@@ -1,0 +1,47 @@
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.exe.config
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.exe
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Caspar Pilot.Hosts.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\AxInterop.ShockwaveFlashObjects.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Interop.ShockwaveFlashObjects.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Caspar Pilot.Hosts.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Svt.Caspar.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Svt.Caspar.Controls.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\bin\x86\Release\Svt.Network.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.Controls.ItemViewControl.resources
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.DnDListBox.resources
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.OperatorForm.resources
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.Properties.Resources.resources
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.SettingsDialog.resources
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.read.4.tlog
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.exe
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.pdb
+C:\Lokala Filer\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.exe.config
+C:\Lokala Filer\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.exe
+C:\Lokala Filer\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.exe.config
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.exe
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\CasparCGClient.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.exe
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\CasparCGClient.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Caspar Pilot.Hosts.dll
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\AxInterop.ShockwaveFlashObjects.dll
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Interop.ShockwaveFlashObjects.dll
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Caspar Pilot.Hosts.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Svt.Caspar.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Svt.Caspar.Controls.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\bin\x86\Release\Svt.Network.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.Controls.ItemViewControl.resources
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.DnDListBox.resources
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.OperatorForm.resources
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.Properties.Resources.resources
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\Caspar_Pilot.SettingsDialog.resources
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.read.4.tlog
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\ResGen.read.1.tlog
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client\obj\x86\Release\ResGen.write.1.tlog

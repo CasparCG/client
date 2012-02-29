@@ -1,0 +1,18 @@
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.dll.config
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Caspar.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Network.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Caspar.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Network.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\x86\Debug\Caspar Pilot.Hosts.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\x86\Debug\Caspar Pilot.Hosts.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.dll.config
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.dll
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Caspar Pilot.Hosts.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Caspar.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\bin\x86\Debug\Svt.Network.pdb
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\obj\x86\Debug\Caspar Pilot.Hosts.dll
+C:\Users\Peter\Documents\Projects\SourceForge\CasparCG\clients\trunk\CasparCG.Client.Hosts\obj\x86\Debug\Caspar Pilot.Hosts.pdb

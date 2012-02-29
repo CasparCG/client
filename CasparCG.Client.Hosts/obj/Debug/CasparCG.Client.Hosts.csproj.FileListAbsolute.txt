@@ -1,0 +1,10 @@
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Caspar Pilot.Hosts.dll.config
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Caspar Pilot.Hosts.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Caspar Pilot.Hosts.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Svt.Caspar.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Svt.Network.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Svt.Caspar.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\bin\Debug\Svt.Network.pdb
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\Debug\ResolveAssemblyReference.cache
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\Debug\Caspar Pilot.Hosts.dll
+C:\Lokala Filer\SourceForge\CasparCG\client\trunk\CasparCG.Client.Hosts\obj\Debug\Caspar Pilot.Hosts.pdb
