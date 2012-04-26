@@ -569,7 +569,7 @@ namespace Caspar_Pilot
 		}
 		private void UpdateTitle()
 		{
-			this.Text = "Caspar CG Client " + VersionString;
+			this.Text = "CasparCG Client " + VersionString;
 			if (IsDirty)
 				this.Text += " *";
 			if (!string.IsNullOrEmpty(currentFilename_))
