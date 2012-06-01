@@ -44,7 +44,7 @@
             System.Windows.Forms.Label label14;
             System.Windows.Forms.Label label15;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemViewControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gbPreview_ = new System.Windows.Forms.GroupBox();
             this.pPreviewContainer_ = new System.Windows.Forms.Panel();
@@ -89,6 +89,7 @@
             this.comboBoxSystemControl = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tName_ = new System.Windows.Forms.TextBox();
+            this.cbUpdateData = new System.Windows.Forms.CheckBox();
             label5 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -375,11 +376,11 @@
             // 
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -473,8 +474,8 @@
             // 
             // cbColor_
             // 
-            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbColor_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColor_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbColor_.FormattingEnabled = true;
@@ -535,8 +536,8 @@
             // 
             // cbChannels_
             // 
-            this.cbChannels_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbChannels_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbChannels_.DisplayMember = "Label";
             this.cbChannels_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbChannels_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -550,8 +551,8 @@
             // 
             // tcItemSettings_
             // 
-            this.tcItemSettings_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcItemSettings_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tcItemSettings_.Controls.Add(this.tpTemplates_);
             this.tcItemSettings_.Controls.Add(this.tpStatics_);
             this.tcItemSettings_.Controls.Add(this.tabPageControl);
@@ -565,6 +566,7 @@
             // 
             // tpTemplates_
             // 
+            this.tpTemplates_.Controls.Add(this.cbUpdateData);
             this.tpTemplates_.Controls.Add(this.checkBoxStoredData);
             this.tpTemplates_.Controls.Add(label4);
             this.tpTemplates_.Controls.Add(this.cbCategory_);
@@ -597,8 +599,8 @@
             // 
             // cbCategory_
             // 
-            this.cbCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCategory_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCategory_.FormattingEnabled = true;
             this.cbCategory_.Location = new System.Drawing.Point(6, 70);
@@ -618,8 +620,8 @@
             // 
             // cbTemplates_
             // 
-            this.cbTemplates_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTemplates_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbTemplates_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbTemplates_.FormattingEnabled = true;
             this.cbTemplates_.Location = new System.Drawing.Point(6, 117);
@@ -635,11 +637,11 @@
             this.cMultistep_.AutoSize = true;
             this.cMultistep_.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cMultistep_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMultistep_.Location = new System.Drawing.Point(165, 7);
+            this.cMultistep_.Location = new System.Drawing.Point(168, 7);
             this.cMultistep_.Name = "cMultistep_";
-            this.cMultistep_.Size = new System.Drawing.Size(138, 20);
+            this.cMultistep_.Size = new System.Drawing.Size(135, 20);
             this.cMultistep_.TabIndex = 3;
-            this.cMultistep_.Text = "Multistep template:";
+            this.cMultistep_.Text = "Multistep template";
             this.cMultistep_.UseVisualStyleBackColor = true;
             this.cMultistep_.CheckedChanged += new System.EventHandler(this.cMultistep__CheckedChanged);
             // 
@@ -662,8 +664,8 @@
             // 
             // cbMediaCategory_
             // 
-            this.cbMediaCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMediaCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMediaCategory_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbMediaCategory_.FormattingEnabled = true;
             this.cbMediaCategory_.Location = new System.Drawing.Point(9, 23);
@@ -685,8 +687,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.cbTransition_);
             this.groupBox3.Controls.Add(this.nDuration_);
             this.groupBox3.Controls.Add(label8);
@@ -718,8 +720,8 @@
             // 
             // cbMediafiles_
             // 
-            this.cbMediafiles_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMediafiles_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMediafiles_.FormattingEnabled = true;
             this.cbMediafiles_.Location = new System.Drawing.Point(11, 69);
             this.cbMediafiles_.Name = "cbMediafiles_";
@@ -763,8 +765,8 @@
             // 
             // comboBoxSettings
             // 
-            this.comboBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxSettings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSettings.FormattingEnabled = true;
             this.comboBoxSettings.Location = new System.Drawing.Point(6, 71);
@@ -775,8 +777,8 @@
             // 
             // comboBoxSystemControl
             // 
-            this.comboBoxSystemControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxSystemControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxSystemControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSystemControl.FormattingEnabled = true;
             this.comboBoxSystemControl.Items.AddRange(new object[] {
@@ -799,14 +801,28 @@
             // 
             // tName_
             // 
-            this.tName_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tName_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tName_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tName_.Location = new System.Drawing.Point(49, 18);
             this.tName_.Name = "tName_";
             this.tName_.Size = new System.Drawing.Size(267, 22);
             this.tName_.TabIndex = 0;
             this.tName_.TextChanged += new System.EventHandler(this.tName__TextChanged);
+            // 
+            // cbUpdateData
+            // 
+            this.cbUpdateData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbUpdateData.AutoSize = true;
+            this.cbUpdateData.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbUpdateData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbUpdateData.Location = new System.Drawing.Point(177, 46);
+            this.cbUpdateData.Name = "cbUpdateData";
+            this.cbUpdateData.Size = new System.Drawing.Size(126, 20);
+            this.cbUpdateData.TabIndex = 15;
+            this.cbUpdateData.Text = "Just update data";
+            this.cbUpdateData.UseVisualStyleBackColor = true;
+            this.cbUpdateData.CheckedChanged += new System.EventHandler(this.cbUpdateData_CheckedChanged);
             // 
             // ItemViewControl
             // 
@@ -890,5 +906,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsert;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemove;
+        private System.Windows.Forms.CheckBox cbUpdateData;
 	}
 }

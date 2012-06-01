@@ -97,16 +97,13 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Svt.Caspar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Svt.Caspar">
       <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Caspar\bin\x86\Debug\Svt.Caspar.dll</HintPath>
     </Reference>
-    <Reference Include="Svt.Caspar.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Svt.Caspar.Controls">
       <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Caspar.Controls\bin\x86\Debug\Svt.Caspar.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="Svt.Network, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Svt.Network">
       <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Network\bin\x86\Debug\Svt.Network.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -123,6 +120,7 @@
     <Compile Include="AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CGDataListWrapper.cs" />
     <Compile Include="Clients\SpyderClient.cs" />
     <Compile Include="Controls\ItemViewControl.cs">
       <SubType>UserControl</SubType>

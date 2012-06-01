@@ -62,7 +62,6 @@ Global
 		{8623F061-98EC-4F25-9CCD-2DF5BB32A498}.Release|x64.ActiveCfg = Release
 		{8623F061-98EC-4F25-9CCD-2DF5BB32A498}.Release|x64.Build.0 = Release
 		{8623F061-98EC-4F25-9CCD-2DF5BB32A498}.Release|x86.ActiveCfg = Release
-		{8623F061-98EC-4F25-9CCD-2DF5BB32A498}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

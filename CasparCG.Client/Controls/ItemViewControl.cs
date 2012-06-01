@@ -89,7 +89,8 @@ namespace Caspar_Pilot.Controls
         public Color ControlColor { get; set; }
         public Color MultistepColor { get; set; }
 		public Color StoredDataColor { get; set; }
-		internal OperatorForm OperatorForm { get; set; }
+        public Color DataUpdateColor { get; set; }
+        internal OperatorForm OperatorForm { get; set; }
 
 		public ItemViewControl()
 		{
@@ -101,6 +102,7 @@ namespace Caspar_Pilot.Controls
             ControlColor = Color.FromName(Properties.Settings.Default.ControlColor);
             MultistepColor = Color.FromName(Properties.Settings.Default.MultistepColor);
 			StoredDataColor = Color.FromName(Properties.Settings.Default.StoredDataColor);
+            DataUpdateColor = Color.FromName(Properties.Settings.Default.DataUpdateColor);
 
 			dataviewBindingSource.AddingNew += new AddingNewEventHandler(dataviewBindingSource_AddingNew);
 			cbTransition_.Items.AddRange(Enum.GetNames(typeof(Svt.Caspar.TransitionType)));
@@ -172,6 +174,7 @@ namespace Caspar_Pilot.Controls
 					nLayer_.Value = value.CGItem.Layer;
 					cMultistep_.Checked = value.MultiStep;
 					checkBoxStoredData.Checked = value.IsStoredData;
+                    cbUpdateData.Checked = value.IsDataUpdate;
                     cLoop_.Checked = value.StaticItem.Loop;
 					cbTransition_.SelectedIndex = (int)value.StaticItem.Transition.Type;
 					nDuration_.Value = value.StaticItem.Transition.Duration;
@@ -710,6 +713,15 @@ namespace Caspar_Pilot.Controls
 			}
 		}
 
+        private void cbUpdateData_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.CurrentItem != null)
+            {
+                this.CurrentItem.IsDataUpdate = (sender as CheckBox).Checked;
+                OnCurrentItemDataChanged();
+            }
+        }
+
 		private void dataGridView1_Leave(object sender, EventArgs e)
 		{
 			if (dataGridView1.CurrentCell != null && dataGridView1.CurrentCell.IsInEditMode)
@@ -793,5 +805,6 @@ namespace Caspar_Pilot.Controls
 
             this.dataviewBindingSource.RemoveAt(this.dataGridView1.CurrentRow.Index);
         }
+
 	}
 }

@@ -81,13 +81,11 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Svt.Caspar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\framework\csharp\trunk\Svt.Caspar\bin\x86\Debug\Svt.Caspar.dll</HintPath>
+    <Reference Include="Svt.Caspar">
+      <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Caspar\bin\x86\Debug\Svt.Caspar.dll</HintPath>
     </Reference>
-    <Reference Include="Svt.Network, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\framework\csharp\trunk\Svt.Network\bin\x86\Debug\Svt.Network.dll</HintPath>
+    <Reference Include="Svt.Network">
+      <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Network\bin\x86\Debug\Svt.Network.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />

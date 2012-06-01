@@ -477,16 +477,23 @@ namespace Caspar_Pilot
 			title += string.IsNullOrEmpty(item.Name) ? NewItemName : item.Name;
 			e.Graphics.DrawString(title, e.Font, fontBrush, e.Bounds.X + 2, e.Bounds.Y + 2);
 
-			//Visa varnings-ikon om ingen mall är vald
-			int offsetX = 0;
-			if (string.IsNullOrEmpty(item.CGItem.TemplateIdentifier))
-			{
-				e.Graphics.DrawImage(Properties.Resources.warn, e.Bounds.X + 2, e.Bounds.Bottom - 16, 14, 14);
-				offsetX = 18;
-			}
+            if (!item.IsDataUpdate)
+            {
+                //Visa varnings-ikon om ingen mall är vald
+                int offsetX = 0;
+                if (string.IsNullOrEmpty(item.CGItem.TemplateIdentifier))
+                {
+                    e.Graphics.DrawImage(Properties.Resources.warn, e.Bounds.X + 2, e.Bounds.Bottom - 16, 14, 14);
+                    offsetX = 18;
+                }
 
-			//visa vilken still det handlar om
-			e.Graphics.DrawString("Mall: " + item.CGItem.TemplateIdentifier, e.Font, fontBrush, e.Bounds.X + 2 + offsetX, e.Bounds.Bottom - 17);
+                //visa vilken still det handlar om
+                e.Graphics.DrawString("Mall: " + item.CGItem.TemplateIdentifier, e.Font, fontBrush, e.Bounds.X + 2 + offsetX, e.Bounds.Bottom - 17);
+            }
+            else
+            {
+                e.Graphics.DrawString("JUST DATA UPDATE", e.Font, fontBrush, e.Bounds.X + 2, e.Bounds.Bottom - 17);
+            }
 		}
 
 		private void DrawStaticItem(RundownItem item, System.Windows.Forms.DrawItemEventArgs e, bool bSelected)
@@ -878,7 +885,10 @@ namespace Caspar_Pilot
 
 		void DoPlayCurrentItem()
 		{
-			if (!IsCurrentItemLoaded)
+            RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+            bool IsUpdate = (item != null) ? item.IsDataUpdate : false;
+
+			if (!IsCurrentItemLoaded && !IsUpdate)
 			{
 				StopItemLoadTimer();
 				DoLoadItem((RundownItem)lbRundown_.SelectedItem, true);
@@ -911,8 +921,13 @@ namespace Caspar_Pilot
                 }
                 else if (item.IsCG)
 				{
-					if (channel != null)
-						channel.CG.Play(item.CGItem.VideoLayer, item.CGItem.Layer);
+                    if (channel != null)
+                    {
+                        if(item.IsDataUpdate)
+                            channel.CG.Update(item.CGItem.VideoLayer, item.CGItem.Layer, new CGDataListWrapper(item.CGItem.Data));
+                        else
+                            channel.CG.Play(item.CGItem.VideoLayer, item.CGItem.Layer);
+                    }
 				}
 				else
 				{

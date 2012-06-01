@@ -15,6 +15,7 @@ namespace Caspar_Pilot
         public string Name { get; set; }
         public bool MultiStep { get; set; }
         public bool IsStoredData { get; set; }
+        public bool IsDataUpdate { get; set; }
         public bool IsStarted { get; set; }
         public string Channel { get; set; }
         public Color Color { get; set; }
@@ -32,6 +33,7 @@ namespace Caspar_Pilot
             IsControl = false;
 			MultiStep = false;
 			IsStoredData = false;
+            IsDataUpdate = false;
 			IsStarted = false; 
             Color = Color.FromName(Properties.Settings.Default.TemplateColor);
 			Name = Channel = string.Empty;
@@ -73,6 +75,7 @@ namespace Caspar_Pilot
 			item.Name = Name;
 			item.MultiStep = MultiStep;
 			item.IsStoredData = IsStoredData;
+            item.IsDataUpdate = IsDataUpdate;
 			item.Channel = Channel;
 			item.Color = Color;
             item.Page = Page;
