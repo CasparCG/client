@@ -29,34 +29,37 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
-            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Load",
             "F5"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Play",
             "F6"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem43 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Step",
             "F7"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem44 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Update",
+            "F5"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Stop",
             "F8"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem45 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "QuickPlay",
             "F1"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem46 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "QuickStop",
             "ESC"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem47 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "QuickStep",
             "F11"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem48 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "Template",
             "LightBlue"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem49 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "Pre-rendered",
             "GhostWhite"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem50 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "Multistep template",
             "Gold"}, -1);
             this.btnCancel_ = new System.Windows.Forms.Button();
@@ -125,7 +128,7 @@
             this.btnCancel_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel_.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel_.Location = new System.Drawing.Point(300, 436);
-            this.btnCancel_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel_.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel_.Name = "btnCancel_";
             this.btnCancel_.Size = new System.Drawing.Size(95, 26);
             this.btnCancel_.TabIndex = 2;
@@ -137,7 +140,7 @@
             this.btnOK_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK_.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK_.Location = new System.Drawing.Point(195, 436);
-            this.btnOK_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOK_.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK_.Name = "btnOK_";
             this.btnOK_.Size = new System.Drawing.Size(95, 26);
             this.btnOK_.TabIndex = 3;
@@ -158,7 +161,7 @@
             // 
             this.tabPage6.Controls.Add(this.groupBox1);
             this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(371, 385);
             this.tabPage6.TabIndex = 5;
@@ -181,9 +184,9 @@
             this.groupBox1.Controls.Add(this.tEditHostTitle_);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(360, 377);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -226,7 +229,7 @@
             this.btnSaveHost_.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveHost_.Image")));
             this.btnSaveHost_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveHost_.Name = "btnSaveHost_";
-            this.btnSaveHost_.Size = new System.Drawing.Size(35, 28);
+            this.btnSaveHost_.Size = new System.Drawing.Size(44, 28);
             this.btnSaveHost_.Text = "Save";
             this.btnSaveHost_.Click += new System.EventHandler(this.btnSaveHost__Click);
             // 
@@ -237,7 +240,7 @@
             this.btnDeleteHost_.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteHost_.Image")));
             this.btnDeleteHost_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDeleteHost_.Name = "btnDeleteHost_";
-            this.btnDeleteHost_.Size = new System.Drawing.Size(50, 28);
+            this.btnDeleteHost_.Size = new System.Drawing.Size(64, 28);
             this.btnDeleteHost_.Text = "Remove";
             this.btnDeleteHost_.Click += new System.EventHandler(this.btnDeleteHost__Click);
             // 
@@ -250,7 +253,7 @@
             this.lHosts_.IntegralHeight = false;
             this.lHosts_.ItemHeight = 16;
             this.lHosts_.Location = new System.Drawing.Point(4, 156);
-            this.lHosts_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lHosts_.Margin = new System.Windows.Forms.Padding(4);
             this.lHosts_.Name = "lHosts_";
             this.lHosts_.Size = new System.Drawing.Size(351, 216);
             this.lHosts_.TabIndex = 15;
@@ -261,7 +264,7 @@
             this.panColorpick.BackColor = System.Drawing.Color.White;
             this.panColorpick.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panColorpick.Location = new System.Drawing.Point(296, 22);
-            this.panColorpick.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panColorpick.Margin = new System.Windows.Forms.Padding(4);
             this.panColorpick.Name = "panColorpick";
             this.panColorpick.Size = new System.Drawing.Size(55, 22);
             this.panColorpick.TabIndex = 14;
@@ -271,7 +274,7 @@
             // 
             this.nEditHostPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nEditHostPort_.Location = new System.Drawing.Point(200, 76);
-            this.nEditHostPort_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nEditHostPort_.Margin = new System.Windows.Forms.Padding(4);
             this.nEditHostPort_.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -317,7 +320,7 @@
             // 
             this.nEditHostChannel_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nEditHostChannel_.Location = new System.Drawing.Point(296, 76);
-            this.nEditHostChannel_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nEditHostChannel_.Margin = new System.Windows.Forms.Padding(4);
             this.nEditHostChannel_.Maximum = new decimal(new int[] {
             10,
             0,
@@ -342,7 +345,7 @@
             this.tEditHostname_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tEditHostname_.Location = new System.Drawing.Point(8, 76);
-            this.tEditHostname_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tEditHostname_.Margin = new System.Windows.Forms.Padding(4);
             this.tEditHostname_.Name = "tEditHostname_";
             this.tEditHostname_.Size = new System.Drawing.Size(183, 22);
             this.tEditHostname_.TabIndex = 3;
@@ -363,7 +366,7 @@
             this.tEditHostTitle_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tEditHostTitle_.Location = new System.Drawing.Point(63, 22);
-            this.tEditHostTitle_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tEditHostTitle_.Margin = new System.Windows.Forms.Padding(4);
             this.tEditHostTitle_.Name = "tEditHostTitle_";
             this.tEditHostTitle_.Size = new System.Drawing.Size(224, 22);
             this.tEditHostTitle_.TabIndex = 1;
@@ -386,7 +389,7 @@
             this.tabPage3.Controls.Add(this.txtAction_);
             this.tabPage3.Controls.Add(this.lvHotKey_);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(371, 385);
             this.tabPage3.TabIndex = 2;
@@ -397,7 +400,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(244, 6);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(120, 24);
             this.button2.TabIndex = 10;
@@ -410,7 +413,7 @@
             this.txtHotKey_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHotKey_.Location = new System.Drawing.Point(180, 345);
-            this.txtHotKey_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtHotKey_.Margin = new System.Windows.Forms.Padding(4);
             this.txtHotKey_.Name = "txtHotKey_";
             this.txtHotKey_.Size = new System.Drawing.Size(183, 22);
             this.txtHotKey_.TabIndex = 6;
@@ -420,7 +423,7 @@
             // 
             this.txtAction_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtAction_.Location = new System.Drawing.Point(4, 345);
-            this.txtAction_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAction_.Margin = new System.Windows.Forms.Padding(4);
             this.txtAction_.Name = "txtAction_";
             this.txtAction_.ReadOnly = true;
             this.txtAction_.Size = new System.Drawing.Size(159, 22);
@@ -435,18 +438,19 @@
             this.lvHotKey_.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Actions,
             this.HotKey});
-            listViewItem45.ToolTipText = "Spelar upp valt klipp direkt";
+            listViewItem6.ToolTipText = "Spelar upp valt klipp direkt";
             this.lvHotKey_.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem41,
-            listViewItem42,
-            listViewItem43,
-            listViewItem44,
-            listViewItem45,
-            listViewItem46,
-            listViewItem47});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.lvHotKey_.LabelEdit = true;
             this.lvHotKey_.Location = new System.Drawing.Point(4, 36);
-            this.lvHotKey_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvHotKey_.Margin = new System.Windows.Forms.Padding(4);
             this.lvHotKey_.Name = "lvHotKey_";
             this.lvHotKey_.Size = new System.Drawing.Size(359, 300);
             this.lvHotKey_.TabIndex = 0;
@@ -471,7 +475,7 @@
             this.tabPage4.Controls.Add(this.txtColor_);
             this.tabPage4.Controls.Add(this.lvColor_);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(371, 385);
             this.tabPage4.TabIndex = 3;
@@ -499,7 +503,7 @@
             "LightSalmon",
             "PaleTurquoise"});
             this.cbColor_.Location = new System.Drawing.Point(180, 344);
-            this.cbColor_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbColor_.Margin = new System.Windows.Forms.Padding(4);
             this.cbColor_.Name = "cbColor_";
             this.cbColor_.Size = new System.Drawing.Size(183, 24);
             this.cbColor_.TabIndex = 15;
@@ -509,7 +513,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(245, 6);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(119, 24);
             this.button1.TabIndex = 14;
@@ -521,7 +525,7 @@
             // 
             this.txtColor_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtColor_.Location = new System.Drawing.Point(4, 345);
-            this.txtColor_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtColor_.Margin = new System.Windows.Forms.Padding(4);
             this.txtColor_.Name = "txtColor_";
             this.txtColor_.ReadOnly = true;
             this.txtColor_.Size = new System.Drawing.Size(159, 22);
@@ -537,12 +541,12 @@
             this.columnHeader3,
             this.columnHeader4});
             this.lvColor_.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem48,
-            listViewItem49,
-            listViewItem50});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11});
             this.lvColor_.LabelEdit = true;
             this.lvColor_.Location = new System.Drawing.Point(4, 36);
-            this.lvColor_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvColor_.Margin = new System.Windows.Forms.Padding(4);
             this.lvColor_.Name = "lvColor_";
             this.lvColor_.Size = new System.Drawing.Size(359, 300);
             this.lvColor_.TabIndex = 11;
@@ -565,9 +569,9 @@
             this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(371, 385);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Common";
@@ -582,9 +586,9 @@
             this.groupBox4.Controls.Add(this.tfieldPrefix);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Location = new System.Drawing.Point(4, 148);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(360, 74);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
@@ -594,7 +598,7 @@
             // 
             this.nFieldStartIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nFieldStartIndex.Location = new System.Drawing.Point(292, 32);
-            this.nFieldStartIndex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nFieldStartIndex.Margin = new System.Windows.Forms.Padding(4);
             this.nFieldStartIndex.Name = "nFieldStartIndex";
             this.nFieldStartIndex.Size = new System.Drawing.Size(60, 22);
             this.nFieldStartIndex.TabIndex = 14;
@@ -615,7 +619,7 @@
             this.tfieldPrefix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tfieldPrefix.Location = new System.Drawing.Point(63, 31);
-            this.tfieldPrefix.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tfieldPrefix.Margin = new System.Windows.Forms.Padding(4);
             this.tfieldPrefix.Name = "tfieldPrefix";
             this.tfieldPrefix.Size = new System.Drawing.Size(132, 22);
             this.tfieldPrefix.TabIndex = 12;
@@ -640,9 +644,9 @@
             this.groupBox3.Controls.Add(this.btnBrowse_);
             this.groupBox3.Controls.Add(this.tTemplateFolder_);
             this.groupBox3.Location = new System.Drawing.Point(4, 7);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(360, 133);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
@@ -652,7 +656,7 @@
             // 
             this.pBGColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pBGColor.Location = new System.Drawing.Point(12, 91);
-            this.pBGColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pBGColor.Margin = new System.Windows.Forms.Padding(4);
             this.pBGColor.Name = "pBGColor";
             this.pBGColor.Size = new System.Drawing.Size(107, 22);
             this.pBGColor.TabIndex = 7;
@@ -682,7 +686,7 @@
             // 
             this.btnBrowse_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse_.Location = new System.Drawing.Point(274, 42);
-            this.btnBrowse_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBrowse_.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowse_.Name = "btnBrowse_";
             this.btnBrowse_.Size = new System.Drawing.Size(78, 24);
             this.btnBrowse_.TabIndex = 5;
@@ -695,7 +699,7 @@
             this.tTemplateFolder_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tTemplateFolder_.Location = new System.Drawing.Point(12, 43);
-            this.tTemplateFolder_.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tTemplateFolder_.Margin = new System.Windows.Forms.Padding(4);
             this.tTemplateFolder_.Name = "tTemplateFolder_";
             this.tTemplateFolder_.Size = new System.Drawing.Size(254, 22);
             this.tTemplateFolder_.TabIndex = 4;
@@ -710,7 +714,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(16, 13);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -729,7 +733,7 @@
             this.Controls.Add(this.btnCancel_);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SettingsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";

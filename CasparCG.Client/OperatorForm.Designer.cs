@@ -36,7 +36,7 @@
             this.btnDelete_ = new System.Windows.Forms.ToolStripButton();
             this.btnLoad_ = new System.Windows.Forms.ToolStripButton();
             this.btnPlay_ = new System.Windows.Forms.ToolStripButton();
-            this.btnStep_ = new System.Windows.Forms.ToolStripButton();
+            this.btnUpdate_ = new System.Windows.Forms.ToolStripButton();
             this.btnStop_ = new System.Windows.Forms.ToolStripButton();
             this.btnOnAir_ = new System.Windows.Forms.ToolStripButton();
             this.btnClear_ = new System.Windows.Forms.ToolStripSplitButton();
@@ -76,6 +76,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelPage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.gbRundown_.SuspendLayout();
             this.tsRundown_.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -110,7 +111,8 @@
             this.btnDelete_,
             this.btnLoad_,
             this.btnPlay_,
-            this.btnStep_,
+            this.toolStripButton1,
+            this.btnUpdate_,
             this.btnStop_,
             this.btnOnAir_,
             this.btnClear_,
@@ -162,16 +164,16 @@
             this.btnPlay_.Text = "Play";
             this.btnPlay_.Click += new System.EventHandler(this.btnPlay__Click);
             // 
-            // btnStep_
+            // btnUpdate_
             // 
-            this.btnStep_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnStep_.Enabled = false;
-            this.btnStep_.Image = ((System.Drawing.Image)(resources.GetObject("btnStep_.Image")));
-            this.btnStep_.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStep_.Name = "btnStep_";
-            this.btnStep_.Size = new System.Drawing.Size(40, 22);
-            this.btnStep_.Text = "Step";
-            this.btnStep_.Click += new System.EventHandler(this.btnStep__Click);
+            this.btnUpdate_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnUpdate_.Enabled = false;
+            this.btnUpdate_.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdate_.Image")));
+            this.btnUpdate_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnUpdate_.Name = "btnUpdate_";
+            this.btnUpdate_.Size = new System.Drawing.Size(57, 22);
+            this.btnUpdate_.Text = "Update";
+            this.btnUpdate_.Click += new System.EventHandler(this.btnUpdate__Click);
             // 
             // btnStop_
             // 
@@ -242,7 +244,7 @@
             this.btnDetail_.Enabled = false;
             this.btnDetail_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDetail_.Name = "btnDetail_";
-            this.btnDetail_.Size = new System.Drawing.Size(47, 22);
+            this.btnDetail_.Size = new System.Drawing.Size(47, 20);
             this.btnDetail_.Text = "Detalj";
             this.btnDetail_.Visible = false;
             this.btnDetail_.Click += new System.EventHandler(this.btnDetail__Click);
@@ -531,6 +533,17 @@
             this.toolStripStatusLabelPage.Size = new System.Drawing.Size(50, 17);
             this.toolStripStatusLabelPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Enabled = false;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(40, 22);
+            this.toolStripButton1.Text = "Step";
+            this.toolStripButton1.Click += new System.EventHandler(this.btnStep__Click);
+            // 
             // OperatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -594,7 +607,7 @@
 		private System.Windows.Forms.ToolStripMenuItem casparToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem btnRefreshTemplates_;
 		private System.Windows.Forms.ToolStripMenuItem btnRefreshGraphics_;
-		private System.Windows.Forms.ToolStripButton btnStep_;
+		private System.Windows.Forms.ToolStripButton btnUpdate_;
         private System.Windows.Forms.ToolStripMenuItem tankaMallgrafiklistaToolStripMenuItem;
        // private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnNew_;
@@ -614,6 +627,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem templateDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
 	}
 }
 

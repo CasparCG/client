@@ -184,9 +184,20 @@ namespace Caspar_Pilot
 					temp["Step"] = Keys.F3;
 					MessageBox.Show("Invalid hotkey for \"Step\".");
                 }
+
                 try
                 {
-                    temp["Stop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[3].SubItems[1].Text);
+                    temp["Update"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[3].SubItems[1].Text);
+                }
+                catch (Exception)
+                {
+                    temp["Update"] = Keys.F5;
+                    MessageBox.Show("Invalid hotkey for \"Update\".");
+                }
+
+                try
+                {
+                    temp["Stop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[4].SubItems[1].Text);
                 }
                 catch (Exception)
                 {
@@ -195,7 +206,7 @@ namespace Caspar_Pilot
                 }
 				try
 				{
-					temp["QuickPlay"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[4].SubItems[1].Text);
+					temp["QuickPlay"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[5].SubItems[1].Text);
 				}
 				catch (Exception)
 				{
@@ -204,7 +215,7 @@ namespace Caspar_Pilot
 				}
 				try
 				{
-					temp["QuickStop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[5].SubItems[1].Text);
+					temp["QuickStop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[6].SubItems[1].Text);
 				}
 				catch (Exception)
 				{
@@ -213,7 +224,7 @@ namespace Caspar_Pilot
 				}
 				try
 				{
-					temp["QuickStep"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[6].SubItems[1].Text);
+					temp["QuickStep"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[7].SubItems[1].Text);
 				}
 				catch (Exception)
 				{
@@ -229,10 +240,11 @@ namespace Caspar_Pilot
                 lvHotKey_.Items[0].SubItems[1].Text = value["Load"].ToString();
                 lvHotKey_.Items[1].SubItems[1].Text = value["Play"].ToString();
                 lvHotKey_.Items[2].SubItems[1].Text = value["Step"].ToString();
-                lvHotKey_.Items[3].SubItems[1].Text = value["Stop"].ToString();
-				lvHotKey_.Items[4].SubItems[1].Text = value["QuickPlay"].ToString();
-				lvHotKey_.Items[5].SubItems[1].Text = value["QuickStop"].ToString();
-				lvHotKey_.Items[6].SubItems[1].Text = value["QuickStep"].ToString();
+                lvHotKey_.Items[3].SubItems[1].Text = value["Update"].ToString();
+                lvHotKey_.Items[4].SubItems[1].Text = value["Stop"].ToString();
+				lvHotKey_.Items[5].SubItems[1].Text = value["QuickPlay"].ToString();
+				lvHotKey_.Items[6].SubItems[1].Text = value["QuickStop"].ToString();
+				lvHotKey_.Items[7].SubItems[1].Text = value["QuickStep"].ToString();
 			}
         }
 
@@ -258,10 +270,11 @@ namespace Caspar_Pilot
             lvHotKey_.Items[0].SubItems[1].Text = "F1";
             lvHotKey_.Items[1].SubItems[1].Text = "F2";
             lvHotKey_.Items[2].SubItems[1].Text = "F3";
-            lvHotKey_.Items[3].SubItems[1].Text = "F4";
-			lvHotKey_.Items[4].SubItems[1].Text = "F12";
-			lvHotKey_.Items[5].SubItems[1].Text = "F9";
-			lvHotKey_.Items[6].SubItems[1].Text = "F11";
+            lvHotKey_.Items[3].SubItems[1].Text = "F5";
+            lvHotKey_.Items[4].SubItems[1].Text = "F4";
+			lvHotKey_.Items[5].SubItems[1].Text = "F12";
+			lvHotKey_.Items[6].SubItems[1].Text = "F9";
+			lvHotKey_.Items[7].SubItems[1].Text = "F11";
 		}
 		#endregion
 

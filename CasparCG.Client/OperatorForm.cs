@@ -54,6 +54,7 @@ namespace Caspar_Pilot
                hotKeys_.Add("Play", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.PlayKey));
                hotKeys_.Add("Step", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.StepKey));
                hotKeys_.Add("Stop", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.StopKey));
+               hotKeys_.Add("Update", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.UpdateKey));
 			   hotKeys_.Add("QuickPlay", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickPlayKey));
 			   hotKeys_.Add("QuickStop", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickStopKey));
 			   hotKeys_.Add("QuickStep", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickStepKey));
@@ -231,7 +232,7 @@ namespace Caspar_Pilot
 			btnNew_.Enabled = !IsOnAir;
 			btnDelete_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches) && !IsOnAir;
 
-			btnLoad_.Enabled = btnPlay_.Enabled = btnStep_.Enabled = btnStop_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches && (HostsManager.HasValidConnections != Hosts.ValidHostsConnections.None));
+			btnLoad_.Enabled = btnPlay_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches && (HostsManager.HasValidConnections != Hosts.ValidHostsConnections.None));
 			btnClear_.Enabled = btnOnAir_.Enabled = (HostsManager.HasValidConnections != Hosts.ValidHostsConnections.None);
 		}
 
@@ -412,6 +413,7 @@ namespace Caspar_Pilot
                 Properties.Settings.Default.PlayKey = hotKeys_["Play"].ToString();
                 Properties.Settings.Default.StepKey = hotKeys_["Step"].ToString();
                 Properties.Settings.Default.StopKey = hotKeys_["Stop"].ToString();
+                Properties.Settings.Default.UpdateKey = hotKeys_["Update"].ToString();
 				Properties.Settings.Default.QuickPlayKey = hotKeys_["QuickPlay"].ToString();
 				Properties.Settings.Default.QuickStopKey = hotKeys_["QuickStop"].ToString();
 				Properties.Settings.Default.QuickStepKey = hotKeys_["QuickStep"].ToString();
@@ -937,6 +939,19 @@ namespace Caspar_Pilot
 			}
 		}
 
+        void DoUpdateItem(RundownItem item)
+        {
+            if (item != null)
+            {
+                Svt.Caspar.Channel channel = HostsManager.GetChannel(item.Channel);
+                if (item.IsCG)
+                {
+                    if (channel != null)
+                        channel.CG.Update(item.CGItem.VideoLayer, item.CGItem.Layer, new CGDataListWrapper(item.CGItem.Data));
+                }
+            }
+        }
+
 		void DoLoadItem(RundownItem item, bool bAutoPlay)
 		{
 			if(item != null)
@@ -1060,6 +1075,8 @@ namespace Caspar_Pilot
 					btnStop__Click(null, null);
 				else if (hotKeys_.ContainsKey("QuickStep") && (int)hotKeys_["QuickStep"] == key)
 					btnStep__Click(null, null);
+                else if (hotKeys_.ContainsKey("Update") && (int)hotKeys_["Update"] == key)
+                    btnUpdate__Click(null, null);
 
 				else if (IsOnAir)
 				{
@@ -1071,6 +1088,8 @@ namespace Caspar_Pilot
 						btnStep__Click(null, null);
 					else if ((int)hotKeys_["Stop"] == key)
 						btnStop__Click(null, null);
+                    else if ((int)hotKeys_["Update"] == key)
+                        btnUpdate__Click(null, null);
 				}
             }
 
@@ -1342,6 +1361,11 @@ namespace Caspar_Pilot
         private void outputSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.itemViewControl_.EnableOutputSettings = !this.itemViewControl_.EnableOutputSettings;
+        }
+
+        private void btnUpdate__Click(object sender, EventArgs e)
+        {
+            DoUpdateItem((RundownItem)lbRundown_.SelectedItem);
         }
 	}
 }

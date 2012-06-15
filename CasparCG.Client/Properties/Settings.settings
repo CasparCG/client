@@ -93,5 +93,8 @@
   &lt;/ChannelInformation&gt;
 &lt;/ArrayOfChannelInformation&gt;</Value>
     </Setting>
+    <Setting Name="UpdateKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
