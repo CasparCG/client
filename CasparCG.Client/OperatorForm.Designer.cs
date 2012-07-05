@@ -36,6 +36,7 @@
             this.btnDelete_ = new System.Windows.Forms.ToolStripButton();
             this.btnLoad_ = new System.Windows.Forms.ToolStripButton();
             this.btnPlay_ = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.btnUpdate_ = new System.Windows.Forms.ToolStripButton();
             this.btnStop_ = new System.Windows.Forms.ToolStripButton();
             this.btnOnAir_ = new System.Windows.Forms.ToolStripButton();
@@ -76,7 +77,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelPage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.gbRundown_.SuspendLayout();
             this.tsRundown_.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -87,9 +87,9 @@
             // 
             // gbRundown_
             // 
-            this.gbRundown_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbRundown_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRundown_.Controls.Add(this.tsRundown_);
             this.gbRundown_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbRundown_.Location = new System.Drawing.Point(4, 4);
@@ -97,7 +97,7 @@
             this.gbRundown_.MinimumSize = new System.Drawing.Size(365, 0);
             this.gbRundown_.Name = "gbRundown_";
             this.gbRundown_.Padding = new System.Windows.Forms.Padding(4);
-            this.gbRundown_.Size = new System.Drawing.Size(463, 828);
+            this.gbRundown_.Size = new System.Drawing.Size(463, 524);
             this.gbRundown_.TabIndex = 1;
             this.gbRundown_.TabStop = false;
             this.gbRundown_.Text = "Rundown";
@@ -163,6 +163,17 @@
             this.btnPlay_.Size = new System.Drawing.Size(39, 22);
             this.btnPlay_.Text = "Play";
             this.btnPlay_.Click += new System.EventHandler(this.btnPlay__Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Enabled = false;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(40, 22);
+            this.toolStripButton1.Text = "Step";
+            this.toolStripButton1.Click += new System.EventHandler(this.btnStep__Click);
             // 
             // btnUpdate_
             // 
@@ -263,7 +274,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1444, 836);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1444, 532);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pOnAir_
@@ -273,14 +284,14 @@
             this.pOnAir_.Location = new System.Drawing.Point(471, 0);
             this.pOnAir_.Margin = new System.Windows.Forms.Padding(0);
             this.pOnAir_.Name = "pOnAir_";
-            this.pOnAir_.Size = new System.Drawing.Size(16, 836);
+            this.pOnAir_.Size = new System.Drawing.Size(16, 532);
             this.pOnAir_.TabIndex = 2;
             // 
             // pItemLoaded_
             // 
-            this.pItemLoaded_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pItemLoaded_.Location = new System.Drawing.Point(5, 814);
+            this.pItemLoaded_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pItemLoaded_.Location = new System.Drawing.Point(5, 510);
             this.pItemLoaded_.Margin = new System.Windows.Forms.Padding(4);
             this.pItemLoaded_.Name = "pItemLoaded_";
             this.pItemLoaded_.Size = new System.Drawing.Size(8, 17);
@@ -496,7 +507,7 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabelPage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 860);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1444, 22);
@@ -517,7 +528,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1221, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1190, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -533,22 +544,11 @@
             this.toolStripStatusLabelPage.Size = new System.Drawing.Size(50, 17);
             this.toolStripStatusLabelPage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(40, 22);
-            this.toolStripButton1.Text = "Step";
-            this.toolStripButton1.Click += new System.EventHandler(this.btnStep__Click);
-            // 
             // OperatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1444, 882);
+            this.ClientSize = new System.Drawing.Size(1444, 578);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);

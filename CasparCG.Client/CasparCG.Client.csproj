@@ -97,8 +97,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Svt.Caspar">
+    <Reference Include="Svt.Caspar, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
       <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Caspar\bin\x86\Debug\Svt.Caspar.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Svt.Caspar.Controls">
       <HintPath>..\..\..\..\..\framework\csharp\trunk\Svt.Caspar.Controls\bin\x86\Debug\Svt.Caspar.Controls.dll</HintPath>

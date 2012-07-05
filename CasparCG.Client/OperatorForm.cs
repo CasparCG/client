@@ -39,10 +39,11 @@ namespace Caspar_Pilot
         private bool IsCompactMode { get; set; }
         private bool IsEnterPressed { get; set; }
 
-		public OperatorForm()
+        public OperatorForm()
 		{
 			HostsManager = new Hosts.HostsManager();
-			
+            HostsManager.ValidConnectionsChanged += HostsManager_ValidConnectionsChanged;
+
 			channelStringFormat_ = new StringFormat(StringFormatFlags.NoWrap);
 			channelStringFormat_.Alignment = StringAlignment.Far;
 			fontBrush_ = new SolidBrush(Color.Black);
@@ -232,8 +233,8 @@ namespace Caspar_Pilot
 			btnNew_.Enabled = !IsOnAir;
 			btnDelete_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches) && !IsOnAir;
 
-			btnLoad_.Enabled = btnPlay_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches && (HostsManager.HasValidConnections != Hosts.ValidHostsConnections.None));
-			btnClear_.Enabled = btnOnAir_.Enabled = (HostsManager.HasValidConnections != Hosts.ValidHostsConnections.None);
+			btnLoad_.Enabled = btnPlay_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches && (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None));
+			btnClear_.Enabled = btnOnAir_.Enabled = (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None);
 		}
 
 		private void btnNew__Click(object sender, EventArgs e)
@@ -264,12 +265,19 @@ namespace Caspar_Pilot
 		private void btnStop__Click(object sender, EventArgs e)
 		{
 			RundownItem item = lbRundown_.SelectedItem as RundownItem;
-			if (item.IsCG)
-				DoStopItem(item);
-			else
-				DoClear(item);
+            if (item != null)
+            {
+                if (item.IsCG)
+                    DoStopItem(item);
+                else
+                    DoClear(item);
+            }
 		}
 
+        private void btnUpdate__Click(object sender, EventArgs e)
+        {
+            DoUpdateItem((RundownItem)lbRundown_.SelectedItem);
+        }
 		private void btnClear__Click(object sender, EventArgs e)
 		{
 			DoClear((RundownItem)lbRundown_.SelectedItem);
@@ -1144,100 +1152,118 @@ namespace Caspar_Pilot
 		{
 			itemViewControl_.UpdateMediafiles();
 		}
-	
-		/// <summary>
+
+        #region Host management
+        /// <summary>
 		/// Called when the app starts or when the user changes settings
 		/// </summary>
 		/// <param name="channels"></param>
 		private void UpdateHosts(Caspar_Pilot.Hosts.ChannelInformationList channels)
-		{
-			HostsManager.SetChannels(channels);
-			RebuildHostStatus();
-			UpdateTotalHostStatus();
-			itemViewControl_.SetChannels(channels);
-			lbRundown_.Invalidate();
-		}
+        {
+            IEnumerable<Hosts.DeviceHolder> devices = null;
 
-		private void RebuildHostStatus()
-		{
-			miCasparStatus_.DropDownItems.Clear();
-			IEnumerable<Hosts.DeviceHolder> devices = HostsManager.Devices;
-			if (devices != null)
-			{
-				foreach (Hosts.DeviceHolder device in devices)
-				{
-					ToolStripMenuItem item = new ToolStripMenuItem();
-					item.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-					item.DoubleClickEnabled = true;
-					item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
-					item.Name = device.Hostname;
-					item.Size = new System.Drawing.Size(100, 20);
-					item.Text = device.Hostname;
-					item.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-					item.Click += new System.EventHandler(this.miDeviceStatus__Click);
-					miCasparStatus_.DropDownItems.Add(item);
+            //unsubscribe validConnectionChanged-events
+            {
+                devices = HostsManager.Devices;
+                if (devices != null)
+                    foreach (Hosts.DeviceHolder device in devices)
+                        device.VaildConnectionChanged -= device_VaildConnectionChanged;
+            }
 
-					device.VaildConnectionChanged -= device_VaildConnectionChanged;
-					device.VaildConnectionChanged += device_VaildConnectionChanged;
-				}
-			}
-		}
-		private void miDeviceStatus__Click(object sender, EventArgs e)
-		{
-			//ToolStripMenuItem item = (ToolStripMenuItem)sender;
-			//Hosts.DeviceHolder device = HostsManager.GetDevice(item.Name);
-		}
+            HostsManager.SetChannels(channels);
 
-		private delegate void HostDeviceGUIMethod(Hosts.DeviceHolder device);
+            //Rebuild caspar host status GUI-elements
+            miCasparStatus_.DropDownItems.Clear();
+            devices = HostsManager.Devices;
+            if (devices != null)
+            {
+                foreach (Hosts.DeviceHolder device in devices)
+                {
+                    ToolStripMenuItem item = new ToolStripMenuItem();
+                    item.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+                    item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
+                    item.Name = device.Hostname;
+                    item.Size = new System.Drawing.Size(100, 20);
+                    item.Text = device.Hostname;
+                    item.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+                    item.Click += new System.EventHandler(this.miDeviceStatus__Click);
+                    miCasparStatus_.DropDownItems.Add(item);
+
+                    //subscribe to validConnectionChanged-events
+                    device.VaildConnectionChanged += device_VaildConnectionChanged;
+                }
+            }
+
+            itemViewControl_.SetChannels(channels);
+
+            lbRundown_.Invalidate();
+        }
+
 		void device_VaildConnectionChanged(object sender, EventArgs e)
 		{
-			BeginInvoke(new HostDeviceGUIMethod(UpdateHostStatus), (Hosts.DeviceHolder)sender);
+            if (InvokeRequired)
+            {
+                BeginInvoke(new EventHandler<EventArgs>(device_VaildConnectionChanged), sender, e);
+            }
+            else
+            {
+                try
+                {
+                    Hosts.DeviceHolder device = (Hosts.DeviceHolder)sender;
+
+                    ToolStripItem[] items = miCasparStatus_.DropDownItems.Find(device.Hostname, false);
+                    foreach (ToolStripItem item in items)
+                        item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
+
+                    //invalidate affecetd items in the rundown
+                    int startIndex = lbRundown_.IndexFromPoint(0, 0);
+                    int lastIndex = Math.Min(startIndex + lbRundown_.Height / lbRundown_.ItemHeight, lbRundown_.Items.Count - 1);
+                    foreach (Hosts.ChannelInformation channel in device.Channels)
+                    {
+                        for (int index = startIndex; index < lastIndex; ++index)
+                        {
+                            RundownItem item = (RundownItem)lbRundown_.Items[index];
+                            if (item.Channel == channel.Label)
+                                lbRundown_.Invalidate(lbRundown_.GetItemRectangle(index), false);
+                        }
+                    }
+                }
+                catch { }
+            }
 		}
 
-		void UpdateHostStatus(Hosts.DeviceHolder device)
-		{
-			try
-			{
-				UpdateRundownMenuState();
+        private void miDeviceStatus__Click(object sender, EventArgs e)
+        {
+            //ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            //Hosts.DeviceHolder device = HostsManager.GetDevice(item.Name);
+        }
 
-				ToolStripItem[] items = miCasparStatus_.DropDownItems.Find(device.Hostname, false);
-				foreach (ToolStripItem item in items)
-					item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
+        void HostsManager_ValidConnectionsChanged(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+                BeginInvoke(new EventHandler<EventArgs>(HostsManager_ValidConnectionsChanged), sender, e);
+            else
+            {
+                UpdateRundownMenuState();
 
-				UpdateTotalHostStatus();
-				int startIndex = lbRundown_.IndexFromPoint(0, 0);
-				int lastIndex = Math.Min(startIndex + lbRundown_.Height / lbRundown_.ItemHeight, lbRundown_.Items.Count - 1);
-				foreach (Hosts.ChannelInformation channel in device.Channels)
-				{
-					for (int index = startIndex; index < lastIndex; ++index)
-					{
-						RundownItem item = (RundownItem)lbRundown_.Items[index];
-						if (item.Channel == channel.Label)
-							lbRundown_.Invalidate(lbRundown_.GetItemRectangle(index), false);
-					}
-				}
-			}
-			catch (Exception ex) { }
-		}
+                switch (HostsManager.ValidConnections)
+                {
+                    case Caspar_Pilot.Hosts.ValidHostsConnections.All:
+                        miCasparStatus_.Image = Properties.Resources.connected;
+                        break;
 
-		private void UpdateTotalHostStatus()
-		{
-			switch (HostsManager.HasValidConnections)
-			{
-				case Caspar_Pilot.Hosts.ValidHostsConnections.All:
-					miCasparStatus_.Image = Properties.Resources.connected;
-					break;
+                    case Caspar_Pilot.Hosts.ValidHostsConnections.Some:
+                        miCasparStatus_.Image = Properties.Resources.semi_connected;
+                        break;
 
-				case Caspar_Pilot.Hosts.ValidHostsConnections.Some:
-					miCasparStatus_.Image = Properties.Resources.semi_connected;
-					break;
-
-				case Caspar_Pilot.Hosts.ValidHostsConnections.None:
-				default:
-					miCasparStatus_.Image = Properties.Resources.disconnected;
-					break;
-			}
-		}
+                    case Caspar_Pilot.Hosts.ValidHostsConnections.None:
+                    default:
+                        miCasparStatus_.Image = Properties.Resources.disconnected;
+                        break;
+                }
+            }
+        }
+        #endregion
 
         private void btnDetail__Click(object sender, EventArgs e)
         {
@@ -1363,9 +1389,5 @@ namespace Caspar_Pilot
             this.itemViewControl_.EnableOutputSettings = !this.itemViewControl_.EnableOutputSettings;
         }
 
-        private void btnUpdate__Click(object sender, EventArgs e)
-        {
-            DoUpdateItem((RundownItem)lbRundown_.SelectedItem);
-        }
 	}
 }

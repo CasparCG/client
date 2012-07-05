@@ -80,21 +80,22 @@
     <Setting Name="DataUpdateColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Plum</Value>
     </Setting>
-    <Setting Name="Channels" Type="Caspar_Pilot.Hosts.ChannelInformationList" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfChannelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ChannelInformation&gt;
-    &lt;Label&gt;localhost&lt;/Label&gt;
-    &lt;Hostname&gt;localhost&lt;/Hostname&gt;
-    &lt;Port&gt;5250&lt;/Port&gt;
-    &lt;Channel&gt;1&lt;/Channel&gt;
-    &lt;Online&gt;false&lt;/Online&gt;
-    &lt;ArgbValue&gt;-1&lt;/ArgbValue&gt;
-  &lt;/ChannelInformation&gt;
-&lt;/ArrayOfChannelInformation&gt;</Value>
-    </Setting>
     <Setting Name="UpdateKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">F5</Value>
+    </Setting>
+    <Setting Name="Channels" Type="Caspar_Pilot.Hosts.ChannelInformationList" Scope="User">
+      <Value Profile="(Default)">
+     &lt;ArrayOfChannelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+      &lt;ChannelInformation&gt;
+       &lt;Label&gt;localhost&lt;/Label&gt;
+       &lt;Hostname&gt;localhost&lt;/Hostname&gt;
+       &lt;Port&gt;5250&lt;/Port&gt;
+       &lt;Channel&gt;1&lt;/Channel&gt;
+       &lt;Online&gt;false&lt;/Online&gt;
+       &lt;ArgbValue&gt;-1&lt;/ArgbValue&gt;
+      &lt;/ChannelInformation&gt;
+     &lt;/ArrayOfChannelInformation&gt;
+    </Value>
     </Setting>
   </Settings>
 </SettingsFile>
