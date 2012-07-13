@@ -123,6 +123,12 @@
     </Compile>
     <Compile Include="CGDataListWrapper.cs" />
     <Compile Include="Clients\SpyderClient.cs" />
+    <Compile Include="Controls\HotkeyEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HotkeyEditControl.Designer.cs">
+      <DependentUpon>HotkeyEditControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ItemViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +140,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Interop.cs" />
+    <Compile Include="ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="OperatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +154,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\HotkeyEditControl.resx">
+      <DependentUpon>HotkeyEditControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ItemViewControl.resx">
       <DependentUpon>ItemViewControl.cs</DependentUpon>

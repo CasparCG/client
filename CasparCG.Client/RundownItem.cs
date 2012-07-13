@@ -19,8 +19,10 @@ namespace Caspar_Pilot
         public bool IsStarted { get; set; }
         public string Channel { get; set; }
         public Color Color { get; set; }
+        public Color ChannelColor { get; set; }
         public string Page { get; set; }
         public int ControlValue { get; set; }
+        public bool Online { get; set; }
 
 		public RundownItem()
 		{
@@ -38,6 +40,8 @@ namespace Caspar_Pilot
             Color = Color.FromName(Properties.Settings.Default.TemplateColor);
 			Name = Channel = string.Empty;
             Page = string.Empty;
+
+            Online = false;
 		}
 
 		
@@ -80,6 +84,9 @@ namespace Caspar_Pilot
 			item.Color = Color;
             item.Page = Page;
             item.ControlValue = ControlValue;
+
+            item.Online = Online;
+            item.ChannelColor = ChannelColor;
 
 			return item;
 		}

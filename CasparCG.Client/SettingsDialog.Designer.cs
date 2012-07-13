@@ -29,37 +29,14 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Load",
-            "F5"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Play",
-            "F6"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Step",
-            "F7"}, -1);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Playout", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Update",
-            "F5"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Stop",
-            "F8"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            "QuickPlay",
-            "F1"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
-            "QuickStop",
-            "ESC"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "QuickStep",
-            "F11"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "Template",
             "LightBlue"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "Pre-rendered",
             "GhostWhite"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "Multistep template",
             "Gold"}, -1);
             this.btnCancel_ = new System.Windows.Forms.Button();
@@ -83,10 +60,8 @@
             this.tEditHostTitle_ = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.txtHotKey_ = new System.Windows.Forms.TextBox();
-            this.txtAction_ = new System.Windows.Forms.TextBox();
-            this.lvHotKey_ = new System.Windows.Forms.ListView();
+            this.btnRestoreDefaultKeys = new System.Windows.Forms.Button();
+            this.lvHotKey_ = new Caspar_Pilot.ListViewEx();
             this.Actions = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.HotKey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -170,8 +145,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.toolStrip1);
             this.groupBox1.Controls.Add(this.lHosts_);
             this.groupBox1.Controls.Add(this.panColorpick);
@@ -194,8 +169,8 @@
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -246,9 +221,9 @@
             // 
             // lHosts_
             // 
-            this.lHosts_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lHosts_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lHosts_.FormattingEnabled = true;
             this.lHosts_.IntegralHeight = false;
             this.lHosts_.ItemHeight = 16;
@@ -342,8 +317,8 @@
             // 
             // tEditHostname_
             // 
-            this.tEditHostname_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tEditHostname_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tEditHostname_.Location = new System.Drawing.Point(8, 76);
             this.tEditHostname_.Margin = new System.Windows.Forms.Padding(4);
             this.tEditHostname_.Name = "tEditHostname_";
@@ -363,8 +338,8 @@
             // 
             // tEditHostTitle_
             // 
-            this.tEditHostTitle_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tEditHostTitle_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tEditHostTitle_.Location = new System.Drawing.Point(63, 22);
             this.tEditHostTitle_.Margin = new System.Windows.Forms.Padding(4);
             this.tEditHostTitle_.Name = "tEditHostTitle_";
@@ -384,9 +359,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.button2);
-            this.tabPage3.Controls.Add(this.txtHotKey_);
-            this.tabPage3.Controls.Add(this.txtAction_);
+            this.tabPage3.Controls.Add(this.btnRestoreDefaultKeys);
             this.tabPage3.Controls.Add(this.lvHotKey_);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
@@ -396,77 +369,51 @@
             this.tabPage3.Text = "Hotkeys";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnRestoreDefaultKeys
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(244, 6);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 24);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "&Restore Defaults";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // txtHotKey_
-            // 
-            this.txtHotKey_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtHotKey_.Location = new System.Drawing.Point(180, 345);
-            this.txtHotKey_.Margin = new System.Windows.Forms.Padding(4);
-            this.txtHotKey_.Name = "txtHotKey_";
-            this.txtHotKey_.Size = new System.Drawing.Size(183, 22);
-            this.txtHotKey_.TabIndex = 6;
-            this.txtHotKey_.TextChanged += new System.EventHandler(this.txtHotKey__TextChanged);
-            // 
-            // txtAction_
-            // 
-            this.txtAction_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtAction_.Location = new System.Drawing.Point(4, 345);
-            this.txtAction_.Margin = new System.Windows.Forms.Padding(4);
-            this.txtAction_.Name = "txtAction_";
-            this.txtAction_.ReadOnly = true;
-            this.txtAction_.Size = new System.Drawing.Size(159, 22);
-            this.txtAction_.TabIndex = 5;
+            this.btnRestoreDefaultKeys.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRestoreDefaultKeys.Location = new System.Drawing.Point(244, 6);
+            this.btnRestoreDefaultKeys.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRestoreDefaultKeys.Name = "btnRestoreDefaultKeys";
+            this.btnRestoreDefaultKeys.Size = new System.Drawing.Size(120, 24);
+            this.btnRestoreDefaultKeys.TabIndex = 10;
+            this.btnRestoreDefaultKeys.Text = "&Restore Defaults";
+            this.btnRestoreDefaultKeys.UseVisualStyleBackColor = true;
             // 
             // lvHotKey_
             // 
             this.lvHotKey_.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lvHotKey_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvHotKey_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lvHotKey_.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Actions,
             this.HotKey});
-            listViewItem6.ToolTipText = "Spelar upp valt klipp direkt";
-            this.lvHotKey_.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
-            this.lvHotKey_.LabelEdit = true;
-            this.lvHotKey_.Location = new System.Drawing.Point(4, 36);
+            this.lvHotKey_.DoubleClickActivation = true;
+            this.lvHotKey_.FullRowSelect = true;
+            listViewGroup2.Header = "Playout";
+            listViewGroup2.Name = "listViewGroup1";
+            this.lvHotKey_.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup2});
+            this.lvHotKey_.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvHotKey_.Location = new System.Drawing.Point(4, 38);
             this.lvHotKey_.Margin = new System.Windows.Forms.Padding(4);
             this.lvHotKey_.Name = "lvHotKey_";
-            this.lvHotKey_.Size = new System.Drawing.Size(359, 300);
+            this.lvHotKey_.ShowGroups = false;
+            this.lvHotKey_.Size = new System.Drawing.Size(360, 343);
             this.lvHotKey_.TabIndex = 0;
             this.lvHotKey_.UseCompatibleStateImageBehavior = false;
             this.lvHotKey_.View = System.Windows.Forms.View.Details;
-            this.lvHotKey_.SelectedIndexChanged += new System.EventHandler(this.lvHotKey__SelectedIndexChanged);
             // 
             // Actions
             // 
             this.Actions.Text = "Actions";
-            this.Actions.Width = 133;
+            this.Actions.Width = 110;
             // 
             // HotKey
             // 
             this.HotKey.Text = "HotKey";
-            this.HotKey.Width = 83;
+            this.HotKey.Width = 246;
             // 
             // tabPage4
             // 
@@ -484,8 +431,8 @@
             // 
             // cbColor_
             // 
-            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbColor_.FormattingEnabled = true;
             this.cbColor_.Items.AddRange(new object[] {
             "Red",
@@ -534,16 +481,16 @@
             // lvColor_
             // 
             this.lvColor_.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lvColor_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvColor_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lvColor_.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4});
             this.lvColor_.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10,
-            listViewItem11});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
             this.lvColor_.LabelEdit = true;
             this.lvColor_.Location = new System.Drawing.Point(4, 36);
             this.lvColor_.Margin = new System.Windows.Forms.Padding(4);
@@ -557,12 +504,12 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Item type";
-            this.columnHeader3.Width = 133;
+            this.columnHeader3.Width = 171;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Color";
-            this.columnHeader4.Width = 83;
+            this.columnHeader4.Width = 95;
             // 
             // tabPage2
             // 
@@ -579,8 +526,8 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.nFieldStartIndex);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Controls.Add(this.tfieldPrefix);
@@ -616,8 +563,8 @@
             // 
             // tfieldPrefix
             // 
-            this.tfieldPrefix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tfieldPrefix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tfieldPrefix.Location = new System.Drawing.Point(63, 31);
             this.tfieldPrefix.Margin = new System.Windows.Forms.Padding(4);
             this.tfieldPrefix.Name = "tfieldPrefix";
@@ -636,8 +583,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.pBGColor);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label4);
@@ -696,8 +643,8 @@
             // 
             // tTemplateFolder_
             // 
-            this.tTemplateFolder_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tTemplateFolder_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tTemplateFolder_.Location = new System.Drawing.Point(12, 43);
             this.tTemplateFolder_.Margin = new System.Windows.Forms.Padding(4);
             this.tTemplateFolder_.Name = "tTemplateFolder_";
@@ -706,9 +653,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -737,6 +684,7 @@
             this.Name = "SettingsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsDialog_FormClosing);
             this.Load += new System.EventHandler(this.SettingsDialog_Load);
             this.tabPage6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -746,7 +694,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nEditHostPort_)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nEditHostChannel_)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -777,10 +724,8 @@
 		private System.Windows.Forms.TextBox tEditHostTitle_;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TabPage tabPage3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.TextBox txtHotKey_;
-		private System.Windows.Forms.TextBox txtAction_;
-		private System.Windows.Forms.ListView lvHotKey_;
+        private System.Windows.Forms.Button btnRestoreDefaultKeys;
+		private ListViewEx lvHotKey_;
 		private System.Windows.Forms.ColumnHeader Actions;
 		private System.Windows.Forms.ColumnHeader HotKey;
 		private System.Windows.Forms.TabPage tabPage4;

@@ -19,7 +19,43 @@ namespace Caspar_Pilot
 
 		private void SettingsDialog_Load(object sender, EventArgs e)
 		{
+            LocalTemplateFolder = Properties.Settings.Default.TemplateFolder;
+
+            TemplateColor = Color.FromName(Properties.Settings.Default.TemplateColor);
+            GraphicColor = Color.FromName(Properties.Settings.Default.GraphicColor);
+            MultistepColor = Color.FromName(Properties.Settings.Default.MultistepColor);
+
+            DefaultFieldPrefix = Properties.Settings.Default.DefaultFieldNamePrefix;
+            DefaultFieldStartIndex = Properties.Settings.Default.DefaultFieldNameStartIndex;
+            Channels = Properties.Settings.Default.Channels;
+
+            PreviewBackgroundColor = Properties.Settings.Default.PreviewBackgroundColor;
+
+            InitializeHotkeys();
 		}
+
+        private void SettingsDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.TemplateFolder = LocalTemplateFolder;
+
+                Properties.Settings.Default.TemplateColor = TemplateColor.Name;
+                Properties.Settings.Default.GraphicColor = GraphicColor.Name;
+                Properties.Settings.Default.MultistepColor = MultistepColor.Name;
+
+                Properties.Settings.Default.DefaultFieldNamePrefix = DefaultFieldPrefix;
+                Properties.Settings.Default.DefaultFieldNameStartIndex = DefaultFieldStartIndex;
+                Properties.Settings.Default.Channels = Channels;
+
+                Properties.Settings.Default.PreviewBackgroundColor = PreviewBackgroundColor;
+
+                EnableHotkeys();
+
+                Properties.Settings.Default.Save();
+            }
+        }
+
 
 		#region autofields
 		public string DefaultFieldPrefix
@@ -151,134 +187,73 @@ namespace Caspar_Pilot
 		}
 		#endregion
 
-		#region Hotkeys
-		public Dictionary<string, Keys> HotKeys
+        #region hotkeys
+        public ToolStripMenuItem PlayoutMenuItems { get; set; }
+
+        Caspar_Pilot.Controls.HotkeyEditControl hotkeyEditCtrl;
+        void InitializeHotkeys()
         {
-            get
+            hotkeyEditCtrl = new Caspar_Pilot.Controls.HotkeyEditControl();
+            hotkeyEditCtrl.Visible = false;
+            lvHotKey_.Parent.Controls.Add(hotkeyEditCtrl);
+            lvHotKey_.SubItemClicked += lvHotKey__SubItemClicked;
+
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Keys));
+
+            if(PlayoutMenuItems != null && PlayoutMenuItems.HasDropDownItems)
             {
-                Dictionary<string, Keys> temp = new Dictionary<string, Keys>();
-                try
-                {                    
-                    temp["Load"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[0].SubItems[1].Text);
-                }
-                catch (Exception)
+                foreach(ToolStripItem menuItem in PlayoutMenuItems.DropDownItems)
                 {
-                    temp["Load"] = Keys.F1;
-                    MessageBox.Show("Invalid hotkey for \"Load\".");
+                    if (menuItem.Tag != null)
+                    {
+                        ListViewItem lvItem = new ListViewItem(lvHotKey_.Groups[0]);
+                        lvItem.Text = menuItem.Text;
+                        lvItem.Name = menuItem.Text;
+                        lvItem.SubItems.Add(converter.ConvertToString(Properties.Settings.Default[menuItem.Tag.ToString()]));
+                        lvHotKey_.Items.Add(lvItem);
+                    }
                 }
-                try
-                {
-                    temp["Play"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[1].SubItems[1].Text);
-                }
-                catch (Exception)
-                {
-                    temp["Play"] = Keys.F2;
-                    MessageBox.Show("Invalid hotkey for \"Play\".");
-                }
-                try
-                {
-                    temp["Step"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[2].SubItems[1].Text);
-                }
-                catch (Exception)
-                {
-					temp["Step"] = Keys.F3;
-					MessageBox.Show("Invalid hotkey for \"Step\".");
-                }
-
-                try
-                {
-                    temp["Update"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[3].SubItems[1].Text);
-                }
-                catch (Exception)
-                {
-                    temp["Update"] = Keys.F5;
-                    MessageBox.Show("Invalid hotkey for \"Update\".");
-                }
-
-                try
-                {
-                    temp["Stop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[4].SubItems[1].Text);
-                }
-                catch (Exception)
-                {
-                    temp["Stop"] = Keys.F4;
-                    MessageBox.Show("Invalid hotkey for \"Stop\".");
-                }
-				try
-				{
-					temp["QuickPlay"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[5].SubItems[1].Text);
-				}
-				catch (Exception)
-				{
-					temp["QuickPlay"] = Keys.F12;
-					MessageBox.Show("Invalid hotkey for \"QuickPlay\".");
-				}
-				try
-				{
-					temp["QuickStop"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[6].SubItems[1].Text);
-				}
-				catch (Exception)
-				{
-					temp["QuickStop"] = Keys.F9;
-					MessageBox.Show("Invalid hotkey for \"QuickStop\".");
-				}
-				try
-				{
-					temp["QuickStep"] = (Keys)Enum.Parse(typeof(Keys), lvHotKey_.Items[7].SubItems[1].Text);
-				}
-				catch (Exception)
-				{
-					temp["QuickStep"] = Keys.F11;
-					MessageBox.Show("Invalid hotkey for \"QuickStep\".");
-				}     
-
-                return temp;
-            }
-
-            set
-            {
-                lvHotKey_.Items[0].SubItems[1].Text = value["Load"].ToString();
-                lvHotKey_.Items[1].SubItems[1].Text = value["Play"].ToString();
-                lvHotKey_.Items[2].SubItems[1].Text = value["Step"].ToString();
-                lvHotKey_.Items[3].SubItems[1].Text = value["Update"].ToString();
-                lvHotKey_.Items[4].SubItems[1].Text = value["Stop"].ToString();
-				lvHotKey_.Items[5].SubItems[1].Text = value["QuickPlay"].ToString();
-				lvHotKey_.Items[6].SubItems[1].Text = value["QuickStop"].ToString();
-				lvHotKey_.Items[7].SubItems[1].Text = value["QuickStep"].ToString();
-			}
-        }
-
-        private void lvHotKey__SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lvHotKey_.SelectedItems.Count > 0)
-            {
-                txtAction_.Text = lvHotKey_.FocusedItem.Text;
-                txtHotKey_.Text = lvHotKey_.FocusedItem.SubItems[1].Text;
             }
         }
 
-        private void txtHotKey__TextChanged(object sender, EventArgs e)
+        private void EnableHotkeys()
         {
-            if (lvHotKey_.SelectedItems.Count > 0)
+            if (PlayoutMenuItems != null && PlayoutMenuItems.HasDropDownItems)
             {
-                lvHotKey_.SelectedItems[0].SubItems[1].Text = txtHotKey_.Text;               
+                TypeConverter converter = TypeDescriptor.GetConverter(typeof(Keys));
+
+                //iterate all submenuitems
+                foreach (ToolStripItem item in PlayoutMenuItems.DropDownItems)
+                {
+                    ToolStripMenuItem menuItem = item as ToolStripMenuItem;
+                    if (menuItem != null && menuItem.Tag != null)
+                    {
+                        //find listview item with same name
+                        ListViewItem lvItem = lvHotKey_.Items[menuItem.Text];
+                        if (lvItem != null && lvItem.SubItems.Count > 1)
+                        {
+                            //assign new shortcut to menuitem
+                            Keys shortcut = (Keys)converter.ConvertFromString(lvItem.SubItems[1].Text);
+                            menuItem.ShortcutKeys = shortcut;
+                            Properties.Settings.Default[menuItem.Tag.ToString()] = shortcut;
+                        }
+
+                    }
+                }
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        void lvHotKey__SubItemClicked(object sender, SubItemEventArgs e)
         {
-            lvHotKey_.Items[0].SubItems[1].Text = "F1";
-            lvHotKey_.Items[1].SubItems[1].Text = "F2";
-            lvHotKey_.Items[2].SubItems[1].Text = "F3";
-            lvHotKey_.Items[3].SubItems[1].Text = "F5";
-            lvHotKey_.Items[4].SubItems[1].Text = "F4";
-			lvHotKey_.Items[5].SubItems[1].Text = "F12";
-			lvHotKey_.Items[6].SubItems[1].Text = "F9";
-			lvHotKey_.Items[7].SubItems[1].Text = "F11";
-		}
-		#endregion
+            if (e.Item != null)
+            {
+                lvHotKey_.StartEditing(hotkeyEditCtrl, e.Item, e.SubItem);
+            }
+        }
+        #endregion
 
-		private void lHosts__SelectedIndexChanged(object sender, EventArgs e)
+        #region hosts
+        private void lHosts__SelectedIndexChanged(object sender, EventArgs e)
 		{
 			btnDeleteHost_.Enabled = btnSaveHost_.Enabled = (lHosts_.SelectedIndex != ListBox.NoMatches);
 			if (lHosts_.SelectedIndex != ListBox.NoMatches)
@@ -358,6 +333,7 @@ namespace Caspar_Pilot
 				}
 			}
 		}
+        #endregion
 
 		public Color PreviewBackgroundColor { get { return pBGColor.BackColor; } set { pBGColor.BackColor = value; } }
 		private void pBGColor_DoubleClick(object sender, EventArgs e)
@@ -370,5 +346,5 @@ namespace Caspar_Pilot
 				pBGColor.BackColor = cd.Color;
 			}
 		}
-	}
+    }
 }

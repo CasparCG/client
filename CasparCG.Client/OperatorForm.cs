@@ -13,9 +13,11 @@ using System.Diagnostics;
 
 namespace Caspar_Pilot
 {
-	public partial class OperatorForm : Form, IMessageFilter
+	public partial class OperatorForm : Form
 	{
-		private int copyIndex = -1;
+        const string RundownItemDataFormatString = "RundownItem";
+        DataFormats.Format RundownItemDataFormat = null;
+
         public string VersionString = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
 		private static string NewItemName = "[New event]";
@@ -24,7 +26,6 @@ namespace Caspar_Pilot
 		internal Hosts.HostsManager HostsManager { get; private set; }
 
 		public delegate void StringDelegate(string name);
-        Dictionary<string, Keys> hotKeys_ = new Dictionary<string, Keys>();
 
 		DnDListBox<RundownItem> lbRundown_ = null;
         Caspar_Pilot.Controls.ItemViewControl itemViewControl_ = null;
@@ -41,6 +42,8 @@ namespace Caspar_Pilot
 
         public OperatorForm()
 		{
+            RundownItemDataFormat = DataFormats.GetFormat(RundownItemDataFormatString);
+
 			HostsManager = new Hosts.HostsManager();
             HostsManager.ValidConnectionsChanged += HostsManager_ValidConnectionsChanged;
 
@@ -48,20 +51,6 @@ namespace Caspar_Pilot
 			channelStringFormat_.Alignment = StringAlignment.Far;
 			fontBrush_ = new SolidBrush(Color.Black);
 			fontBrushSelected_ = new SolidBrush(Color.White);
-
-            try
-            {
-               hotKeys_.Add("Load", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.LoadKey));
-               hotKeys_.Add("Play", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.PlayKey));
-               hotKeys_.Add("Step", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.StepKey));
-               hotKeys_.Add("Stop", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.StopKey));
-               hotKeys_.Add("Update", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.UpdateKey));
-			   hotKeys_.Add("QuickPlay", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickPlayKey));
-			   hotKeys_.Add("QuickStop", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickStopKey));
-			   hotKeys_.Add("QuickStep", (Keys)Enum.Parse(typeof(Keys), Properties.Settings.Default.QuickStepKey));
-			}
-            catch (Exception)
-			{}
 
 			InitializeComponent();
 			InitializeCustomComponents();
@@ -78,17 +67,17 @@ namespace Caspar_Pilot
 				gbRundown_.Controls.Clear();
 
 				lbRundown_ = new DnDListBox<RundownItem>();
-				lbRundown_.SelectionMode = SelectionMode.One;
-				lbRundown_.AllowDrop = true;
-				lbRundown_.SelectedIndexChanged += new EventHandler(lbRundown__SelectedIndexChanged);
-				lbRundown_.Dock = DockStyle.Fill;
-				lbRundown_.IntegralHeight = false;
-				lbRundown_.ItemHeight = 35;
-				lbRundown_.DrawMode = DrawMode.OwnerDrawFixed;
-				lbRundown_.DrawItem += new DrawItemEventHandler(lbRundown__DrawItem);
-				lbRundown_.DragDrop += new DragEventHandler(lbRundown__DragDrop);
-				lbRundown_.Resize += new EventHandler(lbRundown__Resize);
-				lbRundown_.KeyDown += new KeyEventHandler(lbRundown__KeyDown);
+                lbRundown_.DragDropDataFormat = RundownItemDataFormatString;
+                lbRundown_.SelectionMode = SelectionMode.One;
+                lbRundown_.AllowDrop = true;
+                lbRundown_.SelectedIndexChanged += new EventHandler(lbRundown__SelectedIndexChanged);
+                lbRundown_.Dock = DockStyle.Fill;
+                lbRundown_.IntegralHeight = false;
+                lbRundown_.ItemHeight = 35;
+                lbRundown_.DrawMode = DrawMode.OwnerDrawFixed;
+                lbRundown_.DrawItem += new DrawItemEventHandler(lbRundown__DrawItem);
+                lbRundown_.DragDrop += new DragEventHandler(lbRundown__DragDrop);
+                lbRundown_.Resize += new EventHandler(lbRundown__Resize);
 				gbRundown_.Controls.Add(lbRundown_);
                 gbRundown_.Controls.Add(itemsMenu);
 			}
@@ -99,61 +88,19 @@ namespace Caspar_Pilot
 				itemViewControl_.OperatorForm = this;
 				itemViewControl_.Enabled = false;
 				itemViewControl_.Dock = DockStyle.Fill;
-				itemViewControl_.CurrentItemDataChanged += new EventHandler<EventArgs>(itemViewControl__CurrentItemDataChanged);
+				itemViewControl_.CurrentItemDataChanged += itemViewControl__CurrentItemDataChanged;
+                itemViewControl_.CurrentItemChannelChanged += itemViewControl__CurrentItemChannelChanged;
 				itemViewControl_.PreviewControl.BackgroundColor = Properties.Settings.Default.PreviewBackgroundColor;
 				SetPreviewControlPaths();
 
-				this.tableLayoutPanel1.Controls.Add(itemViewControl_, 2, 0);
+                this.panel1.Controls.Add(itemViewControl_);
+				//this.tableLayoutPanel1.Controls.Add(itemViewControl_, 2, 0);
 			}
 
             this.itemViewControl_.EnableOutputSettings = Properties.Settings.Default.EnableOutputSettings;
             this.itemViewControl_.EnableTemplateData = Properties.Settings.Default.EnableTemplateData;
             this.itemViewControl_.EnableVideoLayers = Properties.Settings.Default.EnableVideoLayers;
             this.itemViewControl_.EnableControlValues = Properties.Settings.Default.EnableControlValues;
-		}
-
-		private void lbRundown__KeyDown(object sender, KeyEventArgs e)
-		{
-			if (!e.Control && e.KeyCode == Keys.C)
-			{
-				lbRundown_.SelectedIndex--;
-			}
-			else if (e.Control && e.KeyCode == Keys.C)
-			{
-				this.copyIndex = lbRundown_.SelectedIndex;
-
-				// Workaround for the problem with c-key changes the selected index.
-				if (lbRundown_.SelectedIndex == 0)
-				{
-					lbRundown_.SelectedIndex = lbRundown_.Items.Count - 1;
-				}
-				else
-				{
-					lbRundown_.SelectedIndex--;
-				}
-			}
-			else if (e.Control && e.KeyCode == Keys.V)
-			{
-				CopySelectedItem();
-			}
-		}
-
-		private void CopySelectedItem()
-		{
-			try
-			{
-				if (copyIndex >= 0)
-				{
-					RundownItem oldItem = lbRundown_.Items[this.copyIndex] as RundownItem;
-					RundownItem newItem = oldItem.Clone() as RundownItem;
-
-					lbRundown_.Items.Insert(lbRundown_.SelectedIndex, newItem);
-
-					IsDirty = true;
-				}
-			}
-			catch { }
-
 		}
 
 		private void SetPreviewControlPaths()
@@ -230,11 +177,16 @@ namespace Caspar_Pilot
 		#region Rundown menu
 		private void UpdateRundownMenuState()
 		{
-			btnNew_.Enabled = !IsOnAir;
-			btnDelete_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches) && !IsOnAir;
+            RundownItem selectedItem = (RundownItem)lbRundown_.SelectedItem;
 
-			btnLoad_.Enabled = btnPlay_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = (lbRundown_.SelectedIndex != ListBox.NoMatches && (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None));
-			btnClear_.Enabled = btnOnAir_.Enabled = (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None);
+			btnNew_.Enabled = !IsOnAir;
+            btnDelete_.Enabled = miCut_.Enabled = miCopy_.Enabled = (selectedItem != null) && !IsOnAir;
+            miAdvance_.Enabled = IsOnAir && (selectedItem != null);
+
+            btnClear_.Enabled = btnLoad_.Enabled = btnPlay_.Enabled = btnStep_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = 
+            miClear_.Enabled = miClearAll_.Enabled = miLoad_.Enabled = miPlay_.Enabled = miStep_.Enabled = miUpdate_.Enabled = miStop_.Enabled = (selectedItem != null && selectedItem.Online);
+            
+            btnOnAir_.Enabled = (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None);
 		}
 
 		private void btnNew__Click(object sender, EventArgs e)
@@ -249,38 +201,31 @@ namespace Caspar_Pilot
 
 		private void btnLoad__Click(object sender, EventArgs e)
 		{
-			DoLoadItem((RundownItem)lbRundown_.SelectedItem, false);
+            miLoad_.PerformClick();
 		}
 
 		private void btnPlay__Click(object sender, EventArgs e)
 		{
-			DoPlayItem((RundownItem)lbRundown_.SelectedItem);
-		}
+            miPlay_.PerformClick();
+        }
 
 		private void btnStep__Click(object sender, EventArgs e)
 		{
-			DoStepItem((RundownItem)lbRundown_.SelectedItem);
+            miStep_.PerformClick();
 		}
 
 		private void btnStop__Click(object sender, EventArgs e)
 		{
-			RundownItem item = lbRundown_.SelectedItem as RundownItem;
-            if (item != null)
-            {
-                if (item.IsCG)
-                    DoStopItem(item);
-                else
-                    DoClear(item);
-            }
+            miStop_.PerformClick();
 		}
 
         private void btnUpdate__Click(object sender, EventArgs e)
         {
-            DoUpdateItem((RundownItem)lbRundown_.SelectedItem);
+            miUpdate_.PerformClick();
         }
 		private void btnClear__Click(object sender, EventArgs e)
 		{
-			DoClear((RundownItem)lbRundown_.SelectedItem);
+            miClear_.PerformClick();
 		}
 		#endregion
 
@@ -325,56 +270,69 @@ namespace Caspar_Pilot
 			IsDirty = true;
 		}
 
+        void itemViewControl__CurrentItemChannelChanged(object sender, EventArgs e)
+        {
+            RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+            if (item != null)
+            {
+                Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
+                item.ChannelColor = (channel != null) ? Color.FromArgb(channel.ArgbValue) : Color.Red;
+                item.Online = (channel != null) ? channel.Online : false;
+                UpdateRundownMenuState();
+            }
+        }
+
 		void lbRundown__SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (sender == lbRundown_)
+			if (itemViewControl_.CurrentItem != null)
+				itemViewControl_.CurrentItem.IsStarted = false;
+
+			itemViewControl_.CurrentItem = (RundownItem)lbRundown_.SelectedItem;
+			itemViewControl_.Enabled = (lbRundown_.SelectedItem != null && !IsOnAir);
+
+			if (IsOnAir)
 			{
-				if (itemViewControl_.CurrentItem != null)
-					itemViewControl_.CurrentItem.IsStarted = false;
+				//if we move fast through the list, we need to stop the load-timer so that when we finaly stop on an item,
+				//that item gets timer.Interval ms before it gets loaded.
+				if (!IsCurrentItemLoaded)
+					StopItemLoadTimer();
 
-				itemViewControl_.CurrentItem = (RundownItem)lbRundown_.SelectedItem;
-				itemViewControl_.Enabled = (lbRundown_.SelectedItem != null && !IsOnAir);
+				IsCurrentItemLoaded = false;
 
-				if (IsOnAir)
-				{
-					//if we move fast through the list, we need to stop the load-timer so that when we finaly stop on an item,
-					//that item gets timer.Interval ms before it gets loaded.
-					if (!IsCurrentItemLoaded)
-						StopItemLoadTimer();
-
-					IsCurrentItemLoaded = false;
-
-					if (lbRundown_.SelectedItem != null)
-					{
-						RundownItem item = (RundownItem)lbRundown_.SelectedItem;
-						StartItemLoadTimer();
-					}
-				}
-				lbRundown_.Focus();
-
-				UpdateRundownMenuState();
+				if (lbRundown_.SelectedItem != null)
+					StartItemLoadTimer();
 			}
+			lbRundown_.Focus();
+
+			UpdateRundownMenuState();
 		}
-		
-		private void InsertEmptyItem()
-		{
-			RundownItem item = new RundownItem();
+
+        void InsertEmptyItem()
+        {
+            RundownItem item = new RundownItem();
             item.Color = itemViewControl_.TemplateColor;
+            InsertItem(item);
+        }
+		
+		private void InsertItem(RundownItem item)
+		{
+            if (item != null)
+            {
+                int originalSelection = lbRundown_.SelectedIndex;
+                if (originalSelection == ListBox.NoMatches)
+                {
+                    lbRundown_.Items.Add(item);
+                    lbRundown_.SelectedIndex = lbRundown_.Items.Count - 1;
+                }
+                else
+                {
+                    //insert element over the currently selected item
+                    lbRundown_.Items.Insert(originalSelection + 1, item);
+                    lbRundown_.SelectedIndex = originalSelection + 1;
+                }
 
-			int originalSelection = lbRundown_.SelectedIndex;
-			if (originalSelection == ListBox.NoMatches)
-			{
-				lbRundown_.Items.Add(item);
-				lbRundown_.SelectedIndex = lbRundown_.Items.Count - 1;
-			}
-			else
-			{
-				//insert element over the currently selected item
-				lbRundown_.Items.Insert(originalSelection + 1, item);
-				lbRundown_.SelectedIndex = originalSelection + 1;
-			}
-
-			IsDirty = true;
+                IsDirty = true;
+            }
 		}
 
 		private void DeleteSelectedItem()
@@ -391,6 +349,8 @@ namespace Caspar_Pilot
 					lbRundown_.SelectedIndex = originalSelection - 1;
 				else
 					lbRundown_.SelectedIndex = ListBox.NoMatches;
+
+                IsDirty = true;
 			}
 		}
 		#endregion
@@ -398,11 +358,10 @@ namespace Caspar_Pilot
 		#region main form events
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			Application.AddMessageFilter(this);
 			UpdateHosts(Properties.Settings.Default.Channels);
-			HostsManager.Connect();
 			HostsManager.UpdatedMediafiles += new EventHandler<Caspar_Pilot.Hosts.HostEventArgs>(HostsManager_UpdatedMediafiles);
 			HostsManager.UpdatedTemplates += new EventHandler<Caspar_Pilot.Hosts.HostEventArgs>(HostsManager_UpdatedTemplates);
+			HostsManager.Connect();
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -410,22 +369,6 @@ namespace Caspar_Pilot
 			if (CheckSaveBefore() != DialogResult.Cancel)
 			{
 				HostsManager.Disconnect();
-
-				Properties.Settings.Default.TemplateFolder = itemViewControl_.PreviewControl.TemplateFolder;
-				
-                Properties.Settings.Default.TemplateColor = itemViewControl_.TemplateColor.Name;
-                Properties.Settings.Default.GraphicColor = itemViewControl_.GraphicColor.Name;
-                Properties.Settings.Default.MultistepColor = itemViewControl_.MultistepColor.Name;
-
-                Properties.Settings.Default.LoadKey = hotKeys_["Load"].ToString();
-                Properties.Settings.Default.PlayKey = hotKeys_["Play"].ToString();
-                Properties.Settings.Default.StepKey = hotKeys_["Step"].ToString();
-                Properties.Settings.Default.StopKey = hotKeys_["Stop"].ToString();
-                Properties.Settings.Default.UpdateKey = hotKeys_["Update"].ToString();
-				Properties.Settings.Default.QuickPlayKey = hotKeys_["QuickPlay"].ToString();
-				Properties.Settings.Default.QuickStopKey = hotKeys_["QuickStop"].ToString();
-				Properties.Settings.Default.QuickStepKey = hotKeys_["QuickStep"].ToString();
-
                 Properties.Settings.Default.Save();
 			}
 			else
@@ -436,9 +379,10 @@ namespace Caspar_Pilot
 		#region Rundown ownerdraw
 		void lbRundown__DrawItem(object sender, DrawItemEventArgs e)
 		{
+            ListBox listbox = (ListBox)sender;
 			if (e.Index >= 0)
 			{
-				RundownItem item = (RundownItem)lbRundown_.Items[e.Index];
+				RundownItem item = (RundownItem)listbox.Items[e.Index];
 
 				bool bSelected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
 				Color backColor = bSelected ? Color.Black : item.Color;
@@ -452,11 +396,9 @@ namespace Caspar_Pilot
                 }
                 else
                 {
+                    e.Graphics.FillRectangle(new SolidBrush(item.ChannelColor), e.Bounds.Right - 17, e.Bounds.Top, 17, e.Bounds.Height);
                     //Show warning when a channel is selected that is not availible   
-                    Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
-                    Color channelColor = (channel != null) ? Color.FromArgb(channel.ArgbValue) : Color.Red;
-                    e.Graphics.FillRectangle(new SolidBrush(channelColor), e.Bounds.Right - 17, e.Bounds.Top, 17, e.Bounds.Height);
-                    if (channel == null || channel.Online == false)
+                    if(!item.Online)
                         e.Graphics.DrawImage(Properties.Resources.warn, e.Bounds.Right - 16, e.Bounds.Bottom - 16, 14, 14);
                 }
 
@@ -543,194 +485,7 @@ namespace Caspar_Pilot
 
 		#endregion
 
-		#region Serialization helpers
-		string currentFilename_;
-		string CurrentFilename
-		{
-			get
-			{
-				return currentFilename_;
-			}
-			set
-			{
-				currentFilename_ = value;
-				UpdateTitle();
-			}
-		}
-
-		bool bIsDirty_ = false;
-		bool IsDirty 
-		{
-			get { return bIsDirty_; }
-			set
-			{
-				if (value != bIsDirty_)
-				{
-					bIsDirty_ = value;
-					UpdateTitle();
-				}
-			} 
-		}
-		DialogResult CheckSaveBefore()
-		{
-			if (IsDirty)
-			{
-				DialogResult result = MessageBox.Show("Do you want to save?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-				if (result == DialogResult.Yes)
-					miSave__Click(this, EventArgs.Empty);
-
-				return result;
-			}
-			else
-				return DialogResult.No;
-		}
-		private void UpdateTitle()
-		{
-			this.Text = "CasparCG Client " + VersionString;
-			if (IsDirty)
-				this.Text += " *";
-			if (!string.IsNullOrEmpty(currentFilename_))
-				this.Text += " - " + currentFilename_;
-		}
-		#endregion
-
-		#region main menu
-		private void miNew__Click(object sender, EventArgs e)
-		{
-			if (CheckSaveBefore() != DialogResult.Cancel)
-			{
-				lbRundown_.Items.Clear();
-				IsDirty = false;
-			}
-		}
-
-		private void miLoad__Click(object sender, EventArgs e)
-		{
-			if (CheckSaveBefore() != DialogResult.Cancel)
-			{
-				OpenFileDialog ofd = new OpenFileDialog();
-				ofd.Multiselect = false;
-				ofd.Filter = "Caspar rundown (*.crx)|*.crx";
-				if (ofd.ShowDialog() == DialogResult.OK)
-					if (LoadFile(ofd.FileName))
-						CurrentFilename = ofd.FileName;
-			}
-		}
-
-		private void miSave__Click(object sender, EventArgs e)
-		{
-			if (!string.IsNullOrEmpty(CurrentFilename))
-				SaveFile(CurrentFilename);
-			else
-				miSaveAs__Click(sender, e);
-		}
-
-		private void miSaveAs__Click(object sender, EventArgs e)
-		{
-			SaveFileDialog sfd = new SaveFileDialog();
-			sfd.Filter = "Caspar rundown (*.crx)|*.crx";
-			if (sfd.ShowDialog() == DialogResult.OK)
-			{
-				if (SaveFile(sfd.FileName))
-					CurrentFilename = sfd.FileName;
-			}
-		}
-
-		private void miSettings__Click(object sender, EventArgs e)
-		{
-			SettingsDialog sd = new SettingsDialog();
-			sd.LocalTemplateFolder = itemViewControl_.PreviewControl.TemplateFolder;
-           
-            sd.TemplateColor = itemViewControl_.TemplateColor;
-            sd.GraphicColor = itemViewControl_.GraphicColor; 
-            sd.MultistepColor = itemViewControl_.MultistepColor;
-            sd.HotKeys = hotKeys_;
-
-			sd.DefaultFieldPrefix = Properties.Settings.Default.DefaultFieldNamePrefix;
-			sd.DefaultFieldStartIndex = Properties.Settings.Default.DefaultFieldNameStartIndex;
-			sd.Channels = Properties.Settings.Default.Channels;
-			sd.PreviewBackgroundColor = Properties.Settings.Default.PreviewBackgroundColor;
-
-			if (sd.ShowDialog() == DialogResult.OK)
-			{
-				Properties.Settings.Default.TemplateFolder = sd.LocalTemplateFolder;
-				Properties.Settings.Default.PreviewBackgroundColor = sd.PreviewBackgroundColor;
-				itemViewControl_.PreviewControl.BackgroundColor = Properties.Settings.Default.PreviewBackgroundColor;
-				SetPreviewControlPaths();
-                
-                itemViewControl_.TemplateColor  = sd.TemplateColor;
-                itemViewControl_.GraphicColor   = sd.GraphicColor;
-                itemViewControl_.MultistepColor = sd.MultistepColor;
-
-                hotKeys_ = sd.HotKeys;
-
-				Properties.Settings.Default.DefaultFieldNamePrefix = sd.DefaultFieldPrefix;
-				Properties.Settings.Default.DefaultFieldNameStartIndex = sd.DefaultFieldStartIndex;
-				Properties.Settings.Default.Channels = sd.Channels;
-
-				Properties.Settings.Default.Save();
-
-				UpdateHosts(sd.Channels);
-				lbRundown_.Refresh();
-			}
-		}
-
-		private void miExit__Click(object sender, EventArgs e)
-		{
-			Application.Exit();
-		}
-
-		private void miCasparStatus__DoubleClick(object sender, EventArgs e)
-		{
-			HostsManager.Connect();
-		}
-
-		private void miArkiv__DropDownOpening(object sender, EventArgs e)
-		{
-			miLoad_.Enabled = miNew_.Enabled = miSettings_.Enabled = !IsOnAir;
-		}
-
-		private void btnRefreshTemplates__Click(object sender, EventArgs e)
-		{
-			if (lbRundown_.SelectedItem != null)
-			{
-				RundownItem item = (RundownItem)lbRundown_.SelectedItem;
-				Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
-				if (channel != null)
-				{
-					Hosts.DeviceHolder device = HostsManager.GetDevice(channel.Hostname);
-					if (device != null)
-					{
-						device.RefreshTemplates();
-					}
-				}
-			}
-		}
-
-		private void btnRefreshGraphics__Click(object sender, EventArgs e)
-		{
-			if (lbRundown_.SelectedItem != null)
-			{
-				RundownItem item = (RundownItem)lbRundown_.SelectedItem;
-				Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
-				if (channel != null)
-				{
-					Hosts.DeviceHolder device = HostsManager.GetDevice(channel.Hostname);
-					if (device != null)
-					{
-						device.RefreshMediafiles();
-					}
-				}
-			}
-		}
-
-		private void tankaMallgrafiklistaToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			itemViewControl_.LoadTemplatesFromOfflinefolder();
-		}
-		#endregion
-
-		#region Serialize
+        #region Serialize
 		bool LoadFile(string filename)
 		{
 			bool returnvalue = true;
@@ -779,6 +534,11 @@ namespace Caspar_Pilot
                         bool bIsControl = false;
                         Boolean.TryParse(strIsControl, out bIsControl);
                         item.IsControl = bIsControl;
+
+                        //cache channel-status
+                        Hosts.ChannelInformation channelInfo = HostsManager.GetChannelInfo(item.Channel);
+                        item.Online = (channelInfo != null) ? channelInfo.Online : false;
+                        item.ChannelColor = (channelInfo != null) ? Color.FromArgb(channelInfo.ArgbValue) : Color.Red;
 
 						items.Current.MoveToFirstChild();
 						if (items.Current.Name == "cgitem")
@@ -857,6 +617,57 @@ namespace Caspar_Pilot
 
 			IsDirty = !returnvalue;
 			return returnvalue;
+		}
+		#endregion
+
+		#region Serialization helpers
+		string currentFilename_;
+		string CurrentFilename
+		{
+			get
+			{
+				return currentFilename_;
+			}
+			set
+			{
+				currentFilename_ = value;
+				UpdateTitle();
+			}
+		}
+
+		bool bIsDirty_ = false;
+		bool IsDirty 
+		{
+			get { return bIsDirty_; }
+			set
+			{
+				if (value != bIsDirty_)
+				{
+					bIsDirty_ = value;
+					UpdateTitle();
+				}
+			} 
+		}
+		DialogResult CheckSaveBefore()
+		{
+			if (IsDirty)
+			{
+				DialogResult result = MessageBox.Show("Do you want to save?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+					miSave__Click(this, EventArgs.Empty);
+
+				return result;
+			}
+			else
+				return DialogResult.No;
+		}
+		private void UpdateTitle()
+		{
+			this.Text = "CasparCG Client " + VersionString;
+			if (IsDirty)
+				this.Text += " *";
+			if (!string.IsNullOrEmpty(currentFilename_))
+				this.Text += " - " + currentFilename_;
 		}
 		#endregion
 
@@ -1030,128 +841,117 @@ namespace Caspar_Pilot
 		}
 		#endregion
 
-		#region IMessageFilter Members
-		public bool PreFilterMessage(ref Message m)
-		{
-			//hotkeys
-            if (m.Msg == Messages.WM_KEYDOWN)
+        #region Shortcut keys handling
+        const int WM_KEYDOWN = 0x100;
+        const int WM_SYSKEYDOWN = 0x104;
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (msg.Msg == WM_SYSKEYDOWN || msg.Msg == WM_KEYDOWN)
             {
-                int key = m.WParam.ToInt32();
+                //TODO: Remove. For debug purposes only
+                //toolStripStatusLabel1.Text = keyData.ToString();
 
-	 			if (key == (int)Keys.PageDown || key == (int)Keys.End) // PageDown = Spela två rader. End = Stoppa två rader.
-				{
-					if (key == 34)
-					{
-						DoPlayCurrentItem();
-						if (lbRundown_.Items.Count > lbRundown_.SelectedIndex + 1)
-						{
-							lbRundown_.SelectedIndex++;
-							DoPlayCurrentItem();
-							lbRundown_.SelectedIndex--;
-						}
-					}
-					else
-					{
-						int index1 = lbRundown_.SelectedIndex;
-						int index2 = lbRundown_.SelectedIndex + 1;
-						RundownItem item1 = lbRundown_.Items[index1] as RundownItem;
-						RundownItem item2 = lbRundown_.Items[index2] as RundownItem;
-						
-						if (item1.IsCG)
-							DoStopItem(item1);
-						else
-							DoClear(item1);
+                switch (keyData)
+                {
+                    case Keys.Space:
+                        if (IsOnAir)
+                        {
+                            RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+                            if (item != null)
+                            {
+                                bool bDoAdvance = true;
+                                if (item.IsCG && item.MultiStep)
+                                {
+                                    bDoAdvance = false;
+                                    if (item.IsStarted)
+                                        DoStepItem(item);
+                                    else
+                                    {
+                                        DoPlayCurrentItem();
+                                        item.IsStarted = true;
+                                    }
+                                }
+                                else
+                                    DoPlayCurrentItem();
 
-						if (item2.IsCG)
-							DoStopItem(item2);
-						else
-							DoClear(item2);
-					}
+                                if (bDoAdvance)
+                                {
+                                    int nextIndex = lbRundown_.SelectedIndex + 1;
+                                    if (nextIndex < lbRundown_.Items.Count)
+                                        lbRundown_.SelectedIndex = nextIndex;
+                                    else
+                                        lbRundown_.ClearSelected();
+                                }
+                            }
+                            return true;
+                        }
+                        break;
 
-					return true;
-				}
-				else if (key == (int)Keys.Pause)	// Pause = Clear.
-				{
-					for (int i = 0; i < lbRundown_.Items.Count; i++)
-					{
-						DoClear(lbRundown_.Items[i] as RundownItem);
-					}
-				}
-				else if (hotKeys_.ContainsKey("QuickPlay") && (int)hotKeys_["QuickPlay"] == key)
-					DoPlayCurrentItem();
-				else if (hotKeys_.ContainsKey("QuickStop") && (int)hotKeys_["QuickStop"] == key)
-					btnStop__Click(null, null);
-				else if (hotKeys_.ContainsKey("QuickStep") && (int)hotKeys_["QuickStep"] == key)
-					btnStep__Click(null, null);
-                else if (hotKeys_.ContainsKey("Update") && (int)hotKeys_["Update"] == key)
-                    btnUpdate__Click(null, null);
+                    //case Keys.Pause:    //TODO: Convert to menuItem
+                    //    for (int i = 0; i < lbRundown_.Items.Count; i++)
+                    //    {
+                    //        DoClear(lbRundown_.Items[i] as RundownItem);
+                    //    }
+                    //    return true;
 
-				else if (IsOnAir)
-				{
-					if ((int)hotKeys_["Load"] == key)
-						btnLoad__Click(null, null);
-					else if ((int)hotKeys_["Play"] == key)
-						btnPlay__Click(null, null);
-					else if ((int)hotKeys_["Step"] == key)
-						btnStep__Click(null, null);
-					else if ((int)hotKeys_["Stop"] == key)
-						btnStop__Click(null, null);
-                    else if ((int)hotKeys_["Update"] == key)
-                        btnUpdate__Click(null, null);
-				}
+                    //case Keys.PageDown: //TODO: Convert to menuItem and change key!
+                    //    DoPlayCurrentItem();
+                    //    if (lbRundown_.Items.Count > lbRundown_.SelectedIndex + 1)
+                    //    {
+                    //        lbRundown_.SelectedIndex++;
+                    //        DoPlayCurrentItem();
+                    //        lbRundown_.SelectedIndex--;
+                    //    }
+                    //    return true;
+
+                    //case Keys.End: //TODO: Convert to menuItem and change key!
+                    //    {
+                    //        int index1 = lbRundown_.SelectedIndex;
+                    //        int index2 = lbRundown_.SelectedIndex + 1;
+                    //        RundownItem item1 = lbRundown_.Items[index1] as RundownItem;
+                    //        RundownItem item2 = lbRundown_.Items[index2] as RundownItem;
+
+                    //        if (item1.IsCG)
+                    //            DoStopItem(item1);
+                    //        else
+                    //            DoClear(item1);
+
+                    //        if (item2.IsCG)
+                    //            DoStopItem(item2);
+                    //        else
+                    //            DoClear(item2);
+                    //    }
+                    //    return true;
+
+                    case (Keys.Control | Keys.X):
+                        if (lbRundown_.Focused)
+                        {
+                            miCut_.PerformClick();
+                            return true;
+                        }
+                        break;
+
+                    case (Keys.Control | Keys.C):
+                        if (lbRundown_.Focused)
+                        {
+                            miCopy_.PerformClick();
+                            return true;
+                        }
+                        break;
+
+                    case (Keys.Control | Keys.V):
+                        if (lbRundown_.Focused)
+                        {
+                            miPaste_.PerformClick();
+                            return true;
+                        }
+                        break;
+                }
             }
-
-			if (IsOnAir)
-			{
-				if (m.Msg == Messages.WM_KEYDOWN)
-				{                   
-					int key = m.WParam.ToInt32(); 
-
-                    if (key == (int)Keys.Space)
-					{
-						RundownItem item = (RundownItem)lbRundown_.SelectedItem;
-						if (item != null)
-						{
-							bool bDoAdvance = true;
-							if (item.IsCG && item.MultiStep)
-							{
-								bDoAdvance = false;
-								if (item.IsStarted)
-									DoStepItem(item);
-								else
-								{
-									DoPlayCurrentItem();
-									item.IsStarted = true;
-								}
-							}
-							else 
-								DoPlayCurrentItem();
-
-							if (bDoAdvance)
-							{
-								int nextIndex = lbRundown_.SelectedIndex + 1;
-								if (nextIndex < lbRundown_.Items.Count)
-									lbRundown_.SelectedIndex = nextIndex;
-								else
-									lbRundown_.ClearSelected();
-							}
-						}
-					}
-				}
-			}
-			return false;
-		}
+            
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 		#endregion
-
-		void HostsManager_UpdatedTemplates(object sender, Hosts.HostEventArgs e)
-		{
-			itemViewControl_.UpdateTemplates();
-		}
-
-		void HostsManager_UpdatedMediafiles(object sender, Hosts.HostEventArgs e)
-		{
-			itemViewControl_.UpdateMediafiles();
-		}
 
         #region Host management
         /// <summary>
@@ -1179,6 +979,9 @@ namespace Caspar_Pilot
             {
                 foreach (Hosts.DeviceHolder device in devices)
                 {
+                    //subscribe to validConnectionChanged-events
+                    device.VaildConnectionChanged += device_VaildConnectionChanged;
+
                     ToolStripMenuItem item = new ToolStripMenuItem();
                     item.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
                     item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
@@ -1188,9 +991,6 @@ namespace Caspar_Pilot
                     item.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
                     item.Click += new System.EventHandler(this.miDeviceStatus__Click);
                     miCasparStatus_.DropDownItems.Add(item);
-
-                    //subscribe to validConnectionChanged-events
-                    device.VaildConnectionChanged += device_VaildConnectionChanged;
                 }
             }
 
@@ -1211,20 +1011,30 @@ namespace Caspar_Pilot
                 {
                     Hosts.DeviceHolder device = (Hosts.DeviceHolder)sender;
 
+                    //Update status of Caspar Host Status items
                     ToolStripItem[] items = miCasparStatus_.DropDownItems.Find(device.Hostname, false);
                     foreach (ToolStripItem item in items)
                         item.Image = device.HasValidConnection ? Properties.Resources.connected : Properties.Resources.disconnected;
 
-                    //invalidate affecetd items in the rundown
+                    //invalidate affected items in the rundown
                     int startIndex = lbRundown_.IndexFromPoint(0, 0);
                     int lastIndex = Math.Min(startIndex + lbRundown_.Height / lbRundown_.ItemHeight, lbRundown_.Items.Count - 1);
                     foreach (Hosts.ChannelInformation channel in device.Channels)
                     {
-                        for (int index = startIndex; index < lastIndex; ++index)
+                        int itemCount = lbRundown_.Items.Count;
+                        for (int index = 0; index < itemCount; ++index)
                         {
                             RundownItem item = (RundownItem)lbRundown_.Items[index];
-                            if (item.Channel == channel.Label)
-                                lbRundown_.Invalidate(lbRundown_.GetItemRectangle(index), false);
+                            if (item != null && item.Channel == channel.Label)
+                            {
+                                //cache channel-status in RundownItem
+                                item.Online = device.HasValidConnection;
+                                item.ChannelColor = Color.FromArgb(channel.ArgbValue);
+
+                                //invalidate ItemRectangle if in view
+                                if(index >= startIndex && index <= lastIndex)
+                                    lbRundown_.Invalidate(lbRundown_.GetItemRectangle(index), false);
+                            }
                         }
                     }
                 }
@@ -1263,39 +1073,20 @@ namespace Caspar_Pilot
                 }
             }
         }
+
+        void HostsManager_UpdatedTemplates(object sender, Hosts.HostEventArgs e)
+        {
+            itemViewControl_.UpdateTemplates();
+        }
+
+        void HostsManager_UpdatedMediafiles(object sender, Hosts.HostEventArgs e)
+        {
+            itemViewControl_.UpdateMediafiles();
+        }
+
         #endregion
-
-        private void btnDetail__Click(object sender, EventArgs e)
-        {
-            if(btnDetail_.Checked == true)
-                lbRundown_.ItemHeight = 64;
-            else
-                lbRundown_.ItemHeight = 32;
-        }
-
-        private void toggleFullscreenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                this.TopMost = false;
-                
-            }
-            else if (this.WindowState == FormWindowState.Normal)
-            {  
-                this.WindowState = FormWindowState.Maximized;
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                Interop.SetWinFullScreen(this.Handle);
-                this.TopMost = true; 
-            }
-        }
-
-        private void togglePreviewToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.itemViewControl_.EnablePreview = !this.itemViewControl_.EnablePreview;
-        }
-
+        
+        #region Pages
         private void OperatorForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!btnOnAir_.Checked && !lbRundown_.Focused)
@@ -1357,6 +1148,177 @@ namespace Caspar_Pilot
                 }
             }
         }
+        #endregion
+
+        private void btnDetail__Click(object sender, EventArgs e)
+        {
+            if(btnDetail_.Checked == true)
+                lbRundown_.ItemHeight = 64;
+            else
+                lbRundown_.ItemHeight = 32;
+        }
+
+        //////////////////////////
+        //
+        //  THE MENU-BAR
+        //
+        //////////////////////////
+        #region file menu
+        private void miNew__Click(object sender, EventArgs e)
+        {
+            if (CheckSaveBefore() != DialogResult.Cancel)
+            {
+                lbRundown_.Items.Clear();
+                IsDirty = false;
+            }
+        }
+
+        private void miLoadFile__Click(object sender, EventArgs e)
+        {
+            if (CheckSaveBefore() != DialogResult.Cancel)
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Multiselect = false;
+                ofd.Filter = "Caspar rundown (*.crx)|*.crx";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                    if (LoadFile(ofd.FileName))
+                        CurrentFilename = ofd.FileName;
+            }
+        }
+
+        private void miSave__Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(CurrentFilename))
+                SaveFile(CurrentFilename);
+            else
+                miSaveAs__Click(sender, e);
+        }
+
+        private void miSaveAs__Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Caspar rundown (*.crx)|*.crx";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                if (SaveFile(sfd.FileName))
+                    CurrentFilename = sfd.FileName;
+            }
+        }
+
+        private void miSettings__Click(object sender, EventArgs e)
+        {
+            SettingsDialog sd = new SettingsDialog();
+
+            //hotkeys are now implemented as shortcutkeys to toolstripmenuitems
+            sd.PlayoutMenuItems = playoutToolStripMenuItem;
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                itemViewControl_.PreviewControl.BackgroundColor = Properties.Settings.Default.PreviewBackgroundColor;
+                SetPreviewControlPaths();
+
+                itemViewControl_.UpdateDefaultColors();
+
+                UpdateHosts(sd.Channels);
+                lbRundown_.Refresh();
+            }
+        }
+
+        private void miExit__Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void miCasparStatus__DoubleClick(object sender, EventArgs e)
+        {
+            HostsManager.Connect();
+        }
+
+        private void miArkiv__DropDownOpening(object sender, EventArgs e)
+        {
+            miLoadFile_.Enabled = miNewFile_.Enabled = miSettings_.Enabled = !IsOnAir;
+        }
+
+        #endregion
+
+        #region edit menu
+        RundownItem clipboard_ = null;
+        private void miCut__Click(object sender, EventArgs e)
+        {
+            if (lbRundown_.SelectedItem != null)
+            {
+                clipboard_ = (RundownItem)(lbRundown_.SelectedItem as RundownItem).Clone();
+                DeleteSelectedItem();
+            }
+
+            //TODO: Use the real clipboard instead
+            //if (lbRundown_.SelectedItem != null)
+            //{
+            //    RundownItem copy = (RundownItem)((RundownItem)lbRundown_.SelectedItem).Clone();
+            //    Clipboard.SetData(RundownItemDataFormat.Name, copy);
+            //    DeleteSelectedItem();
+            //}
+        }
+
+        private void miCopy__Click(object sender, EventArgs e)
+        {
+            if (lbRundown_.SelectedItem != null)
+            {
+                clipboard_ = (RundownItem)(lbRundown_.SelectedItem as RundownItem).Clone();
+            }
+            
+            //TODO: Use the real clipboard instead
+            //if (lbRundown_.SelectedItem != null)
+            //{
+            //    RundownItem copy = (RundownItem)((RundownItem)lbRundown_.SelectedItem).Clone();
+            //    Clipboard.SetData(RundownItemDataFormat.Name, copy);
+            //}
+        }
+
+        private void miPaste__Click(object sender, EventArgs e)
+        {
+            if (clipboard_ != null)
+            {
+                RundownItem newItem = clipboard_.Clone() as RundownItem;
+                InsertItem(newItem);
+            }
+
+            //TODO: Use the real clipboard instead
+            //if (Clipboard.ContainsData(RundownItemDataFormat.Name))
+            //{
+            //    RundownItem copy = (RundownItem)Clipboard.GetData(RundownItemDataFormat.Name);
+            //    if (copy != null)
+            //    {
+            //        RundownItem newItem = (RundownItem)copy.Clone();
+            //        InsertItem(newItem);
+            //    }
+            //}
+        }
+        #endregion
+
+        #region view menu
+        private void toggleFullscreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                this.TopMost = false;
+                
+            }
+            else if (this.WindowState == FormWindowState.Normal)
+            {  
+                this.WindowState = FormWindowState.Maximized;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                Interop.SetWinFullScreen(this.Handle);
+                this.TopMost = true; 
+            }
+        }
+
+        private void togglePreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.itemViewControl_.EnablePreview = !this.itemViewControl_.EnablePreview;
+        }
 
         private void compactModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1373,12 +1335,6 @@ namespace Caspar_Pilot
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutDialog dialog = new AboutDialog();
-            dialog.ShowDialog();
-        }
-
         private void templateDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.itemViewControl_.EnableTemplateData = !this.itemViewControl_.EnableTemplateData;
@@ -1388,6 +1344,106 @@ namespace Caspar_Pilot
         {
             this.itemViewControl_.EnableOutputSettings = !this.itemViewControl_.EnableOutputSettings;
         }
+        #endregion
 
-	}
+        #region playout menu
+        private void miLoad__Click(object sender, EventArgs e)
+        {
+            DoLoadItem((RundownItem)lbRundown_.SelectedItem, false);
+        }
+
+        private void miPlay__Click(object sender, EventArgs e)
+        {
+            if (IsOnAir)
+            {
+                DoPlayItem((RundownItem)lbRundown_.SelectedItem);
+            }
+            else
+            {
+                DoPlayCurrentItem();
+            }
+        }
+
+        private void miStep__Click(object sender, EventArgs e)
+        {
+            DoStepItem((RundownItem)lbRundown_.SelectedItem);
+        }
+
+        private void miUpdate__Click(object sender, EventArgs e)
+        {
+            DoUpdateItem((RundownItem)lbRundown_.SelectedItem);
+        }
+
+        private void miStop__Click(object sender, EventArgs e)
+        {
+            RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+            if (item != null)
+            {
+                if (item.IsCG)
+                    DoStopItem(item);
+                else
+                    DoClear(item);
+            }
+        }
+
+        private void miClear__Click(object sender, EventArgs e)
+        {
+            DoClear((RundownItem)lbRundown_.SelectedItem);
+        }
+
+        private void miClearAll__Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region caspar menu
+        private void btnRefreshTemplates__Click(object sender, EventArgs e)
+		{
+			if (lbRundown_.SelectedItem != null)
+			{
+				RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+				Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
+				if (channel != null)
+				{
+					Hosts.DeviceHolder device = HostsManager.GetDevice(channel.Hostname);
+					if (device != null)
+					{
+						device.RefreshTemplates();
+					}
+				}
+			}
+		}
+
+		private void btnRefreshGraphics__Click(object sender, EventArgs e)
+		{
+			if (lbRundown_.SelectedItem != null)
+			{
+				RundownItem item = (RundownItem)lbRundown_.SelectedItem;
+				Hosts.ChannelInformation channel = HostsManager.GetChannelInfo(item.Channel);
+				if (channel != null)
+				{
+					Hosts.DeviceHolder device = HostsManager.GetDevice(channel.Hostname);
+					if (device != null)
+					{
+						device.RefreshMediafiles();
+					}
+				}
+			}
+		}
+
+		private void tankaMallgrafiklistaToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			itemViewControl_.LoadTemplatesFromOfflinefolder();
+		}
+        #endregion
+
+        #region help menu
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutDialog dialog = new AboutDialog();
+            dialog.ShowDialog();
+        }
+        #endregion
+    }
 }

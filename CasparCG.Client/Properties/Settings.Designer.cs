@@ -73,54 +73,6 @@ namespace Caspar_Pilot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F1")]
-        public string LoadKey {
-            get {
-                return ((string)(this["LoadKey"]));
-            }
-            set {
-                this["LoadKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F2")]
-        public string PlayKey {
-            get {
-                return ((string)(this["PlayKey"]));
-            }
-            set {
-                this["PlayKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F3")]
-        public string StepKey {
-            get {
-                return ((string)(this["StepKey"]));
-            }
-            set {
-                this["StepKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F4")]
-        public string StopKey {
-            get {
-                return ((string)(this["StopKey"]));
-            }
-            set {
-                this["StopKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("f")]
         public string DefaultFieldNamePrefix {
             get {
@@ -140,42 +92,6 @@ namespace Caspar_Pilot.Properties {
             }
             set {
                 this["DefaultFieldNameStartIndex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F12")]
-        public string QuickPlayKey {
-            get {
-                return ((string)(this["QuickPlayKey"]));
-            }
-            set {
-                this["QuickPlayKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F9")]
-        public string QuickStopKey {
-            get {
-                return ((string)(this["QuickStopKey"]));
-            }
-            set {
-                this["QuickStopKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F11")]
-        public string QuickStepKey {
-            get {
-                return ((string)(this["QuickStepKey"]));
-            }
-            set {
-                this["QuickStepKey"] = value;
             }
         }
         
@@ -312,13 +228,85 @@ namespace Caspar_Pilot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("F5")]
-        public string UpdateKey {
+        [global::System.Configuration.DefaultSettingValueAttribute("F8")]
+        public global::System.Windows.Forms.Keys ShortcutKeyLoad {
             get {
-                return ((string)(this["UpdateKey"]));
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyLoad"]));
             }
             set {
-                this["UpdateKey"] = value;
+                this["ShortcutKeyLoad"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F12")]
+        public global::System.Windows.Forms.Keys ShortcutKeyPlay {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyPlay"]));
+            }
+            set {
+                this["ShortcutKeyPlay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F11")]
+        public global::System.Windows.Forms.Keys ShortcutKeyStep {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyStep"]));
+            }
+            set {
+                this["ShortcutKeyStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F7")]
+        public global::System.Windows.Forms.Keys ShortcutKeyUpdate {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyUpdate"]));
+            }
+            set {
+                this["ShortcutKeyUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F9")]
+        public global::System.Windows.Forms.Keys ShortcutKeyStop {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyStop"]));
+            }
+            set {
+                this["ShortcutKeyStop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+F6")]
+        public global::System.Windows.Forms.Keys ShortcutKeyClear {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClear"]));
+            }
+            set {
+                this["ShortcutKeyClear"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+Alt+F6")]
+        public global::System.Windows.Forms.Keys ShortcutKeyClearAll {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClearAll"]));
+            }
+            set {
+                this["ShortcutKeyClearAll"] = value;
             }
         }
         

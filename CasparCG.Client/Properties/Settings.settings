@@ -14,32 +14,11 @@
     <Setting Name="MultistepColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">CornflowerBlue</Value>
     </Setting>
-    <Setting Name="LoadKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F1</Value>
-    </Setting>
-    <Setting Name="PlayKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F2</Value>
-    </Setting>
-    <Setting Name="StepKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F3</Value>
-    </Setting>
-    <Setting Name="StopKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F4</Value>
-    </Setting>
     <Setting Name="DefaultFieldNamePrefix" Type="System.String" Scope="User">
       <Value Profile="(Default)">f</Value>
     </Setting>
     <Setting Name="DefaultFieldNameStartIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="QuickPlayKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F12</Value>
-    </Setting>
-    <Setting Name="QuickStopKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F9</Value>
-    </Setting>
-    <Setting Name="QuickStepKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F11</Value>
     </Setting>
     <Setting Name="PreviewBackgroundColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
@@ -80,22 +59,39 @@
     <Setting Name="DataUpdateColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Plum</Value>
     </Setting>
-    <Setting Name="UpdateKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F5</Value>
-    </Setting>
     <Setting Name="Channels" Type="Caspar_Pilot.Hosts.ChannelInformationList" Scope="User">
-      <Value Profile="(Default)">
-     &lt;ArrayOfChannelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-      &lt;ChannelInformation&gt;
-       &lt;Label&gt;localhost&lt;/Label&gt;
-       &lt;Hostname&gt;localhost&lt;/Hostname&gt;
-       &lt;Port&gt;5250&lt;/Port&gt;
-       &lt;Channel&gt;1&lt;/Channel&gt;
-       &lt;Online&gt;false&lt;/Online&gt;
-       &lt;ArgbValue&gt;-1&lt;/ArgbValue&gt;
-      &lt;/ChannelInformation&gt;
-     &lt;/ArrayOfChannelInformation&gt;
-    </Value>
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfChannelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ChannelInformation&gt;
+    &lt;Label&gt;localhost&lt;/Label&gt;
+    &lt;Hostname&gt;localhost&lt;/Hostname&gt;
+    &lt;Port&gt;5250&lt;/Port&gt;
+    &lt;Channel&gt;1&lt;/Channel&gt;
+    &lt;Online&gt;false&lt;/Online&gt;
+    &lt;ArgbValue&gt;-1&lt;/ArgbValue&gt;
+  &lt;/ChannelInformation&gt;
+&lt;/ArrayOfChannelInformation&gt;</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyLoad" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F8</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyPlay" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F12</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyStep" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F11</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyUpdate" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F7</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyStop" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F9</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyClear" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">Ctrl+F6</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyClearAll" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">Ctrl+Alt+F6</Value>
     </Setting>
   </Settings>
 </SettingsFile>

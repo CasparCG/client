@@ -34,9 +34,10 @@
             this.tsRundown_ = new System.Windows.Forms.ToolStrip();
             this.btnNew_ = new System.Windows.Forms.ToolStripButton();
             this.btnDelete_ = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnLoad_ = new System.Windows.Forms.ToolStripButton();
             this.btnPlay_ = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnStep_ = new System.Windows.Forms.ToolStripButton();
             this.btnUpdate_ = new System.Windows.Forms.ToolStripButton();
             this.btnStop_ = new System.Windows.Forms.ToolStripButton();
             this.btnOnAir_ = new System.Windows.Forms.ToolStripButton();
@@ -48,16 +49,21 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pOnAir_ = new System.Windows.Forms.Panel();
             this.pItemLoaded_ = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miFile_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.miNew_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.miLoad_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.miSave_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.miSaveAs_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewFile_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miLoadFile_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSaveFile_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSaveFileAs_ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.miSettings_ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.miExit_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCut_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCopy_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miPaste_ = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compactModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -69,6 +75,16 @@
             this.btnRefreshTemplates_ = new System.Windows.Forms.ToolStripMenuItem();
             this.btnRefreshGraphics_ = new System.Windows.Forms.ToolStripMenuItem();
             this.tankaMallgrafiklistaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAdvance_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.miLoad_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miPlay_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miStep_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miUpdate_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miStop_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miClear_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miClearAll_ = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemLoadTimer_ = new System.Windows.Forms.Timer(this.components);
@@ -97,7 +113,7 @@
             this.gbRundown_.MinimumSize = new System.Drawing.Size(365, 0);
             this.gbRundown_.Name = "gbRundown_";
             this.gbRundown_.Padding = new System.Windows.Forms.Padding(4);
-            this.gbRundown_.Size = new System.Drawing.Size(463, 524);
+            this.gbRundown_.Size = new System.Drawing.Size(450, 752);
             this.gbRundown_.TabIndex = 1;
             this.gbRundown_.TabStop = false;
             this.gbRundown_.Text = "Rundown";
@@ -109,9 +125,10 @@
             this.tsRundown_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnNew_,
             this.btnDelete_,
+            this.toolStripSeparator5,
             this.btnLoad_,
             this.btnPlay_,
-            this.toolStripButton1,
+            this.btnStep_,
             this.btnUpdate_,
             this.btnStop_,
             this.btnOnAir_,
@@ -119,7 +136,7 @@
             this.btnDetail_});
             this.tsRundown_.Location = new System.Drawing.Point(4, 19);
             this.tsRundown_.Name = "tsRundown_";
-            this.tsRundown_.Size = new System.Drawing.Size(455, 25);
+            this.tsRundown_.Size = new System.Drawing.Size(442, 25);
             this.tsRundown_.TabIndex = 2;
             // 
             // btnNew_
@@ -141,6 +158,11 @@
             this.btnDelete_.Size = new System.Drawing.Size(52, 22);
             this.btnDelete_.Text = "Delete";
             this.btnDelete_.Click += new System.EventHandler(this.btnDelete__Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // btnLoad_
             // 
@@ -164,16 +186,16 @@
             this.btnPlay_.Text = "Play";
             this.btnPlay_.Click += new System.EventHandler(this.btnPlay__Click);
             // 
-            // toolStripButton1
+            // btnStep_
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(40, 22);
-            this.toolStripButton1.Text = "Step";
-            this.toolStripButton1.Click += new System.EventHandler(this.btnStep__Click);
+            this.btnStep_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnStep_.Enabled = false;
+            this.btnStep_.Image = ((System.Drawing.Image)(resources.GetObject("btnStep_.Image")));
+            this.btnStep_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStep_.Name = "btnStep_";
+            this.btnStep_.Size = new System.Drawing.Size(40, 22);
+            this.btnStep_.Text = "Step";
+            this.btnStep_.Click += new System.EventHandler(this.btnStep__Click);
             // 
             // btnUpdate_
             // 
@@ -268,57 +290,70 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67F));
             this.tableLayoutPanel1.Controls.Add(this.gbRundown_, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.pOnAir_, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1444, 532);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1404, 760);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pOnAir_
             // 
             this.pOnAir_.Controls.Add(this.pItemLoaded_);
             this.pOnAir_.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pOnAir_.Location = new System.Drawing.Point(471, 0);
+            this.pOnAir_.Location = new System.Drawing.Point(458, 0);
             this.pOnAir_.Margin = new System.Windows.Forms.Padding(0);
             this.pOnAir_.Name = "pOnAir_";
-            this.pOnAir_.Size = new System.Drawing.Size(16, 532);
+            this.pOnAir_.Size = new System.Drawing.Size(16, 760);
             this.pOnAir_.TabIndex = 2;
             // 
             // pItemLoaded_
             // 
             this.pItemLoaded_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pItemLoaded_.Location = new System.Drawing.Point(5, 510);
+            this.pItemLoaded_.Location = new System.Drawing.Point(5, 738);
             this.pItemLoaded_.Margin = new System.Windows.Forms.Padding(4);
             this.pItemLoaded_.Name = "pItemLoaded_";
             this.pItemLoaded_.Size = new System.Drawing.Size(8, 17);
             this.pItemLoaded_.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Location = new System.Drawing.Point(477, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(924, 754);
+            this.panel1.TabIndex = 3;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miFile_,
+            this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.casparToolStripMenuItem,
+            this.playoutToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1444, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1404, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // miFile_
             // 
             this.miFile_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miNew_,
-            this.miLoad_,
-            this.miSave_,
-            this.miSaveAs_,
+            this.miNewFile_,
+            this.miLoadFile_,
+            this.miSaveFile_,
+            this.miSaveFileAs_,
             this.toolStripSeparator2,
             this.miSettings_,
             this.toolStripSeparator3,
@@ -328,36 +363,36 @@
             this.miFile_.Text = "&File";
             this.miFile_.DropDownOpening += new System.EventHandler(this.miArkiv__DropDownOpening);
             // 
-            // miNew_
+            // miNewFile_
             // 
-            this.miNew_.Name = "miNew_";
-            this.miNew_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.miNew_.Size = new System.Drawing.Size(172, 22);
-            this.miNew_.Text = "&New";
-            this.miNew_.Click += new System.EventHandler(this.miNew__Click);
+            this.miNewFile_.Name = "miNewFile_";
+            this.miNewFile_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.miNewFile_.Size = new System.Drawing.Size(172, 22);
+            this.miNewFile_.Text = "&New";
+            this.miNewFile_.Click += new System.EventHandler(this.miNew__Click);
             // 
-            // miLoad_
+            // miLoadFile_
             // 
-            this.miLoad_.Name = "miLoad_";
-            this.miLoad_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.miLoad_.Size = new System.Drawing.Size(172, 22);
-            this.miLoad_.Text = "&Open...";
-            this.miLoad_.Click += new System.EventHandler(this.miLoad__Click);
+            this.miLoadFile_.Name = "miLoadFile_";
+            this.miLoadFile_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.miLoadFile_.Size = new System.Drawing.Size(172, 22);
+            this.miLoadFile_.Text = "&Open...";
+            this.miLoadFile_.Click += new System.EventHandler(this.miLoadFile__Click);
             // 
-            // miSave_
+            // miSaveFile_
             // 
-            this.miSave_.Name = "miSave_";
-            this.miSave_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.miSave_.Size = new System.Drawing.Size(172, 22);
-            this.miSave_.Text = "&Save";
-            this.miSave_.Click += new System.EventHandler(this.miSave__Click);
+            this.miSaveFile_.Name = "miSaveFile_";
+            this.miSaveFile_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.miSaveFile_.Size = new System.Drawing.Size(172, 22);
+            this.miSaveFile_.Text = "&Save";
+            this.miSaveFile_.Click += new System.EventHandler(this.miSave__Click);
             // 
-            // miSaveAs_
+            // miSaveFileAs_
             // 
-            this.miSaveAs_.Name = "miSaveAs_";
-            this.miSaveAs_.Size = new System.Drawing.Size(172, 22);
-            this.miSaveAs_.Text = "S&ave as...";
-            this.miSaveAs_.Click += new System.EventHandler(this.miSaveAs__Click);
+            this.miSaveFileAs_.Name = "miSaveFileAs_";
+            this.miSaveFileAs_.Size = new System.Drawing.Size(172, 22);
+            this.miSaveFileAs_.Text = "S&ave as...";
+            this.miSaveFileAs_.Click += new System.EventHandler(this.miSaveAs__Click);
             // 
             // toolStripSeparator2
             // 
@@ -380,10 +415,44 @@
             // miExit_
             // 
             this.miExit_.Name = "miExit_";
-            this.miExit_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.miExit_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.miExit_.Size = new System.Drawing.Size(172, 22);
             this.miExit_.Text = "&Exit";
             this.miExit_.Click += new System.EventHandler(this.miExit__Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCut_,
+            this.miCopy_,
+            this.miPaste_});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // miCut_
+            // 
+            this.miCut_.Name = "miCut_";
+            this.miCut_.ShortcutKeyDisplayString = "Ctrl+X";
+            this.miCut_.Size = new System.Drawing.Size(154, 22);
+            this.miCut_.Text = "Cut";
+            this.miCut_.Click += new System.EventHandler(this.miCut__Click);
+            // 
+            // miCopy_
+            // 
+            this.miCopy_.Name = "miCopy_";
+            this.miCopy_.ShortcutKeyDisplayString = "Ctrl+C";
+            this.miCopy_.Size = new System.Drawing.Size(154, 22);
+            this.miCopy_.Text = "&Copy";
+            this.miCopy_.Click += new System.EventHandler(this.miCopy__Click);
+            // 
+            // miPaste_
+            // 
+            this.miPaste_.Name = "miPaste_";
+            this.miPaste_.ShortcutKeyDisplayString = "Ctrl+V";
+            this.miPaste_.Size = new System.Drawing.Size(154, 22);
+            this.miPaste_.Text = "Paste";
+            this.miPaste_.Click += new System.EventHandler(this.miPaste__Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -478,6 +547,105 @@
             this.tankaMallgrafiklistaToolStripMenuItem.Text = "Reload templates from offline folder";
             this.tankaMallgrafiklistaToolStripMenuItem.Click += new System.EventHandler(this.tankaMallgrafiklistaToolStripMenuItem_Click);
             // 
+            // playoutToolStripMenuItem
+            // 
+            this.playoutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miAdvance_,
+            this.toolStripSeparator1,
+            this.miLoad_,
+            this.miPlay_,
+            this.miStep_,
+            this.miUpdate_,
+            this.miStop_,
+            this.miClear_,
+            this.miClearAll_});
+            this.playoutToolStripMenuItem.Name = "playoutToolStripMenuItem";
+            this.playoutToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.playoutToolStripMenuItem.Text = "&Playout";
+            // 
+            // miAdvance_
+            // 
+            this.miAdvance_.Enabled = false;
+            this.miAdvance_.Name = "miAdvance_";
+            this.miAdvance_.ShortcutKeyDisplayString = "Space";
+            this.miAdvance_.Size = new System.Drawing.Size(197, 22);
+            this.miAdvance_.Text = "Advance";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(194, 6);
+            // 
+            // miLoad_
+            // 
+            this.miLoad_.Enabled = false;
+            this.miLoad_.Name = "miLoad_";
+            this.miLoad_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyLoad;
+            this.miLoad_.Size = new System.Drawing.Size(197, 22);
+            this.miLoad_.Tag = "ShortcutKeyLoad";
+            this.miLoad_.Text = "Load";
+            this.miLoad_.Click += new System.EventHandler(this.miLoad__Click);
+            // 
+            // miPlay_
+            // 
+            this.miPlay_.Enabled = false;
+            this.miPlay_.Name = "miPlay_";
+            this.miPlay_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyPlay;
+            this.miPlay_.Size = new System.Drawing.Size(197, 22);
+            this.miPlay_.Tag = "ShortcutKeyPlay";
+            this.miPlay_.Text = "Play";
+            this.miPlay_.Click += new System.EventHandler(this.miPlay__Click);
+            // 
+            // miStep_
+            // 
+            this.miStep_.Enabled = false;
+            this.miStep_.Name = "miStep_";
+            this.miStep_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyStep;
+            this.miStep_.Size = new System.Drawing.Size(197, 22);
+            this.miStep_.Tag = "ShortcutKeyStep";
+            this.miStep_.Text = "Step";
+            this.miStep_.Click += new System.EventHandler(this.miStep__Click);
+            // 
+            // miUpdate_
+            // 
+            this.miUpdate_.Enabled = false;
+            this.miUpdate_.Name = "miUpdate_";
+            this.miUpdate_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyUpdate;
+            this.miUpdate_.Size = new System.Drawing.Size(197, 22);
+            this.miUpdate_.Tag = "ShortcutKeyUpdate";
+            this.miUpdate_.Text = "Update";
+            this.miUpdate_.Click += new System.EventHandler(this.miUpdate__Click);
+            // 
+            // miStop_
+            // 
+            this.miStop_.Enabled = false;
+            this.miStop_.Name = "miStop_";
+            this.miStop_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyStop;
+            this.miStop_.Size = new System.Drawing.Size(197, 22);
+            this.miStop_.Tag = "ShortcutKeyStop";
+            this.miStop_.Text = "Stop";
+            this.miStop_.Click += new System.EventHandler(this.miStop__Click);
+            // 
+            // miClear_
+            // 
+            this.miClear_.Enabled = false;
+            this.miClear_.Name = "miClear_";
+            this.miClear_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClear;
+            this.miClear_.Size = new System.Drawing.Size(197, 22);
+            this.miClear_.Tag = "ShortcutKeyClear";
+            this.miClear_.Text = "Clear";
+            this.miClear_.Click += new System.EventHandler(this.miClear__Click);
+            // 
+            // miClearAll_
+            // 
+            this.miClearAll_.Enabled = false;
+            this.miClearAll_.Name = "miClearAll_";
+            this.miClearAll_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClearAll;
+            this.miClearAll_.Size = new System.Drawing.Size(197, 22);
+            this.miClearAll_.Tag = "ShortcutKeyClearAll";
+            this.miClearAll_.Text = "Clear All";
+            this.miClearAll_.Click += new System.EventHandler(this.miClearAll__Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -507,10 +675,10 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabelPage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 556);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 784);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1444, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1404, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -528,7 +696,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1190, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1181, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -548,7 +716,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1444, 578);
+            this.ClientSize = new System.Drawing.Size(1404, 806);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -589,14 +757,14 @@
 		private System.Windows.Forms.ToolStripButton btnOnAir_;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem miFile_;
-		private System.Windows.Forms.ToolStripMenuItem miLoad_;
-		private System.Windows.Forms.ToolStripMenuItem miSaveAs_;
+		private System.Windows.Forms.ToolStripMenuItem miLoadFile_;
+		private System.Windows.Forms.ToolStripMenuItem miSaveFileAs_;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem miSettings_;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem miExit_;
-        private System.Windows.Forms.ToolStripMenuItem miNew_;
-		private System.Windows.Forms.ToolStripMenuItem miSave_;
+        private System.Windows.Forms.ToolStripMenuItem miNewFile_;
+		private System.Windows.Forms.ToolStripMenuItem miSaveFile_;
 		private System.Windows.Forms.Timer itemLoadTimer_;
 		private System.Windows.Forms.Panel pOnAir_;
 		private System.Windows.Forms.Panel pItemLoaded_;
@@ -627,7 +795,23 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem templateDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem outputSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnStep_;
+        private System.Windows.Forms.ToolStripMenuItem playoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miAdvance_;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem miLoad_;
+        private System.Windows.Forms.ToolStripMenuItem miPlay_;
+        private System.Windows.Forms.ToolStripMenuItem miStep_;
+        private System.Windows.Forms.ToolStripMenuItem miUpdate_;
+        private System.Windows.Forms.ToolStripMenuItem miStop_;
+        private System.Windows.Forms.ToolStripMenuItem miClear_;
+        private System.Windows.Forms.ToolStripMenuItem miClearAll_;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miCut_;
+        private System.Windows.Forms.ToolStripMenuItem miCopy_;
+        private System.Windows.Forms.ToolStripMenuItem miPaste_;
+        private System.Windows.Forms.Panel panel1;
 	}
 }
 

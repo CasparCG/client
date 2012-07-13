@@ -59,7 +59,6 @@ namespace Caspar_Pilot.Controls
             set
             {
                 groupBoxTemplteData.Visible = value;
-                this.tableLayoutPanel1.ColumnStyles[1].Width = (value == true) ? 70F : 0;
 
                 Properties.Settings.Default.EnableTemplateData = value;
             }
@@ -71,7 +70,7 @@ namespace Caspar_Pilot.Controls
             set
             {
                 groupBoxOutputSettings.Visible = value;
-                this.tableLayoutPanel1.ColumnStyles[0].Width = (value == true) ? 30F : 0;
+                this.tableLayoutPanel1.ColumnStyles[0].Width = (value == true) ? 270 : 0;
 
                 Properties.Settings.Default.EnableOutputSettings = value;
             }
@@ -80,9 +79,24 @@ namespace Caspar_Pilot.Controls
 		public event EventHandler<EventArgs> CurrentItemDataChanged;
 		protected void OnCurrentItemDataChanged()
 		{
-			if (CurrentItemDataChanged != null)
-				CurrentItemDataChanged(this, EventArgs.Empty);
+            try
+            {
+                if (CurrentItemDataChanged != null)
+                    CurrentItemDataChanged(this, EventArgs.Empty);
+            }
+            catch { }
 		}
+
+        public event EventHandler<EventArgs> CurrentItemChannelChanged;
+        protected void OnCurrentItemChannelChanged()
+        {
+            try
+            {
+                if (CurrentItemChannelChanged != null)
+                    CurrentItemChannelChanged(this, EventArgs.Empty);
+            }
+            catch { }
+        }
 
         public Color TemplateColor { get; set; }
         public Color GraphicColor { get; set; }
@@ -97,12 +111,7 @@ namespace Caspar_Pilot.Controls
 			InitializeComponent();
 			InitializeCustomComponents();
 
-            TemplateColor = Color.FromName(Properties.Settings.Default.TemplateColor);
-            GraphicColor = Color.FromName(Properties.Settings.Default.GraphicColor);
-            ControlColor = Color.FromName(Properties.Settings.Default.ControlColor);
-            MultistepColor = Color.FromName(Properties.Settings.Default.MultistepColor);
-			StoredDataColor = Color.FromName(Properties.Settings.Default.StoredDataColor);
-            DataUpdateColor = Color.FromName(Properties.Settings.Default.DataUpdateColor);
+            UpdateDefaultColors();
 
 			dataviewBindingSource.AddingNew += new AddingNewEventHandler(dataviewBindingSource_AddingNew);
 			cbTransition_.Items.AddRange(Enum.GetNames(typeof(Svt.Caspar.TransitionType)));
@@ -655,6 +664,7 @@ namespace Caspar_Pilot.Controls
 			{
 				string label = (string)cbChannels_.SelectedItem;
 				CurrentItem.Channel = label;
+                OnCurrentItemChannelChanged();
 				OnCurrentItemDataChanged();
 			}
 			UpdateMediafiles();
@@ -806,5 +816,15 @@ namespace Caspar_Pilot.Controls
             this.dataviewBindingSource.RemoveAt(this.dataGridView1.CurrentRow.Index);
         }
 
-	}
+
+        internal void UpdateDefaultColors()
+        {
+            TemplateColor = Color.FromName(Properties.Settings.Default.TemplateColor);
+            GraphicColor = Color.FromName(Properties.Settings.Default.GraphicColor);
+            ControlColor = Color.FromName(Properties.Settings.Default.ControlColor);
+            MultistepColor = Color.FromName(Properties.Settings.Default.MultistepColor);
+            StoredDataColor = Color.FromName(Properties.Settings.Default.StoredDataColor);
+            DataUpdateColor = Color.FromName(Properties.Settings.Default.DataUpdateColor);
+        }
+    }
 }

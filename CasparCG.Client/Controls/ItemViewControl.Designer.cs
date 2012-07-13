@@ -36,7 +36,6 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label8;
             System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label9;
             System.Windows.Forms.Label label11;
             System.Windows.Forms.Label label12;
@@ -54,16 +53,6 @@
             this.btnPreviewStop_ = new System.Windows.Forms.ToolStripButton();
             this.lPreviewInfo_ = new System.Windows.Forms.ToolStripLabel();
             this.tTemplateHostVersion = new System.Windows.Forms.ToolStripLabel();
-            this.groupBoxTemplteData = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuTemplateData = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemInsert = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBoxOutputSettings = new System.Windows.Forms.GroupBox();
             this.cbColor_ = new System.Windows.Forms.ComboBox();
             this.numericUpDownVideoLayer = new System.Windows.Forms.NumericUpDown();
@@ -71,6 +60,7 @@
             this.cbChannels_ = new System.Windows.Forms.ComboBox();
             this.tcItemSettings_ = new System.Windows.Forms.TabControl();
             this.tpTemplates_ = new System.Windows.Forms.TabPage();
+            this.cbUpdateData = new System.Windows.Forms.CheckBox();
             this.checkBoxStoredData = new System.Windows.Forms.CheckBox();
             this.cbCategory_ = new System.Windows.Forms.ComboBox();
             this.nLayer_ = new System.Windows.Forms.NumericUpDown();
@@ -89,7 +79,16 @@
             this.comboBoxSystemControl = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tName_ = new System.Windows.Forms.TextBox();
-            this.cbUpdateData = new System.Windows.Forms.CheckBox();
+            this.groupBoxTemplteData = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuTemplateData = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInsert = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             label5 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -97,7 +96,6 @@
             label3 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
             label12 = new System.Windows.Forms.Label();
@@ -107,10 +105,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.gbPreview_.SuspendLayout();
             this.tsPreview_.SuspendLayout();
-            this.groupBoxTemplteData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuTemplateData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewBindingSource)).BeginInit();
             this.groupBoxOutputSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVideoLayer)).BeginInit();
             this.tcItemSettings_.SuspendLayout();
@@ -121,6 +115,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nDuration_)).BeginInit();
             this.tabPageControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownControlValue)).BeginInit();
+            this.groupBoxTemplteData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuTemplateData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label5
@@ -177,7 +175,7 @@
             // 
             label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(191, 25);
+            label8.Location = new System.Drawing.Point(141, 25);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(57, 16);
             label8.TabIndex = 1;
@@ -191,16 +189,6 @@
             label1.Size = new System.Drawing.Size(33, 16);
             label1.TabIndex = 1;
             label1.Text = "File:";
-            // 
-            // label6
-            // 
-            label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(261, 53);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(39, 16);
-            label6.TabIndex = 16;
-            label6.Text = "Loop";
             // 
             // label9
             // 
@@ -262,13 +250,14 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 270F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.gbPreview_, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBoxTemplteData, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBoxOutputSettings, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupBoxTemplteData, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.MinimumSize = new System.Drawing.Size(800, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -360,96 +349,6 @@
             this.tTemplateHostVersion.Name = "tTemplateHostVersion";
             this.tTemplateHostVersion.Size = new System.Drawing.Size(0, 22);
             // 
-            // groupBoxTemplteData
-            // 
-            this.groupBoxTemplteData.Controls.Add(this.dataGridView1);
-            this.groupBoxTemplteData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxTemplteData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxTemplteData.Location = new System.Drawing.Point(331, 381);
-            this.groupBoxTemplteData.Name = "groupBoxTemplteData";
-            this.groupBoxTemplteData.Size = new System.Drawing.Size(487, 372);
-            this.groupBoxTemplteData.TabIndex = 1;
-            this.groupBoxTemplteData.TabStop = false;
-            this.groupBoxTemplteData.Text = "Template data";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameColumn,
-            this.valueColumn});
-            this.dataGridView1.ContextMenuStrip = this.contextMenuTemplateData;
-            this.dataGridView1.DataSource = this.dataviewBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 18);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.Size = new System.Drawing.Size(475, 351);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.Visible = false;
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
-            this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
-            this.dataGridView1.Leave += new System.EventHandler(this.dataGridView1_Leave);
-            // 
-            // nameColumn
-            // 
-            this.nameColumn.DataPropertyName = "Name";
-            this.nameColumn.FillWeight = 30F;
-            this.nameColumn.HeaderText = "Name";
-            this.nameColumn.MinimumWidth = 30;
-            this.nameColumn.Name = "nameColumn";
-            // 
-            // valueColumn
-            // 
-            this.valueColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.valueColumn.DataPropertyName = "Value";
-            this.valueColumn.HeaderText = "Value";
-            this.valueColumn.Name = "valueColumn";
-            // 
-            // contextMenuTemplateData
-            // 
-            this.contextMenuTemplateData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemAdd,
-            this.toolStripMenuItemInsert,
-            this.toolStripSeparator,
-            this.toolStripMenuItemRemove});
-            this.contextMenuTemplateData.Name = "contextMenuTemplateData";
-            this.contextMenuTemplateData.Size = new System.Drawing.Size(145, 76);
-            // 
-            // toolStripMenuItemAdd
-            // 
-            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(144, 22);
-            this.toolStripMenuItemAdd.Text = "Add item";
-            this.toolStripMenuItemAdd.Click += new System.EventHandler(this.toolStripMenuItemAdd_Click);
-            // 
-            // toolStripMenuItemInsert
-            // 
-            this.toolStripMenuItemInsert.Name = "toolStripMenuItemInsert";
-            this.toolStripMenuItemInsert.Size = new System.Drawing.Size(144, 22);
-            this.toolStripMenuItemInsert.Text = "Insert item";
-            this.toolStripMenuItemInsert.Click += new System.EventHandler(this.toolStripMenuItemInsert_Click);
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(141, 6);
-            // 
-            // toolStripMenuItemRemove
-            // 
-            this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
-            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(144, 22);
-            this.toolStripMenuItemRemove.Text = "Remove item";
-            this.toolStripMenuItemRemove.Click += new System.EventHandler(this.toolStripMenuItemRemove_Click);
-            // 
             // groupBoxOutputSettings
             // 
             this.groupBoxOutputSettings.Controls.Add(this.cbColor_);
@@ -467,7 +366,7 @@
             this.groupBoxOutputSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxOutputSettings.Location = new System.Drawing.Point(3, 381);
             this.groupBoxOutputSettings.Name = "groupBoxOutputSettings";
-            this.groupBoxOutputSettings.Size = new System.Drawing.Size(322, 372);
+            this.groupBoxOutputSettings.Size = new System.Drawing.Size(264, 372);
             this.groupBoxOutputSettings.TabIndex = 2;
             this.groupBoxOutputSettings.TabStop = false;
             this.groupBoxOutputSettings.Text = "Settings";
@@ -496,7 +395,7 @@
             "PaleTurquoise"});
             this.cbColor_.Location = new System.Drawing.Point(49, 77);
             this.cbColor_.Name = "cbColor_";
-            this.cbColor_.Size = new System.Drawing.Size(267, 24);
+            this.cbColor_.Size = new System.Drawing.Size(209, 24);
             this.cbColor_.TabIndex = 4;
             this.cbColor_.SelectedIndexChanged += new System.EventHandler(this.cbColor__TextChanged);
             // 
@@ -544,7 +443,7 @@
             this.cbChannels_.FormattingEnabled = true;
             this.cbChannels_.Location = new System.Drawing.Point(49, 46);
             this.cbChannels_.Name = "cbChannels_";
-            this.cbChannels_.Size = new System.Drawing.Size(267, 24);
+            this.cbChannels_.Size = new System.Drawing.Size(209, 24);
             this.cbChannels_.TabIndex = 1;
             this.cbChannels_.ValueMember = "Label";
             this.cbChannels_.SelectedIndexChanged += new System.EventHandler(this.cbChannels__SelectedIndexChanged);
@@ -560,7 +459,7 @@
             this.tcItemSettings_.Location = new System.Drawing.Point(3, 163);
             this.tcItemSettings_.Name = "tcItemSettings_";
             this.tcItemSettings_.SelectedIndex = 0;
-            this.tcItemSettings_.Size = new System.Drawing.Size(317, 200);
+            this.tcItemSettings_.Size = new System.Drawing.Size(259, 200);
             this.tcItemSettings_.TabIndex = 5;
             this.tcItemSettings_.SelectedIndexChanged += new System.EventHandler(this.tcItemSettings__SelectedIndexChanged);
             // 
@@ -578,10 +477,24 @@
             this.tpTemplates_.Location = new System.Drawing.Point(4, 25);
             this.tpTemplates_.Name = "tpTemplates_";
             this.tpTemplates_.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTemplates_.Size = new System.Drawing.Size(309, 171);
+            this.tpTemplates_.Size = new System.Drawing.Size(251, 171);
             this.tpTemplates_.TabIndex = 0;
             this.tpTemplates_.Text = "Templates";
             this.tpTemplates_.UseVisualStyleBackColor = true;
+            // 
+            // cbUpdateData
+            // 
+            this.cbUpdateData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbUpdateData.AutoSize = true;
+            this.cbUpdateData.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbUpdateData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbUpdateData.Location = new System.Drawing.Point(119, 46);
+            this.cbUpdateData.Name = "cbUpdateData";
+            this.cbUpdateData.Size = new System.Drawing.Size(126, 20);
+            this.cbUpdateData.TabIndex = 15;
+            this.cbUpdateData.Text = "Just update data";
+            this.cbUpdateData.UseVisualStyleBackColor = true;
+            this.cbUpdateData.CheckedChanged += new System.EventHandler(this.cbUpdateData_CheckedChanged);
             // 
             // checkBoxStoredData
             // 
@@ -589,7 +502,7 @@
             this.checkBoxStoredData.AutoSize = true;
             this.checkBoxStoredData.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxStoredData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxStoredData.Location = new System.Drawing.Point(180, 26);
+            this.checkBoxStoredData.Location = new System.Drawing.Point(122, 26);
             this.checkBoxStoredData.Name = "checkBoxStoredData";
             this.checkBoxStoredData.Size = new System.Drawing.Size(123, 20);
             this.checkBoxStoredData.TabIndex = 4;
@@ -605,7 +518,7 @@
             this.cbCategory_.FormattingEnabled = true;
             this.cbCategory_.Location = new System.Drawing.Point(6, 70);
             this.cbCategory_.Name = "cbCategory_";
-            this.cbCategory_.Size = new System.Drawing.Size(297, 24);
+            this.cbCategory_.Size = new System.Drawing.Size(239, 24);
             this.cbCategory_.TabIndex = 1;
             this.cbCategory_.SelectedIndexChanged += new System.EventHandler(this.cbCategory__SelectedIndexChanged);
             // 
@@ -622,11 +535,14 @@
             // 
             this.cbTemplates_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTemplates_.DropDownHeight = 300;
+            this.cbTemplates_.DropDownWidth = 400;
             this.cbTemplates_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbTemplates_.FormattingEnabled = true;
+            this.cbTemplates_.IntegralHeight = false;
             this.cbTemplates_.Location = new System.Drawing.Point(6, 117);
             this.cbTemplates_.Name = "cbTemplates_";
-            this.cbTemplates_.Size = new System.Drawing.Size(297, 24);
+            this.cbTemplates_.Size = new System.Drawing.Size(239, 24);
             this.cbTemplates_.TabIndex = 2;
             this.cbTemplates_.SelectedIndexChanged += new System.EventHandler(this.cbTemplates__SelectedIndexChanged);
             this.cbTemplates_.TextUpdate += new System.EventHandler(this.cbTemplates__TextUpdate);
@@ -637,7 +553,7 @@
             this.cMultistep_.AutoSize = true;
             this.cMultistep_.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cMultistep_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMultistep_.Location = new System.Drawing.Point(168, 7);
+            this.cMultistep_.Location = new System.Drawing.Point(110, 7);
             this.cMultistep_.Name = "cMultistep_";
             this.cMultistep_.Size = new System.Drawing.Size(135, 20);
             this.cMultistep_.TabIndex = 3;
@@ -649,15 +565,14 @@
             // 
             this.tpStatics_.Controls.Add(label15);
             this.tpStatics_.Controls.Add(this.cbMediaCategory_);
-            this.tpStatics_.Controls.Add(label6);
-            this.tpStatics_.Controls.Add(this.cLoop_);
             this.tpStatics_.Controls.Add(this.groupBox3);
             this.tpStatics_.Controls.Add(label1);
             this.tpStatics_.Controls.Add(this.cbMediafiles_);
+            this.tpStatics_.Controls.Add(this.cLoop_);
             this.tpStatics_.Location = new System.Drawing.Point(4, 25);
             this.tpStatics_.Name = "tpStatics_";
             this.tpStatics_.Padding = new System.Windows.Forms.Padding(3);
-            this.tpStatics_.Size = new System.Drawing.Size(309, 171);
+            this.tpStatics_.Size = new System.Drawing.Size(251, 171);
             this.tpStatics_.TabIndex = 1;
             this.tpStatics_.Text = "Graphics";
             this.tpStatics_.UseVisualStyleBackColor = true;
@@ -670,7 +585,7 @@
             this.cbMediaCategory_.FormattingEnabled = true;
             this.cbMediaCategory_.Location = new System.Drawing.Point(9, 23);
             this.cbMediaCategory_.Name = "cbMediaCategory_";
-            this.cbMediaCategory_.Size = new System.Drawing.Size(246, 24);
+            this.cbMediaCategory_.Size = new System.Drawing.Size(236, 24);
             this.cbMediaCategory_.TabIndex = 17;
             this.cbMediaCategory_.SelectedIndexChanged += new System.EventHandler(this.cbMediaCategory__SelectedIndexChanged);
             // 
@@ -678,10 +593,12 @@
             // 
             this.cLoop_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cLoop_.AutoSize = true;
-            this.cLoop_.Location = new System.Drawing.Point(271, 73);
+            this.cLoop_.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cLoop_.Location = new System.Drawing.Point(187, 49);
             this.cLoop_.Name = "cLoop_";
-            this.cLoop_.Size = new System.Drawing.Size(15, 14);
+            this.cLoop_.Size = new System.Drawing.Size(58, 20);
             this.cLoop_.TabIndex = 1;
+            this.cLoop_.Text = "Loop";
             this.cLoop_.UseVisualStyleBackColor = true;
             this.cLoop_.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -694,7 +611,7 @@
             this.groupBox3.Controls.Add(label8);
             this.groupBox3.Location = new System.Drawing.Point(11, 96);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(289, 54);
+            this.groupBox3.Size = new System.Drawing.Size(234, 54);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Transition";
@@ -712,7 +629,7 @@
             // nDuration_
             // 
             this.nDuration_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nDuration_.Location = new System.Drawing.Point(238, 23);
+            this.nDuration_.Location = new System.Drawing.Point(183, 23);
             this.nDuration_.Name = "nDuration_";
             this.nDuration_.Size = new System.Drawing.Size(45, 22);
             this.nDuration_.TabIndex = 1;
@@ -722,10 +639,13 @@
             // 
             this.cbMediafiles_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMediafiles_.DropDownHeight = 300;
+            this.cbMediafiles_.DropDownWidth = 400;
             this.cbMediafiles_.FormattingEnabled = true;
+            this.cbMediafiles_.IntegralHeight = false;
             this.cbMediafiles_.Location = new System.Drawing.Point(11, 69);
             this.cbMediafiles_.Name = "cbMediafiles_";
-            this.cbMediafiles_.Size = new System.Drawing.Size(244, 24);
+            this.cbMediafiles_.Size = new System.Drawing.Size(234, 24);
             this.cbMediafiles_.TabIndex = 0;
             this.cbMediafiles_.SelectedIndexChanged += new System.EventHandler(this.cbMediafiles__SelectedIndexChanged);
             this.cbMediafiles_.TextUpdate += new System.EventHandler(this.cbMediafiles__TextUpdate);
@@ -740,7 +660,7 @@
             this.tabPageControl.Controls.Add(this.comboBoxSystemControl);
             this.tabPageControl.Location = new System.Drawing.Point(4, 25);
             this.tabPageControl.Name = "tabPageControl";
-            this.tabPageControl.Size = new System.Drawing.Size(309, 171);
+            this.tabPageControl.Size = new System.Drawing.Size(251, 171);
             this.tabPageControl.TabIndex = 2;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
@@ -806,23 +726,99 @@
             this.tName_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tName_.Location = new System.Drawing.Point(49, 18);
             this.tName_.Name = "tName_";
-            this.tName_.Size = new System.Drawing.Size(267, 22);
+            this.tName_.Size = new System.Drawing.Size(209, 22);
             this.tName_.TabIndex = 0;
             this.tName_.TextChanged += new System.EventHandler(this.tName__TextChanged);
             // 
-            // cbUpdateData
+            // groupBoxTemplteData
             // 
-            this.cbUpdateData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbUpdateData.AutoSize = true;
-            this.cbUpdateData.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbUpdateData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbUpdateData.Location = new System.Drawing.Point(177, 46);
-            this.cbUpdateData.Name = "cbUpdateData";
-            this.cbUpdateData.Size = new System.Drawing.Size(126, 20);
-            this.cbUpdateData.TabIndex = 15;
-            this.cbUpdateData.Text = "Just update data";
-            this.cbUpdateData.UseVisualStyleBackColor = true;
-            this.cbUpdateData.CheckedChanged += new System.EventHandler(this.cbUpdateData_CheckedChanged);
+            this.groupBoxTemplteData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxTemplteData.Controls.Add(this.dataGridView1);
+            this.groupBoxTemplteData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxTemplteData.Location = new System.Drawing.Point(273, 381);
+            this.groupBoxTemplteData.Name = "groupBoxTemplteData";
+            this.groupBoxTemplteData.Size = new System.Drawing.Size(545, 372);
+            this.groupBoxTemplteData.TabIndex = 1;
+            this.groupBoxTemplteData.TabStop = false;
+            this.groupBoxTemplteData.Text = "Template data";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameColumn,
+            this.valueColumn});
+            this.dataGridView1.ContextMenuStrip = this.contextMenuTemplateData;
+            this.dataGridView1.DataSource = this.dataviewBindingSource;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 18);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridView1.Size = new System.Drawing.Size(539, 351);
+            this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.Visible = false;
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
+            this.dataGridView1.Leave += new System.EventHandler(this.dataGridView1_Leave);
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.DataPropertyName = "Name";
+            this.nameColumn.FillWeight = 30F;
+            this.nameColumn.HeaderText = "Name";
+            this.nameColumn.MinimumWidth = 30;
+            this.nameColumn.Name = "nameColumn";
+            // 
+            // valueColumn
+            // 
+            this.valueColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.valueColumn.DataPropertyName = "Value";
+            this.valueColumn.HeaderText = "Value";
+            this.valueColumn.Name = "valueColumn";
+            // 
+            // contextMenuTemplateData
+            // 
+            this.contextMenuTemplateData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAdd,
+            this.toolStripMenuItemInsert,
+            this.toolStripSeparator,
+            this.toolStripMenuItemRemove});
+            this.contextMenuTemplateData.Name = "contextMenuTemplateData";
+            this.contextMenuTemplateData.Size = new System.Drawing.Size(145, 76);
+            // 
+            // toolStripMenuItemAdd
+            // 
+            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItemAdd.Text = "Add item";
+            this.toolStripMenuItemAdd.Click += new System.EventHandler(this.toolStripMenuItemAdd_Click);
+            // 
+            // toolStripMenuItemInsert
+            // 
+            this.toolStripMenuItemInsert.Name = "toolStripMenuItemInsert";
+            this.toolStripMenuItemInsert.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItemInsert.Text = "Insert item";
+            this.toolStripMenuItemInsert.Click += new System.EventHandler(this.toolStripMenuItemInsert_Click);
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(141, 6);
+            // 
+            // toolStripMenuItemRemove
+            // 
+            this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
+            this.toolStripMenuItemRemove.Size = new System.Drawing.Size(144, 22);
+            this.toolStripMenuItemRemove.Text = "Remove item";
+            this.toolStripMenuItemRemove.Click += new System.EventHandler(this.toolStripMenuItemRemove_Click);
             // 
             // ItemViewControl
             // 
@@ -837,10 +833,6 @@
             this.gbPreview_.PerformLayout();
             this.tsPreview_.ResumeLayout(false);
             this.tsPreview_.PerformLayout();
-            this.groupBoxTemplteData.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuTemplateData.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewBindingSource)).EndInit();
             this.groupBoxOutputSettings.ResumeLayout(false);
             this.groupBoxOutputSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVideoLayer)).EndInit();
@@ -856,6 +848,10 @@
             this.tabPageControl.ResumeLayout(false);
             this.tabPageControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownControlValue)).EndInit();
+            this.groupBoxTemplteData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuTemplateData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewBindingSource)).EndInit();
             this.ResumeLayout(false);
 
 		}
