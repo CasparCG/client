@@ -54,6 +54,9 @@
             this.miFile_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miNewFile_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miLoadFile_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miRecentFiles_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.miClearRecentFiles_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveFile_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveFileAs_ = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -352,6 +355,7 @@
             this.miFile_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miNewFile_,
             this.miLoadFile_,
+            this.miRecentFiles_,
             this.miSaveFile_,
             this.miSaveFileAs_,
             this.toolStripSeparator2,
@@ -378,6 +382,28 @@
             this.miLoadFile_.Size = new System.Drawing.Size(172, 22);
             this.miLoadFile_.Text = "&Open...";
             this.miLoadFile_.Click += new System.EventHandler(this.miLoadFile__Click);
+            // 
+            // miRecentFiles_
+            // 
+            this.miRecentFiles_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator6,
+            this.miClearRecentFiles_});
+            this.miRecentFiles_.Name = "miRecentFiles_";
+            this.miRecentFiles_.Size = new System.Drawing.Size(172, 22);
+            this.miRecentFiles_.Text = "&Recent files";
+            this.miRecentFiles_.DropDownOpening += new System.EventHandler(this.miRecentFiles__DropDownOpening);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            // 
+            // miClearRecentFiles_
+            // 
+            this.miClearRecentFiles_.Name = "miClearRecentFiles_";
+            this.miClearRecentFiles_.Size = new System.Drawing.Size(152, 22);
+            this.miClearRecentFiles_.Text = "Clear list";
+            this.miClearRecentFiles_.Click += new System.EventHandler(this.miClearRecentFiles__Click);
             // 
             // miSaveFile_
             // 
@@ -812,6 +838,9 @@
         private System.Windows.Forms.ToolStripMenuItem miCopy_;
         private System.Windows.Forms.ToolStripMenuItem miPaste_;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem miRecentFiles_;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem miClearRecentFiles_;
 	}
 }
 

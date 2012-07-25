@@ -312,18 +312,28 @@ namespace Caspar_Pilot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-     <ArrayOfChannelInformation xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-      <ChannelInformation>
-       <Label>localhost</Label>
-       <Hostname>localhost</Hostname>
-       <Port>5250</Port>
-       <Channel>1</Channel>
-       <Online>false</Online>
-       <ArgbValue>-1</ArgbValue>
-      </ChannelInformation>
-     </ArrayOfChannelInformation>
-    ")]
+        public global::System.Collections.Specialized.StringCollection RecentFiles {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["RecentFiles"]));
+            }
+            set {
+                this["RecentFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfChannelInformation xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <ChannelInformation>
+    <Label>localhost</Label>
+    <Hostname>localhost</Hostname>
+    <Port>5250</Port>
+    <Channel>1</Channel>
+    <Online>false</Online>
+    <ArgbValue>-1</ArgbValue>
+  </ChannelInformation>
+</ArrayOfChannelInformation>")]
         public global::Caspar_Pilot.Hosts.ChannelInformationList Channels {
             get {
                 return ((global::Caspar_Pilot.Hosts.ChannelInformationList)(this["Channels"]));

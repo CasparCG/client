@@ -53,6 +53,10 @@ namespace Caspar_Pilot
 			fontBrushSelected_ = new SolidBrush(Color.White);
 
 			InitializeComponent();
+            for (int i = 0; i < 8; ++i)
+            {
+                miRecentFiles_.DropDownItems.Insert(0, new ToolStripMenuItem(string.Empty, null, recentFile__Click));
+            }
 			InitializeCustomComponents();
 			UpdateTitle();
 
@@ -358,7 +362,11 @@ namespace Caspar_Pilot
 		#region main form events
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			UpdateHosts(Properties.Settings.Default.Channels);
+            if (Properties.Settings.Default.RecentFiles == null)
+                Properties.Settings.Default.RecentFiles = new System.Collections.Specialized.StringCollection();
+            
+            UpdateHosts(Properties.Settings.Default.Channels);
+
 			HostsManager.UpdatedMediafiles += new EventHandler<Caspar_Pilot.Hosts.HostEventArgs>(HostsManager_UpdatedMediafiles);
 			HostsManager.UpdatedTemplates += new EventHandler<Caspar_Pilot.Hosts.HostEventArgs>(HostsManager_UpdatedTemplates);
 			HostsManager.Connect();
@@ -573,8 +581,28 @@ namespace Caspar_Pilot
 			}
 
 			IsDirty = !returnvalue;
+
+            if (returnvalue)
+            {
+                CurrentFilename = filename;
+                AddToRecentFiles(filename);
+            }
+
 			return returnvalue;
 		}
+
+        private void AddToRecentFiles(string filename)
+        {
+            try
+            {
+                if (Properties.Settings.Default.RecentFiles.Contains(filename))
+                    Properties.Settings.Default.RecentFiles.Remove(filename);
+                Properties.Settings.Default.RecentFiles.Insert(0, filename);
+                if (Properties.Settings.Default.RecentFiles.Count > 8)
+                    Properties.Settings.Default.RecentFiles.RemoveAt(8);
+            }
+            catch { }
+        }
 
 		bool SaveFile(string filename)
 		{
@@ -616,6 +644,10 @@ namespace Caspar_Pilot
 			}
 
 			IsDirty = !returnvalue;
+            
+            if (returnvalue)
+                AddToRecentFiles(filename);
+
 			return returnvalue;
 		}
 		#endregion
@@ -1181,8 +1213,7 @@ namespace Caspar_Pilot
                 ofd.Multiselect = false;
                 ofd.Filter = "Caspar rundown (*.crx)|*.crx";
                 if (ofd.ShowDialog() == DialogResult.OK)
-                    if (LoadFile(ofd.FileName))
-                        CurrentFilename = ofd.FileName;
+                    LoadFile(ofd.FileName);
             }
         }
 
@@ -1239,6 +1270,49 @@ namespace Caspar_Pilot
             miLoadFile_.Enabled = miNewFile_.Enabled = miSettings_.Enabled = !IsOnAir;
         }
 
+        private void recentFile__Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+            if (CheckSaveBefore() != DialogResult.Cancel)
+            {
+                string filename = menuItem.Tag.ToString();
+                LoadFile(filename);
+            }
+        }
+        private void miClearRecentFiles__Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RecentFiles.Clear();
+        }
+
+        private void miRecentFiles__DropDownOpening(object sender, EventArgs e)
+        {
+            miClearRecentFiles_.Enabled = (Properties.Settings.Default.RecentFiles.Count != 0);
+
+            for (int i = 0; i < 8; ++i)
+            {
+                if(i < Properties.Settings.Default.RecentFiles.Count)
+                {
+                    string filename = Properties.Settings.Default.RecentFiles[i];
+                    miRecentFiles_.DropDownItems[i].Tag = filename;
+                    miRecentFiles_.DropDownItems[i].Text = filename;//TruncatePath(filename, 60);
+                    miRecentFiles_.DropDownItems[i].Visible = miRecentFiles_.DropDownItems[i].Enabled = true;
+                }
+                else
+                    miRecentFiles_.DropDownItems[i].Visible = miRecentFiles_.DropDownItems[i].Enabled = false;
+
+            }
+        }
+
+        //To truncate a filename
+        /*[System.Runtime.InteropServices.DllImport( "shlwapi.dll" )]
+        static extern bool PathCompactPathEx([System.Runtime.InteropServices.Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
+
+        static string TruncatePath( string path, int length )
+        {
+            StringBuilder sb = new StringBuilder();
+            PathCompactPathEx( sb, path, length, 0 );
+            return sb.ToString();
+        }*/
         #endregion
 
         #region edit menu
@@ -1445,5 +1519,8 @@ namespace Caspar_Pilot
             dialog.ShowDialog();
         }
         #endregion
+
+
+
     }
 }
