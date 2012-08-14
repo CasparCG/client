@@ -23,6 +23,7 @@ namespace Caspar_Pilot.Controls
 
         private void InitializeDropdown()
         {
+            cKey.Items.Add(Keys.None);
             cKey.Items.Add(Keys.Pause);
             cKey.Items.Add(Keys.Escape);
             cKey.Items.Add(Keys.PageUp);
@@ -52,9 +53,12 @@ namespace Caspar_Pilot.Controls
             get
             {
                 Keys key = (Keys)cKey.SelectedItem;
-                if(cbAlt.Checked) key |= Keys.Alt;
-                if (cbCtrl.Checked) key |= Keys.Control;
-                if (cbShift.Checked) key |= Keys.Shift;
+                if (key != Keys.None)
+                {
+                    if (cbAlt.Checked) key |= Keys.Alt;
+                    if (cbCtrl.Checked) key |= Keys.Control;
+                    if (cbShift.Checked) key |= Keys.Shift;
+                }
 
                 return converter.ConvertToString(key);
             }
@@ -66,6 +70,15 @@ namespace Caspar_Pilot.Controls
                 cbShift.Checked = (key & Keys.Shift) == Keys.Shift;
 
                 cKey.SelectedItem = (key & Keys.KeyCode);
+            }
+        }
+
+        private void cKey_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Keys key = (Keys)cKey.SelectedItem;
+            if (key == Keys.None)
+            {
+                cbAlt.Checked = cbCtrl.Checked = cbShift.Checked = false;
             }
         }
     }

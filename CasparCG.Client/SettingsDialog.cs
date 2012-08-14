@@ -189,6 +189,7 @@ namespace Caspar_Pilot
 
         #region hotkeys
         public ToolStripMenuItem PlayoutMenuItems { get; set; }
+        public ToolStripMenuItem CasparMenuItems { get; set; }
 
         Caspar_Pilot.Controls.HotkeyEditControl hotkeyEditCtrl;
         void InitializeHotkeys()
@@ -209,6 +210,23 @@ namespace Caspar_Pilot
                         ListViewItem lvItem = new ListViewItem(lvHotKey_.Groups[0]);
                         lvItem.Text = menuItem.Text;
                         lvItem.Name = menuItem.Text;
+                        lvItem.ToolTipText = menuItem.Text;
+                        lvItem.SubItems.Add(converter.ConvertToString(Properties.Settings.Default[menuItem.Tag.ToString()]));
+                        lvHotKey_.Items.Add(lvItem);
+                    }
+                }
+            }
+
+            if(CasparMenuItems != null && CasparMenuItems.HasDropDownItems)
+            {
+                foreach (ToolStripItem menuItem in CasparMenuItems.DropDownItems)
+                {
+                    if (menuItem.Tag != null)
+                    {
+                        ListViewItem lvItem = new ListViewItem(lvHotKey_.Groups[1]);
+                        lvItem.Text = menuItem.Text;
+                        lvItem.Name = menuItem.Text;
+                        lvItem.ToolTipText = menuItem.Text;
                         lvItem.SubItems.Add(converter.ConvertToString(Properties.Settings.Default[menuItem.Tag.ToString()]));
                         lvHotKey_.Items.Add(lvItem);
                     }
@@ -224,6 +242,30 @@ namespace Caspar_Pilot
 
                 //iterate all submenuitems
                 foreach (ToolStripItem item in PlayoutMenuItems.DropDownItems)
+                {
+                    ToolStripMenuItem menuItem = item as ToolStripMenuItem;
+                    if (menuItem != null && menuItem.Tag != null)
+                    {
+                        //find listview item with same name
+                        ListViewItem lvItem = lvHotKey_.Items[menuItem.Text];
+                        if (lvItem != null && lvItem.SubItems.Count > 1)
+                        {
+                            //assign new shortcut to menuitem
+                            Keys shortcut = (Keys)converter.ConvertFromString(lvItem.SubItems[1].Text);
+                            menuItem.ShortcutKeys = shortcut;
+                            Properties.Settings.Default[menuItem.Tag.ToString()] = shortcut;
+                        }
+
+                    }
+                }
+            }
+
+            if (CasparMenuItems != null && CasparMenuItems.HasDropDownItems)
+            {
+                TypeConverter converter = TypeDescriptor.GetConverter(typeof(Keys));
+
+                //iterate all submenuitems
+                foreach (ToolStripItem item in CasparMenuItems.DropDownItems)
                 {
                     ToolStripMenuItem menuItem = item as ToolStripMenuItem;
                     if (menuItem != null && menuItem.Tag != null)

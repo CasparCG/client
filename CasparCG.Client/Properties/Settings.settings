@@ -74,10 +74,10 @@
     <Setting Name="ShortcutKeyStop" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">F9</Value>
     </Setting>
-    <Setting Name="ShortcutKeyClear" Type="System.Windows.Forms.Keys" Scope="User">
+    <Setting Name="ShortcutKeyClearLayer" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">Ctrl+F6</Value>
     </Setting>
-    <Setting Name="ShortcutKeyClearAll" Type="System.Windows.Forms.Keys" Scope="User">
+    <Setting Name="ShortcutKeyClearChannel" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">Ctrl+Alt+F6</Value>
     </Setting>
     <Setting Name="RecentFiles" Type="System.Collections.Specialized.StringCollection" Scope="User">
@@ -95,6 +95,18 @@
     &lt;ArgbValue&gt;-1&lt;/ArgbValue&gt;
   &lt;/ChannelInformation&gt;
 &lt;/ArrayOfChannelInformation&gt;</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyReloadOfflineTemplates" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">Alt+M</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyReloadTemplates" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">Ctrl+M</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyReloadGraphics" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">Ctrl+G</Value>
+    </Setting>
+    <Setting Name="ShortcutKeyClearAll" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
   </Settings>
 </SettingsFile>

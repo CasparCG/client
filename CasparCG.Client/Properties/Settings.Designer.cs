@@ -289,24 +289,24 @@ namespace Caspar_Pilot.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+F6")]
-        public global::System.Windows.Forms.Keys ShortcutKeyClear {
+        public global::System.Windows.Forms.Keys ShortcutKeyClearLayer {
             get {
-                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClear"]));
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClearLayer"]));
             }
             set {
-                this["ShortcutKeyClear"] = value;
+                this["ShortcutKeyClearLayer"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+Alt+F6")]
-        public global::System.Windows.Forms.Keys ShortcutKeyClearAll {
+        public global::System.Windows.Forms.Keys ShortcutKeyClearChannel {
             get {
-                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClearAll"]));
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClearChannel"]));
             }
             set {
-                this["ShortcutKeyClearAll"] = value;
+                this["ShortcutKeyClearChannel"] = value;
             }
         }
         
@@ -340,6 +340,54 @@ namespace Caspar_Pilot.Properties {
             }
             set {
                 this["Channels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Alt+M")]
+        public global::System.Windows.Forms.Keys ShortcutKeyReloadOfflineTemplates {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyReloadOfflineTemplates"]));
+            }
+            set {
+                this["ShortcutKeyReloadOfflineTemplates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+M")]
+        public global::System.Windows.Forms.Keys ShortcutKeyReloadTemplates {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyReloadTemplates"]));
+            }
+            set {
+                this["ShortcutKeyReloadTemplates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+G")]
+        public global::System.Windows.Forms.Keys ShortcutKeyReloadGraphics {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyReloadGraphics"]));
+            }
+            set {
+                this["ShortcutKeyReloadGraphics"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys ShortcutKeyClearAll {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ShortcutKeyClearAll"]));
+            }
+            set {
+                this["ShortcutKeyClearAll"] = value;
             }
         }
     }

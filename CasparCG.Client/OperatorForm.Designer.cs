@@ -42,9 +42,8 @@
             this.btnStop_ = new System.Windows.Forms.ToolStripButton();
             this.btnOnAir_ = new System.Windows.Forms.ToolStripButton();
             this.btnClear_ = new System.Windows.Forms.ToolStripSplitButton();
-            this.btnClearCG_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnClearPreRendered_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnClearAll_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnClearLayer_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnClearChannel_ = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDetail_ = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pOnAir_ = new System.Windows.Forms.Panel();
@@ -86,7 +85,9 @@
             this.miStep_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miUpdate_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miStop_ = new System.Windows.Forms.ToolStripMenuItem();
-            this.miClear_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.miClearLayer_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.miClearChannel_ = new System.Windows.Forms.ToolStripMenuItem();
             this.miClearAll_ = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -239,39 +240,31 @@
             // 
             this.btnClear_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnClear_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnClearCG_,
-            this.btnClearPreRendered_,
-            this.btnClearAll_});
+            this.btnClearLayer_,
+            this.btnClearChannel_});
             this.btnClear_.Image = ((System.Drawing.Image)(resources.GetObject("btnClear_.Image")));
             this.btnClear_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnClear_.Name = "btnClear_";
-            this.btnClear_.Size = new System.Drawing.Size(56, 22);
-            this.btnClear_.Text = "Clear";
+            this.btnClear_.Size = new System.Drawing.Size(89, 20);
+            this.btnClear_.Tag = "LAYER";
+            this.btnClear_.Text = "Clear layer";
             this.btnClear_.ButtonClick += new System.EventHandler(this.btnClear__Click);
             // 
-            // btnClearCG_
+            // btnClearLayer_
             // 
-            this.btnClearCG_.Name = "btnClearCG_";
-            this.btnClearCG_.Size = new System.Drawing.Size(218, 22);
-            this.btnClearCG_.Tag = "CG";
-            this.btnClearCG_.Text = "Clear template graphics";
-            this.btnClearCG_.Click += new System.EventHandler(this.btnClear__Click);
+            this.btnClearLayer_.Name = "btnClearLayer_";
+            this.btnClearLayer_.Size = new System.Drawing.Size(158, 22);
+            this.btnClearLayer_.Tag = "LAYER";
+            this.btnClearLayer_.Text = "Clear layer";
+            this.btnClearLayer_.Click += new System.EventHandler(this.btnClearLayer__Click);
             // 
-            // btnClearPreRendered_
+            // btnClearChannel_
             // 
-            this.btnClearPreRendered_.Name = "btnClearPreRendered_";
-            this.btnClearPreRendered_.Size = new System.Drawing.Size(218, 22);
-            this.btnClearPreRendered_.Tag = "PRE";
-            this.btnClearPreRendered_.Text = "Clear graphics";
-            this.btnClearPreRendered_.Click += new System.EventHandler(this.btnClear__Click);
-            // 
-            // btnClearAll_
-            // 
-            this.btnClearAll_.Name = "btnClearAll_";
-            this.btnClearAll_.Size = new System.Drawing.Size(218, 22);
-            this.btnClearAll_.Tag = "ALL";
-            this.btnClearAll_.Text = "Clear all";
-            this.btnClearAll_.Click += new System.EventHandler(this.btnClear__Click);
+            this.btnClearChannel_.Name = "btnClearChannel_";
+            this.btnClearChannel_.Size = new System.Drawing.Size(158, 22);
+            this.btnClearChannel_.Tag = "CHANNEL";
+            this.btnClearChannel_.Text = "Clear channel";
+            this.btnClearChannel_.Click += new System.EventHandler(this.btnClearChannel__Click);
             // 
             // btnDetail_
             // 
@@ -396,12 +389,12 @@
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(124, 6);
             // 
             // miClearRecentFiles_
             // 
             this.miClearRecentFiles_.Name = "miClearRecentFiles_";
-            this.miClearRecentFiles_.Size = new System.Drawing.Size(152, 22);
+            this.miClearRecentFiles_.Size = new System.Drawing.Size(127, 22);
             this.miClearRecentFiles_.Text = "Clear list";
             this.miClearRecentFiles_.Click += new System.EventHandler(this.miClearRecentFiles__Click);
             // 
@@ -552,24 +545,27 @@
             // btnRefreshTemplates_
             // 
             this.btnRefreshTemplates_.Name = "btnRefreshTemplates_";
-            this.btnRefreshTemplates_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.btnRefreshTemplates_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyReloadTemplates;
             this.btnRefreshTemplates_.Size = new System.Drawing.Size(328, 22);
+            this.btnRefreshTemplates_.Tag = "ShortcutKeyReloadTemplates";
             this.btnRefreshTemplates_.Text = "Reload template list";
             this.btnRefreshTemplates_.Click += new System.EventHandler(this.btnRefreshTemplates__Click);
             // 
             // btnRefreshGraphics_
             // 
             this.btnRefreshGraphics_.Name = "btnRefreshGraphics_";
-            this.btnRefreshGraphics_.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.btnRefreshGraphics_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyReloadGraphics;
             this.btnRefreshGraphics_.Size = new System.Drawing.Size(328, 22);
+            this.btnRefreshGraphics_.Tag = "ShortcutKeyReloadGraphics";
             this.btnRefreshGraphics_.Text = "Reload graphic list";
             this.btnRefreshGraphics_.Click += new System.EventHandler(this.btnRefreshGraphics__Click);
             // 
             // tankaMallgrafiklistaToolStripMenuItem
             // 
             this.tankaMallgrafiklistaToolStripMenuItem.Name = "tankaMallgrafiklistaToolStripMenuItem";
-            this.tankaMallgrafiklistaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
+            this.tankaMallgrafiklistaToolStripMenuItem.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyReloadOfflineTemplates;
             this.tankaMallgrafiklistaToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
+            this.tankaMallgrafiklistaToolStripMenuItem.Tag = "ShortcutKeyReloadOfflineTemplates";
             this.tankaMallgrafiklistaToolStripMenuItem.Text = "Reload templates from offline folder";
             this.tankaMallgrafiklistaToolStripMenuItem.Click += new System.EventHandler(this.tankaMallgrafiklistaToolStripMenuItem_Click);
             // 
@@ -583,7 +579,9 @@
             this.miStep_,
             this.miUpdate_,
             this.miStop_,
-            this.miClear_,
+            this.toolStripSeparator7,
+            this.miClearLayer_,
+            this.miClearChannel_,
             this.miClearAll_});
             this.playoutToolStripMenuItem.Name = "playoutToolStripMenuItem";
             this.playoutToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
@@ -594,20 +592,20 @@
             this.miAdvance_.Enabled = false;
             this.miAdvance_.Name = "miAdvance_";
             this.miAdvance_.ShortcutKeyDisplayString = "Space";
-            this.miAdvance_.Size = new System.Drawing.Size(197, 22);
+            this.miAdvance_.Size = new System.Drawing.Size(229, 22);
             this.miAdvance_.Text = "Advance";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
             // 
             // miLoad_
             // 
             this.miLoad_.Enabled = false;
             this.miLoad_.Name = "miLoad_";
             this.miLoad_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyLoad;
-            this.miLoad_.Size = new System.Drawing.Size(197, 22);
+            this.miLoad_.Size = new System.Drawing.Size(229, 22);
             this.miLoad_.Tag = "ShortcutKeyLoad";
             this.miLoad_.Text = "Load";
             this.miLoad_.Click += new System.EventHandler(this.miLoad__Click);
@@ -617,7 +615,7 @@
             this.miPlay_.Enabled = false;
             this.miPlay_.Name = "miPlay_";
             this.miPlay_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyPlay;
-            this.miPlay_.Size = new System.Drawing.Size(197, 22);
+            this.miPlay_.Size = new System.Drawing.Size(229, 22);
             this.miPlay_.Tag = "ShortcutKeyPlay";
             this.miPlay_.Text = "Play";
             this.miPlay_.Click += new System.EventHandler(this.miPlay__Click);
@@ -627,7 +625,7 @@
             this.miStep_.Enabled = false;
             this.miStep_.Name = "miStep_";
             this.miStep_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyStep;
-            this.miStep_.Size = new System.Drawing.Size(197, 22);
+            this.miStep_.Size = new System.Drawing.Size(229, 22);
             this.miStep_.Tag = "ShortcutKeyStep";
             this.miStep_.Text = "Step";
             this.miStep_.Click += new System.EventHandler(this.miStep__Click);
@@ -637,7 +635,7 @@
             this.miUpdate_.Enabled = false;
             this.miUpdate_.Name = "miUpdate_";
             this.miUpdate_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyUpdate;
-            this.miUpdate_.Size = new System.Drawing.Size(197, 22);
+            this.miUpdate_.Size = new System.Drawing.Size(229, 22);
             this.miUpdate_.Tag = "ShortcutKeyUpdate";
             this.miUpdate_.Text = "Update";
             this.miUpdate_.Click += new System.EventHandler(this.miUpdate__Click);
@@ -647,29 +645,44 @@
             this.miStop_.Enabled = false;
             this.miStop_.Name = "miStop_";
             this.miStop_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyStop;
-            this.miStop_.Size = new System.Drawing.Size(197, 22);
+            this.miStop_.Size = new System.Drawing.Size(229, 22);
             this.miStop_.Tag = "ShortcutKeyStop";
             this.miStop_.Text = "Stop";
             this.miStop_.Click += new System.EventHandler(this.miStop__Click);
             // 
-            // miClear_
+            // toolStripSeparator7
             // 
-            this.miClear_.Enabled = false;
-            this.miClear_.Name = "miClear_";
-            this.miClear_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClear;
-            this.miClear_.Size = new System.Drawing.Size(197, 22);
-            this.miClear_.Tag = "ShortcutKeyClear";
-            this.miClear_.Text = "Clear";
-            this.miClear_.Click += new System.EventHandler(this.miClear__Click);
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(226, 6);
+            // 
+            // miClearLayer_
+            // 
+            this.miClearLayer_.Enabled = false;
+            this.miClearLayer_.Name = "miClearLayer_";
+            this.miClearLayer_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClearLayer;
+            this.miClearLayer_.Size = new System.Drawing.Size(229, 22);
+            this.miClearLayer_.Tag = "ShortcutKeyClearLayer";
+            this.miClearLayer_.Text = "Clear layer";
+            this.miClearLayer_.Click += new System.EventHandler(this.miClearLayer__Click);
+            // 
+            // miClearChannel_
+            // 
+            this.miClearChannel_.Enabled = false;
+            this.miClearChannel_.Name = "miClearChannel_";
+            this.miClearChannel_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClearChannel;
+            this.miClearChannel_.Size = new System.Drawing.Size(229, 22);
+            this.miClearChannel_.Tag = "ShortcutKeyClearChannel";
+            this.miClearChannel_.Text = "Clear channel";
+            this.miClearChannel_.Click += new System.EventHandler(this.miClearChannel__Click);
             // 
             // miClearAll_
             // 
             this.miClearAll_.Enabled = false;
             this.miClearAll_.Name = "miClearAll_";
             this.miClearAll_.ShortcutKeys = global::Caspar_Pilot.Properties.Settings.Default.ShortcutKeyClearAll;
-            this.miClearAll_.Size = new System.Drawing.Size(197, 22);
+            this.miClearAll_.Size = new System.Drawing.Size(229, 22);
             this.miClearAll_.Tag = "ShortcutKeyClearAll";
-            this.miClearAll_.Text = "Clear All";
+            this.miClearAll_.Text = "Clear all channels";
             this.miClearAll_.Click += new System.EventHandler(this.miClearAll__Click);
             // 
             // helpToolStripMenuItem
@@ -795,9 +808,8 @@
 		private System.Windows.Forms.Panel pOnAir_;
 		private System.Windows.Forms.Panel pItemLoaded_;
 		private System.Windows.Forms.ToolStripSplitButton btnClear_;
-		private System.Windows.Forms.ToolStripMenuItem btnClearCG_;
-		private System.Windows.Forms.ToolStripMenuItem btnClearAll_;
-		private System.Windows.Forms.ToolStripMenuItem btnClearPreRendered_;
+        private System.Windows.Forms.ToolStripMenuItem btnClearLayer_;
+		private System.Windows.Forms.ToolStripMenuItem btnClearChannel_;
 		private System.Windows.Forms.ToolStripMenuItem casparToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem btnRefreshTemplates_;
 		private System.Windows.Forms.ToolStripMenuItem btnRefreshGraphics_;
@@ -830,8 +842,8 @@
         private System.Windows.Forms.ToolStripMenuItem miStep_;
         private System.Windows.Forms.ToolStripMenuItem miUpdate_;
         private System.Windows.Forms.ToolStripMenuItem miStop_;
-        private System.Windows.Forms.ToolStripMenuItem miClear_;
-        private System.Windows.Forms.ToolStripMenuItem miClearAll_;
+        private System.Windows.Forms.ToolStripMenuItem miClearLayer_;
+        private System.Windows.Forms.ToolStripMenuItem miClearChannel_;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miCut_;
@@ -841,6 +853,8 @@
         private System.Windows.Forms.ToolStripMenuItem miRecentFiles_;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem miClearRecentFiles_;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem miClearAll_;
 	}
 }
 

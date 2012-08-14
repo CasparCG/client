@@ -29,14 +29,15 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Playout", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Playout menu", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Caspar menu", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Template",
             "LightBlue"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Pre-rendered",
             "GhostWhite"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Multistep template",
             "Gold"}, -1);
             this.btnCancel_ = new System.Windows.Forms.Button();
@@ -379,10 +380,12 @@
             this.btnRestoreDefaultKeys.TabIndex = 10;
             this.btnRestoreDefaultKeys.Text = "&Restore Defaults";
             this.btnRestoreDefaultKeys.UseVisualStyleBackColor = true;
+            this.btnRestoreDefaultKeys.Visible = false;
             // 
             // lvHotKey_
             // 
             this.lvHotKey_.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvHotKey_.AllowColumnReorder = true;
             this.lvHotKey_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -391,15 +394,19 @@
             this.HotKey});
             this.lvHotKey_.DoubleClickActivation = true;
             this.lvHotKey_.FullRowSelect = true;
-            listViewGroup2.Header = "Playout";
-            listViewGroup2.Name = "listViewGroup1";
+            listViewGroup1.Header = "Playout menu";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "Caspar menu";
+            listViewGroup2.Name = "listViewGroup2";
             this.lvHotKey_.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
             listViewGroup2});
             this.lvHotKey_.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvHotKey_.Location = new System.Drawing.Point(4, 38);
             this.lvHotKey_.Margin = new System.Windows.Forms.Padding(4);
+            this.lvHotKey_.MultiSelect = false;
             this.lvHotKey_.Name = "lvHotKey_";
-            this.lvHotKey_.ShowGroups = false;
+            this.lvHotKey_.ShowItemToolTips = true;
             this.lvHotKey_.Size = new System.Drawing.Size(360, 343);
             this.lvHotKey_.TabIndex = 0;
             this.lvHotKey_.UseCompatibleStateImageBehavior = false;
@@ -488,9 +495,9 @@
             this.columnHeader3,
             this.columnHeader4});
             this.lvColor_.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
             this.lvColor_.LabelEdit = true;
             this.lvColor_.Location = new System.Drawing.Point(4, 36);
             this.lvColor_.Margin = new System.Windows.Forms.Padding(4);

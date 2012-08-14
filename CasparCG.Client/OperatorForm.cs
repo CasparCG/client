@@ -145,7 +145,6 @@ namespace Caspar_Pilot
 			}
 			else
 			{
-				//TODO: Disable preview since there is no templatehost.
 				itemViewControl_.EnablePreview = false;
 			}
 		}
@@ -188,10 +187,10 @@ namespace Caspar_Pilot
             miAdvance_.Enabled = IsOnAir && (selectedItem != null);
 
             btnClear_.Enabled = btnLoad_.Enabled = btnPlay_.Enabled = btnStep_.Enabled = btnUpdate_.Enabled = btnStop_.Enabled = 
-            miClear_.Enabled = miClearAll_.Enabled = miLoad_.Enabled = miPlay_.Enabled = miStep_.Enabled = miUpdate_.Enabled = miStop_.Enabled = (selectedItem != null && selectedItem.Online);
-            
-            btnOnAir_.Enabled = (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None);
-		}
+            miClearLayer_.Enabled = miClearChannel_.Enabled = miLoad_.Enabled = miPlay_.Enabled = miStep_.Enabled = miUpdate_.Enabled = miStop_.Enabled = (selectedItem != null && selectedItem.Online);
+
+            miClearAll_.Enabled = btnOnAir_.Enabled = (HostsManager.ValidConnections != Hosts.ValidHostsConnections.None);
+        }
 
 		private void btnNew__Click(object sender, EventArgs e)
 		{
@@ -229,8 +228,23 @@ namespace Caspar_Pilot
         }
 		private void btnClear__Click(object sender, EventArgs e)
 		{
-            miClear_.PerformClick();
+            if (btnClear_.Tag == btnClearLayer_.Tag)
+                btnClearLayer_.PerformClick();
+            else if (btnClear_.Tag == btnClearChannel_.Tag)
+                btnClearChannel_.PerformClick();
 		}
+        private void btnClearLayer__Click(object sender, EventArgs e)
+        {
+            miClearLayer_.PerformClick();
+            btnClear_.Tag = btnClearLayer_.Tag;
+            btnClear_.Text = btnClearLayer_.Text;
+        }
+        private void btnClearChannel__Click(object sender, EventArgs e)
+        {
+            miClearChannel_.PerformClick();
+            btnClear_.Tag = btnClearChannel_.Tag;
+            btnClear_.Text = btnClearChannel_.Text;
+        }
 		#endregion
 
 		#region On Air
@@ -851,7 +865,7 @@ namespace Caspar_Pilot
 			}
 		}
 			        
-		void DoClear(RundownItem item)
+		void DoClearLayer(RundownItem item)
 		{
 			if (item != null)
 			{
@@ -871,6 +885,15 @@ namespace Caspar_Pilot
 				}
 			}
 		}
+        void DoClearChannel(RundownItem item)
+        {
+            if (item != null)
+            {
+                Svt.Caspar.Channel channel = HostsManager.GetChannel(item.Channel);
+                if (channel != null)
+                    channel.Clear();
+            }
+        }
 		#endregion
 
         #region Shortcut keys handling
@@ -880,9 +903,6 @@ namespace Caspar_Pilot
         {
             if (msg.Msg == WM_SYSKEYDOWN || msg.Msg == WM_KEYDOWN)
             {
-                //TODO: Remove. For debug purposes only
-                //toolStripStatusLabel1.Text = keyData.ToString();
-
                 switch (keyData)
                 {
                     case Keys.Space:
@@ -918,13 +938,6 @@ namespace Caspar_Pilot
                             return true;
                         }
                         break;
-
-                    //case Keys.Pause:    //TODO: Convert to menuItem
-                    //    for (int i = 0; i < lbRundown_.Items.Count; i++)
-                    //    {
-                    //        DoClear(lbRundown_.Items[i] as RundownItem);
-                    //    }
-                    //    return true;
 
                     //case Keys.PageDown: //TODO: Convert to menuItem and change key!
                     //    DoPlayCurrentItem();
@@ -1242,6 +1255,7 @@ namespace Caspar_Pilot
 
             //hotkeys are now implemented as shortcutkeys to toolstripmenuitems
             sd.PlayoutMenuItems = playoutToolStripMenuItem;
+            sd.CasparMenuItems = casparToolStripMenuItem;
 
             if (sd.ShowDialog() == DialogResult.OK)
             {
@@ -1319,13 +1333,13 @@ namespace Caspar_Pilot
         RundownItem clipboard_ = null;
         private void miCut__Click(object sender, EventArgs e)
         {
+            //TODO: Use the real clipboard instead. see below. doesn't work yet
             if (lbRundown_.SelectedItem != null)
             {
                 clipboard_ = (RundownItem)(lbRundown_.SelectedItem as RundownItem).Clone();
                 DeleteSelectedItem();
             }
 
-            //TODO: Use the real clipboard instead
             //if (lbRundown_.SelectedItem != null)
             //{
             //    RundownItem copy = (RundownItem)((RundownItem)lbRundown_.SelectedItem).Clone();
@@ -1336,12 +1350,12 @@ namespace Caspar_Pilot
 
         private void miCopy__Click(object sender, EventArgs e)
         {
+            //TODO: Use the real clipboard instead. see below, doesn't work yet
             if (lbRundown_.SelectedItem != null)
             {
                 clipboard_ = (RundownItem)(lbRundown_.SelectedItem as RundownItem).Clone();
             }
             
-            //TODO: Use the real clipboard instead
             //if (lbRundown_.SelectedItem != null)
             //{
             //    RundownItem copy = (RundownItem)((RundownItem)lbRundown_.SelectedItem).Clone();
@@ -1351,13 +1365,13 @@ namespace Caspar_Pilot
 
         private void miPaste__Click(object sender, EventArgs e)
         {
+            //TODO: Use the real clipboard instead. see below, doesn't work yet
             if (clipboard_ != null)
             {
                 RundownItem newItem = clipboard_.Clone() as RundownItem;
                 InsertItem(newItem);
             }
 
-            //TODO: Use the real clipboard instead
             //if (Clipboard.ContainsData(RundownItemDataFormat.Name))
             //{
             //    RundownItem copy = (RundownItem)Clipboard.GetData(RundownItemDataFormat.Name);
@@ -1456,17 +1470,31 @@ namespace Caspar_Pilot
                 if (item.IsCG)
                     DoStopItem(item);
                 else
-                    DoClear(item);
+                    DoClearLayer(item);
             }
         }
 
-        private void miClear__Click(object sender, EventArgs e)
+        private void miClearLayer__Click(object sender, EventArgs e)
         {
-            DoClear((RundownItem)lbRundown_.SelectedItem);
+            DoClearLayer((RundownItem)lbRundown_.SelectedItem);
+        }
+
+        private void miClearChannel__Click(object sender, EventArgs e)
+        {
+            DoClearChannel((RundownItem)lbRundown_.SelectedItem);
         }
 
         private void miClearAll__Click(object sender, EventArgs e)
         {
+            foreach (Hosts.ChannelInformation channelInfo in HostsManager.ChannelInfos)
+            {
+                if (channelInfo.Online)
+                {
+                    Svt.Caspar.Channel channel = HostsManager.GetChannel(channelInfo.Label);
+                    if (channel != null)
+                        channel.Clear();
+                }
+            }
 
         }
         #endregion
@@ -1519,8 +1547,6 @@ namespace Caspar_Pilot
             dialog.ShowDialog();
         }
         #endregion
-
-
 
     }
 }

@@ -77,6 +77,7 @@
             this.cKey.Name = "cKey";
             this.cKey.Size = new System.Drawing.Size(60, 21);
             this.cKey.TabIndex = 3;
+            this.cKey.SelectedIndexChanged += new System.EventHandler(this.cKey_SelectedIndexChanged);
             // 
             // HotkeyEditControl
             // 
