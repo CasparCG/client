@@ -42,7 +42,7 @@
       <Value Profile="(Default)">10.23.52.206</Value>
     </Setting>
     <Setting Name="EnablePreview" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableTemplateData" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -51,7 +51,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableVideoLayers" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableControlValues" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>

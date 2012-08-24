@@ -162,7 +162,7 @@ namespace Caspar_Pilot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnablePreview {
             get {
                 return ((bool)(this["EnablePreview"]));
@@ -198,7 +198,7 @@ namespace Caspar_Pilot.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool EnableVideoLayers {
             get {
                 return ((bool)(this["EnableVideoLayers"]));

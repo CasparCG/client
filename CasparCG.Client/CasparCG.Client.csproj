@@ -194,7 +194,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RundownItem.cs" />
-    <Compile Include="Properties\Settings.cs" />
     <Compile Include="SettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>

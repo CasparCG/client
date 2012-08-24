@@ -33,7 +33,7 @@ namespace Caspar_Pilot.Controls
                 gbPreview_.Visible = value;
                 this.tableLayoutPanel1.RowStyles[0].Height = (value == true) ? 50F : 0;
                 tTemplateHostVersion.Text = FlashTemplateHostControl.GetVersionString(PreviewControl.Version);
-                
+
                 Properties.Settings.Default.EnablePreview = value;
             }
 		}
