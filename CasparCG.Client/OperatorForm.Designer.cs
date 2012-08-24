@@ -107,9 +107,9 @@
             // 
             // gbRundown_
             // 
-            this.gbRundown_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbRundown_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRundown_.Controls.Add(this.tsRundown_);
             this.gbRundown_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbRundown_.Location = new System.Drawing.Point(4, 4);
@@ -117,7 +117,7 @@
             this.gbRundown_.MinimumSize = new System.Drawing.Size(365, 0);
             this.gbRundown_.Name = "gbRundown_";
             this.gbRundown_.Padding = new System.Windows.Forms.Padding(4);
-            this.gbRundown_.Size = new System.Drawing.Size(450, 752);
+            this.gbRundown_.Size = new System.Drawing.Size(479, 908);
             this.gbRundown_.TabIndex = 1;
             this.gbRundown_.TabStop = false;
             this.gbRundown_.Text = "Rundown";
@@ -140,7 +140,7 @@
             this.btnDetail_});
             this.tsRundown_.Location = new System.Drawing.Point(4, 19);
             this.tsRundown_.Name = "tsRundown_";
-            this.tsRundown_.Size = new System.Drawing.Size(442, 25);
+            this.tsRundown_.Size = new System.Drawing.Size(471, 25);
             this.tsRundown_.TabIndex = 2;
             // 
             // btnNew_
@@ -293,24 +293,24 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1404, 760);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1494, 916);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pOnAir_
             // 
             this.pOnAir_.Controls.Add(this.pItemLoaded_);
             this.pOnAir_.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pOnAir_.Location = new System.Drawing.Point(458, 0);
+            this.pOnAir_.Location = new System.Drawing.Point(487, 0);
             this.pOnAir_.Margin = new System.Windows.Forms.Padding(0);
             this.pOnAir_.Name = "pOnAir_";
-            this.pOnAir_.Size = new System.Drawing.Size(16, 760);
+            this.pOnAir_.Size = new System.Drawing.Size(16, 916);
             this.pOnAir_.TabIndex = 2;
             // 
             // pItemLoaded_
             // 
-            this.pItemLoaded_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pItemLoaded_.Location = new System.Drawing.Point(5, 738);
+            this.pItemLoaded_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pItemLoaded_.Location = new System.Drawing.Point(5, 894);
             this.pItemLoaded_.Margin = new System.Windows.Forms.Padding(4);
             this.pItemLoaded_.Name = "pItemLoaded_";
             this.pItemLoaded_.Size = new System.Drawing.Size(8, 17);
@@ -318,12 +318,12 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(477, 3);
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Location = new System.Drawing.Point(506, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(924, 754);
+            this.panel1.Size = new System.Drawing.Size(985, 910);
             this.panel1.TabIndex = 3;
             // 
             // menuStrip1
@@ -339,7 +339,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1404, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1494, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -714,10 +714,10 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabelPage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 784);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 940);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1404, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1494, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -735,7 +735,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1181, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(1221, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -755,7 +755,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1404, 806);
+            this.ClientSize = new System.Drawing.Size(1494, 962);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
