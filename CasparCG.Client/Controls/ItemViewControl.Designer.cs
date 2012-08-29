@@ -43,7 +43,7 @@
             System.Windows.Forms.Label label14;
             System.Windows.Forms.Label label15;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemViewControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gbPreview_ = new System.Windows.Forms.GroupBox();
             this.pPreviewContainer_ = new System.Windows.Forms.Panel();
@@ -68,11 +68,11 @@
             this.cMultistep_ = new System.Windows.Forms.CheckBox();
             this.tpStatics_ = new System.Windows.Forms.TabPage();
             this.cbMediaCategory_ = new System.Windows.Forms.ComboBox();
-            this.cLoop_ = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbTransition_ = new System.Windows.Forms.ComboBox();
             this.nDuration_ = new System.Windows.Forms.NumericUpDown();
             this.cbMediafiles_ = new System.Windows.Forms.ComboBox();
+            this.cLoop_ = new System.Windows.Forms.CheckBox();
             this.tabPageControl = new System.Windows.Forms.TabPage();
             this.numericUpDownControlValue = new System.Windows.Forms.NumericUpDown();
             this.comboBoxSettings = new System.Windows.Forms.ComboBox();
@@ -267,10 +267,12 @@
             // 
             // gbPreview_
             // 
+            this.gbPreview_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.gbPreview_, 2);
             this.gbPreview_.Controls.Add(this.pPreviewContainer_);
             this.gbPreview_.Controls.Add(this.tsPreview_);
-            this.gbPreview_.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbPreview_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbPreview_.Location = new System.Drawing.Point(3, 3);
             this.gbPreview_.Name = "gbPreview_";
@@ -373,8 +375,8 @@
             // 
             // cbColor_
             // 
-            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbColor_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbColor_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColor_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbColor_.FormattingEnabled = true;
@@ -435,8 +437,8 @@
             // 
             // cbChannels_
             // 
-            this.cbChannels_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbChannels_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbChannels_.DisplayMember = "Label";
             this.cbChannels_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbChannels_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -450,8 +452,8 @@
             // 
             // tcItemSettings_
             // 
-            this.tcItemSettings_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcItemSettings_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcItemSettings_.Controls.Add(this.tpTemplates_);
             this.tcItemSettings_.Controls.Add(this.tpStatics_);
             this.tcItemSettings_.Controls.Add(this.tabPageControl);
@@ -512,8 +514,8 @@
             // 
             // cbCategory_
             // 
-            this.cbCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCategory_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCategory_.FormattingEnabled = true;
             this.cbCategory_.Location = new System.Drawing.Point(6, 70);
@@ -533,8 +535,8 @@
             // 
             // cbTemplates_
             // 
-            this.cbTemplates_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTemplates_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbTemplates_.DropDownHeight = 300;
             this.cbTemplates_.DropDownWidth = 400;
             this.cbTemplates_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -579,8 +581,8 @@
             // 
             // cbMediaCategory_
             // 
-            this.cbMediaCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMediaCategory_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMediaCategory_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbMediaCategory_.FormattingEnabled = true;
             this.cbMediaCategory_.Location = new System.Drawing.Point(9, 23);
@@ -589,23 +591,10 @@
             this.cbMediaCategory_.TabIndex = 17;
             this.cbMediaCategory_.SelectedIndexChanged += new System.EventHandler(this.cbMediaCategory__SelectedIndexChanged);
             // 
-            // cLoop_
-            // 
-            this.cLoop_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cLoop_.AutoSize = true;
-            this.cLoop_.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cLoop_.Location = new System.Drawing.Point(187, 49);
-            this.cLoop_.Name = "cLoop_";
-            this.cLoop_.Size = new System.Drawing.Size(58, 20);
-            this.cLoop_.TabIndex = 1;
-            this.cLoop_.Text = "Loop";
-            this.cLoop_.UseVisualStyleBackColor = true;
-            this.cLoop_.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.cbTransition_);
             this.groupBox3.Controls.Add(this.nDuration_);
             this.groupBox3.Controls.Add(label8);
@@ -637,8 +626,8 @@
             // 
             // cbMediafiles_
             // 
-            this.cbMediafiles_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMediafiles_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMediafiles_.DropDownHeight = 300;
             this.cbMediafiles_.DropDownWidth = 400;
             this.cbMediafiles_.FormattingEnabled = true;
@@ -649,6 +638,19 @@
             this.cbMediafiles_.TabIndex = 0;
             this.cbMediafiles_.SelectedIndexChanged += new System.EventHandler(this.cbMediafiles__SelectedIndexChanged);
             this.cbMediafiles_.TextUpdate += new System.EventHandler(this.cbMediafiles__TextUpdate);
+            // 
+            // cLoop_
+            // 
+            this.cLoop_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cLoop_.AutoSize = true;
+            this.cLoop_.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cLoop_.Location = new System.Drawing.Point(187, 49);
+            this.cLoop_.Name = "cLoop_";
+            this.cLoop_.Size = new System.Drawing.Size(58, 20);
+            this.cLoop_.TabIndex = 1;
+            this.cLoop_.Text = "Loop";
+            this.cLoop_.UseVisualStyleBackColor = true;
+            this.cLoop_.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // tabPageControl
             // 
@@ -685,8 +687,8 @@
             // 
             // comboBoxSettings
             // 
-            this.comboBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxSettings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSettings.FormattingEnabled = true;
             this.comboBoxSettings.Location = new System.Drawing.Point(6, 71);
@@ -697,8 +699,8 @@
             // 
             // comboBoxSystemControl
             // 
-            this.comboBoxSystemControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxSystemControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxSystemControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSystemControl.FormattingEnabled = true;
             this.comboBoxSystemControl.Items.AddRange(new object[] {
@@ -721,8 +723,8 @@
             // 
             // tName_
             // 
-            this.tName_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tName_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tName_.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tName_.Location = new System.Drawing.Point(49, 18);
             this.tName_.Name = "tName_";
@@ -732,9 +734,9 @@
             // 
             // groupBoxTemplteData
             // 
-            this.groupBoxTemplteData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxTemplteData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTemplteData.Controls.Add(this.dataGridView1);
             this.groupBoxTemplteData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxTemplteData.Location = new System.Drawing.Point(273, 381);
@@ -748,8 +750,8 @@
             // 
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {

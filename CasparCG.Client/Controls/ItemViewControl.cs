@@ -255,7 +255,6 @@ namespace Caspar_Pilot.Controls
 		{
 			if (CurrentItem != null && CurrentItem.CGItem != null)
 			{
-				PreviewControl.DisplayNewFlash();
 				if (PreviewControl.Add(CurrentItem.CGItem, PreviewLayer))
 				{
 					lPreviewInfo_.Text = "Preview " + CurrentItem.CGItem.TemplateIdentifier;
