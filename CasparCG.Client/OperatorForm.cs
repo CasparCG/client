@@ -44,23 +44,23 @@ namespace Caspar_Pilot
 		{
             RundownItemDataFormat = DataFormats.GetFormat(RundownItemDataFormatString);
 
-			HostsManager = new Hosts.HostsManager();
+            HostsManager = new Hosts.HostsManager();
             HostsManager.ValidConnectionsChanged += HostsManager_ValidConnectionsChanged;
 
-			channelStringFormat_ = new StringFormat(StringFormatFlags.NoWrap);
-			channelStringFormat_.Alignment = StringAlignment.Far;
-			fontBrush_ = new SolidBrush(Color.Black);
-			fontBrushSelected_ = new SolidBrush(Color.White);
+            channelStringFormat_ = new StringFormat(StringFormatFlags.NoWrap);
+            channelStringFormat_.Alignment = StringAlignment.Far;
+            fontBrush_ = new SolidBrush(Color.Black);
+            fontBrushSelected_ = new SolidBrush(Color.White);
 
-			InitializeComponent();
+            InitializeComponent();
             for (int i = 0; i < 8; ++i)
             {
                 miRecentFiles_.DropDownItems.Insert(0, new ToolStripMenuItem(string.Empty, null, recentFile__Click));
             }
-			InitializeCustomComponents();
-			UpdateTitle();
+            InitializeCustomComponents();
+            UpdateTitle();
 
-			IsCurrentItemLoaded = false;
+            IsCurrentItemLoaded = false;
 		}
 
 		private void InitializeCustomComponents()
