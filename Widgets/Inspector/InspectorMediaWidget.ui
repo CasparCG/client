@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorMediaWidget</class>
+ <widget class="QWidget" name="InspectorMediaWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>224</width>
+    <height>196</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTransition">
+     <item>
+      <spacer name="horizontalSpacerTransition">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>11</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTransition">
+       <property name="text">
+        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: white;&quot;&gt;Transition&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTransition">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+     <item>
+      <spacer name="horizontalSpacerDuration">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>17</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDuration">
+       <property name="text">
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: white;&quot;&gt;Duration&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTween">
+     <item>
+      <spacer name="horizontalSpacerTween">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>29</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTween">
+       <property name="text">
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: white;&quot;&gt;Tween&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTween">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDirection">
+     <item>
+      <spacer name="horizontalSpacerDirection">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>15</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDirection">
+       <property name="text">
+        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: white;&quot;&gt;Direction&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxDirection">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSeekLength">
+     <item>
+      <spacer name="horizontalSpacerSeekLength">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>39</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSeek">
+       <property name="text">
+        <string>&lt;a href=&quot;Seek&quot; style=&quot;color: white;&quot;&gt;Seek&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxSeek">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelLength">
+       <property name="text">
+        <string>&lt;a href=&quot;Length&quot; style=&quot;color: white;&quot;&gt;Length&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxLength">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutLoop">
+     <item>
+      <spacer name="horizontalSpacerLoop1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelLoop">
+       <property name="text">
+        <string>&lt;a href=&quot;Loop&quot; style=&quot;color: white;&quot;&gt;Loop&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxLoop">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerLoop2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerMedia">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>spinBoxDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>durationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxLoop</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>loopChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>85</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTransition</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>transitionChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxDirection</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>directionChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSeek</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>seekChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>22</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxLength</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>lengthChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>168</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTween</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>tweenChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelTransition</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetTransition(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDuration</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetDuration(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>56</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelTween</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetTween(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDirection</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetDirection(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>89</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelSeek</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetSeek(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelLength</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetLength(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelLoop</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetLoop(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>58</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>durationChanged(int)</slot>
+  <slot>loopChanged(int)</slot>
+  <slot>transitionChanged(QString)</slot>
+  <slot>directionChanged(QString)</slot>
+  <slot>seekChanged(int)</slot>
+  <slot>lengthChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>resetTransition(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>resetDirection(QString)</slot>
+  <slot>resetSeek(QString)</slot>
+  <slot>resetLength(QString)</slot>
+  <slot>resetLoop(QString)</slot>
+ </slots>
+</ui>

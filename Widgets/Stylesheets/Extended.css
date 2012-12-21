@@ -1,0 +1,192 @@
+/*
+ * General
+ */
+#frameItem
+{
+    background-color: transparent;
+    border-radius: 0px;
+}
+#labelName
+{
+    font-size: 13px;
+}
+#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelGpiOutputPort
+{
+    color: rgba(174, 174, 174, 255);
+}
+
+/*
+ * MainWindow
+ */
+#MainWindow > #centralWidget
+{
+    background-color: rgba(59, 59, 59, 255);
+    border-bottom-color: rgba(43, 43, 43, 255);
+    border-bottom-width: 1px;
+    border-radius: 0px;
+}
+
+/*
+ * SettingsDialog
+ */
+#lineStartup, #lineAppearance, #lineSynchronize, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+{
+    background-color: rgba(43, 43, 43, 255);
+}
+
+/*
+ * LibraryWidget
+ */
+#toolButtonRefresh
+{
+    image: url(:/Graphics/Images/Refresh.png);
+}
+#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo
+{
+    border-width: 0px;
+}
+
+/*
+ * InspectorWidget
+ */
+#treeWidgetInspector
+{
+    background-color: rgba(59, 59, 59, 255);
+    border-width: 0px;
+}
+#treeWidgetInspector::item:hover
+{
+    background-color: rgba(59, 59, 59, 255);
+}
+
+/*
+ * RundownWidget
+ */
+#treeWidgetRundown
+{
+    background-color: rgba(52, 52, 52, 255);
+}
+#treeWidgetRundown::item:hover
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::item:hover:selected
+{
+    background-color: rgba(96, 96, 96, 255);
+}
+#treeWidgetRundown::branch
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::branch:!has-children:!has-siblings:adjoins-item
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::branch:closed:has-children:has-siblings, QTreeWidget::branch:has-children:!has-siblings:closed
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::branch:closed:has-children:has-siblings:hover, QTreeWidget::branch:has-children:!has-siblings:closed:hover
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::branch:open:has-children:has-siblings, QTreeWidget::branch:open:has-children:!has-siblings
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::branch:open:has-children:has-siblings:hover, QTreeWidget::branch:open:has-children:!has-siblings:hover
+{
+    background-color: transparent;
+}
+
+/*
+ * PreviewWidget
+ */
+#pagePreview
+{
+    background-color: rgba(52, 52, 52, 255);
+}
+#widgetVideo
+{
+    background-color: transparent;
+}
+
+#pushButtonPlay
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    border-radius: 0px;
+    border-width: 1px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+#pushButtonFastRewindStart
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border-width: 1px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+#pushButtonFastForwardEnd
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border-width: 1px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+#pushButtonFastRewind, #pushButtonFastForward
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    border-left-width: 0px;
+    border-radius: 0px;
+    border-right-width: 0px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+#pushButtonPlay:disabled, #pushButtonFastRewind:disabled, #pushButtonFastRewindStart:disabled, #pushButtonFastForward:disabled, #pushButtonFastForwardEnd:disabled
+{
+    background-color: rgba(59, 59, 59, 255);
+}
+#pushButtonPlay:hover, #pushButtonFastRewind:hover, #pushButtonFastRewindStart:hover, #pushButtonFastForward:hover, #pushButtonFastForwardEnd:hover
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(112, 112, 112, 255));
+}
+#pushButtonPlay:pressed, #pushButtonFastRewind:pressed, #pushButtonFastRewindStart:pressed, #pushButtonFastForward:pressed, #pushButtonFastForwardEnd:pressed
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(96, 96, 96, 255));
+}
+
+/*
+ * ClockWidget
+ */
+#lcdNumber
+{
+    color: rgba(200, 65, 65, 255);
+}
+#lcdNumberShadowHour
+{
+    color: rgba(68, 68, 68, 128);
+}
+#lcdNumberShadowMinute
+{
+    color: rgba(68, 68, 68, 128);
+}
+#lcdNumberShadowSecond
+{
+    color: rgba(68, 68, 68, 128);
+}
+#lcdNumberShadowMillisecond
+{
+    color: rgba(68, 68, 68, 128);
+}

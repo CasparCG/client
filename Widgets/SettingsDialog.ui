@@ -1,0 +1,2900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>757</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>700</width>
+    <height>757</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>700</width>
+    <height>757</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>10</y>
+     <width>680</width>
+     <height>707</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tabGeneral">
+    <attribute name="title">
+     <string>General</string>
+    </attribute>
+    <widget class="QLabel" name="labelSynchronize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>152</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Synchronize</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineSynchronize">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>160</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelInterval">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>218</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Interval:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxSynchronizeInterval">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>216</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>5</number>
+     </property>
+     <property name="value">
+      <number>30</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSeconds">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>220</y>
+       <width>62</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>seconds</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxFontSize">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>106</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>11</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelAppearance">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>82</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Appearance</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineAppearance">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>90</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFontSize">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>110</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Font size:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPixels">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>110</y>
+       <width>62</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>pixels</string>
+     </property>
+    </widget>
+    <widget class="Line" name="lineStartup">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStartup">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>12</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Startup</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxFullscreen">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>40</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Start in fullscreen</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxAutoSynchronize">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>180</y>
+       <width>211</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Synchronize library automatically</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabDevices">
+    <attribute name="title">
+     <string>Devices</string>
+    </attribute>
+    <widget class="QTreeWidget" name="treeWidgetDevice">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>658</width>
+       <height>631</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Username</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Password</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Version</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Shadow</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QToolButton" name="toolButtonRemoveDevice">
+     <property name="geometry">
+      <rect>
+       <x>49</x>
+       <y>647</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Remove device</string>
+     </property>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonAddDevice">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>647</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Add new device</string>
+     </property>
+     <property name="text">
+      <string>+</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabGpi">
+    <attribute name="title">
+     <string>GPI</string>
+    </attribute>
+    <widget class="QLabel" name="labelGpiInputs">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Inputs</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineGpiInputsSetup">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>128</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput1">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>155</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 1:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput2">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>183</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 2:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput3">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>211</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 3:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput4">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>239</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 4:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput5">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>267</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 5:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput6">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>295</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 6:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput7">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>323</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 7:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiInput8">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>351</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Input 8:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction1">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>154</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction2">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>182</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction3">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>210</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction4">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>238</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction5">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>266</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction6">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>294</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>7</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction7">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>322</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>8</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxAction8">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>350</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>9</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Videolayer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="Line" name="lineGpiOutputsSetup">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>408</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutputsSetup">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Outputs</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange1">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>154</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange2">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>182</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange4">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>238</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange5">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>266</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange6">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>294</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange7">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>322</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiVoltageChange8">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>350</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput1">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>435</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 1:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput2">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>463</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 2:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput3">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>491</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 3:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput4">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>519</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 4:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput5">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>547</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 5:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput6">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>575</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 6:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput7">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>603</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 7:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiOutput8">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>631</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Output 8:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange3">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>490</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange8">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>630</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange2">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>462</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange1">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>434</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange6">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>574</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange7">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>602</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange5">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>546</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpoVoltageChange4">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>518</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Rising Edge</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Falling Edge</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="labelGpiDeviceSetup">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>12</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>GPI Device</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineGpiDeviceSetup">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds1">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>437</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength1">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>435</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength1">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>433</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds2">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>465</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength2">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>463</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength2">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>461</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength3">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>491</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength3">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>489</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds3">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>493</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength4">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>519</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength4">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>517</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds4">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>521</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength5">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>545</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength5">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>547</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds5">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>549</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds6">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>577</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength6">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>573</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength6">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>575</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength7">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>601</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength7">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>603</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds7">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>605</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBoxPulseLength8">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>629</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="value">
+      <number>50</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelMilliseconds8">
+     <property name="geometry">
+      <rect>
+       <x>435</x>
+       <y>633</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>milliseconds</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelPulseLength8">
+     <property name="geometry">
+      <rect>
+       <x>254</x>
+       <y>631</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulse Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiSerialPort">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>47</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Serial Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiBaudRate">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>78</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Baud Rate:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxGpiBaudRate">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>76</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>9600</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>115200</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLineEdit" name="lineEditSerialPort">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>46</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>COM1</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>615</x>
+     <y>725</y>
+     <width>75</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>&amp;OK</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>lineEditSerialPort</tabstop>
+  <tabstop>comboBoxGpiBaudRate</tabstop>
+  <tabstop>comboBoxAction1</tabstop>
+  <tabstop>comboBoxGpiVoltageChange1</tabstop>
+  <tabstop>comboBoxAction2</tabstop>
+  <tabstop>comboBoxGpiVoltageChange2</tabstop>
+  <tabstop>comboBoxAction3</tabstop>
+  <tabstop>comboBoxGpiVoltageChange3</tabstop>
+  <tabstop>comboBoxAction4</tabstop>
+  <tabstop>comboBoxGpiVoltageChange4</tabstop>
+  <tabstop>comboBoxAction5</tabstop>
+  <tabstop>comboBoxGpiVoltageChange5</tabstop>
+  <tabstop>comboBoxAction6</tabstop>
+  <tabstop>comboBoxGpiVoltageChange6</tabstop>
+  <tabstop>comboBoxAction7</tabstop>
+  <tabstop>comboBoxGpiVoltageChange7</tabstop>
+  <tabstop>comboBoxAction8</tabstop>
+  <tabstop>comboBoxGpiVoltageChange8</tabstop>
+  <tabstop>comboBoxGpoVoltageChange1</tabstop>
+  <tabstop>spinBoxPulseLength1</tabstop>
+  <tabstop>comboBoxGpoVoltageChange2</tabstop>
+  <tabstop>spinBoxPulseLength2</tabstop>
+  <tabstop>comboBoxGpoVoltageChange3</tabstop>
+  <tabstop>spinBoxPulseLength3</tabstop>
+  <tabstop>comboBoxGpoVoltageChange4</tabstop>
+  <tabstop>spinBoxPulseLength4</tabstop>
+  <tabstop>comboBoxGpoVoltageChange5</tabstop>
+  <tabstop>spinBoxPulseLength5</tabstop>
+  <tabstop>comboBoxGpoVoltageChange6</tabstop>
+  <tabstop>spinBoxPulseLength6</tabstop>
+  <tabstop>comboBoxGpoVoltageChange7</tabstop>
+  <tabstop>spinBoxPulseLength7</tabstop>
+  <tabstop>comboBoxGpoVoltageChange8</tabstop>
+  <tabstop>spinBoxPulseLength8</tabstop>
+  <tabstop>toolButtonAddDevice</tabstop>
+  <tabstop>toolButtonRemoveDevice</tabstop>
+  <tabstop>spinBoxFontSize</tabstop>
+  <tabstop>spinBoxSynchronizeInterval</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>toolButtonAddDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>39</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>86</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>80</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxFontSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>fontSizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>136</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>437</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonOK</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>735</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>594</x>
+     <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSynchronizeInterval</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>synchronizeIntervalChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxFullscreen</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>startFullscreenChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoSynchronize</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>autoSynchronizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction1</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction2</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>226</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction3</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction4</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>281</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction5</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction6</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction7</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction8</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditSerialPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>serialPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>624</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange1</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>380</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>717</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange2</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>712</x>
+     <y>36</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange3</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>368</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>672</x>
+     <y>-6</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange4</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>332</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>-13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange5</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>602</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange6</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>551</x>
+     <y>7</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange7</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>283</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>-3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange8</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>705</x>
+     <y>339</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange1</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength1</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>381</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-18</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange2</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>505</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-12</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength2</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>403</x>
+     <y>506</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-42</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange3</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>536</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-28</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength3</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>363</x>
+     <y>538</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-30</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange4</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-61</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength4</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-68</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange5</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>592</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-48</x>
+     <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength5</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>589</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-67</x>
+     <y>472</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange6</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>613</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-69</x>
+     <y>503</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength6</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>377</x>
+     <y>613</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-49</x>
+     <y>533</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange7</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>647</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-20</x>
+     <y>564</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength7</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>390</x>
+     <y>651</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-44</x>
+     <y>595</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange8</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>679</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-48</x>
+     <y>658</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength8</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>678</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-53</x>
+     <y>695</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiBaudRate</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>baudRateChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-10</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showAddDeviceDialog()</slot>
+  <slot>removeDevice()</slot>
+  <slot>fontSizeChanged(int)</slot>
+  <slot>deviceItemSelected(QTreeWidgetItem*,int)</slot>
+  <slot>synchronizeIntervalChanged(int)</slot>
+  <slot>startFullscreenChanged(int)</slot>
+  <slot>autoSynchronizeChanged(int)</slot>
+  <slot>gpi1Changed()</slot>
+  <slot>gpi2Changed()</slot>
+  <slot>gpi3Changed()</slot>
+  <slot>gpi4Changed()</slot>
+  <slot>gpi5Changed()</slot>
+  <slot>gpi6Changed()</slot>
+  <slot>gpi7Changed()</slot>
+  <slot>gpi8Changed()</slot>
+  <slot>serialPortChanged()</slot>
+  <slot>gpo1Changed()</slot>
+  <slot>gpo2Changed()</slot>
+  <slot>gpo3Changed()</slot>
+  <slot>gpo4Changed()</slot>
+  <slot>gpo5Changed()</slot>
+  <slot>gpo6Changed()</slot>
+  <slot>gpo7Changed()</slot>
+  <slot>gpo8Changed()</slot>
+  <slot>baudRateChanged(QString)</slot>
+ </slots>
+</ui>

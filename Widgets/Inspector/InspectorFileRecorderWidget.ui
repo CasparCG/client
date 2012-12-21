@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorFileRecorderWidget</class>
+ <widget class="QWidget" name="InspectorFileRecorderWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>226</width>
+    <height>168</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutFilename">
+     <item>
+      <spacer name="horizontalSpacerFilename">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>16</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFilename">
+       <property name="text">
+        <string>&lt;a href=&quot;Filename&quot; style=&quot;color: white;&quot;&gt;Filename&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditFilename"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutCodec">
+     <item>
+      <spacer name="horizontalSpacerCodec">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>32</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelCodec">
+       <property name="text">
+        <string>&lt;a href=&quot;Codec&quot; style=&quot;color: white;&quot;&gt;Codec&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxCodec">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>qtrle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>libx264</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>dnxhd</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>prores</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rawvideo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ffvhuff</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutContainer">
+     <item>
+      <spacer name="horizontalSpacerContainer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>12</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelContainer">
+       <property name="text">
+        <string>&lt;a href=&quot;Container&quot; style=&quot;color: white;&quot;&gt;Container&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxContainer">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>mov</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPreset">
+     <item>
+      <spacer name="horizontalSpacerPreset">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>31</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPreset">
+       <property name="text">
+        <string>&lt;a href=&quot;Preset&quot; style=&quot;color: white;&quot;&gt;Preset&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxPreset">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>ultrafast</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTune">
+     <item>
+      <spacer name="horizontalSpacerTune">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>38</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTune">
+       <property name="text">
+        <string>&lt;a href=&quot;Tune&quot; style=&quot;color: white;&quot;&gt;Tune&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTune">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>fastdecode</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerFileRecorder">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelFilename</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetFilename(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelContainer</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetContainer(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxContainer</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>containerChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelCodec</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetCodec(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxCodec</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>codecChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelPreset</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetPreset(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxPreset</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>presetChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelTune</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetTune(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTune</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>tuneChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditFilename</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>filenameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>containerChanged(QString)</slot>
+  <slot>resetContainer(QString)</slot>
+  <slot>resetCodec(QString)</slot>
+  <slot>codecChanged(QString)</slot>
+  <slot>resetPreset(QString)</slot>
+  <slot>presetChanged(QString)</slot>
+  <slot>resetTune(QString)</slot>
+  <slot>tuneChanged(QString)</slot>
+  <slot>resetFilename(QString)</slot>
+  <slot>filenameChanged(QString)</slot>
+ </slots>
+</ui>

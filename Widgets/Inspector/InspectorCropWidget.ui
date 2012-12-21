@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorCropWidget</class>
+ <widget class="QWidget" name="InspectorCropWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>214</width>
+    <height>224</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalCropLeft">
+     <item>
+      <spacer name="horizontalSpacerCropLeft">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>44</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelCropLeft">
+       <property name="text">
+        <string>&lt;a href=&quot;Left&quot; style=&quot;color: white;&quot;&gt;Left&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderCropLeft">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxCropLeft">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutCropTop">
+     <item>
+      <spacer name="horizontalSpacerCropTop">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>37</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelCropTop">
+       <property name="text">
+        <string>&lt;a href=&quot;Right&quot; style=&quot;color: white;&quot;&gt;Right&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderCropTop">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxCropTop">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutCropRight">
+     <item>
+      <spacer name="horizontalSpacerCropRight">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>44</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelCropRight">
+       <property name="text">
+        <string>&lt;a href=&quot;Top&quot; style=&quot;color: white;&quot;&gt;Top&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderCropRight">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxCropRight">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutCropBottom">
+     <item>
+      <spacer name="horizontalSpacerCropBottom">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>24</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelCropBottom">
+       <property name="text">
+        <string>&lt;a href=&quot;Bottom&quot; style=&quot;color: white;&quot;&gt;Bottom&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderCropBottom">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxCropBottom">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+     <item>
+      <spacer name="horizontalSpacerDuration">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>17</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDuration">
+       <property name="text">
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: white;&quot;&gt;Duration&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTween">
+     <item>
+      <spacer name="horizontalSpacerTween">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelEasing">
+       <property name="text">
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: white;&quot;&gt;Tween&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTween">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
+     <item>
+      <spacer name="horizontalSpacerDefer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>29</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDefer">
+       <property name="text">
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: white;&quot;&gt;Defer&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxDefer">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerDefer2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerCrop">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelCropLeft</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetCropLeft(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelCropTop</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetCropTop(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelCropRight</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetCropRight(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelCropBottom</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetCropBottom(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>27</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>durationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTween</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>tweenChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelEasing</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetTween(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDuration</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetDuration(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderCropLeft</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>sliderCropLeftChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderCropTop</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>sliderCropTopChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>113</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderCropRight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>sliderCropRightChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxCropLeft</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>spinBoxCropLeftChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxCropTop</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>spinBoxCropTopChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxCropRight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>spinBoxCropRightChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxCropBottom</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>spinBoxCropBottomChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderCropBottom</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>sliderCropBottomChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDefer</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>resetDefer(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDefer</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorCropWidget</receiver>
+   <slot>deferChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>sliderCropLeftChanged(int)</slot>
+  <slot>sliderCropRightChanged(int)</slot>
+  <slot>sliderCropTopChanged(int)</slot>
+  <slot>sliderCropBottomChanged(int)</slot>
+  <slot>resetCropLeft(QString)</slot>
+  <slot>resetCropRight(QString)</slot>
+  <slot>resetCropTop(QString)</slot>
+  <slot>resetCropBottom(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>durationChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>spinBoxCropLeftChanged(int)</slot>
+  <slot>spinBoxCropRightChanged(int)</slot>
+  <slot>spinBoxCropTopChanged(int)</slot>
+  <slot>spinBoxCropBottomChanged(int)</slot>
+  <slot>resetDefer(QString)</slot>
+  <slot>deferChanged(int)</slot>
+ </slots>
+</ui>

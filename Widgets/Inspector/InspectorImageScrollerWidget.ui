@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorImageScrollerWidget</class>
+ <widget class="QWidget" name="InspectorImageScrollerWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>189</width>
+    <height>140</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutBlur">
+     <item>
+      <spacer name="horizontalSpacerBlur">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>48</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelBlur">
+       <property name="text">
+        <string>&lt;a href=&quot;Blur&quot; style=&quot;color: white;&quot;&gt;Blur&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxBlur">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSpeed">
+     <item>
+      <spacer name="horizontalSpacerSpeed">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>38</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSpeed">
+       <property name="text">
+        <string>&lt;a href=&quot;Speed&quot; style=&quot;color: white;&quot;&gt;Speed&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxSpeed">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPremultiply">
+     <item>
+      <spacer name="horizontalSpacerPremultiply1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPremultiply">
+       <property name="text">
+        <string>&lt;a href=&quot;Premultiply&quot; style=&quot;color: white;&quot;&gt;Premultiply&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxPremultiply">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerPremultiply2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutProgressive">
+     <item>
+      <spacer name="horizontalSpacerProgressive1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>3</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelProgressive">
+       <property name="text">
+        <string>&lt;a href=&quot;Progressive&quot; style=&quot;color: white;&quot;&gt;Progressive&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxProgressive">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerProgressive2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerImageScroller">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelPremultiply</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>resetPremultiply(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelProgressive</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>resetProgressive(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>43</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxPremultiply</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>premultiplyChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxProgressive</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>progressiveChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelBlur</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>resetBlur(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>53</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxBlur</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>blurChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelSpeed</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>resetSpeed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSpeed</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorImageScrollerWidget</receiver>
+   <slot>speedChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>resetProgressive(QString)</slot>
+  <slot>progressiveChanged(int)</slot>
+  <slot>resetPremultiply(QString)</slot>
+  <slot>premultiplyChanged(int)</slot>
+  <slot>resetBlur(QString)</slot>
+  <slot>blurChanged(int)</slot>
+  <slot>resetSpeed(QString)</slot>
+  <slot>speedChanged(int)</slot>
+ </slots>
+</ui>

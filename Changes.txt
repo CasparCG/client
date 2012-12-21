@@ -1,0 +1,25 @@
+CasparCG Client 2.0 Beta 2
+==========================
+
+- Fixed various bugs.
+- UI modifications.
+- Added support for build the project on Mac OSX with GPI support.
+
+
+CasparCG Client 2.0 Beta 1
+==========================
+
+- Fixed various bugs.
+- Added support for open/save rundown lists.
+- Added support for file recording using qtrle, dnxhd, prores, ffvhuff rawvideo, h264.
+- Added support for image scroll producer.
+- Added support for DeckLink input.
+- Added support for transactional mixer commands using commit/defer.
+- Added support for GPI/GPO on groups and individual rundown items.
+- Added support for GPI/GPO. Two sample project is in the repository (arduino/iocore).
+
+
+CasparCG Client 2.0 Alpha 1
+===========================
+
+- Initial version.

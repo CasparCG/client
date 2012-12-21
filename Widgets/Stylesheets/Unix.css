@@ -1,0 +1,7 @@
+/*
+ * QHeaderView
+ */
+QHeaderView::section
+{
+    padding: 4px;
+}

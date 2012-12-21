@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorGeometryWidget</class>
+ <widget class="QWidget" name="InspectorGeometryWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>207</width>
+    <height>224</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPositionX">
+     <item>
+      <spacer name="horizontalSpacerPositionX">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>11</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPositionX">
+       <property name="text">
+        <string>&lt;a href=&quot;PositionX&quot; style=&quot;color: white;&quot;&gt;Position X&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderPositionX">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxPositionX"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPositionY">
+     <item>
+      <spacer name="horizontalSpacerPositionY">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>11</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPositionY">
+       <property name="text">
+        <string>&lt;a href=&quot;PositionY&quot; style=&quot;color: white;&quot;&gt;Position Y&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderPositionY">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxPositionY"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutScaleX">
+     <item>
+      <spacer name="horizontalSpacerScaleX">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>28</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelScaleX">
+       <property name="text">
+        <string>&lt;a href=&quot;ScaleX&quot; style=&quot;color: white;&quot;&gt;Scale X&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderScaleX">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxScaleX"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutScaleY">
+     <item>
+      <spacer name="horizontalSpacerScaleY">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>28</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelScaleY">
+       <property name="text">
+        <string>&lt;a href=&quot;ScaleY&quot; style=&quot;color: white;&quot;&gt;Scale Y&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderScaleY">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxScaleY"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+     <item>
+      <spacer name="horizontalSpacerDuration">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>17</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDuration">
+       <property name="text">
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: white;&quot;&gt;Duration&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTween">
+     <item>
+      <spacer name="horizontalSpacerTween">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelEasing">
+       <property name="text">
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: white;&quot;&gt;Tween&lt;/a&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTween">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
+     <item>
+      <spacer name="horizontalSpacerDefer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>29</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDefer">
+       <property name="text">
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: white;&quot;&gt;Defer&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxDefer">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerDefer2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerGeometry">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelPositionX</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetPositionX(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>65</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelPositionY</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetPositionY(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>65</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelScaleX</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetScaleX(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelScaleY</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetScaleY(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDuration</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetDuration(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelEasing</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetTween(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>13</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>durationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTween</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>tweenChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderPositionX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>sliderPositionXChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPositionX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>spinBoxPositionXChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderPositionY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>sliderPositionYChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPositionY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>spinBoxPositionYChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderScaleX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>sliderScaleXChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxScaleX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>spinBoxScaleXChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderScaleY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>sliderScaleYChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxScaleY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>spinBoxScaleYChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelDefer</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>resetDefer(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>21</x>
+     <y>207</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDefer</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>deferChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>210</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>scaleXChanged(int)</slot>
+  <slot>scaleYChanged(int)</slot>
+  <slot>sliderPositionXChanged(int)</slot>
+  <slot>sliderPositionYChanged(int)</slot>
+  <slot>resetPositionX(QString)</slot>
+  <slot>resetPositionY(QString)</slot>
+  <slot>resetScaleX(QString)</slot>
+  <slot>resetScaleY(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>durationChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>spinBoxPositionXChanged(int)</slot>
+  <slot>spinBoxPositionYChanged(int)</slot>
+  <slot>sliderScaleXChanged(int)</slot>
+  <slot>sliderScaleYChanged(int)</slot>
+  <slot>spinBoxScaleXChanged(int)</slot>
+  <slot>spinBoxScaleYChanged(int)</slot>
+  <slot>resetDefer(QString)</slot>
+  <slot>deferChanged(int)</slot>
+ </slots>
+</ui>
