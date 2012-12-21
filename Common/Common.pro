@@ -6,7 +6,7 @@
 
 QT += core
 
-TARGET = Common
+TARGET = common
 TEMPLATE = lib
 
 DEFINES += COMMON_LIBRARY

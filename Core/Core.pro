@@ -6,7 +6,7 @@
 
 QT += core sql
 
-TARGET = Core
+TARGET = core
 TEMPLATE = lib
 
 DEFINES += CORE_LIBRARY

@@ -7,7 +7,7 @@
 QT -= gui
 QT += network
 
-TARGET = Caspar
+TARGET = caspar
 TEMPLATE = lib
 
 DEFINES += CASPAR_LIBRARY
