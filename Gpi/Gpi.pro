@@ -24,6 +24,6 @@ else:macx: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/macx/ -lboost_date
 
 DEPENDPATH += $$PWD/../../dependencies/gpio-client/include
 INCLUDEPATH += $$PWD/../../dependencies/gpio-client/include
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/release/ -lgpio-client
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/debug/ -lgpio-client
-else:macx: LIBS += -L$$PWD/../../dependencies/gpio-client/lib/macx/ -lgpio-client
+win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/release/ -lgpio-client
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/debug/ -lgpio-client
+else:macx:LIBS += -L$$PWD/../../dependencies/gpio-client/lib/macx/ -lgpio-client

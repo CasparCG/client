@@ -131,24 +131,24 @@ else:macx: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/macx/ -lboost_date
 
 DEPENDPATH += $$PWD/../../dependencies/gpio-client/include
 INCLUDEPATH += $$PWD/../../dependencies/gpio-client/include
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/release/ -lgpio-client
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/debug/ -lgpio-client
-else:macx: LIBS += -L$$PWD/../../dependencies/gpio-client/lib/macx/ -lgpio-client
+win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/release/ -lgpio-client
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../dependencies/gpio-client/lib/win32/debug/ -lgpio-client
+else:macx:LIBS += -L$$PWD/../../dependencies/gpio-client/lib/macx/ -lgpio-client
 
 DEPENDPATH += $$PWD/../Caspar $$OUT_PWD/../Caspar
 INCLUDEPATH += $$PWD/../Caspar $$OUT_PWD/../Caspar
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Caspar/release/ -lcaspar
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Caspar/debug/ -lcaspar
-else:unix: LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Caspar/release/ -lcaspar
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Caspar/debug/ -lcaspar
+else:unix:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 
 DEPENDPATH += $$PWD/../Gpi $$OUT_PWD/../Gpi
 INCLUDEPATH += $$PWD/../Gpi $$OUT_PWD/../Gpi
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Gpi/release/ -lgpi
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Gpi/debug/ -lgpi
-else:unix: LIBS += -L$$OUT_PWD/../Gpi/ -lGpi
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Gpi/release/ -lgpi
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Gpi/debug/ -lgpi
+else:unix:LIBS += -L$$OUT_PWD/../Gpi/ -lGpi
 
 DEPENDPATH += $$PWD/../Common $$OUT_PWD/../Common
 INCLUDEPATH += $$PWD/../Common $$OUT_PWD/../Common
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lcommon
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lcommon
-else:unix: LIBS += -L$$OUT_PWD/../Common/ -lcommon
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Common/release/ -lcommon
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Common/debug/ -lcommon
+else:unix:LIBS += -L$$OUT_PWD/../Common/ -lcommon
