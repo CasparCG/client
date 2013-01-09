@@ -109,6 +109,16 @@ IRundownWidget* RundownImageScrollerWidget::clone()
     return widget;
 }
 
+void RundownImageScrollerWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownImageScrollerWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownImageScrollerWidget::isGroup() const
 {
     return false;

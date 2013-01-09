@@ -5,11 +5,12 @@
 #include "Global.h"
 
 #include "Commands/ICommand.h"
+#include "Commands/IProperties.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
 
-class WIDGETS_EXPORT IRundownWidget
+class WIDGETS_EXPORT IRundownWidget : public IProperties
 {
     public:
         virtual ~IRundownWidget() {}

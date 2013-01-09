@@ -114,6 +114,16 @@ IRundownWidget* RundownMediaWidget::clone()
     return widget;
 }
 
+void RundownMediaWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownMediaWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownMediaWidget::isGroup() const
 {
     return false;

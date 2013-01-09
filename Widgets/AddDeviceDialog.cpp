@@ -121,8 +121,8 @@ const QString AddDeviceDialog::getShadow() const
 
 void AddDeviceDialog::deviceConnectionStateChanged(CasparDevice& device)
 {
-    if (device.isConnected())
-        device.refreshVersion();
+    if (this->device->isConnected())
+        this->device->refreshVersion();
 }
 
 void AddDeviceDialog::deviceVersionChanged(const CasparVersion& version, CasparDevice& device)
@@ -130,5 +130,5 @@ void AddDeviceDialog::deviceVersionChanged(const CasparVersion& version, CasparD
     this->pushButtonOK->setEnabled(true);
     this->lineEditVersion->setText(version.getVersion());
 
-    device.disconnect();
+    this->device->disconnect();
 }

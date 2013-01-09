@@ -106,6 +106,16 @@ IRundownWidget* RundownGeometryWidget::clone()
     return widget;
 }
 
+void RundownGeometryWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownGeometryWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownGeometryWidget::isGroup() const
 {
     return false;

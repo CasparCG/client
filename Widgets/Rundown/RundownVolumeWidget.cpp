@@ -103,6 +103,16 @@ IRundownWidget* RundownVolumeWidget::clone()
     return widget;
 }
 
+void RundownVolumeWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownVolumeWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownVolumeWidget::isGroup() const
 {
     return false;

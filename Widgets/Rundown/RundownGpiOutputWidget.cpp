@@ -77,6 +77,16 @@ IRundownWidget* RundownGpiOutputWidget::clone()
     return widget;
 }
 
+void RundownGpiOutputWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownGpiOutputWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownGpiOutputWidget::isGroup() const
 {
     return false;

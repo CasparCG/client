@@ -103,6 +103,16 @@ IRundownWidget* RundownBrightnessWidget::clone()
     return widget;
 }
 
+void RundownBrightnessWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownBrightnessWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownBrightnessWidget::isGroup() const
 {
     return false;

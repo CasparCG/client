@@ -109,6 +109,16 @@ IRundownWidget* RundownDeckLinkInputWidget::clone()
     return widget;
 }
 
+void RundownDeckLinkInputWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownDeckLinkInputWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownDeckLinkInputWidget::isGroup() const
 {
     return false;

@@ -99,6 +99,16 @@ IRundownWidget* RundownBlendWidget::clone()
     return widget;
 }
 
+void RundownBlendWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownBlendWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownBlendWidget::isGroup() const
 {
     return false;

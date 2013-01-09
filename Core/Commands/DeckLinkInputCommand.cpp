@@ -138,7 +138,7 @@ void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
 void DeckLinkInputCommand::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", "");
+    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
     writer->writeTextElement("delay", QString::number(this->getDelay()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("device", QString::number(this->getDevice()));

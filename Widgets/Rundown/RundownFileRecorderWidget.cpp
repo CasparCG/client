@@ -107,6 +107,16 @@ IRundownWidget* RundownFileRecorderWidget::clone()
     return widget;
 }
 
+void RundownFileRecorderWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownFileRecorderWidget::isGroup() const
 {
     return false;

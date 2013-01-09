@@ -106,6 +106,16 @@ IRundownWidget* RundownCropWidget::clone()
     return widget;
 }
 
+void RundownCropWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownCropWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownCropWidget::isGroup() const
 {
     return false;

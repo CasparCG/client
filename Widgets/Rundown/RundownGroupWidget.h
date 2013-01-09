@@ -40,6 +40,9 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         virtual bool executeCommand(enum Playout::PlayoutType::Type type) { return false; }
 
+        virtual void readProperties(boost::property_tree::wptree& pt) {}
+        virtual void writeProperties(QXmlStreamWriter* writer) {}
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 

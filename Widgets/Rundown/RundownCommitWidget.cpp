@@ -96,6 +96,16 @@ IRundownWidget* RundownCommitWidget::clone()
     return widget;
 }
 
+void RundownCommitWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+}
+
+void RundownCommitWidget::writeProperties(QXmlStreamWriter* writer)
+{
+    writer->writeTextElement("color", this->color);
+}
+
 bool RundownCommitWidget::isGroup() const
 {
     return false;

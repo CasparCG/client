@@ -12,7 +12,12 @@
 #include "Commands/BlendModeCommand.h"
 #include "Models/LibraryModel.h"
 
+#include <boost/foreach.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
 #include <QtCore/QString>
+#include <QtCore/QXmlStreamWriter>
 
 #include <QtGui/QWidget>
 
@@ -39,6 +44,9 @@ class WIDGETS_EXPORT RundownBlendWidget : public QWidget, Ui::RundownBlendWidget
         virtual void setExpanded(bool expanded) {}
 
         virtual bool executeCommand(enum Playout::PlayoutType::Type type);
+
+        virtual void readProperties(boost::property_tree::wptree& pt);
+        virtual void writeProperties(QXmlStreamWriter* writer);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);

@@ -128,6 +128,7 @@ void RundownWidget::readRundownGroup(const QString& name, const QString& deviceN
     widget->setExpanded(true);
 
     widget->getCommand()->readProperties(pt);
+    widget->readProperties(pt);
 
     QTreeWidgetItem* parent = new QTreeWidgetItem();
     this->treeWidgetRundown->invisibleRootItem()->addChild(parent);
@@ -156,6 +157,7 @@ void RundownWidget::writeRundownGroup(const QString& name, const QString& device
 
     IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
     widget->getCommand()->writeProperties(writer);
+    widget->writeProperties(writer);
 
     writer->writeStartElement("items");
     for (int i = 0; i < item->childCount(); i++)
@@ -216,6 +218,7 @@ void RundownWidget::readRundownItem(const QString& name, const QString& deviceNa
         widget = new RundownImageScrollerWidget(LibraryModel(-1, name, deviceName, type), this);
 
     widget->getCommand()->readProperties(pt);
+    widget->readProperties(pt);
 
     QTreeWidgetItem* child = new QTreeWidgetItem();
     if (parent == NULL) // Top level item.
@@ -241,6 +244,7 @@ void RundownWidget::writeRundownItem(const QString& name, const QString& deviceN
 
     IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
     widget->getCommand()->writeProperties(writer);
+    widget->writeProperties(writer);
 
     writer->writeEndElement();
 }

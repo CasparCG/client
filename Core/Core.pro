@@ -67,7 +67,8 @@ HEADERS += \
     Events/OpenRundownEvent.h \
     Commands/BlendModeCommand.h \
     Models/BlendModeModel.h \
-    Events/SaveRundownEvent.h
+    Events/SaveRundownEvent.h \
+    Commands/IProperties.h
 
 SOURCES += \
     DatabaseManager.cpp \

@@ -29,7 +29,9 @@ void AMCPDevice::connectDevice(const QString& address, int port)
 
 void AMCPDevice::disconnectDevice()
 {
+    this->socket->blockSignals(true);
     this->socket->disconnectFromHost();
+    this->socket->blockSignals(false);
 }
 
 void AMCPDevice::reconnectDevice()

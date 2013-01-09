@@ -40,6 +40,9 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
 
         virtual bool executeCommand(enum Playout::PlayoutType::Type type);
 
+        virtual void readProperties(boost::property_tree::wptree& pt);
+        virtual void writeProperties(QXmlStreamWriter* writer);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
