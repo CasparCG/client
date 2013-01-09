@@ -2,6 +2,7 @@ CasparCG Client 2.0 Beta 3
 ==========================
 
 - FIX: Client send multiple VERSION command to server when adding a new device.
+- UPDATE: Minor UI changes.
 - ADD: Color on rundown items is now saved togheter with the rundown.
 
 
