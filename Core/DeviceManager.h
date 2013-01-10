@@ -20,7 +20,7 @@ class CORE_EXPORT DeviceManager : public QObject
 
         void initialize();
         void uninitialize();
-        void synchronize();
+        void refresh();
 
         QList<DeviceModel> getDeviceModels() const;
         const DeviceModel getDeviceModelByAddress(const QString& address) const;

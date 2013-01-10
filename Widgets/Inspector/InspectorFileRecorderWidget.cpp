@@ -34,7 +34,7 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand());
 
-            this->lineEditFilename->setText(this->command->getFilename());
+            this->lineEditOutput->setText(this->command->getOutput());
             //this->comboBoxContainer->setCurrentIndex(this->comboBoxContainer->findText(this->model->getDeviceName()));
             this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
             //this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->model->getDeviceName()));
@@ -47,9 +47,9 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void InspectorFileRecorderWidget::filenameChanged(QString filename)
+void InspectorFileRecorderWidget::outputChanged(QString output)
 {
-    this->command->setFilename(filename);
+    this->command->setOutput(output);
 }
 
 void InspectorFileRecorderWidget::containerChanged(QString container)
@@ -72,10 +72,10 @@ void InspectorFileRecorderWidget::tuneChanged(QString tune)
     this->command->setTune(tune);
 }
 
-void InspectorFileRecorderWidget::resetFilename(QString filename)
+void InspectorFileRecorderWidget::resetOutput(QString output)
 {
-    this->lineEditFilename->setText(FileRecorder::DEFAULT_OUTPUT);
-    this->command->setFilename(this->lineEditFilename->text());
+    this->lineEditOutput->setText(FileRecorder::DEFAULT_OUTPUT);
+    this->command->setOutput(this->lineEditOutput->text());
 }
 
 void InspectorFileRecorderWidget::resetContainer(QString container)

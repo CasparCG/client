@@ -87,8 +87,8 @@ void DatabaseManager::initialize()
 
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoSynchronize', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('SynchronizeInterval', '60')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionWidth', '1920')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionHeight', '1080')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
@@ -633,7 +633,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -651,7 +651,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -670,7 +670,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString()));
 
     return models;
 }
@@ -689,7 +689,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString()));
 
     return models;
 }
@@ -708,7 +708,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -727,7 +727,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -746,7 +746,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -765,7 +765,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }

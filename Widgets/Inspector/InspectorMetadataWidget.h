@@ -31,6 +31,7 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
 
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void deviceRemoved();
-        Q_SLOT void nameChanged(QString);
+        Q_SLOT void labelChanged(QString);
         Q_SLOT void deviceNameChanged(QString);
+        Q_SLOT void nameChanged(QString);
 };

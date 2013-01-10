@@ -3,7 +3,7 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
-#include "SynchronizeManager.h"
+#include "LibraryManager.h"
 
 #include "MainWindow.h"
 
@@ -128,14 +128,14 @@ int main(int argc, char* argv[])
 
     window.show();
 
-    SynchronizeManager::getInstance().initialize();
+    LibraryManager::getInstance().initialize();
     DeviceManager::getInstance().initialize();
 
     int returnValue = application.exec();
 
     GpiManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
-    SynchronizeManager::getInstance().uninitialize();
+    LibraryManager::getInstance().uninitialize();
 
     return returnValue;
 }

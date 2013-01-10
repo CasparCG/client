@@ -24,7 +24,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 
-    this->labelName->setText(this->model.getName());
+    this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -52,11 +52,12 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setName(rundownItemChangedEvent->getName());
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
         this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+        this->model.setName(rundownItemChangedEvent->getName());
         this->command.setMediaName(rundownItemChangedEvent->getName());
 
-        this->labelName->setText(this->model.getName());
+        this->labelLabel->setText(this->model.getLabel());
         this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
         this->labelVideolayer->setText(QString("Videolayer: %1").arg(this->command.getVideolayer()));
         this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));

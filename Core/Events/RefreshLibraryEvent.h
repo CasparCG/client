@@ -4,10 +4,10 @@
 
 #include <QtCore/QEvent>
 
-class CORE_EXPORT SynchronizeEvent : public QEvent
+class CORE_EXPORT RefreshLibraryEvent : public QEvent
 {
     public:
-        explicit SynchronizeEvent(int delay);
+        explicit RefreshLibraryEvent(int delay);
 
         int getDelay() const;
 

@@ -65,14 +65,10 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         bool ungroupItems();
         bool copySelectedItem();
         bool pasteSelectedItem();
-        void readRundownGroup(const QString& name, const QString& deviceName, const QString& type,
-                              boost::property_tree::wptree& pt);
-        void readRundownItem(const QString& name, const QString& deviceName, const QString& type,
-                             boost::property_tree::wptree& pt, QTreeWidgetItem* parent);
-        void writeRundownGroup(const QString& name, const QString& deviceName, const QString& type,
-                               QXmlStreamWriter* writer, QTreeWidgetItem* child);
-        void writeRundownItem(const QString& name, const QString& deviceName, const QString& type,
-                              QXmlStreamWriter* writer, QTreeWidgetItem* item);
+        void readRundownGroup(const QString& type, boost::property_tree::wptree& pt);
+        void readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent);
+        void writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* child);
+        void writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item);
 
         Q_SLOT void addFileRecorderCommand();
         Q_SLOT void addImageScrollerCommand();

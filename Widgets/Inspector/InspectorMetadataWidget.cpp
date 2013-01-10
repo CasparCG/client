@@ -5,9 +5,11 @@
 #include "DeviceManager.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
+#include "Commands/CommitCommand.h"
 #include "Commands/ContrastCommand.h"
 #include "Commands/CropCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
+#include "Commands/FileRecorderCommand.h"
 #include "Commands/GeometryCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GridCommand.h"
@@ -41,15 +43,16 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
     {
         this->preview = false;
 
-        this->lineEditName->setReadOnly(true);
+        this->lineEditLabel->setReadOnly(true);
         this->comboBoxDevice->setEnabled(false);
+        this->lineEditName->setReadOnly(true);
 
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
 
-        this->lineEditName->setText(this->model->getName());
         this->lineEditType->setText(this->model->getType());
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
+        this->lineEditName->setText(this->model->getName());
 
         checkEmptyDevice();
 
@@ -62,22 +65,38 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
 
-        this->lineEditName->setReadOnly(false);
+        this->lineEditLabel->setReadOnly(false);
         this->comboBoxDevice->setEnabled(true);
+        this->lineEditName->setReadOnly(false);
 
-        this->lineEditName->setText(this->model->getName());
         this->lineEditType->setText(this->model->getType());
+        this->lineEditLabel->setText(this->model->getLabel());
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
+        this->lineEditName->setText(this->model->getName());
 
-        if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
+        if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+            dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->lineEditName->setReadOnly(false);
+            this->lineEditLabel->setReadOnly(false);
             this->comboBoxDevice->setEnabled(false);
+            this->lineEditName->setReadOnly(true);
         }
-        else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
+        else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<KeyerCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->lineEditName->setReadOnly(false);
-            this->comboBoxDevice->setEnabled(false);
+            this->lineEditName->setReadOnly(true);
         }
 
         checkEmptyDevice();
@@ -88,10 +107,12 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
     {
         this->preview = false;
 
-        this->lineEditName->setReadOnly(true);
+        this->lineEditLabel->setReadOnly(true);
         this->comboBoxDevice->setEnabled(false);
+        this->lineEditName->setReadOnly(true);
 
         this->lineEditType->clear();
+        this->lineEditLabel->clear();
         this->comboBoxDevice->setCurrentIndex(-1);
         this->lineEditName->clear();
 
@@ -128,10 +149,16 @@ void InspectorMetadataWidget::deviceAdded(CasparDevice& device)
         this->comboBoxDevice->setCurrentIndex(index);
 }
 
+void InspectorMetadataWidget::labelChanged(QString name)
+{
+    if (!this->lineEditLabel->isReadOnly())
+        qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditName->text(), this->comboBoxDevice->currentText()));
+}
+
 void InspectorMetadataWidget::nameChanged(QString name)
 {
     if (!this->lineEditName->isReadOnly())
-        qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditName->text(), this->comboBoxDevice->currentText()));
+        qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditName->text(), this->comboBoxDevice->currentText()));
 }
 
 void InspectorMetadataWidget::deviceNameChanged(QString deviceName)
@@ -140,5 +167,5 @@ void InspectorMetadataWidget::deviceNameChanged(QString deviceName)
         checkEmptyDevice();
 
     if (this->comboBoxDevice->isEnabled())
-        qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditName->text(), this->comboBoxDevice->currentText()));
+        qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditName->text(), this->comboBoxDevice->currentText()));
 }

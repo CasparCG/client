@@ -8,7 +8,7 @@
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/MediaChangedEvent.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/SynchronizeEvent.h"
+#include "Events/RefreshLibraryEvent.h"
 #include "Events/TemplateChangedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -29,15 +29,19 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetAudio->setColumnHidden(1, true);
     this->treeWidgetAudio->setColumnHidden(2, true);
     this->treeWidgetAudio->setColumnHidden(3, true);
+    this->treeWidgetAudio->setColumnHidden(4, true);
     this->treeWidgetImage->setColumnHidden(1, true);
     this->treeWidgetImage->setColumnHidden(2, true);
     this->treeWidgetImage->setColumnHidden(3, true);
+    this->treeWidgetImage->setColumnHidden(4, true);
     this->treeWidgetTemplate->setColumnHidden(1, true);
     this->treeWidgetTemplate->setColumnHidden(2, true);
     this->treeWidgetTemplate->setColumnHidden(3, true);
+    this->treeWidgetTemplate->setColumnHidden(4, true);
     this->treeWidgetVideo->setColumnHidden(1, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
+    this->treeWidgetVideo->setColumnHidden(4, true);
 
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
@@ -85,8 +89,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setIcon(0, QIcon(":/Graphics/Images/Audio.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, "-1");
-                    widget->setText(2, model.getDeviceName());
-                    widget->setText(3, model.getType());
+                    widget->setText(2, model.getLabel());
+                    widget->setText(3, model.getDeviceName());
+                    widget->setText(4, model.getType());
                 }    
                 else if (model.getType() == "STILL")
                 {
@@ -94,8 +99,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setIcon(0, QIcon(":/Graphics/Images/Still.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, "-1");
-                    widget->setText(2, model.getDeviceName());
-                    widget->setText(3, model.getType());
+                    widget->setText(2, model.getLabel());
+                    widget->setText(3, model.getDeviceName());
+                    widget->setText(4, model.getType());
                 }
                 else if (model.getType() == "MOVIE")
                 {
@@ -103,8 +109,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setIcon(0, QIcon(":/Graphics/Images/Movie.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, "-1");
-                    widget->setText(2, model.getDeviceName());
-                    widget->setText(3, model.getType());
+                    widget->setText(2, model.getLabel());
+                    widget->setText(3, model.getDeviceName());
+                    widget->setText(4, model.getType());
                 }
             }
         }
@@ -135,8 +142,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 widget->setIcon(0, QIcon(":/Graphics/Images/Template.png"));
                 widget->setText(0, model.getName());
                 widget->setText(1, "-1");
-                widget->setText(2, model.getDeviceName());
-                widget->setText(3, model.getType());
+                widget->setText(2, model.getLabel());
+                widget->setText(3, model.getDeviceName());
+                widget->setText(4, model.getType());
             }
         }
 
@@ -183,22 +191,22 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
     if (this->toolBoxLibrary->currentIndex() == 0)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(0), item->text(2), item->text(3))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
     else if (this->toolBoxLibrary->currentIndex() == 1)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(0), item->text(2), item->text(3))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
     else if (this->toolBoxLibrary->currentIndex() == 2)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTemplate->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(0), item->text(2), item->text(3))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
     else if (this->toolBoxLibrary->currentIndex() == 3)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(0), item->text(2), item->text(3))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
 }
 
@@ -210,7 +218,7 @@ void LibraryWidget::filterLibrary()
 
 void LibraryWidget::synchronizeLibrary()
 {
-    qApp->postEvent(qApp, new SynchronizeEvent(0));
+    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
 }
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
@@ -218,6 +226,6 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
     if (current == NULL)
         return;
 
-    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(0), current->text(2), current->text(3)));
+    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0), current->text(3), current->text(4)));
     qApp->postEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
 }

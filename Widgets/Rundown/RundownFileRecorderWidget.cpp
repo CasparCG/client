@@ -24,7 +24,7 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 
-    this->labelName->setText(this->model.getName());
+    this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -52,10 +52,11 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setName(rundownItemChangedEvent->getName());
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
         this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+        this->model.setName(rundownItemChangedEvent->getName());
 
-        this->labelName->setText(this->model.getName());
+        this->labelLabel->setText(this->model.getLabel());
         this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
         this->labelVideolayer->setText(QString("Videolayer: %1").arg(this->command.getVideolayer()));
         this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -98,7 +99,7 @@ IRundownWidget* RundownFileRecorderWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
-    command->setFilename(this->command.getFilename());
+    command->setOutput(this->command.getOutput());
     command->setContainer(this->command.getContainer());
     command->setCodec(this->command.getCodec());
     command->setPreset(this->command.getPreset());
@@ -213,7 +214,7 @@ void RundownFileRecorderWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->startRecording(this->command.getChannel(), this->command.getFilename(), this->command.getCodec());
+        device->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -222,7 +223,7 @@ void RundownFileRecorderWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->startRecording(this->command.getChannel(), this->command.getFilename(), this->command.getCodec());
+            deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec());
     }
 }
 

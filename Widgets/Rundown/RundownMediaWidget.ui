@@ -41,7 +41,7 @@
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="labelName">
+     <widget class="QLabel" name="labelLabel">
       <property name="geometry">
        <rect>
         <x>62</x>

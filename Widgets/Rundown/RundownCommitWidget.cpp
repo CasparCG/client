@@ -24,7 +24,7 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 
-    this->labelName->setText(this->model.getName());
+    this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
@@ -50,10 +50,11 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setName(rundownItemChangedEvent->getName());
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
         this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+        this->model.setName(rundownItemChangedEvent->getName());
 
-        this->labelName->setText(this->model.getName());
+        this->labelLabel->setText(this->model.getLabel());
         this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
@@ -169,7 +170,9 @@ void RundownCommitWidget::checkEmptyDevice()
 
 bool RundownCommitWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    if (type == Playout::PlayoutType::Play)
+    if (type == Playout::PlayoutType::Play ||
+        type == Playout::PlayoutType::Invoke ||
+        type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
 
     return true;

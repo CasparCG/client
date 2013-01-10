@@ -53,7 +53,7 @@ void DeviceManager::uninitialize()
     }
 }
 
-void DeviceManager::synchronize()
+void DeviceManager::refresh()
 {
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
 

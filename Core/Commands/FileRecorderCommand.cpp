@@ -5,7 +5,7 @@
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
     : QObject(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), filename(FileRecorder::DEFAULT_OUTPUT), container(FileRecorder::DEFAULT_CONTAINER),
+      allowGpi(Output::DEFAULT_ALLOW_GPI), output(FileRecorder::DEFAULT_OUTPUT), container(FileRecorder::DEFAULT_CONTAINER),
       codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE)
 {
 }
@@ -30,9 +30,9 @@ bool FileRecorderCommand::getAllowGpi() const
     return this->allowGpi;
 }
 
-const QString& FileRecorderCommand::getFilename() const
+const QString& FileRecorderCommand::getOutput() const
 {
-    return this->filename;
+    return this->output;
 }
 
 const QString& FileRecorderCommand::getContainer() const
@@ -79,10 +79,10 @@ void FileRecorderCommand::setAllowGpi(bool allowGpi)
     emit allowGpiChanged(this->allowGpi);
 }
 
-void FileRecorderCommand::setFilename(const QString& filename)
+void FileRecorderCommand::setOutput(const QString& output)
 {
-    this->filename = filename;
-    emit filenameChanged(this->filename);
+    this->output = output;
+    emit outputChanged(this->output);
 }
 
 void FileRecorderCommand::setContainer(const QString& container)
@@ -114,7 +114,7 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
     setChannel(pt.get<int>(L"channel"));
     setDelay(pt.get<int>(L"delay"));
     setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setFilename(QString::fromStdWString(pt.get<std::wstring>(L"filename")));
+    setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
     setContainer(QString::fromStdWString(pt.get<std::wstring>(L"container")));
     setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
     setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
@@ -127,7 +127,7 @@ void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("videolayer", "");
     writer->writeTextElement("delay", QString::number(this->getDelay()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
-    writer->writeTextElement("filename", this->getFilename());
+    writer->writeTextElement("output", this->getOutput());
     writer->writeTextElement("container", this->getContainer());
     writer->writeTextElement("codec", this->getCodec());
     writer->writeTextElement("preset", this->getPreset());

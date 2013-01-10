@@ -252,7 +252,7 @@ QToolBar
  */
 QSizeGrip
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(52, 52, 52, 255);
     border-bottom-left-radius: 0px;
     border-left-width: 1px;
     border-top-right-radius: 0px;

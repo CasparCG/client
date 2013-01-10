@@ -24,7 +24,7 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 
-    this->labelName->setText(this->model.getName());
+    this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     gpiOutputPortChanged(this->command.getGpoPort());
 
@@ -48,9 +48,10 @@ bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
         this->model.setName(rundownItemChangedEvent->getName());
 
-        this->labelName->setText(this->model.getName());
+        this->labelLabel->setText(this->model.getLabel());
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
     {
@@ -138,7 +139,9 @@ void RundownGpiOutputWidget::setColor(const QString& color)
 
 bool RundownGpiOutputWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    if (type == Playout::PlayoutType::Play)
+    if (type == Playout::PlayoutType::Play ||
+        type == Playout::PlayoutType::Invoke ||
+        type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
 
     return true;

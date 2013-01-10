@@ -3,8 +3,8 @@
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
-#include "Events/AutoSynchronizeEvent.h"
-#include "Events/SynchronizeEvent.h"
+#include "Events/AutoRefreshLibraryEvent.h"
+#include "Events/RefreshLibraryEvent.h"
 #include "Models/ConfigurationModel.h"
 #include "Models/GpiModel.h"
 
@@ -24,13 +24,13 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
 
-    bool isAutoSynchronize = (DatabaseManager::getInstance().getConfigurationByName("AutoSynchronize").getValue() == "true") ? true : false;
-    this->checkBoxAutoSynchronize->setChecked(isAutoSynchronize);
-    this->labelInterval->setEnabled(isAutoSynchronize);
-    this->spinBoxSynchronizeInterval->setEnabled(isAutoSynchronize);
-    this->labelSeconds->setEnabled(isAutoSynchronize);
+    bool isAutoRefresh = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
+    this->checkBoxAutoRefreshLibrary->setChecked(isAutoRefresh);
+    this->labelInterval->setEnabled(isAutoRefresh);
+    this->spinBoxRefreshLibraryInterval->setEnabled(isAutoRefresh);
+    this->labelSeconds->setEnabled(isAutoRefresh);
 
-    this->spinBoxSynchronizeInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("SynchronizeInterval").getValue().toInt());
+    this->spinBoxRefreshLibraryInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
 
     loadDevices();
     loadGpi();
@@ -108,9 +108,7 @@ void SettingsDialog::loadGpi()
 
     GpiDeviceModel device = DatabaseManager::getInstance().getGpiDevice();
     this->lineEditSerialPort->setText(device.getSerialPort());
-    this->comboBoxGpiBaudRate->setCurrentIndex(
-            comboBoxGpiBaudRate->findText(QString("%1").arg(
-                    device.getBaudRate())));
+    this->comboBoxGpiBaudRate->setCurrentIndex(comboBoxGpiBaudRate->findText(QString("%1").arg(device.getBaudRate())));
 }
 
 void SettingsDialog::checkEmptyDeviceList()
@@ -129,11 +127,13 @@ void SettingsDialog::showAddDeviceDialog()
     AddDeviceDialog* dialog = new AddDeviceDialog(this);
     if (dialog->exec() == QDialog::Accepted)
     {
-        DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(), dialog->getPort().toInt(), dialog->getUsername(),
-                                                                dialog->getPassword(), dialog->getDescription(), dialog->getVersion(), dialog->getShadow()));
+        DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
+                                                                dialog->getPort().toInt(), dialog->getUsername(),
+                                                                dialog->getPassword(), dialog->getDescription(),
+                                                                dialog->getVersion(), dialog->getShadow()));
         loadDevices();
 
-        qApp->postEvent(qApp, new SynchronizeEvent(0));
+        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
     }
 }
 
@@ -147,7 +147,7 @@ void SettingsDialog::removeDevice()
 
     loadDevices();
 
-    qApp->postEvent(qApp, new SynchronizeEvent(0));
+    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
 }
 
 void SettingsDialog::startFullscreenChanged(int state)
@@ -165,21 +165,21 @@ void SettingsDialog::fontSizeChanged(int size)
 void SettingsDialog::autoSynchronizeChanged(int state)
 {
     QString isAutoSynchronize = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoSynchronize", isAutoSynchronize));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoRefreshLibrary", isAutoSynchronize));
 
     this->labelInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
-    this->spinBoxSynchronizeInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
+    this->spinBoxRefreshLibraryInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
     this->labelSeconds->setEnabled((isAutoSynchronize == "true") ? true : false);
 
-    qApp->postEvent(qApp, new AutoSynchronizeEvent((isAutoSynchronize == "true") ? true : false,
-                                                   this->spinBoxSynchronizeInterval->value() * 1000));
+    qApp->postEvent(qApp, new AutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false,
+                                                       this->spinBoxRefreshLibraryInterval->value() * 1000));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)
 {
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "SynchronizeInterval", QString("%1").arg(interval)));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
-    qApp->postEvent(qApp, new AutoSynchronizeEvent(this->checkBoxAutoSynchronize->checkState(), interval * 1000));
+    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefreshLibrary->checkState(), interval * 1000));
 }
 
 void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action)
@@ -188,14 +188,15 @@ void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBo
         return;       // values in the database that are already there.
 
     bool risingEdge = voltage->currentIndex() == 0;
-    Playout::PlayoutType::Type playoutType =
-            Playout::enumConstants().at(action->currentIndex());
+    Playout::PlayoutType::Type playoutType = Playout::enumConstants().at(action->currentIndex());
+
     qDebug() << "GPI " << gpi
              << " changed -- rising edge: " << risingEdge
              << " action: " << Playout::toString(playoutType);
-    DatabaseManager::getInstance().updateGpiPort(
-            GpiPortModel(gpi, risingEdge, playoutType));
+
+    DatabaseManager::getInstance().updateGpiPort(GpiPortModel(gpi, risingEdge, playoutType));
     GpiManager::getInstance().getGpiDevice()->setupGpiPort(gpi, risingEdge);
+
     emit gpiBindingChanged(gpi, playoutType);
 }
 
@@ -239,21 +240,20 @@ void SettingsDialog::gpi8Changed()
     updateGpi(7, comboBoxGpiVoltageChange8, comboBoxAction8);
 }
 
-void SettingsDialog::updateGpo(
-        int gpo, const QComboBox* voltage, const QSpinBox* pulseLength)
+void SettingsDialog::updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength)
 {
     if (!isVisible()) // During construction of dialog we don't want to rewrite
         return;       // values in the database that are already there.
 
     bool risingEdge = voltage->currentIndex() == 0;
     int pulseLengthMillis = pulseLength->value();
+
     qDebug() << "GPO " << gpo
              << " changed -- rising edge: " << risingEdge
              << " pulse length: " << pulseLengthMillis << "ms";
-    DatabaseManager::getInstance().updateGpoPort(
-            GpoPortModel(gpo, risingEdge, pulseLengthMillis));
-    GpiManager::getInstance().getGpiDevice()->setupGpoPort(
-            gpo, pulseLengthMillis, risingEdge);
+
+    DatabaseManager::getInstance().updateGpoPort(GpoPortModel(gpo, risingEdge, pulseLengthMillis));
+    GpiManager::getInstance().getGpiDevice()->setupGpoPort(gpo, pulseLengthMillis, risingEdge);
 }
 
 void SettingsDialog::gpo1Changed()
@@ -306,8 +306,7 @@ void SettingsDialog::updateGpiDevice()
     qDebug() << "GPO Device changed -- Serial port: "
              << serialPort << " Baud rate: " << baudRate;
 
-    DatabaseManager::getInstance().updateGpiDevice(
-            GpiDeviceModel(serialPort, baudRate));
+    DatabaseManager::getInstance().updateGpiDevice(GpiDeviceModel(serialPort, baudRate));
     GpiManager::getInstance().reinitialize();
 }
 

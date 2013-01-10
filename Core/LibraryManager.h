@@ -10,14 +10,14 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-class CORE_EXPORT SynchronizeManager : public QObject
+class CORE_EXPORT LibraryManager : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit SynchronizeManager(QObject* parent = 0);
+        explicit LibraryManager(QObject* parent = 0);
 
-        static SynchronizeManager& getInstance();
+        static LibraryManager& getInstance();
 
         void initialize();
         void uninitialize();
@@ -26,9 +26,9 @@ class CORE_EXPORT SynchronizeManager : public QObject
         bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        QTimer synchronizeTimer;
+        QTimer refreshTimer;
 
-        Q_SLOT void synchronize();
+        Q_SLOT void refresh();
         Q_SLOT void deviceRemoved();
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);

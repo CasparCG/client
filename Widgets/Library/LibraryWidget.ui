@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>223</width>
+        <height>469</height>
        </rect>
       </property>
       <attribute name="label">
@@ -82,6 +82,11 @@
          </column>
          <column>
           <property name="text">
+           <string>Label</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>DeviceName</string>
           </property>
          </column>
@@ -99,8 +104,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>223</width>
+        <height>469</height>
        </rect>
       </property>
       <attribute name="label">
@@ -144,6 +149,11 @@
          <column>
           <property name="text">
            <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Label</string>
           </property>
          </column>
          <column>
@@ -217,6 +227,11 @@
          </column>
          <column>
           <property name="text">
+           <string>Label</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>DeviceName</string>
           </property>
          </column>
@@ -283,6 +298,11 @@
          </column>
          <column>
           <property name="text">
+           <string>Label</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>DeviceName</string>
           </property>
          </column>
@@ -330,7 +350,7 @@
         </font>
        </property>
        <property name="toolTip">
-        <string>Synchronize library</string>
+        <string>Refresh library</string>
        </property>
       </widget>
      </item>

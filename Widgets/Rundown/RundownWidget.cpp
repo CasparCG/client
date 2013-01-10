@@ -121,10 +121,14 @@ void RundownWidget::setupUiMenu()
     QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
 }
 
-void RundownWidget::readRundownGroup(const QString& name, const QString& deviceName, const QString& type,
-                                     boost::property_tree::wptree& pt)
+void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
 {
-    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, name, deviceName, type), this);
+    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
+    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
+    bool expanded = pt.get<bool>(L"expanded");
+
+    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, name, deviceName, type), this);
     widget->setExpanded(true);
 
     widget->getCommand()->readProperties(pt);
@@ -136,26 +140,32 @@ void RundownWidget::readRundownGroup(const QString& name, const QString& deviceN
     this->treeWidgetRundown->expandItem(parent);
     this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
+    parent->setExpanded(expanded);
+
     BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
     {
         QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-        QString deviceName = QString::fromStdWString(value.second.get<std::wstring>(L"devicename"));
-        QString name = QString::fromStdWString(value.second.get<std::wstring>(L"name"));
 
-        readRundownItem(name, deviceName, type, value.second, parent);
+        readRundownItem(type, value.second, parent);
     }
 }
 
-void RundownWidget::writeRundownGroup(const QString& name, const QString& deviceName, const QString& type,
-                                      QXmlStreamWriter* writer, QTreeWidgetItem* item)
+void RundownWidget::writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
 {
+    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+    QString deviceName = widget->getLibraryModel()->getDeviceName();
+    QString label = widget->getLibraryModel()->getLabel();
+    QString name = widget->getLibraryModel()->getName();
+
     writer->writeStartElement("item");
 
     writer->writeTextElement("type", type);
     writer->writeTextElement("devicename", deviceName);
+    writer->writeTextElement("label", label);
     writer->writeTextElement("name", name);
+    writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
 
-    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
     widget->getCommand()->writeProperties(writer);
     widget->writeProperties(writer);
 
@@ -166,56 +176,57 @@ void RundownWidget::writeRundownGroup(const QString& name, const QString& device
         IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
 
         QString type = widget->getLibraryModel()->getType().toUpper();
-        QString deviceName = widget->getLibraryModel()->getDeviceName();
-        QString name = widget->getLibraryModel()->getName();
 
-        writeRundownItem(name, deviceName, type, writer, child);
+        writeRundownItem(type, writer, child);
     }
     writer->writeEndElement();
 
     writer->writeEndElement();
 }
 
-void RundownWidget::readRundownItem(const QString& name, const QString& deviceName, const QString& type,
-                                    boost::property_tree::wptree& pt, QTreeWidgetItem* parent)
+void RundownWidget::readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent)
 {
+    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
+    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
+
     IRundownWidget* widget = NULL;
     if (type == "BLENDMODE")
-        widget = new RundownBlendWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownBlendWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "BRIGHTNESS")
-        widget = new RundownBrightnessWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownBrightnessWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "CONTRAST")
-        widget = new RundownContrastWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownContrastWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "CROP")
-        widget = new RundownCropWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownCropWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "DECKLINKINPUT")
-        widget = new RundownDeckLinkInputWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownDeckLinkInputWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type ==  "FILERECORDER")
-        widget = new RundownFileRecorderWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownFileRecorderWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "GEOMETRY")
-        widget = new RundownGeometryWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownGeometryWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "GRID")
-        widget = new RundownGridWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownGridWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "GPIOUTPUT")
-        widget = new RundownGpiOutputWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownGpiOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "KEYER")
-        widget = new RundownKeyerWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownKeyerWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "LEVELS")
-        widget = new RundownLevelsWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownLevelsWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "AUDIO" || type == "STILL" || type == "MOVIE")
-        widget = new RundownMediaWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownMediaWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "OPACITY")
-        widget = new RundownOpacityWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownOpacityWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "SATURATION")
-        widget = new RundownSaturationWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownSaturationWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "TEMPLATE")
-        widget = new RundownTemplateWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownTemplateWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "VOLUME")
-        widget = new RundownVolumeWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownVolumeWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "COMMIT")
-        widget = new RundownCommitWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "IMAGESCROLLER")
-        widget = new RundownImageScrollerWidget(LibraryModel(-1, name, deviceName, type), this);
+        widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
 
     widget->getCommand()->readProperties(pt);
     widget->readProperties(pt);
@@ -233,16 +244,21 @@ void RundownWidget::readRundownItem(const QString& name, const QString& deviceNa
     this->treeWidgetRundown->doItemsLayout(); // Refresh.
 }
 
-void RundownWidget::writeRundownItem(const QString& name, const QString& deviceName, const QString& type,
-                                     QXmlStreamWriter* writer, QTreeWidgetItem* item)
+void RundownWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
 {
+    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+    QString deviceName = widget->getLibraryModel()->getDeviceName();
+    QString label = widget->getLibraryModel()->getLabel();
+    QString name = widget->getLibraryModel()->getName();
+
     writer->writeStartElement("item");
 
     writer->writeTextElement("type", type);
     writer->writeTextElement("devicename", deviceName);
+    writer->writeTextElement("label", label);
     writer->writeTextElement("name", name);
 
-    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
     widget->getCommand()->writeProperties(writer);
     widget->writeProperties(writer);
 
@@ -328,13 +344,11 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
             {
                 QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-                QString deviceName = QString::fromStdWString(value.second.get<std::wstring>(L"devicename"));
-                QString name = QString::fromStdWString(value.second.get<std::wstring>(L"name"));
 
                 if (type == "GROUP")
-                    readRundownGroup(name, deviceName, type, value.second);
+                    readRundownGroup(type, value.second);
                 else
-                    readRundownItem(name, deviceName, type, value.second, NULL);
+                    readRundownItem(type, value.second, NULL);
             }
 
             if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
@@ -372,13 +386,11 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
                 IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
 
                 QString type = widget->getLibraryModel()->getType().toUpper();
-                QString deviceName = widget->getLibraryModel()->getDeviceName();
-                QString name = widget->getLibraryModel()->getName();
 
                 if (type == "GROUP")
-                    writeRundownGroup(name, deviceName, type, writer, child);
+                    writeRundownGroup(type, writer, child);
                 else
-                    writeRundownItem(name, deviceName, type, writer, child);
+                    writeRundownItem(type, writer, child);
             }
             writer->writeEndElement();
 
@@ -821,7 +833,7 @@ bool RundownWidget::groupItems()
 
     QTreeWidgetItem* parentItem = new QTreeWidgetItem();
 
-    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(-1, "Group", "", "GROUP"), this);
+    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(-1, "Group", "", "", "GROUP"), this);
     widget->setActive(true);
     widget->setExpanded(true);
 
@@ -921,102 +933,102 @@ bool RundownWidget::ungroupItems()
 
 void RundownWidget::addBlendModeCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Blending", "", "BLENDMODE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Blending", "", "", "BLENDMODE")));
 }
 
 void RundownWidget::addBrightnessCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Brightness", "", "BRIGHTNESS")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Brightness", "", "", "BRIGHTNESS")));
 }
 
 void RundownWidget::addContrastCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Contrast", "", "CONTRAST")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Contrast", "", "", "CONTRAST")));
 }
 
 void RundownWidget::addCropCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Crop", "", "CROP")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Crop", "", "", "CROP")));
 }
 
 void RundownWidget::addImageScrollerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "ImageScroller", "", "IMAGESCROLLER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "ImageScroller", "", "", "IMAGESCROLLER")));
 }
 
 void RundownWidget::addDeckLinkInputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLinkInput", "", "DECKLINKINPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLinkInput", "", "", "DECKLINKINPUT")));
 }
 
 void RundownWidget::addGeometryCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Geometry", "", "GEOMETRY")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Geometry", "", "", "GEOMETRY")));
 }
 
 void RundownWidget::addGpiOutputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "GPI Output", "", "GPIOUTPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "GPI Output", "", "", "GPIOUTPUT")));
 }
 
 void RundownWidget::addFileRecorderCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "FileRecorder", "", "FILERECORDER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "FileRecorder", "", "", "FILERECORDER")));
 }
 
 void RundownWidget::addGridCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Grid", "", "GRID")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Grid", "", "", "GRID")));
 }
 
 void RundownWidget::addKeyerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Keyer", "", "KEYER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Keyer", "", "", "KEYER")));
 }
 
 void RundownWidget::addLevelsCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Levels", "", "LEVELS")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Levels", "", "", "LEVELS")));
 }
 
 void RundownWidget::addOpacityCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Opacity", "", "OPACITY")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Opacity", "", "", "OPACITY")));
 }
 
 void RundownWidget::addSaturationCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Saturation", "", "SATURATION")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Saturation", "", "", "SATURATION")));
 }
 
 void RundownWidget::addVolumeCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Volume", "", "VOLUME")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Volume", "", "", "VOLUME")));
 }
 
 void RundownWidget::addCommitCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Commit", "", "COMMIT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Commit", "", "", "COMMIT")));
 }
 
 void RundownWidget::addAudioCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Audio", "", "AUDIO")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Audio", "", "", "AUDIO")));
 }
 
 void RundownWidget::addImageCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Image", "", "STILL")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Image", "", "", "STILL")));
 }
 
 void RundownWidget::addTemplateCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Template", "", "TEMPLATE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Template", "", "", "TEMPLATE")));
 }
 
 void RundownWidget::addVideoCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Video", "", "MOVIE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Video", "", "", "MOVIE")));
 }
 
 bool RundownWidget::moveItemOutOfGroup()

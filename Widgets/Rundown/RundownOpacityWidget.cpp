@@ -24,7 +24,7 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 
-    this->labelName->setText(this->model.getName());
+    this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -52,10 +52,11 @@ bool RundownOpacityWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setName(rundownItemChangedEvent->getName());
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
         this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+        this->model.setName(rundownItemChangedEvent->getName());
 
-        this->labelName->setText(this->model.getName());
+        this->labelLabel->setText(this->model.getLabel());
         this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
@@ -182,7 +183,9 @@ bool RundownOpacityWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play)
+    else if (type == Playout::PlayoutType::Play ||
+             type == Playout::PlayoutType::Invoke ||
+             type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeClear()));

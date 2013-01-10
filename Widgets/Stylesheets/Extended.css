@@ -6,7 +6,7 @@
     background-color: transparent;
     border-radius: 0px;
 }
-#labelName
+#labelLabel
 {
     font-size: 13px;
 }
@@ -29,7 +29,7 @@
 /*
  * SettingsDialog
  */
-#lineStartup, #lineAppearance, #lineSynchronize, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+#lineStartup, #lineAppearance, #lineLibrary, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
 {
     background-color: rgba(43, 43, 43, 255);
 }

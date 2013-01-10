@@ -110,7 +110,11 @@ void MainWindow::openRundown()
 {
     QString file = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
     if (!file.isEmpty())
+    {
+        qApp->postEvent(qApp, new StatusbarEvent("Opening rundown..."));
+
         qApp->postEvent(qApp, new OpenRundownEvent(file));
+    }
 }
 
 void MainWindow::saveRundown()
@@ -118,6 +122,8 @@ void MainWindow::saveRundown()
     QString filename = (!this->currentFilename.isEmpty()) ? this->currentFilename : QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
     if (!filename.isEmpty())
     {
+        qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
+
         this->currentFilename = filename;
         qApp->postEvent(qApp, new SaveRundownEvent(filename));
     }
@@ -128,6 +134,8 @@ void MainWindow::saveAsRundown()
     QString filename = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
     if (!filename.isEmpty())
     {
+        qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
+
         this->currentFilename = filename;
         qApp->postEvent(qApp, new SaveRundownEvent(filename));
     }

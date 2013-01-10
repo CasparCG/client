@@ -44,7 +44,7 @@
     <attribute name="title">
      <string>General</string>
     </attribute>
-    <widget class="QLabel" name="labelSynchronize">
+    <widget class="QLabel" name="labelLibrary">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -54,13 +54,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>Synchronize</string>
+      <string>Library</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="Line" name="lineSynchronize">
+    <widget class="Line" name="lineLibrary">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -89,7 +89,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QSpinBox" name="spinBoxSynchronizeInterval">
+    <widget class="QSpinBox" name="spinBoxRefreshLibraryInterval">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -122,7 +122,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>106</y>
+       <y>107</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -164,7 +164,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>110</y>
+       <y>111</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -180,7 +180,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>110</y>
+       <y>111</y>
        <width>62</width>
        <height>16</height>
       </rect>
@@ -234,7 +234,7 @@
       <string>Start in fullscreen</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxAutoSynchronize">
+    <widget class="QCheckBox" name="checkBoxAutoRefreshLibrary">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -247,7 +247,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Synchronize library automatically</string>
+      <string>Refresh library automatically</string>
      </property>
     </widget>
    </widget>
@@ -2209,7 +2209,7 @@
   <tabstop>toolButtonAddDevice</tabstop>
   <tabstop>toolButtonRemoveDevice</tabstop>
   <tabstop>spinBoxFontSize</tabstop>
-  <tabstop>spinBoxSynchronizeInterval</tabstop>
+  <tabstop>spinBoxRefreshLibraryInterval</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -2278,7 +2278,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxSynchronizeInterval</sender>
+   <sender>spinBoxRefreshLibraryInterval</sender>
    <signal>valueChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>synchronizeIntervalChanged(int)</slot>
@@ -2310,7 +2310,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAutoSynchronize</sender>
+   <sender>checkBoxAutoRefreshLibrary</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>autoSynchronizeChanged(int)</slot>

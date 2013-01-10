@@ -1,11 +1,11 @@
-#include "SynchronizeManager.h"
+#include "LibraryManager.h"
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
-#include "Events/AutoSynchronizeEvent.h"
+#include "Events/AutoRefreshLibraryEvent.h"
 #include "Events/DataChangedEvent.h"
 #include "Events/MediaChangedEvent.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/SynchronizeEvent.h"
+#include "Events/RefreshLibraryEvent.h"
 #include "Events/TemplateChangedEvent.h"
 #include "Models/DeviceModel.h"
 
@@ -19,69 +19,68 @@
 
 #include <QtGui/QApplication>
 
-Q_GLOBAL_STATIC(SynchronizeManager, synchronizeManager)
+Q_GLOBAL_STATIC(LibraryManager, libraryManager)
 
-SynchronizeManager::SynchronizeManager(QObject* parent)
+LibraryManager::LibraryManager(QObject* parent)
     : QObject(parent)
 {
-    QObject::connect(&this->synchronizeTimer, SIGNAL(timeout()), this, SLOT(synchronize()));
+    QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
 
     qApp->installEventFilter(this);
 }
 
-SynchronizeManager& SynchronizeManager::getInstance()
+LibraryManager& LibraryManager::getInstance()
 {
-    return *synchronizeManager();
+    return *libraryManager();
 }
 
-void SynchronizeManager::initialize()
+void LibraryManager::initialize()
 {
-    qApp->postEvent(qApp, new SynchronizeEvent(0));
-    qApp->postEvent(qApp, new AutoSynchronizeEvent((DatabaseManager::getInstance().getConfigurationByName("AutoSynchronize").getValue() == "true") ? true : false,
-                                                   DatabaseManager::getInstance().getConfigurationByName("SynchronizeInterval").getValue().toInt() * 1000));
+    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+    qApp->postEvent(qApp, new AutoRefreshLibraryEvent((DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false,
+                                                       DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt() * 1000));
 }
 
-void SynchronizeManager::uninitialize()
+void LibraryManager::uninitialize()
 {
 
 }
 
-bool SynchronizeManager::eventFilter(QObject* target, QEvent* event)
+bool LibraryManager::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::Synchronize))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RefreshLibrary))
     {
-        SynchronizeEvent* synchronizeEvent = dynamic_cast<SynchronizeEvent*>(event);
-        QTimer::singleShot(synchronizeEvent->getDelay(), this, SLOT(synchronize()));
+        RefreshLibraryEvent* refreshLibraryEvent = dynamic_cast<RefreshLibraryEvent*>(event);
+        QTimer::singleShot(refreshLibraryEvent->getDelay(), this, SLOT(refresh()));
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AutoSynchronize))
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AutoRefreshLibrary))
     {
-        AutoSynchronizeEvent* autoSynchronizeEvent = dynamic_cast<AutoSynchronizeEvent*>(event);
-        if (this->synchronizeTimer.interval() != autoSynchronizeEvent->getInterval())
-            this->synchronizeTimer.setInterval(autoSynchronizeEvent->getInterval());
+        AutoRefreshLibraryEvent* autoRefreshLibraryEvent = dynamic_cast<AutoRefreshLibraryEvent*>(event);
+        if (this->refreshTimer.interval() != autoRefreshLibraryEvent->getInterval())
+            this->refreshTimer.setInterval(autoRefreshLibraryEvent->getInterval());
 
-        if (this->synchronizeTimer.isActive() != autoSynchronizeEvent->getAutoSynchronize())
+        if (this->refreshTimer.isActive() != autoRefreshLibraryEvent->getAutoRefresh())
         {
-            if (autoSynchronizeEvent->getAutoSynchronize())
-                this->synchronizeTimer.start();
+            if (autoRefreshLibraryEvent->getAutoRefresh())
+                this->refreshTimer.start();
             else
-                this->synchronizeTimer.stop();
+                this->refreshTimer.stop();
         }
     }
 
     return QObject::eventFilter(target, event);
 }
 
-void SynchronizeManager::synchronize()
+void LibraryManager::refresh()
 {
-    DeviceManager::getInstance().synchronize();
+    DeviceManager::getInstance().refresh();
 
     if (DeviceManager::getInstance().getConnectionCount() == 0)
         return;
 
-    StatusbarEvent* event = new StatusbarEvent("Synchronizing library...");
-    qApp->postEvent(qApp, event);
+    qApp->postEvent(qApp, new StatusbarEvent("Refreshing library..."));
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -97,17 +96,17 @@ void SynchronizeManager::synchronize()
         }
     }
 
-    this->synchronizeTimer.setInterval(DatabaseManager::getInstance().getConfigurationByName("SynchronizeInterval").getValue().toInt() * 1000);
+    this->refreshTimer.setInterval(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt() * 1000);
 }
 
-void SynchronizeManager::deviceRemoved()
+void LibraryManager::deviceRemoved()
 {
     qApp->postEvent(qApp, new MediaChangedEvent());
     qApp->postEvent(qApp, new TemplateChangedEvent());
     qApp->postEvent(qApp, new DataChangedEvent());
 }
 
-void SynchronizeManager::deviceAdded(CasparDevice& device)
+void LibraryManager::deviceAdded(CasparDevice& device)
 {
     QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
     QObject::connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(deviceMediaChanged(const QList<CasparMedia>&, CasparDevice&)));
@@ -115,7 +114,7 @@ void SynchronizeManager::deviceAdded(CasparDevice& device)
     QObject::connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(deviceDataChanged(const QList<CasparData>&, CasparDevice&)));
 }
 
-void SynchronizeManager::deviceConnectionStateChanged(CasparDevice& device)
+void LibraryManager::deviceConnectionStateChanged(CasparDevice& device)
 {
     if (device.isConnected())
     {
@@ -129,7 +128,7 @@ void SynchronizeManager::deviceConnectionStateChanged(CasparDevice& device)
     }
 }
 
-void SynchronizeManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems, CasparDevice& device)
+void LibraryManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -163,7 +162,7 @@ void SynchronizeManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, mediaItem.getName(), "", mediaItem.getType()));
+            insertModels.push_back(LibraryModel(0, mediaItem.getName(), mediaItem.getName(), "", mediaItem.getType()));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -172,10 +171,10 @@ void SynchronizeManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems
         qApp->postEvent(qApp, new MediaChangedEvent());
     }
 
-    qDebug() << QString("Synchronize::deviceMediaChanged: %1 msec").arg(time.elapsed());
+    qDebug() << QString("LibraryManager::deviceMediaChanged: %1 msec").arg(time.elapsed());
 }
 
-void SynchronizeManager::deviceTemplateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
+void LibraryManager::deviceTemplateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -209,7 +208,7 @@ void SynchronizeManager::deviceTemplateChanged(const QList<CasparTemplate>& temp
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, templateItem.getName(), "", "TEMPLATE"));
+            insertModels.push_back(LibraryModel(0, templateItem.getName(), templateItem.getName(), "", "TEMPLATE"));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -218,10 +217,10 @@ void SynchronizeManager::deviceTemplateChanged(const QList<CasparTemplate>& temp
         qApp->postEvent(qApp, new TemplateChangedEvent());
     }
 
-    qDebug() << QString("Synchronize::deviceTemplateChanged: %1 msec").arg(time.elapsed());
+    qDebug() << QString("LibraryManager::deviceTemplateChanged: %1 msec").arg(time.elapsed());
 }
 
-void SynchronizeManager::deviceDataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
+void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -255,7 +254,7 @@ void SynchronizeManager::deviceDataChanged(const QList<CasparData>& dataItems, C
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, dataItem.getName(), "", "DATA"));
+            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "DATA"));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -264,5 +263,5 @@ void SynchronizeManager::deviceDataChanged(const QList<CasparData>& dataItems, C
         qApp->postEvent(qApp, new DataChangedEvent());
     }
 
-    qDebug() << QString("Synchronize::deviceDataChanged: %1 msec").arg(time.elapsed());
+    qDebug() << QString("LibraryManager::deviceDataChanged: %1 msec").arg(time.elapsed());
 }

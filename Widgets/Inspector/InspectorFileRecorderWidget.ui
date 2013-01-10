@@ -18,9 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutFilename">
+    <layout class="QHBoxLayout" name="horizontalLayoutOutput">
      <item>
-      <spacer name="horizontalSpacerFilename">
+      <spacer name="horizontalSpacerOutput">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -29,16 +29,16 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>16</width>
+         <width>24</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelFilename">
+      <widget class="QLabel" name="labelOutput">
        <property name="text">
-        <string>&lt;a href=&quot;Filename&quot; style=&quot;color: white;&quot;&gt;Filename&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Output&quot; style=&quot;color: white;&quot;&gt;Output&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditFilename"/>
+      <widget class="QLineEdit" name="lineEditOutput"/>
      </item>
     </layout>
    </item>
@@ -276,10 +276,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelFilename</sender>
+   <sender>labelOutput</sender>
    <signal>linkActivated(QString)</signal>
    <receiver>InspectorFileRecorderWidget</receiver>
-   <slot>resetFilename(QString)</slot>
+   <slot>resetOutput(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>46</x>
@@ -298,8 +298,8 @@
    <slot>resetContainer(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>52</y>
+     <x>74</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -314,8 +314,8 @@
    <slot>containerChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>205</x>
-     <y>49</y>
+     <x>215</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>230</x>
@@ -330,8 +330,8 @@
    <slot>resetCodec(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>76</y>
+     <x>77</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -346,8 +346,8 @@
    <slot>codecChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>78</y>
+     <x>215</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>233</x>
@@ -420,10 +420,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditFilename</sender>
+   <sender>lineEditOutput</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorFileRecorderWidget</receiver>
-   <slot>filenameChanged(QString)</slot>
+   <slot>outputChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>191</x>
@@ -445,7 +445,7 @@
   <slot>presetChanged(QString)</slot>
   <slot>resetTune(QString)</slot>
   <slot>tuneChanged(QString)</slot>
-  <slot>resetFilename(QString)</slot>
-  <slot>filenameChanged(QString)</slot>
+  <slot>resetOutput(QString)</slot>
+  <slot>outputChanged(QString)</slot>
  </slots>
 </ui>
