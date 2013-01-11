@@ -1,8 +1,9 @@
 CasparCG Client 2.0 Beta 3
 ==========================
 
-- NEW: Rundown now support compact view.
+- NEW: The rundown now support compact view.
 - NEW: Color/Expanded state for items is now saved when saving rundown to file.
+- FIX: The rundown use wrong encoding.
 - FIX: Client send multiple VERSION command to server when adding a new device.
 - UPDATE: Minor UI changes.
 - UPDATE: Play mixer command on UPDATE and INVOKE.
