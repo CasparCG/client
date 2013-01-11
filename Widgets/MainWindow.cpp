@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "Events/CompactViewEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/StatusbarEvent.h"
@@ -60,6 +61,7 @@ void MainWindow::setupUiMenu()
 
     this->viewMenu = new QMenu(this);
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
+    this->viewMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -189,6 +191,11 @@ void MainWindow::executeClearVideolayer()
 void MainWindow::executeClearChannel()
 {
     qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
+}
+
+void MainWindow::toggleCompactView()
+{
+    qApp->postEvent(qApp, new CompactViewEvent());
 }
 
 void MainWindow::showAboutDialog()

@@ -23,7 +23,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
     public:
         explicit RundownDeckLinkInputWidget(const LibraryModel& model, QWidget* parent = 0,
                                             const QString& color = Color::DEFAULT_PRODUCER_COLOR, bool active = false,
-                                            bool loaded = false, bool inGroup = false, bool disconnected = false);
+                                            bool loaded = false, bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -43,6 +43,8 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        virtual void setCompactView(bool compactView);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
@@ -51,6 +53,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         bool loaded;
         bool inGroup;
         bool disconnected;
+        bool compactView;
         QString color;
         LibraryModel model;
         DeckLinkInputCommand command;

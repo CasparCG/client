@@ -23,7 +23,7 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
     public:
         explicit RundownGpiOutputWidget(const LibraryModel& model, QWidget* parent = 0,
                                         const QString& color = Color::DEFAULT_GPI_COLOR, bool active = false,
-                                        bool inGroup = false);
+                                        bool inGroup = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -43,12 +43,15 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        virtual void setCompactView(bool compactView);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
         bool inGroup;
+        bool compactView;
         QString color;
         LibraryModel model;
         GpiOutputCommand command;

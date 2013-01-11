@@ -11,13 +11,14 @@
 #include <QtCore/QTimer>
 
 RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                         bool inGroup, bool disconnected)
+                                         bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), color(color), model(model)
+      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
@@ -87,7 +88,7 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
 IRundownWidget* RundownCommitWidget::clone()
 {
     RundownCommitWidget* widget = new RundownCommitWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                          this->inGroup, this->disconnected);
+                                                          this->inGroup, this->disconnected, this->compactView);
 
     CommitCommand* command = dynamic_cast<CommitCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -95,6 +96,24 @@ IRundownWidget* RundownCommitWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
 
     return widget;
+}
+
+void RundownCommitWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownCommitWidget::readProperties(boost::property_tree::wptree& pt)
@@ -207,12 +226,12 @@ void RundownCommitWidget::delayChanged(int delay)
 
 void RundownCommitWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownCommitWidget::allowGpiChanged(bool allowGpi)

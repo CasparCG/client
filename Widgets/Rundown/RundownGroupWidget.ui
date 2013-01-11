@@ -34,8 +34,8 @@
      <widget class="QLabel" name="labelThumbnail">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>1</y>
+        <x>22</x>
+        <y>2</y>
         <width>32</width>
         <height>32</height>
        </rect>
@@ -46,12 +46,15 @@
       <property name="pixmap">
        <pixmap resource="../Resource.qrc">:/Graphics/Images/Group.png</pixmap>
       </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QLabel" name="labelLabel">
       <property name="geometry">
        <rect>
         <x>62</x>
-        <y>10</y>
+        <y>2</y>
         <width>531</width>
         <height>16</height>
        </rect>
@@ -89,7 +92,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="labelGpiTriggerable">
+    <widget class="QLabel" name="labelGpiConnected">
      <property name="minimumSize">
       <size>
        <width>32</width>
@@ -107,6 +110,9 @@
      </property>
      <property name="pixmap">
       <pixmap resource="../Resource.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

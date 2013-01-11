@@ -23,7 +23,7 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
     public:
         explicit RundownSaturationWidget(const LibraryModel& model, QWidget* parent = 0,
                                          const QString& color = Color::DEFAULT_MIXER_COLOR, bool active = false,
-                                         bool inGroup = false, bool disconnected = false);
+                                         bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -43,6 +43,8 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        virtual void setCompactView(bool compactView);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
@@ -50,6 +52,7 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
         bool active;
         bool inGroup;
         bool disconnected;
+        bool compactView;
         QString color;
         LibraryModel model;
         SaturationCommand command;

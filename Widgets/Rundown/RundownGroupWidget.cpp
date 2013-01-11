@@ -8,13 +8,14 @@
 #include <QtGui/QApplication>
 #include <QtCore/QObject>
 
-RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, bool active)
+RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, bool active, bool compactView)
     : QWidget(parent),
-      active(active), model(model)
+      active(active), compactView(compactView), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -50,7 +51,7 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 
 IRundownWidget* RundownGroupWidget::clone()
 {
-    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->active);
+    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->active, this->compactView);
 
     GroupCommand* command = dynamic_cast<GroupCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -59,6 +60,24 @@ IRundownWidget* RundownGroupWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
 
     return widget;
+}
+
+void RundownGroupWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelGroupColor->move(this->labelGroupColor->x(), Define::COMPACT_ITEM_HEIGHT - 2);
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelGroupColor->move(this->labelGroupColor->x(), Define::DEFAULT_ITEM_HEIGHT - 2);
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 bool RundownGroupWidget::isGroup() const
@@ -108,12 +127,12 @@ void RundownGroupWidget::delayChanged(int delay)
 
 void RundownGroupWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)

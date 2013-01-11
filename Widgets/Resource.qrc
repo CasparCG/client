@@ -48,14 +48,14 @@
         <file>Images/Preview.png</file>
         <file>Images/Still.png</file>
         <file>Images/Consumer.png</file>
-        <file>Images/Disconnected.png</file>
         <file>Images/Color.png</file>
         <file>Images/New.png</file>
         <file>Images/Ungroup.png</file>
         <file>Images/ImageScroller.png</file>
-        <file>Images/GpiOutput.png</file>
+        <file>Images/Disconnected.png</file>
         <file>Images/GpiConnected.png</file>
         <file>Images/GpiDisconnected.png</file>
+        <file>Images/GpiOutput.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

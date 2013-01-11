@@ -11,13 +11,14 @@
 #include <QtCore/QTimer>
 
 RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                 bool active, bool inGroup, bool disconnected)
+                                                 bool active, bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), color(color), model(model)
+      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
@@ -89,7 +90,7 @@ bool RundownBrightnessWidget::eventFilter(QObject* target, QEvent* event)
 IRundownWidget* RundownBrightnessWidget::clone()
 {
     RundownBrightnessWidget* widget = new RundownBrightnessWidget(this->model, this->parentWidget(), this->color,
-                                                                  this->active, this->inGroup, this->disconnected);
+                                                                  this->active, this->inGroup, this->disconnected, this->compactView);
 
     BrightnessCommand* command = dynamic_cast<BrightnessCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -102,6 +103,24 @@ IRundownWidget* RundownBrightnessWidget::clone()
     command->setDefer(this->command.getDefer());
 
     return widget;
+}
+
+void RundownBrightnessWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownBrightnessWidget::readProperties(boost::property_tree::wptree& pt)
@@ -307,12 +326,12 @@ void RundownBrightnessWidget::delayChanged(int delay)
 
 void RundownBrightnessWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownBrightnessWidget::allowGpiChanged(bool allowGpi)

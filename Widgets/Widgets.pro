@@ -50,7 +50,6 @@ HEADERS += \
     Inspector/InspectorVolumeWidget.h \
     Rundown/RundownLevelsWidget.h \
     Rundown/RundownKeyerWidget.h \
-    Rundown/RundownBlendWidget.h \
     Rundown/RundownGridWidget.h \
     Inspector/InspectorGridWidget.h \
     Rundown/RundownGpiOutputWidget.h \
@@ -62,7 +61,8 @@ HEADERS += \
     Inspector/InspectorImageScrollerWidget.h \
     Rundown/RundownFileRecorderWidget.h \
     Inspector/InspectorFileRecorderWidget.h \
-    Inspector/InspectorBlendModeWidget.h
+    Inspector/InspectorBlendModeWidget.h \
+    Rundown/RundownBlendModeWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -105,14 +105,14 @@ SOURCES += \
     Rundown/RundownVolumeWidget.cpp \
     Rundown/RundownLevelsWidget.cpp \
     Rundown/RundownKeyerWidget.cpp \
-    Rundown/RundownBlendWidget.cpp \
     Rundown/RundownGridWidget.cpp \
     Rundown/RundownGpiOutputWidget.cpp \
     Rundown/RundownDeckLinkInputWidget.cpp \
     Rundown/RundownCommitWidget.cpp \
     Rundown/RundownImageScrollerWidget.cpp \
     Rundown/RundownFileRecorderWidget.cpp \
-    Inspector/InspectorBlendModeWidget.cpp
+    Inspector/InspectorBlendModeWidget.cpp \
+    Rundown/RundownBlendModeWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -155,14 +155,14 @@ FORMS += \
     Rundown/RundownVolumeWidget.ui \
     Rundown/RundownLevelsWidget.ui \
     Rundown/RundownKeyerWidget.ui \
-    Rundown/RundownBlendWidget.ui \
     Rundown/RundownGridWidget.ui \ 
     Rundown/RundownGpiOutputWidget.ui \
     Rundown/RundownDeckLinkInputWidget.ui \ 
     Rundown/RundownCommitWidget.ui \
     Rundown/RundownImageScrollerWidget.ui \ 
     Rundown/RundownFileRecorderWidget.ui \
-    Inspector/InspectorBlendModeWidget.ui
+    Inspector/InspectorBlendModeWidget.ui \
+    Rundown/RundownBlendModeWidget.ui
 
 RESOURCES += \
     Resource.qrc

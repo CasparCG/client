@@ -11,13 +11,14 @@
 #include <QtCore/QTimer>
 
 RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                               bool active, bool inGroup)
+                                               bool active, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelDisconnected->setVisible(!GpiManager::getInstance().getGpiDevice()->isConnected());
     this->labelGroupColor->setVisible(this->inGroup);
@@ -68,7 +69,7 @@ bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
 IRundownWidget* RundownGpiOutputWidget::clone()
 {
     RundownGpiOutputWidget* widget = new RundownGpiOutputWidget(this->model, this->parentWidget(), this->color,
-                                                                this->active, this->inGroup);
+                                                                this->active, this->inGroup, this->compactView);
 
     GpiOutputCommand* command = dynamic_cast<GpiOutputCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
@@ -76,6 +77,24 @@ IRundownWidget* RundownGpiOutputWidget::clone()
     command->setGpoPort(this->command.getGpoPort());
 
     return widget;
+}
+
+void RundownGpiOutputWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownGpiOutputWidget::readProperties(boost::property_tree::wptree& pt)
@@ -164,12 +183,12 @@ void RundownGpiOutputWidget::gpiOutputPortChanged(int port)
 
 void RundownGpiOutputWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownGpiOutputWidget::allowGpiChanged(bool allowGpi)

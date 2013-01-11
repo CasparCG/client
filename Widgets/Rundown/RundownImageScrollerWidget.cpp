@@ -11,13 +11,14 @@
 #include <QtCore/QTimer>
 
 RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                       bool active, bool loaded, bool inGroup, bool disconnected)
+                                                       bool active, bool loaded, bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), color(color), model(model)
+      active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
@@ -94,7 +95,7 @@ IRundownWidget* RundownImageScrollerWidget::clone()
 {
     RundownImageScrollerWidget* widget = new RundownImageScrollerWidget(this->model, this->parentWidget(), this->color,
                                                                         this->active, this->loaded, this->inGroup,
-                                                                        this->disconnected);
+                                                                        this->disconnected, this->compactView);
 
     ImageScrollerCommand* command = dynamic_cast<ImageScrollerCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -108,6 +109,24 @@ IRundownWidget* RundownImageScrollerWidget::clone()
     command->setProgressive(this->command.getProgressive());
 
     return widget;
+}
+
+void RundownImageScrollerWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownImageScrollerWidget::readProperties(boost::property_tree::wptree& pt)
@@ -358,12 +377,12 @@ void RundownImageScrollerWidget::delayChanged(int delay)
 
 void RundownImageScrollerWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownImageScrollerWidget::allowGpiChanged(bool allowGpi)

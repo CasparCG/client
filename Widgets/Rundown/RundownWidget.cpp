@@ -1,5 +1,5 @@
 #include "RundownWidget.h"
-#include "RundownBlendWidget.h"
+#include "RundownBlendModeWidget.h"
 #include "RundownBrightnessWidget.h"
 #include "RundownCommitWidget.h"
 #include "RundownContrastWidget.h"
@@ -33,12 +33,15 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QPoint>
+#include <QtCore/QTextCodec>
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
 
-RundownWidget::RundownWidget(QWidget* parent) : QWidget(parent), isEnterPressed(false)
+RundownWidget::RundownWidget(QWidget* parent)
+    : QWidget(parent),
+    compactView(false), enterPressed(false)
 {
     setupUi(this);
     setupUiMenu();
@@ -130,7 +133,7 @@ void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::
 
     IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, name, deviceName, type), this);
     widget->setExpanded(true);
-
+    widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
     widget->readProperties(pt);
 
@@ -138,6 +141,12 @@ void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::
     this->treeWidgetRundown->invisibleRootItem()->addChild(parent);
     this->treeWidgetRundown->setItemWidget(parent, 0, dynamic_cast<QWidget*>(widget));
     this->treeWidgetRundown->expandItem(parent);
+
+    if (this->compactView) 
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
     this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
     parent->setExpanded(expanded);
@@ -192,7 +201,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
 
     IRundownWidget* widget = NULL;
     if (type == "BLENDMODE")
-        widget = new RundownBlendWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownBlendModeWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "BRIGHTNESS")
         widget = new RundownBrightnessWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "CONTRAST")
@@ -228,6 +237,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
     else if (type == "IMAGESCROLLER")
         widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
 
+    widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
     widget->readProperties(pt);
 
@@ -241,6 +251,12 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
     }
 
     this->treeWidgetRundown->setItemWidget(child, 0, dynamic_cast<QWidget*>(widget));
+
+    if (this->compactView)
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
     this->treeWidgetRundown->doItemsLayout(); // Refresh.
 }
 
@@ -328,9 +344,11 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     {
         OpenRundownEvent* openRundownEvent = dynamic_cast<OpenRundownEvent*>(event);
         QFile file(openRundownEvent->getPath());
-        if (file.open(QFile::ReadOnly))
+        if (file.open(QFile::ReadOnly | QIODevice::Text))
         {
             QTextStream stream(&file);
+            stream.setCodec(QTextCodec::codecForName("UTF-8"));
+
             std::wstringstream wstringstream;
             wstringstream << stream.readAll().toStdWString();
 
@@ -404,13 +422,48 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
+    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
+    {
+        if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+            return false;
+
+        for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+        {
+            QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
+            QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+            dynamic_cast<IRundownWidget*>(widget)->setCompactView(!this->compactView);
+            if (this->compactView)
+                widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+            else
+                widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+
+            for (int j = 0; j < item->childCount(); j++)
+            {
+                QTreeWidgetItem* child = item->child(j);
+                QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+                dynamic_cast<IRundownWidget*>(widget)->setCompactView(!this->compactView);
+                if (this->compactView)
+                    widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+                else
+                    widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+            }
+        }
+
+        this->treeWidgetRundown->doItemsLayout(); // Refresh
+
+        this->compactView = !this->compactView;
+
+        return true;
+    }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddRudnownItem))
     {
         AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
 
         IRundownWidget* widget = NULL;
         if (addRudnownItemEvent->getLibraryModel().getType() == "BLENDMODE")
-            widget = new RundownBlendWidget(addRudnownItemEvent->getLibraryModel(), this);
+            widget = new RundownBlendModeWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "BRIGHTNESS")
             widget = new RundownBrightnessWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "CONTRAST")
@@ -448,6 +501,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         else if (addRudnownItemEvent->getLibraryModel().getType() == "IMAGESCROLLER")
             widget = new RundownImageScrollerWidget(addRudnownItemEvent->getLibraryModel(), this);
 
+        widget->setCompactView(this->compactView);
+
         QTreeWidgetItem* item = new QTreeWidgetItem();
         if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
             this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
@@ -462,6 +517,12 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
         this->treeWidgetRundown->setCurrentItem(item);
         this->treeWidgetRundown->setFocus();
+
+        if (this->compactView)
+            dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+        else
+            dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
         this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
         checkEmptyRundown();
@@ -836,11 +897,17 @@ bool RundownWidget::groupItems()
     RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(-1, "Group", "", "", "GROUP"), this);
     widget->setActive(true);
     widget->setExpanded(true);
+    widget->setCompactView(this->compactView);
 
     int row = this->treeWidgetRundown->indexOfTopLevelItem(this->treeWidgetRundown->selectedItems().at(0));
     this->treeWidgetRundown->invisibleRootItem()->insertChild(row, parentItem);
     this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(widget));
     this->treeWidgetRundown->expandItem(parentItem);
+
+    if (this->compactView)
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
 
     foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
     {
@@ -1099,20 +1166,8 @@ bool RundownWidget::moveItemIntoGroup()
 
 bool RundownWidget::removeSelectedItems()
 {
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
-
-    QTreeWidgetItem* parentItem = this->treeWidgetRundown->currentItem()->parent();
-
     foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
        delete item;
-
-    if (parentItem != NULL && parentItem->childCount() == 0)
-    {
-        this->treeWidgetRundown->setCurrentItem(parentItem);
-
-        delete parentItem;
-    }
 
     checkEmptyRundown();
 
@@ -1136,9 +1191,9 @@ void RundownWidget::parsePage(QKeyEvent* keyEvent)
     }
     else if (keyEvent->key() >= 48 && keyEvent->key() <= 57)
     {
-        if (this->isEnterPressed)
+        if (this->enterPressed)
         {
-            this->isEnterPressed = !this->isEnterPressed;
+            this->enterPressed = !this->enterPressed;
             this->page = keyEvent->text();
             playSelectedEvent();
         }

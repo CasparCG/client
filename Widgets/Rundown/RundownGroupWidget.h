@@ -23,7 +23,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
     Q_OBJECT
 
     public:
-        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0, bool active = false);
+        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0, bool active = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -43,11 +43,14 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual void readProperties(boost::property_tree::wptree& pt) {}
         virtual void writeProperties(QXmlStreamWriter* writer) {}
 
+        virtual void setCompactView(bool compactView);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
+        bool compactView;
         LibraryModel model;
         GroupCommand command;
 

@@ -14,14 +14,15 @@
 #include <QtGui/QPixmap>
 
 RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool disconnected)
+                                       bool loaded, bool paused, bool playing, bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
-      color(color), model(model)
+      compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->command.setMediaName(this->model.getName());
 
@@ -96,7 +97,7 @@ IRundownWidget* RundownMediaWidget::clone()
 {
     RundownMediaWidget* widget = new RundownMediaWidget(this->model, this->parentWidget(), this->color, this->active,
                                                         this->loaded, this->paused, this->playing, this->inGroup,
-                                                        this->disconnected);
+                                                        this->disconnected, this->compactView);
 
     MediaCommand* command = dynamic_cast<MediaCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -113,6 +114,24 @@ IRundownWidget* RundownMediaWidget::clone()
     command->setLength(this->command.getLength());
 
     return widget;
+}
+
+void RundownMediaWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownMediaWidget::readProperties(boost::property_tree::wptree& pt)
@@ -441,12 +460,12 @@ void RundownMediaWidget::delayChanged(int delay)
 
 void RundownMediaWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownMediaWidget::allowGpiChanged(bool allowGpi)

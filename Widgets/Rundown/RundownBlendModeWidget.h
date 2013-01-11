@@ -3,7 +3,7 @@
 #include "../Shared.h"
 #include "IPlayoutCommand.h"
 #include "IRundownWidget.h"
-#include "ui_RundownBlendWidget.h"
+#include "ui_RundownBlendModeWidget.h"
 #include "GpiDevice.h"
 
 #include "Global.h"
@@ -21,14 +21,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownBlendWidget : public QWidget, Ui::RundownBlendWidget, public IRundownWidget, public IPlayoutCommand
+class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendModeWidget, public IRundownWidget, public IPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownBlendWidget(const LibraryModel& model, QWidget* parent = 0,
-                                    const QString& color = Color::DEFAULT_MIXER_COLOR, bool active = false,
-                                    bool inGroup = false, bool disconnected = false);
+        explicit RundownBlendModeWidget(const LibraryModel& model, QWidget* parent = 0,
+                                        const QString& color = Color::DEFAULT_MIXER_COLOR, bool active = false,
+                                        bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -48,6 +48,8 @@ class WIDGETS_EXPORT RundownBlendWidget : public QWidget, Ui::RundownBlendWidget
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        virtual void setCompactView(bool compactView);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
@@ -55,6 +57,7 @@ class WIDGETS_EXPORT RundownBlendWidget : public QWidget, Ui::RundownBlendWidget
         bool active;
         bool inGroup;
         bool disconnected;
+        bool compactView;
         QString color;
         LibraryModel model;
         BlendModeCommand command;

@@ -11,12 +11,14 @@
 #include <QtCore/QTimer>
 
 RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                             bool active, bool loaded, bool inGroup, bool disconnected) : QWidget(parent),
-    active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), color(color), model(model)
+                                             bool active, bool loaded, bool inGroup, bool disconnected, bool compactView)
+    : QWidget(parent),
+    active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->command.setTemplateName(this->model.getName());
 
@@ -86,7 +88,7 @@ IRundownWidget* RundownTemplateWidget::clone()
 {
     RundownTemplateWidget* widget = new RundownTemplateWidget(this->model, this->parentWidget(), this->color,
                                                               this->active, this->loaded, this->inGroup,
-                                                              this->disconnected);
+                                                              this->disconnected, this->compactView);
 
     TemplateCommand* command = dynamic_cast<TemplateCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -100,6 +102,24 @@ IRundownWidget* RundownTemplateWidget::clone()
     command->setUseStoredData(this->command.getUseStoredData());
 
     return widget;
+}
+
+void RundownTemplateWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
 }
 
 void RundownTemplateWidget::readProperties(boost::property_tree::wptree& pt)
@@ -454,12 +474,12 @@ void RundownTemplateWidget::flashlayerChanged(int flashlayer)
 
 void RundownTemplateWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
 void RundownTemplateWidget::allowGpiChanged(bool allowGpi)

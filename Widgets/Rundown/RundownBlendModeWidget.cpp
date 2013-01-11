@@ -1,4 +1,4 @@
-#include "RundownBlendWidget.h"
+#include "RundownBlendModeWidget.h"
 
 #include "Global.h"
 
@@ -10,13 +10,15 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownBlendWidget::RundownBlendWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool inGroup, bool disconnected) : QWidget(parent),
-    active(active), inGroup(inGroup), disconnected(disconnected), color(color), model(model)
+RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                       bool inGroup, bool disconnected, bool compactView)
+    : QWidget(parent),
+    active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     setActive(active);
+    setCompactView(compactView);
 
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
@@ -42,7 +44,7 @@ RundownBlendWidget::RundownBlendWidget(const LibraryModel& model, QWidget* paren
     qApp->installEventFilter(this);
 }
 
-bool RundownBlendWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownBlendModeWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemChanged))
     {
@@ -85,10 +87,10 @@ bool RundownBlendWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownBlendWidget::clone()
+IRundownWidget* RundownBlendModeWidget::clone()
 {
-    RundownBlendWidget* widget = new RundownBlendWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->inGroup, this->disconnected);
+    RundownBlendModeWidget* widget = new RundownBlendModeWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                                this->inGroup, this->disconnected, this->compactView);
 
     BlendModeCommand* command = dynamic_cast<BlendModeCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -100,32 +102,50 @@ IRundownWidget* RundownBlendWidget::clone()
     return widget;
 }
 
-void RundownBlendWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownBlendModeWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+    }
+    else
+    {
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+    }
+
+    this->compactView = compactView;
+}
+
+void RundownBlendModeWidget::readProperties(boost::property_tree::wptree& pt)
 {
     setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownBlendWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownBlendModeWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownBlendWidget::isGroup() const
+bool RundownBlendModeWidget::isGroup() const
 {
     return false;
 }
 
-ICommand* RundownBlendWidget::getCommand()
+ICommand* RundownBlendModeWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownBlendWidget::getLibraryModel()
+LibraryModel* RundownBlendModeWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownBlendWidget::setActive(bool active)
+void RundownBlendModeWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -135,7 +155,7 @@ void RundownBlendWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownBlendWidget::setInGroup(bool inGroup)
+void RundownBlendModeWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(inGroup);
@@ -161,13 +181,13 @@ void RundownBlendWidget::setInGroup(bool inGroup)
     }
 }
 
-void RundownBlendWidget::setColor(const QString& color)
+void RundownBlendModeWidget::setColor(const QString& color)
 {
     this->color = color;
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
 }
 
-void RundownBlendWidget::checkEmptyDevice()
+void RundownBlendModeWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -175,7 +195,7 @@ void RundownBlendWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownBlendWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownBlendModeWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
@@ -193,7 +213,7 @@ bool RundownBlendWidget::executeCommand(enum Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownBlendWidget::executeStop()
+void RundownBlendModeWidget::executeStop()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -210,7 +230,7 @@ void RundownBlendWidget::executeStop()
     }
 }
 
-void RundownBlendWidget::executePlay()
+void RundownBlendModeWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -227,7 +247,7 @@ void RundownBlendWidget::executePlay()
     }
 }
 
-void RundownBlendWidget::executeClear()
+void RundownBlendModeWidget::executeClear()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -244,7 +264,7 @@ void RundownBlendWidget::executeClear()
     }
 }
 
-void RundownBlendWidget::executeClearVideolayer()
+void RundownBlendModeWidget::executeClearVideolayer()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -261,7 +281,7 @@ void RundownBlendWidget::executeClearVideolayer()
     }
 }
 
-void RundownBlendWidget::executeClearChannel()
+void RundownBlendModeWidget::executeClearChannel()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -284,37 +304,37 @@ void RundownBlendWidget::executeClearChannel()
     }
 }
 
-void RundownBlendWidget::channelChanged(int channel)
+void RundownBlendModeWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownBlendWidget::videolayerChanged(int videolayer)
+void RundownBlendModeWidget::videolayerChanged(int videolayer)
 {
     this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
-void RundownBlendWidget::delayChanged(int delay)
+void RundownBlendModeWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownBlendWidget::checkGpiTriggerable()
+void RundownBlendModeWidget::checkGpiTriggerable()
 {
-    labelGpiTriggerable->setVisible(this->command.getAllowGpi());
+    labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
-        labelGpiTriggerable->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+        labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownBlendWidget::allowGpiChanged(bool allowGpi)
+void RundownBlendModeWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiTriggerable();
 }
 
-void RundownBlendWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownBlendModeWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
 {
     checkGpiTriggerable();
 }

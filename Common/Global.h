@@ -33,7 +33,8 @@ namespace Enum
             ConnectionStateChanged = QEvent::User + 22,
             RundownIsEmpty = QEvent::User + 23,
             OpenRundown = QEvent::User + 24,
-            SaveRundown = QEvent::User + 25
+            SaveRundown = QEvent::User + 25,
+            ToggleCompactView = QEvent::User + 26
         };
     };
 }
@@ -65,6 +66,12 @@ namespace Playout
 namespace Define
 {
     static const int GROUP_XPOS_OFFSET = -65;
+    static const int DEFAULT_VIEW_WIDTH = 32;
+    static const int DEFAULT_VIEW_HEIGHT = 32;
+    static const int COMPACT_VIEW_WIDTH = 16;
+    static const int COMPACT_VIEW_HEIGHT = 16;
+    static const int DEFAULT_ITEM_HEIGHT = 36;
+    static const int COMPACT_ITEM_HEIGHT = 21;
 }
 
 namespace Gpi

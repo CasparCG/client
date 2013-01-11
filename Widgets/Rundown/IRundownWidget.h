@@ -26,5 +26,7 @@ class WIDGETS_EXPORT IRundownWidget : public IProperties
         virtual void setInGroup(bool inGroup) = 0;
         virtual void setColor(const QString& color) = 0;
 
+        virtual void setCompactView(bool compactView) = 0;
+
         virtual void setExpanded(bool expanded) {}
 };

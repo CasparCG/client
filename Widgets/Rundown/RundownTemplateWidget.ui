@@ -43,6 +43,9 @@
       <property name="pixmap">
        <pixmap resource="../Resource.qrc">:/Graphics/Images/Template.png</pixmap>
       </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QLabel" name="labelVideolayer">
       <property name="geometry">
@@ -151,7 +154,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="labelGpiTriggerable">
+    <widget class="QLabel" name="labelGpiConnected">
      <property name="minimumSize">
       <size>
        <width>32</width>
@@ -169,6 +172,9 @@
      </property>
      <property name="pixmap">
       <pixmap resource="../Resource.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -191,6 +197,9 @@
      </property>
      <property name="pixmap">
       <pixmap resource="../Resource.qrc">:/Graphics/Images/Disconnected.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

@@ -40,7 +40,8 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QMenu* libraryMenu;
         QMenu* contextMenu;
 
-        bool isEnterPressed;
+        bool compactView;
+        bool enterPressed;
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
         QTreeWidgetItem* copyItem;
