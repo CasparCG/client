@@ -124,163 +124,6 @@ void RundownWidget::setupUiMenu()
     QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
 }
 
-void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
-{
-    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
-    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
-    bool expanded = pt.get<bool>(L"expanded");
-
-    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    widget->setExpanded(true);
-    widget->setCompactView(this->compactView);
-    widget->getCommand()->readProperties(pt);
-    widget->readProperties(pt);
-
-    QTreeWidgetItem* parent = new QTreeWidgetItem();
-    this->treeWidgetRundown->invisibleRootItem()->addChild(parent);
-    this->treeWidgetRundown->setItemWidget(parent, 0, dynamic_cast<QWidget*>(widget));
-    this->treeWidgetRundown->expandItem(parent);
-
-    if (this->compactView) 
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
-    else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-    parent->setExpanded(expanded);
-
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
-    {
-        QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-
-        readRundownItem(type, value.second, parent);
-    }
-}
-
-void RundownWidget::writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
-{
-    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-    QString deviceName = widget->getLibraryModel()->getDeviceName();
-    QString label = widget->getLibraryModel()->getLabel();
-    QString name = widget->getLibraryModel()->getName();
-
-    writer->writeStartElement("item");
-
-    writer->writeTextElement("type", type);
-    writer->writeTextElement("devicename", deviceName);
-    writer->writeTextElement("label", label);
-    writer->writeTextElement("name", name);
-    writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
-
-    widget->getCommand()->writeProperties(writer);
-    widget->writeProperties(writer);
-
-    writer->writeStartElement("items");
-    for (int i = 0; i < item->childCount(); i++)
-    {
-        QTreeWidgetItem* child = item->child(i);
-        IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
-
-        QString type = widget->getLibraryModel()->getType().toUpper();
-
-        writeRundownItem(type, writer, child);
-    }
-    writer->writeEndElement();
-
-    writer->writeEndElement();
-}
-
-void RundownWidget::readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent)
-{
-    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
-    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
-
-    IRundownWidget* widget = NULL;
-    if (type == "BLENDMODE")
-        widget = new RundownBlendModeWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "BRIGHTNESS")
-        widget = new RundownBrightnessWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "CONTRAST")
-        widget = new RundownContrastWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "CROP")
-        widget = new RundownCropWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "DECKLINKINPUT")
-        widget = new RundownDeckLinkInputWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type ==  "FILERECORDER")
-        widget = new RundownFileRecorderWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "GEOMETRY")
-        widget = new RundownGeometryWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "GRID")
-        widget = new RundownGridWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "GPIOUTPUT")
-        widget = new RundownGpiOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "KEYER")
-        widget = new RundownKeyerWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "LEVELS")
-        widget = new RundownLevelsWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "AUDIO" || type == "STILL" || type == "MOVIE")
-        widget = new RundownMediaWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "OPACITY")
-        widget = new RundownOpacityWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "SATURATION")
-        widget = new RundownSaturationWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "TEMPLATE")
-        widget = new RundownTemplateWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "VOLUME")
-        widget = new RundownVolumeWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "COMMIT")
-        widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "IMAGESCROLLER")
-        widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
-
-    widget->setCompactView(this->compactView);
-    widget->getCommand()->readProperties(pt);
-    widget->readProperties(pt);
-
-    QTreeWidgetItem* child = new QTreeWidgetItem();
-    if (parent == NULL) // Top level item.
-        this->treeWidgetRundown->invisibleRootItem()->addChild(child);
-    else
-    {
-        parent->addChild(child);
-        widget->setInGroup(true);
-    }
-
-    this->treeWidgetRundown->setItemWidget(child, 0, dynamic_cast<QWidget*>(widget));
-
-    if (this->compactView)
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
-    else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh.
-}
-
-void RundownWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
-{
-    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-    QString deviceName = widget->getLibraryModel()->getDeviceName();
-    QString label = widget->getLibraryModel()->getLabel();
-    QString name = widget->getLibraryModel()->getName();
-
-    writer->writeStartElement("item");
-
-    writer->writeTextElement("type", type);
-    writer->writeTextElement("devicename", deviceName);
-    writer->writeTextElement("label", label);
-    writer->writeTextElement("name", name);
-
-    widget->getCommand()->writeProperties(writer);
-    widget->writeProperties(writer);
-
-    writer->writeEndElement();
-}
-
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress)
@@ -531,6 +374,163 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
+{
+    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
+    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
+    bool expanded = pt.get<bool>(L"expanded");
+
+    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    widget->setExpanded(true);
+    widget->setCompactView(this->compactView);
+    widget->getCommand()->readProperties(pt);
+    widget->readProperties(pt);
+
+    QTreeWidgetItem* parent = new QTreeWidgetItem();
+    this->treeWidgetRundown->invisibleRootItem()->addChild(parent);
+    this->treeWidgetRundown->setItemWidget(parent, 0, dynamic_cast<QWidget*>(widget));
+    this->treeWidgetRundown->expandItem(parent);
+
+    if (this->compactView)
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+    parent->setExpanded(expanded);
+
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
+    {
+        QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
+
+        readRundownItem(type, value.second, parent);
+    }
+}
+
+void RundownWidget::writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
+{
+    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+    QString deviceName = widget->getLibraryModel()->getDeviceName();
+    QString label = widget->getLibraryModel()->getLabel();
+    QString name = widget->getLibraryModel()->getName();
+
+    writer->writeStartElement("item");
+
+    writer->writeTextElement("type", type);
+    writer->writeTextElement("devicename", deviceName);
+    writer->writeTextElement("label", label);
+    writer->writeTextElement("name", name);
+    writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
+
+    widget->getCommand()->writeProperties(writer);
+    widget->writeProperties(writer);
+
+    writer->writeStartElement("items");
+    for (int i = 0; i < item->childCount(); i++)
+    {
+        QTreeWidgetItem* child = item->child(i);
+        IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+        QString type = widget->getLibraryModel()->getType().toUpper();
+
+        writeRundownItem(type, writer, child);
+    }
+    writer->writeEndElement();
+
+    writer->writeEndElement();
+}
+
+void RundownWidget::readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent)
+{
+    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
+    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
+
+    IRundownWidget* widget = NULL;
+    if (type == "BLENDMODE")
+        widget = new RundownBlendModeWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "BRIGHTNESS")
+        widget = new RundownBrightnessWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "CONTRAST")
+        widget = new RundownContrastWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "CROP")
+        widget = new RundownCropWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "DECKLINKINPUT")
+        widget = new RundownDeckLinkInputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type ==  "FILERECORDER")
+        widget = new RundownFileRecorderWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "GEOMETRY")
+        widget = new RundownGeometryWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "GRID")
+        widget = new RundownGridWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "GPIOUTPUT")
+        widget = new RundownGpiOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "KEYER")
+        widget = new RundownKeyerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "LEVELS")
+        widget = new RundownLevelsWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "AUDIO" || type == "STILL" || type == "MOVIE")
+        widget = new RundownMediaWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "OPACITY")
+        widget = new RundownOpacityWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "SATURATION")
+        widget = new RundownSaturationWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "TEMPLATE")
+        widget = new RundownTemplateWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "VOLUME")
+        widget = new RundownVolumeWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "COMMIT")
+        widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "IMAGESCROLLER")
+        widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+
+    widget->setCompactView(this->compactView);
+    widget->getCommand()->readProperties(pt);
+    widget->readProperties(pt);
+
+    QTreeWidgetItem* child = new QTreeWidgetItem();
+    if (parent == NULL) // Top level item.
+        this->treeWidgetRundown->invisibleRootItem()->addChild(child);
+    else
+    {
+        parent->addChild(child);
+        widget->setInGroup(true);
+    }
+
+    this->treeWidgetRundown->setItemWidget(child, 0, dynamic_cast<QWidget*>(widget));
+
+    if (this->compactView)
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh.
+}
+
+void RundownWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
+{
+    IRundownWidget* widget = dynamic_cast<IRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+    QString deviceName = widget->getLibraryModel()->getDeviceName();
+    QString label = widget->getLibraryModel()->getLabel();
+    QString name = widget->getLibraryModel()->getName();
+
+    writer->writeStartElement("item");
+
+    writer->writeTextElement("type", type);
+    writer->writeTextElement("devicename", deviceName);
+    writer->writeTextElement("label", label);
+    writer->writeTextElement("name", name);
+
+    widget->getCommand()->writeProperties(writer);
+    widget->writeProperties(writer);
+
+    writer->writeEndElement();
 }
 
 void RundownWidget::checkEmptyRundown()
@@ -933,6 +933,34 @@ bool RundownWidget::ungroupItems()
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
         return false;
+
+    bool isGroup = false;
+    bool isTopItem = false;
+    bool isGroupItem = false;
+    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
+    {
+        QWidget* widget = this->treeWidgetRundown->itemWidget(item, 0);
+
+        if (item->parent() != NULL) // Group item.
+            isGroupItem = true;
+        else if (dynamic_cast<IRundownWidget*>(widget)->isGroup()) // Group
+            isGroup = true;
+        else if (item->parent() == NULL && !dynamic_cast<IRundownWidget*>(widget)->isGroup()) // Top level item.
+            isTopItem = true;
+    }
+
+    if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
+        return false; // We don't have any group to ungroup.
+
+    /*
+    if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
+        this->contextMenu->actions().at(3)->setEnabled(false); // We don't have any group to ungroup.
+
+    if (!isTopItem && !isGroup && !isGroupItem)
+    {
+        return; // Group.
+    }
+    */
 
     QTreeWidgetItem* rootItem = this->treeWidgetRundown->invisibleRootItem();
 
