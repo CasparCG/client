@@ -7,7 +7,8 @@ MediaCommand::MediaCommand(QObject* parent)
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION),
       duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      loop(Media::DEFAULT_LOOP), seek(Media::DEFAULT_SEEK), length(Media::DEFAULT_LENGTH)
+      loop(Media::DEFAULT_LOOP), pauseOnLoad(Media::DEFAULT_PAUSE_ON_LOAD), seek(Media::DEFAULT_SEEK),
+      length(Media::DEFAULT_LENGTH)
 {
 }
 
@@ -85,6 +86,11 @@ bool MediaCommand::getLoop() const
     return this->loop;
 }
 
+bool MediaCommand::getPauseOnLoad() const
+{
+    return this->pauseOnLoad;
+}
+
 int MediaCommand::getSeek() const
 {
     return this->seek;
@@ -129,6 +135,12 @@ void MediaCommand::setLoop(bool loop)
 {
     this->loop = loop;
     emit loopChanged(this->loop);
+}
+
+void MediaCommand::setPauseOnLoad(bool pauseOnLoad)
+{
+    this->pauseOnLoad = pauseOnLoad;
+    emit pauseOnLoadChanged(this->pauseOnLoad);
 }
 
 void MediaCommand::setSeek(int seek)

@@ -173,14 +173,14 @@ void CasparDevice::loadMedia(int channel, int videolayer, const QString& item)
     AMCPDevice::writeMessage(QString("LOADBG %1-%2 \"%3\"").arg(channel).arg(videolayer).arg(item));
 }
 
-void CasparDevice::loadMedia(int channel, int videolayer, const QString &item, const QString &transition, int duration, const QString& easing, const QString& direction, bool loop)
+void CasparDevice::loadMedia(int channel, int videolayer, const QString &item, const QString &transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad)
 {
-    AMCPDevice::writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7 %8").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : ""));
+    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 %9").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : ""));
 }
 
-void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop)
+void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad)
 {
-    AMCPDevice::writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7 SEEK %8 LENGTH %9 %10").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : ""));
+    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 SEEK %9 LENGTH %10 %11").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : ""));
 }
 
 void CasparDevice::stopMedia(int channel, int videolayer)

@@ -343,11 +343,12 @@ void RundownMediaWidget::executeLoad()
         if (this->command.getSeek() > 0 && this->command.getLength() > 0)
             device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                               this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(), this->command.getLoop());
+                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                              this->command.getLoop(), this->command.getPauseOnLoad());
         else
             device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                               this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getLoop());
+                              this->command.getDirection(), this->command.getLoop(), this->command.getPauseOnLoad());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -361,11 +362,12 @@ void RundownMediaWidget::executeLoad()
             if (this->command.getSeek() > 0 && this->command.getLength() > 0)
                 deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                         this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(), this->command.getLoop());
+                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                        this->command.getLoop(), this->command.getPauseOnLoad());
             else
                 deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                         this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getLoop());
+                                        this->command.getDirection(), this->command.getLoop(), this->command.getPauseOnLoad());
         }
     }
 

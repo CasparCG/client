@@ -188,7 +188,7 @@
        <widget class="LibraryWidget" name="widgetLibrary" native="true">
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>260</width>
           <height>0</height>
          </size>
         </property>
@@ -196,7 +196,7 @@
        <widget class="RundownWidget" name="widgetRundown" native="true">
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>260</width>
           <height>0</height>
          </size>
         </property>
@@ -216,7 +216,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>250</width>
+             <width>260</width>
              <height>200</height>
             </size>
            </property>
@@ -226,7 +226,7 @@
           <widget class="InspectorWidget" name="widgetInspector" native="true">
            <property name="minimumSize">
             <size>
-             <width>250</width>
+             <width>260</width>
              <height>0</height>
             </size>
            </property>

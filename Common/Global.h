@@ -141,6 +141,7 @@ namespace Media
     static const int DEFAULT_BLUR = 0;
     static const int DEFAULT_SPEED = 8;
     static const bool DEFAULT_LOOP = false;
+    static const bool DEFAULT_PAUSE_ON_LOAD = false;
     static const bool DEFAULT_PREMULTIPLY = false;
     static const bool DEFAULT_PROGRESSIVE = false;
 }

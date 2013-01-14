@@ -38,6 +38,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         const QString& getTween() const;
         const QString& getDirection() const;
         bool getLoop() const;
+        bool getPauseOnLoad() const;
         int getSeek() const;
         int getLength() const;
 
@@ -46,6 +47,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         void setDuration(int duration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
+        void setPauseOnLoad(bool pauseOnLoad);
         void setLoop(bool loop);
         void setSeek(int seek);
         void setLength(int length);
@@ -61,6 +63,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         QString tween;
         QString direction;
         bool loop;
+        bool pauseOnLoad;
         int seek;
         int length;
 
@@ -74,6 +77,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void loopChanged(bool);
+        Q_SIGNAL void pauseOnLoadChanged(bool);
         Q_SIGNAL void seekChanged(int);
         Q_SIGNAL void lengthChanged(int);
 };

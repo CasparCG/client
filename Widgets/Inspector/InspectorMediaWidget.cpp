@@ -39,6 +39,7 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxSeek->setValue(this->command->getSeek());
             this->spinBoxLength->setValue(this->command->getLength());
             this->checkBoxLoop->setChecked(this->command->getLoop());
+            this->checkBoxPauseOnLoad->setChecked(this->command->getPauseOnLoad());
 
             this->preview = true;
         }
@@ -111,6 +112,11 @@ void InspectorMediaWidget::loopChanged(int state)
     this->command->setLoop((state == Qt::Checked) ? true : false);
 }
 
+void InspectorMediaWidget::pauseOnLoadChanged(int state)
+{
+    this->command->setPauseOnLoad((state == Qt::Checked) ? true : false);
+}
+
 void InspectorMediaWidget::seekChanged(int seek)
 {
     this->command->setSeek(seek);
@@ -161,4 +167,10 @@ void InspectorMediaWidget::resetLoop(QString loop)
 {
     this->checkBoxLoop->setChecked(false);
     this->command->setLoop(this->checkBoxLoop->isChecked());
+}
+
+void InspectorMediaWidget::resetPauseOnLoad(QString pauseOnLoad)
+{
+    this->checkBoxPauseOnLoad->setChecked(false);
+    this->command->setPauseOnLoad(this->checkBoxLoop->isChecked());
 }
