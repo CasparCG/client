@@ -892,6 +892,24 @@ bool RundownWidget::groupItems()
     if (this->treeWidgetRundown->currentItem() == NULL)
         return false;
 
+    bool isGroup = false;
+    bool isTopItem = false;
+    bool isGroupItem = false;
+    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
+    {
+        QWidget* widget = this->treeWidgetRundown->itemWidget(item, 0);
+
+        if (item->parent() != NULL) // Group item.
+            isGroupItem = true;
+        else if (dynamic_cast<IRundownWidget*>(widget)->isGroup()) // Group
+            isGroup = true;
+        else if (item->parent() == NULL && !dynamic_cast<IRundownWidget*>(widget)->isGroup()) // Top level item.
+            isTopItem = true;
+    }
+
+    if (isGroup || isGroupItem)
+        return false; // We don't support group in groups.
+
     QTreeWidgetItem* parentItem = new QTreeWidgetItem();
 
     RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(-1, "Group", "", "", "GROUP"), this);
@@ -951,16 +969,6 @@ bool RundownWidget::ungroupItems()
 
     if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
         return false; // We don't have any group to ungroup.
-
-    /*
-    if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
-        this->contextMenu->actions().at(3)->setEnabled(false); // We don't have any group to ungroup.
-
-    if (!isTopItem && !isGroup && !isGroupItem)
-    {
-        return; // Group.
-    }
-    */
 
     QTreeWidgetItem* rootItem = this->treeWidgetRundown->invisibleRootItem();
 
