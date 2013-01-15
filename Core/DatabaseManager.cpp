@@ -113,6 +113,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Format (Value) VALUES('1080i5000')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080i5994')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080i6000')");
+
     sql.exec("INSERT INTO Format (Value) VALUES('1080p2500')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p2997')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p3000')");

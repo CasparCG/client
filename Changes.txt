@@ -1,6 +1,8 @@
 CasparCG Client 2.0 Beta 3
 ==========================
 
+- FIX: The application crash if trying to execute command where channel is out of range.
+- FIX: If up/down arrow key is triggered really fast in the rundown the inspector will update the wrong item.
 - FIX: Ungrouping rundown items not in a group, using CTRL+U, make the items disappear.
 - FIX: The rundown is using the wrong encoding when opening rundown from disk.
 - FIX: The client sends multiple VERSION commands to the server after a new device has been added.

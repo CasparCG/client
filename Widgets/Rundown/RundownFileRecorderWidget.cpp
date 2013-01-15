@@ -59,7 +59,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 
         this->labelLabel->setText(this->model.getLabel());
         this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-        this->labelVideolayer->setText(QString("Videolayer: %1").arg(this->command.getVideolayer()));
+        this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
         this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
         this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 

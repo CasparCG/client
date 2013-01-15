@@ -122,6 +122,7 @@ AMCPDevice::AMCPCommand AMCPDevice::translateCommand(const QString& command)
     else if (command == "ADD") return AMCPDevice::ADD;
     else if (command == "SWAP") return AMCPDevice::SWAP;
     else if (command == "STATUS") return AMCPDevice::STATUS;
+    else if (command == "ERROR") return AMCPDevice::ERROR;
 
     return AMCPDevice::NONE;
 }
@@ -158,13 +159,6 @@ void AMCPDevice::parseHeader(const QString& line)
     QStringList tokens = line.split(QRegExp("\\s"));
 
     this->code = tokens.at(0).toInt();
-    this->command = translateCommand(tokens.at(1));
-
-    if (tokens.count() == 3)
-        this->command = translateCommand(tokens.at(1));
-    else
-        this->command = translateCommand(QString("%1 %2").arg(tokens.at(1)).arg(tokens.at(2)));
-
     switch (this->code)
     {
         case 200:
@@ -173,10 +167,17 @@ void AMCPDevice::parseHeader(const QString& line)
         case 201:
             this->state = AMCPDevice::ExpectingTwoline;
             break;
+        case 401:
+            resetDevice();
+            return;
         default:
             this->state = AMCPDevice::ExpectingOneline;
             break;
     }
+
+    this->command = translateCommand(tokens.at(1));
+    if (tokens.count() > 3)
+        this->command = translateCommand(QString("%1 %2").arg(tokens.at(1)).arg(tokens.at(2)));
 
     this->response.append(line);
 }

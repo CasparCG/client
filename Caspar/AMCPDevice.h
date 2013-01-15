@@ -40,7 +40,8 @@ class CASPAR_EXPORT AMCPDevice : public QObject
             REMOVE,
             ADD,
             SWAP,
-            STATUS
+            STATUS,
+            ERROR
         };
 
         QTcpSocket* socket;

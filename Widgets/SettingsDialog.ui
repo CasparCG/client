@@ -603,7 +603,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -672,7 +672,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -741,7 +741,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -810,7 +810,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -879,7 +879,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -904,7 +904,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>0</number>
      </property>
      <item>
       <property name="text">
@@ -948,7 +948,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -973,7 +973,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>8</number>
+      <number>0</number>
      </property>
      <item>
       <property name="text">
@@ -1017,7 +1017,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
@@ -1042,7 +1042,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>9</number>
+      <number>0</number>
      </property>
      <item>
       <property name="text">
@@ -1086,7 +1086,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Clear Videolayer</string>
+       <string>Clear Video Layer</string>
       </property>
      </item>
      <item>
