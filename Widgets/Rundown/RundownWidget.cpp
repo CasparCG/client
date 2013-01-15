@@ -634,11 +634,17 @@ void RundownWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
         ICommand* command = dynamic_cast<IRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<IRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        qApp->postEvent(qApp, new RundownItemSelectedEvent(command, model));
+        // Use synchronous event through sendEvent(). The inspector will update the selected
+        // rundown item. We want to be absolutely sure that we update the right item, which
+        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        qApp->sendEvent(qApp, new RundownItemSelectedEvent(command, model));
     }
     else if (currentItem == NULL && previous != NULL && this->treeWidgetRundown->invisibleRootItem()->childCount() == 1) // Last item was removed form the rundown.
     {
-        qApp->postEvent(qApp, new RundownIsEmptyEvent());
+        // Use synchronous event through sendEvent(). The inspector will update the selected
+        // rundown item. We want to be absolutely sure that we update the right item, which
+        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        qApp->sendEvent(qApp, new RundownIsEmptyEvent());
     }
 }
 
