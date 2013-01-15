@@ -1739,7 +1739,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1787,7 +1787,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1822,7 +1822,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1870,7 +1870,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1902,7 +1902,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1963,7 +1963,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -1998,7 +1998,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>
@@ -2046,7 +2046,7 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="value">
       <number>50</number>

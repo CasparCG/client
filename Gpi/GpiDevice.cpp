@@ -25,6 +25,7 @@ void GpiDevice::setupGpiPort(int gpi, bool risingEdge)
 
 void GpiDevice::setupGpoPort(int gpo, int pulseLengthMillis, bool risingEdge)
 {
+    gpo_triggers.erase(gpo);
     gpo_triggers.insert(std::make_pair(
             gpo,
             device->setup_gpo_pulse(gpo, risingEdge ? gpio::LOW : gpio::HIGH, pulseLengthMillis)));
