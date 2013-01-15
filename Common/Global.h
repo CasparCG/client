@@ -167,3 +167,12 @@ namespace FileRecorder
     static const QString DEFAULT_PRESET = "ultrafast";
     static const QString DEFAULT_TUNE = "fastdecode";
 }
+
+namespace Library
+{
+    static const int AUDIO_PAGE_INDEX = 0;
+    static const int STILL_PAGE_INDEX = 1;
+    static const int TEMPLATE_PAGE_INDEX = 2;
+    static const int MOVIE_PAGE_INDEX = 3;
+    static const int DATA_PAGE_INDEX = 4;
+}

@@ -335,10 +335,7 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(GpiPortModel(
-                sql.value(0).toInt(),
-                sql.value(1).toInt() == 1,
-                Playout::fromString(sql.value(2).toString())));
+        models.push_back(GpiPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, Playout::fromString(sql.value(2).toString())));
 
     return models;
 }
@@ -349,9 +346,7 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query("UPDATE GpiPort "
-                  "SET Action = ':action', "
-                  "    RisingEdge = :risingEdge "
+    QString query("UPDATE GpiPort SET Action = ':action', RisingEdge = :risingEdge "
                   "WHERE Id = :input");
     query.replace(QRegExp(":input"), QString("%1").arg(model.getPort()));
     query.replace(QRegExp(":risingEdge"), model.isRisingEdge() ? "1" : "0");
@@ -365,6 +360,7 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
 QList<GpoPortModel> DatabaseManager::getGpoPorts()
 {
     QMutexLocker locker(&mutex);
+
     QSqlQuery sql;
     QList<GpoPortModel> models;
 
@@ -373,10 +369,7 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 
     sql.exec(query);
     while (sql.next())
-        models.push_back(GpoPortModel(
-                sql.value(0).toInt(),
-                sql.value(1).toInt() == 1,
-                sql.value(2).toInt()));
+        models.push_back(GpoPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, sql.value(2).toInt()));
 
     return models;
 }
@@ -386,15 +379,12 @@ void DatabaseManager::updateGpoPort(const GpoPortModel& model)
     QMutexLocker locker(&mutex);
     QSqlDatabase::database().transaction();
 
-    QString query("UPDATE GpoPort "
-                  "SET PulseLengthMillis = :pulseLengthMillis, "
-                  "    RisingEdge = :risingEdge "
+    QString query("UPDATE GpoPort SET PulseLengthMillis = :pulseLengthMillis, RisingEdge = :risingEdge "
                   "WHERE Id = :output");
 
     query.replace(QRegExp(":output"), QString("%1").arg(model.getPort()));
     query.replace(QRegExp(":risingEdge"), model.isRisingEdge() ? "1" : "0");
-    query.replace(QRegExp(":pulseLengthMillis"),
-                  QString("%1").arg(model.getPulseLengthMillis()));
+    query.replace(QRegExp(":pulseLengthMillis"), QString("%1").arg(model.getPulseLengthMillis()));
 
     executeUpdate(query);
 
@@ -525,10 +515,8 @@ GpiDeviceModel DatabaseManager::getGpiDevice()
 
 void DatabaseManager::updateGpiDevice(const GpiDeviceModel& model)
 {
-    updateConfiguration(
-            ConfigurationModel(-1, "GpiSerialPort", model.getSerialPort()));
-    updateConfiguration(ConfigurationModel(
-            -1, "GpiBaudRate", QString("%1").arg(model.getBaudRate())));
+    updateConfiguration(ConfigurationModel(-1, "GpiSerialPort", model.getSerialPort()));
+    updateConfiguration(ConfigurationModel(-1, "GpiBaudRate", QString("%1").arg(model.getBaudRate())));
 }
 
 DeviceModel DatabaseManager::getDeviceById(int id)
@@ -554,7 +542,8 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     QSqlQuery sql;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d WHERE d.Name = ':name'");
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+                  "WHERE d.Name = ':name'");
     query.replace(QRegExp(":name"), QString("%1").arg(name));
 
     sql.exec(query);
@@ -570,7 +559,8 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     QSqlQuery sql;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d WHERE d.Address = ':address'");
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+                  "WHERE d.Address = ':address'");
     query.replace(QRegExp(":address"), QString("%1").arg(address));
 
     sql.exec(query);
@@ -657,6 +647,24 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
     return models;
 }
 
+QList<LibraryModel> DatabaseManager::getLibraryData()
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+    QList<LibraryModel> models;
+
+    QString query("SELECT l.Id, l.Name, d.Name, t.Value FROM Library l, Device d, Type t "
+                  "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 "
+                  "ORDER BY l.Name, l.DeviceId");
+
+    sql.exec(query);
+    while (sql.next())
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+
+    return models;
+}
+
 QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filter)
 {
     QMutexLocker locker(&mutex);
@@ -685,6 +693,25 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
     QString query("SELECT l.Id, l.Name, d.Name, d.Address, t.Value FROM Library l, Device d, Type t "
                   "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND (l.Name LIKE '%:filter%' OR d.Name LIKE '%:filter%' OR d.Address LIKE '%:filter%') "
+                  "ORDER BY l.Name, l.DeviceId");
+    query.replace(QRegExp(":filter"), filter);
+
+    sql.exec(query);
+    while (sql.next())
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString()));
+
+    return models;
+}
+
+QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filter)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+    QList<LibraryModel> models;
+
+    QString query("SELECT l.Id, l.Name, d.Name, d.Address, t.Value FROM Library l, Device d, Type t "
+                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%:filter%' OR d.Name LIKE '%:filter%' OR d.Address LIKE '%:filter%') "
                   "ORDER BY l.Name, l.DeviceId");
     query.replace(QRegExp(":filter"), filter);
 

@@ -41,7 +41,7 @@
 {
     image: url(:/Graphics/Images/Refresh.png);
 }
-#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo
+#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData
 {
     border-width: 0px;
 }

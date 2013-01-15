@@ -42,6 +42,10 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
+    this->treeWidgetData->setColumnHidden(1, true);
+    this->treeWidgetData->setColumnHidden(2, true);
+    this->treeWidgetData->setColumnHidden(3, true);
+    this->treeWidgetData->setColumnHidden(4, true);
 
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
@@ -52,6 +56,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 
     qApp->postEvent(qApp, new MediaChangedEvent());
     qApp->postEvent(qApp, new TemplateChangedEvent());
+    qApp->postEvent(qApp, new DataChangedEvent());
 }
 
 void LibraryWidget::setupUiMenu()
@@ -72,6 +77,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetAudio->clear();
         this->treeWidgetImage->clear();
         this->treeWidgetVideo->clear();
+        this->treeWidgetAudio->clearSelection();
+        this->treeWidgetImage->clearSelection();
+        this->treeWidgetVideo->clearSelection();
 
         QList<LibraryModel> models;
         if (this->lineEditFilter->text().isEmpty())
@@ -150,34 +158,64 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(2, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
     }
+    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::DataChanged))
+    {
+        DataChangedEvent* dataChangedEvent = dynamic_cast<DataChangedEvent*>(event);
+
+        // TODO: Only add / remove necessary items.
+        this->treeWidgetData->clear();
+        this->treeWidgetData->clearSelection();
+
+        QList<LibraryModel> models;
+        if (this->lineEditFilter->text().isEmpty())
+            models = DatabaseManager::getInstance().getLibraryData();
+        else
+            models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text());
+
+        if (models.count() > 0)
+        {
+            foreach (LibraryModel model, models)
+            {
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetData);
+                widget->setIcon(0, QIcon(":/Graphics/Images/Data.png"));
+                widget->setText(0, model.getName());
+                widget->setText(1, "-1");
+                widget->setText(2, model.getLabel());
+                widget->setText(3, model.getDeviceName());
+                widget->setText(4, model.getType());
+            }
+        }
+
+        this->toolBoxLibrary->setItemText(4, QString("Stored (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+    }
 
     return QObject::eventFilter(target, event);
 }
 
 void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
-    if (this->toolBoxLibrary->currentIndex() == 0)
+    if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         if (this->treeWidgetAudio->selectedItems().count() == 0)
             return;
 
         this->contextMenu->exec(this->treeWidgetAudio->mapToGlobal(point));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 1)
+    else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
     {
         if (this->treeWidgetImage->selectedItems().count() == 0)
             return;
 
         this->contextMenu->exec(this->treeWidgetImage->mapToGlobal(point));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 2)
+    else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
         if (this->treeWidgetTemplate->selectedItems().count() == 0)
             return;
 
         this->contextMenu->exec(this->treeWidgetTemplate->mapToGlobal(point));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 3)
+    else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
         if (this->treeWidgetVideo->selectedItems().count() == 0)
             return;
@@ -188,22 +226,22 @@ void LibraryWidget::customContextMenuRequested(const QPoint& point)
 
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
-    if (this->toolBoxLibrary->currentIndex() == 0)
+    if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 1)
+    else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 2)
+    else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTemplate->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
-    else if (this->toolBoxLibrary->currentIndex() == 3)
+    else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
@@ -214,6 +252,7 @@ void LibraryWidget::filterLibrary()
 {
     qApp->postEvent(qApp, new MediaChangedEvent());
     qApp->postEvent(qApp, new TemplateChangedEvent());
+    qApp->postEvent(qApp, new DataChangedEvent());
 }
 
 void LibraryWidget::synchronizeLibrary()
@@ -227,5 +266,9 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
         return;
 
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0), current->text(3), current->text(4)));
-    qApp->postEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
+
+    // Use synchronous event through sendEvent(). The inspector will update the selected
+    // rundown item. We want to be absolutely sure that we update the right item, which
+    // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+    qApp->sendEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
 }

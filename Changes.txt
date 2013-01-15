@@ -6,6 +6,7 @@ CasparCG Client 2.0 Beta 3
 - FIX: Ungrouping rundown items not in a group, using CTRL+U, make the items disappear.
 - FIX: The rundown is using the wrong encoding when opening rundown from disk.
 - FIX: The client sends multiple VERSION commands to the server after a new device has been added.
+- NEW: Added support for see stored data in the library.
 - NEW: Added support for the LOAD command through "Pause on load" property on media items.
 - NEW: The rundown now support compact view.
 - NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.

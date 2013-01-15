@@ -34,7 +34,7 @@
         <x>0</x>
         <y>0</y>
         <width>223</width>
-        <height>469</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -105,7 +105,7 @@
         <x>0</x>
         <y>0</y>
         <width>223</width>
-        <height>469</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -176,7 +176,7 @@
         <x>0</x>
         <y>0</y>
         <width>223</width>
-        <height>469</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -250,7 +250,7 @@
         <x>0</x>
         <y>0</y>
         <width>223</width>
-        <height>469</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -262,6 +262,77 @@
        </property>
        <item>
         <widget class="QTreeWidget" name="treeWidgetVideo">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ExtendedSelection</enum>
+         </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+         <property name="uniformRowHeights">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="headerDefaultSectionSize">
+          <number>100</number>
+         </attribute>
+         <attribute name="headerShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Label</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DeviceName</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageData">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>223</width>
+        <height>448</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Stored</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTreeWidget" name="treeWidgetData">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -485,6 +556,22 @@
     <hint type="destinationlabel">
      <x>229</x>
      <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetData</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>481</y>
     </hint>
    </hints>
   </connection>

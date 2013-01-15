@@ -61,8 +61,10 @@ class CORE_EXPORT DatabaseManager
 
         QList<LibraryModel> getLibraryMedia();
         QList<LibraryModel> getLibraryTemplate();
+        QList<LibraryModel> getLibraryData();
         QList<LibraryModel> getLibraryMediaByFilter(const QString& filter);
         QList<LibraryModel> getLibraryTemplateByFilter(const QString& filter);
+        QList<LibraryModel> getLibraryDataByFilter(const QString& filter);
         QList<LibraryModel> getLibraryByDeviceId(int deviceId);
         QList<LibraryModel> getLibraryMediaByDeviceAddress(const QString& address);
         QList<LibraryModel> getLibraryTemplateByDeviceAddress(const QString& address);
