@@ -41,3 +41,17 @@ CasparCG Client 2.0 Alpha 1
 ===========================
 
 - NEW: Initial version.
+
+
+TODO
+====
+
+- iNews integration.
+- Live view from CasparCG.
+- PBus support.
+- Support for the color producer.
+- Automated rundowns.
+- Support for group in group, aka macro in macro.
+- Support for store the rundown in the database.
+- Support for filter in the rundown.
+- ...
