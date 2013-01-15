@@ -4,6 +4,10 @@
 
 #include "Events/RundownItemSelectedEvent.h"
 
+
+#include <QtCore/QDebug>
+#include <QtGui/QResizeEvent>
+
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     : QWidget(parent), preview(false), model(NULL), command(NULL)
 {

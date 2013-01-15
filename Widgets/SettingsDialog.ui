@@ -551,7 +551,7 @@
       <rect>
        <x>132</x>
        <y>154</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -617,7 +617,7 @@
       <rect>
        <x>132</x>
        <y>182</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -686,7 +686,7 @@
       <rect>
        <x>132</x>
        <y>210</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -755,7 +755,7 @@
       <rect>
        <x>132</x>
        <y>238</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -824,7 +824,7 @@
       <rect>
        <x>132</x>
        <y>266</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -893,7 +893,7 @@
       <rect>
        <x>132</x>
        <y>294</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -962,7 +962,7 @@
       <rect>
        <x>132</x>
        <y>322</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1031,7 +1031,7 @@
       <rect>
        <x>132</x>
        <y>350</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1127,9 +1127,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange1">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>154</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1153,9 +1153,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange2">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>182</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1179,9 +1179,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange3">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>210</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1205,9 +1205,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange4">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>238</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1231,9 +1231,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange5">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>266</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1257,9 +1257,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange6">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>294</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1283,9 +1283,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange7">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>322</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1309,9 +1309,9 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange8">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>350</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2444,8 +2444,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>403</y>
+     <x>247</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -2588,8 +2588,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>402</y>
+     <x>353</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>705</x>
