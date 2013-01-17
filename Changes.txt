@@ -46,6 +46,8 @@ CasparCG Client 2.0 Alpha 1
 TODO
 ====
 
+- Support for themes.
+- Support for presets.
 - iNews integration.
 - Live view from CasparCG.
 - PBus support.

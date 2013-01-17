@@ -104,12 +104,12 @@ void RundownWidget::setupUiMenu()
     this->colorMenu->setTitle("Colorize");
     //this->colorMenu->setIcon(QIcon(":/Graphics/Images/Color.png"));
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Goldenrod");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "CadetBlue");
+    this->colorMenu->addSeparator();
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
 
     this->contextMenu = new QMenu(this);
     this->contextMenu->addMenu(this->newMenu);
@@ -605,7 +605,18 @@ void RundownWidget::newMenuTriggered(QAction* action)
 
 void RundownWidget::colorMenuTriggered(QAction* action)
 {
-    colorizeItems(action->text());
+    if (action->text() == "Sienna")
+        colorizeItems(Color::SIENNA_RGBA_COLOR);
+    else if (action->text() == "OliveDrab")
+        colorizeItems(Color::OLIVEDRAB_RGBA_COLOR);
+    else if (action->text() == "SeaGreen")
+        colorizeItems(Color::SEAGREEN_RGBA_COLOR);
+    else if (action->text() == "Chocolate")
+        colorizeItems(Color::CHOCOLATE_RGBA_COLOR);
+    else if (action->text() == "DarkSlateGray")
+        colorizeItems(Color::DARKSLATEGRAY_RGBA_COLOR);
+    else
+        colorizeItems(""); // Reset
 }
 
 void RundownWidget::contextMenuTriggered(QAction* action)

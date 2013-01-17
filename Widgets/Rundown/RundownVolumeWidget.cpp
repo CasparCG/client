@@ -23,7 +23,7 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
@@ -187,7 +187,7 @@ void RundownVolumeWidget::setInGroup(bool inGroup)
 void RundownVolumeWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("background-color: %1;").arg(color));
 }
 
 void RundownVolumeWidget::checkEmptyDevice()

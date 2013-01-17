@@ -100,7 +100,7 @@ namespace Mixer
     static const float DEFAULT_OPACITY = 1;
     static const float DEFAULT_SATURATION = 1;
     static const float DEFAULT_VOLUME = 1;
-    static const int DEFAULT_DURATION = 12;
+    static const int DEFAULT_DURATION = 1;
     static const bool DEFAULT_DEFER = false;
     static const QString DEFAULT_BLENDMODE = "Normal";
     static const QString DEFAULT_TWEEN = "Linear";
@@ -117,6 +117,12 @@ namespace Color
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
+    static const QString DEFAULT_TRANSPARENT_COLOR = "Transparent";
+    static const QString SIENNA_RGBA_COLOR = "136, 45, 23, 128";
+    static const QString OLIVEDRAB_RGBA_COLOR = "107, 142, 35, 128";
+    static const QString SEAGREEN_RGBA_COLOR = "46, 139, 87, 128";
+    static const QString CHOCOLATE_RGBA_COLOR = "123, 63, 0, 128";
+    static const QString DARKSLATEGRAY_RGBA_COLOR = "123, 63, 0, 128";
 }
 
 namespace TemplateData

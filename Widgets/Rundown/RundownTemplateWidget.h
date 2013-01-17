@@ -22,7 +22,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
     public:
         explicit RundownTemplateWidget(const LibraryModel& model, QWidget* parent = 0,
-                                       const QString& color = Color::DEFAULT_TEMPLATE_COLOR, bool active = false,
+                                       const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                        bool loaded = false, bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual IRundownWidget* clone();

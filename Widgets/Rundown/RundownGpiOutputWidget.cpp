@@ -23,7 +23,7 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     this->labelDisconnected->setVisible(!GpiManager::getInstance().getGpiDevice()->isConnected());
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GPI_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -153,7 +153,7 @@ void RundownGpiOutputWidget::setInGroup(bool inGroup)
 void RundownGpiOutputWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("background-color: %1;").arg(color));
 }
 
 bool RundownGpiOutputWidget::executeCommand(enum Playout::PlayoutType::Type type)

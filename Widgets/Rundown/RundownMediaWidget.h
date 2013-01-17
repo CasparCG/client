@@ -24,7 +24,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
 
     public:
         explicit RundownMediaWidget(const LibraryModel& model, QWidget* parent = 0,
-                                    const QString& color = Color::DEFAULT_MEDIA_COLOR, bool active = false,
+                                    const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                     bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
                                     bool disconnected = false, bool compactView = false);
 

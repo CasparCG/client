@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
+    <width>678</width>
     <height>36</height>
    </rect>
   </property>
@@ -92,47 +92,84 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="labelGpiConnected">
+    <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>32</width>
-       <height>32</height>
+       <width>37</width>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>32</width>
-       <height>32</height>
+       <width>37</width>
+       <height>16777215</height>
       </size>
      </property>
-     <property name="text">
-      <string/>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="pixmap">
-      <pixmap resource="../Resource.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="labelActiveColor">
-     <property name="minimumSize">
-      <size>
-       <width>2</width>
-       <height>36</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>2</width>
-       <height>36</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
+     <widget class="QLabel" name="labelGpiConnected">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>2</y>
+        <width>32</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelActiveColor">
+      <property name="geometry">
+       <rect>
+        <x>64</x>
+        <y>0</y>
+        <width>5</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>5</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>5</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

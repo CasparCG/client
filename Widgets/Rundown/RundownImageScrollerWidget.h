@@ -22,7 +22,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
 
     public:
         explicit RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent = 0,
-                                            const QString& color = Color::DEFAULT_PRODUCER_COLOR, bool active = false,
+                                            const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                             bool loaded = false, bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual IRundownWidget* clone();

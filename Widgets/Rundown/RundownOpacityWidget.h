@@ -22,7 +22,7 @@ class WIDGETS_EXPORT RundownOpacityWidget : public QWidget, Ui::RundownOpacityWi
 
     public:
         explicit RundownOpacityWidget(const LibraryModel& model, QWidget* parent = 0,
-                                      const QString& color = Color::DEFAULT_MIXER_COLOR, bool active = false,
+                                      const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                       bool inGroup = false, bool disconnected = false, bool compcatView = false);
 
         virtual IRundownWidget* clone();
