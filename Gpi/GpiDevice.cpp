@@ -3,8 +3,7 @@
 #include <boost/bind.hpp>
 
 GpiDevice::GpiDevice(const QString& serialPort, int baudRate)
-    : device(gpio::serial_port_device::create(
-            serialPort.toStdString(), baudRate, boost::bind(&GpiDevice::onConnected, this, _1)))
+    : device(gpio::serial_port_device::create(serialPort.toStdString(), baudRate, boost::bind(&GpiDevice::onConnected, this, _1)))
 {
 }
 
@@ -14,8 +13,7 @@ void GpiDevice::reset(const QString& serialPort, int baudRate)
     connected = false;
     gpo_triggers.clear();
     device.reset();
-    device = gpio::serial_port_device::create(
-            serialPort.toStdString(), baudRate, boost::bind(&GpiDevice::onConnected, this, _1));
+    device = gpio::serial_port_device::create(serialPort.toStdString(), baudRate, boost::bind(&GpiDevice::onConnected, this, _1));
 }
 
 void GpiDevice::setupGpiPort(int gpi, bool risingEdge)
@@ -26,9 +24,7 @@ void GpiDevice::setupGpiPort(int gpi, bool risingEdge)
 void GpiDevice::setupGpoPort(int gpo, int pulseLengthMillis, bool risingEdge)
 {
     gpo_triggers.erase(gpo);
-    gpo_triggers.insert(std::make_pair(
-            gpo,
-            device->setup_gpo_pulse(gpo, risingEdge ? gpio::LOW : gpio::HIGH, pulseLengthMillis)));
+    gpo_triggers.insert(std::make_pair(gpo, device->setup_gpo_pulse(gpo, risingEdge ? gpio::LOW : gpio::HIGH, pulseLengthMillis)));
 }
 
 void GpiDevice::onTrigger(int gpi)
