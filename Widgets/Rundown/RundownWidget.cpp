@@ -153,7 +153,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         if (target == treeWidgetRundown)
         {
             qDebug() << keyEvent->modifiers();
-            qDebug() <<  keyEvent->key();
+            qDebug() << keyEvent->key();
             if (keyEvent->key() == Qt::Key_Delete)
                 return removeSelectedItems();
             else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
@@ -164,7 +164,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
                 return groupItems();
             else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
                 return ungroupItems();
-            else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() == Qt::ControlModifier && keyEvent->modifiers() == Qt::KeyboardModifier)))
+            else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
                 return moveItemUp();
             else if (keyEvent->key() == Qt::Key_Down && keyEvent->modifiers() == Qt::ControlModifier)
                 return moveItemDown();
