@@ -48,9 +48,9 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetData->setColumnHidden(4, true);
 
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
-    QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
 
     qApp->installEventFilter(this);
 
@@ -64,7 +64,12 @@ void LibraryWidget::setupUiMenu()
     this->contextMenu = new QMenu(this);
     this->contextMenu->addAction("Add to rundown");
 
+    this->contextMenuImage = new QMenu(this);
+    this->contextMenuImage->addAction("Add to rundown as image");
+    this->contextMenuImage->addAction("Add to rundown as image scroller");
+
     QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
+    QObject::connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
 }
 
 bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
@@ -224,16 +229,19 @@ void LibraryWidget::customContextMenuRequested(const QPoint& point)
     }
 }
 
+void LibraryWidget::customContextMenuImageRequested(const QPoint& point)
+{
+    if (this->treeWidgetImage->selectedItems().count() == 0)
+        return;
+
+    this->contextMenuImage->exec(this->treeWidgetImage->mapToGlobal(point));
+}
+
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
-    }
-    else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
-    {
-        foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
@@ -245,6 +253,20 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+    }
+}
+
+void LibraryWidget::contextMenuImageTriggered(QAction* action)
+{
+    if (action->text() == "Add to rundown as image")
+    {
+        foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+    }
+    else if (action->text() == "Add to rundown as image scroller")
+    {
+        foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), "IMAGESCROLLER")));
     }
 }
 

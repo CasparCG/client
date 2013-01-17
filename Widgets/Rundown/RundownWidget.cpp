@@ -84,6 +84,7 @@ void RundownWidget::setupUiMenu()
     //this->mixerMenu->setIcon(QIcon(":/Graphics/Images/Library.png"));
     this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Audio", this, SLOT(addAudioCommand()));
     this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Image", this, SLOT(addImageCommand()));
+    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "Image Scroller", this, SLOT(addImageScrollerCommand()));
     this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Template", this, SLOT(addTemplateCommand()));
     this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Video", this, SLOT(addVideoCommand()));
 
@@ -96,7 +97,6 @@ void RundownWidget::setupUiMenu()
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "Image Scroller", this, SLOT(addImageScrollerCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
     this->newMenu->actions().at(4)->setEnabled(false);
 
