@@ -10,6 +10,7 @@ CasparCG Client 2.0 Beta 3
 - NEW: Added support for the LOAD command through "Pause on load" property on media items.
 - NEW: The rundown now support compact view.
 - NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.
+- UPDATE: Changed colorization logic.
 - UPDATE: Minor UI changes.
 - UPDATE: The client will execute the mixer command when a UPDATE or INVOKE is issued.
 
@@ -46,6 +47,7 @@ CasparCG Client 2.0 Alpha 1
 TODO
 ====
 
+- Timeline view?
 - Support for themes.
 - Support for presets.
 - iNews integration.
