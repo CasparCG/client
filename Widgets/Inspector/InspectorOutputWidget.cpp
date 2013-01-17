@@ -5,6 +5,7 @@
 #include "Commands/CommitCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
+#include "Commands/FileRecorderCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
@@ -86,6 +87,18 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->blockSignals(false);
                 this->spinBoxVideolayer->blockSignals(false);
                 this->spinBoxDelay->blockSignals(false);
+            }
+            else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
+            {
+                this->spinBoxVideolayer->setEnabled(false);
+
+                // We do not have a command object, block the signals.
+                // Events will not be triggered while we update the values.
+                this->spinBoxVideolayer->setEnabled(false);
+
+                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+
+                this->spinBoxVideolayer->blockSignals(false);
             }
 
             this->preview = true;
