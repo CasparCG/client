@@ -17,6 +17,7 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
 {
     setupUi(this);
 
+    setColor(color);
     setActive(active);
     setCompactView(compactView);
 
@@ -187,7 +188,7 @@ void RundownOpacityWidget::setInGroup(bool inGroup)
 void RundownOpacityWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
 void RundownOpacityWidget::checkEmptyDevice()

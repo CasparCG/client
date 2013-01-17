@@ -17,6 +17,7 @@ RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWid
 {
     setupUi(this);
 
+    setColor(color);
     setActive(active);
     setCompactView(compactView);
 
@@ -187,7 +188,7 @@ void RundownBrightnessWidget::setInGroup(bool inGroup)
 void RundownBrightnessWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
 void RundownBrightnessWidget::checkEmptyDevice()

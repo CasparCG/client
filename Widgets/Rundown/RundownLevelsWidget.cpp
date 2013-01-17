@@ -17,6 +17,7 @@ RundownLevelsWidget::RundownLevelsWidget(const LibraryModel& model, QWidget* par
 {
     setupUi(this);
 
+    setColor(color);
     setActive(active);
     setCompactView(compactView);
 
@@ -191,7 +192,7 @@ void RundownLevelsWidget::setInGroup(bool inGroup)
 void RundownLevelsWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
 void RundownLevelsWidget::checkEmptyDevice()

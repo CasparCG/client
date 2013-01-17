@@ -17,6 +17,7 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
 {
     setupUi(this);
 
+    setColor(color);
     setActive(active);
     setCompactView(compactView);
 
@@ -187,7 +188,7 @@ void RundownContrastWidget::setInGroup(bool inGroup)
 void RundownContrastWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("background-color: %1;").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
 void RundownContrastWidget::checkEmptyDevice()
