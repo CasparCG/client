@@ -148,7 +148,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>64</x>
+        <x>32</x>
         <y>0</y>
         <width>5</width>
         <height>36</height>
