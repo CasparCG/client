@@ -102,7 +102,6 @@ IRundownWidget* RundownFileRecorderWidget::clone()
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setOutput(this->command.getOutput());
-    command->setContainer(this->command.getContainer());
     command->setCodec(this->command.getCodec());
     command->setPreset(this->command.getPreset());
     command->setTune(this->command.getTune());
@@ -234,7 +233,8 @@ void RundownFileRecorderWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec());
+        device->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
+                               this->command.getPreset(), this->command.getTune());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -243,7 +243,8 @@ void RundownFileRecorderWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec());
+            deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
+                                         this->command.getPreset(), this->command.getTune());
     }
 }
 

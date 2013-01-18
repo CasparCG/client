@@ -33,13 +33,11 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getOutput() const;
-        const QString& getContainer() const;
         const QString& getCodec() const;
         const QString& getPreset() const;
         const QString& getTune() const;
 
         void setOutput(const QString& output);
-        void setContainer(const QString& container);
         void setCodec(const QString& codec);
         void setPreset(const QString& preset);
         void setTune(const QString& tune);
@@ -50,7 +48,6 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         int delay;
         bool allowGpi;
         QString output;
-        QString container;
         QString codec;
         QString preset;
         QString tune;
@@ -60,7 +57,6 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         Q_SIGNAL void videolayerChanged(int);
         Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void outputChanged(const QString&);
-        Q_SIGNAL void containerChanged(const QString&);
         Q_SIGNAL void codecChanged(const QString&);
         Q_SIGNAL void presetChanged(const QString&);
         Q_SIGNAL void tuneChanged(const QString&);

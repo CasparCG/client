@@ -28,12 +28,10 @@ class WIDGETS_EXPORT InspectorFileRecorderWidget : public QWidget, Ui::Inspector
         FileRecorderCommand* command;
 
         Q_SLOT void outputChanged(QString);
-        Q_SLOT void containerChanged(QString);
         Q_SLOT void codecChanged(QString);
         Q_SLOT void presetChanged(QString);
         Q_SLOT void tuneChanged(QString);
         Q_SLOT void resetOutput(QString);
-        Q_SLOT void resetContainer(QString);
         Q_SLOT void resetCodec(QString);
         Q_SLOT void resetPreset(QString);
         Q_SLOT void resetTune(QString);

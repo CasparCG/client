@@ -46,8 +46,6 @@ RundownWidget::RundownWidget(QWidget* parent)
     setupUi(this);
     setupUiMenu();
 
-    this->lineEditFilter->setVisible(false);
-
     // TODO: specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));

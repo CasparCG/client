@@ -5,8 +5,8 @@
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
     : QObject(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), output(FileRecorder::DEFAULT_OUTPUT), container(FileRecorder::DEFAULT_CONTAINER),
-      codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE)
+      allowGpi(Output::DEFAULT_ALLOW_GPI), output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC),
+      preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE)
 {
 }
 
@@ -33,11 +33,6 @@ bool FileRecorderCommand::getAllowGpi() const
 const QString& FileRecorderCommand::getOutput() const
 {
     return this->output;
-}
-
-const QString& FileRecorderCommand::getContainer() const
-{
-    return this->container;
 }
 
 const QString& FileRecorderCommand::getCodec() const
@@ -85,12 +80,6 @@ void FileRecorderCommand::setOutput(const QString& output)
     emit outputChanged(this->output);
 }
 
-void FileRecorderCommand::setContainer(const QString& container)
-{
-    this->container = container;
-    emit containerChanged(this->container);
-}
-
 void FileRecorderCommand::setCodec(const QString& codec)
 {
     this->codec = codec;
@@ -115,7 +104,6 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
     setDelay(pt.get<int>(L"delay"));
     setAllowGpi(pt.get<bool>(L"allowgpi"));
     setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
-    setContainer(QString::fromStdWString(pt.get<std::wstring>(L"container")));
     setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
     setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
     setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune")));
@@ -128,7 +116,6 @@ void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("delay", QString::number(this->getDelay()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("output", this->getOutput());
-    writer->writeTextElement("container", this->getContainer());
     writer->writeTextElement("codec", this->getCodec());
     writer->writeTextElement("preset", this->getPreset());
     writer->writeTextElement("tune", this->getTune());

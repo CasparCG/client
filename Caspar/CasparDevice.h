@@ -57,7 +57,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad);
         void stopMedia(int channel, int videolayer);
 
-        void startRecording(int channel, const QString& filename, const QString& codec);
+        void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune);
         void stopRecording(int channel);
 
         void playDeviceInput(int channel, int videolayer);

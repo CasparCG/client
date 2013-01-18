@@ -50,6 +50,7 @@ CasparCG Client 2.0 Alpha 1
 TODO
 ====
 
+- DND support.
 - Timeline view?
 - Support for themes.
 - Support for presets.

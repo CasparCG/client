@@ -188,9 +188,9 @@ void CasparDevice::stopMedia(int channel, int videolayer)
     AMCPDevice::writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::startRecording(int channel, const QString& filename, const QString& codec)
+void CasparDevice::startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune)
 {
-    AMCPDevice::writeMessage(QString("ADD %1 FILE %2 -vcodec %3").arg(channel).arg(filename).arg(codec));
+    AMCPDevice::writeMessage(QString("ADD %1 FILE %2 -vcodec %3 -preset %4 -tune %5").arg(channel).arg(filename).arg(codec).arg(preset).arg(tune));
 }
 
 void CasparDevice::stopRecording(int channel)

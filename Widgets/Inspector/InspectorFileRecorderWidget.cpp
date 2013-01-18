@@ -12,13 +12,6 @@ InspectorFileRecorderWidget::InspectorFileRecorderWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->labelContainer->setVisible(false);
-    this->labelPreset->setVisible(false);
-    this->labelTune->setVisible(false);
-    this->comboBoxContainer->setVisible(false);
-    this->comboBoxPreset->setVisible(false);
-    this->comboBoxTune->setVisible(false);
-
     qApp->installEventFilter(this);
 }
 
@@ -35,10 +28,9 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->lineEditOutput->setText(this->command->getOutput());
-            //this->comboBoxContainer->setCurrentIndex(this->comboBoxContainer->findText(this->model->getDeviceName()));
             this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
-            //this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->model->getDeviceName()));
-            //this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->model->getDeviceName()));
+            this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
+            this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
 
             this->preview = true;
         }
@@ -50,11 +42,6 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorFileRecorderWidget::outputChanged(QString output)
 {
     this->command->setOutput(output);
-}
-
-void InspectorFileRecorderWidget::containerChanged(QString container)
-{
-    this->command->setContainer(container);
 }
 
 void InspectorFileRecorderWidget::codecChanged(QString codec)
@@ -76,12 +63,6 @@ void InspectorFileRecorderWidget::resetOutput(QString output)
 {
     this->lineEditOutput->setText(FileRecorder::DEFAULT_OUTPUT);
     this->command->setOutput(this->lineEditOutput->text());
-}
-
-void InspectorFileRecorderWidget::resetContainer(QString container)
-{
-    this->comboBoxContainer->setCurrentIndex(this->comboBoxContainer->findText(FileRecorder::DEFAULT_CONTAINER));
-    this->command->setContainer(this->comboBoxContainer->currentText());
 }
 
 void InspectorFileRecorderWidget::resetCodec(QString codec)
