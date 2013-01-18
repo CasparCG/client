@@ -63,4 +63,5 @@ TODO
 - Support for group in group, aka macro in macro.
 - Support for store the rundown in the database.
 - Support for filter in the rundown.
+- Review on Shift+F* buttons.
 - ...
