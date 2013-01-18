@@ -41,6 +41,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         bool getPauseOnLoad() const;
         int getSeek() const;
         int getLength() const;
+        bool getUseAuto() const;
 
         void setMediaName(const QString& mediaName);
         void setTransition(const QString& transition);
@@ -51,6 +52,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         void setLoop(bool loop);
         void setSeek(int seek);
         void setLength(int length);
+        void setUseAuto(bool useAuto);
 
     private:
         int channel;
@@ -66,6 +68,7 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         bool pauseOnLoad;
         int seek;
         int length;
+        bool useAuto;
 
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void channelChanged(int);
@@ -80,4 +83,5 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         Q_SIGNAL void pauseOnLoadChanged(bool);
         Q_SIGNAL void seekChanged(int);
         Q_SIGNAL void lengthChanged(int);
+        Q_SIGNAL void useAutoChanged(bool);
 };

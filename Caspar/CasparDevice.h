@@ -45,16 +45,10 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
         void pauseMedia(int channel, int videolayer);
         void playMedia(int channel, int videolayer);
-        void playMedia(int channel, int videolayer, const QString& item);
-        void playMedia(int channel, int videolayer, const QString& item, bool loop);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& direction);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& direction, bool loop);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop);
-        void loadMedia(int channel, int videolayer, const QString& item);
-        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad);
-        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad);
+        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool useAuto);
+        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);
+        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad, bool useAuto);
+        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad, bool useAuto);
         void stopMedia(int channel, int videolayer);
 
         void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune);

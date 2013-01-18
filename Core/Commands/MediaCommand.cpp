@@ -8,7 +8,7 @@ MediaCommand::MediaCommand(QObject* parent)
       allowGpi(Output::DEFAULT_ALLOW_GPI), mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION),
       duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
       loop(Media::DEFAULT_LOOP), pauseOnLoad(Media::DEFAULT_PAUSE_ON_LOAD), seek(Media::DEFAULT_SEEK),
-      length(Media::DEFAULT_LENGTH)
+      length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
 {
 }
 
@@ -101,6 +101,11 @@ int MediaCommand::getLength() const
     return this->length;
 }
 
+bool MediaCommand::getUseAuto() const
+{
+    return this->useAuto;
+}
+
 void MediaCommand::setMediaName(const QString& mediaName)
 {
     this->mediaName = mediaName;
@@ -155,6 +160,12 @@ void MediaCommand::setLength(int length)
     emit lengthChanged(this->length);
 }
 
+void MediaCommand::setUseAuto(bool useAuto)
+{
+    this->useAuto = useAuto;
+    emit useAutoChanged(this->useAuto);
+}
+
 void MediaCommand::readProperties(boost::property_tree::wptree& pt)
 {
     setChannel(pt.get<int>(L"channel"));
@@ -168,6 +179,7 @@ void MediaCommand::readProperties(boost::property_tree::wptree& pt)
     setSeek(pt.get<int>(L"seek"));
     setLength(pt.get<int>(L"length"));
     setLoop(pt.get<bool>(L"loop"));
+    setUseAuto(pt.get<bool>(L"useauto"));
 }
 
 void MediaCommand::writeProperties(QXmlStreamWriter* writer)
@@ -183,4 +195,5 @@ void MediaCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("seek", QString::number(this->getSeek()));
     writer->writeTextElement("length", QString::number(this->getLength()));
     writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
+    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
 }

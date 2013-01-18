@@ -40,6 +40,7 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxLength->setValue(this->command->getLength());
             this->checkBoxLoop->setChecked(this->command->getLoop());
             this->checkBoxPauseOnLoad->setChecked(this->command->getPauseOnLoad());
+            this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
 
             this->preview = true;
         }
@@ -112,9 +113,18 @@ void InspectorMediaWidget::loopChanged(int state)
     this->command->setLoop((state == Qt::Checked) ? true : false);
 }
 
+void InspectorMediaWidget::useAutoChanged(int state)
+{
+    this->command->setUseAuto((state == Qt::Checked) ? true : false);
+    if (state == Qt::Checked)
+        this->checkBoxPauseOnLoad->setChecked(false); // Auto is only supported for LOADBG.
+}
+
 void InspectorMediaWidget::pauseOnLoadChanged(int state)
 {
     this->command->setPauseOnLoad((state == Qt::Checked) ? true : false);
+    if (state == Qt::Checked)
+        this->checkBoxUseAuto->setChecked(false); // Auto is not supported for LOAD.
 }
 
 void InspectorMediaWidget::seekChanged(int seek)
@@ -167,6 +177,12 @@ void InspectorMediaWidget::resetLoop(QString loop)
 {
     this->checkBoxLoop->setChecked(false);
     this->command->setLoop(this->checkBoxLoop->isChecked());
+}
+
+void InspectorMediaWidget::resetUseAuto(QString useAuto)
+{
+    this->checkBoxUseAuto->setChecked(false);
+    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
 void InspectorMediaWidget::resetPauseOnLoad(QString pauseOnLoad)

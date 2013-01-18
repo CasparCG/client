@@ -122,7 +122,7 @@ namespace Color
     static const QString OLIVEDRAB_RGBA_COLOR = "107, 142, 35, 128";
     static const QString SEAGREEN_RGBA_COLOR = "46, 139, 87, 128";
     static const QString CHOCOLATE_RGBA_COLOR = "123, 63, 0, 128";
-    static const QString DARKSLATEGRAY_RGBA_COLOR = "123, 63, 0, 128";
+    static const QString DARKSLATEGRAY_RGBA_COLOR = "47, 79, 79, 128";
 }
 
 namespace TemplateData
@@ -150,6 +150,7 @@ namespace Media
     static const bool DEFAULT_PAUSE_ON_LOAD = false;
     static const bool DEFAULT_PREMULTIPLY = false;
     static const bool DEFAULT_PROGRESSIVE = false;
+    static const bool DEFAULT_USE_AUTO = false;
 }
 
 namespace Template

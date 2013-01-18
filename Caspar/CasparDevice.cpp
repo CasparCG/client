@@ -133,54 +133,30 @@ void CasparDevice::playMedia(int channel, int videolayer)
     AMCPDevice::writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item)
+void CasparDevice::playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool useAuto)
 {
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\"").arg(channel).arg(videolayer).arg(item));
+    if (useAuto)
+        loadMedia(channel, videolayer, item, transition, duration, easing, direction, loop, false, useAuto);
+    else
+        AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 %8").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : ""));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item, bool loop)
+void CasparDevice::playMedia(int channel, int videolayer, const QString &item, const QString &transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto)
 {
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4").arg(channel).arg(videolayer).arg(item).arg((loop == true) ? "LOOP" : ""));
+    if (useAuto)
+        loadMedia(channel, videolayer, item, transition, duration, easing, direction, seek, length, loop, false, useAuto);
+    else
+        AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 SEEK %8 LENGTH %9 %10").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : ""));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& direction)
+void CasparDevice::loadMedia(int channel, int videolayer, const QString &item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad, bool useAuto)
 {
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(direction));
+    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 %9 %10").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : "").arg((useAuto == true) ? "AUTO" : ""));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& direction, bool loop)
+void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad, bool useAuto)
 {
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(direction).arg((loop == true) ? "LOOP" : ""));
-}
-
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction)
-{
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction));
-}
-
-void CasparDevice::playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop)
-{
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 %8").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : ""));
-}
-
-void CasparDevice::playMedia(int channel, int videolayer, const QString &item, const QString &transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop)
-{
-    AMCPDevice::writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 SEEK %8 LENGTH %9 %10").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : ""));
-}
-
-void CasparDevice::loadMedia(int channel, int videolayer, const QString& item)
-{
-    AMCPDevice::writeMessage(QString("LOADBG %1-%2 \"%3\"").arg(channel).arg(videolayer).arg(item));
-}
-
-void CasparDevice::loadMedia(int channel, int videolayer, const QString &item, const QString &transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad)
-{
-    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 %9").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg((loop == true) ? "LOOP" : ""));
-}
-
-void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad)
-{
-    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 SEEK %9 LENGTH %10 %11").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : ""));
+    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 SEEK %9 LENGTH %10 %11 %12").arg((pauseOnLoad == true) ? "LOAD" : "LOADBG").arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing).arg(direction).arg(seek).arg(length).arg((loop == true) ? "LOOP" : "").arg((useAuto == true) ? "AUTO" : ""));
 }
 
 void CasparDevice::stopMedia(int channel, int videolayer)
