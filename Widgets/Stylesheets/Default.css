@@ -1066,6 +1066,10 @@ QScrollBar::sub-page:vertical
 /*
  * QSlider
  */
+ QSlider
+ {
+     background-color: transparent;
+ }
 QSlider::groove
 {
     background-color: rgba(52, 52, 52, 255);

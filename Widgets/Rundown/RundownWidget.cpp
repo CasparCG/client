@@ -63,7 +63,7 @@ void RundownWidget::setupUiMenu()
     this->mixerMenu = new QMenu(this);
     this->mixerMenu->setTitle("Mixer");
     //this->mixerMenu->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Blending", this, SLOT(addBlendModeCommand()));
+    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Blend Mode", this, SLOT(addBlendModeCommand()));
     this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Brightness", this, SLOT(addBrightnessCommand()));
     this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Contrast", this, SLOT(addContrastCommand()));
     this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Crop", this, SLOT(addCropCommand()));
