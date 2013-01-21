@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>18</width>
+         <width>15</width>
          <height>20</height>
         </size>
        </property>
@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelBlendMode">
        <property name="text">
-        <string>&lt;a href=&quot;Blending&quot; style=&quot;color: white;&quot;&gt;Blending&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Blend Mode&quot; style=&quot;color: #A0A0A0;&quot;&gt;Blend Mode&lt;/a&gt;</string>
        </property>
       </widget>
      </item>

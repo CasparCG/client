@@ -6,7 +6,7 @@ FileRecorderCommand::FileRecorderCommand(QObject* parent)
     : QObject(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC),
-      preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE)
+      preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)
 {
 }
 
@@ -48,6 +48,11 @@ const QString& FileRecorderCommand::getPreset() const
 const QString& FileRecorderCommand::getTune() const
 {
     return this->tune;
+}
+
+bool FileRecorderCommand::getWithAlpha() const
+{
+    return this->withAlpha;
 }
 
 void FileRecorderCommand::setChannel(int channel)
@@ -98,6 +103,12 @@ void FileRecorderCommand::setTune(const QString& tune)
     emit tuneChanged(this->tune);
 }
 
+void FileRecorderCommand::setWithAlpha(bool withAlpha)
+{
+    this->withAlpha = withAlpha;
+    emit withAlphaChanged(this->withAlpha);
+}
+
 void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 {
     setChannel(pt.get<int>(L"channel"));
@@ -107,6 +118,7 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
     setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
     setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
     setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune")));
+    setWithAlpha(pt.get<bool>(L"withalpha"));
 }
 
 void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
@@ -119,4 +131,5 @@ void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("codec", this->getCodec());
     writer->writeTextElement("preset", this->getPreset());
     writer->writeTextElement("tune", this->getTune());
+    writer->writeTextElement("withalpha", (getWithAlpha() == true) ? "true" : "false");
 }

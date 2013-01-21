@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>245</width>
-    <height>332</height>
+    <height>339</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -31,13 +31,13 @@
      <property name="tabSpacing">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="pageInspector">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>245</width>
-        <height>311</height>
+        <height>318</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -73,7 +73,7 @@
             <x>0</x>
             <y>0</y>
             <width>243</width>
-            <height>309</height>
+            <height>316</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -126,6 +126,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -138,6 +147,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -152,6 +170,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -165,10 +192,19 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
-               <string>Blending</string>
+               <string>Blend Mode</string>
               </property>
               <property name="font">
                <font>
@@ -177,6 +213,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -191,6 +236,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -203,6 +257,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -217,6 +280,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -229,6 +301,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -243,6 +324,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -255,6 +345,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -269,6 +368,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -281,6 +389,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -295,6 +412,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -307,6 +433,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
              <item>
@@ -321,6 +456,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -334,6 +478,15 @@
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
               </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
              </item>
              <item>
               <property name="text">
@@ -346,6 +499,15 @@
               </property>
               <property name="textAlignment">
                <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
              </item>
             </widget>

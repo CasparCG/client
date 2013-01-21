@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>226</width>
-    <height>140</height>
+    <height>168</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelOutput">
        <property name="text">
-        <string>&lt;a href=&quot;Output&quot; style=&quot;color: white;&quot;&gt;Output&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Output&quot; style=&quot;color: #A0A0A0;&quot;&gt;Output&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -71,7 +71,7 @@
      <item>
       <widget class="QLabel" name="labelCodec">
        <property name="text">
-        <string>&lt;a href=&quot;Codec&quot; style=&quot;color: white;&quot;&gt;Codec&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Codec&quot; style=&quot;color: #A0A0A0;&quot;&gt;Codec&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -88,7 +88,32 @@
        </property>
        <item>
         <property name="text">
+         <string>dnxhd</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>libx264</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>prores</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>dvvideo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ffvhuff</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rawvideo</string>
         </property>
        </item>
       </widget>
@@ -116,7 +141,7 @@
      <item>
       <widget class="QLabel" name="labelPreset">
        <property name="text">
-        <string>&lt;a href=&quot;Preset&quot; style=&quot;color: white;&quot;&gt;Preset&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Preset&quot; style=&quot;color: #A0A0A0;&quot;&gt;Preset&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -131,6 +156,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>ultrafast</string>
@@ -161,7 +191,7 @@
      <item>
       <widget class="QLabel" name="labelTune">
        <property name="text">
-        <string>&lt;a href=&quot;Tune&quot; style=&quot;color: white;&quot;&gt;Tune&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tune&quot; style=&quot;color: #A0A0A0;&quot;&gt;Tune&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -178,10 +208,68 @@
        </property>
        <item>
         <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>fastdecode</string>
         </property>
        </item>
       </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutWithAlpha">
+     <item>
+      <spacer name="horizontalSpacerWithAlpha1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelWithAlpha">
+       <property name="text">
+        <string>&lt;a href=&quot;With alpha&quot; style=&quot;color: #A0A0A0;&quot;&gt;With alpha&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxWithAlpha">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerWithAlpha2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -248,7 +336,7 @@
      <y>57</y>
     </hint>
     <hint type="destinationlabel">
-     <x>233</x>
+     <x>225</x>
      <y>75</y>
     </hint>
    </hints>
@@ -260,8 +348,8 @@
    <slot>resetPreset(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>63</x>
-     <y>101</y>
+     <x>77</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -276,11 +364,11 @@
    <slot>presetChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>98</y>
+     <x>215</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
-     <x>226</x>
+     <x>225</x>
      <y>102</y>
     </hint>
    </hints>
@@ -292,8 +380,8 @@
    <slot>resetTune(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>135</y>
+     <x>76</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -308,11 +396,11 @@
    <slot>tuneChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>132</y>
+     <x>215</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
-     <x>226</x>
+     <x>225</x>
      <y>148</y>
     </hint>
    </hints>
@@ -328,8 +416,40 @@
      <y>23</y>
     </hint>
     <hint type="destinationlabel">
-     <x>230</x>
+     <x>225</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelWithAlpha</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>resetWithAlpha(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>37</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxWithAlpha</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>withAlphaChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>94</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -345,5 +465,7 @@
   <slot>tuneChanged(QString)</slot>
   <slot>resetOutput(QString)</slot>
   <slot>outputChanged(QString)</slot>
+  <slot>resetWithAlpha(QString)</slot>
+  <slot>withAlphaChanged(int)</slot>
  </slots>
 </ui>

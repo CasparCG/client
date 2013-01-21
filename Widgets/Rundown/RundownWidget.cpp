@@ -150,8 +150,6 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         if (target == treeWidgetRundown)
         {
-            qDebug() << keyEvent->modifiers();
-            qDebug() << keyEvent->key();
             if (keyEvent->key() == Qt::Key_Delete)
                 return removeSelectedItems();
             else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)

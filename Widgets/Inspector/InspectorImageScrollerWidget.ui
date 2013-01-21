@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelBlur">
        <property name="text">
-        <string>&lt;a href=&quot;Blur&quot; style=&quot;color: white;&quot;&gt;Blur&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Blur&quot; style=&quot;color: #A0A0A0;&quot;&gt;Blur&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -78,7 +78,7 @@
      <item>
       <widget class="QLabel" name="labelSpeed">
        <property name="text">
-        <string>&lt;a href=&quot;Speed&quot; style=&quot;color: white;&quot;&gt;Speed&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Speed&quot; style=&quot;color: #A0A0A0;&quot;&gt;Speed&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -124,7 +124,7 @@
      <item>
       <widget class="QLabel" name="labelPremultiply">
        <property name="text">
-        <string>&lt;a href=&quot;Premultiply&quot; style=&quot;color: white;&quot;&gt;Premultiply&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Premultiply&quot; style=&quot;color: #A0A0A0;&quot;&gt;Premultiply&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -177,7 +177,7 @@
      <item>
       <widget class="QLabel" name="labelProgressive">
        <property name="text">
-        <string>&lt;a href=&quot;Progressive&quot; style=&quot;color: white;&quot;&gt;Progressive&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Progressive&quot; style=&quot;color: #A0A0A0;&quot;&gt;Progressive&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

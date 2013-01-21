@@ -36,11 +36,13 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         const QString& getCodec() const;
         const QString& getPreset() const;
         const QString& getTune() const;
+        bool getWithAlpha() const;
 
         void setOutput(const QString& output);
         void setCodec(const QString& codec);
         void setPreset(const QString& preset);
         void setTune(const QString& tune);
+        void setWithAlpha(bool withAlpha);
 
     private:
         int channel;
@@ -51,6 +53,7 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         QString codec;
         QString preset;
         QString tune;
+        bool withAlpha;
 
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void channelChanged(int);
@@ -60,4 +63,5 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
         Q_SIGNAL void codecChanged(const QString&);
         Q_SIGNAL void presetChanged(const QString&);
         Q_SIGNAL void tuneChanged(const QString&);
+        Q_SIGNAL void withAlphaChanged(bool);
 };

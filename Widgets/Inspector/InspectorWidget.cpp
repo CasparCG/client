@@ -83,6 +83,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
 
+    this->treeWidgetInspector->expandAll();
     this->treeWidgetInspector->doItemsLayout();
 
     qApp->installEventFilter(this);

@@ -49,9 +49,6 @@
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
@@ -119,9 +116,6 @@
         <widget class="QTreeWidget" name="treeWidgetImage">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -194,9 +188,6 @@
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
@@ -265,9 +256,6 @@
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
@@ -335,9 +323,6 @@
         <widget class="QTreeWidget" name="treeWidgetData">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>

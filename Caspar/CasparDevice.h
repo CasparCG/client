@@ -45,13 +45,13 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
         void pauseMedia(int channel, int videolayer);
         void playMedia(int channel, int videolayer);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool useAuto);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);
-        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, bool loop, bool pauseOnLoad, bool useAuto);
-        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration, const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad, bool useAuto);
+        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);
+        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, int seek, int length, bool loop, bool pauseOnLoad, bool useAuto);
         void stopMedia(int channel, int videolayer);
 
-        void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune);
+        void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
         void stopRecording(int channel);
 
         void playDeviceInput(int channel, int videolayer);
@@ -78,12 +78,18 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void setContrast(int channel, int videolayer, float contrast, int duration, const QString& easing, bool defer = false);
         void setSaturation(int channel, int videolayer, float saturation, bool defer = false);
         void setSaturation(int channel, int videolayer, float saturation, int duration, const QString& easing, bool defer = false);
-        void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut, bool defer = false);
-        void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut, int duration, const QString& easing, bool defer = false);
-        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY, bool defer = false);
-        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY, int duration, const QString& easing, bool defer = false);
-        void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY, bool defer = false);
-        void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY, int duration, const QString& easing, bool defer = false);
+        void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
+                       bool defer = false);
+        void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
+                       int duration, const QString& easing, bool defer = false);
+        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+                         bool defer = false);
+        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+                         int duration, const QString& easing, bool defer = false);
+        void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+                         bool defer = false);
+        void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+                         int duration, const QString& easing, bool defer = false);
 
         Q_SIGNAL void connectionStateChanged(CasparDevice&);
         Q_SIGNAL void infoChanged(const QList<QString>&, CasparDevice&);

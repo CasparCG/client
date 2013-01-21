@@ -168,10 +168,11 @@ namespace DeckLinkInput
 
 namespace FileRecorder
 {
-    static const QString DEFAULT_OUTPUT = "Output.mp4";
-    static const QString DEFAULT_CODEC = "libx264";
-    static const QString DEFAULT_PRESET = "ultrafast";
-    static const QString DEFAULT_TUNE = "fastdecode";
+    static const QString DEFAULT_OUTPUT = "Output.mov";
+    static const QString DEFAULT_CODEC = "dnxhd";
+    static const QString DEFAULT_PRESET = "";
+    static const QString DEFAULT_TUNE = "";
+    static const bool DEFAULT_WITH_ALPHA = false;
 }
 
 namespace Library

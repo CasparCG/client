@@ -264,15 +264,10 @@ void RundownMediaWidget::executePlay()
         }
         else
         {
-            if (this->command.getSeek() > 0 && this->command.getLength() > 0)
-                device->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                  this->command.getLoop(), this->command.getUseAuto());
-            else
-                device->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                  this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
+            device->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                              this->command.getLoop(), this->command.getUseAuto());
         }
     }
 
@@ -290,15 +285,10 @@ void RundownMediaWidget::executePlay()
             }
             else
             {
-                if (this->command.getSeek() > 0 && this->command.getLength() > 0)
-                    deviceShadow->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                            this->command.getLoop(), this->command.getUseAuto());
-                else
-                    deviceShadow->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                            this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
+                deviceShadow->playMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                        this->command.getLoop(), this->command.getUseAuto());
             }
         }
     }
@@ -345,15 +335,10 @@ void RundownMediaWidget::executeLoad()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        if (this->command.getSeek() > 0 && this->command.getLength() > 0)
-            device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                              this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
-        else
-            device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
+        device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+                          this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                          this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                          this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -364,15 +349,10 @@ void RundownMediaWidget::executeLoad()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            if (this->command.getSeek() > 0 && this->command.getLength() > 0)
-                deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                        this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
-            else
-                deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
-                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
+            deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+                                    this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                    this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                    this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
         }
     }
 

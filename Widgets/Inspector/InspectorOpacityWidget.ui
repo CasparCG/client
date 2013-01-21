@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelOpacity">
        <property name="text">
-        <string>&lt;a href=&quot;Opacity&quot; style=&quot;color: white;&quot;&gt;Opacity&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Opacity&quot; style=&quot;color: #A0A0A0;&quot;&gt;Opacity&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
@@ -82,7 +82,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: white;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #A0A0A0;&quot;&gt;Duration&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
@@ -122,7 +122,7 @@
      <item>
       <widget class="QLabel" name="labelEasing">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: white;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #A0A0A0;&quot;&gt;Tween&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
@@ -159,7 +159,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: white;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #A0A0A0;&quot;&gt;Defer&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

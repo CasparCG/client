@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>233</width>
-    <height>386</height>
+    <height>438</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>386</height>
+    <height>438</height>
    </size>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -44,7 +44,7 @@
      <item>
       <widget class="QLabel" name="labelFlashlayer">
        <property name="text">
-        <string>&lt;a href=&quot;Flash layer&quot; style=&quot;color: white;&quot;&gt;Flash layer&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Flash layer&quot; style=&quot;color: #A0A0A0;&quot;&gt;Flash layer&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -90,7 +90,7 @@
      <item>
       <widget class="QLabel" name="labelInvoke">
        <property name="text">
-        <string>&lt;a href=&quot;Invoke&quot; style=&quot;color: white;&quot;&gt;Invoke&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Invoke&quot; style=&quot;color: #A0A0A0;&quot;&gt;Invoke&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -127,7 +127,7 @@
      <item>
       <widget class="QLabel" name="labelUseStoredData">
        <property name="text">
-        <string>&lt;a href=&quot;Use stored data&quot; style=&quot;color: white;&quot;&gt;Use stored data&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Use stored data&quot; style=&quot;color: #A0A0A0;&quot;&gt;Use stored data&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -31,6 +31,7 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
             this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
             this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
+            this->checkBoxWithAlpha->setChecked(this->command->getWithAlpha());
 
             this->preview = true;
         }
@@ -59,6 +60,11 @@ void InspectorFileRecorderWidget::tuneChanged(QString tune)
     this->command->setTune(tune);
 }
 
+void InspectorFileRecorderWidget::withAlphaChanged(int state)
+{
+    this->command->setWithAlpha((state == Qt::Checked) ? true : false);
+}
+
 void InspectorFileRecorderWidget::resetOutput(QString output)
 {
     this->lineEditOutput->setText(FileRecorder::DEFAULT_OUTPUT);
@@ -81,4 +87,10 @@ void InspectorFileRecorderWidget::resetTune(QString tune)
 {
     this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(FileRecorder::DEFAULT_TUNE));
     this->command->setTune(this->comboBoxTune->currentText());
+}
+
+void InspectorFileRecorderWidget::resetWithAlpha(QString withAlpha)
+{
+    this->checkBoxWithAlpha->setChecked(false);
+    this->command->setWithAlpha(this->checkBoxWithAlpha->isChecked());
 }

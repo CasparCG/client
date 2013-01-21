@@ -26,8 +26,8 @@
 }
 #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData
 {
-    background-color: rgba(59, 59, 59, 255);
     border-width: 0px;
+    color: rgba(174, 174, 174, 255);
 }
 
 /*
@@ -37,10 +37,15 @@
 {
     background-color: rgba(59, 59, 59, 255);
     border-width: 0px;
+    color: rgba(174, 174, 174, 255);
 }
 #treeWidgetInspector::item:hover
 {
     background-color: rgba(59, 59, 59, 255);
+}
+#treeWidgetInspector QLabel
+{
+    color: rgba(174, 174, 174, 255);
 }
 
 /*
