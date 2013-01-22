@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelTransition">
        <property name="text">
-        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: #A0A0A0;&quot;&gt;Transition&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: #B4B4B4;&quot;&gt;Transition&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -78,7 +78,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #A0A0A0;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #B4B4B4;&quot;&gt;Duration&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -121,7 +121,7 @@
      <item>
       <widget class="QLabel" name="labelTween">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #A0A0A0;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #B4B4B4;&quot;&gt;Tween&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -161,7 +161,7 @@
      <item>
       <widget class="QLabel" name="labelDirection">
        <property name="text">
-        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: #A0A0A0;&quot;&gt;Direction&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: #B4B4B4;&quot;&gt;Direction&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -201,7 +201,7 @@
      <item>
       <widget class="QLabel" name="labelSeek">
        <property name="text">
-        <string>&lt;a href=&quot;Seek&quot; style=&quot;color: #A0A0A0;&quot;&gt;Seek&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Seek&quot; style=&quot;color: #B4B4B4;&quot;&gt;Seek&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -224,7 +224,7 @@
      <item>
       <widget class="QLabel" name="labelLength">
        <property name="text">
-        <string>&lt;a href=&quot;Length&quot; style=&quot;color: #A0A0A0;&quot;&gt;Length&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Length&quot; style=&quot;color: #B4B4B4;&quot;&gt;Length&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -267,7 +267,7 @@
      <item>
       <widget class="QLabel" name="labelLoop">
        <property name="text">
-        <string>&lt;a href=&quot;Loop&quot; style=&quot;color: #A0A0A0;&quot;&gt;Loop&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Loop&quot; style=&quot;color: #B4B4B4;&quot;&gt;Loop&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -320,7 +320,7 @@
      <item>
       <widget class="QLabel" name="labelPauseOnLoad">
        <property name="text">
-        <string>&lt;a href=&quot;Pause on load&quot; style=&quot;color: #A0A0A0;&quot;&gt;Pause on load&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Pause on load&quot; style=&quot;color: #B4B4B4;&quot;&gt;Pause on load&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -373,7 +373,7 @@
      <item>
       <widget class="QLabel" name="labelUseAuto">
        <property name="text">
-        <string>&lt;a href=&quot;Use auto&quot; style=&quot;color: #A0A0A0;&quot;&gt;Use auto&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Use auto&quot; style=&quot;color: #B4B4B4;&quot;&gt;Use auto&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

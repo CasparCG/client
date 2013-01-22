@@ -181,6 +181,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         }
         */
     }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected))
+    {
+        this->treeWidgetRundown->setCurrentItem(NULL);
+    }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
     {
         OpenRundownEvent* openRundownEvent = dynamic_cast<OpenRundownEvent*>(event);

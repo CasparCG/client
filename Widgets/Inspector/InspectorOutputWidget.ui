@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelChannel">
        <property name="text">
-        <string>&lt;a href=&quot;Channel&quot; style=&quot;color: #A0A0A0;&quot;&gt;Channel&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Channel&quot; style=&quot;color: #B4B4B4;&quot;&gt;Channel&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -84,7 +84,7 @@
      <item>
       <widget class="QLabel" name="labelVideolayer">
        <property name="text">
-        <string>&lt;a href=&quot;Video layer&quot; style=&quot;color: #A0A0A0;&quot;&gt;Video layer&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Video layer&quot; style=&quot;color: #B4B4B4;&quot;&gt;Video layer&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -127,7 +127,7 @@
      <item>
       <widget class="QLabel" name="labelDelay">
        <property name="text">
-        <string>&lt;a href=&quot;Delay&quot; style=&quot;color: #A0A0A0;&quot;&gt;Delay&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Delay&quot; style=&quot;color: #B4B4B4;&quot;&gt;Delay&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -170,7 +170,7 @@
      <item>
       <widget class="QLabel" name="labelAllowGpi">
        <property name="text">
-        <string>&lt;a href=&quot;Allow GPI&quot; style=&quot;color: #A0A0A0;&quot;&gt;Allow GPI&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Allow GPI&quot; style=&quot;color: #B4B4B4;&quot;&gt;Allow GPI&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

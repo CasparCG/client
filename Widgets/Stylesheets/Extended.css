@@ -4,7 +4,7 @@
 #MainWindow > #centralWidget
 {
     background-color: rgba(64, 64, 64, 255);
-    border-bottom-color: rgba(43, 43, 43, 255);
+    border-bottom-color: rgba(42, 42, 42, 255);
     border-bottom-width: 1px;
     border-radius: 0px;
 }
@@ -14,7 +14,7 @@
  */
 #lineStartup, #lineAppearance, #lineLibrary, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
 {
-    background-color: rgba(43, 43, 43, 255);
+    background-color: rgba(42, 42, 42, 255);
 }
 
 /*
@@ -27,7 +27,7 @@
 #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData
 {
     border-width: 0px;
-    color: rgba(174, 174, 174, 255);
+    color: rgba(180, 180, 180, 255);
 }
 
 /*
@@ -37,7 +37,7 @@
 {
     background-color: rgba(59, 59, 59, 255);
     border-width: 0px;
-    color: rgba(174, 174, 174, 255);
+    color: rgba(180, 180, 180, 255);
 }
 #treeWidgetInspector::item:hover
 {
@@ -45,7 +45,7 @@
 }
 #treeWidgetInspector QLabel
 {
-    color: rgba(174, 174, 174, 255);
+    color: rgba(180, 180, 180, 255);
 }
 
 /*
@@ -62,7 +62,7 @@
 }
 #labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelGpiOutputPort
 {
-    color: rgba(174, 174, 174, 255);
+    color: rgba(180, 180, 180, 255);
 }
 
 /*
@@ -78,7 +78,7 @@
 }
 #treeWidgetRundown::item:hover:selected
 {
-    background-color: rgba(96, 96, 96, 255);
+    background-color: rgba(90, 90, 90, 255);
 }
 #treeWidgetRundown::branch
 {
@@ -119,7 +119,7 @@
 
 #pushButtonPlay
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-radius: 0px;
     border-width: 1px;
     padding-bottom: 4px;
@@ -129,7 +129,7 @@
 }
 #pushButtonFastRewindStart
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
     border-width: 1px;
@@ -140,7 +140,7 @@
 }
 #pushButtonFastForwardEnd
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     border-width: 1px;
@@ -151,7 +151,7 @@
 }
 #pushButtonFastRewind, #pushButtonFastForward
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(91, 91, 91, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-left-width: 0px;
     border-radius: 0px;
     border-right-width: 0px;
@@ -166,11 +166,11 @@
 }
 #pushButtonPlay:hover, #pushButtonFastRewind:hover, #pushButtonFastRewindStart:hover, #pushButtonFastForward:hover, #pushButtonFastForwardEnd:hover
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(112, 112, 112, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
 }
 #pushButtonPlay:pressed, #pushButtonFastRewind:pressed, #pushButtonFastRewindStart:pressed, #pushButtonFastForward:pressed, #pushButtonFastForwardEnd:pressed
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(96, 96, 96, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(90, 90, 90, 255));
 }
 
 /*

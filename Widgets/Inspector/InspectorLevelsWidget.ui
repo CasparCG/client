@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelMinIn">
        <property name="text">
-        <string>&lt;a href=&quot;Min in&quot; style=&quot;color: #A0A0A0;&quot;&gt;Min in&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Min in&quot; style=&quot;color: #B4B4B4;&quot;&gt;Min in&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -85,7 +85,7 @@
      <item>
       <widget class="QLabel" name="labelMaxIn">
        <property name="text">
-        <string>&lt;a href=&quot;Max in&quot; style=&quot;color: #A0A0A0;&quot;&gt;Max in&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Max in&quot; style=&quot;color: #B4B4B4;&quot;&gt;Max in&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -132,7 +132,7 @@
      <item>
       <widget class="QLabel" name="labelMinOut">
        <property name="text">
-        <string>&lt;a href=&quot;Min out&quot; style=&quot;color: #A0A0A0;&quot;&gt;Min out&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Min out&quot; style=&quot;color: #B4B4B4;&quot;&gt;Min out&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -179,7 +179,7 @@
      <item>
       <widget class="QLabel" name="labelMaxOut">
        <property name="text">
-        <string>&lt;a href=&quot;Max out&quot; style=&quot;color: #A0A0A0;&quot;&gt;Max out&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Max out&quot; style=&quot;color: #B4B4B4;&quot;&gt;Max out&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -226,7 +226,7 @@
      <item>
       <widget class="QLabel" name="labelGamma">
        <property name="text">
-        <string>&lt;a href=&quot;Gamma&quot; style=&quot;color: #A0A0A0;&quot;&gt;Gamma&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Gamma&quot; style=&quot;color: #B4B4B4;&quot;&gt;Gamma&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -273,7 +273,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #A0A0A0;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #B4B4B4;&quot;&gt;Duration&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
@@ -313,7 +313,7 @@
      <item>
       <widget class="QLabel" name="labelEasing">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #A0A0A0;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #B4B4B4;&quot;&gt;Tween&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
@@ -350,7 +350,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #A0A0A0;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #B4B4B4;&quot;&gt;Defer&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

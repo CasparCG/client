@@ -83,15 +83,35 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
 
-    this->treeWidgetInspector->expandAll();
     this->treeWidgetInspector->doItemsLayout();
+    this->treeWidgetInspector->expandAll();
 
     qApp->installEventFilter(this);
 }
 
 bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
