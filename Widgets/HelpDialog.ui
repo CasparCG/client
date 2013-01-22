@@ -63,34 +63,34 @@ Function: Play
 Description: Call play on selected item in the rundown.
 
 F3
-Function: Pause / Resume
-Description: Call pause / resume on selected item in the rundown.
-
-F5
 Function: Load
 Description: Call load on selected item in the rundown.
 
-F6
+F4
+Function: Pause
+Description: Call pause on selected item in the rundown.
+
+F5
 Function: Next
 Description: Call next on selected item in the rundown.
 
-F7
+F6
 Function: Update
 Description: Call update on selected item in the rundown.
 
-F8
+F7
 Function: Invoke
 Description: Call invoke on selected item in the rundown.
 
-F9
+F10
 Function: Clear
 Description: Call clear on selected item in the rundown.
 
-F10
+F11
 Function: Clear Layer
 Description: Call clear on selected items video layer in the rundown.
 
-F11
+F12
 Function: Clear Channel
 Description: Call clear on selected items channel in the rundown.
 
