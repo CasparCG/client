@@ -9,6 +9,7 @@ CasparCG Client 2.0 Beta 3
 - FIX: The rundown is using the wrong encoding when opening rundown from disk.
 - FIX: The client sends multiple VERSION commands to the server after a new device has been added.
 - FIX: Can not seeking in media if the length is zero.
+- FIX: Font rendering on MacOSX.
 - NEW: Added support for recording with separated alpha in CasparCG 2.0.4.
 - NEW: Added support for the AUTO parameter on media items in the rundown.
 - NEW: Added application icon for MacOSX.
@@ -16,7 +17,7 @@ CasparCG Client 2.0 Beta 3
 - NEW: Added support for the LOAD command through "Pause on load" property on media items.
 - NEW: The rundown now support compact view.
 - NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.
-- UPDATE: Changed colorization logic.
+- UPDATE: Changed colorization logic of rundown items.
 - UPDATE: Minor UI changes.
 - UPDATE: The client will execute the mixer command when a UPDATE or INVOKE is issued.
 

@@ -66,16 +66,16 @@ void MainWindow::setupUiMenu()
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
     this->playoutMenu->addAction("Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
-    this->playoutMenu->addAction("Pause", this, SLOT(executePause()), QKeySequence::fromString("F3"));
+    this->playoutMenu->addAction("Load", this, SLOT(executeLoad()), QKeySequence::fromString("F3"));
+    this->playoutMenu->addAction("Pause", this, SLOT(executePause()), QKeySequence::fromString("F4"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction("Load", this, SLOT(executeLoad()), QKeySequence::fromString("F5"));
-    this->playoutMenu->addAction("Next", this, SLOT(executeNext()), QKeySequence::fromString("F6"));
-    this->playoutMenu->addAction("Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F7"));
-    this->playoutMenu->addAction("Invoke", this, SLOT(executeInvoke()), QKeySequence::fromString("F8"));
+    this->playoutMenu->addAction("Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
+    this->playoutMenu->addAction("Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
+    this->playoutMenu->addAction("Invoke", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F9"));
-    this->playoutMenu->addAction("Clear Videolayer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F10"));
-    this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F11"));
+    this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
+    this->playoutMenu->addAction("Clear Videolayer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
+    this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
 
     this->helpMenu = new QMenu(this);
     this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));

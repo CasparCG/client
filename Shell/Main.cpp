@@ -124,6 +124,7 @@ int main(int argc, char* argv[])
     loadDatabase(application);
     loadStyleSheets(application);
     loadFonts(application);
+
     GpiManager::getInstance().initialize();
 
     MainWindow window;
