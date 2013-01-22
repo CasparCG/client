@@ -59,7 +59,7 @@
  */
 QWidget
 {
-    alternate-background-color: rgba(52, 52, 52, 255);
+    alternate-background-color: rgba(55, 55, 55, 255);
     background-color: rgba(64, 64, 64, 255);
     border-color: rgba(42, 42, 42, 255);
     border-radius: 2px;
@@ -96,7 +96,7 @@ QCheckBox
 }
 QCheckBox::indicator
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-width: 1px;
@@ -143,7 +143,7 @@ QRadioButton
 }
 QRadioButton::indicator
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-width: 1px;
@@ -205,7 +205,7 @@ QStatusBar
  */
 QListView
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 
@@ -214,7 +214,7 @@ QListView
  */
 QLineEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 19px;
 }
@@ -224,7 +224,7 @@ QLineEdit
  */
 QTextEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 
@@ -233,7 +233,7 @@ QTextEdit
  */
 QPlainTextEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 
@@ -252,7 +252,7 @@ QToolBar
  */
 QSizeGrip
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     border-bottom-left-radius: 0px;
     border-left-width: 1px;
     border-top-right-radius: 0px;
@@ -283,7 +283,7 @@ QGroupBox::title
  */
 QTreeView
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 QTreeView::item:hover
@@ -300,25 +300,25 @@ QTreeView::branch
 }
 QTreeView::branch:!has-children:!has-siblings:adjoins-item
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 QTreeView::branch:closed:has-children:has-siblings, QTreeView::branch:has-children:!has-siblings:closed
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowRight.png);
 }
 QTreeView::branch:closed:has-children:has-siblings:hover, QTreeView::branch:has-children:!has-siblings:closed:hover
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 QTreeView::branch:open:has-children:has-siblings, QTreeView::branch:open:has-children:!has-siblings
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowDown.png);
 }
 QTreeView::branch:open:has-children:has-siblings:hover, QTreeView::branch:open:has-children:!has-siblings:hover
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 
 /*
@@ -326,7 +326,7 @@ QTreeView::branch:open:has-children:has-siblings:hover, QTreeView::branch:open:h
  */
 QTreeWidget
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 QTreeWidget::item:hover
@@ -344,25 +344,25 @@ QTreeWidget::branch
 }
 QTreeWidget::branch:!has-children:!has-siblings:adjoins-item
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 QTreeWidget::branch:closed:has-children:has-siblings, QTreeWidget::branch:has-children:!has-siblings:closed
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowRight.png);
 }
 QTreeWidget::branch:closed:has-children:has-siblings:hover, QTreeWidget::branch:has-children:!has-siblings:closed:hover
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 QTreeWidget::branch:open:has-children:has-siblings, QTreeWidget::branch:open:has-children:!has-siblings
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowDown.png);
 }
 QTreeWidget::branch:open:has-children:has-siblings:hover, QTreeWidget::branch:open:has-children:!has-siblings:hover
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 
 /*
@@ -370,7 +370,7 @@ QTreeWidget::branch:open:has-children:has-siblings:hover, QTreeWidget::branch:op
  */
 QTableWidget
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
 QTableWidget::item:hover
@@ -388,7 +388,7 @@ QTableWidget::item:selected
  */
 QProgressBar
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     text-align: center;
 }
@@ -418,14 +418,14 @@ QMenuBar::item
 }
 QMenuBar::item:selected
 {
-    background-color: rgba(59, 59, 59, 255); /* When selected using mouse or keyboard. */
+    background-color: rgba(60, 60, 60, 255); /* When selected using mouse or keyboard. */
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-width: 1px;
 }
 QMenuBar::item:pressed
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 
 /*
@@ -433,7 +433,7 @@ QMenuBar::item:pressed
  */
 QMenu
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     border-radius: 0px;
     border-width: 1px;
 }
@@ -454,7 +454,7 @@ QMenu::item:selected
  */
 QToolBox
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-radius: 2px;
     border-style: solid;
@@ -592,7 +592,7 @@ QComboBox::drop-down
 }
 QComboBox::drop-down:editable
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
 }
 QComboBox:!editable:on, QComboBox::drop-down:editable:on
 {
@@ -600,7 +600,7 @@ QComboBox:!editable:on, QComboBox::drop-down:editable:on
 }
 QComboBox QAbstractItemView
 {
-    background-color: rgba(59, 59, 59, 255);
+    background-color: rgba(60, 60, 60, 255);
     border-radius: 0px;
     padding-left: 2px;
 }
@@ -610,7 +610,7 @@ QComboBox QAbstractItemView
  */
 QSpinBox
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 20px;
     min-width: 50px;
@@ -619,6 +619,7 @@ QSpinBox::up-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-width: 1px;
+    border-left-width: 1px;
     border-top-right-radius: 2px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -640,6 +641,7 @@ QSpinBox::down-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 2px;
+    border-left-width: 1px;
     border-top-width: 1px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -663,7 +665,7 @@ QSpinBox::down-button:pressed
  */
 QDoubleSpinBox
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 20px;
     min-width: 50px;
@@ -672,6 +674,7 @@ QDoubleSpinBox::up-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-width: 1px;
+    border-left-width: 1px;
     border-top-right-radius: 2px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -693,6 +696,7 @@ QDoubleSpinBox::down-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 2px;
+    border-left-width: 1px;
     border-top-width: 1px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -716,7 +720,7 @@ QDoubleSpinBox::down-button:pressed
  */
 QDateEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 20px;
     min-width: 50px;
@@ -725,6 +729,7 @@ QDateEdit::up-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-width: 1px;
+    border-left-width: 1px;
     border-top-right-radius: 2px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -746,6 +751,7 @@ QDateEdit::down-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 2px;
+    border-left-width: 1px;
     border-top-width: 1px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -769,7 +775,7 @@ QDateEdit::down-button:pressed
  */
 QTimeEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 20px;
     min-width: 50px;
@@ -778,6 +784,7 @@ QTimeEdit::up-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-width: 1px;
+    border-left-width: 1px;
     border-top-right-radius: 2px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -799,6 +806,7 @@ QTimeEdit::down-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 2px;
+    border-left-width: 1px;
     border-top-width: 1px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -822,7 +830,7 @@ QTimeEdit::down-button:pressed
  */
 QDateTimeEdit
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
     min-height: 20px;
     min-width: 50px;
@@ -831,6 +839,7 @@ QDateTimeEdit::up-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-width: 1px;
+    border-left-width: 1px;
     border-top-right-radius: 2px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -852,6 +861,7 @@ QDateTimeEdit::down-button
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
     border-bottom-right-radius: 2px;
+    border-left-width: 1px;
     border-top-width: 1px;
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
@@ -976,7 +986,7 @@ QHeaderView::section:pressed
  */
 QScrollBar:horizontal
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(52, 52, 52, 255), stop:1 rgba(42, 42, 42, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 255), stop:1 rgba(42, 42, 42, 255));
     height: 12px;
 }
 QScrollBar::handle:horizontal
@@ -1020,7 +1030,7 @@ QScrollBar::sub-page:horizontal
 }
 QScrollBar:vertical
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(52, 52, 52, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
     width: 12px;
 }
 QScrollBar::handle:vertical
@@ -1072,7 +1082,7 @@ QScrollBar::sub-page:vertical
  }
 QSlider::groove
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-radius: 2px;
     border-style: solid;
@@ -1080,7 +1090,7 @@ QSlider::groove
 }
 QSlider::sub-page
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-radius: 2px;
     border-style: solid;
@@ -1088,7 +1098,7 @@ QSlider::sub-page
 }
 QSlider::add-page
 {
-    background-color: rgba(52, 52, 52, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-color: rgba(42, 42, 42, 255);
     border-radius: 2px;
     border-style: solid;

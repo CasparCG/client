@@ -98,7 +98,11 @@ void loadFonts(QApplication& application)
     QFontDatabase::addApplicationFont(":/Appearances/Fonts/OpenSans-Semibold.ttf");
     QFontDatabase::addApplicationFont(":/Appearances/Fonts/OpenSans-SemiboldItalic.ttf");
 
-    application.setFont(QFont("Open Sans Semibold"));
+#if defined(Q_OS_UNIX)
+    application.setFont(QFont("Open Sans"));
+#elif defined(Q_OS_WIN32)
+   application.setFont(QFont("Open Sans Semibold"));
+#endif
 }
 
 void loadConfiguration(QApplication& application, QMainWindow& window)
