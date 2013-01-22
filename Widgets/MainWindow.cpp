@@ -155,12 +155,12 @@ void MainWindow::executePlay()
 
 void MainWindow::executePause()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
+    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier));
 }
 
 void MainWindow::executeLoad()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier));
+    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
 }
 
 void MainWindow::executeNext()
@@ -180,17 +180,17 @@ void MainWindow::executeInvoke()
 
 void MainWindow::executeClear()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F9, Qt::NoModifier));
+    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
 }
 
 void MainWindow::executeClearVideolayer()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
+    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
 }
 
 void MainWindow::executeClearChannel()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
+    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
 }
 
 void MainWindow::toggleCompactView()

@@ -131,21 +131,21 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             return executeCommand(Playout::PlayoutType::Stop, KeyPress);
         else if (keyEvent->key() == Qt::Key_F2) // Play.
             return executeCommand(Playout::PlayoutType::Play, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F3) // Pause.
-            return executeCommand(Playout::PlayoutType::Pause, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F5) // Load.
+        else if (keyEvent->key() == Qt::Key_F3) // Load.
             return executeCommand(Playout::PlayoutType::Load, KeyPress);
+        else if (keyEvent->key() == Qt::Key_F4) // Pause.
+            return executeCommand(Playout::PlayoutType::Pause, KeyPress);
         else if (keyEvent->key() == Qt::Key_F6) // Next.
             return executeCommand(Playout::PlayoutType::Next, KeyPress);
         else if (keyEvent->key() == Qt::Key_F7) // Update.
             return executeCommand(Playout::PlayoutType::Update, KeyPress);
         else if (keyEvent->key() == Qt::Key_F8) // Invoke.
             return executeCommand(Playout::PlayoutType::Invoke, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F9) // Clear.
+        else if (keyEvent->key() == Qt::Key_F10) // Clear.
             return executeCommand(Playout::PlayoutType::Clear, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F10) // Clear videolayer.
+        else if (keyEvent->key() == Qt::Key_F11) // Clear videolayer.
             return executeCommand(Playout::PlayoutType::ClearVideolayer, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F11) // Clear channel.
+        else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
             return executeCommand(Playout::PlayoutType::ClearChannel, KeyPress);
 
         if (target == treeWidgetRundown)
