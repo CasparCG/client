@@ -49,7 +49,7 @@
       <attribute name="label">
        <string>Inspector</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -76,7 +76,7 @@
             <height>316</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QVBoxLayout" name="verticalLayout">
            <property name="spacing">
             <number>0</number>
            </property>

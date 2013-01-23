@@ -86,13 +86,17 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Luminosity')");
 
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionWidth', '1920')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionHeight', '1080')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
+#if defined(Q_OS_UNIX)
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '13')");
+#elif defined(Q_OS_WIN32)
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
+#endif
 
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
     sql.exec("INSERT INTO Direction (Value) VALUES('LEFT')");

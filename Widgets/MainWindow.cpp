@@ -74,7 +74,7 @@ void MainWindow::setupUiMenu()
     this->playoutMenu->addAction("Invoke", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
     this->playoutMenu->addSeparator();
     this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
-    this->playoutMenu->addAction("Clear Videolayer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
+    this->playoutMenu->addAction("Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
     this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
 
     this->helpMenu = new QMenu(this);
