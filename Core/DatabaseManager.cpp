@@ -93,7 +93,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
 #if defined(Q_OS_UNIX)
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '13')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #elif defined(Q_OS_WIN32)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #endif
