@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelOutput">
        <property name="text">
-        <string>&lt;a href=&quot;Output&quot; style=&quot;color: #B4B4B4;&quot;&gt;Output&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Output&quot; style=&quot;color: #BEBEBE;&quot;&gt;Output&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -71,7 +71,7 @@
      <item>
       <widget class="QLabel" name="labelCodec">
        <property name="text">
-        <string>&lt;a href=&quot;Codec&quot; style=&quot;color: #B4B4B4;&quot;&gt;Codec&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Codec&quot; style=&quot;color: #BEBEBE;&quot;&gt;Codec&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -141,7 +141,7 @@
      <item>
       <widget class="QLabel" name="labelPreset">
        <property name="text">
-        <string>&lt;a href=&quot;Preset&quot; style=&quot;color: #B4B4B4;&quot;&gt;Preset&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Preset&quot; style=&quot;color: #BEBEBE;&quot;&gt;Preset&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -191,7 +191,7 @@
      <item>
       <widget class="QLabel" name="labelTune">
        <property name="text">
-        <string>&lt;a href=&quot;Tune&quot; style=&quot;color: #B4B4B4;&quot;&gt;Tune&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tune&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tune&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -241,7 +241,7 @@
      <item>
       <widget class="QLabel" name="labelWithAlpha">
        <property name="text">
-        <string>&lt;a href=&quot;With alpha&quot; style=&quot;color: #B4B4B4;&quot;&gt;With alpha&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;With alpha&quot; style=&quot;color: #BEBEBE;&quot;&gt;With alpha&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

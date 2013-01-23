@@ -65,7 +65,7 @@ QWidget
     border-radius: 2px;
     border-style: solid;
     color: rgba(255, 255, 255, 255);
-    selection-background-color: rgba(90, 90, 90, 255);
+    selection-background-color: rgba(80, 80, 80, 255);
     selection-color: rgba(255, 255, 255, 255);
 }
 QWidget:disabled
@@ -292,7 +292,7 @@ QTreeView::item:hover
 }
 QTreeView::item:selected
 {
-    background-color: rgba(90, 90, 90, 255);
+    background-color: rgba(80, 80, 80, 255);
 }
 QTreeView::branch
 {
@@ -335,7 +335,7 @@ QTreeWidget::item:hover
 }
 QTreeWidget::item:selected
 {
-    background-color: rgba(90, 90, 90, 255);
+    background-color: rgba(80, 80, 80, 255);
     color: rgba(255, 255, 255, 255);
 }
 QTreeWidget::branch
@@ -379,7 +379,7 @@ QTableWidget::item:hover
 }
 QTableWidget::item:selected
 {
-    background-color: rgba(90, 90, 90, 255);
+    background-color: rgba(80, 80, 80, 255);
     color: rgba(255, 255, 255, 255);
 }
 
@@ -446,7 +446,7 @@ QMenu::item
 }
 QMenu::item:selected
 {
-    background-color: rgba(90, 90, 90, 255);
+    background-color: rgba(80, 80, 80, 255);
 }
 
 /*

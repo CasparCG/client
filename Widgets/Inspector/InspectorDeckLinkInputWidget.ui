@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelDevice">
        <property name="text">
-        <string>&lt;a href=&quot;Device&quot; style=&quot;color: #B4B4B4;&quot;&gt;Device&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Device&quot; style=&quot;color: #BEBEBE;&quot;&gt;Device&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -81,7 +81,7 @@
      <item>
       <widget class="QLabel" name="labelFormat">
        <property name="text">
-        <string>&lt;a href=&quot;Format&quot; style=&quot;color: #B4B4B4;&quot;&gt;Format&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Format&quot; style=&quot;color: #BEBEBE;&quot;&gt;Format&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -121,7 +121,7 @@
      <item>
       <widget class="QLabel" name="labelTransition">
        <property name="text">
-        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: #B4B4B4;&quot;&gt;Transition&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: #BEBEBE;&quot;&gt;Transition&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -161,7 +161,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #B4B4B4;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #BEBEBE;&quot;&gt;Duration&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -204,7 +204,7 @@
      <item>
       <widget class="QLabel" name="labelTween">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #B4B4B4;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tween&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -244,7 +244,7 @@
      <item>
       <widget class="QLabel" name="labelDirection">
        <property name="text">
-        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: #B4B4B4;&quot;&gt;Direction&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: #BEBEBE;&quot;&gt;Direction&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

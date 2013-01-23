@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelGpoPort">
        <property name="text">
-        <string>&lt;a href=&quot;GPOPort&quot; style=&quot;color: #B4B4B4;&quot;&gt;GPO Port&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;GPOPort&quot; style=&quot;color: #BEBEBE;&quot;&gt;GPO Port&lt;/a&gt;</string>
        </property>
       </widget>
      </item>
