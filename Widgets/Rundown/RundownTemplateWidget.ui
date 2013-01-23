@@ -53,7 +53,7 @@
      <widget class="QLabel" name="labelVideolayer">
       <property name="geometry">
        <rect>
-        <x>226</x>
+        <x>229</x>
         <y>19</y>
         <width>110</width>
         <height>16</height>
@@ -81,7 +81,7 @@
        <rect>
         <x>142</x>
         <y>19</y>
-        <width>75</width>
+        <width>78</width>
         <height>16</height>
        </rect>
       </property>
@@ -118,7 +118,7 @@
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
-        <x>345</x>
+        <x>348</x>
         <y>19</y>
         <width>83</width>
         <height>16</height>
@@ -131,7 +131,7 @@
      <widget class="QLabel" name="labelDevice">
       <property name="geometry">
        <rect>
-        <x>538</x>
+        <x>543</x>
         <y>19</y>
         <width>260</width>
         <height>16</height>
@@ -144,7 +144,7 @@
      <widget class="QLabel" name="labelFlashlayer">
       <property name="geometry">
        <rect>
-        <x>437</x>
+        <x>440</x>
         <y>19</y>
         <width>92</width>
         <height>16</height>

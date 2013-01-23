@@ -55,7 +55,7 @@
        <rect>
         <x>142</x>
         <y>19</y>
-        <width>70</width>
+        <width>78</width>
         <height>16</height>
        </rect>
       </property>
@@ -79,9 +79,9 @@
      <widget class="QLabel" name="labelVideolayer">
       <property name="geometry">
        <rect>
-        <x>221</x>
+        <x>229</x>
         <y>19</y>
-        <width>90</width>
+        <width>110</width>
         <height>16</height>
        </rect>
       </property>
@@ -118,9 +118,9 @@
      <widget class="QLabel" name="labelDevice">
       <property name="geometry">
        <rect>
-        <x>396</x>
+        <x>440</x>
         <y>19</y>
-        <width>332</width>
+        <width>260</width>
         <height>16</height>
        </rect>
       </property>
@@ -131,9 +131,9 @@
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>348</x>
         <y>19</y>
-        <width>67</width>
+        <width>83</width>
         <height>16</height>
        </rect>
       </property>
