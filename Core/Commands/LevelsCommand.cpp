@@ -145,18 +145,18 @@ void LevelsCommand::setAllowGpi(bool allowGpi)
 
 void LevelsCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setMinIn(pt.get<float>(L"minin"));
-    setMaxIn(pt.get<float>(L"maxin"));
-    setMinOut(pt.get<float>(L"minout"));
-    setMaxOut(pt.get<float>(L"maxout"));
-    setGamma(pt.get<float>(L"gamma"));
-    setDuration(pt.get<int>(L"duration"));
-    setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    setDefer(pt.get<bool>(L"defer"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"minin") > 0) setMinIn(pt.get<float>(L"minin"));
+    if (pt.count(L"maxin") > 0) setMaxIn(pt.get<float>(L"maxin"));
+    if (pt.count(L"minout") > 0) setMinOut(pt.get<float>(L"minout"));
+    if (pt.count(L"maxout") > 0) setMaxOut(pt.get<float>(L"maxout"));
+    if (pt.count(L"gamma") > 0) setGamma(pt.get<float>(L"gamma"));
+    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
+    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
+    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
 }
 
 void LevelsCommand::writeProperties(QXmlStreamWriter* writer)

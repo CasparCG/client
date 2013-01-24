@@ -134,17 +134,17 @@ void GeometryCommand::setAllowGpi(bool allowGpi)
 
 void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setPositionX(pt.get<float>(L"positionx"));
-    setPositionY(pt.get<float>(L"positiony"));
-    setScaleX(pt.get<float>(L"scalex"));
-    setScaleY(pt.get<float>(L"scaley"));
-    setDuration(pt.get<int>(L"duration"));
-    setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    setDefer(pt.get<bool>(L"defer"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"positionx") > 0) setPositionX(pt.get<float>(L"positionx"));
+    if (pt.count(L"positiony") > 0) setPositionY(pt.get<float>(L"positiony"));
+    if (pt.count(L"scalex") > 0) setScaleX(pt.get<float>(L"scalex"));
+    if (pt.count(L"scaley") > 0) setScaleY(pt.get<float>(L"scaley"));
+    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
+    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
+    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
 }
 
 void GeometryCommand::writeProperties(QXmlStreamWriter* writer)

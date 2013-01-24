@@ -100,14 +100,14 @@ void GridCommand::setAllowGpi(bool allowGpi)
 
 void GridCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setGrid(pt.get<float>(L"grid"));
-    setDuration(pt.get<int>(L"duration"));
-    setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    setDefer(pt.get<bool>(L"defer"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"grid") > 0) setGrid(pt.get<float>(L"grid"));
+    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
+    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
+    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
 }
 
 void GridCommand::writeProperties(QXmlStreamWriter* writer)

@@ -8,12 +8,13 @@
 #include <QtGui/QApplication>
 #include <QtCore/QObject>
 
-RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, bool active, bool compactView)
+RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                       bool compactView)
     : QWidget(parent),
-      active(active), compactView(compactView), model(model)
+      active(active), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
-
+    setColor(color);
     setActive(active);
     setCompactView(compactView);
 
@@ -51,7 +52,8 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 
 IRundownWidget* RundownGroupWidget::clone()
 {
-    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->active, this->compactView);
+    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                        this->compactView);
 
     GroupCommand* command = dynamic_cast<GroupCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -93,6 +95,12 @@ ICommand* RundownGroupWidget::getCommand()
 LibraryModel* RundownGroupWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownGroupWidget::setColor(const QString& color)
+{
+    this->color = color;
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
 void RundownGroupWidget::setActive(bool active)

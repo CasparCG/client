@@ -55,7 +55,7 @@ void GroupCommand::setAllowGpi(bool allowGpi)
 
 void GroupCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
 }
 
 void GroupCommand::writeProperties(QXmlStreamWriter* writer)

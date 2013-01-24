@@ -143,13 +143,13 @@ void TemplateCommand::setTemplateDataModels(const QList<TemplateDataModel>& mode
 
 void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setFlashlayer(pt.get<int>(L"flashlayer"));
-    setInvoke(QString::fromStdWString(pt.get<std::wstring>(L"invoke")));
-    setUseStoredData(pt.get<bool>(L"usestoreddata"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"flashlayer") > 0) setFlashlayer(pt.get<int>(L"flashlayer"));
+    if (pt.count(L"invoke") > 0) setInvoke(QString::fromStdWString(pt.get<std::wstring>(L"invoke")));
+    if (pt.count(L"usestoreddata") > 0) setUseStoredData(pt.get<bool>(L"usestoreddata"));
 
     if (pt.count(L"templatedata") > 0)
     {

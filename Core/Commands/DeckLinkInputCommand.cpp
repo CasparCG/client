@@ -123,16 +123,16 @@ void DeckLinkInputCommand::setTween(const QString& tween)
 
 void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setDevice(pt.get<int>(L"device"));
-    setFormat(QString::fromStdWString(pt.get<std::wstring>(L"format")));
-    setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
-    setDuration(pt.get<int>(L"duration"));
-    setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"device") > 0) setDevice(pt.get<int>(L"device"));
+    if (pt.count(L"format") > 0) setFormat(QString::fromStdWString(pt.get<std::wstring>(L"format")));
+    if (pt.count(L"transition") > 0) setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
+    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
+    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
+    if (pt.count(L"direction") > 0) setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
 }
 
 void DeckLinkInputCommand::writeProperties(QXmlStreamWriter* writer)

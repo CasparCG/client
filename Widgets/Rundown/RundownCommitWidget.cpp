@@ -191,7 +191,6 @@ void RundownCommitWidget::checkEmptyDevice()
 bool RundownCommitWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play ||
-        type == Playout::PlayoutType::Invoke ||
         type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
 

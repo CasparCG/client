@@ -106,6 +106,10 @@ void RundownWidget::setupUiMenu()
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
     this->colorMenu->addSeparator();
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
 
@@ -580,10 +584,7 @@ void RundownWidget::customContextMenuRequested(const QPoint& point)
     }
 
     if (isGroup)
-    {
         this->contextMenu->actions().at(2)->setEnabled(false); // We don't support group in groups.
-        this->contextMenu->actions().at(5)->setEnabled(false); // We don't support colorize groups.
-    }
 
     if (isGroupItem)
         this->contextMenu->actions().at(2)->setEnabled(false); // We don't support group in groups.
@@ -617,6 +618,14 @@ void RundownWidget::colorMenuTriggered(QAction* action)
         colorizeItems(Color::CHOCOLATE_RGBA_COLOR);
     else if (action->text() == "DarkSlateGray")
         colorizeItems(Color::DARKSLATEGRAY_RGBA_COLOR);
+    else if (action->text() == "SteelBlue")
+        colorizeItems(Color::STEELBLUE_RGBA_COLOR);
+    else if (action->text() == "Maroon")
+        colorizeItems(Color::MAROON_RGBA_COLOR);
+    else if (action->text() == "DarkKhaki")
+        colorizeItems(Color::DARKKHAKI_RGBA_COLOR);
+    else if (action->text() == "RoyalBlue")
+        colorizeItems(Color::ROYALBLUE_RGBA_COLOR);
     else
         colorizeItems(""); // Reset
 }

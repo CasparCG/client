@@ -208,7 +208,6 @@ bool RundownLevelsWidget::executeCommand(enum Playout::PlayoutType::Type type)
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play ||
-             type == Playout::PlayoutType::Invoke ||
              type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)

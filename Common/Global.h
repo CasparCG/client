@@ -123,6 +123,10 @@ namespace Color
     static const QString SEAGREEN_RGBA_COLOR = "46, 139, 87, 128";
     static const QString CHOCOLATE_RGBA_COLOR = "123, 63, 0, 128";
     static const QString DARKSLATEGRAY_RGBA_COLOR = "47, 79, 79, 128";
+    static const QString STEELBLUE_RGBA_COLOR = "70, 130, 179, 128";
+    static const QString MAROON_RGBA_COLOR = "128, 0, 0, 64";
+    static const QString DARKKHAKI_RGBA_COLOR = "189, 183, 107, 64";
+    static const QString ROYALBLUE_RGBA_COLOR = "65, 105, 225, 64";
 }
 
 namespace TemplateData

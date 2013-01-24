@@ -23,7 +23,9 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
     Q_OBJECT
 
     public:
-        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0, bool active = false, bool compactView = false);
+        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0,
+                                    const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                    bool active = false, bool compactView = false);
 
         virtual IRundownWidget* clone();
 
@@ -34,7 +36,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         virtual void setActive(bool active);
         virtual void setInGroup(bool inGroup) {}
-        virtual void setColor(const QString& color) {}
+        virtual void setColor(const QString& color);
 
         virtual void setExpanded(bool expanded);
 
@@ -51,6 +53,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
     private:
         bool active;
         bool compactView;
+        QString color;
         LibraryModel model;
         GroupCommand command;
 

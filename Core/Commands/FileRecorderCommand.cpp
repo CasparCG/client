@@ -111,14 +111,14 @@ void FileRecorderCommand::setWithAlpha(bool withAlpha)
 
 void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
-    setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
-    setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
-    setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune")));
-    setWithAlpha(pt.get<bool>(L"withalpha"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"output") > 0) setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
+    if (pt.count(L"codec") > 0) setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
+    if (pt.count(L"preset") > 0) setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
+    if (pt.count(L"tune") > 0) setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune")));
+    if (pt.count(L"withalpha") > 0) setWithAlpha(pt.get<bool>(L"withalpha"));
 }
 
 void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)

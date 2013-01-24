@@ -29,7 +29,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent),
     setupUi(this);
     setupUiMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
-    setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
+
+    this->applicationTitle = this->windowTitle();
+    setWindowTitle(QString("%1 %2.%3 %4").arg(this->applicationTitle).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
 
     this->widgetOnAirNow->setVisible(false);
     this->widgetClock->setVisible(false);
@@ -110,12 +112,15 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
 
 void MainWindow::openRundown()
 {
-    QString file = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
-    if (!file.isEmpty())
+    QString filename = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+    if (!filename.isEmpty())
     {
         qApp->postEvent(qApp, new StatusbarEvent("Opening rundown..."));
+        qApp->postEvent(qApp, new OpenRundownEvent(filename));
 
-        qApp->postEvent(qApp, new OpenRundownEvent(file));
+        this->currentFilename = filename;
+        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
+                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
     }
 }
 
@@ -125,9 +130,11 @@ void MainWindow::saveRundown()
     if (!filename.isEmpty())
     {
         qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
+        qApp->postEvent(qApp, new SaveRundownEvent(filename));
 
         this->currentFilename = filename;
-        qApp->postEvent(qApp, new SaveRundownEvent(filename));
+        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
+                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
     }
 }
 
@@ -137,9 +144,11 @@ void MainWindow::saveAsRundown()
     if (!filename.isEmpty())
     {
         qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
+        qApp->postEvent(qApp, new SaveRundownEvent(filename));
 
         this->currentFilename = filename;
-        qApp->postEvent(qApp, new SaveRundownEvent(filename));
+        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
+                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
     }
 }
 

@@ -111,14 +111,14 @@ void ImageScrollerCommand::setProgressive(bool progressive)
 
 void ImageScrollerCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel"));
-    setVideolayer(pt.get<int>(L"videolayer"));
-    setDelay(pt.get<int>(L"delay"));
-    setAllowGpi(pt.get<bool>(L"allowgpi"));
-    setBlur(pt.get<int>(L"blur"));
-    setSpeed(pt.get<int>(L"speed"));
-    setPremultiply(pt.get<bool>(L"premultiply"));
-    setProgressive(pt.get<bool>(L"progressive"));
+    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
+    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
+    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
+    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    if (pt.count(L"blur") > 0) setBlur(pt.get<int>(L"blur"));
+    if (pt.count(L"speed") > 0) setSpeed(pt.get<int>(L"speed"));
+    if (pt.count(L"premultiply") > 0) setPremultiply(pt.get<bool>(L"premultiply"));
+    if (pt.count(L"progressive") > 0) setProgressive(pt.get<bool>(L"progressive"));
 }
 
 void ImageScrollerCommand::writeProperties(QXmlStreamWriter* writer)

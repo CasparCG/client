@@ -1,7 +1,10 @@
 CasparCG Client 2.0 RC 1
 ========================
 
+- NEW: Added support for colorize groups.
+- NEW: Show active rundown in titlebar.
 - UPDATE: UI modifications.
+- UPDATE: The client will execute the mixer command when UPDATE is issued.
 
 
 CasparCG Client 2.0 Beta 3
@@ -25,7 +28,7 @@ CasparCG Client 2.0 Beta 3
 - NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.
 - UPDATE: Changed colorization logic of rundown items.
 - UPDATE: Minor UI changes.
-- UPDATE: The client will execute the mixer command when a UPDATE or INVOKE is issued.
+- UPDATE: The client will execute the mixer command when UPDATE or INVOKE is issued.
 
 Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
 
@@ -60,6 +63,7 @@ CasparCG Client 2.0 Alpha 1
 TODO
 ====
 
+- Support for multiple rundowns.
 - DND support.
 - Timeline view?
 - Support for presets.

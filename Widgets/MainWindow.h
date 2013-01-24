@@ -23,6 +23,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
     private:
         QString currentFilename;
+        QString applicationTitle;
 
         QMenu* fileMenu;
         QMenu* editMenu;
