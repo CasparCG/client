@@ -126,7 +126,7 @@ void RundownGridWidget::setCompactView(bool compactView)
 
 void RundownGridWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
 void RundownGridWidget::writeProperties(QXmlStreamWriter* writer)

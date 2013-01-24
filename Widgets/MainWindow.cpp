@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent),
 void MainWindow::setupUiMenu()
 {
     this->fileMenu = new QMenu(this);
-    this->fileMenu->addAction("Open", this, SLOT(openRundown()), QKeySequence::fromString("Ctrl+O"));
+    this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));

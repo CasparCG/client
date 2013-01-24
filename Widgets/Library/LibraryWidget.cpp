@@ -193,14 +193,6 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(4, QString("Stored (%1)").arg(this->treeWidgetData->topLevelItemCount()));
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
-    {
-        this->treeWidgetAudio->setCurrentItem(NULL);
-        this->treeWidgetImage->setCurrentItem(NULL);
-        this->treeWidgetTemplate->setCurrentItem(NULL);
-        this->treeWidgetVideo->setCurrentItem(NULL);
-        this->treeWidgetData->setCurrentItem(NULL);
-    }
 
     return QObject::eventFilter(target, event);
 }

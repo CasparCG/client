@@ -126,7 +126,7 @@ void RundownBrightnessWidget::setCompactView(bool compactView)
 
 void RundownBrightnessWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
 void RundownBrightnessWidget::writeProperties(QXmlStreamWriter* writer)

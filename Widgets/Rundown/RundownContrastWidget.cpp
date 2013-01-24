@@ -126,7 +126,7 @@ void RundownContrastWidget::setCompactView(bool compactView)
 
 void RundownContrastWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
 void RundownContrastWidget::writeProperties(QXmlStreamWriter* writer)

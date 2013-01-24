@@ -130,7 +130,7 @@ void RundownFileRecorderWidget::setCompactView(bool compactView)
 
 void RundownFileRecorderWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
 void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter* writer)

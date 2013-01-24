@@ -139,7 +139,7 @@ void RundownMediaWidget::setCompactView(bool compactView)
 
 void RundownMediaWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
 void RundownMediaWidget::writeProperties(QXmlStreamWriter* writer)
