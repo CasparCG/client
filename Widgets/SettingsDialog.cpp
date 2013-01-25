@@ -13,7 +13,7 @@
 #include <QtGui/QComboBox>
 
 SettingsDialog::SettingsDialog(QWidget* parent)
-    : QDialog(parent)
+    : QDialog(parent, Qt::Sheet)
 {
     setupUi(this);
 
