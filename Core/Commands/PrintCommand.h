@@ -12,20 +12,20 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT KeyerCommand : public QObject, public ICommand
+class CORE_EXPORT PrintCommand : public QObject, public ICommand
 {
     Q_OBJECT
 
     public:
-        explicit KeyerCommand(QObject* parent = 0);
+        explicit PrintCommand(QObject* parent = 0);
 
         virtual int getDelay() const;
         virtual int getChannel() const;
-        virtual int getVideolayer() const;
+        virtual int getVideolayer() const {}
         virtual bool getAllowGpi() const;
 
         virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
+        virtual void setVideolayer(int videolayer) {}
         virtual void setDelay(int delay);
         virtual void setAllowGpi(bool allowGpi);
 
@@ -37,13 +37,11 @@ class CORE_EXPORT KeyerCommand : public QObject, public ICommand
 
     private:
         int channel;
-        int videolayer;
         int delay;
         bool allowGpi;
         bool defer;
 
         Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
         Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void deferChanged(bool);
