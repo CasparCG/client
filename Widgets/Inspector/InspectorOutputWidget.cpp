@@ -6,6 +6,7 @@
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
 #include "Commands/FileRecorderCommand.h"
+#include "Commands/SeparatorCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
@@ -87,6 +88,29 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->blockSignals(false);
                 this->spinBoxVideolayer->blockSignals(false);
                 this->spinBoxDelay->blockSignals(false);
+            }
+            else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
+            {
+                this->spinBoxChannel->setEnabled(false);
+                this->spinBoxVideolayer->setEnabled(false);
+                this->spinBoxDelay->setEnabled(false);
+
+                // We do not have a command object, block the signals.
+                // Events will not be triggered while we update the values.
+                this->spinBoxChannel->blockSignals(true);
+                this->spinBoxVideolayer->blockSignals(true);
+                this->spinBoxDelay->blockSignals(true);
+                this->checkBoxAllowGpi->blockSignals(true);
+
+                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+                this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+                this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+
+                this->spinBoxChannel->blockSignals(false);
+                this->spinBoxVideolayer->blockSignals(false);
+                this->spinBoxDelay->blockSignals(false);
+                this->checkBoxAllowGpi->blockSignals(false);
             }
             else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
             {

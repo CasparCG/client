@@ -71,6 +71,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         void writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* child);
         void writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item);
 
+        Q_SLOT void addSeparatorCommand();
         Q_SLOT void addFileRecorderCommand();
         Q_SLOT void addImageScrollerCommand();
         Q_SLOT void addAudioCommand();

@@ -214,6 +214,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('VOLUME')");
     sql.exec("INSERT INTO Type (Value) VALUES('COMMIT')");
     sql.exec("INSERT INTO Type (Value) VALUES('IMAGESCROLLER')");
+    sql.exec("INSERT INTO Type (Value) VALUES('SEPARATOR')");
 }
 
 void DatabaseManager::updateConfiguration(const ConfigurationModel& model)

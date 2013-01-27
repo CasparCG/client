@@ -18,6 +18,7 @@
 #include "Commands/LevelsCommand.h"
 #include "Commands/OpacityCommand.h"
 #include "Commands/SaturationCommand.h"
+#include "Commands/SeparatorCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/RundownIsEmptyEvent.h"
@@ -68,6 +69,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         this->lineEditLabel->setReadOnly(false);
         this->comboBoxDevice->setEnabled(true);
         this->lineEditName->setReadOnly(false);
+        this->lineEditName->setEnabled(true);
 
         this->lineEditType->setText(this->model->getType());
         this->lineEditLabel->setText(this->model->getLabel());
@@ -80,6 +82,11 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
             this->lineEditLabel->setReadOnly(false);
             this->comboBoxDevice->setEnabled(false);
             this->lineEditName->setReadOnly(true);
+        }
+        else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->comboBoxDevice->setEnabled(false);
+            this->lineEditName->setEnabled(false);
         }
         else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()) ||

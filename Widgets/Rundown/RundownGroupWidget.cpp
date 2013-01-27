@@ -123,24 +123,9 @@ void RundownGroupWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownGroupWidget::setExpanded(bool expanded)
+bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    //this->labelGroupColor->setVisible(expanded);
-}
-
-void RundownGroupWidget::channelChanged(int channel)
-{
-
-}
-
-void RundownGroupWidget::videolayerChanged(int videolayer)
-{
-
-}
-
-void RundownGroupWidget::delayChanged(int delay)
-{
-
+    return false;
 }
 
 void RundownGroupWidget::checkGpiTriggerable()

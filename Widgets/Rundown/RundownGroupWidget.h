@@ -38,9 +38,9 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual void setInGroup(bool inGroup) {}
         virtual void setColor(const QString& color);
 
-        virtual void setExpanded(bool expanded);
+        virtual void setExpanded(bool expanded) {}
 
-        virtual bool executeCommand(enum Playout::PlayoutType::Type type) { return false; }
+        virtual bool executeCommand(enum Playout::PlayoutType::Type type);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
@@ -59,9 +59,6 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         void checkGpiTriggerable();
 
-        Q_SLOT void channelChanged(int);
-        Q_SLOT void videolayerChanged(int);
-        Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
 };

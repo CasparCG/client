@@ -18,6 +18,7 @@
 #include "RundownSaturationWidget.h"
 #include "RundownTemplateWidget.h"
 #include "RundownVolumeWidget.h"
+#include "RundownSeparatorWidget.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -91,11 +92,12 @@ void RundownWidget::setupUiMenu()
     //this->newMenu->setIcon(QIcon(":/Graphics/Images/New.png"));
     this->newMenu->addMenu(this->mixerMenu);
     this->newMenu->addMenu(this->libraryMenu);
-    this->newMenu->addSeparator();
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
+    this->newMenu->addSeparator();
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Separator", this, SLOT(addSeparatorCommand()));
     this->newMenu->actions().at(4)->setEnabled(false);
 
     this->colorMenu = new QMenu(this);
@@ -345,6 +347,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownCommitWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "IMAGESCROLLER")
             widget = new RundownImageScrollerWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "SEPARATOR")
+            widget = new RundownSeparatorWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
 
@@ -1101,6 +1105,11 @@ void RundownWidget::addGpiOutputCommand()
 void RundownWidget::addFileRecorderCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "FileRecorder", "", "", "FILERECORDER")));
+}
+
+void RundownWidget::addSeparatorCommand()
+{
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Separator", "", "", "SEPARATOR")));
 }
 
 void RundownWidget::addGridCommand()

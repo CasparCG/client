@@ -218,6 +218,10 @@ QLineEdit
     border-width: 1px;
     min-height: 19px;
 }
+QLineEdit::disabled
+{
+    background-color: transparent;
+}
 
 /*
  * QTextEdit
@@ -227,6 +231,10 @@ QTextEdit
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
+QTextEdit::disabled
+{
+    background-color: transparent;
+}
 
 /*
  * QPlainTextEdit
@@ -235,6 +243,10 @@ QPlainTextEdit
 {
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
+}
+QPlainTextEdit::disabled
+{
+    background-color: transparent;
 }
 
 /*

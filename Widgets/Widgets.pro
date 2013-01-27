@@ -62,7 +62,8 @@ HEADERS += \
     Rundown/RundownFileRecorderWidget.h \
     Inspector/InspectorFileRecorderWidget.h \
     Inspector/InspectorBlendModeWidget.h \
-    Rundown/RundownBlendModeWidget.h
+    Rundown/RundownBlendModeWidget.h \
+    Rundown/RundownSeparatorWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -112,7 +113,8 @@ SOURCES += \
     Rundown/RundownImageScrollerWidget.cpp \
     Rundown/RundownFileRecorderWidget.cpp \
     Inspector/InspectorBlendModeWidget.cpp \
-    Rundown/RundownBlendModeWidget.cpp
+    Rundown/RundownBlendModeWidget.cpp \
+    Rundown/RundownSeparatorWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -162,7 +164,8 @@ FORMS += \
     Rundown/RundownImageScrollerWidget.ui \ 
     Rundown/RundownFileRecorderWidget.ui \
     Inspector/InspectorBlendModeWidget.ui \
-    Rundown/RundownBlendModeWidget.ui
+    Rundown/RundownBlendModeWidget.ui \
+    Rundown/RundownSeparatorWidget.ui
 
 RESOURCES += \
     Resource.qrc
