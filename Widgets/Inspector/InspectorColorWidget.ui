@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>196</height>
+    <height>198</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,21 +49,12 @@
       <widget class="QLineEdit" name="lineEditColor"/>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonAddDevice">
+      <widget class="QToolButton" name="toolButtonColor">
        <property name="minimumSize">
         <size>
-         <width>33</width>
+         <width>22</width>
          <height>22</height>
         </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
        </property>
        <property name="icon">
         <iconset resource="../Resource.qrc">
@@ -290,7 +281,7 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacerMedia">
+    <spacer name="verticalSpacerColor">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>

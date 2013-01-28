@@ -399,11 +399,9 @@
          <height>22</height>
         </size>
        </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
+       <property name="icon">
+        <iconset resource="../Resource.qrc">
+         <normaloff>:/Graphics/Images/Refresh.png</normaloff>:/Graphics/Images/Refresh.png</iconset>
        </property>
       </widget>
      </item>
@@ -443,7 +441,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>lineEditFilter</sender>
