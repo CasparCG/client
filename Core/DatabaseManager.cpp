@@ -215,6 +215,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('COMMIT')");
     sql.exec("INSERT INTO Type (Value) VALUES('IMAGESCROLLER')");
     sql.exec("INSERT INTO Type (Value) VALUES('SEPARATOR')");
+    sql.exec("INSERT INTO Type (Value) VALUES('CHANNELSNAPSHOT')");
 }
 
 void DatabaseManager::updateConfiguration(const ConfigurationModel& model)

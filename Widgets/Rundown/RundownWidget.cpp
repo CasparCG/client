@@ -352,7 +352,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownImageScrollerWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "SEPARATOR")
             widget = new RundownSeparatorWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "PRINT")
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "CHANNELSNAPSHOT")
             widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
@@ -495,7 +495,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "IMAGESCROLLER")
         widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
-    else if (type == "PRINT")
+    else if (type == "CHANNELSNAPSHOT")
         widget = new RundownPrintWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "SEPARATOR")
         widget = new RundownSeparatorWidget(LibraryModel(-1, label, name, deviceName, type), this);
@@ -1099,7 +1099,7 @@ void RundownWidget::addDeckLinkInputCommand()
 
 void RundownWidget::addPrintCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Print", "", "", "PRINT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Channel Snapshot", "", "", "CHANNELSNAPSHOT")));
 }
 
 void RundownWidget::addGeometryCommand()

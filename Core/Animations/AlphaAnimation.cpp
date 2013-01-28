@@ -6,8 +6,8 @@ AlphaAnimation::AlphaAnimation(QWidget* target, QObject* parent)
 {
     this->animation = new QPropertyAnimation(this, "alpha");
     this->animation->setDuration(1000);
-    this->animation->setKeyValueAt(0, 255);
-    this->animation->setKeyValueAt(0.5, 100);
+    this->animation->setKeyValueAt(0, 0);
+    this->animation->setKeyValueAt(0.5, 192);
     this->animation->setKeyValueAt(1, 255);
 }
 
@@ -26,6 +26,6 @@ void AlphaAnimation::setAlpha(const int value)
 {
     this->value = value;
 
-    QString stylesheet(QString("border-color: rgba(255, 0, 0, %1);").arg(this->value));
+    QString stylesheet(QString("color: rgba(255, 255, 255, %1);").arg(this->value));
     this->target->setStyleSheet(stylesheet);
 }

@@ -405,9 +405,6 @@
          <bold>true</bold>
         </font>
        </property>
-       <property name="toolTip">
-        <string>Refresh library</string>
-       </property>
       </widget>
      </item>
      <item>

@@ -349,9 +349,6 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="toolTip">
-      <string>Remove device</string>
-     </property>
      <property name="text">
       <string>-</string>
      </property>
@@ -376,9 +373,6 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
-     </property>
-     <property name="toolTip">
-      <string>Add new device</string>
      </property>
      <property name="text">
       <string>+</string>
