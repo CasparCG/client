@@ -96,6 +96,7 @@ void RundownWidget::setupUiMenu()
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Print Producer", this, SLOT(addPrintCommand()));
     this->newMenu->addSeparator();
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Separator", this, SLOT(addSeparatorCommand()));
     this->newMenu->actions().at(4)->setEnabled(false);
@@ -1091,6 +1092,11 @@ void RundownWidget::addDeckLinkInputCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLinkInput", "", "", "DECKLINKINPUT")));
 }
+/*
+void RundownWidget::addPrintCommand()
+{
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Print", "", "", "PRINT")));
+}*/
 
 void RundownWidget::addGeometryCommand()
 {
