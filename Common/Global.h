@@ -117,6 +117,7 @@ namespace Color
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
+    static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
     static const QString DEFAULT_TRANSPARENT_COLOR = "Transparent";
     static const QString SIENNA_RGBA_COLOR = "136, 45, 23, 128";
     static const QString OLIVEDRAB_RGBA_COLOR = "107, 142, 35, 128";

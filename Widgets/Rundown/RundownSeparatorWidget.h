@@ -23,7 +23,7 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
 
     public:
         explicit RundownSeparatorWidget(const LibraryModel& model, QWidget* parent = 0,
-                                        const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                        const QString& color = Color::DEFAULT_SEPARATOR_COLOR,
                                         bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual IRundownWidget* clone();

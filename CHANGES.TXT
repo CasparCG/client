@@ -67,7 +67,6 @@ CasparCG Client 2.0 Alpha 1
 TODO
 ====
 
-- Add support for the PRINT command.
 - Support for multiple rundowns.
 - DND support.
 - Timeline view?
