@@ -217,7 +217,7 @@ void RundownBlendModeWidget::executeStop()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setBlend(this->command.getChannel(), this->command.getVideolayer(), "Normal");
+        device->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), "Normal");
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -226,7 +226,7 @@ void RundownBlendModeWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setBlend(this->command.getChannel(), this->command.getVideolayer(), "Normal");
+            deviceShadow->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), "Normal");
     }
 }
 
@@ -234,7 +234,7 @@ void RundownBlendModeWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setBlend(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
+        device->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -243,7 +243,7 @@ void RundownBlendModeWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setBlend(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
+            deviceShadow->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
     }
 }
 
@@ -251,7 +251,7 @@ void RundownBlendModeWidget::executeClear()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setBlend(this->command.getChannel(), this->command.getVideolayer(), "Normal");
+        device->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), "Normal");
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -260,7 +260,7 @@ void RundownBlendModeWidget::executeClear()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setBlend(this->command.getChannel(), this->command.getVideolayer(), "Normal");
+            deviceShadow->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), "Normal");
     }
 }
 

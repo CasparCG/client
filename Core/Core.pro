@@ -70,6 +70,7 @@ HEADERS += \
     Events/RefreshLibraryEvent.h \
     Events/AutoRefreshLibraryEvent.h \
     Events/CompactViewEvent.h \
+    Animations/AlphaAnimation.h \
     Commands/SeparatorCommand.h \
     Commands/PrintCommand.h
 
@@ -129,6 +130,7 @@ SOURCES += \
     Events/AutoRefreshLibraryEvent.cpp \
     Events/RefreshLibraryEvent.cpp \
     Events/CompactViewEvent.cpp \
+    Animations/AlphaAnimation.cpp \
     Commands/SeparatorCommand.cpp \
     Commands/PrintCommand.cpp
 

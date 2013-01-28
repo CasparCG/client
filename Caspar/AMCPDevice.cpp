@@ -6,7 +6,8 @@
 #include <QtCore/QTimer>
 
 AMCPDevice::AMCPDevice(QObject* parent)
-    : QObject(parent), command(AMCPDevice::NONE), state(AMCPDevice::ExpectingHeader), connected(false)
+    : QObject(parent),
+      command(AMCPDevice::NONE), state(AMCPDevice::ExpectingHeader), connected(false)
 {
     this->socket = new QTcpSocket(this);
 

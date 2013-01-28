@@ -7,6 +7,7 @@
 #include "Commands/GroupCommand.h"
 #include "Commands/FileRecorderCommand.h"
 #include "Commands/SeparatorCommand.h"
+#include "Commands/PrintCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
@@ -57,7 +58,9 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->blockSignals(false);
                 this->spinBoxVideolayer->blockSignals(false);
             }
-            else if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()))
+            else if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->spinBoxVideolayer->setEnabled(false);
 
@@ -111,19 +114,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->blockSignals(false);
                 this->spinBoxDelay->blockSignals(false);
                 this->checkBoxAllowGpi->blockSignals(false);
-            }
-            else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->spinBoxVideolayer->setEnabled(false);
-
-                // We do not have a command object, block the signals.
-                // Events will not be triggered while we update the values.
-                this->spinBoxVideolayer->setEnabled(false);
-
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-
-                this->spinBoxVideolayer->blockSignals(false);
-            }
+            } 
 
             this->preview = true;
         }

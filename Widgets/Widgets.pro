@@ -64,7 +64,8 @@ HEADERS += \
     Inspector/InspectorBlendModeWidget.h \
     Rundown/RundownBlendModeWidget.h \
     Rundown/RundownSeparatorWidget.h \
-    Rundown/RundownPrintWidget.h
+    Rundown/RundownPrintWidget.h \
+    Inspector/InspectorKeyerWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -116,7 +117,8 @@ SOURCES += \
     Inspector/InspectorBlendModeWidget.cpp \
     Rundown/RundownBlendModeWidget.cpp \
     Rundown/RundownSeparatorWidget.cpp \
-    Rundown/RundownPrintWidget.cpp
+    Rundown/RundownPrintWidget.cpp \
+    Inspector/InspectorKeyerWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -168,7 +170,8 @@ FORMS += \
     Inspector/InspectorBlendModeWidget.ui \
     Rundown/RundownBlendModeWidget.ui \
     Rundown/RundownSeparatorWidget.ui \
-    Rundown/RundownPrintWidget.ui
+    Rundown/RundownPrintWidget.ui \
+    Inspector/InspectorKeyerWidget.ui
 
 RESOURCES += \
     Resource.qrc
@@ -246,7 +249,8 @@ OTHER_FILES += \
     Images/ImageScroller.png \
     Images/GpiDisconnected.png \
     Images/GpiConnected.png \
-    Images/Data.png
+    Images/Data.png \
+    Images/Print.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

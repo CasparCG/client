@@ -4,8 +4,7 @@
 
 CommitCommand::CommitCommand(QObject* parent)
     : QObject(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI)
+      channel(Output::DEFAULT_CHANNEL), delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI)
 {
 }
 
@@ -24,21 +23,10 @@ int CommitCommand::getChannel() const
     return this->channel;
 }
 
-int CommitCommand::getVideolayer() const
-{
-    return this->videolayer;
-}
-
 void CommitCommand::setChannel(int channel)
 {
     this->channel = channel;
     emit channelChanged(this->channel);
-}
-
-void CommitCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
 }
 
 void CommitCommand::setDelay(int delay)
@@ -63,7 +51,6 @@ void CommitCommand::readProperties(boost::property_tree::wptree& pt)
 void CommitCommand::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", "");
     writer->writeTextElement("delay", QString::number(this->getDelay()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
 }

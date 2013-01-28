@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorKeyerWidget</class>
+ <widget class="QWidget" name="InspectorKeyerWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>207</width>
+    <height>56</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
+     <item>
+      <spacer name="horizontalSpacerDefer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>29</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDefer">
+       <property name="text">
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxDefer">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerDefer2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerVolume">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelDefer</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorKeyerWidget</receiver>
+   <slot>resetDefer(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDefer</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorKeyerWidget</receiver>
+   <slot>deferChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>spinBoxVolumeChanged(int)</slot>
+  <slot>resetVolume(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>durationChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>sliderVolumeChanged(int)</slot>
+  <slot>resetDefer(QString)</slot>
+  <slot>deferChanged(int)</slot>
+ </slots>
+</ui>

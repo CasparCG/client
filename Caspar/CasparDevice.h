@@ -54,6 +54,8 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
         void stopRecording(int channel);
 
+        void print(int channel);
+
         void playDeviceInput(int channel, int videolayer);
         void playDeviceInput(int channel, int videolayer, int device, const QString& format);
         void loadDeviceInput(int channel, int videolayer, int device, const QString& format);
@@ -65,9 +67,9 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void stopImageScroll(int channel, int videolayer);
 
         void setCommit(int channel);
-        void setBlend(int channel, int videolayer, const QString& blend);
+        void setBlendMode(int channel, int videolayer, const QString& blendMode);
         void setGrid(int channel, int grid, int duration, const QString& easing, bool defer = false);
-        void setKeyer(int channel, int videolayer, int keyer);
+        void setKeyer(int channel, int videolayer, int keyer, bool defer = false);
         void setVolume(int channel, int videolayer, float volume, bool defer = false);
         void setVolume(int channel, int videolayer, float volume, int duration, const QString& easing, bool defer = false);
         void setOpacity(int channel, int videolayer, float opacity, bool defer = false);

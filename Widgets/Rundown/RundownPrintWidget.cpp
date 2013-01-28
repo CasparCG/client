@@ -24,16 +24,14 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MEDIA_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
@@ -166,10 +164,6 @@ void RundownPrintWidget::setInGroup(bool inGroup)
                                         this->labelChannel->geometry().y(),
                                         this->labelChannel->geometry().width(),
                                         this->labelChannel->geometry().height());
-        this->labelVideolayer->setGeometry(this->labelVideolayer->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                           this->labelVideolayer->geometry().y(),
-                                           this->labelVideolayer->geometry().width(),
-                                           this->labelVideolayer->geometry().height());
         this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
                                       this->labelDelay->geometry().y(),
                                       this->labelDelay->geometry().width(),
@@ -197,43 +191,18 @@ void RundownPrintWidget::checkEmptyDevice()
 
 bool RundownPrintWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play ||
-             type == Playout::PlayoutType::Update)
+    if (type == Playout::PlayoutType::Play ||
+        type == Playout::PlayoutType::Update)
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
-    else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
-    else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
-    else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
 
     return true;
-}
-
-void RundownPrintWidget::executeStop()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 0);
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 0);
-    }
 }
 
 void RundownPrintWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1);
+        device->print(this->command.getChannel());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -242,75 +211,13 @@ void RundownPrintWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1);
-    }
-}
-
-void RundownPrintWidget::executeClear()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 0);
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 0);
-    }
-}
-
-void RundownPrintWidget::executeClearVideolayer()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
-    }
-}
-
-void RundownPrintWidget::executeClearChannel()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-    {
-        device->clearChannel(this->command.getChannel());
-        device->clearMixerChannel(this->command.getChannel());
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            deviceShadow->clearChannel(this->command.getChannel());
-            deviceShadow->clearMixerChannel(this->command.getChannel());
-        }
+            deviceShadow->print(this->command.getChannel());
     }
 }
 
 void RundownPrintWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
-}
-
-void RundownPrintWidget::videolayerChanged(int videolayer)
-{
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
 void RundownPrintWidget::delayChanged(int delay)

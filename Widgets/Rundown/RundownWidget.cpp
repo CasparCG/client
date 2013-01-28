@@ -19,6 +19,7 @@
 #include "RundownTemplateWidget.h"
 #include "RundownVolumeWidget.h"
 #include "RundownSeparatorWidget.h"
+#include "RundownPrintWidget.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -92,14 +93,15 @@ void RundownWidget::setupUiMenu()
     //this->newMenu->setIcon(QIcon(":/Graphics/Images/New.png"));
     this->newMenu->addMenu(this->mixerMenu);
     this->newMenu->addMenu(this->libraryMenu);
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
+    this->newMenu->addSeparator();
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addFileRecorderCommand()));
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Print Producer", this, SLOT(addPrintCommand()));
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Channel Snapshot", this, SLOT(addPrintCommand()));
     this->newMenu->addSeparator();
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Separator", this, SLOT(addSeparatorCommand()));
-    this->newMenu->actions().at(4)->setEnabled(false);
+    this->newMenu->actions().at(3)->setEnabled(false);
 
     this->colorMenu = new QMenu(this);
     this->colorMenu->setTitle("Colorize");
@@ -350,6 +352,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownImageScrollerWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "SEPARATOR")
             widget = new RundownSeparatorWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "PRINT")
+            widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
 
@@ -385,12 +389,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
 void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
 {
-    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
     QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
     bool expanded = pt.get<bool>(L"expanded");
 
-    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    IRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, "", "", type), this);
     widget->setExpanded(true);
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -429,9 +431,7 @@ void RundownWidget::writeRundownGroup(const QString& type, QXmlStreamWriter* wri
     writer->writeStartElement("item");
 
     writer->writeTextElement("type", type);
-    writer->writeTextElement("devicename", deviceName);
     writer->writeTextElement("label", label);
-    writer->writeTextElement("name", name);
     writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
 
     widget->getCommand()->writeProperties(writer);
@@ -495,6 +495,10 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "IMAGESCROLLER")
         widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "PRINT")
+        widget = new RundownPrintWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "SEPARATOR")
+        widget = new RundownSeparatorWidget(LibraryModel(-1, label, name, deviceName, type), this);
 
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -1065,7 +1069,7 @@ bool RundownWidget::ungroupItems()
 
 void RundownWidget::addBlendModeCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Blending", "", "", "BLENDMODE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Blend Mode", "", "", "BLENDMODE")));
 }
 
 void RundownWidget::addBrightnessCommand()
@@ -1092,11 +1096,11 @@ void RundownWidget::addDeckLinkInputCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLinkInput", "", "", "DECKLINKINPUT")));
 }
-/*
+
 void RundownWidget::addPrintCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Print", "", "", "PRINT")));
-}*/
+}
 
 void RundownWidget::addGeometryCommand()
 {
@@ -1115,7 +1119,7 @@ void RundownWidget::addFileRecorderCommand()
 
 void RundownWidget::addSeparatorCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Separator", "", "", "SEPARATOR")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "", "", "", "SEPARATOR")));
 }
 
 void RundownWidget::addGridCommand()

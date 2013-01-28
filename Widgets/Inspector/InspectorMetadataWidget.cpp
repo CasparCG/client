@@ -20,6 +20,7 @@
 #include "Commands/SaturationCommand.h"
 #include "Commands/SeparatorCommand.h"
 #include "Commands/VolumeCommand.h"
+#include "Commands/PrintCommand.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/RundownIsEmptyEvent.h"
 #include "Events/RundownItemChangedEvent.h"
@@ -77,20 +78,19 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         this->lineEditName->setText(this->model->getName());
 
         if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-            dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->lineEditLabel->setReadOnly(false);
-            this->comboBoxDevice->setEnabled(false);
-            this->lineEditName->setReadOnly(true);
-        }
-        else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
+            dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()) ||
+            dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->comboBoxDevice->setEnabled(false);
             this->lineEditName->setEnabled(false);
         }
-        else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                 dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                 dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
+        else if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->lineEditName->setEnabled(false);
+        }
+        else if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()) ||

@@ -164,7 +164,7 @@ void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, c
                              const QString& easing, const QString& direction, int seek, int length, bool loop,
                              bool pauseOnLoad, bool useAuto)
 {
-    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 SEEK %9 LENGTH %10 %11 %12")
+    AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 %9 %10 %11 %12")
                              .arg((pauseOnLoad == true) ? "LOAD" : "LOADBG")
                              .arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing)
                              .arg(direction)
@@ -192,6 +192,11 @@ void CasparDevice::startRecording(int channel, const QString& filename, const QS
 void CasparDevice::stopRecording(int channel)
 {
     AMCPDevice::writeMessage(QString("REMOVE %1 FILE").arg(channel));
+}
+
+void CasparDevice::print(int channel)
+{
+    AMCPDevice::writeMessage(QString("PRINT %1 ").arg(channel));
 }
 
 void CasparDevice::playDeviceInput(int channel, int videolayer)
@@ -249,184 +254,145 @@ void CasparDevice::setCommit(int channel)
     AMCPDevice::writeMessage(QString("MIXER %1 COMMIT").arg(channel));
 }
 
-void CasparDevice::setBlend(int channel, int videolayer, const QString& blend)
+void CasparDevice::setBlendMode(int channel, int videolayer, const QString& blendMode)
 {
-    AMCPDevice::writeMessage(QString("MIXER %1-%2 BLEND %3 DEFER").arg(channel).arg(videolayer).arg(blend));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 BLEND %3 %4")
+                             .arg(channel).arg(videolayer).arg(blendMode));
 }
 
 void CasparDevice::setGrid(int channel, int grid, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1 GRID %2 %3 %4 DEFER").arg(channel).arg(grid).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1 GRID %2 %3 %4").arg(channel).arg(grid).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1 GRID %2 %3 %4 %5")
+                             .arg(channel).arg(grid).arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
-void CasparDevice::setKeyer(int channel, int videolayer, int keyer)
+void CasparDevice::setKeyer(int channel, int videolayer, int keyer, bool defer)
 {
-    AMCPDevice::writeMessage(QString("MIXER %1-%2 KEYER %3").arg(channel).arg(videolayer).arg(keyer));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 KEYER %3 %4")
+                             .arg(channel).arg(videolayer).arg(keyer)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setVolume(int channel, int videolayer, float volume, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3 DEFER").arg(channel).arg(videolayer).arg(volume));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3").arg(channel).arg(videolayer).arg(volume));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3 %4")
+                             .arg(channel).arg(videolayer).arg(volume)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setVolume(int channel, int videolayer, float volume, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3 %4 %5 DEFER")
-                                 .arg(channel).arg(videolayer).arg(volume).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3 %4 %5")
-                                 .arg(channel).arg(videolayer).arg(volume).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 VOLUME %3 %4 %5 %6")
+                             .arg(channel).arg(videolayer).arg(volume).arg(duration)
+                             .arg(easing).arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setOpacity(int channel, int videolayer, float opacity, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3 DEFER").arg(channel).arg(videolayer).arg(opacity));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3").arg(channel).arg(videolayer).arg(opacity));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3 %4")
+                             .arg(channel).arg(videolayer).arg(opacity)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setOpacity(int channel, int videolayer, float opacity, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3 %4 %5 DEFER")
-                                 .arg(channel).arg(videolayer).arg(opacity).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3 %4 %5")
-                                 .arg(channel).arg(videolayer).arg(opacity).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 OPACITY %3 %4 %5 %6")
+                             .arg(channel).arg(videolayer).arg(opacity).arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setBrightness(int channel, int videolayer, float brightness, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3 DEFER").arg(channel).arg(videolayer).arg(brightness));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3").arg(channel).arg(videolayer).arg(brightness));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3 %4")
+                             .arg(channel).arg(videolayer).arg(brightness)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setBrightness(int channel, int videolayer, float brightness, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3 %4 %5 DEFER")
-                                 .arg(channel).arg(videolayer).arg(brightness).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3 %4 %5")
-                                 .arg(channel).arg(videolayer).arg(brightness).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 BRIGHTNESS %3 %4 %5 %6")
+                            .arg(channel).arg(videolayer).arg(brightness).arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setContrast(int channel, int videolayer, float contrast, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3 DEFER").arg(channel).arg(videolayer).arg(contrast));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3").arg(channel).arg(videolayer).arg(contrast));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3 %4")
+                             .arg(channel).arg(videolayer).arg(contrast)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setContrast(int channel, int videolayer, float contrast, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3 %4 %5 DEFER")
-                                 .arg(channel).arg(videolayer).arg(contrast).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3 %4 %5")
-                                 .arg(channel).arg(videolayer).arg(contrast).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 CONTRAST %3 %4 %5 %6")
+                             .arg(channel).arg(videolayer).arg(contrast).arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setSaturation(int channel, int videolayer, float saturation, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3 DEFER").arg(channel).arg(videolayer).arg(saturation));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3").arg(channel).arg(videolayer).arg(saturation));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3 %4")
+                             .arg(channel).arg(videolayer).arg(saturation)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setSaturation(int channel, int videolayer, float saturation, int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3 %4 %5 DEFER")
-                                 .arg(channel).arg(videolayer).arg(saturation).arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3 %4 %5")
-                                 .arg(channel).arg(videolayer).arg(saturation).arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 SATURATION %3 %4 %5 %6")
+                             .arg(channel).arg(videolayer).arg(saturation).arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
                              bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7 DEFER")
-                                 .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7")
-                                 .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7 %8")
+                             .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
                              int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7 %8 %9 DEFER")
-                                 .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut)
-                                 .arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7 %8 %9")
-                                 .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut)
-                                 .arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 LEVELS %3 %4 %5 %6 %7 %8 %9 %10")
+                             .arg(channel).arg(videolayer).arg(minIn).arg(maxIn).arg(gamma).arg(minOut).arg(maxOut)
+                             .arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                                bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 DEFER")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7")
+                             .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                                int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7 %8 DEFER")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
-                                 .arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7 %8")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
-                                 .arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7 %8 %9")
+                             .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
+                             .arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                                bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6 DEFER")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6 %7")
+                             .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX)
+                             .arg(scaleY).arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                                int duration, const QString& easing, bool defer)
 {
-    if (defer)
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6 %7 %8 DEFER")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
-                                 .arg(duration).arg(easing));
-    else
-        AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6 %7 %8")
-                                 .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
-                                 .arg(duration).arg(easing));
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 CLIP %3 %4 %5 %6 %7 %8 %9")
+                             .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
+                             .arg(duration).arg(easing)
+                             .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::sendNotification()

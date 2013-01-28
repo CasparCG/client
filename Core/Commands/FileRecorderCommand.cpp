@@ -4,9 +4,9 @@
 
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
     : QObject(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC),
-      preset(FileRecorder::DEFAULT_PRESET), tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)
+      channel(Output::DEFAULT_CHANNEL), delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI),
+      output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET),
+      tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)
 {
 }
 
@@ -18,11 +18,6 @@ int FileRecorderCommand::getDelay() const
 int FileRecorderCommand::getChannel() const
 {
     return this->channel;
-}
-
-int FileRecorderCommand::getVideolayer() const
-{
-    return this->videolayer;
 }
 
 bool FileRecorderCommand::getAllowGpi() const
@@ -59,12 +54,6 @@ void FileRecorderCommand::setChannel(int channel)
 {
     this->channel = channel;
     emit channelChanged(this->channel);
-}
-
-void FileRecorderCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
 }
 
 void FileRecorderCommand::setDelay(int delay)
@@ -124,7 +113,6 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", "");
     writer->writeTextElement("delay", QString::number(this->getDelay()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("output", this->getOutput());

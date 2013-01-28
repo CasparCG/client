@@ -233,7 +233,7 @@ void RundownKeyerWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1);
+        device->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1, this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -242,7 +242,7 @@ void RundownKeyerWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1);
+            deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1, this->command.getDefer());
     }
 }
 

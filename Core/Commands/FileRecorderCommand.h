@@ -21,11 +21,11 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
 
         virtual int getDelay() const;
         virtual int getChannel() const;
-        virtual int getVideolayer() const;
+        virtual int getVideolayer() const {}
         virtual bool getAllowGpi() const;
 
         virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
+        virtual void setVideolayer(int videolayer) {}
         virtual void setDelay(int delay);
         virtual void setAllowGpi(bool allowGpi);
 
@@ -46,7 +46,6 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
 
     private:
         int channel;
-        int videolayer;
         int delay;
         bool allowGpi;
         QString output;
@@ -57,7 +56,6 @@ class CORE_EXPORT FileRecorderCommand : public QObject, public ICommand
 
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
         Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void outputChanged(const QString&);
         Q_SIGNAL void codecChanged(const QString&);

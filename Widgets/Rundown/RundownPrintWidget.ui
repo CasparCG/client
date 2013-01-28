@@ -44,7 +44,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/Mixer.png</pixmap>
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/Print.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -76,19 +76,6 @@
        <string>Print</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelVideolayer">
-      <property name="geometry">
-       <rect>
-        <x>229</x>
-        <y>19</y>
-        <width>110</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Video layer:</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelColor">
       <property name="geometry">
        <rect>
@@ -118,7 +105,7 @@
      <widget class="QLabel" name="labelDevice">
       <property name="geometry">
        <rect>
-        <x>440</x>
+        <x>321</x>
         <y>19</y>
         <width>260</width>
         <height>16</height>
@@ -131,7 +118,7 @@
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
-        <x>348</x>
+        <x>229</x>
         <y>19</y>
         <width>83</width>
         <height>16</height>

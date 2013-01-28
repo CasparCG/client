@@ -57,6 +57,7 @@
         <file>Images/GpiDisconnected.png</file>
         <file>Images/GpiOutput.png</file>
         <file>Images/Data.png</file>
+        <file>Images/Print.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
