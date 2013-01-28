@@ -20,7 +20,7 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MEDIA_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_SEPARATOR_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
 
