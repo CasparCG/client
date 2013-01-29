@@ -45,9 +45,9 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
         void pauseMedia(int channel, int videolayer);
         void playMedia(int channel, int videolayer);
-        void playMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration,
+        void playMedia(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);
-        void loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration,
+        void loadMedia(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool freezeOnLoad, bool useAuto);
         void stopMedia(int channel, int videolayer);
 
@@ -62,8 +62,8 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void stopDeviceInput(int channel, int videolayer);
 
         void playImageScroll(int channel, int videolayer);
-        void playImageScroll(int channel, int videolayer, const QString& media, int blur, int speed, bool premultiply, bool progressive);
-        void loadImageScroll(int channel, int videolayer, const QString& media, int blur, int speed, bool premultiply, bool progressive);
+        void playImageScroll(int channel, int videolayer, const QString& name, int blur, int speed, bool premultiply, bool progressive);
+        void loadImageScroll(int channel, int videolayer, const QString& name, int blur, int speed, bool premultiply, bool progressive);
         void stopImageScroll(int channel, int videolayer);
 
         void setCommit(int channel);
