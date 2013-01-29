@@ -1,6 +1,8 @@
 CasparCG Client 2.0 RC 1
 ========================
 
+- FIX: The name parameter in the image scroller is not set correctly when open a rundown.
+- FIX: Better support for spaces in filenames.
 - FIX: Freeze on load does not work as expected.
 - FIX: Defer on mixer keyer is missing.
 - FIX: The parameters SEEK and LENGTH is sent regardless of whether it is set or not.
