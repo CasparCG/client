@@ -21,8 +21,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     Images/CasparCG.ico \
-    Windows.rc \
-    Images/CasparCG.icns
+    Images/CasparCG.icns \
+    Windows.rc
 
 win32:RC_FILE = Windows.rc
 else:macx:ICON = Images/CasparCG.icns
