@@ -21,6 +21,8 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     setActive(active);
     setCompactView(compactView);
 
+    this->command.setMediaName(this->model.getName());
+
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));

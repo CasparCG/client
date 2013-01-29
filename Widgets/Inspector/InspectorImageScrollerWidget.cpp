@@ -25,8 +25,6 @@ bool InspectorImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
             this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
             this->spinBoxBlur->setValue(this->command->getBlur());
             this->spinBoxSpeed->setValue(this->command->getSpeed());
             this->checkBoxPremultiply->setChecked(this->command->getPremultiply());

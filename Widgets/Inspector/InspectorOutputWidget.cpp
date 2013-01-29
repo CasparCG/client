@@ -8,6 +8,7 @@
 #include "Commands/FileRecorderCommand.h"
 #include "Commands/SeparatorCommand.h"
 #include "Commands/PrintCommand.h"
+#include "Commands/GridCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
@@ -60,7 +61,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             }
             else if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
+                     dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->spinBoxVideolayer->setEnabled(false);
 

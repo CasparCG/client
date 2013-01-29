@@ -86,11 +86,8 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         }
         else if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                 dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->lineEditName->setEnabled(false);
-        }
-        else if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                 dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()) ||
@@ -103,7 +100,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
                  dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->lineEditName->setReadOnly(true);
+            this->lineEditName->setEnabled(false);
         }
 
         checkEmptyDevice();
