@@ -49,6 +49,6 @@ class WIDGETS_EXPORT InspectorMediaWidget : public QWidget, Ui::InspectorMediaWi
         Q_SLOT void resetLength(QString);
         Q_SLOT void resetLoop(QString);
         Q_SLOT void resetFreezeOnLoad(QString);
-        Q_SLOT void resetTriggereOnNext(QString);
+        Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void resetUseAuto(QString);
 };

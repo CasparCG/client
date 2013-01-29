@@ -197,7 +197,7 @@ void InspectorMediaWidget::resetFreezeOnLoad(QString freezeOnLoad)
     this->command->setFreezeOnLoad(this->checkBoxFreezeOnLoad->isChecked());
 }
 
-void InspectorMediaWidget::resetTriggereOnNext(QString triggerOnNext)
+void InspectorMediaWidget::resetTriggerOnNext(QString triggerOnNext)
 {
     this->checkBoxTriggerOnNext->setChecked(false);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
