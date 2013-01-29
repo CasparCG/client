@@ -37,7 +37,8 @@ class WIDGETS_EXPORT InspectorMediaWidget : public QWidget, Ui::InspectorMediaWi
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void loopChanged(int);
         Q_SLOT void useAutoChanged(int);
-        Q_SLOT void pauseOnLoadChanged(int);
+        Q_SLOT void freezeOnLoadChanged(int);
+        Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void seekChanged(int);
         Q_SLOT void lengthChanged(int);
         Q_SLOT void resetTransition(QString);
@@ -47,6 +48,7 @@ class WIDGETS_EXPORT InspectorMediaWidget : public QWidget, Ui::InspectorMediaWi
         Q_SLOT void resetSeek(QString);
         Q_SLOT void resetLength(QString);
         Q_SLOT void resetLoop(QString);
-        Q_SLOT void resetPauseOnLoad(QString);
+        Q_SLOT void resetFreezeOnLoad(QString);
+        Q_SLOT void resetTriggereOnNext(QString);
         Q_SLOT void resetUseAuto(QString);
 };

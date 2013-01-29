@@ -114,7 +114,8 @@ IRundownWidget* RundownMediaWidget::clone()
     command->setSeek(this->command.getSeek());
     command->setLength(this->command.getLength());
     command->setUseAuto(this->command.getUseAuto());
-    command->setPauseOnLoad(this->command.getPauseOnLoad());
+    command->setFreezeOnLoad(this->command.getFreezeOnLoad());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -218,6 +219,8 @@ bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play || (type == Playout::PlayoutType::Update && this->model.getType() == "AUDIO"))
         QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
@@ -338,7 +341,7 @@ void RundownMediaWidget::executeLoad()
         device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                           this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                          this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
+                          this->command.getLoop(), this->command.getFreezeOnLoad(), this->command.getUseAuto());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -352,7 +355,7 @@ void RundownMediaWidget::executeLoad()
             deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                     this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                    this->command.getLoop(), this->command.getPauseOnLoad(), this->command.getUseAuto());
+                                    this->command.getLoop(), this->command.getFreezeOnLoad(), this->command.getUseAuto());
         }
     }
 

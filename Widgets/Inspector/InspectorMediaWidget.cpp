@@ -39,7 +39,8 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxSeek->setValue(this->command->getSeek());
             this->spinBoxLength->setValue(this->command->getLength());
             this->checkBoxLoop->setChecked(this->command->getLoop());
-            this->checkBoxPauseOnLoad->setChecked(this->command->getPauseOnLoad());
+            this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
             this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
 
             this->preview = true;
@@ -117,14 +118,19 @@ void InspectorMediaWidget::useAutoChanged(int state)
 {
     this->command->setUseAuto((state == Qt::Checked) ? true : false);
     if (state == Qt::Checked)
-        this->checkBoxPauseOnLoad->setChecked(false); // Auto is only supported for LOADBG.
+        this->checkBoxFreezeOnLoad->setChecked(false); // Auto is only supported for LOADBG.
 }
 
-void InspectorMediaWidget::pauseOnLoadChanged(int state)
+void InspectorMediaWidget::freezeOnLoadChanged(int state)
 {
-    this->command->setPauseOnLoad((state == Qt::Checked) ? true : false);
+    this->command->setFreezeOnLoad((state == Qt::Checked) ? true : false);
     if (state == Qt::Checked)
         this->checkBoxUseAuto->setChecked(false); // Auto is not supported for LOAD.
+}
+
+void InspectorMediaWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
 void InspectorMediaWidget::seekChanged(int seek)
@@ -185,8 +191,14 @@ void InspectorMediaWidget::resetUseAuto(QString useAuto)
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
-void InspectorMediaWidget::resetPauseOnLoad(QString pauseOnLoad)
+void InspectorMediaWidget::resetFreezeOnLoad(QString freezeOnLoad)
 {
-    this->checkBoxPauseOnLoad->setChecked(false);
-    this->command->setPauseOnLoad(this->checkBoxLoop->isChecked());
+    this->checkBoxFreezeOnLoad->setChecked(false);
+    this->command->setFreezeOnLoad(this->checkBoxFreezeOnLoad->isChecked());
+}
+
+void InspectorMediaWidget::resetTriggereOnNext(QString triggerOnNext)
+{
+    this->checkBoxTriggerOnNext->setChecked(false);
+    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

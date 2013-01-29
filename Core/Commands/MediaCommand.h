@@ -38,7 +38,8 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         const QString& getTween() const;
         const QString& getDirection() const;
         bool getLoop() const;
-        bool getPauseOnLoad() const;
+        bool getFreezeOnLoad() const;
+        bool getTriggerOnNext() const;
         int getSeek() const;
         int getLength() const;
         bool getUseAuto() const;
@@ -48,7 +49,8 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         void setDuration(int duration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
-        void setPauseOnLoad(bool pauseOnLoad);
+        void setFreezeOnLoad(bool freezeOnLoad);
+        void setTriggerOnNext(bool triggerOnNext);
         void setLoop(bool loop);
         void setSeek(int seek);
         void setLength(int length);
@@ -65,7 +67,8 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         QString tween;
         QString direction;
         bool loop;
-        bool pauseOnLoad;
+        bool freezeOnLoad;
+        bool triggerOnNext;
         int seek;
         int length;
         bool useAuto;
@@ -80,7 +83,8 @@ class CORE_EXPORT MediaCommand : public QObject, public ICommand
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void loopChanged(bool);
-        Q_SIGNAL void pauseOnLoadChanged(bool);
+        Q_SIGNAL void freezeOnLoadChanged(bool);
+        Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void seekChanged(int);
         Q_SIGNAL void lengthChanged(int);
         Q_SIGNAL void useAutoChanged(bool);

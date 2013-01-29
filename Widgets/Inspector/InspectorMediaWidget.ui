@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>252</height>
+    <height>280</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -258,7 +258,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>49</width>
+         <width>55</width>
          <height>20</height>
         </size>
        </property>
@@ -300,59 +300,6 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPauseOnLoad">
-     <item>
-      <spacer name="horizontalSpacerPauseOnLoad1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPauseOnLoad">
-       <property name="text">
-        <string>&lt;a href=&quot;Pause on load&quot; style=&quot;color: #BEBEBE;&quot;&gt;Pause on load&lt;/a&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxPauseOnLoad">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerPauseOnLoad2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutUseAuto">
      <item>
       <spacer name="horizontalSpacerUseAuto1">
@@ -364,7 +311,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>30</width>
+         <width>36</width>
          <height>20</height>
         </size>
        </property>
@@ -392,6 +339,112 @@
      </item>
      <item>
       <spacer name="horizontalSpacerUseAuto2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutFreezeOnLoad">
+     <item>
+      <spacer name="horizontalSpacerFreezeOnLoad1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>5</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPauseOnLoad">
+       <property name="text">
+        <string>&lt;a href=&quot;Freeze on load&quot; style=&quot;color: #BEBEBE;&quot;&gt;Freeze on load&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxFreezeOnLoad">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerFreezeOnLoad2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>&lt;a href=&quot;Trigger on next&quot; style=&quot;color: #BEBEBE;&quot;&gt;Trigger on next&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -650,38 +703,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxPauseOnLoad</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>InspectorMediaWidget</receiver>
-   <slot>pauseOnLoadChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>103</x>
-     <y>188</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>161</x>
-     <y>208</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelPauseOnLoad</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorMediaWidget</receiver>
-   <slot>resetPauseOnLoad(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>185</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>26</x>
-     <y>208</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>labelUseAuto</sender>
    <signal>linkActivated(QString)</signal>
    <receiver>InspectorMediaWidget</receiver>
@@ -689,7 +710,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>82</x>
-     <y>211</y>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
@@ -705,11 +726,75 @@
    <hints>
     <hint type="sourcelabel">
      <x>99</x>
-     <y>210</y>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
      <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelPauseOnLoad</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetFreezeOnLoad(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxFreezeOnLoad</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>freezeOnLoadChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelTriggerOnNext</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>resetTriggerOnNext(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>17</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorMediaWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>263</y>
     </hint>
    </hints>
   </connection>
@@ -729,9 +814,11 @@
   <slot>resetSeek(QString)</slot>
   <slot>resetLength(QString)</slot>
   <slot>resetLoop(QString)</slot>
-  <slot>pauseOnLoadChanged(int)</slot>
-  <slot>resetPauseOnLoad(QString)</slot>
+  <slot>freezeOnLoadChanged(int)</slot>
+  <slot>resetFreezeOnLoad(QString)</slot>
   <slot>resetUseAuto(QString)</slot>
   <slot>useAutoChanged(int)</slot>
+  <slot>resetTriggerOnNext(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

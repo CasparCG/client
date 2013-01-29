@@ -7,8 +7,8 @@ MediaCommand::MediaCommand(QObject* parent)
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION),
       duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      loop(Media::DEFAULT_LOOP), pauseOnLoad(Media::DEFAULT_PAUSE_ON_LOAD), seek(Media::DEFAULT_SEEK),
-      length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
+      loop(Media::DEFAULT_LOOP), freezeOnLoad(Media::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Media::DEFAULT_TRIGGER_ON_NEXT),
+      seek(Media::DEFAULT_SEEK), length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
 {
 }
 
@@ -86,9 +86,14 @@ bool MediaCommand::getLoop() const
     return this->loop;
 }
 
-bool MediaCommand::getPauseOnLoad() const
+bool MediaCommand::getFreezeOnLoad() const
 {
-    return this->pauseOnLoad;
+    return this->freezeOnLoad;
+}
+
+bool MediaCommand::getTriggerOnNext() const
+{
+    return this->triggerOnNext;
 }
 
 int MediaCommand::getSeek() const
@@ -142,10 +147,16 @@ void MediaCommand::setLoop(bool loop)
     emit loopChanged(this->loop);
 }
 
-void MediaCommand::setPauseOnLoad(bool pauseOnLoad)
+void MediaCommand::setFreezeOnLoad(bool freezeOnLoad)
 {
-    this->pauseOnLoad = pauseOnLoad;
-    emit pauseOnLoadChanged(this->pauseOnLoad);
+    this->freezeOnLoad = freezeOnLoad;
+    emit freezeOnLoadChanged(this->freezeOnLoad);
+}
+
+void MediaCommand::setTriggerOnNext(bool triggerOnNext)
+{
+    this->triggerOnNext = triggerOnNext;
+    emit triggerOnNextChanged(this->triggerOnNext);
 }
 
 void MediaCommand::setSeek(int seek)
@@ -179,6 +190,7 @@ void MediaCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"seek") > 0) setSeek(pt.get<int>(L"seek"));
     if (pt.count(L"length") > 0) setLength(pt.get<int>(L"length"));
     if (pt.count(L"loop") > 0) setLoop(pt.get<bool>(L"loop"));
+    if (pt.count(L"freezeonload") > 0) setFreezeOnLoad(pt.get<bool>(L"freezeonload"));
     if (pt.count(L"useauto") > 0) setUseAuto(pt.get<bool>(L"useauto"));
 }
 
@@ -195,5 +207,6 @@ void MediaCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("seek", QString::number(this->getSeek()));
     writer->writeTextElement("length", QString::number(this->getLength()));
     writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
+    writer->writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
 }

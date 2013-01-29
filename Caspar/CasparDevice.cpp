@@ -162,10 +162,10 @@ void CasparDevice::playMedia(int channel, int videolayer, const QString &item, c
 
 void CasparDevice::loadMedia(int channel, int videolayer, const QString& item, const QString& transition, int duration,
                              const QString& easing, const QString& direction, int seek, int length, bool loop,
-                             bool pauseOnLoad, bool useAuto)
+                             bool freezeOnLoad, bool useAuto)
 {
     AMCPDevice::writeMessage(QString("%1 %2-%3 \"%4\" %5 %6 %7 %8 %9 %10 %11 %12")
-                             .arg((pauseOnLoad == true) ? "LOAD" : "LOADBG")
+                             .arg((freezeOnLoad == true) ? "LOAD" : "LOADBG")
                              .arg(channel).arg(videolayer).arg(item).arg(transition).arg(duration).arg(easing)
                              .arg(direction)
                              .arg((seek > 0) ? QString("SEEK %1").arg(seek) : "")
