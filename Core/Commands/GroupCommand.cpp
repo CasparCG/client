@@ -3,7 +3,7 @@
 #include "Global.h"
 
 GroupCommand::GroupCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       allowGpi(Output::DEFAULT_ALLOW_GPI)
 {
 }

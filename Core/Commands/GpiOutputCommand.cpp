@@ -3,7 +3,7 @@
 #include "Global.h"
 
 GpiOutputCommand::GpiOutputCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI), gpoPort(Gpi::DEFAULT_GPO_PORT)
 {
 }

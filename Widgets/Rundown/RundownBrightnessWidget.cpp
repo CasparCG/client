@@ -88,7 +88,7 @@ bool RundownBrightnessWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownBrightnessWidget::clone()
+AbstractRundownWidget* RundownBrightnessWidget::clone()
 {
     RundownBrightnessWidget* widget = new RundownBrightnessWidget(this->model, this->parentWidget(), this->color,
                                                                   this->active, this->inGroup, this->disconnected, this->compactView);
@@ -139,7 +139,7 @@ bool RundownBrightnessWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownBrightnessWidget::getCommand()
+AbstractCommand* RundownBrightnessWidget::getCommand()
 {
     return &this->command;
 }

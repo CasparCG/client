@@ -5,7 +5,7 @@
 #include <QtCore/QRegExp>
 
 TemplateCommand::TemplateCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER_FLASH), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE),
       useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)

@@ -33,8 +33,7 @@ HEADERS += \
     Rundown/RundownMediaWidget.h \
     Rundown/RundownTemplateWidget.h \
     Rundown/RundownWidget.h \
-    Rundown/IRundownWidget.h \
-    Rundown/IPlayoutCommand.h \
+    Rundown/AbstractRundownWidget.h \
     Rundown/RundownCropWidget.h \
     Inspector/InspectorCropWidget.h \
     Rundown/RundownGeometryWidget.h \

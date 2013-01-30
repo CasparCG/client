@@ -88,7 +88,7 @@ bool RundownSaturationWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownSaturationWidget::clone()
+AbstractRundownWidget* RundownSaturationWidget::clone()
 {
     RundownSaturationWidget* widget = new RundownSaturationWidget(this->model, this->parentWidget(), this->color,
                                                                   this->active, this->inGroup, this->disconnected, this->compactView);
@@ -139,7 +139,7 @@ bool RundownSaturationWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownSaturationWidget::getCommand()
+AbstractCommand* RundownSaturationWidget::getCommand()
 {
     return &this->command;
 }

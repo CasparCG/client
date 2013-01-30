@@ -2,12 +2,12 @@
 
 #include "Global.h"
 
-RundownItemSelectedEvent::RundownItemSelectedEvent(ICommand* command, LibraryModel* model)
+RundownItemSelectedEvent::RundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
     : QEvent(static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected)), command(command), model(model)
 {
 }
 
-ICommand* RundownItemSelectedEvent::getCommand() const
+AbstractCommand* RundownItemSelectedEvent::getCommand() const
 {
     return this->command;
 }

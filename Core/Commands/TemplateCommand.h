@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shared.h"
-#include "ICommand.h"
+#include "AbstractCommand.h"
 #include "Models/TemplateDataModel.h"
 
 #include <boost/foreach.hpp>
@@ -13,7 +13,7 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT TemplateCommand : public QObject, public ICommand
+class CORE_EXPORT TemplateCommand : public AbstractCommand
 {
     Q_OBJECT
 

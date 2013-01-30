@@ -88,7 +88,7 @@ bool RundownKeyerWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownKeyerWidget::clone()
+AbstractRundownWidget* RundownKeyerWidget::clone()
 {
     RundownKeyerWidget* widget = new RundownKeyerWidget(this->model, this->parentWidget(), this->color, this->active,
                                                         this->inGroup, this->disconnected, this->compactView);
@@ -135,7 +135,7 @@ bool RundownKeyerWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownKeyerWidget::getCommand()
+AbstractCommand* RundownKeyerWidget::getCommand()
 {
     return &this->command;
 }

@@ -88,7 +88,7 @@ bool RundownGeometryWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownGeometryWidget::clone()
+AbstractRundownWidget* RundownGeometryWidget::clone()
 {
     RundownGeometryWidget* widget = new RundownGeometryWidget(this->model, this->parentWidget(), this->color,
                                                               this->active, this->inGroup, this->disconnected, this->compactView);
@@ -142,7 +142,7 @@ bool RundownGeometryWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownGeometryWidget::getCommand()
+AbstractCommand* RundownGeometryWidget::getCommand()
 {
     return &this->command;
 }

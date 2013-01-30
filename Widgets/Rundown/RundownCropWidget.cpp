@@ -88,7 +88,7 @@ bool RundownCropWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownCropWidget::clone()
+AbstractRundownWidget* RundownCropWidget::clone()
 {
     RundownCropWidget* widget = new RundownCropWidget(this->model, this->parentWidget(), this->color, this->active,
                                                       this->inGroup, this->disconnected, this->compactView);
@@ -142,7 +142,7 @@ bool RundownCropWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownCropWidget::getCommand()
+AbstractCommand* RundownCropWidget::getCommand()
 {
     return &this->command;
 }

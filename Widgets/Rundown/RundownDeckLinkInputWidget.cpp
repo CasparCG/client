@@ -91,7 +91,7 @@ bool RundownDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownDeckLinkInputWidget::clone()
+AbstractRundownWidget* RundownDeckLinkInputWidget::clone()
 {
     RundownDeckLinkInputWidget* widget = new RundownDeckLinkInputWidget(this->model, this->parentWidget(), this->color,
                                                                         this->active, this->loaded, this->inGroup,
@@ -145,7 +145,7 @@ bool RundownDeckLinkInputWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownDeckLinkInputWidget::getCommand()
+AbstractCommand* RundownDeckLinkInputWidget::getCommand()
 {
     return &this->command;
 }

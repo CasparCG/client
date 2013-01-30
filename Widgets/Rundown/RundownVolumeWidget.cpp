@@ -88,7 +88,7 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownVolumeWidget::clone()
+AbstractRundownWidget* RundownVolumeWidget::clone()
 {
     RundownVolumeWidget* widget = new RundownVolumeWidget(this->model, this->parentWidget(), this->color, this->active,
                                                           this->inGroup, this->disconnected, this->compactView);
@@ -139,7 +139,7 @@ bool RundownVolumeWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownVolumeWidget::getCommand()
+AbstractCommand* RundownVolumeWidget::getCommand()
 {
     return &this->command;
 }

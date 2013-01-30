@@ -88,7 +88,7 @@ bool RundownOpacityWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownOpacityWidget::clone()
+AbstractRundownWidget* RundownOpacityWidget::clone()
 {
     RundownOpacityWidget* widget = new RundownOpacityWidget(this->model, this->parentWidget(), this->color,
                                                             this->active, this->inGroup, this->disconnected, this->compactView);
@@ -139,7 +139,7 @@ bool RundownOpacityWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownOpacityWidget::getCommand()
+AbstractCommand* RundownOpacityWidget::getCommand()
 {
     return &this->command;
 }

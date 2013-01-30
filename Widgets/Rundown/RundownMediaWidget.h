@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../Shared.h"
-#include "IPlayoutCommand.h"
-#include "IRundownWidget.h"
+#include "AbstractRundownWidget.h"
 #include "ui_RundownMediaWidget.h"
 #include "GpiDevice.h"
 
@@ -10,7 +9,8 @@
 
 #include "CasparDevice.h"
 
-#include "Commands/ICommand.h"
+#include "Commands/AbstractCommand.h"
+#include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/MediaCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -18,7 +18,7 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget, public IRundownWidget, public IPlayoutCommand
+class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
@@ -28,11 +28,11 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
                                     bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
                                     bool disconnected = false, bool compactView = false);
 
-        virtual IRundownWidget* clone();
+        virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
 
-        virtual ICommand* getCommand();
+        virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();
 
         virtual void setActive(bool active);

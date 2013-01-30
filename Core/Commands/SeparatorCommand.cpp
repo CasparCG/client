@@ -3,6 +3,6 @@
 #include "Global.h"
 
 SeparatorCommand::SeparatorCommand(QObject* parent)
-    : QObject(parent)
+    : AbstractCommand(parent)
 {
 }

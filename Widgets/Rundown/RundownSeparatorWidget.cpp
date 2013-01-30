@@ -45,7 +45,7 @@ bool RundownSeparatorWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownSeparatorWidget::clone()
+AbstractRundownWidget* RundownSeparatorWidget::clone()
 {
     RundownSeparatorWidget* widget = new RundownSeparatorWidget(this->model, this->parentWidget(), this->color,
                                                                 this->active, this->inGroup, this->compactView);
@@ -78,7 +78,7 @@ bool RundownSeparatorWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownSeparatorWidget::getCommand()
+AbstractCommand* RundownSeparatorWidget::getCommand()
 {
     return &this->command;
 }

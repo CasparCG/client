@@ -5,7 +5,7 @@
 
 #include "CasparDevice.h"
 
-#include "Commands/ICommand.h"
+#include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>

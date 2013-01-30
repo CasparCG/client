@@ -94,7 +94,7 @@ bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownMediaWidget::clone()
+AbstractRundownWidget* RundownMediaWidget::clone()
 {
     RundownMediaWidget* widget = new RundownMediaWidget(this->model, this->parentWidget(), this->color, this->active,
                                                         this->loaded, this->paused, this->playing, this->inGroup,
@@ -153,7 +153,7 @@ bool RundownMediaWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownMediaWidget::getCommand()
+AbstractCommand* RundownMediaWidget::getCommand()
 {
     return &this->command;
 }

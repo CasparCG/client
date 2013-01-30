@@ -88,7 +88,7 @@ bool RundownContrastWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownContrastWidget::clone()
+AbstractRundownWidget* RundownContrastWidget::clone()
 {
     RundownContrastWidget* widget = new RundownContrastWidget(this->model, this->parentWidget(), this->color,
                                                               this->active, this->inGroup, this->disconnected, this->compactView);
@@ -139,7 +139,7 @@ bool RundownContrastWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownContrastWidget::getCommand()
+AbstractCommand* RundownContrastWidget::getCommand()
 {
     return &this->command;
 }

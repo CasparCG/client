@@ -3,7 +3,7 @@
 #include "Global.h"
 
 LevelsCommand::LevelsCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), minIn(Mixer::DEFAULT_LEVELS_MIN_IN), maxIn(Mixer::DEFAULT_LEVELS_MAX_IN),
       minOut(Mixer::DEFAULT_LEVELS_MIN_OUT), maxOut(Mixer::DEFAULT_LEVELS_MAX_OUT), gamma(Mixer::DEFAULT_LEVELS_GAMMA),

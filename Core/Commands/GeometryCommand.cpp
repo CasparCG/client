@@ -3,7 +3,7 @@
 #include "Global.h"
 
 GeometryCommand::GeometryCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS),
       scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE), scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION),

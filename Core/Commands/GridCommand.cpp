@@ -3,7 +3,7 @@
 #include "Global.h"
 
 GridCommand::GridCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), grid(Mixer::DEFAULT_GRID), duration(Mixer::DEFAULT_DURATION),
       tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)

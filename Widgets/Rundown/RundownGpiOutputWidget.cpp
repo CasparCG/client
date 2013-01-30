@@ -67,7 +67,7 @@ bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownGpiOutputWidget::clone()
+AbstractRundownWidget* RundownGpiOutputWidget::clone()
 {
     RundownGpiOutputWidget* widget = new RundownGpiOutputWidget(this->model, this->parentWidget(), this->color,
                                                                 this->active, this->inGroup, this->compactView);
@@ -113,7 +113,7 @@ bool RundownGpiOutputWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownGpiOutputWidget::getCommand()
+AbstractCommand* RundownGpiOutputWidget::getCommand()
 {
     return &this->command;
 }

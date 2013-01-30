@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shared.h"
-#include "ICommand.h"
+#include "AbstractCommand.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -12,7 +12,7 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT GpiOutputCommand : public QObject, public ICommand
+class CORE_EXPORT GpiOutputCommand : public AbstractCommand
 {
     Q_OBJECT
 

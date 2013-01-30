@@ -94,7 +94,7 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownImageScrollerWidget::clone()
+AbstractRundownWidget* RundownImageScrollerWidget::clone()
 {
     RundownImageScrollerWidget* widget = new RundownImageScrollerWidget(this->model, this->parentWidget(), this->color,
                                                                         this->active, this->loaded, this->inGroup,
@@ -147,7 +147,7 @@ bool RundownImageScrollerWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownImageScrollerWidget::getCommand()
+AbstractCommand* RundownImageScrollerWidget::getCommand()
 {
     return &this->command;
 }

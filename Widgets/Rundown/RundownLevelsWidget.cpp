@@ -88,7 +88,7 @@ bool RundownLevelsWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownLevelsWidget::clone()
+AbstractRundownWidget* RundownLevelsWidget::clone()
 {
     RundownLevelsWidget* widget = new RundownLevelsWidget(this->model, this->parentWidget(), this->color, this->active,
                                                           this->inGroup, this->disconnected, this->compactView);
@@ -143,7 +143,7 @@ bool RundownLevelsWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownLevelsWidget::getCommand()
+AbstractCommand* RundownLevelsWidget::getCommand()
 {
     return &this->command;
 }

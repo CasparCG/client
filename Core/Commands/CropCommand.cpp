@@ -3,7 +3,7 @@
 #include "Global.h"
 
 CropCommand::CropCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI), cropLeft(Mixer::DEFAULT_CROP_LEFT), cropRight(Mixer::DEFAULT_CROP_RIGHT),
       cropTop(Mixer::DEFAULT_CROP_TOP), cropBottom(Mixer::DEFAULT_CROP_BOTTOM), duration(Mixer::DEFAULT_DURATION),

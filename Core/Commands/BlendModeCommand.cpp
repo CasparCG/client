@@ -2,7 +2,8 @@
 
 #include "Global.h"
 
-BlendModeCommand::BlendModeCommand(QObject* parent) : QObject(parent),
+BlendModeCommand::BlendModeCommand(QObject* parent)
+    : AbstractCommand(parent),
     channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
     allowGpi(Output::DEFAULT_ALLOW_GPI), blendMode(Mixer::DEFAULT_BLENDMODE)
 {

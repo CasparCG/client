@@ -21,7 +21,7 @@
 
 #include "Global.h"
 
-#include "Commands/ICommand.h"
+#include "Commands/AbstractCommand.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"

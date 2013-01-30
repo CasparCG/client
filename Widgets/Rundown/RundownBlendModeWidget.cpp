@@ -88,7 +88,7 @@ bool RundownBlendModeWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownBlendModeWidget::clone()
+AbstractRundownWidget* RundownBlendModeWidget::clone()
 {
     RundownBlendModeWidget* widget = new RundownBlendModeWidget(this->model, this->parentWidget(), this->color, this->active,
                                                                 this->inGroup, this->disconnected, this->compactView);
@@ -136,7 +136,7 @@ bool RundownBlendModeWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownBlendModeWidget::getCommand()
+AbstractCommand* RundownBlendModeWidget::getCommand()
 {
     return &this->command;
 }

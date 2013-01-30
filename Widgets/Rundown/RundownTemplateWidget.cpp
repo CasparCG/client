@@ -85,7 +85,7 @@ bool RundownTemplateWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownTemplateWidget::clone()
+AbstractRundownWidget* RundownTemplateWidget::clone()
 {
     RundownTemplateWidget* widget = new RundownTemplateWidget(this->model, this->parentWidget(), this->color,
                                                               this->active, this->loaded, this->inGroup,
@@ -138,7 +138,7 @@ bool RundownTemplateWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownTemplateWidget::getCommand()
+AbstractCommand* RundownTemplateWidget::getCommand()
 {
     return &this->command;
 }

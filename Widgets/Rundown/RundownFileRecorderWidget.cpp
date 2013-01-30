@@ -91,7 +91,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownFileRecorderWidget::clone()
+AbstractRundownWidget* RundownFileRecorderWidget::clone()
 {
     RundownFileRecorderWidget* widget = new RundownFileRecorderWidget(this->model, this->parentWidget(), this->color,
                                                                       this->active, this->inGroup, this->disconnected, this->compactView);
@@ -143,7 +143,7 @@ bool RundownFileRecorderWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownFileRecorderWidget::getCommand()
+AbstractCommand* RundownFileRecorderWidget::getCommand()
 {
     return &this->command;
 }

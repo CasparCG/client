@@ -3,7 +3,7 @@
 #include "Global.h"
 
 CommitCommand::CommitCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI)
 {
 }

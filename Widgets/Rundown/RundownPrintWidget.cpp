@@ -86,7 +86,7 @@ bool RundownPrintWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownPrintWidget::clone()
+AbstractRundownWidget* RundownPrintWidget::clone()
 {
     RundownPrintWidget* widget = new RundownPrintWidget(this->model, this->parentWidget(), this->color, this->active,
                                                         this->inGroup, this->disconnected, this->compactView);
@@ -133,7 +133,7 @@ bool RundownPrintWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownPrintWidget::getCommand()
+AbstractCommand* RundownPrintWidget::getCommand()
 {
     return &this->command;
 }

@@ -3,7 +3,7 @@
 #include "Global.h"
 
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
-    : QObject(parent),
+    : AbstractCommand(parent),
       channel(Output::DEFAULT_CHANNEL), delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI),
       output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET),
       tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)

@@ -8,10 +8,10 @@
 
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT IProperties
+class CORE_EXPORT AbstractProperties
 {
     public:
-        virtual ~IProperties() {}
+        virtual ~AbstractProperties() {}
 
         virtual void readProperties(boost::property_tree::wptree& pt) = 0;
         virtual void writeProperties(QXmlStreamWriter* writer) = 0;

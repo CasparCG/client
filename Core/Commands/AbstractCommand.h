@@ -1,18 +1,16 @@
 #pragma once
 
 #include "../Shared.h"
-#include "IProperties.h"
+#include "AbstractProperties.h"
 
-#include <boost/foreach.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+#include <QtCore/QObject>
 
-#include <QtCore/QXmlStreamWriter>
-
-class CORE_EXPORT ICommand : public IProperties
+class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
 {
+    Q_OBJECT
+
     public:
-        virtual ~ICommand() {}
+        virtual ~AbstractCommand();
 
         virtual int getDelay() const = 0;
         virtual int getChannel() const = 0;
@@ -23,4 +21,7 @@ class CORE_EXPORT ICommand : public IProperties
         virtual void setChannel(int channel) = 0;
         virtual void setVideolayer(int videoLayer) = 0;
         virtual void setAllowGpi(bool allowGpi) = 0;
+
+    protected:
+        explicit AbstractCommand(QObject* parent = 0);
 };

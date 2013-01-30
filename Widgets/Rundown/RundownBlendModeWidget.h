@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../Shared.h"
-#include "IPlayoutCommand.h"
-#include "IRundownWidget.h"
+#include "AbstractRundownWidget.h"
 #include "ui_RundownBlendModeWidget.h"
 #include "GpiDevice.h"
 
 #include "Global.h"
 
-#include "Commands/ICommand.h"
+#include "Commands/AbstractCommand.h"
+#include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/BlendModeCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -21,7 +21,7 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendModeWidget, public IRundownWidget, public IPlayoutCommand
+class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendModeWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
@@ -30,11 +30,11 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
                                         const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                         bool inGroup = false, bool disconnected = false, bool compactView = false);
 
-        virtual IRundownWidget* clone();
+        virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
 
-        virtual ICommand* getCommand();
+        virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();
 
         virtual void setActive(bool active);

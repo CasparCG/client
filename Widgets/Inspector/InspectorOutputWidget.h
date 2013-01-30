@@ -3,7 +3,7 @@
 #include "../Shared.h"
 #include "ui_InspectorOutputWidget.h"
 
-#include "Commands/ICommand.h"
+#include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -24,7 +24,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
 
     private:
         bool preview;
-        ICommand* command;
+        AbstractCommand* command;
         LibraryModel* model;
 
         Q_SLOT void allowGpiChanged(int);

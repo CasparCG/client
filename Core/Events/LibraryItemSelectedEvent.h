@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Shared.h"
-#include "../Commands/ICommand.h"
+#include "../Commands/AbstractCommand.h"
 #include "../Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -10,12 +10,12 @@
 class CORE_EXPORT LibraryItemSelectedEvent : public QEvent
 {
     public:
-        explicit LibraryItemSelectedEvent(ICommand* command, LibraryModel* model);
+        explicit LibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
 
-        ICommand* getCommand() const;
+        AbstractCommand* getCommand() const;
         LibraryModel* getLibraryModel() const;
 
     private:
-        ICommand* command;
+        AbstractCommand* command;
         LibraryModel* model;
 };

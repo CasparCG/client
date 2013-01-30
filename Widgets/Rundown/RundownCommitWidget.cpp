@@ -86,7 +86,7 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownCommitWidget::clone()
+AbstractRundownWidget* RundownCommitWidget::clone()
 {
     RundownCommitWidget* widget = new RundownCommitWidget(this->model, this->parentWidget(), this->color, this->active,
                                                           this->inGroup, this->disconnected, this->compactView);
@@ -132,7 +132,7 @@ bool RundownCommitWidget::isGroup() const
     return false;
 }
 
-ICommand* RundownCommitWidget::getCommand()
+AbstractCommand* RundownCommitWidget::getCommand()
 {
     return &this->command;
 }

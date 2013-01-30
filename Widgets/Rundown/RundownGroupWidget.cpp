@@ -50,7 +50,7 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-IRundownWidget* RundownGroupWidget::clone()
+AbstractRundownWidget* RundownGroupWidget::clone()
 {
     RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color, this->active,
                                                         this->compactView);
@@ -97,7 +97,7 @@ bool RundownGroupWidget::isGroup() const
     return true;
 }
 
-ICommand* RundownGroupWidget::getCommand()
+AbstractCommand* RundownGroupWidget::getCommand()
 {
     return &this->command;
 }

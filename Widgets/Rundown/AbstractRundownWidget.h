@@ -4,22 +4,22 @@
 
 #include "Global.h"
 
-#include "Commands/ICommand.h"
-#include "Commands/IProperties.h"
+#include "Commands/AbstractCommand.h"
+#include "Commands/AbstractProperties.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
 
-class WIDGETS_EXPORT IRundownWidget : public IProperties
+class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
 {
     public:
-        virtual ~IRundownWidget() {}
+        virtual ~AbstractRundownWidget() {}
 
-        virtual IRundownWidget* clone() = 0;
+        virtual AbstractRundownWidget* clone() = 0;
 
         virtual bool isGroup() const = 0;
 
-        virtual ICommand* getCommand() = 0;
+        virtual AbstractCommand* getCommand() = 0;
         virtual LibraryModel* getLibraryModel() = 0;
 
         virtual void setActive(bool active) = 0;
