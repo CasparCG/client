@@ -190,3 +190,8 @@ namespace Library
     static const int MOVIE_PAGE_INDEX = 3;
     static const int DATA_PAGE_INDEX = 4;
 }
+
+namespace Print
+{
+    static const QString DEFAULT_OUTPUT = "Output.png";
+}

@@ -202,7 +202,7 @@ void RundownPrintWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->print(this->command.getChannel());
+        device->print(this->command.getChannel(), this->command.getOutput());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -211,7 +211,7 @@ void RundownPrintWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->print(this->command.getChannel());
+            deviceShadow->print(this->command.getChannel(), this->command.getOutput());
     }
 }
 

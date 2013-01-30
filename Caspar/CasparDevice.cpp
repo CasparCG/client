@@ -194,9 +194,9 @@ void CasparDevice::stopRecording(int channel)
     AMCPDevice::writeMessage(QString("REMOVE %1 FILE").arg(channel));
 }
 
-void CasparDevice::print(int channel)
+void CasparDevice::print(int channel, const QString& output)
 {
-    AMCPDevice::writeMessage(QString("PRINT %1").arg(channel));
+    AMCPDevice::writeMessage(QString("ADD %1 IMAGE \"%2\"").arg(channel).arg(output));
 }
 
 void CasparDevice::playDeviceInput(int channel, int videolayer)

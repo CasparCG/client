@@ -65,7 +65,8 @@ HEADERS += \
     Rundown/RundownSeparatorWidget.h \
     Rundown/RundownPrintWidget.h \
     Inspector/InspectorKeyerWidget.h \
-    Inspector/InspectorColorWidget.h
+    Inspector/InspectorColorWidget.h \
+    Inspector/InspectorPrintWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -119,7 +120,8 @@ SOURCES += \
     Rundown/RundownSeparatorWidget.cpp \
     Rundown/RundownPrintWidget.cpp \
     Inspector/InspectorKeyerWidget.cpp \
-    Inspector/InspectorColorWidget.cpp
+    Inspector/InspectorColorWidget.cpp \
+    Inspector/InspectorPrintWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -173,7 +175,8 @@ FORMS += \
     Rundown/RundownSeparatorWidget.ui \
     Rundown/RundownPrintWidget.ui \
     Inspector/InspectorKeyerWidget.ui \
-    Inspector/InspectorColorWidget.ui
+    Inspector/InspectorColorWidget.ui \
+    Inspector/InspectorPrintWidget.ui
 
 RESOURCES += \
     Resource.qrc

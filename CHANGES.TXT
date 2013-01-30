@@ -11,6 +11,7 @@ CasparCG Client 2.0 RC 1
 - NEW: Added a separator item.
 - NEW: Added support for colorize groups.
 - NEW: Show active rundown in titlebar.
+- NEW: Added support for naming output using PRINT command. CasparCG 2.0.4 feature.
 - UPDATE: UI modifications.
 - UPDATE: The client will execute the mixer command when UPDATE is issued.
 

@@ -29,8 +29,8 @@ class CORE_EXPORT PrintCommand : public AbstractCommand
         virtual void setDelay(int delay);
         virtual void setAllowGpi(bool allowGpi);
 
-        bool getDefer() const;
-        void setDefer(bool defer);
+        const QString& getOutput() const;
+        void setOutput(const QString& output);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
@@ -39,10 +39,10 @@ class CORE_EXPORT PrintCommand : public AbstractCommand
         int channel;
         int delay;
         bool allowGpi;
-        bool defer;
+        QString output;
 
         Q_SIGNAL void channelChanged(int);
         Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void allowGpiChanged(bool);
-        Q_SIGNAL void deferChanged(bool);
+        Q_SIGNAL void outputChanged(const QString&);
 };

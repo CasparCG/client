@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorPrintWidget</class>
+ <widget class="QWidget" name="InspectorPrintWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>226</width>
+    <height>56</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutOutput">
+     <item>
+      <spacer name="horizontalSpacerOutput">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>24</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelOutput">
+       <property name="text">
+        <string>&lt;a href=&quot;Output&quot; style=&quot;color: #BEBEBE;&quot;&gt;Output&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditOutput"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerFileRecorder">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelOutput</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorPrintWidget</receiver>
+   <slot>resetOutput(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditOutput</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorPrintWidget</receiver>
+   <slot>outputChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>containerChanged(QString)</slot>
+  <slot>resetContainer(QString)</slot>
+  <slot>resetCodec(QString)</slot>
+  <slot>codecChanged(QString)</slot>
+  <slot>resetPreset(QString)</slot>
+  <slot>presetChanged(QString)</slot>
+  <slot>resetTune(QString)</slot>
+  <slot>tuneChanged(QString)</slot>
+  <slot>resetOutput(QString)</slot>
+  <slot>outputChanged(QString)</slot>
+  <slot>resetWithAlpha(QString)</slot>
+  <slot>withAlphaChanged(int)</slot>
+ </slots>
+</ui>
