@@ -65,7 +65,7 @@ void AddDeviceDialog::lookupAddress()
     this->device = new CasparDevice(this);
 
     QObject::connect(this->device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-    QObject::connect(this->device, SIGNAL(versionChanged(const CasparServerVersion&, CasparDevice&)), this, SLOT(deviceVersionChanged(const CasparServerVersion&, CasparDevice&)));
+    QObject::connect(this->device, SIGNAL(versionChanged(const CasparVersion&, CasparDevice&)), this, SLOT(deviceVersionChanged(const CasparVersion&, CasparDevice&)));
 
     if (this->lineEditPort->text().isEmpty())
         this->device->connect(this->lineEditAddress->text());
@@ -125,7 +125,7 @@ void AddDeviceDialog::deviceConnectionStateChanged(CasparDevice& device)
         this->device->refreshServerVersion();
 }
 
-void AddDeviceDialog::deviceVersionChanged(const CasparServerVersion& version, CasparDevice& device)
+void AddDeviceDialog::deviceVersionChanged(const CasparVersion& version, CasparDevice& device)
 {
     this->pushButtonOK->setEnabled(true);
     this->lineEditVersion->setText(version.getVersion());

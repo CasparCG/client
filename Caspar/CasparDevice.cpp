@@ -488,13 +488,9 @@ void CasparDevice::sendNotification()
             emit dataChanged(items, *this);
         }
         break;
-        case AMCPDevice::VERSIONFLASH:
-            break;
-        case AMCPDevice::VERSIONSERVER:
+        case AMCPDevice::VERSION:
             AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
-            emit versionChanged(CasparServerVersion(AMCPDevice::response.at(0)), *this);
-            break;
-        case AMCPDevice::VERSIONTEMPLATEHOST:
+            emit versionChanged(CasparVersion(AMCPDevice::response.at(0)), *this);
             break;
         case AMCPDevice::CONNECTIONSTATE:
             emit connectionStateChanged(*this);

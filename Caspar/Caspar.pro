@@ -19,7 +19,7 @@ HEADERS += \
     CasparMedia.h \
     CasparData.h \
     Shared.h \
-    CasparServerVersion.h
+    CasparVersion.h
 	
 SOURCES += \
     CasparDevice.cpp \
@@ -27,4 +27,4 @@ SOURCES += \
     CasparTemplate.cpp \
     CasparMedia.cpp \
     CasparData.cpp \
-    CasparServerVersion.cpp
+    CasparVersion.cpp

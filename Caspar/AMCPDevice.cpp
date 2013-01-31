@@ -110,10 +110,7 @@ AMCPDevice::AMCPCommand AMCPDevice::translateCommand(const QString& command)
     else if (command == "CG") return AMCPDevice::CG;
     else if (command == "CLS") return AMCPDevice::CLS;
     else if (command == "CINF") return AMCPDevice::CINF;
-    else if (command == "VERSION") return AMCPDevice::VERSIONSERVER; // TODO: Temporary fix!
-    else if (command == "VERSION FLASH") return AMCPDevice::VERSIONFLASH;
-    else if (command == "VERSION SERVER") return AMCPDevice::VERSIONSERVER;
-    else if (command == "VERSION TEMPLATEHOST") return AMCPDevice::VERSIONTEMPLATEHOST;
+    else if (command == "VERSION") return AMCPDevice::VERSION;
     else if (command == "TLS") return AMCPDevice::TLS;
     else if (command == "INFO") return AMCPDevice::INFO;
     else if (command == "INFO SYSTEM") return AMCPDevice::INFOSYSTEM;

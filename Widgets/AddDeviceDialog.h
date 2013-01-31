@@ -4,7 +4,7 @@
 #include "ui_AddDeviceDialog.h"
 
 #include "CasparDevice.h"
-#include "CasparServerVersion.h"
+#include "CasparVersion.h"
 
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
@@ -35,5 +35,5 @@ class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
         Q_SLOT void lookupName();
         Q_SLOT void lookupAddress();
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceVersionChanged(const CasparServerVersion&, CasparDevice&);
+        Q_SLOT void deviceVersionChanged(const CasparVersion&, CasparDevice&);
 };
