@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -57,11 +58,12 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
         LibraryModel model;
         BrightnessCommand command;
 
+        QTimer executeTimer;
+
         void loadEasing();
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
-        Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);

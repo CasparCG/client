@@ -52,6 +52,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
 
+        this->lineEditLabel->clear();
         this->lineEditType->setText(this->model->getType());
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
         this->lineEditName->setText(this->model->getName());

@@ -118,7 +118,7 @@ namespace Color
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
-    static const QString DEFAULT_SEPARATOR_COLOR = "Goldenrod";
+    static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
     static const QString DEFAULT_TRANSPARENT_COLOR = "Transparent";
     static const QString SIENNA_RGBA_COLOR = "136, 45, 23, 128";
     static const QString OLIVEDRAB_RGBA_COLOR = "107, 142, 35, 128";
@@ -126,7 +126,8 @@ namespace Color
     static const QString CHOCOLATE_RGBA_COLOR = "123, 63, 0, 128";
     static const QString DARKSLATEGRAY_RGBA_COLOR = "47, 79, 79, 128";
     static const QString STEELBLUE_RGBA_COLOR = "70, 130, 179, 128";
-    static const QString MAROON_RGBA_COLOR = "128, 0, 0, 64";
+    static const QString MAROON_RGBA_COLOR = "128, 0, 0, 255";
+    static const QString MAROONLIGHT_RGBA_COLOR = "128, 0, 0, 64";
     static const QString DARKKHAKI_RGBA_COLOR = "189, 183, 107, 64";
     static const QString ROYALBLUE_RGBA_COLOR = "65, 105, 225, 64";
 }
@@ -193,5 +194,5 @@ namespace Library
 
 namespace Print
 {
-    static const QString DEFAULT_OUTPUT = "Output.png";
+    static const QString DEFAULT_OUTPUT = "Snapshot.png";
 }

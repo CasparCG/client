@@ -15,16 +15,16 @@ DEFINES += CASPAR_LIBRARY
 HEADERS += \
     CasparDevice.h \
     AMCPDevice.h \
-    CasparVersion.h \
     CasparTemplate.h \
     CasparMedia.h \
     CasparData.h \
-    Shared.h
+    Shared.h \
+    CasparServerVersion.h
 	
 SOURCES += \
     CasparDevice.cpp \
     AMCPDevice.cpp \
-    CasparVersion.cpp \
     CasparTemplate.cpp \
     CasparMedia.cpp \
-    CasparData.cpp
+    CasparData.cpp \
+    CasparServerVersion.cpp

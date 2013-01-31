@@ -35,4 +35,5 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         Q_SLOT void customContextMenuRequested(const QPoint& point);
         Q_SLOT void customContextMenuImageRequested(const QPoint& point);
         Q_SLOT void currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
+        Q_SLOT void itemClicked(QTreeWidgetItem*, int);
 };

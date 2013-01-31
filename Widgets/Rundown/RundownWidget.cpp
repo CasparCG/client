@@ -105,16 +105,17 @@ void RundownWidget::setupUiMenu()
 
     this->colorMenu = new QMenu(this);
     this->colorMenu->setTitle("Colorize");
-    //this->colorMenu->setIcon(QIcon(":/Graphics/Images/Color.png"));
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
+    //this->colorMenu->setIcon(QIcon(":/Graphics/Images/Color.png"));  
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "MaroonLight");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
+    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
     this->colorMenu->addSeparator();
     this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
 
@@ -627,6 +628,8 @@ void RundownWidget::colorMenuTriggered(QAction* action)
         colorizeItems(Color::STEELBLUE_RGBA_COLOR);
     else if (action->text() == "Maroon")
         colorizeItems(Color::MAROON_RGBA_COLOR);
+    else if (action->text() == "MaroonLight")
+        colorizeItems(Color::MAROONLIGHT_RGBA_COLOR);
     else if (action->text() == "DarkKhaki")
         colorizeItems(Color::DARKKHAKI_RGBA_COLOR);
     else if (action->text() == "RoyalBlue")
@@ -643,6 +646,25 @@ void RundownWidget::contextMenuTriggered(QAction* action)
         ungroupItems();
 }
 
+void RundownWidget::itemClicked(QTreeWidgetItem* current, int i)
+{
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
+    QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+    QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+    if (currentItem != NULL && currentItemWidget != NULL)
+    {
+        AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
+        LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
+
+        // Use synchronous event through sendEvent(). The inspector will update the selected
+        // rundown item. We want to be absolutely sure that we update the right item, which
+        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        qApp->sendEvent(qApp, new RundownItemSelectedEvent(command, model));
+    }
+}
+
 void RundownWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
     QWidget* currentWidget = this->treeWidgetRundown->itemWidget(current, 0);
@@ -655,7 +677,7 @@ void RundownWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
         dynamic_cast<AbstractRundownWidget*>(currentWidget)->setActive(true);
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-    QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
+    QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
     if (currentItem != NULL && currentItemWidget != NULL)
     {
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();

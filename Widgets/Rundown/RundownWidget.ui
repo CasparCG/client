@@ -95,6 +95,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidgetRundown</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>RundownWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>315</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>657</x>
+     <y>322</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addItem()</slot>
@@ -103,5 +119,7 @@
   <slot>filterRundown()</slot>
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+  <slot>itemActivated(QTreeWidgetItem*,int)</slot>
+  <slot>slot1()</slot>
  </slots>
 </ui>

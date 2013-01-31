@@ -4,10 +4,10 @@
 
 #include <QtCore/QString>
 
-class CASPAR_EXPORT CasparVersion
+class CASPAR_EXPORT CasparServerVersion
 {
     public:
-        explicit CasparVersion(const QString& version);
+        explicit CasparServerVersion(const QString& version);
 
         const QString& getVersion() const;
 

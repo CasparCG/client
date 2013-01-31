@@ -32,6 +32,9 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -210,11 +213,14 @@ bool RundownDeckLinkInputWidget::executeCommand(enum Playout::PlayoutType::Type 
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
@@ -225,6 +231,8 @@ bool RundownDeckLinkInputWidget::executeCommand(enum Playout::PlayoutType::Type 
 
 void RundownDeckLinkInputWidget::executeStop()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopDeviceInput(this->command.getChannel(), this->command.getVideolayer());
@@ -292,25 +300,6 @@ void RundownDeckLinkInputWidget::executeLoad()
     }
 
     this->loaded = true;
-}
-
-void RundownDeckLinkInputWidget::executeClear()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->stopDeviceInput(this->command.getChannel(), this->command.getVideolayer());
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopDeviceInput(this->command.getChannel(), this->command.getVideolayer());
-    }
-
-    this->loaded = false;
 }
 
 void RundownDeckLinkInputWidget::executeClearVideolayer()

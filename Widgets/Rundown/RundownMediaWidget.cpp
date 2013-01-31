@@ -9,7 +9,6 @@
 #include "Events/RundownItemChangedEvent.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtGui/QPixmap>
 
@@ -44,6 +43,9 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
         this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Still.png"));
     else if (this->model.getType() == "MOVIE")
         this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Movie.png"));
+
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -218,7 +220,10 @@ bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || (type == Playout::PlayoutType::Update && this->model.getType() == "AUDIO"))
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Pause)
@@ -226,7 +231,7 @@ bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
@@ -237,6 +242,8 @@ bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
 
 void RundownMediaWidget::executeStop()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopMedia(this->command.getChannel(), this->command.getVideolayer());
@@ -364,29 +371,10 @@ void RundownMediaWidget::executeLoad()
     this->playing = false;
 }
 
-void RundownMediaWidget::executeClear()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->stopMedia(this->command.getChannel(), this->command.getVideolayer());
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopMedia(this->command.getChannel(), this->command.getVideolayer());
-    }
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
-}
-
 void RundownMediaWidget::executeClearVideolayer()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
@@ -408,6 +396,8 @@ void RundownMediaWidget::executeClearVideolayer()
 
 void RundownMediaWidget::executeClearChannel()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {

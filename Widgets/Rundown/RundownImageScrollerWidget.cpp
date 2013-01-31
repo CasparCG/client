@@ -34,6 +34,9 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -212,11 +215,14 @@ bool RundownImageScrollerWidget::executeCommand(enum Playout::PlayoutType::Type 
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
@@ -227,6 +233,8 @@ bool RundownImageScrollerWidget::executeCommand(enum Playout::PlayoutType::Type 
 
 void RundownImageScrollerWidget::executeStop()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
@@ -300,27 +308,10 @@ void RundownImageScrollerWidget::executeLoad()
     this->loaded = true;
 }
 
-void RundownImageScrollerWidget::executeClear()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-        device->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
-    }
-
-    this->loaded = false;
-}
-
 void RundownImageScrollerWidget::executeClearVideolayer()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
@@ -340,6 +331,8 @@ void RundownImageScrollerWidget::executeClearVideolayer()
 
 void RundownImageScrollerWidget::executeClearChannel()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {

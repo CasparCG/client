@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -56,9 +57,12 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         LibraryModel model;
         GpiOutputCommand command;
 
+        QTimer executeTimer;
+
         void checkGpiTriggerable();
 
         Q_SLOT void executePlay();
+        Q_SLOT void executeStop();
         Q_SLOT void delayChanged(int);
         Q_SLOT void gpiOutputPortChanged(int);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);

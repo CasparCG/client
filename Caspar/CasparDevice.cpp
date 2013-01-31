@@ -33,9 +33,19 @@ void CasparDevice::refreshData()
     AMCPDevice::writeMessage("DATA LIST");
 }
 
-void CasparDevice::refreshVersion()
+void CasparDevice::refreshFlashVersion()
 {
-    AMCPDevice::writeMessage("VERSION");
+    AMCPDevice::writeMessage("VERSION FLASH");
+}
+
+void CasparDevice::refreshServerVersion()
+{
+    AMCPDevice::writeMessage("VERSION SERVER");
+}
+
+void CasparDevice::refreshTemplateHostVersion()
+{
+    AMCPDevice::writeMessage("VERSION TEMPLATEHOST");
 }
 
 void CasparDevice::refreshMedia()
@@ -478,9 +488,13 @@ void CasparDevice::sendNotification()
             emit dataChanged(items, *this);
         }
         break;
-        case AMCPDevice::VERSION:
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.          
-            emit versionChanged(CasparVersion(AMCPDevice::response.at(0)), *this);      
+        case AMCPDevice::VERSIONFLASH:
+            break;
+        case AMCPDevice::VERSIONSERVER:
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
+            emit versionChanged(CasparServerVersion(AMCPDevice::response.at(0)), *this);
+            break;
+        case AMCPDevice::VERSIONTEMPLATEHOST:
             break;
         case AMCPDevice::CONNECTIONSTATE:
             emit connectionStateChanged(*this);

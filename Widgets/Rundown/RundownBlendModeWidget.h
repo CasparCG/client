@@ -17,6 +17,7 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 #include <QtCore/QXmlStreamWriter>
 
 #include <QtGui/QWidget>
@@ -62,10 +63,11 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         LibraryModel model;
         BlendModeCommand command;
 
+        QTimer executeTimer;
+
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
-        Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);

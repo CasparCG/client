@@ -32,6 +32,9 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -202,41 +205,20 @@ void RundownGridWidget::checkEmptyDevice()
 bool RundownGridWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play ||
-             type == Playout::PlayoutType::Update)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
         QTimer::singleShot(0, this, SLOT(executeClearChannel()));
 
     return true;
-}
-
-void RundownGridWidget::executeStop()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-    {
-        for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-            device->clearMixerVideolayer(this->command.getChannel(), i);
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-                deviceShadow->clearMixerVideolayer(this->command.getChannel(), i);
-        }
-    }
 }
 
 void RundownGridWidget::executePlay()
@@ -258,31 +240,10 @@ void RundownGridWidget::executePlay()
     }
 }
 
-void RundownGridWidget::executeClear()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-    {
-        for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-            device->clearMixerVideolayer(this->command.getChannel(), i);
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-                deviceShadow->clearMixerVideolayer(this->command.getChannel(), i);
-        }
-    }
-}
-
 void RundownGridWidget::executeClearVideolayer()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
@@ -306,6 +267,8 @@ void RundownGridWidget::executeClearVideolayer()
 
 void RundownGridWidget::executeClearChannel()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {

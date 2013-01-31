@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -57,15 +58,15 @@ class WIDGETS_EXPORT RundownGridWidget : public QWidget, Ui::RundownGridWidget, 
         LibraryModel model;
         GridCommand command;
 
+        QTimer executeTimer;
+
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
-        Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);
         Q_SLOT void executePlay();
-        Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);

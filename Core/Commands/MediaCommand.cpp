@@ -192,6 +192,7 @@ void MediaCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"loop") > 0) setLoop(pt.get<bool>(L"loop"));
     if (pt.count(L"freezeonload") > 0) setFreezeOnLoad(pt.get<bool>(L"freezeonload"));
     if (pt.count(L"useauto") > 0) setUseAuto(pt.get<bool>(L"useauto"));
+    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
 }
 
 void MediaCommand::writeProperties(QXmlStreamWriter* writer)
@@ -209,4 +210,5 @@ void MediaCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
     writer->writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

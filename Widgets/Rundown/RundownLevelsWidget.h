@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -57,10 +58,11 @@ class WIDGETS_EXPORT RundownLevelsWidget : public QWidget, Ui::RundownLevelsWidg
         LibraryModel model;
         LevelsCommand command;
 
+        QTimer executeTimer;
+
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
-        Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);

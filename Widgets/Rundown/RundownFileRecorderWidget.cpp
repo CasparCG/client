@@ -32,6 +32,9 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -208,13 +211,24 @@ bool RundownFileRecorderWidget::executeCommand(enum Playout::PlayoutType::Type t
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
+    else if (type == Playout::PlayoutType::Clear)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
+    else if (type == Playout::PlayoutType::ClearVideolayer)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
+    else if (type == Playout::PlayoutType::ClearChannel)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
 
     return true;
 }
 
 void RundownFileRecorderWidget::executeStop()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopRecording(this->command.getChannel());

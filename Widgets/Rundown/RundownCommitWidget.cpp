@@ -31,6 +31,9 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -190,11 +193,26 @@ void RundownCommitWidget::checkEmptyDevice()
 
 bool RundownCommitWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    if (type == Playout::PlayoutType::Play ||
-        type == Playout::PlayoutType::Update)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    if (type == Playout::PlayoutType::Stop)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
+    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
+    else if (type == Playout::PlayoutType::Clear)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
+    else if (type == Playout::PlayoutType::ClearVideolayer)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
+    else if (type == Playout::PlayoutType::ClearChannel)
+        QTimer::singleShot(0, this, SLOT(executeStop()));
 
     return true;
+}
+
+void RundownCommitWidget::executeStop()
+{
+    this->executeTimer.stop();
 }
 
 void RundownCommitWidget::executePlay()

@@ -15,6 +15,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -63,10 +64,11 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         LibraryModel model;
         MediaCommand command;
 
+        QTimer executeTimer;
+
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
-        Q_SLOT void executeClear();
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();

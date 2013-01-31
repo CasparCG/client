@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -56,6 +57,8 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         QString color;
         LibraryModel model;
         FileRecorderCommand command;
+
+        QTimer executeTimer;
 
         void checkEmptyDevice();
         void checkGpiTriggerable();

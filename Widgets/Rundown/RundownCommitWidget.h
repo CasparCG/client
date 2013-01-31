@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -57,11 +58,14 @@ class WIDGETS_EXPORT RundownCommitWidget : public QWidget, Ui::RundownCommitWidg
         LibraryModel model;
         CommitCommand command;
 
+        QTimer executeTimer;
+
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executePlay();
+        Q_SLOT void executeStop();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);

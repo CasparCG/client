@@ -548,12 +548,92 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>482</y>
+     <x>164</x>
+     <y>447</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
      <y>481</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetTemplate</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetVideo</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetData</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetImage</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>204</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetAudio</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>197</y>
     </hint>
    </hints>
   </connection>
@@ -562,5 +642,6 @@
   <slot>filterLibrary()</slot>
   <slot>synchronizeLibrary()</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+  <slot>itemClicked(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

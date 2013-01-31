@@ -35,6 +35,9 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(this->command.getFlashlayer()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -207,7 +210,10 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
-        QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+    {
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Next)
@@ -228,6 +234,8 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
 
 void RundownTemplateWidget::executeStop()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopTemplate(this->command.getChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
@@ -392,6 +400,8 @@ void RundownTemplateWidget::executeInvoke()
 
 void RundownTemplateWidget::executeClear()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->removeTemplate(this->command.getChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
@@ -411,6 +421,8 @@ void RundownTemplateWidget::executeClear()
 
 void RundownTemplateWidget::executeClearVideolayer()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
@@ -430,6 +442,8 @@ void RundownTemplateWidget::executeClearVideolayer()
 
 void RundownTemplateWidget::executeClearChannel()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {

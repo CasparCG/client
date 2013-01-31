@@ -282,8 +282,21 @@ void LibraryWidget::synchronizeLibrary()
     qApp->postEvent(qApp, new RefreshLibraryEvent(0));
 }
 
-void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+void LibraryWidget::itemClicked(QTreeWidgetItem* current, int i)
 {
+    if (current == NULL)
+        return;
+
+    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0), current->text(3), current->text(4)));
+
+    // Use synchronous event through sendEvent(). The inspector will update the selected
+    // rundown item. We want to be absolutely sure that we update the right item, which
+    // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+    qApp->sendEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
+}
+
+void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+{ 
     if (current == NULL)
         return;
 

@@ -13,6 +13,7 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
 
@@ -57,6 +58,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         QString color;
         LibraryModel model;
         TemplateCommand command;
+
+        QTimer executeTimer;
 
         void checkEmptyDevice();
         void checkGpiTriggerable();
