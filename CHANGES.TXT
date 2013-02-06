@@ -1,13 +1,12 @@
 CasparCG Client 2.0 RC 1
 ========================
 
-- FIX: The image scroller does not support pause.
 - FIX: The name parameter in the image scroller is not set correctly when open a rundown.
 - FIX: Better support for spaces in filenames.
 - FIX: Freeze on load does not work as expected.
 - FIX: Defer on mixer keyer is missing.
 - FIX: The parameters SEEK and LENGTH is sent regardless of whether it is set or not.
-- NEW: Added support for pause/resume for image scroller and DeckLink input items.
+- NEW: Added support for pause/resume on image scroller and DeckLink input items.
 - NEW: Added trigger on next option for media items.
 - NEW: Added support for CasparCG PRINT command.
 - NEW: Added a separator item.
@@ -15,7 +14,7 @@ CasparCG Client 2.0 RC 1
 - NEW: Show active rundown in titlebar.
 - NEW: Added support for naming output using PRINT command. CasparCG 2.0.4 feature.
 - NEW: Support for cancel delayed commands.
-- NEW: Clear output item.
+- NEW: Added a clear output item.
 - UPDATE: UI modifications.
 - UPDATE: The client will execute the mixer command when UPDATE is issued.
 
