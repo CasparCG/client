@@ -20,6 +20,7 @@
 #include "RundownVolumeWidget.h"
 #include "RundownSeparatorWidget.h"
 #include "RundownPrintWidget.h"
+#include "RundownClearOutputWidget.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -99,6 +100,7 @@ void RundownWidget::setupUiMenu()
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Channel Snapshot", this, SLOT(addPrintCommand()));
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Clear Output", this, SLOT(addClearOutputCommand()));
     this->newMenu->addSeparator();
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Separator", this, SLOT(addSeparatorCommand()));
     this->newMenu->actions().at(3)->setEnabled(false);
@@ -355,6 +357,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownSeparatorWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "CHANNELSNAPSHOT")
             widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "CLEAROUTPUT")
+            widget = new RundownClearOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
 
@@ -500,6 +504,8 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownPrintWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "SEPARATOR")
         widget = new RundownSeparatorWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "CLEAROUTPUT")
+        widget = new RundownClearOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
 
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -1111,17 +1117,22 @@ void RundownWidget::addCropCommand()
 
 void RundownWidget::addImageScrollerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "ImageScroller", "", "", "IMAGESCROLLER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Image Scroller", "", "", "IMAGESCROLLER")));
 }
 
 void RundownWidget::addDeckLinkInputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLinkInput", "", "", "DECKLINKINPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLink Input", "", "", "DECKLINKINPUT")));
 }
 
 void RundownWidget::addPrintCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Channel Snapshot", "", "", "CHANNELSNAPSHOT")));
+}
+
+void RundownWidget::addClearOutputCommand()
+{
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Clear Output", "", "", "CLEAROUTPUT")));
 }
 
 void RundownWidget::addGeometryCommand()
@@ -1136,7 +1147,7 @@ void RundownWidget::addGpiOutputCommand()
 
 void RundownWidget::addFileRecorderCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "FileRecorder", "", "", "FILERECORDER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "File Recorder", "", "", "FILERECORDER")));
 }
 
 void RundownWidget::addSeparatorCommand()

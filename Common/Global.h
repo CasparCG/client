@@ -196,3 +196,8 @@ namespace Print
 {
     static const QString DEFAULT_OUTPUT = "Snapshot.png";
 }
+
+namespace ClearOutput
+{
+    static const bool DEFAULT_CLEAR_CHANNEL = true;
+}

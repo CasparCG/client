@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>245</width>
-    <height>365</height>
+    <height>382</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>245</width>
-        <height>344</height>
+        <height>361</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -73,7 +73,7 @@
             <x>0</x>
             <y>0</y>
             <width>243</width>
-            <height>342</height>
+            <height>359</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -535,6 +535,28 @@
              <item>
               <property name="text">
                <string>Channel Snapshot</string>
+              </property>
+              <property name="font">
+               <font>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="textAlignment">
+               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Clear Output</string>
               </property>
               <property name="font">
                <font>

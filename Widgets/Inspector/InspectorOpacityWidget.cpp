@@ -112,6 +112,6 @@ void InspectorOpacityWidget::deferChanged(int state)
 
 void InspectorOpacityWidget::resetDefer(QString defer)
 {
-    this->checkBoxDefer->setChecked(false);
+    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
     this->command->setDefer(this->checkBoxDefer->isChecked());
 }

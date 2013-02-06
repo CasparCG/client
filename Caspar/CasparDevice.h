@@ -59,11 +59,13 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
 
         void print(int channel, const QString& output);
 
+        void pauseDeviceInput(int channel, int videolayer);
         void playDeviceInput(int channel, int videolayer);
         void playDeviceInput(int channel, int videolayer, int device, const QString& format);
         void loadDeviceInput(int channel, int videolayer, int device, const QString& format);
         void stopDeviceInput(int channel, int videolayer);
 
+        void pauseImageScroll(int channel, int videolayer);
         void playImageScroll(int channel, int videolayer);
         void playImageScroll(int channel, int videolayer, const QString& name, int blur, int speed, bool premultiply, bool progressive);
         void loadImageScroll(int channel, int videolayer, const QString& name, int blur, int speed, bool premultiply, bool progressive);

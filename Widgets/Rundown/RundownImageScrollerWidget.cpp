@@ -11,9 +11,11 @@
 #include <QtCore/QTimer>
 
 RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                       bool active, bool loaded, bool inGroup, bool disconnected, bool compactView)
+                                                       bool active, bool loaded, bool paused, bool playing, bool inGroup,
+                                                       bool disconnected, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
+      compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
@@ -100,8 +102,8 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownImageScrollerWidget::clone()
 {
     RundownImageScrollerWidget* widget = new RundownImageScrollerWidget(this->model, this->parentWidget(), this->color,
-                                                                        this->active, this->loaded, this->inGroup,
-                                                                        this->disconnected, this->compactView);
+                                                                        this->active, this->loaded, this->paused, this->playing,
+                                                                        this->inGroup, this->disconnected, this->compactView);
 
     ImageScrollerCommand* command = dynamic_cast<ImageScrollerCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -219,6 +221,8 @@ bool RundownImageScrollerWidget::executeCommand(enum Playout::PlayoutType::Type 
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
+    else if (type == Playout::PlayoutType::Pause)
+        QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Clear)
@@ -249,7 +253,9 @@ void RundownImageScrollerWidget::executeStop()
             deviceShadow->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownImageScrollerWidget::executePlay()
@@ -282,7 +288,41 @@ void RundownImageScrollerWidget::executePlay()
         }
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = true;
+}
+
+void RundownImageScrollerWidget::executePause()
+{
+    if (!this->playing)
+        return;
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+    {
+        if (this->paused)
+            device->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+        else
+            device->pauseImageScroll(this->command.getChannel(), this->command.getVideolayer());
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
+            if (this->paused)
+                deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+            else
+                deviceShadow->pauseImageScroll(this->command.getChannel(), this->command.getVideolayer());
+        }
+    }
+
+    this->paused = !this->paused;
 }
 
 void RundownImageScrollerWidget::executeLoad()
@@ -306,6 +346,8 @@ void RundownImageScrollerWidget::executeLoad()
     }
 
     this->loaded = true;
+    this->paused = false;
+    this->playing = false;
 }
 
 void RundownImageScrollerWidget::executeClearVideolayer()
@@ -326,7 +368,9 @@ void RundownImageScrollerWidget::executeClearVideolayer()
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownImageScrollerWidget::executeClearChannel()
@@ -353,7 +397,9 @@ void RundownImageScrollerWidget::executeClearChannel()
         }
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownImageScrollerWidget::channelChanged(int channel)

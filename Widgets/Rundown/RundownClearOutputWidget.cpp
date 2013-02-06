@@ -1,4 +1,4 @@
-#include "RundownFileRecorderWidget.h"
+#include "RundownClearOutputWidget.h"
 
 #include "Global.h"
 
@@ -10,8 +10,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                     bool active, bool inGroup, bool disconnected, bool compactView)
+RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                                   bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
@@ -24,19 +24,16 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MEDIA_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
@@ -48,7 +45,7 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     qApp->installEventFilter(this);
 }
 
-bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownClearOutputWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemChanged))
     {
@@ -62,9 +59,6 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setName(rundownItemChangedEvent->getName());
 
         this->labelLabel->setText(this->model.getLabel());
-        this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-        this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
-        this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
         this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
@@ -86,26 +80,22 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownFileRecorderWidget::clone()
+AbstractRundownWidget* RundownClearOutputWidget::clone()
 {
-    RundownFileRecorderWidget* widget = new RundownFileRecorderWidget(this->model, this->parentWidget(), this->color,
-                                                                      this->active, this->inGroup, this->disconnected, this->compactView);
+    RundownClearOutputWidget* widget = new RundownClearOutputWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                                    this->inGroup, this->disconnected, this->compactView);
 
-    FileRecorderCommand* command = dynamic_cast<FileRecorderCommand*>(widget->getCommand());
+    ClearOutputCommand* command = dynamic_cast<ClearOutputCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
-    command->setOutput(this->command.getOutput());
-    command->setCodec(this->command.getCodec());
-    command->setPreset(this->command.getPreset());
-    command->setTune(this->command.getTune());
-    command->setWithAlpha(this->command.getWithAlpha());
+    command->setClearChannel(this->command.getClearChannel());
 
     return widget;
 }
 
-void RundownFileRecorderWidget::setCompactView(bool compactView)
+void RundownClearOutputWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -123,32 +113,32 @@ void RundownFileRecorderWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownFileRecorderWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownClearOutputWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownClearOutputWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownFileRecorderWidget::isGroup() const
+bool RundownClearOutputWidget::isGroup() const
 {
     return false;
 }
 
-AbstractCommand* RundownFileRecorderWidget::getCommand()
+AbstractCommand* RundownClearOutputWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownFileRecorderWidget::getLibraryModel()
+LibraryModel* RundownClearOutputWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownFileRecorderWidget::setActive(bool active)
+void RundownClearOutputWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -158,7 +148,7 @@ void RundownFileRecorderWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownFileRecorderWidget::setInGroup(bool inGroup)
+void RundownClearOutputWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(inGroup);
@@ -169,10 +159,6 @@ void RundownFileRecorderWidget::setInGroup(bool inGroup)
                                         this->labelChannel->geometry().y(),
                                         this->labelChannel->geometry().width(),
                                         this->labelChannel->geometry().height());
-        this->labelVideolayer->setGeometry(this->labelVideolayer->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                           this->labelVideolayer->geometry().y(),
-                                           this->labelVideolayer->geometry().width(),
-                                           this->labelVideolayer->geometry().height());
         this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
                                       this->labelDelay->geometry().y(),
                                       this->labelDelay->geometry().width(),
@@ -184,13 +170,13 @@ void RundownFileRecorderWidget::setInGroup(bool inGroup)
     }
 }
 
-void RundownFileRecorderWidget::setColor(const QString& color)
+void RundownClearOutputWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-void RundownFileRecorderWidget::checkEmptyDevice()
+void RundownClearOutputWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -198,32 +184,44 @@ void RundownFileRecorderWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownFileRecorderWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
-    {
+    {  
+        this->executeTimer.disconnect();
+
+        if (this->command.getClearChannel())
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeClearChannel()));
+        else
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeClearVideolayer()));
+
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
 
     return true;
 }
 
-void RundownFileRecorderWidget::executeStop()
+void RundownClearOutputWidget::executeStop()
+{
+    this->executeTimer.stop();
+}
+
+void RundownClearOutputWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopRecording(this->command.getChannel());
+        device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -232,45 +230,46 @@ void RundownFileRecorderWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopRecording(this->command.getChannel());
+            deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
 }
 
-void RundownFileRecorderWidget::executePlay()
+void RundownClearOutputWidget::executeClearChannel()
 {
+    this->executeTimer.stop();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
-                               this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
+    {
+        device->clearChannel(this->command.getChannel());
+        device->clearMixerChannel(this->command.getChannel());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
-                                         this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
+        {
+            deviceShadow->clearChannel(this->command.getChannel());
+            deviceShadow->clearMixerChannel(this->command.getChannel());
+        }
     }
 }
 
-void RundownFileRecorderWidget::channelChanged(int channel)
+void RundownClearOutputWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownFileRecorderWidget::videolayerChanged(int videolayer)
-{
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
-}
-
-void RundownFileRecorderWidget::delayChanged(int delay)
+void RundownClearOutputWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownFileRecorderWidget::checkGpiTriggerable()
+void RundownClearOutputWidget::checkGpiTriggerable()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -280,12 +279,12 @@ void RundownFileRecorderWidget::checkGpiTriggerable()
         labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownFileRecorderWidget::allowGpiChanged(bool allowGpi)
+void RundownClearOutputWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiTriggerable();
 }
 
-void RundownFileRecorderWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownClearOutputWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
 {
     checkGpiTriggerable();
 }

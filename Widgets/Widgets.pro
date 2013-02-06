@@ -66,7 +66,9 @@ HEADERS += \
     Rundown/RundownPrintWidget.h \
     Inspector/InspectorKeyerWidget.h \
     Inspector/InspectorColorWidget.h \
-    Inspector/InspectorPrintWidget.h
+    Inspector/InspectorPrintWidget.h \
+    Rundown/RundownClearOutputWidget.h \
+    Inspector/InspectorClearOutputWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -121,7 +123,9 @@ SOURCES += \
     Rundown/RundownPrintWidget.cpp \
     Inspector/InspectorKeyerWidget.cpp \
     Inspector/InspectorColorWidget.cpp \
-    Inspector/InspectorPrintWidget.cpp
+    Inspector/InspectorPrintWidget.cpp \
+    Rundown/RundownClearOutputWidget.cpp \
+    Inspector/InspectorClearOutputWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -176,7 +180,9 @@ FORMS += \
     Rundown/RundownPrintWidget.ui \
     Inspector/InspectorKeyerWidget.ui \
     Inspector/InspectorColorWidget.ui \
-    Inspector/InspectorPrintWidget.ui
+    Inspector/InspectorPrintWidget.ui \
+    Rundown/RundownClearOutputWidget.ui \
+    Inspector/InspectorClearOutputWidget.ui
 
 RESOURCES += \
     Resource.qrc
@@ -255,7 +261,8 @@ OTHER_FILES += \
     Images/GpiDisconnected.png \
     Images/GpiConnected.png \
     Images/Data.png \
-    Images/Print.png
+    Images/Print.png \
+    Images/Clear.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

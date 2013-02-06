@@ -60,7 +60,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>ImageScroller</string>
+       <string>Image Scroller</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">

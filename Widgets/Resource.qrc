@@ -58,6 +58,7 @@
         <file>Images/GpiOutput.png</file>
         <file>Images/Data.png</file>
         <file>Images/Print.png</file>
+        <file>Images/Clear.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

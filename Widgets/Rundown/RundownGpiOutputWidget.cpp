@@ -58,14 +58,6 @@ bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         this->labelLabel->setText(this->model.getLabel());
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        executePlay();
-    }
 
     return QObject::eventFilter(target, event);
 }

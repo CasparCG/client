@@ -209,6 +209,11 @@ void CasparDevice::print(int channel, const QString& output)
     AMCPDevice::writeMessage(QString("ADD %1 IMAGE \"%2\"").arg(channel).arg(output));
 }
 
+void CasparDevice::pauseDeviceInput(int channel, int videolayer)
+{
+    AMCPDevice::writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::playDeviceInput(int channel, int videolayer)
 {
     AMCPDevice::writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
@@ -229,6 +234,11 @@ void CasparDevice::loadDeviceInput(int channel, int videolayer, int device, cons
 void CasparDevice::stopDeviceInput(int channel, int videolayer)
 {
     AMCPDevice::writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::pauseImageScroll(int channel, int videolayer)
+{
+    AMCPDevice::writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
 }
 
 void CasparDevice::playImageScroll(int channel, int videolayer)

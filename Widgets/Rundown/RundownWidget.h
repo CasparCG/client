@@ -88,6 +88,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void addGeometryCommand();
         Q_SLOT void addGpiOutputCommand();
         Q_SLOT void addGridCommand();
+        Q_SLOT void addClearOutputCommand();
         Q_SLOT void addKeyerCommand();
         Q_SLOT void addLevelsCommand();
         Q_SLOT void addOpacityCommand();

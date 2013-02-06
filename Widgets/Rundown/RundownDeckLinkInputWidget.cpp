@@ -11,9 +11,11 @@
 #include <QtCore/QTimer>
 
 RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                       bool active, bool loaded, bool inGroup, bool disconnected, bool compactView)
+                                                       bool active, bool loaded, bool paused, bool playing, bool inGroup,
+                                                       bool disconnected, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
+      compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
@@ -69,14 +71,6 @@ bool RundownDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        executePlay();
-    }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
     {
         ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
@@ -97,8 +91,8 @@ bool RundownDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownDeckLinkInputWidget::clone()
 {
     RundownDeckLinkInputWidget* widget = new RundownDeckLinkInputWidget(this->model, this->parentWidget(), this->color,
-                                                                        this->active, this->loaded, this->inGroup,
-                                                                        this->disconnected, this->compactView);
+                                                                        this->active, this->loaded, this->paused, this->playing,
+                                                                        this->inGroup, this->disconnected, this->compactView);
 
     DeckLinkInputCommand* command = dynamic_cast<DeckLinkInputCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -217,6 +211,8 @@ bool RundownDeckLinkInputWidget::executeCommand(enum Playout::PlayoutType::Type 
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
+    else if (type == Playout::PlayoutType::Pause)
+        QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Clear)
@@ -247,7 +243,9 @@ void RundownDeckLinkInputWidget::executeStop()
             deviceShadow->stopDeviceInput(this->command.getChannel(), this->command.getVideolayer());
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownDeckLinkInputWidget::executePlay()
@@ -278,7 +276,41 @@ void RundownDeckLinkInputWidget::executePlay()
         }
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = true;
+}
+
+void RundownDeckLinkInputWidget::executePause()
+{
+    if (!this->playing)
+        return;
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+    {
+        if (this->paused)
+            device->playDeviceInput(this->command.getChannel(), this->command.getVideolayer());
+        else
+            device->pauseDeviceInput(this->command.getChannel(), this->command.getVideolayer());
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
+            if (this->paused)
+                deviceShadow->playDeviceInput(this->command.getChannel(), this->command.getVideolayer());
+            else
+                deviceShadow->pauseDeviceInput(this->command.getChannel(), this->command.getVideolayer());
+        }
+    }
+
+    this->paused = !this->paused;
 }
 
 void RundownDeckLinkInputWidget::executeLoad()
@@ -300,6 +332,8 @@ void RundownDeckLinkInputWidget::executeLoad()
     }
 
     this->loaded = true;
+    this->paused = false;
+    this->playing = false;
 }
 
 void RundownDeckLinkInputWidget::executeClearVideolayer()
@@ -318,7 +352,9 @@ void RundownDeckLinkInputWidget::executeClearVideolayer()
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownDeckLinkInputWidget::executeClearChannel()
@@ -343,7 +379,9 @@ void RundownDeckLinkInputWidget::executeClearChannel()
         }
     }
 
+    this->paused = false;
     this->loaded = false;
+    this->playing = false;
 }
 
 void RundownDeckLinkInputWidget::channelChanged(int channel)

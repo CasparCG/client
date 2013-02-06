@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InspectorKeyerWidget</class>
- <widget class="QWidget" name="InspectorKeyerWidget">
+ <class>InspectorClearOutputWidget</class>
+ <widget class="QWidget" name="InspectorClearOutputWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,9 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
+    <layout class="QHBoxLayout" name="horizontalLayoutClearChannel">
      <item>
-      <spacer name="horizontalSpacerDefer1">
+      <spacer name="horizontalSpacerClearChannel1">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -29,16 +29,16 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>29</width>
+         <width>2</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDefer">
+      <widget class="QLabel" name="labelClearChannel">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;Clear Channel&quot; style=&quot;color: #BEBEBE;&quot;&gt;Clear Channel&lt;/a&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBoxDefer">
+      <widget class="QCheckBox" name="checkBoxClearChannel">
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
@@ -56,7 +56,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacerDefer2">
+      <spacer name="horizontalSpacerClearChannel2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -71,7 +71,7 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacerKeyer">
+    <spacer name="verticalSpacerClearOutput">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -91,47 +91,40 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelDefer</sender>
+   <sender>labelClearChannel</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorKeyerWidget</receiver>
-   <slot>resetDefer(QString)</slot>
+   <receiver>InspectorClearOutputWidget</receiver>
+   <slot>resetClearChannel(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>71</x>
-     <y>29</y>
+     <x>64</x>
+     <y>18</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-2</x>
-     <y>106</y>
+     <x>45</x>
+     <y>59</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxDefer</sender>
+   <sender>checkBoxClearChannel</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>InspectorKeyerWidget</receiver>
-   <slot>deferChanged(int)</slot>
+   <receiver>InspectorClearOutputWidget</receiver>
+   <slot>clearChannelChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>25</y>
+     <x>104</x>
+     <y>22</y>
     </hint>
     <hint type="destinationlabel">
-     <x>214</x>
-     <y>128</y>
+     <x>142</x>
+     <y>34</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>spinBoxVolumeChanged(int)</slot>
-  <slot>resetVolume(QString)</slot>
-  <slot>resetTween(QString)</slot>
-  <slot>resetDuration(QString)</slot>
-  <slot>durationChanged(int)</slot>
-  <slot>tweenChanged(QString)</slot>
-  <slot>sliderVolumeChanged(int)</slot>
-  <slot>resetDefer(QString)</slot>
-  <slot>deferChanged(int)</slot>
+  <slot>resetClearChannel(QString)</slot>
+  <slot>clearChannelChanged(int)</slot>
  </slots>
 </ui>

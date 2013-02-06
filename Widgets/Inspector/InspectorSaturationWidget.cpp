@@ -112,6 +112,6 @@ void InspectorSaturationWidget::deferChanged(int state)
 
 void InspectorSaturationWidget::resetDefer(QString defer)
 {
-    this->checkBoxDefer->setChecked(false);
+    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
     this->command->setDefer(this->checkBoxDefer->isChecked());
 }

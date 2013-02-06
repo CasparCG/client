@@ -66,14 +66,6 @@ bool RundownKeyerWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        executePlay();
-    }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
     {
         ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);

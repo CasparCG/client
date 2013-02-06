@@ -24,7 +24,8 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
     public:
         explicit RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent = 0,
                                             const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
-                                            bool loaded = false, bool inGroup = false, bool disconnected = false, bool compactView = false);
+                                            bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
+                                            bool disconnected = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -52,6 +53,8 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
     private:
         bool active;
         bool loaded;
+        bool paused;
+        bool playing;
         bool inGroup;
         bool disconnected;
         bool compactView;
@@ -69,6 +72,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeLoad();
         Q_SLOT void executePlay();
+        Q_SLOT void executePause();
         Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);

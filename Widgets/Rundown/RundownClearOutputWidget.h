@@ -2,14 +2,14 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownDeckLinkInputWidget.h"
+#include "ui_RundownClearOutputWidget.h"
 #include "GpiDevice.h"
 
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/DeckLinkInputCommand.h"
+#include "Commands/ClearOutputCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -17,15 +17,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDeckLinkInputWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClearOutputWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownDeckLinkInputWidget(const LibraryModel& model, QWidget* parent = 0,
-                                            const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
-                                            bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
-                                            bool disconnected = false, bool compactView = false);
+        explicit RundownClearOutputWidget(const LibraryModel& model, QWidget* parent = 0,
+                                          const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
+                                          bool inGroup = false, bool disconnected = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -52,29 +51,22 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
 
     private:
         bool active;
-        bool loaded;
-        bool paused;
-        bool playing;
         bool inGroup;
         bool disconnected;
         bool compactView;
         QString color;
         LibraryModel model;
-        DeckLinkInputCommand command;
+        ClearOutputCommand command;
 
         QTimer executeTimer;
 
         void checkEmptyDevice();
         void checkGpiTriggerable();
 
+        Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
-        Q_SLOT void channelChanged(int);
-        Q_SLOT void executeLoad();
-        Q_SLOT void executePlay();
-        Q_SLOT void executePause();
         Q_SLOT void executeStop();
-        Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);

@@ -63,7 +63,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>DeckLinkInput</string>
+       <string>DeckLink Input</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">

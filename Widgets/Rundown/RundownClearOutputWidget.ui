@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownFileRecorderWidget</class>
- <widget class="QWidget" name="RundownFileRecorderWidget">
+ <class>RundownClearOutputWidget</class>
+ <widget class="QWidget" name="RundownClearOutputWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
+    <width>783</width>
     <height>36</height>
    </rect>
   </property>
@@ -44,10 +44,23 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/Recorder.png</pixmap>
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/Clear.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelChannel">
+      <property name="geometry">
+       <rect>
+        <x>142</x>
+        <y>19</y>
+        <width>77</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Channel:</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelLabel">
@@ -55,12 +68,12 @@
        <rect>
         <x>62</x>
         <y>2</y>
-        <width>533</width>
+        <width>561</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>File Recorder</string>
+       <string>Clear Output</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelColor">
@@ -102,32 +115,6 @@
        <string>Device:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelVideolayer">
-      <property name="geometry">
-       <rect>
-        <x>229</x>
-        <y>19</y>
-        <width>110</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Video layer:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelChannel">
-      <property name="geometry">
-       <rect>
-        <x>142</x>
-        <y>19</y>
-        <width>78</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Channel:</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
@@ -139,6 +126,19 @@
       </property>
       <property name="text">
        <string>Delay:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelVideolayer">
+      <property name="geometry">
+       <rect>
+        <x>229</x>
+        <y>19</y>
+        <width>110</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Video layer:</string>
       </property>
      </widget>
     </widget>

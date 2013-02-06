@@ -210,6 +210,6 @@ void InspectorGeometryWidget::deferChanged(int state)
 
 void InspectorGeometryWidget::resetDefer(QString defer)
 {
-    this->checkBoxDefer->setChecked(false);
+    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
     this->command->setDefer(this->checkBoxDefer->isChecked());
 }
