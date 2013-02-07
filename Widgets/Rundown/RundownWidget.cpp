@@ -954,7 +954,15 @@ bool RundownWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource
 
 void RundownWidget::selectItemBelow()
 {
-    QTreeWidgetItem* itemBelow = this->treeWidgetRundown->itemBelow(this->treeWidgetRundown->currentItem());
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
+    QTreeWidgetItem* itemBelow = NULL;
+    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup()) // Group.
+        itemBelow = this->treeWidgetRundown->invisibleRootItem()->child(this->treeWidgetRundown->currentIndex().row() + 1);
+    else
+        itemBelow = this->treeWidgetRundown->itemBelow(this->treeWidgetRundown->currentItem());
+
     if (itemBelow != NULL)
         this->treeWidgetRundown->setCurrentItem(itemBelow);
 }
