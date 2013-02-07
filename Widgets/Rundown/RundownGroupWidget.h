@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/GroupCommand.h"
@@ -56,9 +57,11 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         QString color;
         LibraryModel model;
         GroupCommand command;
+        ColorAnimation* animation;
 
         void checkGpiTriggerable();
 
+        Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
 };

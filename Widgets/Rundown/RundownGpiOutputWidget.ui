@@ -121,13 +121,13 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>69</width>
+       <width>72</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>69</width>
+       <width>72</width>
        <height>16777215</height>
       </size>
      </property>
@@ -207,19 +207,19 @@
        <rect>
         <x>64</x>
         <y>0</y>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </size>
       </property>

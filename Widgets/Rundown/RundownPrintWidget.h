@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/PrintCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         QString color;
         LibraryModel model;
         PrintCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

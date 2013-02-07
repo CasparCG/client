@@ -25,12 +25,13 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
 
     bool isAutoRefresh = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
-    this->checkBoxAutoRefreshLibrary->setChecked(isAutoRefresh);
+    this->checkBoxAutoRefresh->setChecked(isAutoRefresh);
     this->labelInterval->setEnabled(isAutoRefresh);
-    this->spinBoxRefreshLibraryInterval->setEnabled(isAutoRefresh);
+    this->spinBoxRefreshInterval->setEnabled(isAutoRefresh);
     this->labelSeconds->setEnabled(isAutoRefresh);
-
-    this->spinBoxRefreshLibraryInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
+    this->spinBoxRefreshInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
+    bool isAutoStep = (DatabaseManager::getInstance().getConfigurationByName("AutoStepInRundown").getValue() == "true") ? true : false;
+    this->checkBoxAutoStep->setChecked(isAutoStep);
 
     loadDevices();
     loadGpi();
@@ -168,18 +169,24 @@ void SettingsDialog::autoSynchronizeChanged(int state)
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoRefreshLibrary", isAutoSynchronize));
 
     this->labelInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
-    this->spinBoxRefreshLibraryInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
+    this->spinBoxRefreshInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
     this->labelSeconds->setEnabled((isAutoSynchronize == "true") ? true : false);
 
     qApp->postEvent(qApp, new AutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false,
-                                                       this->spinBoxRefreshLibraryInterval->value() * 1000));
+                                                       this->spinBoxRefreshInterval->value() * 1000));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
-    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefreshLibrary->checkState(), interval * 1000));
+    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000));
+}
+
+void SettingsDialog::autoStepChanged(int state)
+{
+    QString isAutoStep = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoStepInRundown", isAutoStep));
 }
 
 void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action)

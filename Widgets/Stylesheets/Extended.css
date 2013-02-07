@@ -12,7 +12,7 @@
 /*
  * SettingsDialog
  */
-#lineStartup, #lineAppearance, #lineLibrary, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
 {
     background-color: rgba(42, 42, 42, 255);
 }
@@ -52,7 +52,7 @@
     background-color: transparent;
     border-radius: 0px;
 }
-#labelLabel
+#labelLabel, #labelNoteField
 {
     font-size: 13px;
 }

@@ -201,3 +201,8 @@ namespace ClearOutput
 {
     static const bool DEFAULT_CLEAR_CHANNEL = true;
 }
+
+namespace Group
+{
+    static const QString DEFAULT_NOTE = "";
+}

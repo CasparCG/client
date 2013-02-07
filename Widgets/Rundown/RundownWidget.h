@@ -104,4 +104,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
         Q_SLOT void newMenuTriggered(QAction*);
+        Q_SLOT void selectItemBelow();
 };

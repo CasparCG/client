@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/CropCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownCropWidget : public QWidget, Ui::RundownCropWidget, 
         QString color;
         LibraryModel model;
         CropCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

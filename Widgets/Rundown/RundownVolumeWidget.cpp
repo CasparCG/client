@@ -17,6 +17,8 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
 {
     setupUi(this);
 
+    this->animation = new ColorAnimation(this->labelActiveColor);
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -156,6 +158,8 @@ void RundownVolumeWidget::setActive(bool active)
 {
     this->active = active;
 
+    this->animation->stop();
+
     if (this->active)
         this->labelActiveColor->setStyleSheet("background-color: red;");
     else
@@ -217,6 +221,9 @@ bool RundownVolumeWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
         QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+
+    if (this->active)
+        this->animation->start(1);
 
     return true;
 }

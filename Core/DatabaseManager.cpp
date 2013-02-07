@@ -90,6 +90,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionWidth', '1920')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionHeight', '1080')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoStepInRundown', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
 #if defined(Q_OS_UNIX)

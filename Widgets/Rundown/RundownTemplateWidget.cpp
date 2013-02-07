@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -16,6 +17,8 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     active(active), loaded(loaded), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
+
+    this->animation = new ColorAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);
@@ -155,6 +158,8 @@ void RundownTemplateWidget::setActive(bool active)
 {
     this->active = active;
 
+    this->animation->stop();
+
     if (this->active)
         this->labelActiveColor->setStyleSheet("background-color: red;");
     else
@@ -228,6 +233,9 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearChannel)
         QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+
+    if (this->active)
+        this->animation->start(1);
 
     return true;
 }

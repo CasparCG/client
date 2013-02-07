@@ -161,7 +161,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>13</width>
+         <width>8</width>
          <height>20</height>
         </size>
        </property>
@@ -325,8 +325,8 @@
    <slot>allowGpiChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>93</x>
-     <y>101</y>
+     <x>92</x>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>185</x>

@@ -9,6 +9,7 @@
 
 #include "CasparDevice.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/MediaCommand.h"
@@ -63,6 +64,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         QString color;
         LibraryModel model;
         MediaCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

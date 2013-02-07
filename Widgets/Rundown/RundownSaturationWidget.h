@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/SaturationCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
         QString color;
         LibraryModel model;
         SaturationCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

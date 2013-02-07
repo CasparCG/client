@@ -55,7 +55,7 @@
        <rect>
         <x>62</x>
         <y>2</y>
-        <width>531</width>
+        <width>271</width>
         <height>16</height>
        </rect>
       </property>
@@ -89,19 +89,41 @@
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="labelNoteField">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>1</y>
+        <width>271</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::PlainText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>37</width>
+       <width>40</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>37</width>
+       <width>40</width>
        <height>16777215</height>
       </size>
      </property>
@@ -150,19 +172,19 @@
        <rect>
         <x>32</x>
         <y>0</y>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>5</width>
+        <width>8</width>
         <height>36</height>
        </size>
       </property>

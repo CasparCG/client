@@ -68,7 +68,8 @@ HEADERS += \
     Inspector/InspectorColorWidget.h \
     Inspector/InspectorPrintWidget.h \
     Rundown/RundownClearOutputWidget.h \
-    Inspector/InspectorClearOutputWidget.h
+    Inspector/InspectorClearOutputWidget.h \
+    Inspector/InspectorGroupWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -125,7 +126,8 @@ SOURCES += \
     Inspector/InspectorColorWidget.cpp \
     Inspector/InspectorPrintWidget.cpp \
     Rundown/RundownClearOutputWidget.cpp \
-    Inspector/InspectorClearOutputWidget.cpp
+    Inspector/InspectorClearOutputWidget.cpp \
+    Inspector/InspectorGroupWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -182,7 +184,8 @@ FORMS += \
     Inspector/InspectorColorWidget.ui \
     Inspector/InspectorPrintWidget.ui \
     Rundown/RundownClearOutputWidget.ui \
-    Inspector/InspectorClearOutputWidget.ui
+    Inspector/InspectorClearOutputWidget.ui \
+    Inspector/InspectorGroupWidget.ui
 
 RESOURCES += \
     Resource.qrc

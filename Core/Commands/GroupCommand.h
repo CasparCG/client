@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shared.h"
+#include "../Shared.h"
 #include "AbstractCommand.h"
 
 #include <boost/foreach.hpp>
@@ -32,8 +32,13 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        const QString& getNotes() const;
+        void setNotes(const QString& notes);
+
     private:
         bool allowGpi;
+         QString notes;
 
         Q_SIGNAL void allowGpiChanged(bool);
+        Q_SIGNAL void notesChanged(const QString&);
 };

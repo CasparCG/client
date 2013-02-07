@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/ClearOutputCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         QString color;
         LibraryModel model;
         ClearOutputCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

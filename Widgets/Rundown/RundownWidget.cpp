@@ -945,7 +945,18 @@ bool RundownWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource
         }
     }
 
+    bool isAutoStep = (DatabaseManager::getInstance().getConfigurationByName("AutoStepInRundown").getValue() == "true") ? true : false;
+    if (isAutoStep)
+        QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+
     return true;
+}
+
+void RundownWidget::selectItemBelow()
+{
+    QTreeWidgetItem* itemBelow = this->treeWidgetRundown->itemBelow(this->treeWidgetRundown->currentItem());
+    if (itemBelow != NULL)
+        this->treeWidgetRundown->setCurrentItem(itemBelow);
 }
 
 bool RundownWidget::groupItems()

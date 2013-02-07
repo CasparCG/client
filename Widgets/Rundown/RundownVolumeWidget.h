@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/VolumeCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownVolumeWidget : public QWidget, Ui::RundownVolumeWidg
         QString color;
         LibraryModel model;
         VolumeCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

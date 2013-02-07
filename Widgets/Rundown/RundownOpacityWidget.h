@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/OpacityCommand.h"
@@ -57,6 +58,7 @@ class WIDGETS_EXPORT RundownOpacityWidget : public QWidget, Ui::RundownOpacityWi
         QString color;
         LibraryModel model;
         OpacityCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

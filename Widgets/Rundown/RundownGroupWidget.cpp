@@ -14,6 +14,9 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
       active(active), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
+
+    this->animation = new ColorAnimation(this->labelActiveColor);
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -23,6 +26,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     this->labelLabel->setText(this->model.getLabel());
 
+    QObject::connect(&this->command, SIGNAL(notesChanged(const QString&)), this, SLOT(notesChanged(const QString&)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
                      this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
@@ -117,6 +121,8 @@ void RundownGroupWidget::setActive(bool active)
 {
     this->active = active;
 
+    this->animation->stop();
+
     if (this->active)
         this->labelActiveColor->setStyleSheet("background-color: red;");
     else
@@ -125,6 +131,9 @@ void RundownGroupWidget::setActive(bool active)
 
 bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
+    if (this->active)
+        this->animation->start(1);
+
     return false;
 }
 
@@ -136,6 +145,11 @@ void RundownGroupWidget::checkGpiTriggerable()
         labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownGroupWidget::notesChanged(const QString& note)
+{
+    this->labelNoteField->setText(this->command.getNotes());
 }
 
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)

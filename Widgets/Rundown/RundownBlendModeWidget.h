@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/BlendModeCommand.h"
@@ -62,6 +63,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         QString color;
         LibraryModel model;
         BlendModeCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

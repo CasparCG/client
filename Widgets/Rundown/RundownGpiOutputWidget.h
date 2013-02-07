@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/GpiOutputCommand.h"
@@ -56,6 +57,7 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         QString color;
         LibraryModel model;
         GpiOutputCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 

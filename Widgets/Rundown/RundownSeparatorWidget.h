@@ -6,6 +6,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/SeparatorCommand.h"
@@ -56,4 +57,5 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
         QString color;
         LibraryModel model;
         SeparatorCommand command;
+        ColorAnimation* animation;
 };

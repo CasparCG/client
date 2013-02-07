@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shared.h"
+#include "../Shared.h"
 #include "AbstractCommand.h"
 
 #include <boost/foreach.hpp>

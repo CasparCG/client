@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorGroupWidget</class>
+ <widget class="QWidget" name="InspectorGroupWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>267</width>
+    <height>76</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutNoteField">
+     <item>
+      <spacer name="horizontalSpacerNotes">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>33</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelNotes">
+       <property name="text">
+        <string>&lt;a href=&quot;Notes&quot; style=&quot;color: #BEBEBE;&quot;&gt;Notes&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="plainTextEditNotes">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerGroup">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>labelNotes</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGroupWidget</receiver>
+   <slot>resetNotes(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>17</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plainTextEditNotes</sender>
+   <signal>textChanged()</signal>
+   <receiver>InspectorGroupWidget</receiver>
+   <slot>notesChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>63</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>resetNotes(QString)</slot>
+  <slot>notesChanged()</slot>
+ </slots>
+</ui>

@@ -89,7 +89,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QSpinBox" name="spinBoxRefreshLibraryInterval">
+    <widget class="QSpinBox" name="spinBoxRefreshInterval">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -234,7 +234,7 @@
       <string>Start in fullscreen</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxAutoRefreshLibrary">
+    <widget class="QCheckBox" name="checkBoxAutoRefresh">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -248,6 +248,51 @@
      </property>
      <property name="text">
       <string>Refresh library automatically</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelRundown">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>252</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rundown</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxAutoStep">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>280</y>
+       <width>231</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Step automatically in the rundown</string>
+     </property>
+    </widget>
+    <widget class="Line" name="lineRundown">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>260</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </widget>
@@ -2203,7 +2248,7 @@
   <tabstop>toolButtonAddDevice</tabstop>
   <tabstop>toolButtonRemoveDevice</tabstop>
   <tabstop>spinBoxFontSize</tabstop>
-  <tabstop>spinBoxRefreshLibraryInterval</tabstop>
+  <tabstop>spinBoxRefreshInterval</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -2272,7 +2317,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxRefreshLibraryInterval</sender>
+   <sender>spinBoxRefreshInterval</sender>
    <signal>valueChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>synchronizeIntervalChanged(int)</slot>
@@ -2304,7 +2349,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAutoRefreshLibrary</sender>
+   <sender>checkBoxAutoRefresh</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>autoSynchronizeChanged(int)</slot>
@@ -2550,8 +2595,8 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>298</x>
-     <y>338</y>
+     <x>301</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>551</x>
@@ -2566,8 +2611,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>283</x>
-     <y>369</y>
+     <x>301</x>
+     <y>373</y>
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
@@ -2863,6 +2908,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>autoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>334</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -2890,5 +2951,6 @@
   <slot>gpo7Changed()</slot>
   <slot>gpo8Changed()</slot>
   <slot>baudRateChanged(QString)</slot>
+  <slot>autoStepChanged(int)</slot>
  </slots>
 </ui>

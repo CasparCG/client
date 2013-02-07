@@ -7,6 +7,7 @@
 
 #include "Global.h"
 
+#include "Animations/ColorAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/ImageScrollerCommand.h"
@@ -61,6 +62,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         QString color;
         LibraryModel model;
         ImageScrollerCommand command;
+        ColorAnimation* animation;
 
         QTimer executeTimer;
 
