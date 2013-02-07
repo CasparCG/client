@@ -64,6 +64,8 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setNotes(this->command.getNotes());
+    command->setAutoStep(this->command.getAutoStep());
 
     return widget;
 }
