@@ -30,8 +30,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->spinBoxRefreshInterval->setEnabled(isAutoRefresh);
     this->labelSeconds->setEnabled(isAutoRefresh);
     this->spinBoxRefreshInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
-    bool isAutoStep = (DatabaseManager::getInstance().getConfigurationByName("AutoStepInRundown").getValue() == "true") ? true : false;
-    this->checkBoxAutoStep->setChecked(isAutoStep);
 
     loadDevices();
     loadGpi();
@@ -181,12 +179,6 @@ void SettingsDialog::synchronizeIntervalChanged(int interval)
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
     qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000));
-}
-
-void SettingsDialog::autoStepChanged(int state)
-{
-    QString isAutoStep = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoStepInRundown", isAutoStep));
 }
 
 void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action)

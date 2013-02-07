@@ -936,6 +936,7 @@ bool RundownWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource
         return false; // Gpi pulses cannot trigger this item.
 
     dynamic_cast<AbstractPlayoutCommand*>(selectedWidget)->executeCommand(type);
+
     if (rundownWidget->isGroup()) // Group
     {
         for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
@@ -943,11 +944,10 @@ bool RundownWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource
             QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
             dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);
         }
-    }
 
-    bool isAutoStep = (DatabaseManager::getInstance().getConfigurationByName("AutoStepInRundown").getValue() == "true") ? true : false;
-    if (isAutoStep)
-        QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+        if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
+            QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+    }
 
     return true;
 }

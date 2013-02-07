@@ -31,7 +31,6 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void startFullscreenChanged(int);
         Q_SLOT void fontSizeChanged(int);
         Q_SLOT void autoSynchronizeChanged(int);
-        Q_SLOT void autoStepChanged(int);
         Q_SLOT void synchronizeIntervalChanged(int);
         Q_SLOT void gpi1Changed();
         Q_SLOT void gpi2Changed();

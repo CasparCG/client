@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>267</width>
-    <height>76</height>
+    <width>266</width>
+    <height>104</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,6 +64,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoStep">
+     <item>
+      <spacer name="horizontalSpacerAutoStep1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>8</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelAutoStep">
+       <property name="text">
+        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Auto step&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoStep">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoStep2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerGroup">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -90,7 +143,7 @@
    <slot>resetNotes(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>17</x>
+     <x>56</x>
      <y>17</y>
     </hint>
     <hint type="destinationlabel">
@@ -115,9 +168,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>labelAutoStep</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorGroupWidget</receiver>
+   <slot>resetAutoStep(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>50</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorGroupWidget</receiver>
+   <slot>autoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>resetNotes(QString)</slot>
   <slot>notesChanged()</slot>
+  <slot>resetAutoStep(QString)</slot>
+  <slot>autoStepChanged(int)</slot>
  </slots>
 </ui>

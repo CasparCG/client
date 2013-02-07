@@ -205,4 +205,5 @@ namespace ClearOutput
 namespace Group
 {
     static const QString DEFAULT_NOTE = "";
+    static const bool DEFAULT_AUTO_STEP = false;
 }

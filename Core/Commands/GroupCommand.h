@@ -32,13 +32,18 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
+        bool getAutoStep() const;
         const QString& getNotes() const;
+
+        void setAutoStep(bool autoStep);
         void setNotes(const QString& notes);
 
     private:
         bool allowGpi;
-         QString notes;
+        QString notes;
+        bool autoStep;
 
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void notesChanged(const QString&);
+        Q_SIGNAL void autoStepChanged(bool);
 };

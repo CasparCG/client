@@ -226,7 +226,8 @@ bool RundownDeckLinkInputWidget::executeCommand(enum Playout::PlayoutType::Type 
     else if (type == Playout::PlayoutType::ClearChannel)
         QTimer::singleShot(0, this, SLOT(executeClearChannel()));
 
-    this->animation->start(1);
+    if (this->active)
+        this->animation->start(1);
 
     return true;
 }

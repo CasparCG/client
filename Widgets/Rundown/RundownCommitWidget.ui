@@ -134,13 +134,13 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>72</width>
+       <width>77</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>72</width>
+       <width>77</width>
        <height>16777215</height>
       </size>
      </property>
@@ -218,7 +218,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>64</x>
+        <x>69</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>

@@ -33,6 +33,7 @@ bool InspectorGroupWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->plainTextEditNotes->setPlainText(this->command->getNotes());
+            this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
 
             this->preview = true;
         }
@@ -50,4 +51,15 @@ void InspectorGroupWidget::resetNotes(QString note)
 {
     this->plainTextEditNotes->setPlainText(Group::DEFAULT_NOTE);
     this->command->setNotes(this->plainTextEditNotes->toPlainText());
+}
+
+void InspectorGroupWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
+}
+
+void InspectorGroupWidget::resetAutoStep(QString note)
+{
+    this->checkBoxAutoStep->setChecked(Group::DEFAULT_AUTO_STEP);
+    this->command->setAutoStep(this->checkBoxAutoStep->isChecked());
 }
