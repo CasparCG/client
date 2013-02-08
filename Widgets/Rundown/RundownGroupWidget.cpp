@@ -9,9 +9,9 @@
 #include <QtCore/QObject>
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool compactView)
+                                       bool autoStep, bool compactView)
     : QWidget(parent),
-      active(active), compactView(compactView), color(color), model(model)
+      active(active), autoStep(autoStep), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
@@ -21,6 +21,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     setActive(active);
     setCompactView(compactView);
 
+    this->labelAutoStep->setVisible(this->autoStep);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
 
@@ -28,6 +29,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     QObject::connect(&this->command, SIGNAL(notesChanged(const QString&)), this, SLOT(notesChanged(const QString&)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
                      this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
 
@@ -56,8 +58,8 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 
 AbstractRundownWidget* RundownGroupWidget::clone()
 {
-    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->compactView);
+    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color, this->autoStep,
+                                                        this->active, this->compactView);
 
     GroupCommand* command = dynamic_cast<GroupCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -87,12 +89,14 @@ void RundownGroupWidget::setCompactView(bool compactView)
         this->labelGroupColor->move(this->labelGroupColor->x(), Define::COMPACT_ITEM_HEIGHT - 2);
         this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelAutoStep->move(this->labelAutoStep->x(), Define::COMPACT_VIEW_HEIGHT - 14);
     }
     else
     {
         this->labelGroupColor->move(this->labelGroupColor->x(), Define::DEFAULT_ITEM_HEIGHT - 2);
         this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelAutoStep->move(this->labelAutoStep->x(), Define::DEFAULT_VIEW_HEIGHT - 22);
     }
 
     this->compactView = compactView;
@@ -157,6 +161,12 @@ void RundownGroupWidget::notesChanged(const QString& note)
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiTriggerable();
+}
+
+void RundownGroupWidget::autoStepChanged(bool autoStep)
+{
+    this->autoStep = autoStep;
+    this->labelAutoStep->setVisible(this->autoStep);
 }
 
 void RundownGroupWidget::gpiDeviceConnected(bool connected, GpiDevice* device)

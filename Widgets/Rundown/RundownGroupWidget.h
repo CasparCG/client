@@ -26,7 +26,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
     public:
         explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0,
                                     const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                    bool active = false, bool compactView = false);
+                                    bool active = false, bool autoStep = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -53,6 +53,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
     private:
         bool active;
+        bool autoStep;
         bool compactView;
         QString color;
         LibraryModel model;
@@ -63,5 +64,6 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void autoStepChanged(bool);
         Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
 };
