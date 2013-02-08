@@ -89,14 +89,14 @@ void RundownGroupWidget::setCompactView(bool compactView)
         this->labelGroupColor->move(this->labelGroupColor->x(), Define::COMPACT_ITEM_HEIGHT - 2);
         this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
-        this->labelAutoStep->move(this->labelAutoStep->x(), Define::COMPACT_VIEW_HEIGHT - 14);
+        this->labelAutoStep->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
     }
     else
     {
         this->labelGroupColor->move(this->labelGroupColor->x(), Define::DEFAULT_ITEM_HEIGHT - 2);
         this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
-        this->labelAutoStep->move(this->labelAutoStep->x(), Define::DEFAULT_VIEW_HEIGHT - 22);
+        this->labelAutoStep->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
     }
 
     this->compactView = compactView;
