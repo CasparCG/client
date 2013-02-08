@@ -78,12 +78,12 @@ const QString& TemplateCommand::getTemplateName() const
 
 const QString TemplateCommand::getTemplateData() const
 {
-    if (this->models.count() == 0)
-        return "";
-
     QString templateData;
     if (this->useStoredData)
     {
+        if (this->models.count() == 0)
+            return "";
+
         templateData.append(this->models.at(0).getValue());
     }
     else

@@ -1,6 +1,8 @@
 CasparCG Client 2.0 RC 1
 ========================
 
+- FIX: UPDATE on template item should use the delay value.
+- FIX: The client will not send UPDATE if template data is empty.
 - FIX: The name parameter in the image scroller is not set correctly when open a rundown.
 - FIX: Better support for spaces in filenames.
 - FIX: Freeze on load does not work as expected.

@@ -39,7 +39,6 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -216,6 +215,17 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
     {
+        this->executeTimer.disconnect();
+        QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+
+        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.start();
+    }
+    else if (type == Playout::PlayoutType::Update)
+    {
+        this->executeTimer.disconnect();
+        QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
+
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
@@ -223,8 +233,6 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
     else if (type == Playout::PlayoutType::Next)
         QTimer::singleShot(0, this, SLOT(executeNext()));
-    else if (type == Playout::PlayoutType::Update)
-        QTimer::singleShot(0, this, SLOT(executeUpdate()));
     else if (type == Playout::PlayoutType::Invoke)
         QTimer::singleShot(0, this, SLOT(executeInvoke()));
     else if (type == Playout::PlayoutType::Clear)
@@ -363,9 +371,6 @@ void RundownTemplateWidget::executeUpdate()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        if (this->command.getTemplateData().isEmpty())
-            return;
-
         device->updateTemplate(this->command.getChannel(), this->command.getVideolayer(),
                                this->command.getFlashlayer(), this->command.getTemplateData());
     }
@@ -378,9 +383,6 @@ void RundownTemplateWidget::executeUpdate()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            if (this->command.getTemplateData().isEmpty())
-                return;
-
             deviceShadow->updateTemplate(this->command.getChannel(), this->command.getVideolayer(),
                                          this->command.getFlashlayer(), this->command.getTemplateData());
         }
