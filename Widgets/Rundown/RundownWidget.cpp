@@ -946,7 +946,7 @@ bool RundownWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource
         }
 
         if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() &&
-            (type != Playout::PlayoutType::Clear || type != Playout::PlayoutType::ClearVideolayer || type != Playout::PlayoutType::ClearChannel))
+            (type != Playout::PlayoutType::Clear && type != Playout::PlayoutType::ClearVideolayer && type != Playout::PlayoutType::ClearChannel))
             QTimer::singleShot(500, this, SLOT(selectItemBelow()));
     }
 
