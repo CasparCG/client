@@ -6,54 +6,9 @@
 
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER_FLASH), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE),
+      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE),
       useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)
 {
-}
-
-int TemplateCommand::getDelay() const
-{
-    return this->delay;
-}
-
-bool TemplateCommand::getAllowGpi() const
-{
-    return this->allowGpi;
-}
-
-int TemplateCommand::getChannel() const
-{
-    return this->channel;
-}
-
-int TemplateCommand::getVideolayer() const
-{
-    return this->videolayer;
-}
-
-void TemplateCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
-}
-
-void TemplateCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
-}
-
-void TemplateCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
-}
-
-void TemplateCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
 }
 
 int TemplateCommand::getFlashlayer() const
@@ -143,10 +98,8 @@ void TemplateCommand::setTemplateDataModels(const QList<TemplateDataModel>& mode
 
 void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
-    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    AbstractCommand::readProperties(pt);
+
     if (pt.count(L"flashlayer") > 0) setFlashlayer(pt.get<int>(L"flashlayer"));
     if (pt.count(L"invoke") > 0) setInvoke(QString::fromStdWString(pt.get<std::wstring>(L"invoke")));
     if (pt.count(L"usestoreddata") > 0) setUseStoredData(pt.get<bool>(L"usestoreddata"));
@@ -163,10 +116,8 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 
 void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    AbstractCommand::writeProperties(writer);
+
     writer->writeTextElement("flashlayer", QString::number(this->getFlashlayer()));
     writer->writeTextElement("invoke", this->getInvoke());
     writer->writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");

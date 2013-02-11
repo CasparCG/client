@@ -15,7 +15,7 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 {
     setupUi(this);
 
-    this->animation = new ColorAnimation(this->labelActiveColor);
+    this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);

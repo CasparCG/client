@@ -19,16 +19,6 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
     public:
         explicit DeckLinkInputCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const;
-        virtual int getVideolayer() const;
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
@@ -47,10 +37,6 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         void setDirection(const QString& direction);
 
     private:
-        int channel;
-        int videolayer;
-        int delay;
-        bool allowGpi;
         int device;
         QString format;
         QString transition;
@@ -58,10 +44,6 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         QString tween;
         QString direction;
 
-        Q_SIGNAL void allowGpiChanged(bool);
-        Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
-        Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void deviceChanged(int);
         Q_SIGNAL void formatChanged(QString);
         Q_SIGNAL void transitionChanged(const QString&);

@@ -19,16 +19,6 @@ class CORE_EXPORT GpiOutputCommand : public AbstractCommand
     public:
         explicit GpiOutputCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const {}
-        virtual int getVideolayer() const {}
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel) {}
-        virtual void setVideolayer(int videolayer) {}
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
@@ -36,11 +26,7 @@ class CORE_EXPORT GpiOutputCommand : public AbstractCommand
         void setGpoPort(int gpoPort);
 
     private:
-        int delay;
-        bool allowGpi;
         int gpoPort;
 
-        Q_SIGNAL void allowGpiChanged(bool);
-        Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void gpoPortChanged(int);
 };

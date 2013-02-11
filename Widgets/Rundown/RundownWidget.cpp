@@ -49,6 +49,8 @@ RundownWidget::RundownWidget(QWidget* parent)
     setupUi(this);
     setupUiMenu();
 
+    this->animation = new BorderAnimation(this->treeWidgetRundown);
+
     // TODO: specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
@@ -553,7 +555,7 @@ void RundownWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writ
 
 void RundownWidget::checkEmptyRundown()
 {
-    this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "border-color: red;" : "");
+    (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? this->animation->start() : this->animation->stop();
 }
 
 void RundownWidget::colorizeItems(const QString& color)
@@ -1172,7 +1174,7 @@ void RundownWidget::addFileRecorderCommand()
 
 void RundownWidget::addSeparatorCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "", "", "", "SEPARATOR")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Separator", "", "", "SEPARATOR")));
 }
 
 void RundownWidget::addGridCommand()

@@ -601,6 +601,7 @@ QComboBox::drop-down
     border-left-color: rgba(42, 42, 42, 255);
     border-left-width: 1px;
     border-left-style: solid;
+    border-top-width: 0px;
 }
 QComboBox::drop-down:editable
 {

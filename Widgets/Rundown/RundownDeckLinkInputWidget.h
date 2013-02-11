@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
@@ -62,7 +62,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         QString color;
         LibraryModel model;
         DeckLinkInputCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

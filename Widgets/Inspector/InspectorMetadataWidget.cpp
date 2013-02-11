@@ -33,6 +33,8 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
 {
     setupUi(this);
 
+    this->animation = new BorderAnimation(this->comboBoxDevice);
+
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
 
@@ -131,10 +133,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorMetadataWidget::checkEmptyDevice()
 {
-    if (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "")
-        this->comboBoxDevice->setStyleSheet("border-color: red;");
-    else
-        this->comboBoxDevice->setStyleSheet("");
+    (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "") ? this->animation->start() : this->animation->stop();
 }
 
 void InspectorMetadataWidget::deviceRemoved()

@@ -132,6 +132,11 @@ namespace Color
     static const QString ROYALBLUE_RGBA_COLOR = "65, 105, 225, 64";
 }
 
+namespace Stylesheet
+{
+    static const QString DEFAULT_BORDER_COLOR = "42, 42, 42, 255";
+}
+
 namespace TemplateData
 {
     static const QString DEFAULT_COMPONENT_DATA_XML = "<componentData id=\\\"#KEY\\\"><data id=\\\"text\\\" value=\\\"#VALUE\\\"/></componentData>";

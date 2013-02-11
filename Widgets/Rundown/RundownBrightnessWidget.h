@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/BrightnessCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
         QString color;
         LibraryModel model;
         BrightnessCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

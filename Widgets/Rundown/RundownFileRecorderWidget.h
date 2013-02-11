@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/FileRecorderCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         QString color;
         LibraryModel model;
         FileRecorderCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

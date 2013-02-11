@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/GridCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownGridWidget : public QWidget, Ui::RundownGridWidget, 
         QString color;
         LibraryModel model;
         GridCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

@@ -19,16 +19,6 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
     public:
         explicit GroupCommand(QObject* parent = 0);
 
-        virtual int getDelay() const {}
-        virtual int getChannel() const {}
-        virtual int getVideolayer() const {}
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel) {}
-        virtual void setVideolayer(int videolayer) {}
-        virtual void setDelay(int delay) {}
-        virtual void setAllowGpi(bool allowGpi);
-
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
@@ -39,11 +29,9 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         void setNotes(const QString& notes);
 
     private:
-        bool allowGpi;
         QString notes;
         bool autoStep;
 
-        Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void notesChanged(const QString&);
         Q_SIGNAL void autoStepChanged(bool);
 };

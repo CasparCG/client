@@ -19,16 +19,6 @@ class CORE_EXPORT KeyerCommand : public AbstractCommand
     public:
         explicit KeyerCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const;
-        virtual int getVideolayer() const;
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         bool getDefer() const;
         void setDefer(bool defer);
 
@@ -36,15 +26,7 @@ class CORE_EXPORT KeyerCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
     private:
-        int channel;
-        int videolayer;
-        int delay;
-        bool allowGpi;
         bool defer;
 
-        Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
-        Q_SIGNAL void delayChanged(int);
-        Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void deferChanged(bool);
 };

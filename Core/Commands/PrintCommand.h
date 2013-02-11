@@ -19,16 +19,6 @@ class CORE_EXPORT PrintCommand : public AbstractCommand
     public:
         explicit PrintCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const;
-        virtual int getVideolayer() const {}
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer) {}
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         const QString& getOutput() const;
         void setOutput(const QString& output);
 
@@ -36,13 +26,7 @@ class CORE_EXPORT PrintCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
     private:
-        int channel;
-        int delay;
-        bool allowGpi;
         QString output;
 
-        Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void delayChanged(int);
-        Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void outputChanged(const QString&);
 };

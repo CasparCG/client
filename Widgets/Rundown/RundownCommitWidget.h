@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/CommitCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownCommitWidget : public QWidget, Ui::RundownCommitWidg
         QString color;
         LibraryModel model;
         CommitCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

@@ -17,7 +17,7 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
 {
     setupUi(this);
 
-    this->animation = new ColorAnimation(this->labelActiveColor);
+    this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);

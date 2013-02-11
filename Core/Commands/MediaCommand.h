@@ -19,16 +19,6 @@ class CORE_EXPORT MediaCommand : public AbstractCommand
     public:
         explicit MediaCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const;
-        virtual int getVideolayer() const;
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
@@ -57,10 +47,6 @@ class CORE_EXPORT MediaCommand : public AbstractCommand
         void setUseAuto(bool useAuto);
 
     private:
-        int channel;
-        int videolayer;
-        int delay;
-        bool allowGpi;
         QString mediaName;
         QString transition;
         int duration;
@@ -73,10 +59,6 @@ class CORE_EXPORT MediaCommand : public AbstractCommand
         int length;
         bool useAuto;
 
-        Q_SIGNAL void allowGpiChanged(bool);
-        Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
-        Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void mediaNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void durationChanged(int);

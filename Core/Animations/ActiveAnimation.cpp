@@ -1,7 +1,6 @@
-#include "ColorAnimation.h"
-#include "QDebug"
+#include "ActiveAnimation.h"
 
-ColorAnimation::ColorAnimation(QWidget* target, QObject* parent)
+ActiveAnimation::ActiveAnimation(QWidget* target, QObject* parent)
     : QObject(parent),
     value(255), target(target), animation(NULL)
 {
@@ -11,23 +10,23 @@ ColorAnimation::ColorAnimation(QWidget* target, QObject* parent)
     this->animation->setKeyValueAt(1, 255);
 }
 
-void ColorAnimation::start(int loopCount)
+void ActiveAnimation::start(int loopCount)
 {
     this->animation->setLoopCount(loopCount);
     this->animation->start();
 }
 
-void ColorAnimation::stop()
+void ActiveAnimation::stop()
 {
     this->animation->stop();
 }
 
-int ColorAnimation::color() const
+int ActiveAnimation::color() const
 {
     return this->value;
 }
 
-void ColorAnimation::setColor(const int value)
+void ActiveAnimation::setColor(const int value)
 {
     this->value = value;
 

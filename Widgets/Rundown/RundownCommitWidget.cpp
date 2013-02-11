@@ -17,7 +17,7 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
 {
     setupUi(this);
 
-    this->animation = new ColorAnimation(this->labelActiveColor);
+    this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);

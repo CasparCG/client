@@ -17,7 +17,7 @@ RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent,
 {
     setupUi(this);
 
-    this->animation = new ColorAnimation(this->labelActiveColor);
+    this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);

@@ -4,44 +4,9 @@
 
 GeometryCommand::GeometryCommand(QObject* parent)
     : AbstractCommand(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS),
-      scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE), scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS), scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE),
+      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
-}
-
-int GeometryCommand::getDelay() const
-{
-    return this->delay;
-}
-
-int GeometryCommand::getChannel() const
-{
-    return this->channel;
-}
-
-int GeometryCommand::getVideolayer() const
-{
-    return this->videolayer;
-}
-
-void GeometryCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
-}
-
-void GeometryCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
-}
-
-void GeometryCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
 }
 
 float GeometryCommand::getPositionX() const
@@ -121,23 +86,10 @@ void GeometryCommand::setDefer(bool defer)
     emit deferChanged(this->defer);
 }
 
-bool GeometryCommand::getAllowGpi() const
-{
-    return this->allowGpi;
-}
-
-void GeometryCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
-}
-
 void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
-    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    AbstractCommand::readProperties(pt);
+
     if (pt.count(L"positionx") > 0) setPositionX(pt.get<float>(L"positionx"));
     if (pt.count(L"positiony") > 0) setPositionY(pt.get<float>(L"positiony"));
     if (pt.count(L"scalex") > 0) setScaleX(pt.get<float>(L"scalex"));
@@ -149,10 +101,8 @@ void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
 
 void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    AbstractCommand::writeProperties(writer);
+
     writer->writeTextElement("positionx", QString::number(this->getPositionX()));
     writer->writeTextElement("positiony", QString::number(this->getPositionY()));
     writer->writeTextElement("scalex", QString::number(this->getScaleX()));

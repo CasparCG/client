@@ -4,56 +4,11 @@
 
 MediaCommand::MediaCommand(QObject* parent)
     : AbstractCommand(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      loop(Media::DEFAULT_LOOP), freezeOnLoad(Media::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Media::DEFAULT_TRIGGER_ON_NEXT),
-      seek(Media::DEFAULT_SEEK), length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
+      mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
+      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Media::DEFAULT_LOOP),
+      freezeOnLoad(Media::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Media::DEFAULT_TRIGGER_ON_NEXT), seek(Media::DEFAULT_SEEK),
+      length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
 {
-}
-
-int MediaCommand::getDelay() const
-{
-    return this->delay;
-}
-
-int MediaCommand::getChannel() const
-{
-    return this->channel;
-}
-
-int MediaCommand::getVideolayer() const
-{
-    return this->videolayer;
-}
-
-bool MediaCommand::getAllowGpi() const
-{
-    return this->allowGpi;
-}
-
-void MediaCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
-}
-
-void MediaCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
-}
-
-void MediaCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
-}
-
-void MediaCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
 }
 
 const QString& MediaCommand::getMediaName() const
@@ -179,10 +134,8 @@ void MediaCommand::setUseAuto(bool useAuto)
 
 void MediaCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
-    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    AbstractCommand::readProperties(pt);
+
     if (pt.count(L"transition") > 0) setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
     if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
     if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
@@ -197,10 +150,8 @@ void MediaCommand::readProperties(boost::property_tree::wptree& pt)
 
 void MediaCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    AbstractCommand::writeProperties(writer);
+
     writer->writeTextElement("transition", this->getTransition());
     writer->writeTextElement("duration", QString::number(this->getDuration()));
     writer->writeTextElement("tween", this->getTween());

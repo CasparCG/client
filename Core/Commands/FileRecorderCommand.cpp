@@ -4,25 +4,9 @@
 
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
     : AbstractCommand(parent),
-      channel(Output::DEFAULT_CHANNEL), delay(Output::DEFAULT_DELAY), allowGpi(Output::DEFAULT_ALLOW_GPI),
       output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET),
       tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)
 {
-}
-
-int FileRecorderCommand::getDelay() const
-{
-    return this->delay;
-}
-
-int FileRecorderCommand::getChannel() const
-{
-    return this->channel;
-}
-
-bool FileRecorderCommand::getAllowGpi() const
-{
-    return this->allowGpi;
 }
 
 const QString& FileRecorderCommand::getOutput() const
@@ -48,24 +32,6 @@ const QString& FileRecorderCommand::getTune() const
 bool FileRecorderCommand::getWithAlpha() const
 {
     return this->withAlpha;
-}
-
-void FileRecorderCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
-}
-
-void FileRecorderCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
-}
-
-void FileRecorderCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
 }
 
 void FileRecorderCommand::setOutput(const QString& output)
@@ -100,9 +66,8 @@ void FileRecorderCommand::setWithAlpha(bool withAlpha)
 
 void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    AbstractCommand::readProperties(pt);
+
     if (pt.count(L"output") > 0) setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
     if (pt.count(L"codec") > 0) setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
     if (pt.count(L"preset") > 0) setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
@@ -112,9 +77,8 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 
 void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    AbstractCommand::writeProperties(writer);
+
     writer->writeTextElement("output", this->getOutput());
     writer->writeTextElement("codec", this->getCodec());
     writer->writeTextElement("preset", this->getPreset());

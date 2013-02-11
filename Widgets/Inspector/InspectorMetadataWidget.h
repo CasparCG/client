@@ -5,6 +5,7 @@
 
 #include "CasparDevice.h"
 
+#include "Animations/BorderAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -26,6 +27,7 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
     private:
         bool preview;
         LibraryModel* model;
+        BorderAnimation* animation;
 
         void checkEmptyDevice();
 

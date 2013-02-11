@@ -7,13 +7,13 @@
 
 #include <QtGui/QWidget>
 
-class CORE_EXPORT ColorAnimation : public QObject
+class CORE_EXPORT ActiveAnimation : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int color READ color WRITE setColor)
 
     public:
-        explicit ColorAnimation(QWidget* target, QObject* parent = 0);
+        explicit ActiveAnimation(QWidget* target, QObject* parent = 0);
 
         void start(int loopCount = -1);
         void stop();

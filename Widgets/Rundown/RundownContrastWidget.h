@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/ContrastCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownContrastWidget : public QWidget, Ui::RundownContrast
         QString color;
         LibraryModel model;
         ContrastCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

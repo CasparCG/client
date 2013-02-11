@@ -4,31 +4,9 @@
 
 DeckLinkInputCommand::DeckLinkInputCommand(QObject* parent)
     : AbstractCommand(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), device(DeckLinkInput::DEFAULT_DEVICE), format(DeckLinkInput::DEFAULT_FORMAT),
-      transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN),
-      direction(Mixer::DEFAULT_DIRECTION)
+      device(DeckLinkInput::DEFAULT_DEVICE), format(DeckLinkInput::DEFAULT_FORMAT), transition(Mixer::DEFAULT_TRANSITION),
+      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION)
 {
-}
-
-int DeckLinkInputCommand::getDelay() const
-{
-    return this->delay;
-}
-
-int DeckLinkInputCommand::getChannel() const
-{
-    return this->channel;
-}
-
-int DeckLinkInputCommand::getVideolayer() const
-{
-    return this->videolayer;
-}
-
-bool DeckLinkInputCommand::getAllowGpi() const
-{
-    return this->allowGpi;
 }
 
 int DeckLinkInputCommand::getDevice() const
@@ -59,30 +37,6 @@ const QString& DeckLinkInputCommand::getDirection() const
 const QString& DeckLinkInputCommand::getTween() const
 {
     return this->tween;
-}
-
-void DeckLinkInputCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
-}
-
-void DeckLinkInputCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
-}
-
-void DeckLinkInputCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
-}
-
-void DeckLinkInputCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
 }
 
 void DeckLinkInputCommand::setDevice(int device)
@@ -123,10 +77,8 @@ void DeckLinkInputCommand::setTween(const QString& tween)
 
 void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel"));
-    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer"));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay"));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi"));
+    AbstractCommand::readProperties(pt);
+
     if (pt.count(L"device") > 0) setDevice(pt.get<int>(L"device"));
     if (pt.count(L"format") > 0) setFormat(QString::fromStdWString(pt.get<std::wstring>(L"format")));
     if (pt.count(L"transition") > 0) setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
@@ -137,10 +89,8 @@ void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
 
 void DeckLinkInputCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    AbstractCommand::writeProperties(writer);
+
     writer->writeTextElement("device", QString::number(this->getDevice()));
     writer->writeTextElement("format", this->getFormat());
     writer->writeTextElement("transition", this->getTransition());

@@ -7,7 +7,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/KeyerCommand.h"
@@ -58,7 +58,7 @@ class WIDGETS_EXPORT RundownKeyerWidget : public QWidget, Ui::RundownKeyerWidget
         QString color;
         LibraryModel model;
         KeyerCommand command;
-        ColorAnimation* animation;
+        ActiveAnimation* animation;
 
         QTimer executeTimer;
 

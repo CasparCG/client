@@ -2,7 +2,7 @@
 
 #include "Global.h"
 
-#include "Animations/ColorAnimation.h"
+#include "Animations/ActiveAnimation.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -18,7 +18,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
 {
     setupUi(this);
 
-    this->animation = new ColorAnimation(this->labelActiveColor);
+    this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setColor(color);
     setActive(active);

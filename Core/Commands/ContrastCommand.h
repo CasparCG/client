@@ -19,16 +19,6 @@ class CORE_EXPORT ContrastCommand : public AbstractCommand
     public:
         explicit ContrastCommand(QObject* parent = 0);
 
-        virtual int getDelay() const;
-        virtual int getChannel() const;
-        virtual int getVideolayer() const;
-        virtual bool getAllowGpi() const;
-
-        virtual void setChannel(int channel);
-        virtual void setVideolayer(int videolayer);
-        virtual void setDelay(int delay);
-        virtual void setAllowGpi(bool allowGpi);
-
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
@@ -42,20 +32,12 @@ class CORE_EXPORT ContrastCommand : public AbstractCommand
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
-    private:
-        int channel;
-        int videolayer;
-        int delay;
-        bool allowGpi;
+    private: 
         float contrast;
         int duration;
         QString tween;
         bool defer;
 
-        Q_SIGNAL void channelChanged(int);
-        Q_SIGNAL void videolayerChanged(int);
-        Q_SIGNAL void delayChanged(int);
-        Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void contrastChanged(float);
         Q_SIGNAL void durationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);

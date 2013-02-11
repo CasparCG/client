@@ -6,6 +6,8 @@
 
 #include "Global.h"
 
+#include "Animations/BorderAnimation.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -42,6 +44,9 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
         bool compactView;
         bool enterPressed;
+
+        BorderAnimation* animation;
+
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
         QTreeWidgetItem* copyItem;
