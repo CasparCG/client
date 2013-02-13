@@ -81,7 +81,7 @@
     <rect>
      <x>138</x>
      <y>34</y>
-     <width>121</width>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
@@ -97,7 +97,7 @@
     <rect>
      <x>138</x>
      <y>138</y>
-     <width>121</width>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
@@ -239,7 +239,7 @@
     <rect>
      <x>138</x>
      <y>8</y>
-     <width>121</width>
+     <width>111</width>
      <height>20</height>
     </rect>
    </property>
@@ -263,9 +263,9 @@
   <widget class="QLabel" name="labelChannels">
    <property name="geometry">
     <rect>
-     <x>272</x>
+     <x>252</x>
      <y>139</y>
-     <width>51</width>
+     <width>71</width>
      <height>20</height>
     </rect>
    </property>

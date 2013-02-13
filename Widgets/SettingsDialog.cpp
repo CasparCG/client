@@ -40,8 +40,8 @@ void SettingsDialog::loadDevices()
     this->treeWidgetDevice->clear();
     this->treeWidgetDevice->headerItem()->setText(1, "");
     this->treeWidgetDevice->setColumnHidden(0, true);
-    this->treeWidgetDevice->setColumnWidth(1, this->treeWidgetDevice->header()->minimumSectionSize());
-    this->treeWidgetDevice->setColumnWidth(4, this->treeWidgetDevice->header()->minimumSectionSize() * 2);
+    this->treeWidgetDevice->setColumnWidth(1, 25);
+    this->treeWidgetDevice->setColumnWidth(4, 50);
 
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
     foreach (DeviceModel model, models)
