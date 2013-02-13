@@ -94,14 +94,14 @@
       <widget class="QToolButton" name="toolButtonMasterVolume">
        <property name="minimumSize">
         <size>
-         <width>21</width>
-         <height>21</height>
+         <width>34</width>
+         <height>34</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>21</width>
-         <height>21</height>
+         <width>34</width>
+         <height>34</height>
         </size>
        </property>
        <property name="icon">
