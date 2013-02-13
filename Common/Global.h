@@ -4,8 +4,8 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
-#define TAG_VERSION "RC 1"
-#define DATABASE_VERSION "20rc1"
+#define TAG_VERSION "RC 2"
+#define DATABASE_VERSION "20rc2"
 
 #include <stdexcept>
 
@@ -199,7 +199,7 @@ namespace Library
 
 namespace Print
 {
-    static const QString DEFAULT_OUTPUT = "Snapshot.png";
+    static const QString DEFAULT_OUTPUT = "Snapshot";
 }
 
 namespace ClearOutput

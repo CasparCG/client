@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorColorWidget.h"
+#include "ui_InspectorColorProducerWidget.h"
 
 #include "Commands/ColorCommand.h"
 #include "Models/LibraryModel.h"
@@ -12,12 +12,12 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorColorWidget : public QWidget, Ui::InspectorColorWidget
+class WIDGETS_EXPORT InspectorColorProducerWidget : public QWidget, Ui::InspectorColorProducerWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorColorWidget(QWidget* parent = 0);
+        explicit InspectorColorProducerWidget(QWidget* parent = 0);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
@@ -31,6 +31,7 @@ class WIDGETS_EXPORT InspectorColorWidget : public QWidget, Ui::InspectorColorWi
         void loadTransition();
         void loadTween();
 
+        Q_SLOT void colorDialogClicked();
         Q_SLOT void transitionChanged(QString);
         Q_SLOT void durationChanged(int);
         Q_SLOT void directionChanged(QString);

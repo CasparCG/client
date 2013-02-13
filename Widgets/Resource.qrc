@@ -60,6 +60,12 @@
         <file>Images/Print.png</file>
         <file>Images/Clear.png</file>
         <file>Images/AutoStep.png</file>
+        <file>Images/Snapshot.png</file>
+        <file>Images/MasterVolumeOff.png</file>
+        <file>Images/MasterVolumeOn.png</file>
+        <file>Images/Delay.png</file>
+        <file>Images/ServerBig.png</file>
+        <file>Images/ServerSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
@@ -76,5 +82,7 @@
         <file>Fonts/OpenSans-Regular.ttf</file>
         <file>Fonts/OpenSans-Semibold.ttf</file>
         <file>Fonts/OpenSans-SemiboldItalic.ttf</file>
+        <file>Images/MasterVolumeOff.png</file>
+        <file>Images/MasterVolumeOn.png</file>
     </qresource>
 </RCC>

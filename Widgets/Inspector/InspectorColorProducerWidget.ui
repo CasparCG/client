@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InspectorColorWidget</class>
- <widget class="QWidget" name="InspectorColorWidget">
+ <class>InspectorColorProducerWidget</class>
+ <widget class="QWidget" name="InspectorColorProducerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -52,8 +52,14 @@
       <widget class="QToolButton" name="toolButtonColor">
        <property name="minimumSize">
         <size>
-         <width>22</width>
-         <height>22</height>
+         <width>23</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>23</width>
+         <height>23</height>
         </size>
        </property>
        <property name="icon">
@@ -305,12 +311,12 @@
   <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>durationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>57</y>
+     <x>254</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
      <x>223</x>
@@ -321,12 +327,12 @@
   <connection>
    <sender>comboBoxTransition</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>transitionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>29</y>
+     <x>254</x>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel">
      <x>223</x>
@@ -337,12 +343,12 @@
   <connection>
    <sender>comboBoxDirection</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>directionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>105</y>
+     <x>222</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -353,12 +359,12 @@
   <connection>
    <sender>comboBoxTween</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>85</y>
+     <x>254</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -369,12 +375,12 @@
   <connection>
    <sender>labelTransition</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>resetTransition(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>47</x>
-     <y>22</y>
+     <x>90</x>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -385,12 +391,12 @@
   <connection>
    <sender>labelDuration</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>resetDuration(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>56</x>
-     <y>44</y>
+     <x>91</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -401,12 +407,12 @@
   <connection>
    <sender>labelTween</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>resetTween(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>94</x>
-     <y>85</y>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -417,12 +423,12 @@
   <connection>
    <sender>labelDirection</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>resetDirection(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>104</y>
+     <x>91</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -433,12 +439,12 @@
   <connection>
    <sender>labelUseAuto</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>resetUseAuto(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>211</y>
+     <x>88</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
@@ -449,16 +455,32 @@
   <connection>
    <sender>checkBoxUseAuto</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>InspectorColorWidget</receiver>
+   <receiver>InspectorColorProducerWidget</receiver>
    <slot>useAutoChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>210</y>
+     <x>107</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
      <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonColor</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>InspectorColorProducerWidget</receiver>
+   <slot>colorDialogClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
@@ -482,5 +504,6 @@
   <slot>resetPauseOnLoad(QString)</slot>
   <slot>resetUseAuto(QString)</slot>
   <slot>useAutoChanged(int)</slot>
+  <slot>colorDialogClicked()</slot>
  </slots>
 </ui>

@@ -65,11 +65,12 @@ HEADERS += \
     Rundown/RundownSeparatorWidget.h \
     Rundown/RundownPrintWidget.h \
     Inspector/InspectorKeyerWidget.h \
-    Inspector/InspectorColorWidget.h \
     Inspector/InspectorPrintWidget.h \
     Rundown/RundownClearOutputWidget.h \
     Inspector/InspectorClearOutputWidget.h \
-    Inspector/InspectorGroupWidget.h
+    Inspector/InspectorGroupWidget.h \
+    Rundown/RundownColorProducerWidget.h \
+    Inspector/InspectorColorProducerWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -123,11 +124,12 @@ SOURCES += \
     Rundown/RundownSeparatorWidget.cpp \
     Rundown/RundownPrintWidget.cpp \
     Inspector/InspectorKeyerWidget.cpp \
-    Inspector/InspectorColorWidget.cpp \
     Inspector/InspectorPrintWidget.cpp \
     Rundown/RundownClearOutputWidget.cpp \
     Inspector/InspectorClearOutputWidget.cpp \
-    Inspector/InspectorGroupWidget.cpp
+    Inspector/InspectorGroupWidget.cpp \
+    Rundown/RundownColorProducerWidget.cpp \
+    Inspector/InspectorColorProducerWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -181,11 +183,12 @@ FORMS += \
     Rundown/RundownSeparatorWidget.ui \
     Rundown/RundownPrintWidget.ui \
     Inspector/InspectorKeyerWidget.ui \
-    Inspector/InspectorColorWidget.ui \
     Inspector/InspectorPrintWidget.ui \
     Rundown/RundownClearOutputWidget.ui \
     Inspector/InspectorClearOutputWidget.ui \
-    Inspector/InspectorGroupWidget.ui
+    Inspector/InspectorGroupWidget.ui \
+    Rundown/RundownColorProducerWidget.ui \
+    Inspector/InspectorColorProducerWidget.ui
 
 RESOURCES += \
     Resource.qrc
@@ -266,7 +269,13 @@ OTHER_FILES += \
     Images/Data.png \
     Images/Print.png \
     Images/Clear.png \
-    Images/AutoStep.png
+    Images/AutoStep.png \
+    Images/Snapshot.png \
+    Images/MasterVolumeOff.png \
+    Images/MasterVolumeOn.png \
+    Images/Delay.png \
+    Images/ServerSmall.png \
+    Images/ServerBig.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

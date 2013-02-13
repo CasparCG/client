@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>654</width>
-    <height>382</height>
+    <height>430</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -59,9 +59,64 @@
      </column>
     </widget>
    </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>6</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutMasterVolume">
+     <item>
+      <spacer name="horizontalSpacerMasterVolume">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButtonMasterVolume">
+       <property name="minimumSize">
+        <size>
+         <width>21</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>21</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource.qrc">
+         <normaloff>:/Graphics/Images/MasterVolumeOn.png</normaloff>:/Graphics/Images/MasterVolumeOn.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>treeWidgetRundown</sender>
@@ -74,7 +129,7 @@
      <y>160</y>
     </hint>
     <hint type="destinationlabel">
-     <x>658</x>
+     <x>653</x>
      <y>154</y>
     </hint>
    </hints>
@@ -90,7 +145,7 @@
      <y>222</y>
     </hint>
     <hint type="destinationlabel">
-     <x>654</x>
+     <x>653</x>
      <y>237</y>
     </hint>
    </hints>
@@ -106,8 +161,24 @@
      <y>315</y>
     </hint>
     <hint type="destinationlabel">
-     <x>657</x>
+     <x>653</x>
      <y>322</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonMasterVolume</sender>
+   <signal>clicked()</signal>
+   <receiver>RundownWidget</receiver>
+   <slot>soundClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>641</x>
+     <y>416</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>660</x>
+     <y>399</y>
     </hint>
    </hints>
   </connection>
@@ -120,6 +191,6 @@
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
   <slot>itemActivated(QTreeWidgetItem*,int)</slot>
-  <slot>slot1()</slot>
+  <slot>soundClicked()</slot>
  </slots>
 </ui>

@@ -6,6 +6,8 @@
 #include "CasparDevice.h"
 #include "CasparVersion.h"
 
+#include <QtCore/QList>
+
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
 
@@ -24,6 +26,7 @@ class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
         const QString getDescription() const;
         const QString getVersion() const;
         const QString getShadow() const;
+        int getChannels() const;
 
     protected:
         void closeEvent(QCloseEvent* event);
@@ -35,5 +38,6 @@ class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
         Q_SLOT void lookupName();
         Q_SLOT void lookupAddress();
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceVersionChanged(const CasparVersion&, CasparDevice&);
+        Q_SLOT void deviceServerVersionChanged(const CasparVersion&, CasparDevice&);
+        Q_SLOT void deviceInfoChanged(const QList<QString>&, CasparDevice&);
 };

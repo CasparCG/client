@@ -24,6 +24,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void refreshData();
         void refreshMedia();
         void refreshTemplate();
+        void refreshChannels();
 
         void refreshFlashVersion();
         void refreshServerVersion();
@@ -35,6 +36,8 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void clearMixerChannel(int channel);
         void clearVideolayer(int channel, int videolayer);
         void clearMixerVideolayer(int channel, int videolayer);
+
+        void setMasterVolume(int channel, float masterVolume);
 
         void addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad);
         void addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad, const QString& data);

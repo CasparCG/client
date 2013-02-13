@@ -1,4 +1,4 @@
-#include "RundownMediaWidget.h"
+#include "RundownColorProducerWidget.h"
 
 #include "Global.h"
 
@@ -11,8 +11,8 @@
 
 #include <QtGui/QPixmap>
 
-RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool disconnected, bool compactView)
+RundownColorProducerWidget::RundownColorProducerWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                                       bool loaded, bool paused, bool playing, bool inGroup, bool disconnected, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
       compactView(compactView), color(color), model(model)
@@ -61,7 +61,7 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
     qApp->installEventFilter(this);
 }
 
-bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownColorProducerWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
     {
@@ -97,13 +97,13 @@ bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownMediaWidget::clone()
+AbstractRundownWidget* RundownColorProducerWidget::clone()
 {
-    RundownMediaWidget* widget = new RundownMediaWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->loaded, this->paused, this->playing, this->inGroup,
-                                                        this->disconnected, this->compactView);
+    RundownColorProducerWidget* widget = new RundownColorProducerWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                                        this->loaded, this->paused, this->playing, this->inGroup,
+                                                                        this->disconnected, this->compactView);
 
-    MediaCommand* command = dynamic_cast<MediaCommand*>(widget->getCommand());
+    ColorProducerCommand* command = dynamic_cast<ColorProducerCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -117,13 +117,11 @@ AbstractRundownWidget* RundownMediaWidget::clone()
     command->setSeek(this->command.getSeek());
     command->setLength(this->command.getLength());
     command->setUseAuto(this->command.getUseAuto());
-    command->setFreezeOnLoad(this->command.getFreezeOnLoad());
-    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
 
-void RundownMediaWidget::setCompactView(bool compactView)
+void RundownColorProducerWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -141,32 +139,32 @@ void RundownMediaWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownMediaWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownColorProducerWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownMediaWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownColorProducerWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownMediaWidget::isGroup() const
+bool RundownColorProducerWidget::isGroup() const
 {
     return false;
 }
 
-AbstractCommand* RundownMediaWidget::getCommand()
+AbstractCommand* RundownColorProducerWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownMediaWidget::getLibraryModel()
+LibraryModel* RundownColorProducerWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownMediaWidget::setActive(bool active)
+void RundownColorProducerWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -178,7 +176,7 @@ void RundownMediaWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownMediaWidget::setInGroup(bool inGroup)
+void RundownColorProducerWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(inGroup);
@@ -204,13 +202,13 @@ void RundownMediaWidget::setInGroup(bool inGroup)
     }
 }
 
-void RundownMediaWidget::setColor(const QString& color)
+void RundownColorProducerWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-void RundownMediaWidget::checkEmptyDevice()
+void RundownColorProducerWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -218,7 +216,7 @@ void RundownMediaWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownColorProducerWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
@@ -247,7 +245,7 @@ bool RundownMediaWidget::executeCommand(enum Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownMediaWidget::executeStop()
+void RundownColorProducerWidget::executeStop()
 {
     this->executeTimer.stop();
 
@@ -270,7 +268,7 @@ void RundownMediaWidget::executeStop()
     this->playing = false;
 }
 
-void RundownMediaWidget::executePlay()
+void RundownColorProducerWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -315,7 +313,7 @@ void RundownMediaWidget::executePlay()
     this->playing = true;
 }
 
-void RundownMediaWidget::executePause()
+void RundownColorProducerWidget::executePause()
 {
     if (!this->playing)
         return;
@@ -347,7 +345,7 @@ void RundownMediaWidget::executePause()
     this->paused = !this->paused;
 }
 
-void RundownMediaWidget::executeLoad()
+void RundownColorProducerWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -378,7 +376,7 @@ void RundownMediaWidget::executeLoad()
     this->playing = false;
 }
 
-void RundownMediaWidget::executeClearVideolayer()
+void RundownColorProducerWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
@@ -401,7 +399,7 @@ void RundownMediaWidget::executeClearVideolayer()
     this->playing = false;
 }
 
-void RundownMediaWidget::executeClearChannel()
+void RundownColorProducerWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
@@ -430,22 +428,22 @@ void RundownMediaWidget::executeClearChannel()
     this->playing = false;
 }
 
-void RundownMediaWidget::channelChanged(int channel)
+void RundownColorProducerWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownMediaWidget::videolayerChanged(int videolayer)
+void RundownColorProducerWidget::videolayerChanged(int videolayer)
 {
     this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
-void RundownMediaWidget::delayChanged(int delay)
+void RundownColorProducerWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownMediaWidget::checkGpiTriggerable()
+void RundownColorProducerWidget::checkGpiTriggerable()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -455,12 +453,12 @@ void RundownMediaWidget::checkGpiTriggerable()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownMediaWidget::allowGpiChanged(bool allowGpi)
+void RundownColorProducerWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiTriggerable();
 }
 
-void RundownMediaWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownColorProducerWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
 {
     checkGpiTriggerable();
 }

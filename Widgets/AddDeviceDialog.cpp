@@ -65,7 +65,8 @@ void AddDeviceDialog::lookupAddress()
     this->device = new CasparDevice(this);
 
     QObject::connect(this->device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-    QObject::connect(this->device, SIGNAL(versionChanged(const CasparVersion&, CasparDevice&)), this, SLOT(deviceVersionChanged(const CasparVersion&, CasparDevice&)));
+    QObject::connect(this->device, SIGNAL(versionChanged(const CasparVersion&, CasparDevice&)), this, SLOT(deviceServerVersionChanged(const CasparVersion&, CasparDevice&)));
+    QObject::connect(this->device, SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(deviceInfoChanged(const QList<QString>&, CasparDevice&)));
 
     if (this->lineEditPort->text().isEmpty())
         this->device->connect(this->lineEditAddress->text());
@@ -108,10 +109,18 @@ const QString AddDeviceDialog::getDescription() const
 
 const QString AddDeviceDialog::getVersion() const
 {
-    if (!this->lineEditVersion->text().isEmpty())
-        return this->lineEditVersion->text();
-    else
+    if (this->lineEditVersion->text().isEmpty())
         return this->lineEditVersion->placeholderText();
+
+    return this->lineEditVersion->text();
+}
+
+int AddDeviceDialog::getChannels() const
+{
+    if (this->lineEditChannels->text().isEmpty())
+        return 0;
+
+    return this->lineEditChannels->text().toInt();
 }
 
 const QString AddDeviceDialog::getShadow() const
@@ -125,10 +134,18 @@ void AddDeviceDialog::deviceConnectionStateChanged(CasparDevice& device)
         this->device->refreshServerVersion();
 }
 
-void AddDeviceDialog::deviceVersionChanged(const CasparVersion& version, CasparDevice& device)
+void AddDeviceDialog::deviceServerVersionChanged(const CasparVersion& version, CasparDevice& device)
 {
-    this->pushButtonOK->setEnabled(true);
     this->lineEditVersion->setText(version.getVersion());
 
+    if (this->device->isConnected())
+        this->device->refreshChannels();
+}
+
+void AddDeviceDialog::deviceInfoChanged(const QList<QString>& info, CasparDevice& device)
+{
+    this->lineEditChannels->setText(QString("%1").arg(info.count()));
+
+    this->pushButtonOK->setEnabled(true);
     this->device->disconnect();
 }

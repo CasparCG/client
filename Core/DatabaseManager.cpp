@@ -44,7 +44,7 @@ void DatabaseManager::initialize()
     QSqlQuery sql;
     sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT)");
+    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER)");
     sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
@@ -217,6 +217,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('SEPARATOR')");
     sql.exec("INSERT INTO Type (Value) VALUES('CHANNELSNAPSHOT')");
     sql.exec("INSERT INTO Type (Value) VALUES('CLEAROUTPUT')");
+    sql.exec("INSERT INTO Type (Value) VALUES('COLORPRODUCER')");
 }
 
 void DatabaseManager::updateConfiguration(const ConfigurationModel& model)
@@ -502,22 +503,20 @@ QList<DeviceModel> DatabaseManager::getDevice()
     QSqlQuery sql;
     QList<DeviceModel> models;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
                   "ORDER BY d.Name");
 
     sql.exec(query);
     while (sql.next())
         models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                                     sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString()));
+                                     sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt()));
 
     return models;
 }
 
 GpiDeviceModel DatabaseManager::getGpiDevice()
 {
-    return GpiDeviceModel(
-            getConfigurationByName("GpiSerialPort").getValue(),
-            getConfigurationByName("GpiBaudRate").getValue().toInt());
+    return GpiDeviceModel(getConfigurationByName("GpiSerialPort").getValue(), getConfigurationByName("GpiBaudRate").getValue().toInt());
 }
 
 void DatabaseManager::updateGpiDevice(const GpiDeviceModel& model)
@@ -532,7 +531,7 @@ DeviceModel DatabaseManager::getDeviceById(int id)
 
     QSqlQuery sql;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
                   "WHERE d.Id = :id");
     query.replace(QRegExp(":id"), QString("%1").arg(id));
 
@@ -540,7 +539,7 @@ DeviceModel DatabaseManager::getDeviceById(int id)
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString());
+                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByName(const QString& name)
@@ -549,7 +548,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     QSqlQuery sql;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
                   "WHERE d.Name = ':name'");
     query.replace(QRegExp(":name"), QString("%1").arg(name));
 
@@ -557,7 +556,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString());
+                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
@@ -566,7 +565,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     QSqlQuery sql;
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
                   "WHERE d.Address = ':address'");
     query.replace(QRegExp(":address"), QString("%1").arg(address));
 
@@ -574,7 +573,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString());
+                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
 }
 
 void DatabaseManager::insertDevice(const DeviceModel& model)
@@ -583,8 +582,8 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow) "
-                  "VALUES(':name', ':address', :port, ':username', ':password', ':description', ':version', ':shadow')");
+    QString query("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels) "
+                  "VALUES(':name', ':address', :port, ':username', ':password', ':description', ':version', ':shadow', :channels)");
     query.replace(QRegExp(":name"), model.getName());
     query.replace(QRegExp(":address"), model.getAddress());
     query.replace(QRegExp(":port"), QString("%1").arg(model.getPort()));
@@ -593,6 +592,7 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
     query.replace(QRegExp(":description"), model.getDescription());
     query.replace(QRegExp(":version"), model.getVersion());
     query.replace(QRegExp(":shadow"), model.getShadow());
+    query.replace(QRegExp(":channels"), QString("%1").arg(model.getChannels()));
 
     executeUpdate(query);
 

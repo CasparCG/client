@@ -8,9 +8,8 @@
 #include "Models/ConfigurationModel.h"
 #include "Models/GpiModel.h"
 
-#include <QtCore/QDebug>
-
 #include <QtGui/QComboBox>
+#include <QtGui/QIcon>
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
@@ -39,25 +38,29 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 void SettingsDialog::loadDevices()
 {
     this->treeWidgetDevice->clear();
+    this->treeWidgetDevice->headerItem()->setText(1, "");
     this->treeWidgetDevice->setColumnHidden(0, true);
-    this->treeWidgetDevice->setColumnWidth(3, 50);
+    this->treeWidgetDevice->setColumnWidth(1, this->treeWidgetDevice->header()->minimumSectionSize());
+    this->treeWidgetDevice->setColumnWidth(4, this->treeWidgetDevice->header()->minimumSectionSize() * 2);
 
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
     foreach (DeviceModel model, models)
     {
         QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetDevice);
         treeItem->setText(0, QString("%1").arg(model.getId()));
-        treeItem->setText(1, model.getName());
-        treeItem->setText(2, model.getAddress());
-        treeItem->setText(3, QString("%1").arg(model.getPort()));
-        treeItem->setText(4, model.getUsername());
+        treeItem->setIcon(1, QIcon(":/Graphics/Images/ServerSmall.png"));
+        treeItem->setText(2, model.getName());
+        treeItem->setText(3, model.getAddress());
+        treeItem->setText(4, QString("%1").arg(model.getPort()));
+        treeItem->setText(5, model.getUsername());
 
         QString password = model.getPassword();
-        treeItem->setText(5, password.replace(QRegExp("."), "*"));
+        treeItem->setText(6, password.replace(QRegExp("."), "*"));
 
-        treeItem->setText(6, model.getDescription());
-        treeItem->setText(7, model.getVersion());
-        treeItem->setText(8, model.getShadow());
+        treeItem->setText(7, model.getDescription());
+        treeItem->setText(8, model.getVersion());
+        treeItem->setText(9, model.getShadow());
+        treeItem->setText(10, QString("%1").arg(model.getChannels()));
     }
 
     checkEmptyDeviceList();
@@ -124,7 +127,7 @@ void SettingsDialog::showAddDeviceDialog()
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                dialog->getVersion(), dialog->getShadow()));
+                                                                dialog->getVersion(), dialog->getShadow(), dialog->getChannels()));
         loadDevices();
 
         qApp->postEvent(qApp, new RefreshLibraryEvent(0));

@@ -58,6 +58,11 @@ void CasparDevice::refreshTemplate()
     AMCPDevice::writeMessage("TLS");
 }
 
+void CasparDevice::refreshChannels()
+{
+    AMCPDevice::writeMessage("INFO");
+}
+
 void CasparDevice::sendCommand(const QString& command)
 {
     AMCPDevice::writeMessage(QString("%1").arg(command));
@@ -81,6 +86,11 @@ void CasparDevice::clearVideolayer(int channel, int videolayer)
 void CasparDevice::clearMixerVideolayer(int channel, int videolayer)
 {
     AMCPDevice::writeMessage(QString("MIXER %1-%2 CLEAR").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::setMasterVolume(int channel, float masterVolume)
+{
+    AMCPDevice::writeMessage(QString("MIXER %1 MASTERVOLUME %2").arg(channel).arg(masterVolume));
 }
 
 void CasparDevice::addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad)

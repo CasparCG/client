@@ -21,8 +21,10 @@
 #include "RundownSeparatorWidget.h"
 #include "RundownPrintWidget.h"
 #include "RundownClearOutputWidget.h"
+#include "RundownColorProducerWidget.h"
 
 #include "DatabaseManager.h"
+#include "DeviceManager.h"
 #include "Events/AddRudnownItemEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
@@ -44,7 +46,7 @@
 
 RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent),
-    compactView(false), enterPressed(false)
+    compactView(false), enterPressed(false), masterVolumeMuted(false)
 {
     setupUi(this);
     setupUiMenu();
@@ -97,7 +99,7 @@ void RundownWidget::setupUiMenu()
     this->newMenu->addMenu(this->mixerMenu);
     this->newMenu->addMenu(this->libraryMenu);
     this->newMenu->addSeparator();
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addFileRecorderCommand()));
+    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Color Producer", this, SLOT(addColorProducerCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
@@ -361,6 +363,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "CLEAROUTPUT")
             widget = new RundownClearOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "COLORPRODUCER")
+            widget = new RundownColorProducerWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
 
@@ -508,6 +512,8 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownSeparatorWidget(LibraryModel(-1, label, name, deviceName, type), this);
     else if (type == "CLEAROUTPUT")
         widget = new RundownClearOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+    else if (type == "COLORPRODUCER")
+        widget = new RundownColorProducerWidget(LibraryModel(-1, label, name, deviceName, type), this);
 
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -1182,6 +1188,11 @@ void RundownWidget::addGridCommand()
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Grid", "", "", "GRID")));
 }
 
+void RundownWidget::addColorProducerCommand()
+{
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Color Producer", "", "", "COLORPRODUCER")));
+}
+
 void RundownWidget::addKeyerCommand()
 {
     qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Keyer", "", "", "KEYER")));
@@ -1338,4 +1349,24 @@ void RundownWidget::parsePage(QKeyEvent* keyEvent)
 
 void RundownWidget::filterRundown()
 {
+}
+
+void RundownWidget::soundClicked()
+{
+    this->masterVolumeMuted = !this->masterVolumeMuted;
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
+        if (device->isConnected())
+        {
+            for (int i = 1; i <= model.getChannels(); i++)
+                device->setMasterVolume(i, (this->masterVolumeMuted == true) ? 0 : 1);
+        }
+    }
+
+    if (this->masterVolumeMuted)
+        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOff.png"));
+    else
+        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOn.png"));
 }

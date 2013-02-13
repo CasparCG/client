@@ -1,3 +1,10 @@
+CasparCG Client 2.0 RC 2
+========================
+
+- NEW: Added support for CasparCG 2.0.4 master volume feature.
+- UPDATE: UI changes.
+
+
 CasparCG Client 2.0 RC 1
 ========================
 
@@ -20,7 +27,7 @@ CasparCG Client 2.0 RC 1
 - NEW: Added support for notes on group items.
 - NEW: Added support for automatically step in the rundown.
 - NEW: Added execute indication on items.
-- UPDATE: UI modifications.
+- UPDATE: UI changes.
 - UPDATE: The client will execute the mixer command when UPDATE is issued.
 
 
@@ -44,7 +51,7 @@ CasparCG Client 2.0 Beta 3
 - NEW: The rundown now support compact view.
 - NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.
 - UPDATE: Changed colorization logic of rundown items.
-- UPDATE: Minor UI changes.
+- UPDATE: UI changes.
 - UPDATE: The client will execute the mixer command when UPDATE or INVOKE is issued.
 
 Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
@@ -55,7 +62,7 @@ CasparCG Client 2.0 Beta 2
 
 - FIX: Various bugs.
 - NEW: Added support for build the project on MacOSX with full GPI support.
-- UPDATE: UI modifications.
+- UPDATE: UI changes.
 
 
 CasparCG Client 2.0 Beta 1
@@ -87,7 +94,7 @@ TODO
 - iNews integration.
 - Live view from CasparCG.
 - PBus support.
-- Support for the color producer.
++ Support for the color producer.
 - Automated rundowns.
 - Support for group in group, aka macro in macro.
 - Support for store the rundown in the database.

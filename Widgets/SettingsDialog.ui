@@ -289,6 +289,11 @@
      </column>
      <column>
       <property name="text">
+       <string>Icon</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Name</string>
       </property>
      </column>
@@ -325,6 +330,11 @@
      <column>
       <property name="text">
        <string>Shadow</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Channels</string>
       </property>
      </column>
     </widget>
