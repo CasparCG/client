@@ -27,12 +27,14 @@ class CORE_EXPORT ColorCommand : public AbstractCommand
         int getDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
+        bool getUseAuto() const;
 
         void setColor(const QString& color);
         void setTransition(const QString& transition);
         void setDuration(int duration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
+        void setUseAuto(bool useAuto);
 
     private:
         QString color;
@@ -40,10 +42,12 @@ class CORE_EXPORT ColorCommand : public AbstractCommand
         int duration;
         QString tween;
         QString direction;
+        bool useAuto;
 
         Q_SIGNAL void colorChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void durationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
+        Q_SIGNAL void useAutoChanged(bool);
 };

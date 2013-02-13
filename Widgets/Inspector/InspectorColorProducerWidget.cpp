@@ -111,6 +111,11 @@ void InspectorColorProducerWidget::tweenChanged(QString tween)
     this->command->setTween(tween);
 }
 
+void InspectorColorProducerWidget::useAutoChanged(int state)
+{
+    this->command->setUseAuto((state == Qt::Checked) ? true : false);
+}
+
 void InspectorColorProducerWidget::resetTransition(QString transition)
 {
     this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
@@ -133,4 +138,10 @@ void InspectorColorProducerWidget::resetTween(QString tween)
 {
     this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
     this->command->setTween(this->comboBoxTween->currentText());
+}
+
+void InspectorColorProducerWidget::resetUseAuto(QString useAuto)
+{
+    this->checkBoxUseAuto->setChecked(false);
+    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }

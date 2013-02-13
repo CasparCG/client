@@ -110,6 +110,7 @@ namespace Mixer
 
 namespace Color
 {
+    static const bool DEFAULT_USE_AUTO = false;
     static const QString DEFAULT_COLOR_NAME = "";
     static const QString DEFAULT_CONSUMER_COLOR = "DarkSlateGray";
     static const QString DEFAULT_GPI_COLOR = "Chocolate";

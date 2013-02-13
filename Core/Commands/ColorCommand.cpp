@@ -5,7 +5,7 @@
 ColorCommand::ColorCommand(QObject* parent)
     : AbstractCommand(parent),
       color(Color::DEFAULT_COLOR_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION)
+      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(Color::DEFAULT_USE_AUTO)
 {
 }
 
@@ -32,6 +32,11 @@ const QString& ColorCommand::getDirection() const
 const QString& ColorCommand::getTween() const
 {
     return this->tween;
+}
+
+bool ColorCommand::getUseAuto() const
+{
+    return this->useAuto;
 }
 
 void ColorCommand::setColor(const QString& color)
@@ -62,6 +67,12 @@ void ColorCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
+}
+
+void ColorCommand::setUseAuto(bool useAuto)
+{
+    this->useAuto = useAuto;
+    emit useAutoChanged(this->useAuto);
 }
 
 void ColorCommand::readProperties(boost::property_tree::wptree& pt)
