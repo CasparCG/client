@@ -237,7 +237,6 @@ OTHER_FILES += \
     Images/RedBullet.png \
     Images/BlueBullet.png \
     Images/CheckboxChecked.png \
-    Images/Refresh.png \
     Images/Group.png \
     Images/GreyBullet.png \
     Images/Audio.png \
@@ -266,7 +265,6 @@ OTHER_FILES += \
     Images/ImageScroller.png \
     Images/GpiDisconnected.png \
     Images/GpiConnected.png \
-    Images/Data.png \
     Images/Print.png \
     Images/Clear.png \
     Images/AutoStep.png \
@@ -275,7 +273,14 @@ OTHER_FILES += \
     Images/MasterVolumeOn.png \
     Images/Delay.png \
     Images/ServerSmall.png \
-    Images/ServerBig.png
+    Images/ServerBig.png \
+    Images/StoredData.png \
+    Images/TemplateColor.png \
+    Images/AudioColor.png \
+    Images/StillColor.png \
+    Images/MovieColor.png \
+    Images/StillColor.png \
+    Images/StoredDataColor.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

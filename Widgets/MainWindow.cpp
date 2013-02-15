@@ -4,6 +4,7 @@
 
 #include "Events/CompactViewEvent.h"
 #include "Events/OpenRundownEvent.h"
+#include "Events/RefreshLibraryEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/StatusbarEvent.h"
 
@@ -65,6 +66,9 @@ void MainWindow::setupUiMenu()
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
     this->viewMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
+    this->libraryMenu = new QMenu(this);
+    this->libraryMenu->addAction("Refresh Library", this, SLOT(refreshLibrary()), QKeySequence::fromString("Ctrl+R"));
+
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
     this->playoutMenu->addAction("Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
@@ -90,6 +94,7 @@ void MainWindow::setupUiMenu()
     this->menuBar->addMenu(this->fileMenu)->setText("File");
     this->menuBar->addMenu(this->editMenu)->setText("Edit");
     this->menuBar->addMenu(this->viewMenu)->setText("View");
+    this->menuBar->addMenu(this->libraryMenu)->setText("Library");
     this->menuBar->addMenu(this->playoutMenu)->setText("Playout");
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
@@ -229,4 +234,9 @@ void MainWindow::showSettingsDialog()
 void MainWindow::toggleFullscreen()
 {
     isFullScreen() ? showNormal() : showFullScreen();
+}
+
+void MainWindow::refreshLibrary()
+{
+    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
 }

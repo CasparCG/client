@@ -25,7 +25,7 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MEDIA_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRINT_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));

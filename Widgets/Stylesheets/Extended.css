@@ -20,7 +20,7 @@
 /*
  * LibraryWidget
  */
-#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData
+#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetStoredData
 {
     border-width: 0px;
     color: rgba(190, 190, 190, 255);

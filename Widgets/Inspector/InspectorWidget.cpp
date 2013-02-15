@@ -25,6 +25,7 @@
 
 #include "Global.h"
 
+#include "DeviceManager.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
@@ -49,7 +50,8 @@
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorWidget::InspectorWidget(QWidget* parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      masterVolumeMuted(false)
 {
     setupUi(this);
 
@@ -300,4 +302,24 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
     item->setExpanded(!item->isExpanded());
+}
+
+void InspectorWidget::masterVolumeClicked()
+{
+    this->masterVolumeMuted = !this->masterVolumeMuted;
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
+        if (device->isConnected())
+        {
+            for (int i = 1; i <= model.getChannels(); i++)
+                device->setMasterVolume(i, (this->masterVolumeMuted == true) ? 0 : 1);
+        }
+    }
+
+    if (this->masterVolumeMuted)
+        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOff.png"));
+    else
+        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOn.png"));
 }

@@ -28,6 +28,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* fileMenu;
         QMenu* editMenu;
         QMenu* viewMenu;
+        QMenu* libraryMenu;
         QMenu* playoutMenu;
         QMenu* helpMenu;
         QMenuBar* menuBar;
@@ -52,4 +53,5 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void showSettingsDialog();
         Q_SLOT void toggleFullscreen();
         Q_SLOT void toggleCompactView();
+        Q_SLOT void refreshLibrary();
 };

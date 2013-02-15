@@ -193,7 +193,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInBounce')");
 
     sql.exec("INSERT INTO Type (Value) VALUES('AUDIO')");
-    sql.exec("INSERT INTO Type (Value) VALUES('DATA')");
+    sql.exec("INSERT INTO Type (Value) VALUES('STOREDDATA')");
     sql.exec("INSERT INTO Type (Value) VALUES('MOVIE')");
     sql.exec("INSERT INTO Type (Value) VALUES('SCRIPT')");
     sql.exec("INSERT INTO Type (Value) VALUES('STILL')");
@@ -654,7 +654,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
     return models;
 }
 
-QList<LibraryModel> DatabaseManager::getLibraryData()
+QList<LibraryModel> DatabaseManager::getLibraryStoredData()
 {
     QMutexLocker locker(&mutex);
 
@@ -710,7 +710,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     return models;
 }
 
-QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filter)
+QList<LibraryModel> DatabaseManager::getLibraryStoredDataByFilter(const QString& filter)
 {
     QMutexLocker locker(&mutex);
 

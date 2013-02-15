@@ -30,20 +30,28 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
     this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MEDIA_COLOR));
+
+    if (this->model.getType() == "AUDIO")
+    {
+        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Audio.png"));
+        this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_AUDIO_COLOR));
+    }
+    else if (this->model.getType() == "STILL")
+    {
+        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Still.png"));
+        this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_STILL_COLOR));
+    }
+    else if (this->model.getType() == "MOVIE")
+    {
+        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Movie.png"));
+        this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MOVIE_COLOR));
+    }
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
-
-    if (this->model.getType() == "AUDIO")
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Audio.png"));
-    else if (this->model.getType() == "STILL")
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Still.png"));
-    else if (this->model.getType() == "MOVIE")
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Movie.png"));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));

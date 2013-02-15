@@ -44,7 +44,6 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
         bool compactView;
         bool enterPressed;
-        bool masterVolumeMuted;
 
         BorderAnimation* animation;
 
@@ -106,11 +105,9 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void customContextMenuRequested(const QPoint&);
         Q_SLOT void gpiPortTriggered(int, GpiDevice*);
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
-        Q_SLOT void filterRundown();
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
         Q_SLOT void newMenuTriggered(QAction*);
         Q_SLOT void selectItemBelow();
-        Q_SLOT void soundClicked();
 };

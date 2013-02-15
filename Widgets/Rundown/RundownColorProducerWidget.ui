@@ -43,6 +43,9 @@
       <property name="text">
        <string/>
       </property>
+      <property name="pixmap">
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/Color.png</pixmap>
+      </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>

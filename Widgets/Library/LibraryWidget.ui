@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>223</width>
+    <width>214</width>
     <height>583</height>
    </rect>
   </property>
@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>214</width>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -69,12 +69,17 @@
          </attribute>
          <column>
           <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Name</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Id</string>
+           <string>Color</string>
           </property>
          </column>
          <column>
@@ -101,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>214</width>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -137,6 +142,11 @@
          </attribute>
          <column>
           <property name="text">
+           <string>Color</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Name</string>
           </property>
          </column>
@@ -169,7 +179,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>223</width>
+        <width>214</width>
         <height>448</height>
        </rect>
       </property>
@@ -191,6 +201,9 @@
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
+         </property>
          <property name="rootIsDecorated">
           <bool>false</bool>
          </property>
@@ -206,6 +219,11 @@
          <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
+         <column>
+          <property name="text">
+           <string>Color</string>
+          </property>
+         </column>
          <column>
           <property name="text">
            <string>Name</string>
@@ -240,8 +258,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>214</width>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -276,6 +294,11 @@
          </attribute>
          <column>
           <property name="text">
+           <string>Color</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Name</string>
           </property>
          </column>
@@ -303,12 +326,12 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pageData">
+     <widget class="QWidget" name="pageStoredData">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>223</width>
+        <width>214</width>
         <height>448</height>
        </rect>
       </property>
@@ -320,7 +343,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetData">
+        <widget class="QTreeWidget" name="treeWidgetStoredData">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -344,12 +367,17 @@
          </attribute>
          <column>
           <property name="text">
+           <string>New Column</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Name</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Id</string>
+           <string>Color</string>
           </property>
          </column>
          <column>
@@ -392,29 +420,12 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="toolButtonRefresh">
-       <property name="minimumSize">
-        <size>
-         <width>21</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>21</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource.qrc">
-         <normaloff>:/Graphics/Images/Refresh.png</normaloff>:/Graphics/Images/Refresh.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -427,14 +438,14 @@
      <item>
       <widget class="QLineEdit" name="lineEditFilter">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>147</width>
          <height>22</height>
         </size>
        </property>
@@ -447,9 +458,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>lineEditFilter</sender>
@@ -464,22 +473,6 @@
     <hint type="destinationlabel">
      <x>0</x>
      <y>324</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRefresh</sender>
-   <signal>clicked()</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>synchronizeLibrary()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>18</x>
-     <y>581</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-6</x>
-     <y>307</y>
     </hint>
    </hints>
   </connection>
@@ -548,7 +541,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetData</sender>
+   <sender>treeWidgetStoredData</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
@@ -596,7 +589,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetData</sender>
+   <sender>treeWidgetStoredData</sender>
    <signal>itemClicked(QTreeWidgetItem*,int)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>itemClicked(QTreeWidgetItem*,int)</slot>

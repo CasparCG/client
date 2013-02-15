@@ -24,7 +24,6 @@
 #include "RundownColorProducerWidget.h"
 
 #include "DatabaseManager.h"
-#include "DeviceManager.h"
 #include "Events/AddRudnownItemEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
@@ -46,7 +45,7 @@
 
 RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent),
-    compactView(false), enterPressed(false), masterVolumeMuted(false)
+    compactView(false), enterPressed(false)
 {
     setupUi(this);
     setupUiMenu();
@@ -1345,28 +1344,4 @@ void RundownWidget::parsePage(QKeyEvent* keyEvent)
         else
             this->page.append(keyEvent->text());
     }*/
-}
-
-void RundownWidget::filterRundown()
-{
-}
-
-void RundownWidget::soundClicked()
-{
-    this->masterVolumeMuted = !this->masterVolumeMuted;
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (device->isConnected())
-        {
-            for (int i = 1; i <= model.getChannels(); i++)
-                device->setMasterVolume(i, (this->masterVolumeMuted == true) ? 0 : 1);
-        }
-    }
-
-    if (this->masterVolumeMuted)
-        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOff.png"));
-    else
-        this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOn.png"));
 }

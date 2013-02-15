@@ -8,16 +8,16 @@
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/MediaChangedEvent.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/RefreshLibraryEvent.h"
 #include "Events/TemplateChangedEvent.h"
 #include "Models/LibraryModel.h"
 
-#include <QtCore/QDebug>
 #include <QtCore/QPoint>
 #include <QtCore/QSharedDataPointer>
 
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
+#include <QtGui/QColor>
+#include <QtGui/QIcon>
 #include <QtGui/QTreeWidgetItem>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
@@ -26,26 +26,46 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     setupUi(this);
     setupUiMenu();
 
-    this->treeWidgetAudio->setColumnHidden(1, true);
+    this->treeWidgetAudio->setColumnWidth(0, 5);
+    this->treeWidgetAudio->setColumnHidden(0, true);
     this->treeWidgetAudio->setColumnHidden(2, true);
     this->treeWidgetAudio->setColumnHidden(3, true);
     this->treeWidgetAudio->setColumnHidden(4, true);
-    this->treeWidgetImage->setColumnHidden(1, true);
+    this->treeWidgetAudio->setColumnHidden(5, true);
+
+    this->treeWidgetImage->setColumnWidth(0, 5);
+    this->treeWidgetImage->setColumnHidden(0, true);
     this->treeWidgetImage->setColumnHidden(2, true);
     this->treeWidgetImage->setColumnHidden(3, true);
     this->treeWidgetImage->setColumnHidden(4, true);
-    this->treeWidgetTemplate->setColumnHidden(1, true);
+    this->treeWidgetImage->setColumnHidden(5, true);
+
+    this->treeWidgetTemplate->setColumnWidth(0, 5);
+    this->treeWidgetTemplate->setColumnHidden(0, true);
     this->treeWidgetTemplate->setColumnHidden(2, true);
     this->treeWidgetTemplate->setColumnHidden(3, true);
     this->treeWidgetTemplate->setColumnHidden(4, true);
-    this->treeWidgetVideo->setColumnHidden(1, true);
+    this->treeWidgetTemplate->setColumnHidden(5, true);
+
+    this->treeWidgetVideo->setColumnWidth(0, 5);
+    this->treeWidgetVideo->setColumnHidden(0, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
-    this->treeWidgetData->setColumnHidden(1, true);
-    this->treeWidgetData->setColumnHidden(2, true);
-    this->treeWidgetData->setColumnHidden(3, true);
-    this->treeWidgetData->setColumnHidden(4, true);
+    this->treeWidgetVideo->setColumnHidden(5, true);
+
+    this->treeWidgetStoredData->setColumnWidth(0, 5);
+    this->treeWidgetStoredData->setColumnHidden(0, true);
+    this->treeWidgetStoredData->setColumnHidden(2, true);
+    this->treeWidgetStoredData->setColumnHidden(3, true);
+    this->treeWidgetStoredData->setColumnHidden(4, true);
+    this->treeWidgetStoredData->setColumnHidden(5, true);
+
+    this->toolBoxLibrary->setItemIcon(0, QIcon(":/Graphics/Images/AudioColor.png"));
+    this->toolBoxLibrary->setItemIcon(1, QIcon(":/Graphics/Images/StillColor.png"));
+    this->toolBoxLibrary->setItemIcon(2, QIcon(":/Graphics/Images/TemplateColor.png"));
+    this->toolBoxLibrary->setItemIcon(3, QIcon(":/Graphics/Images/MovieColor.png"));
+    this->toolBoxLibrary->setItemIcon(4, QIcon(":/Graphics/Images/StoredDataColor.png"));
 
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
@@ -99,32 +119,35 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 if (model.getType() == "AUDIO")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetAudio);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Audio.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, "-1");
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
+                    widget->setBackgroundColor(0, QColor(Color::DEFAULT_AUDIO_COLOR));
+                    widget->setIcon(1, QIcon(":/Graphics/Images/Audio.png"));
+                    widget->setText(1, model.getName());
+                    widget->setText(2, "-1");
+                    widget->setText(3, model.getLabel());
+                    widget->setText(4, model.getDeviceName());
+                    widget->setText(5, model.getType());
                 }    
                 else if (model.getType() == "STILL")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetImage);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Still.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, "-1");
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
+                    widget->setBackgroundColor(0, QColor(Color::DEFAULT_STILL_COLOR));
+                    widget->setIcon(1, QIcon(":/Graphics/Images/Still.png"));
+                    widget->setText(1, model.getName());
+                    widget->setText(2, "-1");
+                    widget->setText(3, model.getLabel());
+                    widget->setText(4, model.getDeviceName());
+                    widget->setText(5, model.getType());
                 }
                 else if (model.getType() == "MOVIE")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetVideo);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Movie.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, "-1");
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
+                    widget->setBackgroundColor(0, QColor(Color::DEFAULT_MOVIE_COLOR));
+                    widget->setIcon(1, QIcon(":/Graphics/Images/Movie.png"));
+                    widget->setText(1, model.getName());
+                    widget->setText(2, "-1");
+                    widget->setText(3, model.getLabel());
+                    widget->setText(4, model.getDeviceName());
+                    widget->setText(5, model.getType());
                 }
             }
         }
@@ -152,12 +175,13 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             foreach (LibraryModel model, models)
             {
                 QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetTemplate);
-                widget->setIcon(0, QIcon(":/Graphics/Images/Template.png"));
-                widget->setText(0, model.getName());
-                widget->setText(1, "-1");
-                widget->setText(2, model.getLabel());
-                widget->setText(3, model.getDeviceName());
-                widget->setText(4, model.getType());
+                widget->setBackgroundColor(0, QColor(Color::DEFAULT_TEMPLATE_COLOR));
+                widget->setIcon(1, QIcon(":/Graphics/Images/Template.png"));
+                widget->setText(1, model.getName());
+                widget->setText(2, "-1");
+                widget->setText(3, model.getLabel());
+                widget->setText(4, model.getDeviceName());
+                widget->setText(5, model.getType());
             }
         }
 
@@ -168,30 +192,31 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         DataChangedEvent* dataChangedEvent = dynamic_cast<DataChangedEvent*>(event);
 
         // TODO: Only add / remove necessary items.
-        this->treeWidgetData->clear();
-        this->treeWidgetData->clearSelection();
+        this->treeWidgetStoredData->clear();
+        this->treeWidgetStoredData->clearSelection();
 
         QList<LibraryModel> models;
         if (this->lineEditFilter->text().isEmpty())
-            models = DatabaseManager::getInstance().getLibraryData();
+            models = DatabaseManager::getInstance().getLibraryStoredData();
         else
-            models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text());
+            models = DatabaseManager::getInstance().getLibraryStoredDataByFilter(this->lineEditFilter->text());
 
         if (models.count() > 0)
         {
             foreach (LibraryModel model, models)
             {
-                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetData);
-                widget->setIcon(0, QIcon(":/Graphics/Images/Data.png"));
-                widget->setText(0, model.getName());
-                widget->setText(1, "-1");
-                widget->setText(2, model.getLabel());
-                widget->setText(3, model.getDeviceName());
-                widget->setText(4, model.getType());
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetStoredData);
+                widget->setBackgroundColor(0, QColor(Color::DEFAULT_STORED_DATA_COLOR));
+                widget->setIcon(1, QIcon(":/Graphics/Images/StoredData.png"));
+                widget->setText(1, model.getName());
+                widget->setText(2, "-1");
+                widget->setText(3, model.getLabel());
+                widget->setText(4, model.getDeviceName());
+                widget->setText(5, model.getType());
             }
         }
 
-        this->toolBoxLibrary->setItemText(4, QString("Stored (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(4, QString("Stored (%1)").arg(this->treeWidgetStoredData->topLevelItemCount()));
     }
 
     return QObject::eventFilter(target, event);
@@ -242,17 +267,17 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
     if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(2).toInt(), item->text(3), item->text(1), item->text(4), item->text(5))));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTemplate->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(2).toInt(), item->text(3), item->text(1), item->text(4), item->text(5))));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(2).toInt(), item->text(3), item->text(1), item->text(4), item->text(5))));
     }
 }
 
@@ -261,12 +286,12 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
     if (action->text() == "Add to rundown as image")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), item->text(4))));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(2).toInt(), item->text(3), item->text(1), item->text(4), item->text(5))));
     }
     else if (action->text() == "Add to rundown as image scroller")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0), item->text(3), "IMAGESCROLLER")));
+            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(2).toInt(), item->text(3), item->text(1), item->text(5), "IMAGESCROLLER")));
     }
 }
 
@@ -277,17 +302,12 @@ void LibraryWidget::filterLibrary()
     qApp->postEvent(qApp, new DataChangedEvent());
 }
 
-void LibraryWidget::synchronizeLibrary()
-{
-    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
-}
-
 void LibraryWidget::itemClicked(QTreeWidgetItem* current, int i)
 {
     if (current == NULL)
         return;
 
-    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0), current->text(3), current->text(4)));
+    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(2).toInt(), current->text(3), current->text(1), current->text(2), current->text(5)));
 
     // Use synchronous event through sendEvent(). The inspector will update the selected
     // rundown item. We want to be absolutely sure that we update the right item, which
@@ -300,7 +320,7 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
     if (current == NULL)
         return;
 
-    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0), current->text(3), current->text(4)));
+    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(2).toInt(), current->text(3), current->text(1), current->text(4), current->text(5)));
 
     // Use synchronous event through sendEvent(). The inspector will update the selected
     // rundown item. We want to be absolutely sure that we update the right item, which

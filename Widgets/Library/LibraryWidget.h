@@ -29,7 +29,6 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         void setupUiMenu();
 
         Q_SLOT void filterLibrary();
-        Q_SLOT void synchronizeLibrary();
         Q_SLOT void contextMenuTriggered(QAction*);
         Q_SLOT void contextMenuImageTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint& point);

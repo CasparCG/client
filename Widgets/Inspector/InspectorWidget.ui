@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>245</width>
-    <height>399</height>
+    <height>589</height>
    </rect>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>245</width>
-        <height>378</height>
+        <height>525</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -73,10 +73,10 @@
             <x>0</x>
             <y>0</y>
             <width>243</width>
-            <height>376</height>
+            <height>523</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -630,9 +630,64 @@
      </widget>
     </widget>
    </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>6</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutMasterVolume">
+     <item>
+      <spacer name="horizontalSpacerMasterVolume">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButtonMasterVolume">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resource.qrc">
+         <normaloff>:/Graphics/Images/MasterVolumeOn.png</normaloff>:/Graphics/Images/MasterVolumeOn.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>treeWidgetInspector</sender>
@@ -647,6 +702,22 @@
     <hint type="destinationlabel">
      <x>244</x>
      <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonMasterVolume</sender>
+   <signal>clicked()</signal>
+   <receiver>InspectorWidget</receiver>
+   <slot>masterVolumeClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>19</x>
+     <y>577</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>98</x>
+     <y>592</y>
     </hint>
    </hints>
   </connection>
@@ -681,5 +752,6 @@
   <slot>resetVolumeEasing(QString)</slot>
   <slot>resetVolumeDuration(QString)</slot>
   <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>
+  <slot>masterVolumeClicked()</slot>
  </slots>
 </ui>
