@@ -1,6 +1,7 @@
 CasparCG Client 2.0 RC 2
 ========================
 
+- FIX: Open rundowns containing mixer opacity item crash the client.
 - NEW: Added support for CasparCG 2.0.4 master volume feature.
 - UPDATE: UI changes.
 

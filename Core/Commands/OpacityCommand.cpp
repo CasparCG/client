@@ -60,7 +60,7 @@ void OpacityCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"opacity") > 0) setOpacity(pt.get<float>(L"opacity"));
     if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
     if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"tween") > 0) setDefer(pt.get<bool>(L"tween"));
+    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
 }
 
 void OpacityCommand::writeProperties(QXmlStreamWriter* writer)
