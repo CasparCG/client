@@ -254,7 +254,7 @@ void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, Caspa
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "DATA"));
+            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "STOREDDATA"));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)

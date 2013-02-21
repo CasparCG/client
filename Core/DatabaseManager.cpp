@@ -51,6 +51,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
     sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER)");
     sql.exec("CREATE TABLE Rundown (Id INTEGER PRIMARY KEY, Page TEXT, Name TEXT, Device TEXT, TypeId INTEGER)");
+    sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Timestamp DATETIME)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
@@ -117,7 +118,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Format (Value) VALUES('1080i5000')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080i5994')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080i6000')");
-
     sql.exec("INSERT INTO Format (Value) VALUES('1080p2500')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p2997')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p3000')");
@@ -903,8 +903,8 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
         int typeId;
         for (int i = 0; i < insertModels.count(); i++)
         {
-            if (insertModels.at(i).getType() == "DATA")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("DATA"))->getId();
+            if (insertModels.at(i).getType() == "STOREDDATA")
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("STOREDDATA"))->getId();
 
             sql.exec(QString("INSERT INTO Library (Name, DeviceId, TypeId) VALUES('%1', %2 ,%3)").arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId));
         }
