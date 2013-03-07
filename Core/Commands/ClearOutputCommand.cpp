@@ -35,6 +35,7 @@ void ClearOutputCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     if (pt.count(L"clearchannel") > 0) setClearChannel(pt.get<bool>(L"clearchannel"));
+    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
 }
 
 void ClearOutputCommand::writeProperties(QXmlStreamWriter* writer)
@@ -42,4 +43,5 @@ void ClearOutputCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("clearchannel", (getClearChannel() == true) ? "true" : "false");
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

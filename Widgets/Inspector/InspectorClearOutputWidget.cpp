@@ -32,6 +32,7 @@ bool InspectorClearOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->checkBoxClearChannel->setChecked(this->command->getClearChannel());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
 
             this->preview = true;
         }
