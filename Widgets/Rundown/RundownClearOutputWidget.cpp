@@ -93,6 +93,7 @@ AbstractRundownWidget* RundownClearOutputWidget::clone()
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setClearChannel(this->command.getClearChannel());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -192,7 +193,8 @@ bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type ty
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play)
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) ||
+             (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext()))
     {  
         this->executeTimer.disconnect();
 

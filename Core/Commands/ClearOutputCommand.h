@@ -23,11 +23,15 @@ class CORE_EXPORT ClearOutputCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         bool getClearChannel() const;
+        bool getTriggerOnNext() const;
 
         void setClearChannel(bool clearChannel);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         bool clearChannel;
+        bool triggerOnNext;
 
         Q_SIGNAL void clearChannelChanged(bool);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };
