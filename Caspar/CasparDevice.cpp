@@ -63,6 +63,16 @@ void CasparDevice::refreshChannels()
     AMCPDevice::writeMessage("INFO");
 }
 
+void CasparDevice::refreshThumbnail()
+{
+    AMCPDevice::writeMessage("THUMBNAIL LIST");
+}
+
+void CasparDevice::retrieveThumbnail(const QString& name)
+{
+    AMCPDevice::writeMessage(QString("THUMBNAIL RETRIEVE \"%1\"").arg(name));
+}
+
 void CasparDevice::sendCommand(const QString& command)
 {
     AMCPDevice::writeMessage(QString("%1").arg(command));
@@ -508,6 +518,33 @@ void CasparDevice::sendNotification()
             emit dataChanged(items, *this);
         }
         break;
+        case AMCPDevice::THUMBNAILLIST:
+        {
+            QList<QString> response;
+            response.push_back(AMCPDevice::response.at(0));
+
+            emit responseChanged(response, *this);
+
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL LIST OK.
+
+            QList<CasparThumbnail> items;
+            foreach (QString response, AMCPDevice::response)
+            {
+                QString name = response.split("\" ").at(0);
+                name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
+
+                QString timestamp = response.split("\" ").at(1).trimmed().split(" ").at(0);
+
+                items.push_back(CasparThumbnail(name, timestamp));
+            }
+
+            emit thumbnailChanged(items, *this);
+        }
+        break;
+        case AMCPDevice::THUMBNAILRETRIEVE:
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
+            emit thumbnailRetrieveChanged(AMCPDevice::response.at(0), *this);
+            break;
         case AMCPDevice::VERSION:
             AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
             emit versionChanged(CasparVersion(AMCPDevice::response.at(0)), *this);

@@ -176,10 +176,13 @@ QRadioButton::indicator:checked:pressed
 /*
  * QSplitter
  */
-QSplitter::handle
+QSplitter::handle:vertical
 {
-   background-color: rgba(64, 64, 64, 255);
-   image: url(:/Graphics/Images/Splitter.png);
+    image: url(:/Graphics/Images/SplitterVertical.png);
+}
+QSplitter::handle:horizontal
+{
+    image: url(:/Graphics/Images/SplitterHorizontal.png);
 }
 
 /*

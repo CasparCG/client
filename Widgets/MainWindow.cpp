@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent),
     this->widgetClock->setVisible(false);
     this->widgetOnAirNext->setVisible(false);
     this->widgetTimeline->setVisible(false);
-    this->widgetPreview->setVisible(false);
     this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
 
     qApp->installEventFilter(this);

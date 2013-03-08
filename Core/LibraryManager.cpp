@@ -22,7 +22,8 @@
 Q_GLOBAL_STATIC(LibraryManager, libraryManager)
 
 LibraryManager::LibraryManager(QObject* parent)
-    : QObject(parent)
+    : QObject(parent),
+      thumbnailWorker(NULL)
 {
     QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
@@ -93,6 +94,7 @@ void LibraryManager::refresh()
             device->refreshMedia();
             device->refreshTemplate();
             device->refreshData();
+            device->refreshThumbnail();
         }
     }
 
@@ -112,6 +114,7 @@ void LibraryManager::deviceAdded(CasparDevice& device)
     QObject::connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(deviceMediaChanged(const QList<CasparMedia>&, CasparDevice&)));
     QObject::connect(&device, SIGNAL(templateChanged(const QList<CasparTemplate>&, CasparDevice&)), this, SLOT(deviceTemplateChanged(const QList<CasparTemplate>&, CasparDevice&)));
     QObject::connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(deviceDataChanged(const QList<CasparData>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)), this, SLOT(deviceThumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)));
 }
 
 void LibraryManager::deviceConnectionStateChanged(CasparDevice& device)
@@ -125,6 +128,7 @@ void LibraryManager::deviceConnectionStateChanged(CasparDevice& device)
         device.refreshMedia();
         device.refreshTemplate();
         device.refreshData();
+        device.refreshThumbnail();
     }
 }
 
@@ -162,7 +166,7 @@ void LibraryManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems, Ca
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, mediaItem.getName(), mediaItem.getName(), "", mediaItem.getType()));
+            insertModels.push_back(LibraryModel(0, mediaItem.getName(), mediaItem.getName(), "", mediaItem.getType(), 0));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -208,7 +212,7 @@ void LibraryManager::deviceTemplateChanged(const QList<CasparTemplate>& template
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, templateItem.getName(), templateItem.getName(), "", "TEMPLATE"));
+            insertModels.push_back(LibraryModel(0, templateItem.getName(), templateItem.getName(), "", "TEMPLATE", 0));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -254,7 +258,7 @@ void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, Caspa
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "STOREDDATA"));
+            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "DATA", 0));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -264,4 +268,31 @@ void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, Caspa
     }
 
     qDebug() << QString("LibraryManager::deviceDataChanged: %1 msec").arg(time.elapsed());
+}
+
+void LibraryManager::deviceThumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)
+{
+    QList<ThumbnailModel> processModels;
+    QList<ThumbnailModel> thumbnailModels = DatabaseManager::getInstance().getThumbnailByDeviceAddress(device.getAddress());
+
+    // Find thumbnail items to process.
+    foreach (CasparThumbnail thumbnailItem, thumbnailItems)
+    {
+        bool found = false;
+        foreach (const ThumbnailModel& thumbnailModel, thumbnailModels)
+        {
+            if (thumbnailModel.getName() == thumbnailItem.getName() && thumbnailModel.getTimestamp() == thumbnailItem.getTimestamp())
+                found = true;
+        }
+
+        if (!found)
+            processModels.push_back(ThumbnailModel(0, "", thumbnailItem.getTimestamp(), thumbnailItem.getName(), device.getAddress()));
+    }
+
+    // OBS! Need to support multiple devices.
+    if (this->thumbnailWorker != NULL)
+        delete this->thumbnailWorker;
+
+    this->thumbnailWorker = new ThumbnailWorker(processModels, this);
+    this->thumbnailWorker->start();
 }

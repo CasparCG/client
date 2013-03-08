@@ -52,6 +52,10 @@
     background-color: transparent;
     border-radius: 0px;
 }
+#labelThumbnail
+{
+    border-width: 1px;
+}
 #labelLabel, #labelNoteField
 {
     font-size: 13px;
@@ -107,66 +111,6 @@
 #pagePreview
 {
     background-color: rgba(55, 55, 55, 255);
-}
-#widgetVideo
-{
-    background-color: transparent;
-}
-
-#pushButtonPlay
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    border-radius: 0px;
-    border-width: 1px;
-    padding-bottom: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-}
-#pushButtonFastRewindStart
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    border-bottom-right-radius: 0px;
-    border-top-right-radius: 0px;
-    border-width: 1px;
-    padding-bottom: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-}
-#pushButtonFastForwardEnd
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
-    border-width: 1px;
-    padding-bottom: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-}
-#pushButtonFastRewind, #pushButtonFastForward
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    border-left-width: 0px;
-    border-radius: 0px;
-    border-right-width: 0px;
-    padding-bottom: 4px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-}
-#pushButtonPlay:disabled, #pushButtonFastRewind:disabled, #pushButtonFastRewindStart:disabled, #pushButtonFastForward:disabled, #pushButtonFastForwardEnd:disabled
-{
-    background-color: rgba(60, 60, 60, 255);
-}
-#pushButtonPlay:hover, #pushButtonFastRewind:hover, #pushButtonFastRewindStart:hover, #pushButtonFastForward:hover, #pushButtonFastForwardEnd:hover
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
-}
-#pushButtonPlay:pressed, #pushButtonFastRewind:pressed, #pushButtonFastRewindStart:pressed, #pushButtonFastForward:pressed, #pushButtonFastForwardEnd:pressed
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(61, 61, 61, 255), stop:1 rgba(90, 90, 90, 255));
 }
 
 /*

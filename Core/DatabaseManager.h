@@ -15,6 +15,7 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 #include "Models/TypeModel.h"
+#include "Models/ThumbnailModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -61,18 +62,24 @@ class CORE_EXPORT DatabaseManager
 
         QList<LibraryModel> getLibraryMedia();
         QList<LibraryModel> getLibraryTemplate();
-        QList<LibraryModel> getLibraryStoredData();
+        QList<LibraryModel> getLibraryData();
+
         QList<LibraryModel> getLibraryMediaByFilter(const QString& filter);
         QList<LibraryModel> getLibraryTemplateByFilter(const QString& filter);
-        QList<LibraryModel> getLibraryStoredDataByFilter(const QString& filter);
+        QList<LibraryModel> getLibraryDataByFilter(const QString& filter);
         QList<LibraryModel> getLibraryByDeviceId(int deviceId);
         QList<LibraryModel> getLibraryMediaByDeviceAddress(const QString& address);
         QList<LibraryModel> getLibraryTemplateByDeviceAddress(const QString& address);
-        QList<LibraryModel> getLibraryDataByDeviceAddress(const QString& name);
-        void updateLibraryMedia(const QString& name, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
-        void updateLibraryTemplate(const QString& name, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
-        void updateLibraryData(const QString& name, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
+        QList<LibraryModel> getLibraryDataByDeviceAddress(const QString& address);
+        QList<LibraryModel> getLibraryByNameAndDeviceId(const QString& name, int deviceId);
+        void updateLibraryMedia(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
+        void updateLibraryTemplate(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
+        void updateLibraryData(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
         void deleteLibrary(int deviceId);
+
+        ThumbnailModel getThumbnailById(int id);
+        QList<ThumbnailModel> getThumbnailByDeviceAddress(const QString& address);
+        void updateThumbnail(const ThumbnailModel& model);
 
     private:
         QMutex mutex;

@@ -14,7 +14,6 @@ DEFINES += CORE_LIBRARY
 HEADERS += \
     DatabaseManager.h \
     DeviceManager.h \
-    MediaPlayer.h \
     Shared.h \
     Commands/CropCommand.h \
     Commands/GeometryCommand.h \
@@ -77,12 +76,13 @@ HEADERS += \
     Commands/ClearOutputCommand.h \
     Animations/BorderAnimation.h \
     Animations/ActiveAnimation.h \
-    Commands/ColorProducerCommand.h
+    Commands/ColorProducerCommand.h \
+    Models/ThumbnailModel.h \
+    ThumbnailWorker.h
 
 SOURCES += \
     DatabaseManager.cpp \
     DeviceManager.cpp \
-    MediaPlayer.cpp \
     Commands/CropCommand.cpp \
     Commands/GeometryCommand.cpp \
     Commands/MediaCommand.cpp \
@@ -144,7 +144,9 @@ SOURCES += \
     Commands/AbstractProperties.cpp \
     Animations/BorderAnimation.cpp \
     Animations/ActiveAnimation.cpp \
-    Commands/ColorProducerCommand.cpp
+    Commands/ColorProducerCommand.cpp \
+    Models/ThumbnailModel.cpp \
+    ThumbnailWorker.cpp
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

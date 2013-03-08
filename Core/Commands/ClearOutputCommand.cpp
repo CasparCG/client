@@ -4,7 +4,7 @@
 
 ClearOutputCommand::ClearOutputCommand(QObject* parent)
     : AbstractCommand(parent),
-      clearChannel(ClearOutput::DEFAULT_CLEAR_CHANNEL), triggerOnNext(Media::DEFAULT_TRIGGER_ON_NEXT)
+      clearChannel(ClearOutput::DEFAULT_CLEAR_CHANNEL), triggerOnNext(ClearOutput::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 

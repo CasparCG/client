@@ -12,7 +12,7 @@
 #include <QtGui/QApplication>
 
 InspectorClearOutputWidget::InspectorClearOutputWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent), model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -26,15 +26,11 @@ bool InspectorClearOutputWidget::eventFilter(QObject* target, QEvent* event)
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
             this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->checkBoxClearChannel->setChecked(this->command->getClearChannel());
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-
-            this->preview = true;
         }
     }
 
@@ -59,6 +55,6 @@ void InspectorClearOutputWidget::resetClearChannel(QString clearChannel)
 
 void InspectorClearOutputWidget::resetTriggerOnNext(QString triggerOnNext)
 {
-    this->checkBoxTriggerOnNext->setChecked(false);
+    this->checkBoxTriggerOnNext->setChecked(ClearOutput::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

@@ -33,6 +33,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
             INFO,
             INFOSYSTEM,
             DATALIST,
+            DATARETRIEVE,
             CLEAR,
             SET,
             MIXER,
@@ -41,7 +42,9 @@ class CASPAR_EXPORT AMCPDevice : public QObject
             ADD,
             SWAP,
             STATUS,
-            ERROR
+            ERROR,
+            THUMBNAILLIST,
+            THUMBNAILRETRIEVE
         };
 
         QTcpSocket* socket;

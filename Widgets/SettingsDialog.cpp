@@ -30,6 +30,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->spinBoxRefreshInterval->setEnabled(isAutoRefresh);
     this->labelSeconds->setEnabled(isAutoRefresh);
     this->spinBoxRefreshInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
+    bool showThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+    this->checkBoxShowThumbnailTooltip->setChecked(showThumbnailTooltip);
 
     loadDevices();
     loadGpi();
@@ -170,6 +172,12 @@ void SettingsDialog::autoSynchronizeChanged(int state)
 
     qApp->postEvent(qApp, new AutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false,
                                                        this->spinBoxRefreshInterval->value() * 1000));
+}
+
+void SettingsDialog::showThumbnailTooltipChanged(int state)
+{
+    QString showThumbnailTooltip = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "ShowThumbnailTooltipInRundown", showThumbnailTooltip));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)

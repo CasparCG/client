@@ -220,18 +220,8 @@ OTHER_FILES += \
     Images/ArrowRightDisabled.png \
     Images/ArrowRight.png \
     Images/Forward.png \
-    Images/FastForwardEnd.png \
     Images/Rewind.png \
-    Images/FastRewindStart.png \
-    Images/Splitter.png \
-    Images/Play.png \
-    Images/FastForward.png \
     Images/RewindStart.png \
-    Images/FastRewind.png \
-    Images/Stop.png \
-    Images/Pause.png \
-    Images/Recording.png \
-    Images/Record.png \
     Images/GreenBullet.png \
     Images/YellowBullet.png \
     Images/RedBullet.png \
@@ -274,13 +264,16 @@ OTHER_FILES += \
     Images/Delay.png \
     Images/ServerSmall.png \
     Images/ServerBig.png \
-    Images/StoredData.png \
     Images/TemplateColor.png \
     Images/AudioColor.png \
     Images/StillColor.png \
     Images/MovieColor.png \
     Images/StillColor.png \
-    Images/StoredDataColor.png
+    Images/Thumbnail.png \
+    Images/SplitterVertical.png \
+    Images/SplitterHorizontal.png \
+    Images/Data.png \
+    Images/DataColor.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

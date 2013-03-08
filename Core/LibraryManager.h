@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Shared.h"
+#include "ThumbnailWorker.h"
 
 #include "CasparData.h"
 #include "CasparDevice.h"
 #include "CasparMedia.h"
 #include "CasparTemplate.h"
+#include "CasparThumbnail.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
@@ -28,6 +30,8 @@ class CORE_EXPORT LibraryManager : public QObject
     private:
         QTimer refreshTimer;
 
+        ThumbnailWorker* thumbnailWorker;
+
         Q_SLOT void refresh();
         Q_SLOT void deviceRemoved();
         Q_SLOT void deviceAdded(CasparDevice&);
@@ -35,4 +39,5 @@ class CORE_EXPORT LibraryManager : public QObject
         Q_SLOT void deviceMediaChanged(const QList<CasparMedia>&, CasparDevice&);
         Q_SLOT void deviceTemplateChanged(const QList<CasparTemplate>&, CasparDevice&);
         Q_SLOT void deviceDataChanged(const QList<CasparData>&, CasparDevice&);
+        Q_SLOT void deviceThumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
 };

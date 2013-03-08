@@ -22,7 +22,6 @@ class WIDGETS_EXPORT InspectorClearOutputWidget : public QWidget, Ui::InspectorC
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         ClearOutputCommand* command;
 

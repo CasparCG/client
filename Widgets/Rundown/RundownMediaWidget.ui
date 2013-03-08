@@ -31,7 +31,7 @@
        <height>36</height>
       </size>
      </property>
-     <widget class="QLabel" name="labelThumbnail">
+     <widget class="QLabel" name="labelIcon">
       <property name="geometry">
        <rect>
         <x>22</x>
@@ -144,13 +144,13 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>77</width>
+       <width>138</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>77</width>
+       <width>134</width>
        <height>16777215</height>
       </size>
      </property>
@@ -163,7 +163,7 @@
      <widget class="QLabel" name="labelGpiConnected">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>62</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -197,7 +197,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>32</x>
+        <x>93</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -228,7 +228,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>69</x>
+        <x>130</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -248,6 +248,37 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelThumbnail">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>2</y>
+        <width>57</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>57</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>57</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>

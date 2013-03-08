@@ -17,14 +17,16 @@ HEADERS += \
     AMCPDevice.h \
     CasparTemplate.h \
     CasparMedia.h \
-    CasparData.h \
     Shared.h \
-    CasparVersion.h
+    CasparVersion.h \
+    CasparThumbnail.h \
+    CasparData.h
 	
 SOURCES += \
     CasparDevice.cpp \
     AMCPDevice.cpp \
     CasparTemplate.cpp \
     CasparMedia.cpp \
-    CasparData.cpp \
-    CasparVersion.cpp
+    CasparVersion.cpp \
+    CasparThumbnail.cpp \
+    CasparData.cpp

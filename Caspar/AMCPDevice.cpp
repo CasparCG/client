@@ -115,6 +115,7 @@ AMCPDevice::AMCPCommand AMCPDevice::translateCommand(const QString& command)
     else if (command == "INFO") return AMCPDevice::INFO;
     else if (command == "INFO SYSTEM") return AMCPDevice::INFOSYSTEM;
     else if (command == "DATA LIST") return AMCPDevice::DATALIST;
+    else if (command == "DATA RETRIEVE") return AMCPDevice::DATARETRIEVE;
     else if (command == "CLEAR") return AMCPDevice::CLEAR;
     else if (command == "SET") return AMCPDevice::SET;
     else if (command == "MIXER") return AMCPDevice::MIXER;
@@ -124,6 +125,8 @@ AMCPDevice::AMCPCommand AMCPDevice::translateCommand(const QString& command)
     else if (command == "SWAP") return AMCPDevice::SWAP;
     else if (command == "STATUS") return AMCPDevice::STATUS;
     else if (command == "ERROR") return AMCPDevice::ERROR;
+    else if (command == "THUMBNAIL LIST") return AMCPDevice::THUMBNAILLIST;
+    else if (command == "THUMBNAIL RETRIEVE") return AMCPDevice::THUMBNAILRETRIEVE;
 
     return AMCPDevice::NONE;
 }
@@ -168,7 +171,10 @@ void AMCPDevice::parseHeader(const QString& line)
         case 201:
             this->state = AMCPDevice::ExpectingTwoline;
             break;
+        case 400:
         case 401:
+        case 402:
+        case 500:
             resetDevice();
             return;
         default:

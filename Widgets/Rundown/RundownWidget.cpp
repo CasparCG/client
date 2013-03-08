@@ -402,7 +402,7 @@ void RundownWidget::readRundownGroup(const QString& type, boost::property_tree::
     QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
     bool expanded = pt.get<bool>(L"expanded");
 
-    AbstractRundownWidget* widget = new RundownGroupWidget(LibraryModel(-1, label, "", "", type), this);
+    AbstractRundownWidget* widget = new RundownGroupWidget(LibraryModel(0, label, "", "", type, 0), this);
     widget->setExpanded(true);
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -470,49 +470,49 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
 
     AbstractRundownWidget* widget = NULL;
     if (type == "BLENDMODE")
-        widget = new RundownBlendModeWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownBlendModeWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "BRIGHTNESS")
-        widget = new RundownBrightnessWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownBrightnessWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CONTRAST")
-        widget = new RundownContrastWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownContrastWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CROP")
-        widget = new RundownCropWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownCropWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "DECKLINKINPUT")
-        widget = new RundownDeckLinkInputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownDeckLinkInputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type ==  "FILERECORDER")
-        widget = new RundownFileRecorderWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownFileRecorderWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "GEOMETRY")
-        widget = new RundownGeometryWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownGeometryWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "GRID")
-        widget = new RundownGridWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownGridWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "GPIOUTPUT")
-        widget = new RundownGpiOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownGpiOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "KEYER")
-        widget = new RundownKeyerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownKeyerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "LEVELS")
-        widget = new RundownLevelsWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownLevelsWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "AUDIO" || type == "STILL" || type == "MOVIE")
-        widget = new RundownMediaWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownMediaWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "OPACITY")
-        widget = new RundownOpacityWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownOpacityWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "SATURATION")
-        widget = new RundownSaturationWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownSaturationWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "TEMPLATE")
-        widget = new RundownTemplateWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownTemplateWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "VOLUME")
-        widget = new RundownVolumeWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownVolumeWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "COMMIT")
-        widget = new RundownCommitWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownCommitWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "IMAGESCROLLER")
-        widget = new RundownImageScrollerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownImageScrollerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CHANNELSNAPSHOT")
-        widget = new RundownPrintWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownPrintWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "SEPARATOR")
-        widget = new RundownSeparatorWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownSeparatorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CLEAROUTPUT")
-        widget = new RundownClearOutputWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownClearOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "COLORPRODUCER")
-        widget = new RundownColorProducerWidget(LibraryModel(-1, label, name, deviceName, type), this);
+        widget = new RundownColorProducerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
 
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -1000,7 +1000,7 @@ bool RundownWidget::groupItems()
 
     QTreeWidgetItem* parentItem = new QTreeWidgetItem();
 
-    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(-1, "Group", "", "", "GROUP"), this);
+    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(0, "Group", "", "", "GROUP", 0), this);
     widget->setActive(true);
     widget->setExpanded(true);
     widget->setCompactView(this->compactView);
@@ -1124,122 +1124,122 @@ bool RundownWidget::ungroupItems()
 
 void RundownWidget::addBlendModeCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Blend Mode", "", "", "BLENDMODE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", "BLENDMODE", 0)));
 }
 
 void RundownWidget::addBrightnessCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Brightness", "", "", "BRIGHTNESS")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", "BRIGHTNESS", 0)));
 }
 
 void RundownWidget::addContrastCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Contrast", "", "", "CONTRAST")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", "CONTRAST", 0)));
 }
 
 void RundownWidget::addCropCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Crop", "", "", "CROP")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", "CROP", 0)));
 }
 
 void RundownWidget::addImageScrollerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Image Scroller", "", "", "IMAGESCROLLER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", "IMAGESCROLLER", 0)));
 }
 
 void RundownWidget::addDeckLinkInputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "DeckLink Input", "", "", "DECKLINKINPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", "DECKLINKINPUT", 0)));
 }
 
 void RundownWidget::addPrintCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Channel Snapshot", "", "", "CHANNELSNAPSHOT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", "CHANNELSNAPSHOT", 0)));
 }
 
 void RundownWidget::addClearOutputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Clear Output", "", "", "CLEAROUTPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", "CLEAROUTPUT", 0)));
 }
 
 void RundownWidget::addGeometryCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Geometry", "", "", "GEOMETRY")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Geometry", "", "", "GEOMETRY", 0)));
 }
 
 void RundownWidget::addGpiOutputCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "GPI Output", "", "", "GPIOUTPUT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", "GPIOUTPUT", 0)));
 }
 
 void RundownWidget::addFileRecorderCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "File Recorder", "", "", "FILERECORDER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", "FILERECORDER", 0)));
 }
 
 void RundownWidget::addSeparatorCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Separator", "", "", "SEPARATOR")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", "SEPARATOR", 0)));
 }
 
 void RundownWidget::addGridCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Grid", "", "", "GRID")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", "GRID", 0)));
 }
 
 void RundownWidget::addColorProducerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Color Producer", "", "", "COLORPRODUCER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Color Producer", "", "", "COLORPRODUCER", 0)));
 }
 
 void RundownWidget::addKeyerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Keyer", "", "", "KEYER")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Keyer", "", "", "KEYER", 0)));
 }
 
 void RundownWidget::addLevelsCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Levels", "", "", "LEVELS")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", "LEVELS", 0)));
 }
 
 void RundownWidget::addOpacityCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Opacity", "", "", "OPACITY")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", "OPACITY", 0)));
 }
 
 void RundownWidget::addSaturationCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Saturation", "", "", "SATURATION")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", "SATURATION", 0)));
 }
 
 void RundownWidget::addVolumeCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Volume", "", "", "VOLUME")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", "VOLUME", 0)));
 }
 
 void RundownWidget::addCommitCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Commit", "", "", "COMMIT")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", "COMMIT", 0)));
 }
 
 void RundownWidget::addAudioCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Audio", "", "", "AUDIO")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", "AUDIO", 0)));
 }
 
 void RundownWidget::addImageCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Image", "", "", "STILL")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image", "", "", "STILL", 0)));
 }
 
 void RundownWidget::addTemplateCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Template", "", "", "TEMPLATE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", "TEMPLATE", 0)));
 }
 
 void RundownWidget::addVideoCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(-1, "Video", "", "", "MOVIE")));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", "MOVIE", 0)));
 }
 
 bool RundownWidget::moveItemOutOfGroup()

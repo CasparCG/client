@@ -28,7 +28,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         explicit RundownMediaWidget(const LibraryModel& model, QWidget* parent = 0,
                                     const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
                                     bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
-                                    bool disconnected = false, bool compactView = false);
+                                    bool disconnected = true, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
 
         QTimer executeTimer;
 
+        void setThumbnail();
         void checkEmptyDevice();
         void checkGpiTriggerable();
 

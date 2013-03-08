@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>448</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -69,17 +69,12 @@
          </attribute>
          <column>
           <property name="text">
-           <string>New Column</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Name</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Color</string>
+           <string>Id</string>
           </property>
          </column>
          <column>
@@ -97,6 +92,11 @@
            <string>Type</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -106,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>448</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -142,11 +142,6 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Color</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Name</string>
           </property>
          </column>
@@ -168,6 +163,11 @@
          <column>
           <property name="text">
            <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
           </property>
          </column>
         </widget>
@@ -221,11 +221,6 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Color</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Name</string>
           </property>
          </column>
@@ -249,6 +244,11 @@
            <string>Type</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -258,8 +258,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>448</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -294,11 +294,6 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Color</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Name</string>
           </property>
          </column>
@@ -322,17 +317,22 @@
            <string>Type</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pageStoredData">
+     <widget class="QWidget" name="pageData">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>448</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -343,7 +343,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetStoredData">
+        <widget class="QTreeWidget" name="treeWidgetData">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -393,6 +393,11 @@
          <column>
           <property name="text">
            <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
           </property>
          </column>
         </widget>
@@ -467,7 +472,7 @@
    <slot>filterLibrary()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
+     <x>212</x>
      <y>581</y>
     </hint>
     <hint type="destinationlabel">
@@ -541,7 +546,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetStoredData</sender>
+   <sender>treeWidgetData</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
@@ -589,7 +594,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetStoredData</sender>
+   <sender>treeWidgetData</sender>
    <signal>itemClicked(QTreeWidgetItem*,int)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>itemClicked(QTreeWidgetItem*,int)</slot>
@@ -642,5 +647,6 @@
   <slot>synchronizeLibrary()</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
+  <slot>itemEntered(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

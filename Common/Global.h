@@ -66,12 +66,16 @@ namespace Playout
 namespace Define
 {
     static const int GROUP_XPOS_OFFSET = -65;
-    static const int DEFAULT_VIEW_WIDTH = 32;
-    static const int DEFAULT_VIEW_HEIGHT = 32;
-    static const int COMPACT_VIEW_WIDTH = 16;
-    static const int COMPACT_VIEW_HEIGHT = 16;
+    static const int DEFAULT_ICON_WIDTH = 32;
+    static const int DEFAULT_ICON_HEIGHT = 32;
+    static const int COMPACT_ICON_WIDTH = 16;
+    static const int COMPACT_ICON_HEIGHT = 16;
     static const int DEFAULT_ITEM_HEIGHT = 36;
     static const int COMPACT_ITEM_HEIGHT = 21;
+    static const int DEFAULT_THUMBNAIL_WIDTH = 57;
+    static const int DEFAULT_THUMBNAIL_HEIGHT = 32;
+    static const int COMPACT_THUMBNAIL_WIDTH = 28;
+    static const int COMPACT_THUMBNAIL_HEIGHT = 16;
 }
 
 namespace Gpi
@@ -212,6 +216,7 @@ namespace Print
 namespace ClearOutput
 {
     static const bool DEFAULT_CLEAR_CHANNEL = true;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Group

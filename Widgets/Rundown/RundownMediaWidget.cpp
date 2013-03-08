@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -21,6 +22,7 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    setThumbnail();
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -33,17 +35,17 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
 
     if (this->model.getType() == "AUDIO")
     {
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Audio.png"));
+        this->labelIcon->setPixmap(QPixmap(":/Graphics/Images/Audio.png"));
         this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_AUDIO_COLOR));
     }
     else if (this->model.getType() == "STILL")
     {
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Still.png"));
+        this->labelIcon->setPixmap(QPixmap(":/Graphics/Images/Still.png"));
         this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_STILL_COLOR));
     }
     else if (this->model.getType() == "MOVIE")
     {
-        this->labelThumbnail->setPixmap(QPixmap(":/Graphics/Images/Movie.png"));
+        this->labelIcon->setPixmap(QPixmap(":/Graphics/Images/Movie.png"));
         this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MOVIE_COLOR));
     }
 
@@ -67,6 +69,24 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
     checkGpiTriggerable();
 
     qApp->installEventFilter(this);
+}
+
+void RundownMediaWidget::setThumbnail()
+{
+    if (this->model.getType() == "AUDIO")
+    {
+        this->labelThumbnail->setVisible(false);
+        return;
+    }
+
+    QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
+    QImage image;
+    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
+
+    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+    if (displayThumbnailTooltip)
+        this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
 }
 
 bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
@@ -135,15 +155,17 @@ void RundownMediaWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
-        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
-        this->labelGpiConnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
-        this->labelDisconnected->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelIcon->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::COMPACT_THUMBNAIL_WIDTH, Define::COMPACT_THUMBNAIL_HEIGHT);
     }
     else
     {
-        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
-        this->labelGpiConnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
-        this->labelDisconnected->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelIcon->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
+        this->labelGpiConnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
+        this->labelDisconnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_THUMBNAIL_WIDTH, Define::DEFAULT_THUMBNAIL_HEIGHT);
     }
 
     this->compactView = compactView;

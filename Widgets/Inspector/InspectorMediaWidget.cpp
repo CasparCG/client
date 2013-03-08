@@ -181,24 +181,24 @@ void InspectorMediaWidget::resetLength(QString length)
 
 void InspectorMediaWidget::resetLoop(QString loop)
 {
-    this->checkBoxLoop->setChecked(false);
+    this->checkBoxLoop->setChecked(Media::DEFAULT_LOOP);
     this->command->setLoop(this->checkBoxLoop->isChecked());
 }
 
 void InspectorMediaWidget::resetUseAuto(QString useAuto)
 {
-    this->checkBoxUseAuto->setChecked(false);
+    this->checkBoxUseAuto->setChecked(Media::DEFAULT_USE_AUTO);
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
 void InspectorMediaWidget::resetFreezeOnLoad(QString freezeOnLoad)
 {
-    this->checkBoxFreezeOnLoad->setChecked(false);
+    this->checkBoxFreezeOnLoad->setChecked(Media::DEFAULT_FREEZE_ON_LOAD);
     this->command->setFreezeOnLoad(this->checkBoxFreezeOnLoad->isChecked());
 }
 
 void InspectorMediaWidget::resetTriggerOnNext(QString triggerOnNext)
 {
-    this->checkBoxTriggerOnNext->setChecked(false);
+    this->checkBoxTriggerOnNext->setChecked(Media::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

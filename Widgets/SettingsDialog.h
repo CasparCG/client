@@ -25,10 +25,8 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         void loadGpi();
         void loadDevices();
         void checkEmptyDeviceList();
-        void updateGpi(
-                int gpi, const QComboBox* voltage, const QComboBox* action);
-        void updateGpo(
-                int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
+        void updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action);
+        void updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
         void updateGpiDevice();
 
         Q_SLOT void removeDevice();
@@ -37,6 +35,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void fontSizeChanged(int);
         Q_SLOT void autoSynchronizeChanged(int);
         Q_SLOT void synchronizeIntervalChanged(int);
+        Q_SLOT void showThumbnailTooltipChanged(int);
         Q_SLOT void gpi1Changed();
         Q_SLOT void gpi2Changed();
         Q_SLOT void gpi3Changed();

@@ -69,9 +69,9 @@ void RundownSeparatorWidget::writeProperties(QXmlStreamWriter* writer)
 void RundownSeparatorWidget::setCompactView(bool compactView)
 {
     if (compactView)
-        this->labelThumbnail->setFixedSize(Define::COMPACT_VIEW_WIDTH, Define::COMPACT_VIEW_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
     else
-        this->labelThumbnail->setFixedSize(Define::DEFAULT_VIEW_WIDTH, Define::DEFAULT_VIEW_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
 
     this->compactView = compactView;
 }

@@ -7,6 +7,7 @@
 #include "CasparMedia.h"
 #include "CasparTemplate.h"
 #include "CasparVersion.h"
+#include "CasparThumbnail.h"
 
 class CASPAR_EXPORT CasparDevice : public AMCPDevice
 {
@@ -25,10 +26,13 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void refreshMedia();
         void refreshTemplate();
         void refreshChannels();
+        void refreshThumbnail();
 
         void refreshFlashVersion();
         void refreshServerVersion();
         void refreshTemplateHostVersion();
+
+        void retrieveThumbnail(const QString& name);
 
         void sendCommand(const QString& command);
 
@@ -110,6 +114,8 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         Q_SIGNAL void dataChanged(const QList<CasparData>&, CasparDevice&);
         Q_SIGNAL void versionChanged(const CasparVersion&, CasparDevice&);
         Q_SIGNAL void responseChanged(const QList<QString>&, CasparDevice&);
+        Q_SIGNAL void thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
+        Q_SIGNAL void thumbnailRetrieveChanged(const QString& data, CasparDevice&);
 
     protected:
         void sendNotification();

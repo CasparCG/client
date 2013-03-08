@@ -22,16 +22,6 @@
         <file>Images/ArrowLeftDisabled.png</file>
         <file>Images/ArrowRight.png</file>
         <file>Images/ArrowRightDisabled.png</file>
-        <file>Images/Splitter.png</file>
-        <file>Images/FastRewind.png</file>
-        <file>Images/FastForward.png</file>
-        <file>Images/Play.png</file>
-        <file>Images/FastRewindStart.png</file>
-        <file>Images/FastForwardEnd.png</file>
-        <file>Images/Stop.png</file>
-        <file>Images/Pause.png</file>
-        <file>Images/Record.png</file>
-        <file>Images/Recording.png</file>
         <file>Images/BlueBullet.png</file>
         <file>Images/YellowBullet.png</file>
         <file>Images/RedBullet.png</file>
@@ -64,12 +54,15 @@
         <file>Images/Delay.png</file>
         <file>Images/ServerBig.png</file>
         <file>Images/ServerSmall.png</file>
-        <file>Images/StoredData.png</file>
         <file>Images/AudioColor.png</file>
         <file>Images/StillColor.png</file>
         <file>Images/TemplateColor.png</file>
         <file>Images/MovieColor.png</file>
-        <file>Images/StoredDataColor.png</file>
+        <file>Images/Thumbnail.png</file>
+        <file>Images/SplitterVertical.png</file>
+        <file>Images/SplitterHorizontal.png</file>
+        <file>Images/Data.png</file>
+        <file>Images/DataColor.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
