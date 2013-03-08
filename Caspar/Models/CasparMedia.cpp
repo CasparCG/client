@@ -1,4 +1,4 @@
-#include "CasparMedia.h"
+#include "Models/CasparMedia.h"
 
 CasparMedia::CasparMedia(const QString& name, const QString& type)
     : name(name), type(type)

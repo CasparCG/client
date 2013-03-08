@@ -1,4 +1,4 @@
-#include "CasparThumbnail.h"
+#include "Models/CasparThumbnail.h"
 
 CasparThumbnail::CasparThumbnail(const QString& name, const QString& timestamp)
     : name(name), timestamp(timestamp)

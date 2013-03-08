@@ -3,11 +3,11 @@
 #include "Shared.h"
 
 #include "AMCPDevice.h"
-#include "CasparData.h"
-#include "CasparMedia.h"
-#include "CasparTemplate.h"
-#include "CasparVersion.h"
-#include "CasparThumbnail.h"
+#include "Models/CasparData.h"
+#include "Models/CasparMedia.h"
+#include "Models/CasparTemplate.h"
+#include "Models/CasparVersion.h"
+#include "Models/CasparThumbnail.h"
 
 class CASPAR_EXPORT CasparDevice : public AMCPDevice
 {

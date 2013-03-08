@@ -1,4 +1,4 @@
-#include "CasparVersion.h"
+#include "Models/CasparVersion.h"
 
 CasparVersion::CasparVersion(const QString& version)
     : version(version)

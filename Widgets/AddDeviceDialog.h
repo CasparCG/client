@@ -4,7 +4,7 @@
 #include "ui_AddDeviceDialog.h"
 
 #include "CasparDevice.h"
-#include "CasparVersion.h"
+#include "Models/CasparVersion.h"
 
 #include <QtCore/QList>
 

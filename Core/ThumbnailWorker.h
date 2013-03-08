@@ -2,11 +2,11 @@
 
 #include "Shared.h"
 
-#include "CasparData.h"
+#include "Models/CasparData.h"
 #include "CasparDevice.h"
-#include "CasparMedia.h"
-#include "CasparTemplate.h"
-#include "CasparThumbnail.h"
+#include "Models/CasparMedia.h"
+#include "Models/CasparTemplate.h"
+#include "Models/CasparThumbnail.h"
 
 #include "Models/ThumbnailModel.h"
 

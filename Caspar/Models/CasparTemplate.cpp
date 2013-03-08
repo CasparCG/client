@@ -1,4 +1,4 @@
-#include "CasparTemplate.h"
+#include "Models/CasparTemplate.h"
 
 CasparTemplate::CasparTemplate(const QString& name)
     : name(name)
