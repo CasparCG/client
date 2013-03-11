@@ -45,7 +45,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         bool compactView;
         bool enterPressed;
 
-        BorderAnimation* animation;
+        BorderAnimation* rundownAnimation;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 

@@ -50,7 +50,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     setupUi(this);
     setupUiMenu();
 
-    this->animation = new BorderAnimation(this->treeWidgetRundown);
+    this->rundownAnimation = new BorderAnimation(this->treeWidgetRundown);
 
     // TODO: specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
@@ -560,7 +560,7 @@ void RundownWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writ
 
 void RundownWidget::checkEmptyRundown()
 {
-    (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? this->animation->start() : this->animation->stop();
+    (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? this->rundownAnimation->start() : this->rundownAnimation->stop();
 }
 
 void RundownWidget::colorizeItems(const QString& color)

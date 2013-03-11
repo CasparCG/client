@@ -9,7 +9,7 @@ BorderAnimation::BorderAnimation(QWidget* target, QObject* parent)
     this->animation = new QPropertyAnimation(this, "alpha");
     this->animation->setDuration(1000);
     this->animation->setKeyValueAt(0, 255);
-    this->animation->setKeyValueAt(0.5, 100);
+    this->animation->setKeyValueAt(0.5, 64);
     this->animation->setKeyValueAt(1, 255);
 }
 

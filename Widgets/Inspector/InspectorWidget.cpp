@@ -55,6 +55,8 @@ InspectorWidget::InspectorWidget(QWidget* parent)
 {
     setupUi(this);
 
+    this->masterVolumeAnimation = new BorderAnimation(this->toolButtonMasterVolume);
+
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(0)), 0, new InspectorMetadataWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(1)), 0, new InspectorOutputWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(2)), 0, new InspectorTemplateWidget(this));
@@ -319,7 +321,13 @@ void InspectorWidget::masterVolumeClicked()
     }
 
     if (this->masterVolumeMuted)
+    {
+        this->masterVolumeAnimation->start();
         this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOff.png"));
+    }
     else
+    {
+        this->masterVolumeAnimation->stop();
         this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOn.png"));
+    }
 }
