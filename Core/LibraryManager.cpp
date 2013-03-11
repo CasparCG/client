@@ -82,6 +82,7 @@ void LibraryManager::refresh()
         return;
 
     qApp->postEvent(qApp, new StatusbarEvent("Refreshing library..."));
+    qDebug() << QString("LibraryManager::refresh: Refreshing library...");
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {

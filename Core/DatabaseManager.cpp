@@ -88,7 +88,7 @@ void DatabaseManager::initialize()
 
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltipInRundown', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltipInRundown', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionWidth', '1920')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionHeight', '1080')");
@@ -928,7 +928,10 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
     if (deleteModels.count() > 0)
     {
         for (int i = 0; i < deleteModels.count(); i++)
+        {
+            sql.exec(QString("DELETE FROM Thumbnail WHERE Id = %1").arg(deleteModels.at(i).getThumbnailId()));
             sql.exec(QString("DELETE FROM Library WHERE Id = %1 AND TypeId = 2").arg(deleteModels.at(i).getId()));
+        }
     }
 
     if (insertModels.count() > 0)

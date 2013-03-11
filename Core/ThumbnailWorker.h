@@ -25,7 +25,6 @@ class CORE_EXPORT ThumbnailWorker : public QObject
     private:
         QTimer thumbnailTimer;
 
-        int currentId;
         QString currentName;
         QString currentAddress;
         QString currentTimestamp;

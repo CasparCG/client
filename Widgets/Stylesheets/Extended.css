@@ -55,6 +55,7 @@
 #labelThumbnail
 {
     border-width: 1px;
+    image: url(:/Graphics/Images/Checkerboard.png);
 }
 #labelLabel, #labelNoteField
 {
@@ -110,7 +111,12 @@
  */
 #pagePreview
 {
-    background-color: rgba(55, 55, 55, 255);
+    background-color: rgba(60, 60, 60, 255);
+}
+#labelPreview
+{
+    border-width: 1px;
+    image: url(:/Graphics/Images/Checkerboard.png);
 }
 
 /*

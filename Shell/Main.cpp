@@ -19,7 +19,7 @@
 
 void loadDatabase(QApplication& application)
 {
-    QString path = QString("%1/.casparcg/client").arg(QDir::homePath());
+    QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
     QDir directory;
     if (!directory.exists(path))

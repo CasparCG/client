@@ -42,7 +42,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="1">
-        <widget class="QLabel" name="labelThumbnail">
+        <widget class="QLabel" name="labelPreview">
          <property name="minimumSize">
           <size>
            <width>228</width>

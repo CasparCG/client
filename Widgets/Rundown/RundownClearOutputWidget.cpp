@@ -196,12 +196,13 @@ bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type ty
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) ||
              (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext()))
     {  
-        this->executeTimer.disconnect(); // Disconnect events.
+        QObject::disconnect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
+        QObject::disconnect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
 
         if (this->command.getClearChannel())
-            QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeClearChannel()));
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
         else
-            QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeClearVideolayer()));
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
 
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();

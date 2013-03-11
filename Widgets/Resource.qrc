@@ -63,6 +63,7 @@
         <file>Images/SplitterHorizontal.png</file>
         <file>Images/Data.png</file>
         <file>Images/DataColor.png</file>
+        <file>Images/Checkerboard.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

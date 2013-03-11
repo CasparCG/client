@@ -38,11 +38,11 @@ bool PreviewWidget::eventFilter(QObject* target, QEvent* event)
             QString data = DatabaseManager::getInstance().getThumbnailById(thumbnailId).getData();
             QImage image;
             image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
-            this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
+            this->labelPreview->setPixmap(QPixmap::fromImage(image));
         }
         else
         {
-            this->labelThumbnail->setPixmap(NULL);
+            this->labelPreview->setPixmap(NULL);
         }
     }
 
