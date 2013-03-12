@@ -675,6 +675,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Master Volume</string>
+       </property>
        <property name="icon">
         <iconset resource="../Resource.qrc">
          <normaloff>:/Graphics/Images/MasterVolumeOn.png</normaloff>:/Graphics/Images/MasterVolumeOn.png</iconset>
