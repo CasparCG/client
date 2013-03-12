@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>214</width>
-    <height>583</height>
+    <width>287</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>287</width>
+        <height>465</height>
        </rect>
       </property>
       <attribute name="label">
@@ -106,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>287</width>
+        <height>465</height>
        </rect>
       </property>
       <attribute name="label">
@@ -179,8 +179,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>448</height>
+        <width>287</width>
+        <height>465</height>
        </rect>
       </property>
       <attribute name="label">
@@ -258,8 +258,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>287</width>
+        <height>465</height>
        </rect>
       </property>
       <attribute name="label">
@@ -331,8 +331,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>287</width>
+        <height>465</height>
        </rect>
       </property>
       <attribute name="label">

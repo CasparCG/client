@@ -282,12 +282,15 @@ void LibraryManager::deviceThumbnailChanged(const QList<CasparThumbnail>& thumbn
         bool found = false;
         foreach (const ThumbnailModel& thumbnailModel, thumbnailModels)
         {
-            if (thumbnailModel.getName() == thumbnailItem.getName() && thumbnailModel.getTimestamp() == thumbnailItem.getTimestamp())
+            if (thumbnailModel.getName() == thumbnailItem.getName() &&
+                thumbnailModel.getTimestamp() == thumbnailItem.getTimestamp() &&
+                thumbnailModel.getSize() == thumbnailItem.getSize())
                 found = true;
         }
 
         if (!found)
-            processModels.push_back(ThumbnailModel(0, "", thumbnailItem.getTimestamp(), thumbnailItem.getName(), device.getAddress()));
+            processModels.push_back(ThumbnailModel(0, "", thumbnailItem.getTimestamp(), thumbnailItem.getSize(),
+                                                   thumbnailItem.getName(), device.getAddress()));
     }
 
     // OBS! Need to support multiple devices.

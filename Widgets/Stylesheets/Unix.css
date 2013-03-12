@@ -5,3 +5,8 @@ QHeaderView::section
 {
     padding: 4px;
 }
+
+QToolTip
+{
+    font-size: 12px;
+}

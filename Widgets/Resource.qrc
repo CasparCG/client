@@ -63,6 +63,7 @@
         <file>Images/SplitterHorizontal.png</file>
         <file>Images/Data.png</file>
         <file>Images/DataColor.png</file>
+        <file>Images/AlphaPreview.png</file>
         <file>Images/Checkerboard.png</file>
     </qresource>
     <qresource prefix="/Appearances">
@@ -80,7 +81,5 @@
         <file>Fonts/OpenSans-Regular.ttf</file>
         <file>Fonts/OpenSans-Semibold.ttf</file>
         <file>Fonts/OpenSans-SemiboldItalic.ttf</file>
-        <file>Images/MasterVolumeOff.png</file>
-        <file>Images/MasterVolumeOn.png</file>
     </qresource>
 </RCC>

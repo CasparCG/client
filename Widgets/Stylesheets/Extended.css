@@ -118,6 +118,11 @@
     border-width: 1px;
     image: url(:/Graphics/Images/Checkerboard.png);
 }
+#toolButtonAlphaPreview
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+    padding: 0px;
+}
 
 /*
  * ClockWidget

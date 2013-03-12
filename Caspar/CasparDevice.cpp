@@ -534,8 +534,9 @@ void CasparDevice::sendNotification()
                 name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
 
                 QString timestamp = response.split("\" ").at(1).trimmed().split(" ").at(0);
+                QString size = response.split("\" ").at(1).trimmed().split(" ").at(1);
 
-                items.push_back(CasparThumbnail(name, timestamp));
+                items.push_back(CasparThumbnail(name, timestamp, size));
             }
 
             emit thumbnailChanged(items, *this);

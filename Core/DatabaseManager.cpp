@@ -51,7 +51,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
     sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER)");
     sql.exec("CREATE TABLE Rundown (Id INTEGER PRIMARY KEY, Page TEXT, Name TEXT, Device TEXT, TypeId INTEGER)");
-    sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT)");
+    sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
@@ -952,20 +952,35 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
     qDebug() << QString("DatabaseManager::updateLibraryData: %1 msec").arg(time.elapsed());
 }
 
+void DatabaseManager::deleteLibrary(int deviceId)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query("DELETE FROM Library WHERE DeviceId = :deviceId");
+    query.replace(QRegExp(":deviceId"), QString("%1").arg(deviceId));
+
+    executeUpdate(query);
+
+    QSqlDatabase::database().commit();
+}
+
 ThumbnailModel DatabaseManager::getThumbnailById(int id)
 {
     QMutexLocker locker(&mutex);
 
     QSqlQuery sql;
 
-    QString query("SELECT t.Id, t.Data, t.Timestamp, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
+    QString query("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
                   "WHERE t.Id = :id AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id");
     query.replace(QRegExp(":id"), QString("%1").arg(id));
 
     sql.exec(query);
     sql.first();
 
-    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(4).toString(), sql.value(5).toString());
+    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
+                          sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString());
 }
 
 QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString& address)
@@ -975,14 +990,14 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
     QSqlQuery sql;
     QList<ThumbnailModel> models;
 
-    QString query("SELECT t.Id, t.Data, t.Timestamp, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
+    QString query("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
                   "WHERE d.Address = ':address' AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id");
     query.replace(QRegExp(":address"), address);
 
     sql.exec(query);
     while (sql.next())
         models.push_back(ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                        sql.value(3).toString(), sql.value(4).toString()));
+                                        sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString()));
 
     return models;
 }
@@ -1007,10 +1022,11 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
         {
             const LibraryModel& libraryModel = libraryModels.at(i);
             if (libraryModel.getThumbnailId() > 0)
-                sql.exec(QString("UPDATE Thumbnail SET Data = '%1', Timestamp = '%2' WHERE Id = %3").arg(model.getData()).arg(model.getTimestamp()).arg(libraryModel.getThumbnailId()));
+                sql.exec(QString("UPDATE Thumbnail SET Data = '%1', Timestamp = '%2', Size = '%3' WHERE Id = %4")
+                         .arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()).arg(libraryModel.getThumbnailId()));
             else
             {
-                sql.exec(QString("INSERT INTO Thumbnail (Data, Timestamp) VALUES('%1', '%2')").arg(model.getData()).arg(model.getTimestamp()));
+                sql.exec(QString("INSERT INTO Thumbnail (Data, Timestamp, Size) VALUES('%1', '%2', '%3')").arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()));
                 sql.exec(QString("UPDATE Library SET ThumbnailId = %1 WHERE Id = %2").arg(sql.lastInsertId().toInt()).arg(libraryModel.getId()));
             }
         }
@@ -1019,18 +1035,4 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
     QSqlDatabase::database().commit();
 
     qDebug() << QString("DatabaseManager::updateThumbnail: %1 msec").arg(time.elapsed());
-}
-
-void DatabaseManager::deleteLibrary(int deviceId)
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlDatabase::database().transaction();
-
-    QString query("DELETE FROM Library WHERE DeviceId = :deviceId");
-    query.replace(QRegExp(":deviceId"), QString("%1").arg(deviceId));
-
-    executeUpdate(query);
-
-    QSqlDatabase::database().commit();
 }

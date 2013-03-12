@@ -40,6 +40,7 @@ void ThumbnailWorker::process()
     this->currentName = this->thumbnailModels.at(0).getName();
     this->currentAddress = this->thumbnailModels.at(0).getAddress();
     this->currentTimestamp= this->thumbnailModels.at(0).getTimestamp();
+    this->currentSize= this->thumbnailModels.at(0).getSize();
 
     const DeviceModel& model = DeviceManager::getInstance().getDeviceModelByAddress(this->currentAddress);
     if (model.getShadow() == "Yes")
@@ -61,5 +62,5 @@ void ThumbnailWorker::process()
 void ThumbnailWorker::deviceThumbnailRetrieveChanged(const QString& data, CasparDevice& device)
 {
     QObject::disconnect(&device, SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(deviceThumbnailRetrieveChanged(const QString&, CasparDevice&)));
-    DatabaseManager::getInstance().updateThumbnail(ThumbnailModel(0, data, this->currentTimestamp, this->currentName, this->currentAddress));
+    DatabaseManager::getInstance().updateThumbnail(ThumbnailModel(0, data, this->currentTimestamp, this->currentSize, this->currentName, this->currentAddress));
 }

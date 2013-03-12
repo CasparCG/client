@@ -262,10 +262,12 @@ QToolBar
     padding: 1px;*/
 }
 
+/*
+ * QToolTip
+ */
 QToolTip
 {
-    background-color: transparent;
-    border-width: 0px;
+    font-size: 11px;
 }
 
 /*

@@ -3,6 +3,9 @@
 #include "Shared.h"
 #include "ui_PreviewWidget.h"
 
+#include "Animations/BorderAnimation.h"
+
+#include <QtGui/QImage>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
@@ -14,4 +17,12 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
+
+    private:
+        QImage image;
+        bool alphaPreview;
+
+        BorderAnimation* alphaPreviewAnimation;
+
+        Q_SLOT void switchPreview();
 };

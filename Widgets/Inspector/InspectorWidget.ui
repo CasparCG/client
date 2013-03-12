@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>245</width>
-    <height>589</height>
+    <width>287</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -36,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>245</width>
-        <height>528</height>
+        <width>287</width>
+        <height>539</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>243</width>
-            <height>526</height>
+            <width>285</width>
+            <height>537</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -718,8 +718,8 @@
    <slot>masterVolumeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>19</x>
-     <y>577</y>
+     <x>231</x>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
      <x>98</x>

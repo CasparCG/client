@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1460</width>
+    <width>1400</width>
     <height>937</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1460</width>
+    <width>1400</width>
     <height>937</height>
    </size>
   </property>
@@ -179,6 +179,12 @@
        </layout>
       </widget>
       <widget class="QSplitter" name="splitterVertical">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -186,9 +192,15 @@
         <number>6</number>
        </property>
        <widget class="LibraryWidget" name="widgetLibrary" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>260</width>
+          <width>287</width>
           <height>0</height>
          </size>
         </property>
@@ -209,14 +221,14 @@
          <item>
           <widget class="PreviewWidget" name="widgetPreview" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>260</width>
+             <width>287</width>
              <height>200</height>
             </size>
            </property>
@@ -225,14 +237,14 @@
          <item>
           <widget class="InspectorWidget" name="widgetInspector" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="minimumSize">
             <size>
-             <width>260</width>
+             <width>287</width>
              <height>0</height>
             </size>
            </property>

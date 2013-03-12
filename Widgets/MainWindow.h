@@ -29,6 +29,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* editMenu;
         QMenu* viewMenu;
         QMenu* libraryMenu;
+        QMenu* rundownMenu;
         QMenu* playoutMenu;
         QMenu* helpMenu;
         QMenuBar* menuBar;

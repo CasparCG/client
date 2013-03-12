@@ -9,9 +9,12 @@
 #include "Models/ThumbnailModel.h"
 
 PreviewWidget::PreviewWidget(QWidget* parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      alphaPreview(false)
 {
     setupUi(this);
+
+    this->alphaPreviewAnimation = new BorderAnimation(this->toolButtonAlphaPreview);
 
     qApp->installEventFilter(this);
 }
@@ -36,9 +39,12 @@ bool PreviewWidget::eventFilter(QObject* target, QEvent* event)
         if (thumbnailId > 0)
         {
             QString data = DatabaseManager::getInstance().getThumbnailById(thumbnailId).getData();
-            QImage image;
-            image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
-            this->labelPreview->setPixmap(QPixmap::fromImage(image));
+            this->image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+
+            if (this->alphaPreview)
+                this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+            else
+                this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
         }
         else
         {
@@ -47,4 +53,20 @@ bool PreviewWidget::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void PreviewWidget::switchPreview()
+{
+    if (this->alphaPreview)
+    {
+        this->alphaPreviewAnimation->stop();
+        this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
+    }
+    else
+    {
+        this->alphaPreviewAnimation->start();
+        this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+    }
+
+    this->alphaPreview = !this->alphaPreview;
 }

@@ -63,10 +63,12 @@ void MainWindow::setupUiMenu()
 
     this->viewMenu = new QMenu(this);
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
-    this->viewMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
     this->libraryMenu = new QMenu(this);
     this->libraryMenu->addAction("Refresh Library", this, SLOT(refreshLibrary()), QKeySequence::fromString("Ctrl+R"));
+
+    this->rundownMenu = new QMenu(this);
+    this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -94,6 +96,7 @@ void MainWindow::setupUiMenu()
     this->menuBar->addMenu(this->editMenu)->setText("Edit");
     this->menuBar->addMenu(this->viewMenu)->setText("View");
     this->menuBar->addMenu(this->libraryMenu)->setText("Library");
+    this->menuBar->addMenu(this->rundownMenu)->setText("Rundown");
     this->menuBar->addMenu(this->playoutMenu)->setText("Playout");
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
