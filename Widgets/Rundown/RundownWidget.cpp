@@ -238,7 +238,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyRundown();
 
-        qDebug() << QString("RundownWidget::eventFilter: %1 msec").arg(time.elapsed());
+        qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
 
         return true;
     }
