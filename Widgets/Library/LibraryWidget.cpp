@@ -37,7 +37,6 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetImage->setColumnHidden(3, true);
     this->treeWidgetImage->setColumnHidden(4, true);
     this->treeWidgetImage->setColumnHidden(5, true);
-    this->treeWidgetImage->setMouseTracking(true);
 
     this->treeWidgetTemplate->setColumnHidden(1, true);
     this->treeWidgetTemplate->setColumnHidden(2, true);
@@ -50,7 +49,6 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
     this->treeWidgetVideo->setColumnHidden(5, true);
-    this->treeWidgetVideo->setMouseTracking(true);
 
     this->treeWidgetData->setColumnHidden(1, true);
     this->treeWidgetData->setColumnHidden(2, true);

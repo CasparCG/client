@@ -50,7 +50,6 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
     sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER)");
-    sql.exec("CREATE TABLE Rundown (Id INTEGER PRIMARY KEY, Page TEXT, Name TEXT, Device TEXT, TypeId INTEGER)");
     sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
@@ -432,73 +431,6 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
     return TypeModel(sql.value(0).toInt(), sql.value(1).toString());
 }
 
-QList<RundownModel> DatabaseManager::getRundown()
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlQuery sql;
-    QList<RundownModel> models;
-
-    QString query("SELECT r.Id, r.Page, r.Name, r.Device, t.Value FROM Rundown r, Type t "
-                  "WHERE r.TypeId = t.Id "
-                  "ORDER BY r.Id");
-
-    sql.exec(query);
-    while (sql.next())
-        models.push_back(RundownModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toString()));
-
-    return models;
-}
-
-QList<RundownModel> DatabaseManager::getRundownByFilter(const QString& filter)
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlQuery sql;
-    QList<RundownModel> models;
-
-    QString query("SELECT r.Id, r.Page, r.Name, r.Device, t.Value FROM Rundown r, Type t "
-                  "WHERE r.TypeId = t.Id AND (r.Page LIKE '%:filter%' OR r.Name LIKE '%:filter%' OR r.Device LIKE '%:filter%' OR t.Value LIKE '%:filter%') "
-                  "ORDER BY r.Id");
-    query.replace(QRegExp(":filter"), filter);
-
-    sql.exec(query);
-    while (sql.next())
-        models.push_back(RundownModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString(), sql.value(6).toString()));
-
-    return models;
-}
-
-RundownModel DatabaseManager::getRundownById(int id)
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlQuery sql;
-
-    QString query("SELECT r.Id, r.Page, r.Name, r.Device, t.Value FROM Rundown r, Type t "
-                  "WHERE r.TypeId = t.Id AND r.Id=:id");
-    query.replace(QRegExp(":id"), QString("%1").arg(id));
-
-    sql.exec(query);
-    sql.first();
-
-    return RundownModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString(), sql.value(6).toString());
-}
-
-void DatabaseManager::deleteRundown(int id)
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlDatabase::database().transaction();
-
-    QString query("DELETE FROM Rundown WHERE Id = :id");
-    query.replace(QRegExp(":id"), QString("%1").arg(id));
-
-    executeUpdate(query);
-
-    QSqlDatabase::database().commit();
-}
-
 QList<DeviceModel> DatabaseManager::getDevice()
 {
     QSqlQuery sql;
@@ -610,6 +542,11 @@ void DatabaseManager::deleteDevice(int id)
     deviceQuery.replace(QRegExp(":id"), QString("%1").arg(id));
 
     executeUpdate(deviceQuery);
+
+    QString thumbnailQuery("DELETE FROM Thumbnail WHERE Id IN (SELECT l.ThumbnailId FROM Library l WHERE DeviceId = :id)");
+    thumbnailQuery.replace(QRegExp(":id"), QString("%1").arg(id));
+
+    executeUpdate(thumbnailQuery);
 
     QString contentQuery("DELETE FROM Library WHERE DeviceId = :id");
     contentQuery.replace(QRegExp(":id"), QString("%1").arg(id));

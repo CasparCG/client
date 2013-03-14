@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>287</width>
-        <height>465</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -106,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>287</width>
-        <height>465</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -367,22 +367,17 @@
          </attribute>
          <column>
           <property name="text">
-           <string>New Column</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Name</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Color</string>
+           <string>New Column</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Label</string>
+           <string>Id</string>
           </property>
          </column>
          <column>

@@ -38,6 +38,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QPoint>
 #include <QtCore/QTextCodec>
+#include <QtCore/QTime>
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -198,6 +199,9 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
     {
+        QTime time;
+        time.start();
+
         OpenRundownEvent* openRundownEvent = dynamic_cast<OpenRundownEvent*>(event);
         QFile file(openRundownEvent->getPath());
         if (file.open(QFile::ReadOnly | QIODevice::Text))
@@ -210,8 +214,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
             file.close();
 
-            this->treeWidgetRundown->selectAll();
-            removeSelectedItems();
+            this->treeWidgetRundown->clear();
 
             boost::property_tree::wptree pt;
             boost::property_tree::xml_parser::read_xml(wstringstream, pt);
@@ -225,6 +228,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
                     readRundownItem(type, value.second, NULL);
             }
 
+            qDebug() << QString("RundownWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
+
             if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
                 this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
@@ -232,6 +237,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         }
 
         checkEmptyRundown();
+
+        qDebug() << QString("RundownWidget::eventFilter: %1 msec").arg(time.elapsed());
 
         return true;
     }

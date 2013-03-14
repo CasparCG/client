@@ -22,8 +22,7 @@
 Q_GLOBAL_STATIC(LibraryManager, libraryManager)
 
 LibraryManager::LibraryManager(QObject* parent)
-    : QObject(parent),
-      thumbnailWorker(NULL)
+    : QObject(parent)
 {
     QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
@@ -76,6 +75,8 @@ bool LibraryManager::eventFilter(QObject* target, QEvent* event)
 
 void LibraryManager::refresh()
 {
+    this->thumbnailWorkers.clear();
+
     DeviceManager::getInstance().refresh();
 
     if (DeviceManager::getInstance().getConnectionCount() == 0)
@@ -293,10 +294,8 @@ void LibraryManager::deviceThumbnailChanged(const QList<CasparThumbnail>& thumbn
                                                    thumbnailItem.getName(), device.getAddress()));
     }
 
-    // OBS! Need to support multiple devices.
-    if (this->thumbnailWorker != NULL)
-        delete this->thumbnailWorker;
+    QSharedPointer<ThumbnailWorker> thumbnailWorker(new ThumbnailWorker(processModels, this));
+    thumbnailWorker->start();
 
-    this->thumbnailWorker = new ThumbnailWorker(processModels, this);
-    this->thumbnailWorker->start();
+    this->thumbnailWorkers.push_back(thumbnailWorker);
 }

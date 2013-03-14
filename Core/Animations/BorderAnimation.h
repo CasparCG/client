@@ -16,6 +16,8 @@ class CORE_EXPORT BorderAnimation : public QObject
         explicit BorderAnimation(QWidget* target, QObject* parent = 0);
 
         void start(int loopCount = -1);
+        void pause();
+        void resume();
         void stop();
 
     private:

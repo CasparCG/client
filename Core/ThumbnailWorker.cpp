@@ -49,7 +49,7 @@ void ThumbnailWorker::process()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
     if (device->isConnected())
     {
-        qApp->postEvent(qApp, new StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
+        qApp->postEvent(qApp, new StatusbarEvent(QString("Retrieving thumbnails...")));
         qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
 
         QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(deviceThumbnailRetrieveChanged(const QString&, CasparDevice&)));

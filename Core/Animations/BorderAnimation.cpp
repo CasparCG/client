@@ -19,10 +19,15 @@ void BorderAnimation::start(int loopCount)
     this->animation->start();
 }
 
+void BorderAnimation::pause()
+{
+    this->animation->pause();
+}
+
 void BorderAnimation::stop()
 {
     this->animation->stop();
-    this->target->setStyleSheet(QString("border-color: rgba(%1);").arg(Stylesheet::DEFAULT_BORDER_COLOR));
+    this->target->setStyleSheet(QString("#%1 { border-color: rgba(%2); }").arg(target->objectName()).arg(Stylesheet::DEFAULT_BORDER_COLOR));
 }
 
 int BorderAnimation::alpha() const
@@ -34,5 +39,5 @@ void BorderAnimation::setAlpha(const int value)
 {
     this->value = value;
 
-    this->target->setStyleSheet(QString("border-color: rgba(255, 0, 0, %1);").arg(this->value));
+    this->target->setStyleSheet(QString("#%1 { border-color: rgba(255, 0, 0, %2); }").arg(target->objectName()).arg(this->value));
 }

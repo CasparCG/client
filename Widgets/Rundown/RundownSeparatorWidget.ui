@@ -31,7 +31,7 @@
        <height>36</height>
       </size>
      </property>
-     <widget class="QLabel" name="labelThumbnail">
+     <widget class="QLabel" name="labelIcon">
       <property name="geometry">
        <rect>
         <x>22</x>
@@ -93,7 +93,7 @@
       </property>
      </widget>
      <zorder>labelColor</zorder>
-     <zorder>labelThumbnail</zorder>
+     <zorder>labelIcon</zorder>
      <zorder>labelLabel</zorder>
      <zorder>labelGroupColor</zorder>
     </widget>

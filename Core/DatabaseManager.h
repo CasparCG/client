@@ -48,11 +48,6 @@ class CORE_EXPORT DatabaseManager
         QList<TypeModel> getType();
         TypeModel getTypeByValue(const QString& value);
 
-        QList<RundownModel> getRundown();
-        QList<RundownModel> getRundownByFilter(const QString& filter);
-        RundownModel getRundownById(int id);
-        void deleteRundown(int id);
-
         QList<DeviceModel> getDevice();
         DeviceModel getDeviceById(int id);
         DeviceModel getDeviceByName(const QString& name);

@@ -10,6 +10,7 @@
 #include "Models/CasparThumbnail.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QSharedPointer>
 #include <QtCore/QTimer>
 
 class CORE_EXPORT LibraryManager : public QObject
@@ -29,8 +30,7 @@ class CORE_EXPORT LibraryManager : public QObject
 
     private:
         QTimer refreshTimer;
-
-        ThumbnailWorker* thumbnailWorker;
+        QList<QSharedPointer<ThumbnailWorker> > thumbnailWorkers;
 
         Q_SLOT void refresh();
         Q_SLOT void deviceRemoved();
