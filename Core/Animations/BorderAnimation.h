@@ -17,7 +17,6 @@ class CORE_EXPORT BorderAnimation : public QObject
 
         void start(int loopCount = -1);
         void pause();
-        void resume();
         void stop();
 
     private:
