@@ -21,8 +21,8 @@ ThumbnailWorker::ThumbnailWorker(const QList<ThumbnailModel>& thumbnailModels, Q
 
 void ThumbnailWorker::start()
 {
-    this->thumbnailTimer.start();
     this->thumbnailTimer.setInterval(2000); // Settings?
+    this->thumbnailTimer.start();
 }
 
 void ThumbnailWorker::process()
