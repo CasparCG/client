@@ -20,9 +20,9 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
 
     private:
         QImage image;
-        bool alphaPreview;
+        bool previewAlpha;
 
-        BorderAnimation* alphaPreviewAnimation;
+        BorderAnimation* previewAlphaAnimation;
 
         Q_SLOT void switchPreview();
 };
