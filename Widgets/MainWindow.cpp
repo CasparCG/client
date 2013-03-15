@@ -87,7 +87,7 @@ void MainWindow::setupUiMenu()
     this->helpMenu = new QMenu(this);
     this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
     this->helpMenu->addSeparator();
-    this->helpMenu->addAction("About CasparCG Rundown");//, this, SLOT(showAboutDialog()));
+    this->helpMenu->addAction("About CasparCG Client");//, this, SLOT(showAboutDialog()));
     this->helpMenu->actions().at(2)->setEnabled(false);
 
     this->menuBar = new QMenuBar(this);
