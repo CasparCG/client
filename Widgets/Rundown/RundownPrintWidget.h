@@ -63,12 +63,12 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         QTimer executeTimer;
 
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executePlay();
         Q_SLOT void executeStop();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

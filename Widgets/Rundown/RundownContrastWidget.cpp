@@ -42,10 +42,10 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -325,7 +325,7 @@ void RundownContrastWidget::delayChanged(int delay)
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownContrastWidget::checkGpiTriggerable()
+void RundownContrastWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -337,10 +337,10 @@ void RundownContrastWidget::checkGpiTriggerable()
 
 void RundownContrastWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
-void RundownContrastWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownContrastWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }

@@ -1,24 +1,13 @@
 #include "DatabaseManager.h"
 
-#include <algorithm>
-#include <stdexcept>
-
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
 #include <QtCore/QMutexLocker>
 #include <QtCore/QTime>
 #include <QtCore/QVariant>
 
-#include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
-
-void executeUpdate(const QString& query)
-{
-    QSqlQuery sql;
-
-    if (!sql.exec(query))
-        throw std::runtime_error("Failed to execute " + query.toStdString() + ": " + sql.lastError().text().toStdString());
-}
+#include <QtSql/QSqlQuery>
 
 Q_GLOBAL_STATIC(DatabaseManager, databaseManager)
 
@@ -226,12 +215,12 @@ void DatabaseManager::updateConfiguration(const ConfigurationModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query("UPDATE Configuration SET Value = ':value' "
-                  "WHERE Name = ':name'");
-    query.replace(QRegExp(":name"), model.getName());
-    query.replace(QRegExp(":value"), model.getValue());
+    QString query = QString("UPDATE Configuration SET Value = '%1' "
+                            "WHERE Name = '%2'").arg(model.getValue()).arg(model.getName());
 
-    executeUpdate(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -240,13 +229,13 @@ ConfigurationModel DatabaseManager::getConfigurationByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT c.Id, c.Name, c.Value FROM Configuration c "
+                            "WHERE c.Name = '%1'").arg(name);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT c.Id, c.Name, c.Value FROM Configuration c "
-                  "WHERE c.Name = ':name'");
-    query.replace(QRegExp(":name"), name);
-
-    sql.exec(query);
     sql.first();
 
     return ConfigurationModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString());
@@ -256,12 +245,13 @@ QList<BlendModeModel> DatabaseManager::getBlendMode()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<BlendModeModel> models;
-
     QString query("SELECT b.Id, b.Value FROM BlendMode b");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<BlendModeModel> models;
     while (sql.next())
         models.push_back(BlendModeModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -272,12 +262,13 @@ QList<DirectionModel> DatabaseManager::getDirection()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<DirectionModel> models;
-
     QString query("SELECT d.Id, d.Value FROM Direction d");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<DirectionModel> models;
     while (sql.next())
         models.push_back(DirectionModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -288,12 +279,13 @@ QList<FormatModel> DatabaseManager::getFormat()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<FormatModel> models;
-
     QString query("SELECT f.Id, f.Value FROM Format f");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<FormatModel> models;
     while (sql.next())
         models.push_back(FormatModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -304,12 +296,13 @@ QList<TransitionModel> DatabaseManager::getTransition()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<TransitionModel> models;
-
     QString query("SELECT t.Id, t.Value FROM Transition t");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TransitionModel> models;
     while (sql.next())
         models.push_back(TransitionModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -320,12 +313,13 @@ QList<TweenModel> DatabaseManager::getTween()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<TweenModel> models;
-
     QString query("SELECT t.Id, t.Value FROM Tween t");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TweenModel> models;
     while (sql.next())
         models.push_back(TweenModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -336,12 +330,13 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<GpiPortModel> models;
-
     QString query("SELECT Id, RisingEdge, Action FROM GpiPort ORDER BY Id");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<GpiPortModel> models;
     while (sql.next())
         models.push_back(GpiPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, Playout::fromString(sql.value(2).toString())));
 
@@ -354,13 +349,12 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query("UPDATE GpiPort SET Action = ':action', RisingEdge = :risingEdge "
-                  "WHERE Id = :input");
-    query.replace(QRegExp(":input"), QString("%1").arg(model.getPort()));
-    query.replace(QRegExp(":risingEdge"), model.isRisingEdge() ? "1" : "0");
-    query.replace(QRegExp(":action"), Playout::toString(model.getAction()));
+    QString query = QString("UPDATE GpiPort SET Action = '%1', RisingEdge = %2 "
+                            "WHERE Id = %3").arg(model.getAction()).arg(model.isRisingEdge() ? "1" : "0").arg(model.getPort());
 
-    executeUpdate(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -369,13 +363,14 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<GpoPortModel> models;
-
     QString query("SELECT Id, RisingEdge, PulseLengthMillis "
                   "FROM GpoPort ORDER BY Id");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<GpoPortModel> models;
     while (sql.next())
         models.push_back(GpoPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, sql.value(2).toInt()));
 
@@ -385,16 +380,15 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 void DatabaseManager::updateGpoPort(const GpoPortModel& model)
 {
     QMutexLocker locker(&mutex);
+
     QSqlDatabase::database().transaction();
 
-    QString query("UPDATE GpoPort SET PulseLengthMillis = :pulseLengthMillis, RisingEdge = :risingEdge "
-                  "WHERE Id = :output");
+    QString query = QString("UPDATE GpoPort SET PulseLengthMillis = %1, RisingEdge = %2 "
+                            "WHERE Id = %3").arg(model.getPulseLengthMillis()).arg(model.isRisingEdge() ? "1" : "0").arg(model.getPort());
 
-    query.replace(QRegExp(":output"), QString("%1").arg(model.getPort()));
-    query.replace(QRegExp(":risingEdge"), model.isRisingEdge() ? "1" : "0");
-    query.replace(QRegExp(":pulseLengthMillis"), QString("%1").arg(model.getPulseLengthMillis()));
-
-    executeUpdate(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -403,12 +397,13 @@ QList<TypeModel> DatabaseManager::getType()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<TypeModel> models;
-
     QString query("SELECT t.Id, t.Value FROM Type t");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TypeModel> models;
     while (sql.next())
         models.push_back(TypeModel(sql.value(0).toInt(), sql.value(1).toString()));
 
@@ -419,13 +414,13 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT t.Id FROM Type t "
+                            "WHERE t.Value = '%1'").arg(value);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT t.Id FROM Type t "
-                  "WHERE t.Value = ':value'");
-    query.replace(QRegExp(":value"), value);
-
-    sql.exec(query);
     sql.first();
 
     return TypeModel(sql.value(0).toInt(), sql.value(1).toString());
@@ -433,13 +428,14 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 
 QList<DeviceModel> DatabaseManager::getDevice()
 {
-    QSqlQuery sql;
-    QList<DeviceModel> models;
-
     QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
                   "ORDER BY d.Name");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<DeviceModel> models;
     while (sql.next())
         models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
                                      sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt()));
@@ -454,21 +450,21 @@ GpiDeviceModel DatabaseManager::getGpiDevice()
 
 void DatabaseManager::updateGpiDevice(const GpiDeviceModel& model)
 {
-    updateConfiguration(ConfigurationModel(-1, "GpiSerialPort", model.getSerialPort()));
-    updateConfiguration(ConfigurationModel(-1, "GpiBaudRate", QString("%1").arg(model.getBaudRate())));
+    updateConfiguration(ConfigurationModel(0, "GpiSerialPort", model.getSerialPort()));
+    updateConfiguration(ConfigurationModel(0, "GpiBaudRate", QString("%1").arg(model.getBaudRate())));
 }
 
 DeviceModel DatabaseManager::getDeviceById(int id)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+                            "WHERE d.Id = %1").arg(id);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
-                  "WHERE d.Id = :id");
-    query.replace(QRegExp(":id"), QString("%1").arg(id));
-
-    sql.exec(query);
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
@@ -479,13 +475,13 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+                            "WHERE d.Name = '%1'").arg(name);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
-                  "WHERE d.Name = ':name'");
-    query.replace(QRegExp(":name"), QString("%1").arg(name));
-
-    sql.exec(query);
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
@@ -496,13 +492,13 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+                            "WHERE d.Address = '%1'").arg(address);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
-                  "WHERE d.Address = ':address'");
-    query.replace(QRegExp(":address"), QString("%1").arg(address));
-
-    sql.exec(query);
     sql.first();
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
@@ -515,19 +511,14 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels) "
-                  "VALUES(':name', ':address', :port, ':username', ':password', ':description', ':version', ':shadow', :channels)");
-    query.replace(QRegExp(":name"), model.getName());
-    query.replace(QRegExp(":address"), model.getAddress());
-    query.replace(QRegExp(":port"), QString("%1").arg(model.getPort()));
-    query.replace(QRegExp(":username"), model.getUsername());
-    query.replace(QRegExp(":password"), model.getPassword());
-    query.replace(QRegExp(":description"), model.getDescription());
-    query.replace(QRegExp(":version"), model.getVersion());
-    query.replace(QRegExp(":shadow"), model.getShadow());
-    query.replace(QRegExp(":channels"), QString("%1").arg(model.getChannels()));
+    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels) "
+                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9)")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername()).arg(model.getPassword())
+                            .arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow()).arg(model.getChannels());
 
-    executeUpdate(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -538,20 +529,21 @@ void DatabaseManager::deleteDevice(int id)
 
     QSqlDatabase::database().transaction();
 
-    QString deviceQuery("DELETE FROM Device WHERE Id = :id");
-    deviceQuery.replace(QRegExp(":id"), QString("%1").arg(id));
+    QString query = QString("DELETE FROM Device WHERE Id = %1").arg(id);
 
-    executeUpdate(deviceQuery);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString thumbnailQuery("DELETE FROM Thumbnail WHERE Id IN (SELECT l.ThumbnailId FROM Library l WHERE DeviceId = :id)");
-    thumbnailQuery.replace(QRegExp(":id"), QString("%1").arg(id));
+    query = QString("DELETE FROM Thumbnail WHERE Id IN (SELECT l.ThumbnailId FROM Library l WHERE DeviceId = %1)").arg(id);
 
-    executeUpdate(thumbnailQuery);
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString contentQuery("DELETE FROM Library WHERE DeviceId = :id");
-    contentQuery.replace(QRegExp(":id"), QString("%1").arg(id));
+    query = QString("DELETE FROM Library WHERE DeviceId = %1").arg(id);
 
-    executeUpdate(contentQuery);
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -560,14 +552,15 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<LibraryModel> models;
-
     QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) "
                   "ORDER BY l.Name, l.DeviceId");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -579,14 +572,15 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<LibraryModel> models;
-
     QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 "
                   "ORDER BY l.Name, l.DeviceId");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -598,14 +592,15 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
 {
     QMutexLocker locker(&mutex);
 
-    QSqlQuery sql;
-    QList<LibraryModel> models;
-
     QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 "
                   "ORDER BY l.Name, l.DeviceId");
 
-    sql.exec(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -617,15 +612,15 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                            "ORDER BY l.Name, l.DeviceId").arg(filter);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND (l.Name LIKE '%:filter%' OR d.Name LIKE '%:filter%' OR d.Address LIKE '%:filter%') "
-                  "ORDER BY l.Name, l.DeviceId");
-    query.replace(QRegExp(":filter"), filter);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -637,15 +632,15 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                            "ORDER BY l.Name, l.DeviceId").arg(filter);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND (l.Name LIKE '%:filter%' OR d.Name LIKE '%:filter%' OR d.Address LIKE '%:filter%') "
-                  "ORDER BY l.Name, l.DeviceId");
-    query.replace(QRegExp(":filter"), filter);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -657,15 +652,15 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                            "ORDER BY l.Name, l.DeviceId").arg(filter);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%:filter%' OR d.Name LIKE '%:filter%' OR d.Address LIKE '%:filter%') "
-                  "ORDER BY l.Name, l.DeviceId");
-    query.replace(QRegExp(":filter"), filter);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -677,15 +672,15 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE d.Id = %1 AND t.Id = l.TypeId "
+                            "ORDER BY l.Name, l.DeviceId").arg(deviceId);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE d.Id = :deviceId AND t.Id = l.TypeId "
-                  "ORDER BY l.Name, l.DeviceId");
-    query.replace(QRegExp(":deviceId"), QString("%1").arg(deviceId));
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -697,15 +692,15 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND d.Address = '%1' "
+                            "ORDER BY l.Id, l.DeviceId").arg(address);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND d.Address = ':address' "
-                  "ORDER BY l.Id, l.DeviceId");
-    query.replace(QRegExp(":address"), address);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -717,15 +712,15 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND d.Address = '%1' "
+                            "ORDER BY l.Id, l.DeviceId").arg(address);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND d.Address = ':address' "
-                  "ORDER BY l.Id, l.DeviceId");
-    query.replace(QRegExp(":address"), address);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -737,15 +732,15 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND d.Address = '%1' "
+                            "ORDER BY l.Id, l.DeviceId").arg(address);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND d.Address = ':address' "
-                  "ORDER BY l.Id, l.DeviceId");
-    query.replace(QRegExp(":address"), address);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -757,15 +752,15 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                            "WHERE  l.Name = '%1' AND l.DeviceId = %2 AND l.DeviceId = d.Id AND l.TypeId = t.Id")
+                            .arg(name).arg(deviceId);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<LibraryModel> models;
-
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE  l.Name = ':name' AND l.DeviceId = :deviceId AND l.DeviceId = d.Id AND l.TypeId = t.Id");
-    query.replace(QRegExp(":name"), name);
-    query.replace(QRegExp(":deviceId"), QString("%1").arg(deviceId));
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
                                       sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
@@ -777,20 +772,21 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
 {
     QMutexLocker locker(&mutex);
 
-    QTime time;
-    time.start();
-
-    QSqlQuery sql;
-
     int deviceId = getDeviceByAddress(address).getId();
     QList<TypeModel> typeModels = getType();
 
     QSqlDatabase::database().transaction();
 
+    QSqlQuery sql;
     if (deleteModels.count() > 0)
     {
         for (int i = 0; i < deleteModels.count(); i++)
-            sql.exec(QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId()));
+        {
+            QString query = QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+        }
     }
 
     if (insertModels.count() > 0)
@@ -805,24 +801,20 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
             else if (insertModels.at(i).getType() == "STILL")
                 typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("STILL"))->getId();
 
-            sql.exec(QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2, %3, %4)")
-                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()));
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2, %3, %4)")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
         }
     }
 
     QSqlDatabase::database().commit();
-
-    qDebug() << QString("DatabaseManager::updateLibraryMedia: %1 msec").arg(time.elapsed());
 }
 
 void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels)
 {
     QMutexLocker locker(&mutex);
-
-    QTime time;
-    time.start();
-
-    QSqlQuery sql;
 
     int deviceId = getDeviceByAddress(address).getId();
     QList<TypeModel> typeModels = getType();
@@ -830,44 +822,56 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
 
     QSqlDatabase::database().transaction();
 
+    QSqlQuery sql;
     if (deleteModels.count() > 0)
     {
         for (int i = 0; i < deleteModels.count(); i++)
-            sql.exec(QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId()));
+        {
+            QString query = QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+        }
     }
 
     if (insertModels.count() > 0)
     {
         for (int i = 0; i < insertModels.count(); i++)
-            sql.exec(QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
-                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()));
+        {
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+        }
     }
 
     QSqlDatabase::database().commit();
-
-    qDebug() << QString("DatabaseManager::updateLibraryTemplate: %1 msec").arg(time.elapsed());
 }
 
 void DatabaseManager::updateLibraryData(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels)
 {
     QMutexLocker locker(&mutex);
 
-    QTime time;
-    time.start();
-
-    QSqlQuery sql;
-
     int deviceId = getDeviceByAddress(address).getId();
     QList<TypeModel> typeModels = getType();
 
     QSqlDatabase::database().transaction();
 
+    QSqlQuery sql;
     if (deleteModels.count() > 0)
     {
         for (int i = 0; i < deleteModels.count(); i++)
         {
-            sql.exec(QString("DELETE FROM Thumbnail WHERE Id = %1").arg(deleteModels.at(i).getThumbnailId()));
-            sql.exec(QString("DELETE FROM Library WHERE Id = %1 AND TypeId = 2").arg(deleteModels.at(i).getId()));
+            QString query = QString("DELETE FROM Thumbnail WHERE Id = %1").arg(deleteModels.at(i).getThumbnailId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+            query = QString("DELETE FROM Library WHERE Id = %1 AND TypeId = 2").arg(deleteModels.at(i).getId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
         }
     }
 
@@ -879,14 +883,15 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
             if (insertModels.at(i).getType() == "DATA")
                 typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("DATA"))->getId();
 
-            sql.exec(QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
-                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()));
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
         }
     }
 
     QSqlDatabase::database().commit();
-
-    qDebug() << QString("DatabaseManager::updateLibraryData: %1 msec").arg(time.elapsed());
 }
 
 void DatabaseManager::deleteLibrary(int deviceId)
@@ -895,10 +900,11 @@ void DatabaseManager::deleteLibrary(int deviceId)
 
     QSqlDatabase::database().transaction();
 
-    QString query("DELETE FROM Library WHERE DeviceId = :deviceId");
-    query.replace(QRegExp(":deviceId"), QString("%1").arg(deviceId));
+    QString query = QString("DELETE FROM Library WHERE DeviceId = %1").arg(deviceId);
 
-    executeUpdate(query);
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -907,13 +913,13 @@ ThumbnailModel DatabaseManager::getThumbnailById(int id)
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
+                            "WHERE t.Id = %1 AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id").arg(id);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QString query("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
-                  "WHERE t.Id = :id AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id");
-    query.replace(QRegExp(":id"), QString("%1").arg(id));
-
-    sql.exec(query);
     sql.first();
 
     return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
@@ -924,14 +930,14 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
 {
     QMutexLocker locker(&mutex);
 
+    QString query = QString("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
+                            "WHERE d.Address = '%1' AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id").arg(address);
+
     QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
     QList<ThumbnailModel> models;
-
-    QString query("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
-                  "WHERE d.Address = ':address' AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id");
-    query.replace(QRegExp(":address"), address);
-
-    sql.exec(query);
     while (sql.next())
         models.push_back(ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
                                         sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString()));
@@ -943,33 +949,39 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
 {
     QMutexLocker locker(&mutex);
 
-    QTime time;
-    time.start();
-
-    QSqlQuery sql;
-
     int deviceId = getDeviceByAddress(model.getAddress()).getId();
     const QList<LibraryModel>& libraryModels = getLibraryByNameAndDeviceId(model.getName(), deviceId);
 
     QSqlDatabase::database().transaction();
 
+    QSqlQuery sql;
     if (libraryModels.count() > 0)
     {
         for (int i = 0; i < libraryModels.count(); i++)
         {
             const LibraryModel& libraryModel = libraryModels.at(i);
             if (libraryModel.getThumbnailId() > 0)
-                sql.exec(QString("UPDATE Thumbnail SET Data = '%1', Timestamp = '%2', Size = '%3' WHERE Id = %4")
-                         .arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()).arg(libraryModel.getThumbnailId()));
+            {
+                QString query = QString("UPDATE Thumbnail SET Data = '%1', Timestamp = '%2', Size = '%3' WHERE Id = %4")
+                                        .arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()).arg(libraryModel.getThumbnailId());
+
+                if (!sql.exec(query))
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+            }
             else
             {
-                sql.exec(QString("INSERT INTO Thumbnail (Data, Timestamp, Size) VALUES('%1', '%2', '%3')").arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()));
-                sql.exec(QString("UPDATE Library SET ThumbnailId = %1 WHERE Id = %2").arg(sql.lastInsertId().toInt()).arg(libraryModel.getId()));
+                QString query = QString("INSERT INTO Thumbnail (Data, Timestamp, Size) VALUES('%1', '%2', '%3')").arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize());
+
+                if (!sql.exec(query))
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+                query = QString("UPDATE Library SET ThumbnailId = %1 WHERE Id = %2").arg(sql.lastInsertId().toInt()).arg(libraryModel.getId());
+
+                if (!sql.exec(query))
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
             }
         }
     }
 
     QSqlDatabase::database().commit();
-
-    qDebug() << QString("DatabaseManager::updateThumbnail: %1 msec").arg(time.elapsed());
 }

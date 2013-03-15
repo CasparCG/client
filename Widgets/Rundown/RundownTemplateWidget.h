@@ -64,7 +64,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         QTimer executeTimer;
 
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeStop();
@@ -80,5 +80,5 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void delayChanged(int);
         Q_SLOT void flashlayerChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

@@ -64,7 +64,7 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
 
         void loadEasing();
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
@@ -74,5 +74,5 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

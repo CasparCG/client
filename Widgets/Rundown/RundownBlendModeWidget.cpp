@@ -42,10 +42,10 @@ RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidge
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -320,7 +320,7 @@ void RundownBlendModeWidget::delayChanged(int delay)
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownBlendModeWidget::checkGpiTriggerable()
+void RundownBlendModeWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -332,10 +332,10 @@ void RundownBlendModeWidget::checkGpiTriggerable()
 
 void RundownBlendModeWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
-void RundownBlendModeWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownBlendModeWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }

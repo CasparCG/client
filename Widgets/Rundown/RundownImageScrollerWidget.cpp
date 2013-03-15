@@ -46,10 +46,10 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -424,7 +424,7 @@ void RundownImageScrollerWidget::delayChanged(int delay)
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownImageScrollerWidget::checkGpiTriggerable()
+void RundownImageScrollerWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -436,10 +436,10 @@ void RundownImageScrollerWidget::checkGpiTriggerable()
 
 void RundownImageScrollerWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
-void RundownImageScrollerWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownImageScrollerWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }

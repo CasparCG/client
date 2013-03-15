@@ -70,7 +70,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
 
         void setThumbnail();
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
@@ -82,5 +82,5 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

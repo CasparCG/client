@@ -63,7 +63,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         QTimer executeTimer;
 
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void executePlay();
         Q_SLOT void executeStop();
@@ -71,5 +71,5 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

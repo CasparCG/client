@@ -47,10 +47,10 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     QObject::connect(&this->command, SIGNAL(flashlayerChanged(int)), this, SLOT(flashlayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -498,7 +498,7 @@ void RundownTemplateWidget::flashlayerChanged(int flashlayer)
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(flashlayer));
 }
 
-void RundownTemplateWidget::checkGpiTriggerable()
+void RundownTemplateWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -510,10 +510,10 @@ void RundownTemplateWidget::checkGpiTriggerable()
 
 void RundownTemplateWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
-void RundownTemplateWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownTemplateWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }

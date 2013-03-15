@@ -63,7 +63,7 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
         QTimer executeTimer;
 
         void checkEmptyDevice();
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
@@ -73,5 +73,5 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

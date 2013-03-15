@@ -61,12 +61,12 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
 
         QTimer executeTimer;
 
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void executePlay();
         Q_SLOT void executeStop();
         Q_SLOT void delayChanged(int);
         Q_SLOT void gpiOutputPortChanged(int);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void allowGpiChanged(bool);
 };

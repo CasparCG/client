@@ -39,9 +39,9 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -198,7 +198,7 @@ void RundownGpiOutputWidget::gpiOutputPortChanged(int port)
     this->labelGpiOutputPort->setText(QString("GPO Port: %1").arg(port + 1));
 }
 
-void RundownGpiOutputWidget::checkGpiTriggerable()
+void RundownGpiOutputWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -210,11 +210,11 @@ void RundownGpiOutputWidget::checkGpiTriggerable()
 
 void RundownGpiOutputWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
-void RundownGpiOutputWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownGpiOutputWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     this->labelDisconnected->setVisible(!connected);
-    checkGpiTriggerable();
+    checkGpiConnection();
 }

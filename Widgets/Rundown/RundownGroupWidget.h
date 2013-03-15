@@ -60,10 +60,10 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         GroupCommand command;
         ActiveAnimation* animation;
 
-        void checkGpiTriggerable();
+        void checkGpiConnection();
 
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void autoStepChanged(bool);
-        Q_SLOT void gpiDeviceConnected(bool, GpiDevice*);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
 };

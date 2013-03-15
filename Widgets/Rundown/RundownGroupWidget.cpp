@@ -31,9 +31,9 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiDeviceConnected(bool, GpiDevice*)));
+                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
-    checkGpiTriggerable();
+    checkGpiConnection();
 
     qApp->installEventFilter(this);
 }
@@ -143,7 +143,7 @@ bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
     return false;
 }
 
-void RundownGroupWidget::checkGpiTriggerable()
+void RundownGroupWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -160,7 +160,7 @@ void RundownGroupWidget::notesChanged(const QString& note)
 
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
 
 void RundownGroupWidget::autoStepChanged(bool autoStep)
@@ -169,7 +169,7 @@ void RundownGroupWidget::autoStepChanged(bool autoStep)
     this->labelAutoStep->setVisible(this->autoStep);
 }
 
-void RundownGroupWidget::gpiDeviceConnected(bool connected, GpiDevice* device)
+void RundownGroupWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    checkGpiTriggerable();
+    checkGpiConnection();
 }
