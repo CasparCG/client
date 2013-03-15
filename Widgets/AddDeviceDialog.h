@@ -7,6 +7,7 @@
 #include "Models/CasparVersion.h"
 
 #include <QtCore/QList>
+#include <QtCore/QSharedPointer>
 
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
@@ -33,7 +34,7 @@ class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
 
     private:
         bool isClosing;
-        CasparDevice* device;
+        QSharedPointer<CasparDevice> device;
 
         Q_SLOT void lookupName();
         Q_SLOT void lookupAddress();

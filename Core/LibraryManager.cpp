@@ -294,7 +294,7 @@ void LibraryManager::deviceThumbnailChanged(const QList<CasparThumbnail>& thumbn
                                                    thumbnailItem.getName(), device.getAddress()));
     }
 
-    QSharedPointer<ThumbnailWorker> thumbnailWorker(new ThumbnailWorker(processModels, this));
+    QSharedPointer<ThumbnailWorker> thumbnailWorker(new ThumbnailWorker(processModels));
     thumbnailWorker->start();
 
     this->thumbnailWorkers.push_back(thumbnailWorker);

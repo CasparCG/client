@@ -55,7 +55,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->masterVolumeAnimation = new BorderAnimation(this->toolButtonMasterVolume);
+    this->masterVolumeAnimation = new BorderAnimation(this->toolButtonMasterVolume, this);
 
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(0)), 0, new InspectorMetadataWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(1)), 0, new InspectorOutputWidget(this));

@@ -34,7 +34,7 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->animation = new BorderAnimation(this->comboBoxDevice);
+    this->animation = new BorderAnimation(this->comboBoxDevice, this);
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));

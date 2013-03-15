@@ -62,11 +62,11 @@ void AddDeviceDialog::lookupAddress()
         return;
     }
 
-    this->device = new CasparDevice(this);
+    this->device = QSharedPointer<CasparDevice>(new CasparDevice());
 
-    QObject::connect(this->device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-    QObject::connect(this->device, SIGNAL(versionChanged(const CasparVersion&, CasparDevice&)), this, SLOT(deviceServerVersionChanged(const CasparVersion&, CasparDevice&)));
-    QObject::connect(this->device, SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(deviceInfoChanged(const QList<QString>&, CasparDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(versionChanged(const CasparVersion&, CasparDevice&)), this, SLOT(deviceServerVersionChanged(const CasparVersion&, CasparDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(deviceInfoChanged(const QList<QString>&, CasparDevice&)));
 
     if (this->lineEditPort->text().isEmpty())
         this->device->connect(this->lineEditAddress->text());
