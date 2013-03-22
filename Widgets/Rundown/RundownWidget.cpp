@@ -56,6 +56,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
     toolButtonRundownDropdown->setIcon(QIcon(":/Graphics/Images/Dropdown.png"));
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
+    this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     this->rundownAnimation = new BorderAnimation(this->treeWidgetRundown);
 

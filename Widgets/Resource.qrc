@@ -69,6 +69,9 @@
         <file>Images/Attention.png</file>
         <file>Images/Information.png</file>
         <file>Images/Dropdown.png</file>
+        <file>Images/Close.png</file>
+        <file>Images/CloseHover.png</file>
+        <file>Images/TabSplitter.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

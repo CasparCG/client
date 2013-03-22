@@ -80,12 +80,17 @@
 {
     border-width: 0px;
     position: absolute;
-    top: -1px;
+    top: 0px;
+}
+#tabWidgetRundown::tab:only-one
+{
+    border-bottom-width: 1px;
 }
 
 #treeWidgetRundown
 {
     background-color: rgba(64, 64, 64, 255);
+    border-top-left-radius: 0px;
 }
 #treeWidgetRundown::item:hover
 {

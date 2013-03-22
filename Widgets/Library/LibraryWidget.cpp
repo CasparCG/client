@@ -77,11 +77,11 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 void LibraryWidget::setupUiMenu()
 {
     this->contextMenu = new QMenu(this);
-    this->contextMenu->addAction("Add to rundown");
+    this->contextMenu->addAction("Add...");
 
     this->contextMenuImage = new QMenu(this);
-    this->contextMenuImage->addAction("Add to rundown as image");
-    this->contextMenuImage->addAction("Add to rundown as image scroller");
+    this->contextMenuImage->addAction("Add as image...");
+    this->contextMenuImage->addAction("Add image scroller...");
 
     QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
     QObject::connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));

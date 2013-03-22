@@ -25,6 +25,15 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>5</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="tabsClosable">
+      <bool>true</bool>
+     </property>
      <property name="movable">
       <bool>true</bool>
      </property>

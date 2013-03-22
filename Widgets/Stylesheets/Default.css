@@ -927,6 +927,10 @@ QTabBar::tab
     padding-top: 3px;
     margin-left: -1px;
 }
+QTabBar::tab:only-one
+{
+    margin: 0; /* If there is only one tab, we don't want overlapping margins. */
+}
 QTabBar::tab:first
 {
     margin-left: 0; /* The first selected tab has nothing to overlap on the left. */
@@ -953,6 +957,14 @@ QTabWidget::pane
     border-width: 1px;
     position: absolute;
     top: -1px;
+}
+QTabBar::close-button
+{
+    image: url(:/Graphics/Images/Close.png);
+}
+QTabBar::close-button:hover
+{
+    image: url(:/Graphics/Images/CloseHover.png);
 }
 QTabBar QToolButton
 {
