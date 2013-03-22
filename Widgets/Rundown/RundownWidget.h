@@ -2,9 +2,10 @@
 
 #include "../Shared.h"
 #include "ui_RundownWidget.h"
-#include "GpiDevice.h"
 
 #include "Global.h"
+
+#include "GpiDevice.h"
 
 #include "Animations/BorderAnimation.h"
 

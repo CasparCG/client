@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorSaturationWidget : public QWidget, Ui::InspectorSa
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         SaturationCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderSaturationChanged(int);
         Q_SLOT void spinBoxSaturationChanged(int);

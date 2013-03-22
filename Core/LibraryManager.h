@@ -35,9 +35,11 @@ class CORE_EXPORT LibraryManager : public QObject
         Q_SLOT void refresh();
         Q_SLOT void deviceRemoved();
         Q_SLOT void deviceAdded(CasparDevice&);
-        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceMediaChanged(const QList<CasparMedia>&, CasparDevice&);
-        Q_SLOT void deviceTemplateChanged(const QList<CasparTemplate>&, CasparDevice&);
-        Q_SLOT void deviceDataChanged(const QList<CasparData>&, CasparDevice&);
-        Q_SLOT void deviceThumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
+        Q_SLOT void versionChanged(const QString&, CasparDevice&);
+        Q_SLOT void infoChanged(const QList<QString>&, CasparDevice&);
+        Q_SLOT void connectionStateChanged(CasparDevice&);
+        Q_SLOT void mediaChanged(const QList<CasparMedia>&, CasparDevice&);
+        Q_SLOT void templateChanged(const QList<CasparTemplate>&, CasparDevice&);
+        Q_SLOT void dataChanged(const QList<CasparData>&, CasparDevice&);
+        Q_SLOT void thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
 };

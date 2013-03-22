@@ -52,7 +52,6 @@ HEADERS += \
     Models/TransitionModel.h \
     Models/DirectionModel.h \
     Models/TweenModel.h \
-    Models/GpiDeviceModel.h \
     Models/GpiPortModel.h \
     Models/GpoPortModel.h \
     Commands/CommitCommand.h \
@@ -120,7 +119,6 @@ SOURCES += \
     Models/TransitionModel.cpp \
     Models/DirectionModel.cpp \
     Models/TweenModel.cpp \
-    Models/GpiDeviceModel.cpp \
     Models/GpiPortModel.cpp \
     Models/GpoPortModel.cpp \
     Commands/CommitCommand.cpp \

@@ -8,7 +8,7 @@
 
 InspectorFileRecorderWidget::InspectorFileRecorderWidget(QWidget* parent)
     : QWidget(parent),
-      preview(false), model(NULL), command(NULL)
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -20,11 +20,12 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->lineEditOutput->setText(this->command->getOutput());
@@ -32,12 +33,21 @@ bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
             this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
             this->checkBoxWithAlpha->setChecked(this->command->getWithAlpha());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorFileRecorderWidget::blockAllSignals(bool block)
+{
+    this->lineEditOutput->blockSignals(block);
+    this->comboBoxCodec->blockSignals(block);
+    this->comboBoxPreset->blockSignals(block);
+    this->comboBoxTune->blockSignals(block);
+    this->checkBoxWithAlpha->blockSignals(block);
 }
 
 void InspectorFileRecorderWidget::outputChanged(QString output)

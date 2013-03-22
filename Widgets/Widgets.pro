@@ -275,7 +275,11 @@ OTHER_FILES += \
     Images/Data.png \
     Images/DataColor.png \
     Images/Checkerboard.png \
-    Images/AlphaPreview.png
+    Images/AlphaPreview.png \
+    Images/TestConnection.png \
+    Images/Information.png \
+    Images/Attention.png \
+    Images/Dropdown.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

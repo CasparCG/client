@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorBlendModeWidget::InspectorBlendModeWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,20 +25,26 @@ bool InspectorBlendModeWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->preview = false;
+        this->model = rundownItemSelectedEvent->getLibraryModel();
 
-            this->model = rundownItemSelectedEvent->getLibraryModel();
+        blockAllSignals(true);
+
+        if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()))
+        {  
             this->command = dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText(this->command->getBlendMode()));
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorBlendModeWidget::blockAllSignals(bool block)
+{
+    this->comboBoxBlendMode->blockSignals(block);
 }
 
 void InspectorBlendModeWidget::loadBlendMode()
@@ -57,8 +64,7 @@ void InspectorBlendModeWidget::blendModeChanged(QString blendMode)
 {
     this->command->setBlendMode(blendMode);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
@@ -66,6 +72,5 @@ void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
     this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText("Normal"));
     this->command->setBlendMode(this->comboBoxBlendMode->currentText());
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }

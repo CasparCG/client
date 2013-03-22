@@ -13,24 +13,22 @@
 #include <QtGui/QPixmap>
 
 RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool disconnected, bool compactView)
+                                       bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
-      compactView(compactView), color(color), model(model)
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     setThumbnail();
-    setColor(color);
-    setActive(active);
-    setCompactView(compactView);
+    setColor(this->color);
+    setActive(this->active);
+    setCompactView(this->compactView);
 
     this->command.setMediaName(this->model.getName());
 
-    this->labelDisconnected->setVisible(this->disconnected);
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
 
     if (this->model.getType() == "AUDIO")
@@ -62,64 +60,56 @@ RundownMediaWidget::RundownMediaWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL)
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
+    checkDeviceConnection();
 
     qApp->installEventFilter(this);
 }
 
-void RundownMediaWidget::setThumbnail()
-{
-    if (this->model.getType() == "AUDIO")
-    {
-        this->labelThumbnail->setVisible(false);
-        return;
-    }
-
-    QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
-    QImage image;
-    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
-    this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
-
-    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
-    if (displayThumbnailTooltip)
-        this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
-}
-
 bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
-    {
-        ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
-        if (connectionStateChangedEvent->getDeviceName() == this->model.getDeviceName())
-        {
-            this->disconnected = !connectionStateChangedEvent->getConnected();
-
-            if (connectionStateChangedEvent->getConnected())
-                this->labelDisconnected->setVisible(false);
-            else
-                this->labelDisconnected->setVisible(true);
-        }
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemChanged))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemChanged))
     {
         // This event is not for us.
         if (!this->active)
             return false;
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
-        this->model.setName(rundownItemChangedEvent->getName());
         this->command.setMediaName(rundownItemChangedEvent->getName());
+        this->model.setLabel(rundownItemChangedEvent->getLabel());
+        this->model.setName(rundownItemChangedEvent->getName());
+
+        // Should we update the device name?
+        if (rundownItemChangedEvent->getDeviceName() != this->model.getDeviceName())
+        {
+            // Disconnect connectionStateChanged() from the old device.
+            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (oldDevice != NULL)
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+            // Update the model with the new device.
+            this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+
+            // Connect connectionStateChanged() to the new device.
+            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (newDevice != NULL)
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        }
 
         this->labelLabel->setText(this->model.getLabel());
-        this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
+        checkDeviceConnection();
     }
 
     return QObject::eventFilter(target, event);
@@ -128,8 +118,7 @@ bool RundownMediaWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownMediaWidget::clone()
 {
     RundownMediaWidget* widget = new RundownMediaWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->loaded, this->paused, this->playing, this->inGroup,
-                                                        this->disconnected, this->compactView);
+                                                        this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
 
     MediaCommand* command = dynamic_cast<MediaCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -196,6 +185,24 @@ LibraryModel* RundownMediaWidget::getLibraryModel()
     return &this->model;
 }
 
+void RundownMediaWidget::setThumbnail()
+{
+    if (this->model.getType() == "AUDIO")
+    {
+        this->labelThumbnail->setVisible(false);
+        return;
+    }
+
+    QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
+    QImage image;
+    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
+
+    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+    if (displayThumbnailTooltip)
+        this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
+}
+
 void RundownMediaWidget::setActive(bool active)
 {
     this->active = active;
@@ -211,7 +218,7 @@ void RundownMediaWidget::setActive(bool active)
 void RundownMediaWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 
     if (this->inGroup)
     {
@@ -281,7 +288,7 @@ void RundownMediaWidget::executeStop()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopMedia(this->command.getChannel(), this->command.getVideolayer());
 
@@ -290,7 +297,7 @@ void RundownMediaWidget::executeStop()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->stopMedia(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -302,7 +309,7 @@ void RundownMediaWidget::executeStop()
 
 void RundownMediaWidget::executePlay()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
@@ -323,7 +330,7 @@ void RundownMediaWidget::executePlay()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
@@ -350,7 +357,7 @@ void RundownMediaWidget::executePause()
     if (!this->playing)
         return;
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
@@ -364,7 +371,7 @@ void RundownMediaWidget::executePause()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
@@ -379,7 +386,7 @@ void RundownMediaWidget::executePause()
 
 void RundownMediaWidget::executeLoad()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         device->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
@@ -393,7 +400,7 @@ void RundownMediaWidget::executeLoad()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->loadMedia(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
@@ -412,7 +419,7 @@ void RundownMediaWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
 
@@ -421,7 +428,7 @@ void RundownMediaWidget::executeClearVideolayer()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -435,7 +442,7 @@ void RundownMediaWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         device->clearChannel(this->command.getChannel());
@@ -447,7 +454,7 @@ void RundownMediaWidget::executeClearChannel()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->clearChannel(this->command.getChannel());
@@ -458,6 +465,25 @@ void RundownMediaWidget::executeClearChannel()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+}
+
+void RundownMediaWidget::checkGpiConnection()
+{
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
+
+    if (GpiManager::getInstance().getGpiDevice()->isConnected())
+        this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
+    else
+        this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownMediaWidget::checkDeviceConnection()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device == NULL)
+        this->labelDisconnected->setVisible(true);
+    else
+        this->labelDisconnected->setVisible(!device->isConnected());
 }
 
 void RundownMediaWidget::channelChanged(int channel)
@@ -475,16 +501,6 @@ void RundownMediaWidget::delayChanged(int delay)
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownMediaWidget::checkGpiConnection()
-{
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
-
-    if (GpiManager::getInstance().getGpiDevice()->isConnected())
-        this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
-    else
-        this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
-}
-
 void RundownMediaWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
@@ -493,4 +509,17 @@ void RundownMediaWidget::allowGpiChanged(bool allowGpi)
 void RundownMediaWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownMediaWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownMediaWidget::deviceAdded(CasparDevice& device)
+{
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    checkDeviceConnection();
 }

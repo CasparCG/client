@@ -25,11 +25,11 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         BorderAnimation* animation;
 
         void checkEmptyDevice();
+        void blockAllSignals(bool block);
 
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void deviceRemoved();

@@ -23,9 +23,10 @@ class WIDGETS_EXPORT InspectorFileRecorderWidget : public QWidget, Ui::Inspector
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         FileRecorderCommand* command;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void outputChanged(QString);
         Q_SLOT void codecChanged(QString);

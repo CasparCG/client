@@ -22,12 +22,12 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         int rowIndex;
         LibraryModel* model;
         TemplateCommand* command;
 
         void updateDataTemplateModels();
+        void blockAllSignals(bool block);
 
         Q_SLOT void addRow();
         Q_SLOT void removeRow();

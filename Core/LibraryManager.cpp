@@ -75,24 +75,28 @@ bool LibraryManager::eventFilter(QObject* target, QEvent* event)
 
 void LibraryManager::refresh()
 {
+    // Clear out all thumbnail workers.
     this->thumbnailWorkers.clear();
 
     DeviceManager::getInstance().refresh();
 
-    if (DeviceManager::getInstance().getConnectionCount() == 0)
+    if (DeviceManager::getInstance().getDeviceCount() == 0)
         return;
 
     qApp->postEvent(qApp, new StatusbarEvent("Refreshing library..."));
     qDebug() << QString("LibraryManager::refresh: Refreshing library...");
 
+    // Only refresh library for all devices.
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
         if (model.getShadow() == "Yes")
             continue;
 
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
-        if (device->isConnected())
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
+        if (device != NULL && device->isConnected())
         {
+            device->refreshServerVersion();
+            device->refreshChannels();
             device->refreshMedia();
             device->refreshTemplate();
             device->refreshData();
@@ -112,21 +116,36 @@ void LibraryManager::deviceRemoved()
 
 void LibraryManager::deviceAdded(CasparDevice& device)
 {
-    QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-    QObject::connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(deviceMediaChanged(const QList<CasparMedia>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(templateChanged(const QList<CasparTemplate>&, CasparDevice&)), this, SLOT(deviceTemplateChanged(const QList<CasparTemplate>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(deviceDataChanged(const QList<CasparData>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)), this, SLOT(deviceThumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(versionChanged(const QString&, CasparDevice&)), this, SLOT(versionChanged(const QString&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(infoChanged(const QList<QString>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    QObject::connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(mediaChanged(const QList<CasparMedia>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(templateChanged(const QList<CasparTemplate>&, CasparDevice&)), this, SLOT(templateChanged(const QList<CasparTemplate>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(dataChanged(const QList<CasparData>&, CasparDevice&)));
+    QObject::connect(&device, SIGNAL(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)), this, SLOT(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)));
 }
 
-void LibraryManager::deviceConnectionStateChanged(CasparDevice& device)
+void LibraryManager::versionChanged(const QString& version, CasparDevice& device)
 {
+    DatabaseManager::getInstance().updateDeviceVersion(DeviceModel(0, "", device.getAddress(), 0, "", "", "", version, "", 0));
+}
+
+void LibraryManager::infoChanged(const QList<QString>& info, CasparDevice& device)
+{
+    DatabaseManager::getInstance().updateDeviceChannels(DeviceModel(0, "", device.getAddress(), 0, "", "", "", "", "", info.count()));
+}
+
+void LibraryManager::connectionStateChanged(CasparDevice& device)
+{
+    // Only refresh library for current device.
     if (device.isConnected())
     {
         const DeviceModel& model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
         if (model.getShadow() == "Yes")
             return;
 
+        device.refreshServerVersion();
+        device.refreshChannels();
         device.refreshMedia();
         device.refreshTemplate();
         device.refreshData();
@@ -134,7 +153,7 @@ void LibraryManager::deviceConnectionStateChanged(CasparDevice& device)
     }
 }
 
-void LibraryManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems, CasparDevice& device)
+void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -180,7 +199,7 @@ void LibraryManager::deviceMediaChanged(const QList<CasparMedia>& mediaItems, Ca
     qDebug() << QString("LibraryManager::deviceMediaChanged: %1 msec").arg(time.elapsed());
 }
 
-void LibraryManager::deviceTemplateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
+void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -226,7 +245,7 @@ void LibraryManager::deviceTemplateChanged(const QList<CasparTemplate>& template
     qDebug() << QString("LibraryManager::deviceTemplateChanged: %1 msec").arg(time.elapsed());
 }
 
-void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
+void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
 {
     QTime time;
     time.start();
@@ -272,7 +291,7 @@ void LibraryManager::deviceDataChanged(const QList<CasparData>& dataItems, Caspa
     qDebug() << QString("LibraryManager::deviceDataChanged: %1 msec").arg(time.elapsed());
 }
 
-void LibraryManager::deviceThumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)
+void LibraryManager::thumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)
 {
     QList<ThumbnailModel> processModels;
     QList<ThumbnailModel> thumbnailModels = DatabaseManager::getInstance().getThumbnailByDeviceAddress(device.getAddress());

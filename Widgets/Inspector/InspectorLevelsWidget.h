@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorLevelsWidget : public QWidget, Ui::InspectorLevels
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         LevelsCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderMinInChanged(int);
         Q_SLOT void sliderMinOutChanged(int);

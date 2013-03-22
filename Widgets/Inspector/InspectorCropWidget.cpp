@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorCropWidget::InspectorCropWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,11 +25,12 @@ bool InspectorCropWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand());
 
             // This will also set the slider value.
@@ -37,16 +39,26 @@ bool InspectorCropWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
             this->spinBoxCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
             this->spinBoxCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
-
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorCropWidget::blockAllSignals(bool block)
+{
+    this->spinBoxCropLeft->blockSignals(block);
+    this->spinBoxCropRight->blockSignals(block);
+    this->spinBoxCropTop->blockSignals(block);
+    this->spinBoxCropBottom->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorCropWidget::loadTween()
@@ -68,8 +80,7 @@ void InspectorCropWidget::sliderCropLeftChanged(int cropLeft)
 
     this->spinBoxCropLeft->setValue(cropLeft);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropLeftChanged(int cropLeft)
@@ -83,8 +94,7 @@ void InspectorCropWidget::sliderCropRightChanged(int cropRight)
 
     this->spinBoxCropRight->setValue(cropRight);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropRightChanged(int cropRight)
@@ -98,8 +108,7 @@ void InspectorCropWidget::sliderCropTopChanged(int cropTop)
 
     this->spinBoxCropTop->setValue(cropTop);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropTopChanged(int cropTop)
@@ -113,8 +122,7 @@ void InspectorCropWidget::sliderCropBottomChanged(int cropBottom)
 
     this->spinBoxCropBottom->setValue(cropBottom);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropBottomChanged(int cropBottom)
@@ -137,8 +145,7 @@ void InspectorCropWidget::resetCropLeft(QString value)
     this->sliderCropLeft->setValue(Mixer::DEFAULT_CROP_LEFT);
     this->command->setCropLeft(static_cast<float>(this->sliderCropLeft->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::resetCropRight(QString value)
@@ -146,8 +153,7 @@ void InspectorCropWidget::resetCropRight(QString value)
     this->sliderCropRight->setValue(Mixer::DEFAULT_CROP_RIGHT);
     this->command->setCropRight(static_cast<float>(this->sliderCropRight->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::resetCropTop(QString value)
@@ -155,8 +161,7 @@ void InspectorCropWidget::resetCropTop(QString value)
     this->sliderCropTop->setValue(Mixer::DEFAULT_CROP_TOP * 100);
     this->command->setCropTop(static_cast<float>(this->sliderCropTop->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::resetCropBottom(QString value)
@@ -164,8 +169,7 @@ void InspectorCropWidget::resetCropBottom(QString value)
     this->sliderCropBottom->setValue(Mixer::DEFAULT_CROP_BOTTOM * 100);
     this->command->setCropBottom(static_cast<float>(this->sliderCropBottom->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorCropWidget::resetDuration(QString value)

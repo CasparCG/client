@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorContrastWidget : public QWidget, Ui::InspectorCont
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         ContrastCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderContrastChanged(int);
         Q_SLOT void spinBoxContrastChanged(int);

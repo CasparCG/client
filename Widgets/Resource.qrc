@@ -65,6 +65,10 @@
         <file>Images/DataColor.png</file>
         <file>Images/AlphaPreview.png</file>
         <file>Images/Checkerboard.png</file>
+        <file>Images/TestConnection.png</file>
+        <file>Images/Attention.png</file>
+        <file>Images/Information.png</file>
+        <file>Images/Dropdown.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

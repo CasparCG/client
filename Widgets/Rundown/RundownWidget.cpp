@@ -42,6 +42,7 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
+#include <QtGui/QToolButton>
 #include <QtGui/QTreeWidgetItem>
 
 RundownWidget::RundownWidget(QWidget* parent)
@@ -50,6 +51,11 @@ RundownWidget::RundownWidget(QWidget* parent)
 {
     setupUi(this);
     setupUiMenu();
+
+    QToolButton* toolButtonRundownDropdown = new QToolButton(this);
+    toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
+    toolButtonRundownDropdown->setIcon(QIcon(":/Graphics/Images/Dropdown.png"));
+    this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
 
     this->rundownAnimation = new BorderAnimation(this->treeWidgetRundown);
 
@@ -197,6 +203,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         }
         */
     }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
+    {
+        this->treeWidgetRundown->setCurrentItem(NULL);
+    }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
     {
         QTime time;
@@ -285,7 +295,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
     {
         if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
             return false;

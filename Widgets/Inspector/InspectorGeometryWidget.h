@@ -22,13 +22,13 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         GeometryCommand* command;
         int resolutionWidth;
         int resolutionHeight;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderPositionXChanged(int);
         Q_SLOT void spinBoxPositionXChanged(int);

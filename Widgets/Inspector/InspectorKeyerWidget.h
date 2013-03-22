@@ -22,9 +22,10 @@ class WIDGETS_EXPORT InspectorKeyerWidget : public QWidget, Ui::InspectorKeyerWi
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         KeyerCommand* command;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);

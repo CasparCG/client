@@ -14,6 +14,9 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         explicit AMCPDevice(QObject* parent = 0);
         virtual ~AMCPDevice();
 
+        void connectDevice(const QString& address, int port = 5250);
+        void disconnectDevice();
+
         bool isConnected() const;
 
     protected:
@@ -56,9 +59,6 @@ class CASPAR_EXPORT AMCPDevice : public QObject
 
         int getPort() const;
         const QString& getAddress() const;
-
-        void connectDevice(const QString& address, int port);
-        void disconnectDevice();
 
         void resetDevice();
         void writeMessage(const QString& message);

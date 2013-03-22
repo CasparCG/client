@@ -23,9 +23,10 @@ class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWi
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         PrintCommand* command;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void outputChanged(QString);
         Q_SLOT void resetOutput(QString);

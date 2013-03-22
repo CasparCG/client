@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorContrastWidget::InspectorContrastWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,11 +25,12 @@ bool InspectorContrastWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand());
 
             // This will also set the slider value.
@@ -38,12 +40,20 @@ bool InspectorContrastWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorContrastWidget::blockAllSignals(bool block)
+{
+    this->spinBoxContrast->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorContrastWidget::loadTween()
@@ -75,8 +85,7 @@ void InspectorContrastWidget::sliderContrastChanged(int contrast)
 
     this->spinBoxContrast->setValue(contrast);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorContrastWidget::spinBoxContrastChanged(int contrast)
@@ -89,8 +98,7 @@ void InspectorContrastWidget::resetContrast(QString contrast)
     this->sliderContrast->setValue(Mixer::DEFAULT_CONTRAST * 100);
     this->command->setContrast(static_cast<float>(this->sliderContrast->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorContrastWidget::resetDuration(QString duration)

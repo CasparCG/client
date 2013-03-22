@@ -23,13 +23,13 @@ class WIDGETS_EXPORT InspectorMediaWidget : public QWidget, Ui::InspectorMediaWi
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         MediaCommand* command;
 
         void loadDirection();
         void loadTransition();
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void transitionChanged(QString);
         Q_SLOT void durationChanged(int);

@@ -11,19 +11,18 @@
 #include <QtCore/QTimer>
 
 RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                         bool inGroup, bool disconnected, bool compactView)
+                                         bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
-    setColor(color);
-    setActive(active);
-    setCompactView(compactView);
+    setColor(this->color);
+    setActive(this->active);
+    setCompactView(this->compactView);
 
-    this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
@@ -39,11 +38,17 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL)
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
+    checkDeviceConnection();
 
     qApp->installEventFilter(this);
 }
@@ -58,26 +63,30 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
         this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
         this->model.setName(rundownItemChangedEvent->getName());
 
+        // Should we update the device name?
+        if (rundownItemChangedEvent->getDeviceName() != this->model.getDeviceName())
+        {
+            // Disconnect connectionStateChanged() from the old device.
+            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (oldDevice != NULL)
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+            // Update the model with the new device.
+            this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+
+            // Connect connectionStateChanged() to the new device.
+            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (newDevice != NULL)
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        }
+
         this->labelLabel->setText(this->model.getLabel());
-        this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
-    {
-        ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
-        if (connectionStateChangedEvent->getDeviceName() == this->model.getDeviceName())
-        {
-            this->disconnected = !connectionStateChangedEvent->getConnected();
-
-            if (connectionStateChangedEvent->getConnected())
-                this->labelDisconnected->setVisible(false);
-            else
-                this->labelDisconnected->setVisible(true);
-        }
+        checkDeviceConnection();
     }
 
     return QObject::eventFilter(target, event);
@@ -86,7 +95,7 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownCommitWidget::clone()
 {
     RundownCommitWidget* widget = new RundownCommitWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                          this->inGroup, this->disconnected, this->compactView);
+                                                          this->inGroup, this->compactView);
 
     CommitCommand* command = dynamic_cast<CommitCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -154,7 +163,7 @@ void RundownCommitWidget::setActive(bool active)
 void RundownCommitWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 
     if (this->inGroup)
     {
@@ -216,7 +225,7 @@ void RundownCommitWidget::executeStop()
 
 void RundownCommitWidget::executePlay()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setCommit(this->command.getChannel());
 
@@ -225,7 +234,7 @@ void RundownCommitWidget::executePlay()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setCommit(this->command.getChannel());
     }
@@ -243,12 +252,21 @@ void RundownCommitWidget::delayChanged(int delay)
 
 void RundownCommitWidget::checkGpiConnection()
 {
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownCommitWidget::checkDeviceConnection()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device == NULL)
+        this->labelDisconnected->setVisible(true);
+    else
+        this->labelDisconnected->setVisible(!device->isConnected());
 }
 
 void RundownCommitWidget::allowGpiChanged(bool allowGpi)
@@ -259,4 +277,17 @@ void RundownCommitWidget::allowGpiChanged(bool allowGpi)
 void RundownCommitWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownCommitWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownCommitWidget::deviceAdded(CasparDevice& device)
+{
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    checkDeviceConnection();
 }

@@ -27,7 +27,7 @@ void ThumbnailWorker::start()
 
 void ThumbnailWorker::process()
 {
-    if (this->thumbnailModels.count() == 0 || DeviceManager::getInstance().getConnectionCount() == 0)
+    if (this->thumbnailModels.count() == 0)
     {
         this->thumbnailTimer.stop();
         qApp->postEvent(qApp, new MediaChangedEvent());
@@ -44,21 +44,26 @@ void ThumbnailWorker::process()
     if (model.getShadow() == "Yes")
         return;
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
-    if (device->isConnected())
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
+    if (!device->isConnected())
     {
-        qApp->postEvent(qApp, new StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
-        qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
+        this->thumbnailTimer.stop();
+        qApp->postEvent(qApp, new MediaChangedEvent());
 
-        QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(deviceThumbnailRetrieveChanged(const QString&, CasparDevice&)));
-        device->retrieveThumbnail(this->currentName);
+        return;
     }
+
+    qApp->postEvent(qApp, new StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
+    qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
+
+    QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));
+    device->retrieveThumbnail(this->currentName);
 
     this->thumbnailModels.removeAt(0);
 }
 
-void ThumbnailWorker::deviceThumbnailRetrieveChanged(const QString& data, CasparDevice& device)
+void ThumbnailWorker::thumbnailRetrieveChanged(const QString& data, CasparDevice& device)
 {
-    QObject::disconnect(&device, SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(deviceThumbnailRetrieveChanged(const QString&, CasparDevice&)));
+    QObject::disconnect(&device, SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));
     DatabaseManager::getInstance().updateThumbnail(ThumbnailModel(0, data, this->currentTimestamp, this->currentSize, this->currentName, this->currentAddress));
 }

@@ -4,8 +4,7 @@
 
 OpacityCommand::OpacityCommand(QObject* parent)
     : AbstractCommand(parent),
-      opacity(Mixer::DEFAULT_OPACITY), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      opacity(Mixer::DEFAULT_OPACITY), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
 }
 

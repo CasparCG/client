@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorLevelsWidget::InspectorLevelsWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,11 +25,12 @@ bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        if (dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->preview = false;
+        this->model = rundownItemSelectedEvent->getLibraryModel();
 
-            this->model = rundownItemSelectedEvent->getLibraryModel();
+        blockAllSignals(true);
+
+        if (dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()))
+        { 
             this->command = dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand());
 
             // This will also set the slider value.
@@ -42,12 +44,24 @@ bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorLevelsWidget::blockAllSignals(bool block)
+{
+    this->spinBoxMinIn->blockSignals(block);
+    this->spinBoxMaxIn->blockSignals(block);
+    this->spinBoxMinOut->blockSignals(block);
+    this->spinBoxMaxOut->blockSignals(block);
+    this->spinBoxGamma->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorLevelsWidget::loadTween()
@@ -69,8 +83,7 @@ void InspectorLevelsWidget::sliderMinInChanged(int minIn)
 
     this->spinBoxMinIn->setValue(minIn);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMinInChanged(int minIn)
@@ -84,8 +97,7 @@ void InspectorLevelsWidget::sliderMaxInChanged(int maxIn)
 
     this->spinBoxMaxIn->setValue(maxIn);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMaxInChanged(int maxIn)
@@ -99,8 +111,7 @@ void InspectorLevelsWidget::sliderMinOutChanged(int minOut)
 
     this->spinBoxMinOut->setValue(minOut);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMinOutChanged(int minOut)
@@ -114,8 +125,7 @@ void InspectorLevelsWidget::sliderMaxOutChanged(int maxOut)
 
     this->spinBoxMaxOut->setValue(maxOut);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMaxOutChanged(int maxOut)
@@ -129,8 +139,7 @@ void InspectorLevelsWidget::sliderGammaChanged(int gamma)
 
     this->spinBoxGamma->setValue(gamma);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxGammaChanged(int gamma)
@@ -153,8 +162,7 @@ void InspectorLevelsWidget::resetMinIn(QString minIn)
     this->sliderMinIn->setValue(Mixer::DEFAULT_LEVELS_MIN_IN);
     this->command->setMinIn(static_cast<float>(this->sliderMinIn->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::resetMaxIn(QString maxIn)
@@ -162,8 +170,7 @@ void InspectorLevelsWidget::resetMaxIn(QString maxIn)
     this->sliderMaxIn->setValue(Mixer::DEFAULT_LEVELS_MAX_IN * 100);
     this->command->setMaxIn(static_cast<float>(this->sliderMaxIn->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::resetMinOut(QString minOut)
@@ -171,8 +178,7 @@ void InspectorLevelsWidget::resetMinOut(QString minOut)
     this->sliderMinOut->setValue(Mixer::DEFAULT_LEVELS_MIN_OUT);
     this->command->setMinOut(static_cast<float>(this->sliderMinOut->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::resetMaxOut(QString maxOut)
@@ -180,8 +186,7 @@ void InspectorLevelsWidget::resetMaxOut(QString maxOut)
     this->sliderMaxOut->setValue(Mixer::DEFAULT_LEVELS_MAX_OUT * 100);
     this->command->setMaxOut(static_cast<float>(this->sliderMaxOut->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::resetGamma(QString gamma)
@@ -189,8 +194,7 @@ void InspectorLevelsWidget::resetGamma(QString gamma)
     this->sliderGamma->setValue(Mixer::DEFAULT_LEVELS_GAMMA * 100);
     this->command->setGamma(static_cast<float>(this->sliderGamma->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorLevelsWidget::resetDuration(QString duration)

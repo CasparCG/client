@@ -34,11 +34,10 @@ void DeviceManager::initialize()
     foreach (const DeviceModel& model, models)
     {
         QSharedPointer<CasparDevice> device(new CasparDevice());
-        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-        device->connect(model.getAddress(), model.getPort());
+        device->connectDevice(model.getAddress(), model.getPort());
 
         this->deviceModels.insert(model.getName(), model);
-        this->connections.insert(model.getName(), device);
+        this->devices.insert(model.getName(), device);
 
         emit deviceAdded(*device);
     }
@@ -46,10 +45,10 @@ void DeviceManager::initialize()
 
 void DeviceManager::uninitialize()
 {
-    foreach (const QString& key, this->connections.keys())
+    foreach (const QString& key, this->devices.keys())
     {
-        QSharedPointer<CasparDevice>& connection = this->connections[key];
-        connection->disconnect();
+        QSharedPointer<CasparDevice>& device = this->devices[key];
+        device->disconnectDevice();
     }
 }
 
@@ -58,14 +57,14 @@ void DeviceManager::refresh()
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
 
     // Disconnect old devices.
-    foreach (const QString& key, this->connections.keys())
+    foreach (const QString& key, this->devices.keys())
     {
-        QSharedPointer<CasparDevice>& connection = this->connections[key];
+        QSharedPointer<CasparDevice>& device = this->devices[key];
 
         bool foundDevice = false;
         foreach (DeviceModel model, models)
         {
-            if (model.getAddress() == connection->getAddress())
+            if (model.getAddress() == device->getAddress())
             {
                 foundDevice = true;
                 break;
@@ -74,8 +73,9 @@ void DeviceManager::refresh()
 
         if (!foundDevice)
         {
-            connection->disconnect();
-            this->connections.remove(key);
+            device->disconnectDevice();
+
+            this->devices.remove(key);
             this->deviceModels.remove(key);
 
             emit deviceRemoved();
@@ -85,14 +85,13 @@ void DeviceManager::refresh()
     // Connect new devices.
     foreach (DeviceModel model, models)
     {
-        if (!this->connections.contains(model.getName()))
+        if (!this->devices.contains(model.getName()))
         {
             QSharedPointer<CasparDevice> device(new CasparDevice());
-            QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-            device->connect(model.getAddress(), model.getPort());
+            device->connectDevice(model.getAddress(), model.getPort());
 
             this->deviceModels.insert(model.getName(), model);
-            this->connections.insert(model.getName(), device);
+            this->devices.insert(model.getName(), device);
 
             emit deviceAdded(*device);
         }
@@ -116,20 +115,15 @@ const DeviceModel DeviceManager::getDeviceModelByAddress(const QString& address)
             return model;
     }
 
-    throw std::runtime_error("No DeviceModel found for specified address");
+    qCritical() << "No DeviceModel found for specified address";
 }
 
-const int DeviceManager::getConnectionCount() const
+const int DeviceManager::getDeviceCount() const
 {
-    return this->connections.count();
+    return this->devices.count();
 }
 
-const QSharedPointer<CasparDevice> DeviceManager::getConnectionByName(const QString& name) const
+const QSharedPointer<CasparDevice> DeviceManager::getDeviceByName(const QString& name) const
 {
-    return this->connections.value(name);
-}
-
-void DeviceManager::deviceConnectionStateChanged(CasparDevice& device)
-{
-    qApp->postEvent(qApp, new ConnectionStateChangedEvent(getDeviceModelByAddress(device.getAddress()).getName(), device.isConnected()));
+    return this->devices.value(name);
 }

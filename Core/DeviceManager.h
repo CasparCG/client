@@ -25,16 +25,14 @@ class CORE_EXPORT DeviceManager : public QObject
         QList<DeviceModel> getDeviceModels() const;
         const DeviceModel getDeviceModelByAddress(const QString& address) const;
 
-        const int getConnectionCount() const;
-        const QSharedPointer<CasparDevice> getConnectionByName(const QString& name) const;
+        const int getDeviceCount() const;
+        const QSharedPointer<CasparDevice> getDeviceByName(const QString& name) const;
 
         Q_SIGNAL void deviceRemoved();
         Q_SIGNAL void deviceAdded(CasparDevice&);
 
     private:
         QMap<QString, DeviceModel> deviceModels;
-        QMap<QString, QSharedPointer<CasparDevice> > connections;
-
-        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
+        QMap<QString, QSharedPointer<CasparDevice> > devices;
 };
 

@@ -4,7 +4,9 @@
 #include "ui_AddDeviceDialog.h"
 
 #include "CasparDevice.h"
-#include "Models/CasparVersion.h"
+
+#include "Animations/BorderAnimation.h"
+#include "Models/DeviceModel.h"
 
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
@@ -19,26 +21,30 @@ class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
     public:
         explicit AddDeviceDialog(QWidget* parent = 0);
 
+        void setDeviceModel(const DeviceModel& model);
+        void setEditMode(bool editMode);
+
         const QString getName() const;
         const QString getAddress() const;
         const QString getPort() const;
         const QString getUsername() const;
         const QString getPassword() const;
         const QString getDescription() const;
-        const QString getVersion() const;
         const QString getShadow() const;
-        int getChannels() const;
 
     protected:
-        void closeEvent(QCloseEvent* event);
+        void accept();
 
     private:
-        bool isClosing;
+        bool editMode;
+
+        BorderAnimation* addressAnimation;
+        BorderAnimation* deviceNameAnimation;
+
         QSharedPointer<CasparDevice> device;
 
-        Q_SLOT void lookupName();
-        Q_SLOT void lookupAddress();
-        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceServerVersionChanged(const CasparVersion&, CasparDevice&);
-        Q_SLOT void deviceInfoChanged(const QList<QString>&, CasparDevice&);
+        Q_SLOT void nameChanged(QString);
+        Q_SLOT void addressChanged(QString);
+        Q_SLOT void testConnection();
+        Q_SLOT void connectionStateChanged(CasparDevice&);
 };

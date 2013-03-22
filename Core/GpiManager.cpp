@@ -1,7 +1,6 @@
 #include "GpiManager.h"
 
 #include "DatabaseManager.h"
-#include "Models/GpiDeviceModel.h"
 
 #include <QtCore/QDebug>
 
@@ -20,9 +19,10 @@ GpiManager& GpiManager::getInstance()
 
 void GpiManager::initialize()
 {
-    GpiDeviceModel model = DatabaseManager::getInstance().getGpiDevice();
+    QString serialPort = DatabaseManager::getInstance().getConfigurationByName("GpiSerialPort").getValue();
+    int baudRate = DatabaseManager::getInstance().getConfigurationByName("GpiBaudRate").getValue().toInt();
 
-    device = GpiDevice::Ptr(new GpiDevice(model.getSerialPort(), model.getBaudRate()));
+    this->device = GpiDevice::Ptr(new GpiDevice(serialPort, baudRate));
 
     setupPorts();
 }
@@ -32,17 +32,18 @@ void GpiManager::setupPorts()
     DatabaseManager& database = DatabaseManager::getInstance();
 
     foreach (const GpiPortModel gpiPort, database.getGpiPorts())
-        device->setupGpiPort(gpiPort.getPort(), gpiPort.isRisingEdge());
+        this->device->setupGpiPort(gpiPort.getPort(), gpiPort.isRisingEdge());
 
     foreach (const GpoPortModel gpoPort, database.getGpoPorts())
-        device->setupGpoPort(gpoPort.getPort(), gpoPort.getPulseLengthMillis(), gpoPort.isRisingEdge());
+       this-> device->setupGpoPort(gpoPort.getPort(), gpoPort.getPulseLengthMillis(), gpoPort.isRisingEdge());
 }
 
 void GpiManager::reinitialize()
 {
-    GpiDeviceModel model = DatabaseManager::getInstance().getGpiDevice();
+    QString serialPort = DatabaseManager::getInstance().getConfigurationByName("GpiSerialPort").getValue();
+    int baudRate = DatabaseManager::getInstance().getConfigurationByName("GpiBaudRate").getValue().toInt();
 
-    device->reset(model.getSerialPort(), model.getBaudRate());
+    this->device->reset(serialPort, baudRate);
 
     setupPorts();
 }

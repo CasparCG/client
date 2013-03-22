@@ -3,9 +3,12 @@
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
 #include "ui_RundownTemplateWidget.h"
-#include "GpiDevice.h"
 
 #include "Global.h"
+
+#include "CasparDevice.h"
+
+#include "GpiDevice.h"
 
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
@@ -23,9 +26,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
     Q_OBJECT
 
     public:
-        explicit RundownTemplateWidget(const LibraryModel& model, QWidget* parent = 0,
-                                       const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
-                                       bool loaded = false, bool inGroup = false, bool disconnected = false, bool compactView = false);
+        explicit RundownTemplateWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                       bool active = false, bool loaded = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -54,7 +56,6 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         bool active;
         bool loaded;
         bool inGroup;
-        bool disconnected;
         bool compactView;
         QString color;
         LibraryModel model;
@@ -65,6 +66,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
         void checkEmptyDevice();
         void checkGpiConnection();
+        void checkDeviceConnection();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeStop();
@@ -81,4 +83,6 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void flashlayerChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
+        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
+        Q_SLOT void deviceAdded(CasparDevice&);
 };

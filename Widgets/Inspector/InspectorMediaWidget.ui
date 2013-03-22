@@ -200,6 +200,9 @@
      </item>
      <item>
       <widget class="QLabel" name="labelSeek">
+       <property name="toolTip">
+        <string>Start playback at this frame</string>
+       </property>
        <property name="text">
         <string>&lt;a href=&quot;Seek&quot; style=&quot;color: #BEBEBE;&quot;&gt;Seek&lt;/a&gt;</string>
        </property>
@@ -223,6 +226,9 @@
      </item>
      <item>
       <widget class="QLabel" name="labelLength">
+       <property name="toolTip">
+        <string>Stop playback at this frame relative to the seek frame</string>
+       </property>
        <property name="text">
         <string>&lt;a href=&quot;Length&quot; style=&quot;color: #BEBEBE;&quot;&gt;Length&lt;/a&gt;</string>
        </property>

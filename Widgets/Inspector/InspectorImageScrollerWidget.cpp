@@ -6,7 +6,7 @@
 
 InspectorImageScrollerWidget::InspectorImageScrollerWidget(QWidget* parent)
     : QWidget(parent),
-      preview(false), model(NULL), command(NULL)
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -18,23 +18,32 @@ bool InspectorImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->spinBoxBlur->setValue(this->command->getBlur());
             this->spinBoxSpeed->setValue(this->command->getSpeed());
             this->checkBoxPremultiply->setChecked(this->command->getPremultiply());
             this->checkBoxProgressive->setChecked(this->command->getProgressive());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorImageScrollerWidget::blockAllSignals(bool block)
+{
+    this->spinBoxBlur->blockSignals(block);
+    this->spinBoxSpeed->blockSignals(block);
+    this->checkBoxPremultiply->blockSignals(block);
+    this->checkBoxProgressive->blockSignals(block);
 }
 
 void InspectorImageScrollerWidget::blurChanged(int blur)

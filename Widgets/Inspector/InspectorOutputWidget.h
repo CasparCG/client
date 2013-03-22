@@ -23,9 +23,10 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         AbstractCommand* command;
         LibraryModel* model;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void allowGpiChanged(int);
         Q_SLOT void channelChanged(int);

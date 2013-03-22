@@ -16,9 +16,11 @@ class WIDGETS_EXPORT InspectorGpiOutputWidget : public QWidget, Ui::InspectorGpi
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
-private:
-    GpiOutputCommand* command;
+    private:
+        GpiOutputCommand* command;
 
-    Q_SLOT void gpoPortChanged(int);
-    Q_SLOT void resetGpoPort(QString);
+        void blockAllSignals(bool block);
+
+        Q_SLOT void gpoPortChanged(int);
+        Q_SLOT void resetGpoPort(QString);
 };

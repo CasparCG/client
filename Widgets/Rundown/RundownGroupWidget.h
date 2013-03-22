@@ -3,9 +3,10 @@
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
 #include "ui_RundownGroupWidget.h"
-#include "GpiDevice.h"
 
 #include "Global.h"
+
+#include "GpiDevice.h"
 
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
@@ -24,8 +25,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
     Q_OBJECT
 
     public:
-        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0,
-                                    const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+        explicit RundownGroupWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                     bool active = false, bool autoStep = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();

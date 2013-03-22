@@ -3,9 +3,12 @@
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
 #include "ui_RundownBlendModeWidget.h"
-#include "GpiDevice.h"
 
 #include "Global.h"
+
+#include "CasparDevice.h"
+
+#include "GpiDevice.h"
 
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
@@ -28,9 +31,8 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
     Q_OBJECT
 
     public:
-        explicit RundownBlendModeWidget(const LibraryModel& model, QWidget* parent = 0,
-                                        const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
-                                        bool inGroup = false, bool disconnected = false, bool compactView = false);
+        explicit RundownBlendModeWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                        bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -69,6 +71,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
 
         void checkEmptyDevice();
         void checkGpiConnection();
+        void checkDeviceConnection();
 
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
@@ -79,4 +82,6 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
+        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
+        Q_SLOT void deviceAdded(CasparDevice&);
 };

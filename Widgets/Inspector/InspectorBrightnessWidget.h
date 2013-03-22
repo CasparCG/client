@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorBrightnessWidget : public QWidget, Ui::InspectorBr
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         BrightnessCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderBrightnessChanged(int);
         Q_SLOT void spinBoxBrightnessChanged(int);

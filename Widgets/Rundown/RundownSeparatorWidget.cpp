@@ -17,9 +17,9 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
-    setColor(color);
-    setActive(active);
-    setCompactView(compactView);
+    setColor(this->color);
+    setActive(this->active);
+    setCompactView(this->compactView);
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -112,7 +112,7 @@ void RundownSeparatorWidget::setActive(bool active)
 void RundownSeparatorWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 }
 
 bool RundownSeparatorWidget::executeCommand(enum Playout::PlayoutType::Type type)

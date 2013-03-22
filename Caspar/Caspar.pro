@@ -16,7 +16,6 @@ HEADERS += \
     CasparDevice.h \
     AMCPDevice.h \
     Shared.h \
-    Models/CasparVersion.h \
     Models/CasparThumbnail.h \
     Models/CasparTemplate.h \
     Models/CasparMedia.h \
@@ -25,7 +24,6 @@ HEADERS += \
 SOURCES += \
     CasparDevice.cpp \
     AMCPDevice.cpp \
-    Models/CasparVersion.cpp \
     Models/CasparThumbnail.cpp \
     Models/CasparTemplate.cpp \
     Models/CasparMedia.cpp \

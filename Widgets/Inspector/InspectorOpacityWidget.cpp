@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorOpacityWidget::InspectorOpacityWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,26 +25,34 @@ bool InspectorOpacityWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand());
 
             // This will also set the slider value.
             // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
             this->spinBoxOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
-
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorOpacityWidget::blockAllSignals(bool block)
+{
+    this->spinBoxOpacity->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorOpacityWidget::loadTween()
@@ -75,8 +84,7 @@ void InspectorOpacityWidget::sliderOpacityChanged(int opacity)
 
     this->spinBoxOpacity->setValue(opacity);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorOpacityWidget::spinBoxOpacityChanged(int opacity)
@@ -89,8 +97,7 @@ void InspectorOpacityWidget::resetOpacity(QString opacity)
     this->sliderOpacity->setValue(Mixer::DEFAULT_OPACITY * 100);
     this->command->setOpacity(static_cast<float>(this->sliderOpacity->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorOpacityWidget::resetDuration(QString duration)

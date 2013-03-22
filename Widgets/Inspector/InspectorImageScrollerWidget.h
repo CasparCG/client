@@ -23,9 +23,10 @@ class WIDGETS_EXPORT InspectorImageScrollerWidget : public QWidget, Ui::Inspecto
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         ImageScrollerCommand* command;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void blurChanged(int);
         Q_SLOT void speedChanged(int);

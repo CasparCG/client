@@ -23,13 +23,13 @@ class WIDGETS_EXPORT InspectorColorProducerWidget : public QWidget, Ui::Inspecto
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         ColorCommand* command;
 
         void loadDirection();
         void loadTransition();
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void colorDialogClicked();
         Q_SLOT void transitionChanged(QString);

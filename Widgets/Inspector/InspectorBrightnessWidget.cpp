@@ -10,7 +10,8 @@
 #include <QtGui/QApplication>
 
 InspectorBrightnessWidget::InspectorBrightnessWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,26 +25,34 @@ bool InspectorBrightnessWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        if (dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->preview = false;
+        this->model = rundownItemSelectedEvent->getLibraryModel();
 
-            this->model = rundownItemSelectedEvent->getLibraryModel();
+        blockAllSignals(true);
+
+        if (dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()))
+        {   
             this->command = dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand());
 
             // This will also set the slider value.
             // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
             this->spinBoxBrightness->setValue(QString("%1").arg(this->command->getBrightness() * 100).toFloat());
-
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorBrightnessWidget::blockAllSignals(bool block)
+{
+    this->spinBoxBrightness->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorBrightnessWidget::loadTween()
@@ -75,8 +84,7 @@ void InspectorBrightnessWidget::sliderBrightnessChanged(int brightness)
 
     this->spinBoxBrightness->setValue(brightness);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorBrightnessWidget::spinBoxBrightnessChanged(int brightness)
@@ -89,8 +97,7 @@ void InspectorBrightnessWidget::resetBrightness(QString brightness)
     this->sliderBrightness->setValue(Mixer::DEFAULT_BRIGHTNESS * 100);
     this->command->setBrightness(static_cast<float>(this->sliderBrightness->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorBrightnessWidget::resetDuration(QString duration)

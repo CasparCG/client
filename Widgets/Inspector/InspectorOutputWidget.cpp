@@ -12,7 +12,8 @@
 #include "Events/RundownItemSelectedEvent.h"
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
-    : QWidget(parent), preview(false), command(NULL), model(NULL)
+    : QWidget(parent),
+      command(NULL), model(NULL)
 {
     setupUi(this);
 
@@ -23,17 +24,18 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
+        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         this->spinBoxChannel->setEnabled(true);
         this->spinBoxVideolayer->setEnabled(true);
         this->spinBoxDelay->setEnabled(true);
 
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (rundownItemSelectedEvent->getCommand() != NULL && rundownItemSelectedEvent->getLibraryModel() != NULL)
         {
-            this->preview = false;
-
             this->command = rundownItemSelectedEvent->getCommand();
-            this->model = rundownItemSelectedEvent->getLibraryModel();
 
             this->spinBoxChannel->setEnabled(true);
             this->spinBoxVideolayer->setEnabled(true);
@@ -48,16 +50,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
 
-                // We do not have a command object, block the signals.
-                // Events will not be triggered while we update the values.
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-
-                this->spinBoxChannel->blockSignals(false);
-                this->spinBoxVideolayer->blockSignals(false);
             }
             else if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
@@ -66,13 +60,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             {
                 this->spinBoxVideolayer->setEnabled(false);
 
-                // We do not have a command object, block the signals.
-                // Events will not be triggered while we update the values.
-                this->spinBoxVideolayer->setEnabled(false);
-
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-
-                this->spinBoxVideolayer->blockSignals(false);
             }
             else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
             {
@@ -80,49 +68,36 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->setEnabled(false);
                 this->spinBoxDelay->setEnabled(false);
 
-                // We do not have a command object, block the signals.
-                // Events will not be triggered while we update the values.
-                this->spinBoxChannel->blockSignals(true);
-                this->spinBoxVideolayer->blockSignals(true);
-                this->spinBoxDelay->blockSignals(true);
-
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-
-                this->spinBoxChannel->blockSignals(false);
-                this->spinBoxVideolayer->blockSignals(false);
-                this->spinBoxDelay->blockSignals(false);
             }
             else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
             {
+
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
                 this->spinBoxDelay->setEnabled(false);
-
-                // We do not have a command object, block the signals.
-                // Events will not be triggered while we update the values.
-                this->spinBoxChannel->blockSignals(true);
-                this->spinBoxVideolayer->blockSignals(true);
-                this->spinBoxDelay->blockSignals(true);
-                this->checkBoxAllowGpi->blockSignals(true);
 
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
                 this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
-
-                this->spinBoxChannel->blockSignals(false);
-                this->spinBoxVideolayer->blockSignals(false);
-                this->spinBoxDelay->blockSignals(false);
-                this->checkBoxAllowGpi->blockSignals(false);
             } 
 
-            this->preview = true;
+            blockAllSignals(false);
         }
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorOutputWidget::blockAllSignals(bool block)
+{
+    this->spinBoxChannel->blockSignals(block);
+    this->spinBoxVideolayer->blockSignals(block);
+    this->spinBoxDelay->blockSignals(block);
+    this->checkBoxAllowGpi->blockSignals(block);
 }
 
 void InspectorOutputWidget::allowGpiChanged(int state)

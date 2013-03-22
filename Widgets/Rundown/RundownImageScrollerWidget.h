@@ -3,9 +3,12 @@
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
 #include "ui_RundownImageScrollerWidget.h"
-#include "GpiDevice.h"
 
 #include "Global.h"
+
+#include "CasparDevice.h"
+
+#include "GpiDevice.h"
 
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
@@ -23,10 +26,9 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
     Q_OBJECT
 
     public:
-        explicit RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent = 0,
-                                            const QString& color = Color::DEFAULT_TRANSPARENT_COLOR, bool active = false,
-                                            bool loaded = false, bool paused = false, bool playing = false, bool inGroup = false,
-                                            bool disconnected = false, bool compactView = false);
+        explicit RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                            bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                            bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -57,7 +59,6 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         bool paused;
         bool playing;
         bool inGroup;
-        bool disconnected;
         bool compactView;
         QString color;
         LibraryModel model;
@@ -68,6 +69,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
 
         void checkEmptyDevice();
         void checkGpiConnection();
+        void checkDeviceConnection();
 
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
@@ -80,4 +82,6 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
+        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
+        Q_SLOT void deviceAdded(CasparDevice&);
 };

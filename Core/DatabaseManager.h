@@ -7,7 +7,6 @@
 #include "Models/DirectionModel.h"
 #include "Models/FormatModel.h"
 #include "Models/LibraryModel.h"
-#include "Models/GpiDeviceModel.h"
 #include "Models/GpiModel.h"
 #include "Models/GpiPortModel.h"
 #include "Models/GpoPortModel.h"
@@ -29,8 +28,8 @@ class CORE_EXPORT DatabaseManager
 
         void initialize();
 
-        void updateConfiguration(const ConfigurationModel& model);
         ConfigurationModel getConfigurationByName(const QString& name);
+        void updateConfiguration(const ConfigurationModel& model);     
 
         QList<BlendModeModel> getBlendMode();
         QList<DirectionModel> getDirection();
@@ -38,21 +37,20 @@ class CORE_EXPORT DatabaseManager
         QList<TransitionModel> getTransition();
         QList<TweenModel> getTween();
 
-        GpiDeviceModel getGpiDevice();
-        void updateGpiDevice(const GpiDeviceModel& model);
         QList<GpiPortModel> getGpiPorts();
-        void updateGpiPort(const GpiPortModel& model);
         QList<GpoPortModel> getGpoPorts();
+        void updateGpiPort(const GpiPortModel& model);
         void updateGpoPort(const GpoPortModel& model);
 
         QList<TypeModel> getType();
         TypeModel getTypeByValue(const QString& value);
 
         QList<DeviceModel> getDevice();
-        DeviceModel getDeviceById(int id);
         DeviceModel getDeviceByName(const QString& name);
         DeviceModel getDeviceByAddress(const QString& address);
         void insertDevice(const DeviceModel& model);
+        void updateDeviceVersion(const DeviceModel& model);
+        void updateDeviceChannels(const DeviceModel& model);
         void deleteDevice(int id);
 
         QList<LibraryModel> getLibraryMedia();

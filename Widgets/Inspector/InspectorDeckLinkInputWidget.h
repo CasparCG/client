@@ -23,7 +23,6 @@ class WIDGETS_EXPORT InspectorDeckLinkInputWidget : public QWidget, Ui::Inspecto
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         DeckLinkInputCommand* command;
 
@@ -31,6 +30,7 @@ class WIDGETS_EXPORT InspectorDeckLinkInputWidget : public QWidget, Ui::Inspecto
         void loadFormat();
         void loadTransition();
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void transitionChanged(QString);
         Q_SLOT void durationChanged(int);

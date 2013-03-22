@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorVolumeWidget : public QWidget, Ui::InspectorVolume
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         VolumeCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderVolumeChanged(int);
         Q_SLOT void spinBoxVolumeChanged(int);

@@ -4,8 +4,7 @@
 
 SaturationCommand::SaturationCommand(QObject* parent)
     : AbstractCommand(parent),
-      saturation(Mixer::DEFAULT_SATURATION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      saturation(Mixer::DEFAULT_SATURATION), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
 }
 

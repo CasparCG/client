@@ -312,7 +312,7 @@ void InspectorWidget::masterVolumeClicked()
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (device->isConnected())
         {
             for (int i = 1; i <= model.getChannels(); i++)

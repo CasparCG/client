@@ -302,7 +302,7 @@ void LibraryWidget::filterLibrary()
     qApp->postEvent(qApp, new DataChangedEvent());
 }
 
-void LibraryWidget::itemClicked(QTreeWidgetItem* current, int i)
+void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
 {
     if (current == NULL)
         return;

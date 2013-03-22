@@ -9,7 +9,8 @@
 #include "Models/TweenModel.h"
 
 InspectorMediaWidget::InspectorMediaWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -25,11 +26,12 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<MediaCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<MediaCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
@@ -42,12 +44,26 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
             this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
             this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorMediaWidget::blockAllSignals(bool block)
+{
+    this->comboBoxTransition->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->comboBoxDirection->blockSignals(block);
+    this->spinBoxSeek->blockSignals(block);
+    this->spinBoxLength->blockSignals(block);
+    this->checkBoxLoop->blockSignals(block);
+    this->checkBoxFreezeOnLoad->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxUseAuto->blockSignals(block);
 }
 
 void InspectorMediaWidget::loadDirection()

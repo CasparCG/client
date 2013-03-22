@@ -11,9 +11,9 @@
 #include <QtCore/QTimer>
 
 RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                         bool inGroup, bool disconnected, bool compactView)
+                                         bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
@@ -23,7 +23,6 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
     setActive(active);
     setCompactView(compactView);
 
-    this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
@@ -41,11 +40,17 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL)
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
+    checkDeviceConnection();
 
     qApp->installEventFilter(this);
 }
@@ -60,13 +65,30 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
         this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
         this->model.setName(rundownItemChangedEvent->getName());
 
+        // Should we update the device name?
+        if (rundownItemChangedEvent->getDeviceName() != this->model.getDeviceName())
+        {
+            // Disconnect connectionStateChanged() from the old device.
+            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (oldDevice != NULL)
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+            // Update the model with the new device.
+            this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+
+            // Connect connectionStateChanged() to the new device.
+            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (newDevice != NULL)
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        }
+
         this->labelLabel->setText(this->model.getLabel());
-        this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
+        checkDeviceConnection();
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
     {
@@ -76,19 +98,6 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 
         executePlay();
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
-    {
-        ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
-        if (connectionStateChangedEvent->getDeviceName() == this->model.getDeviceName())
-        {
-            this->disconnected = !connectionStateChangedEvent->getConnected();
-
-            if (connectionStateChangedEvent->getConnected())
-                this->labelDisconnected->setVisible(false);
-            else
-                this->labelDisconnected->setVisible(true);
-        }
-    }
 
     return QObject::eventFilter(target, event);
 }
@@ -96,7 +105,7 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownVolumeWidget::clone()
 {
     RundownVolumeWidget* widget = new RundownVolumeWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                          this->inGroup, this->disconnected, this->compactView);
+                                                          this->inGroup, this->compactView);
 
     VolumeCommand* command = dynamic_cast<VolumeCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -169,7 +178,7 @@ void RundownVolumeWidget::setActive(bool active)
 void RundownVolumeWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 
     if (this->inGroup)
     {
@@ -232,7 +241,7 @@ void RundownVolumeWidget::executeStop()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setVolume(this->command.getChannel(), this->command.getVideolayer(), 1);
 
@@ -241,7 +250,7 @@ void RundownVolumeWidget::executeStop()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setVolume(this->command.getChannel(), this->command.getVideolayer(), 1);
     }
@@ -249,7 +258,7 @@ void RundownVolumeWidget::executeStop()
 
 void RundownVolumeWidget::executePlay()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setVolume(this->command.getChannel(), this->command.getVideolayer(), this->command.getVolume(),
                           this->command.getDuration(), this->command.getTween(), this->command.getDefer());
@@ -259,7 +268,7 @@ void RundownVolumeWidget::executePlay()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setVolume(this->command.getChannel(), this->command.getVideolayer(), this->command.getVolume(),
                                     this->command.getDuration(), this->command.getTween(), this->command.getDefer());
@@ -270,7 +279,7 @@ void RundownVolumeWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
 
@@ -279,7 +288,7 @@ void RundownVolumeWidget::executeClearVideolayer()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -289,7 +298,7 @@ void RundownVolumeWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         device->clearChannel(this->command.getChannel());
@@ -301,7 +310,7 @@ void RundownVolumeWidget::executeClearChannel()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->clearChannel(this->command.getChannel());
@@ -327,12 +336,21 @@ void RundownVolumeWidget::delayChanged(int delay)
 
 void RundownVolumeWidget::checkGpiConnection()
 {
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownVolumeWidget::checkDeviceConnection()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device == NULL)
+        this->labelDisconnected->setVisible(true);
+    else
+        this->labelDisconnected->setVisible(!device->isConnected());
 }
 
 void RundownVolumeWidget::allowGpiChanged(bool allowGpi)
@@ -343,4 +361,17 @@ void RundownVolumeWidget::allowGpiChanged(bool allowGpi)
 void RundownVolumeWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownVolumeWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownVolumeWidget::deviceAdded(CasparDevice& device)
+{
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    checkDeviceConnection();
 }

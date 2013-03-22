@@ -2301,8 +2301,8 @@
    <slot>fontSizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>136</x>
-     <y>151</y>
+     <x>178</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>437</x>
@@ -2925,12 +2925,28 @@
    <slot>showThumbnailTooltipChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>262</x>
-     <y>319</y>
+     <x>264</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
      <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetDevice</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>deviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>610</x>
+     <y>480</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>476</y>
     </hint>
    </hints>
   </connection>
@@ -2939,7 +2955,7 @@
   <slot>showAddDeviceDialog()</slot>
   <slot>removeDevice()</slot>
   <slot>fontSizeChanged(int)</slot>
-  <slot>deviceItemSelected(QTreeWidgetItem*,int)</slot>
+  <slot>deviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>synchronizeIntervalChanged(int)</slot>
   <slot>startFullscreenChanged(int)</slot>
   <slot>autoSynchronizeChanged(int)</slot>

@@ -8,7 +8,7 @@
 
 InspectorPrintWidget::InspectorPrintWidget(QWidget* parent)
     : QWidget(parent),
-      preview(false), model(NULL), command(NULL)
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -20,20 +20,26 @@ bool InspectorPrintWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->preview = false;
+        this->model = rundownItemSelectedEvent->getLibraryModel();
 
-            this->model = rundownItemSelectedEvent->getLibraryModel();
+        blockAllSignals(true);
+
+        if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()))
+        {       
             this->command = dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->lineEditOutput->setText(this->command->getOutput());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorPrintWidget::blockAllSignals(bool block)
+{
+    this->lineEditOutput->blockSignals(block);
 }
 
 void InspectorPrintWidget::outputChanged(QString output)

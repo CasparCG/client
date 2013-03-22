@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorCropWidget : public QWidget, Ui::InspectorCropWidg
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         CropCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderCropLeftChanged(int);
         Q_SLOT void sliderCropRightChanged(int);

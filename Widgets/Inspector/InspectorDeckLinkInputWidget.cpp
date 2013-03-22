@@ -7,7 +7,8 @@
 #include "Models/FormatModel.h"
 
 InspectorDeckLinkInputWidget::InspectorDeckLinkInputWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,11 +25,12 @@ bool InspectorDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->spinBoxDevice->setValue(this->command->getDevice());
@@ -37,12 +39,22 @@ bool InspectorDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorDeckLinkInputWidget::blockAllSignals(bool block)
+{
+    this->spinBoxDevice->blockSignals(block);
+    this->comboBoxFormat->blockSignals(block);
+    this->comboBoxTransition->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->comboBoxDirection->blockSignals(block);
 }
 
 void InspectorDeckLinkInputWidget::loadDirection()

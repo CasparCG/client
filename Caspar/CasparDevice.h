@@ -6,7 +6,6 @@
 #include "Models/CasparData.h"
 #include "Models/CasparMedia.h"
 #include "Models/CasparTemplate.h"
-#include "Models/CasparVersion.h"
 #include "Models/CasparThumbnail.h"
 
 class CASPAR_EXPORT CasparDevice : public AMCPDevice
@@ -15,9 +14,6 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
 
     public:
         explicit CasparDevice(QObject* parent = 0);
-
-        void connect(const QString& address, int port = 5250);
-        void disconnect();
 
         const int getPort() const;
         const QString getAddress() const;
@@ -112,7 +108,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         Q_SIGNAL void mediaInfoChanged(const QList<QString>&, CasparDevice&);
         Q_SIGNAL void templateChanged(const QList<CasparTemplate>&, CasparDevice&);
         Q_SIGNAL void dataChanged(const QList<CasparData>&, CasparDevice&);
-        Q_SIGNAL void versionChanged(const CasparVersion&, CasparDevice&);
+        Q_SIGNAL void versionChanged(const QString& version, CasparDevice&);
         Q_SIGNAL void responseChanged(const QList<QString>&, CasparDevice&);
         Q_SIGNAL void thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
         Q_SIGNAL void thumbnailRetrieveChanged(const QString& data, CasparDevice&);

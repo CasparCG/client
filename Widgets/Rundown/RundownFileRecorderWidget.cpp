@@ -11,19 +11,18 @@
 #include <QtCore/QTimer>
 
 RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                     bool active, bool inGroup, bool disconnected, bool compactView)
+                                                     bool active, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
-    setColor(color);
-    setActive(active);
-    setCompactView(compactView);
+    setColor(this->color);
+    setActive(this->active);
+    setCompactView(this->compactView);
 
-    this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
@@ -41,11 +40,17 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL)
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
+    checkDeviceConnection();
 
     qApp->installEventFilter(this);
 }
@@ -60,29 +65,31 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
         this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
         this->model.setName(rundownItemChangedEvent->getName());
 
+        // Should we update the device name?
+        if (rundownItemChangedEvent->getDeviceName() != this->model.getDeviceName())
+        {
+            // Disconnect connectionStateChanged() from the old device.
+            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (oldDevice != NULL)
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+            // Update the model with the new device.
+            this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+
+            // Connect connectionStateChanged() to the new device.
+            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (newDevice != NULL)
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        }
+
+
         this->labelLabel->setText(this->model.getLabel());
-        this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-        this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
-        this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
-        this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
-    {
-        ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
-        if (connectionStateChangedEvent->getDeviceName() == this->model.getDeviceName())
-        {
-            this->disconnected = !connectionStateChangedEvent->getConnected();
-
-            if (connectionStateChangedEvent->getConnected())
-                this->labelDisconnected->setVisible(false);
-            else
-                this->labelDisconnected->setVisible(true);
-        }
+        checkDeviceConnection();
     }
 
     return QObject::eventFilter(target, event);
@@ -91,7 +98,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownFileRecorderWidget::clone()
 {
     RundownFileRecorderWidget* widget = new RundownFileRecorderWidget(this->model, this->parentWidget(), this->color,
-                                                                      this->active, this->inGroup, this->disconnected, this->compactView);
+                                                                      this->active, this->inGroup, this->compactView);
 
     FileRecorderCommand* command = dynamic_cast<FileRecorderCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -165,7 +172,7 @@ void RundownFileRecorderWidget::setActive(bool active)
 void RundownFileRecorderWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 
     if (this->inGroup)
     {
@@ -228,7 +235,7 @@ void RundownFileRecorderWidget::executeStop()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopRecording(this->command.getChannel());
 
@@ -237,7 +244,7 @@ void RundownFileRecorderWidget::executeStop()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->stopRecording(this->command.getChannel());
     }
@@ -245,7 +252,7 @@ void RundownFileRecorderWidget::executeStop()
 
 void RundownFileRecorderWidget::executePlay()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
                                this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
@@ -255,7 +262,7 @@ void RundownFileRecorderWidget::executePlay()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
                                          this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
@@ -279,12 +286,21 @@ void RundownFileRecorderWidget::delayChanged(int delay)
 
 void RundownFileRecorderWidget::checkGpiConnection()
 {
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownFileRecorderWidget::checkDeviceConnection()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device == NULL)
+        this->labelDisconnected->setVisible(true);
+    else
+        this->labelDisconnected->setVisible(!device->isConnected());
 }
 
 void RundownFileRecorderWidget::allowGpiChanged(bool allowGpi)
@@ -295,4 +311,17 @@ void RundownFileRecorderWidget::allowGpiChanged(bool allowGpi)
 void RundownFileRecorderWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownFileRecorderWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownFileRecorderWidget::deviceAdded(CasparDevice& device)
+{
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    checkDeviceConnection();
 }

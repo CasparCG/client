@@ -8,6 +8,8 @@
 #include "Models/ConfigurationModel.h"
 #include "Models/GpiModel.h"
 
+#include <QtCore/QTimer>
+
 #include <QtGui/QComboBox>
 #include <QtGui/QIcon>
 
@@ -111,14 +113,24 @@ void SettingsDialog::loadGpi()
     this->spinBoxPulseLength7->setValue(outputs.at(6).getPulseLengthMillis());
     this->spinBoxPulseLength8->setValue(outputs.at(7).getPulseLengthMillis());
 
-    GpiDeviceModel device = DatabaseManager::getInstance().getGpiDevice();
-    this->lineEditSerialPort->setText(device.getSerialPort());
-    this->comboBoxGpiBaudRate->setCurrentIndex(comboBoxGpiBaudRate->findText(QString("%1").arg(device.getBaudRate())));
+    QString serialPort = DatabaseManager::getInstance().getConfigurationByName("GpiSerialPort").getValue();
+    int baudRate = DatabaseManager::getInstance().getConfigurationByName("GpiBaudRate").getValue().toInt();
+
+    this->lineEditSerialPort->setText(serialPort);
+    this->comboBoxGpiBaudRate->setCurrentIndex(comboBoxGpiBaudRate->findText(QString("%1").arg(baudRate)));
 }
 
 void SettingsDialog::checkEmptyDeviceList()
 {
-    (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0) ? this->animation->start() : this->animation->stop();
+    if (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0)
+    {
+        this->animation->start();
+        this->tabWidget->setCurrentIndex(1);
+
+        return;
+    }
+
+    this->animation->stop();
 }
 
 void SettingsDialog::showAddDeviceDialog()
@@ -129,10 +141,11 @@ void SettingsDialog::showAddDeviceDialog()
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                dialog->getVersion(), dialog->getShadow(), dialog->getChannels()));
-        loadDevices();
+                                                                "", dialog->getShadow(), 0));
 
         qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+
+        QTimer::singleShot(500, this, SLOT(loadDevices()));
     }
 }
 
@@ -149,22 +162,43 @@ void SettingsDialog::removeDevice()
     qApp->postEvent(qApp, new RefreshLibraryEvent(0));
 }
 
+void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
+{
+    DeviceModel model = DatabaseManager::getInstance().getDeviceByAddress(current->text(3));
+
+    AddDeviceDialog* dialog = new AddDeviceDialog(this);
+    dialog->setDeviceModel(model);
+    dialog->setEditMode(true);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().deleteDevice(current->text(0).toInt());
+        DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
+                                                                dialog->getPort().toInt(), dialog->getUsername(),
+                                                                dialog->getPassword(), dialog->getDescription(),
+                                                                model.getVersion(), dialog->getShadow(), model.getChannels()));
+
+        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+
+        QTimer::singleShot(500, this, SLOT(loadDevices()));
+    }
+}
+
 void SettingsDialog::startFullscreenChanged(int state)
 {
     QString isFullscreen = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "StartFullscreen", isFullscreen));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StartFullscreen", isFullscreen));
 }
 
 void SettingsDialog::fontSizeChanged(int size)
 {
     qApp->setStyleSheet(this->stylesheet + QString("QWidget { font-size: %1px; }").arg(size));
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "FontSize", QString("%1").arg(size)));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "FontSize", QString("%1").arg(size)));
 }
 
 void SettingsDialog::autoSynchronizeChanged(int state)
 {
     QString isAutoSynchronize = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "AutoRefreshLibrary", isAutoSynchronize));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "AutoRefreshLibrary", isAutoSynchronize));
 
     this->labelInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
     this->spinBoxRefreshInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
@@ -177,12 +211,12 @@ void SettingsDialog::autoSynchronizeChanged(int state)
 void SettingsDialog::showThumbnailTooltipChanged(int state)
 {
     QString showThumbnailTooltip = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "ShowThumbnailTooltipInRundown", showThumbnailTooltip));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowThumbnailTooltipInRundown", showThumbnailTooltip));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)
 {
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(-1, "RefreshLibraryInterval", QString("%1").arg(interval)));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
     qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000));
 }
@@ -200,6 +234,7 @@ void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBo
              << " action: " << Playout::toString(playoutType);
 
     DatabaseManager::getInstance().updateGpiPort(GpiPortModel(gpi, risingEdge, playoutType));
+
     GpiManager::getInstance().getGpiDevice()->setupGpiPort(gpi, risingEdge);
 
     emit gpiBindingChanged(gpi, playoutType);
@@ -258,6 +293,7 @@ void SettingsDialog::updateGpo(int gpo, const QComboBox* voltage, const QSpinBox
              << " pulse length: " << pulseLengthMillis << "ms";
 
     DatabaseManager::getInstance().updateGpoPort(GpoPortModel(gpo, risingEdge, pulseLengthMillis));
+
     GpiManager::getInstance().getGpiDevice()->setupGpoPort(gpo, pulseLengthMillis, risingEdge);
 }
 
@@ -311,7 +347,9 @@ void SettingsDialog::updateGpiDevice()
     qDebug() << "GPO Device changed -- Serial port: "
              << serialPort << " Baud rate: " << baudRate;
 
-    DatabaseManager::getInstance().updateGpiDevice(GpiDeviceModel(serialPort, baudRate));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "GpiSerialPort", serialPort));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "GpiBaudRate", QString("%1").arg(baudRate)));
+
     GpiManager::getInstance().reinitialize();
 }
 

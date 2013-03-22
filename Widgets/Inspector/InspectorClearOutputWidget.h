@@ -25,6 +25,8 @@ class WIDGETS_EXPORT InspectorClearOutputWidget : public QWidget, Ui::InspectorC
         LibraryModel* model;
         ClearOutputCommand* command;
 
+        void blockAllSignals(bool block);
+
         Q_SLOT void clearChannelChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void resetClearChannel(QString);

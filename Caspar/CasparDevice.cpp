@@ -8,16 +8,6 @@ CasparDevice::CasparDevice(QObject* parent)
 {
 }
 
-void CasparDevice::connect(const QString& address, int port)
-{
-    AMCPDevice::connectDevice(address, port);
-}
-
-void CasparDevice::disconnect()
-{
-    AMCPDevice::disconnectDevice();
-}
-
 const int CasparDevice::getPort() const
 {
     return AMCPDevice::getPort();
@@ -548,7 +538,7 @@ void CasparDevice::sendNotification()
             break;
         case AMCPDevice::VERSION:
             AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
-            emit versionChanged(CasparVersion(AMCPDevice::response.at(0)), *this);
+            emit versionChanged(AMCPDevice::response.at(0), *this);
             break;
         case AMCPDevice::CONNECTIONSTATE:
             emit connectionStateChanged(*this);

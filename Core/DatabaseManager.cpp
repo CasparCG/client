@@ -438,37 +438,9 @@ QList<DeviceModel> DatabaseManager::getDevice()
     QList<DeviceModel> models;
     while (sql.next())
         models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                                     sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt()));
+                                     sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(), sql.value(8).toString(), sql.value(9).toInt()));
 
     return models;
-}
-
-GpiDeviceModel DatabaseManager::getGpiDevice()
-{
-    return GpiDeviceModel(getConfigurationByName("GpiSerialPort").getValue(), getConfigurationByName("GpiBaudRate").getValue().toInt());
-}
-
-void DatabaseManager::updateGpiDevice(const GpiDeviceModel& model)
-{
-    updateConfiguration(ConfigurationModel(0, "GpiSerialPort", model.getSerialPort()));
-    updateConfiguration(ConfigurationModel(0, "GpiBaudRate", QString("%1").arg(model.getBaudRate())));
-}
-
-DeviceModel DatabaseManager::getDeviceById(int id)
-{
-    QMutexLocker locker(&mutex);
-
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
-                            "WHERE d.Id = %1").arg(id);
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    sql.first();
-
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByName(const QString& name)
@@ -515,6 +487,38 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
                             "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9)")
                             .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername()).arg(model.getPassword())
                             .arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow()).arg(model.getChannels());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateDeviceVersion(const DeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE Device SET Version = '%1' "
+                            "WHERE Address = '%2'").arg(model.getVersion()).arg(model.getAddress());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateDeviceChannels(const DeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE Device SET Channels = %1 "
+                            "WHERE Address = '%2'").arg(model.getChannels()).arg(model.getAddress());
 
     QSqlQuery sql;
     if (!sql.exec(query))

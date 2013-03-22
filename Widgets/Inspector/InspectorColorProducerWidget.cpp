@@ -12,7 +12,7 @@
 
 InspectorColorProducerWidget::InspectorColorProducerWidget(QWidget* parent)
     : QWidget(parent),
-      preview(false), model(NULL), command(NULL)
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -28,23 +28,32 @@ bool InspectorColorProducerWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<ColorCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ColorCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorColorProducerWidget::blockAllSignals(bool block)
+{
+    this->comboBoxTransition->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->comboBoxDirection->blockSignals(block);
 }
 
 void InspectorColorProducerWidget::loadDirection()

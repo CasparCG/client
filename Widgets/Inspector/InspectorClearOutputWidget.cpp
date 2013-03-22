@@ -12,7 +12,8 @@
 #include <QtGui/QApplication>
 
 InspectorClearOutputWidget::InspectorClearOutputWidget(QWidget* parent)
-    : QWidget(parent), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -24,17 +25,28 @@ bool InspectorClearOutputWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->checkBoxClearChannel->setChecked(this->command->getClearChannel());
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorClearOutputWidget::blockAllSignals(bool block)
+{
+    this->checkBoxClearChannel->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorClearOutputWidget::clearChannelChanged(int state)

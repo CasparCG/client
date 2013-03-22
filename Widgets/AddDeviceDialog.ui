@@ -6,24 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>214</height>
+    <width>450</width>
+    <height>194</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>214</height>
+    <width>450</width>
+    <height>194</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>450</width>
     <height>214</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Add new device</string>
+   <string>Add New Device</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -33,9 +33,12 @@
     <rect>
      <x>138</x>
      <y>60</y>
-     <width>252</width>
+     <width>302</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Optional</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelDescription">
@@ -55,13 +58,10 @@
    </property>
   </widget>
   <widget class="QPushButton" name="pushButtonOK">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="geometry">
     <rect>
-     <x>315</x>
-     <y>182</y>
+     <x>365</x>
+     <y>162</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -81,25 +81,12 @@
     <rect>
      <x>138</x>
      <y>34</y>
-     <width>111</width>
+     <width>161</width>
      <height>20</height>
     </rect>
    </property>
    <property name="placeholderText">
-    <string>Hostname / IP</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditVersion">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>138</x>
-     <y>138</y>
-     <width>111</width>
-     <height>20</height>
-    </rect>
+    <string>Hostname / IP address</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelAddress">
@@ -121,7 +108,7 @@
   <widget class="QLabel" name="labelPort">
    <property name="geometry">
     <rect>
-     <x>292</x>
+     <x>302</x>
      <y>35</y>
      <width>31</width>
      <height>20</height>
@@ -155,33 +142,20 @@
     <rect>
      <x>138</x>
      <y>112</y>
-     <width>252</width>
+     <width>302</width>
      <height>20</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLabel" name="labelVersion">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>139</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Version</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   <property name="placeholderText">
+    <string>Optional</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditPort">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>340</x>
      <y>34</y>
-     <width>60</width>
+     <width>74</width>
      <height>20</height>
     </rect>
    </property>
@@ -213,19 +187,22 @@
     <rect>
      <x>138</x>
      <y>86</y>
-     <width>252</width>
+     <width>302</width>
      <height>20</height>
     </rect>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
    </property>
+   <property name="placeholderText">
+    <string>Optional</string>
+   </property>
   </widget>
   <widget class="QCheckBox" name="checkBoxShadow">
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>162</y>
+     <y>136</y>
      <width>248</width>
      <height>17</height>
     </rect>
@@ -239,7 +216,7 @@
     <rect>
      <x>138</x>
      <y>8</y>
-     <width>111</width>
+     <width>161</width>
      <height>20</height>
     </rect>
    </property>
@@ -260,39 +237,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelChannels">
-   <property name="geometry">
-    <rect>
-     <x>252</x>
-     <y>139</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Channels</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditChannels">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>138</y>
-     <width>60</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::ClickFocus</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelDeviceName_2">
+  <widget class="QLabel" name="labelDeviceIcon">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -311,6 +256,32 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButtonTestConnection">
+   <property name="geometry">
+    <rect>
+     <x>419</x>
+     <y>34</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="toolTip">
+    <string>Test Connection</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Resource.qrc">
+     <normaloff>:/Graphics/Images/TestConnection.png</normaloff>:/Graphics/Images/TestConnection.png</iconset>
+   </property>
+   <property name="shortcut">
+    <string>Alt+O</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditDeviceName</tabstop>
@@ -319,7 +290,6 @@
   <tabstop>lineEditUsername</tabstop>
   <tabstop>lineEditPassword</tabstop>
   <tabstop>lineEditDescription</tabstop>
-  <tabstop>lineEditVersion</tabstop>
   <tabstop>checkBoxShadow</tabstop>
  </tabstops>
  <resources>
@@ -333,8 +303,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>306</x>
-     <y>194</y>
+     <x>365</x>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>247</x>
@@ -343,40 +313,60 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditDeviceName</sender>
-   <signal>editingFinished()</signal>
+   <sender>pushButtonTestConnection</sender>
+   <signal>clicked()</signal>
    <receiver>AddDeviceDialog</receiver>
-   <slot>lookupName()</slot>
+   <slot>testConnection()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>15</y>
+     <x>428</x>
+     <y>44</y>
     </hint>
     <hint type="destinationlabel">
-     <x>2</x>
-     <y>17</y>
+     <x>0</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>lineEditAddress</sender>
-   <signal>editingFinished()</signal>
+   <signal>textChanged(QString)</signal>
    <receiver>AddDeviceDialog</receiver>
-   <slot>lookupAddress()</slot>
+   <slot>addressChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>44</y>
+     <x>282</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1</x>
-     <y>53</y>
+     <x>378</x>
+     <y>-3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditDeviceName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>AddDeviceDialog</receiver>
+   <slot>nameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>342</x>
+     <y>1</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>lookupAddress()</slot>
-  <slot>lookupName()</slot>
+  <slot>addressFinished()</slot>
+  <slot>nameFinished()</slot>
+  <slot>testConnection()</slot>
+  <slot>okClicked()</slot>
+  <slot>nameChanged(QString)</slot>
+  <slot>addressChanged(QString)</slot>
  </slots>
 </ui>

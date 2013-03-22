@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorBlendModeWidget : public QWidget, Ui::InspectorBle
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         BlendModeCommand* command;
 
         void loadBlendMode();
+        void blockAllSignals(bool block);
 
         Q_SLOT void blendModeChanged(QString);
         Q_SLOT void resetBlendMode(QString);

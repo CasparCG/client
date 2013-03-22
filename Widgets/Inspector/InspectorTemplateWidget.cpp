@@ -9,7 +9,8 @@
 #include <QtGui/QResizeEvent>
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -23,11 +24,12 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->spinBoxFlashlayer->setValue(this->command->getFlashlayer());
@@ -49,12 +51,20 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
                 this->rowIndex++;
             }
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorTemplateWidget::blockAllSignals(bool block)
+{
+    this->spinBoxFlashlayer->blockSignals(block);
+    this->lineEditInvoke->blockSignals(block);
+    this->checkBoxUseStoredData->blockSignals(block);
+    this->tableWidgetTemplateData->blockSignals(block);
 }
 
 void InspectorTemplateWidget::updateDataTemplateModels()
@@ -71,12 +81,15 @@ void InspectorTemplateWidget::updateDataTemplateModels()
 
 void InspectorTemplateWidget::addRow()
 {
+    this->tableWidgetTemplateData->clearSelection();
     this->tableWidgetTemplateData->insertRow(this->tableWidgetTemplateData->rowCount());
 
     QTableWidgetItem* nameItem = new QTableWidgetItem(QString("f%1").arg(this->rowIndex));
     QTableWidgetItem* valueItem = new QTableWidgetItem("");
     this->tableWidgetTemplateData->setItem(this->tableWidgetTemplateData->rowCount() - 1, 0, nameItem);
     this->tableWidgetTemplateData->setItem(this->tableWidgetTemplateData->rowCount() - 1, 1, valueItem);
+
+    this->tableWidgetTemplateData->setItemSelected(valueItem, true);
 
     this->rowIndex++;
 }

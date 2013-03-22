@@ -18,15 +18,25 @@ bool InspectorGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+
+        blockAllSignals(true);
+
         if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->command = dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->spinBoxGpoPort->setValue(this->command->getGpoPort() + 1);
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorGpiOutputWidget::blockAllSignals(bool block)
+{
+    this->spinBoxGpoPort->blockSignals(block);
 }
 
 void InspectorGpiOutputWidget::gpoPortChanged(int port)

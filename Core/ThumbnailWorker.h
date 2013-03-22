@@ -33,5 +33,5 @@ class CORE_EXPORT ThumbnailWorker : public QObject
         QList<ThumbnailModel> thumbnailModels;
 
         Q_SLOT void process();
-        Q_SLOT void deviceThumbnailRetrieveChanged(const QString& data, CasparDevice& device);
+        Q_SLOT void thumbnailRetrieveChanged(const QString& data, CasparDevice& device);
 };

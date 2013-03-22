@@ -22,9 +22,10 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         GroupCommand* command;
+
+        void blockAllSignals(bool block);
 
         Q_SLOT void notesChanged();
         Q_SLOT void resetNotes(QString);

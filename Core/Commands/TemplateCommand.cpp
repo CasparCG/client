@@ -6,8 +6,7 @@
 
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
-      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE),
-      useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)
+      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)
 {
 }
 

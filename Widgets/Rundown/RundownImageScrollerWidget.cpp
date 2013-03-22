@@ -12,22 +12,21 @@
 
 RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
-                                                       bool disconnected, bool compactView)
+                                                       bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), disconnected(disconnected),
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup),
       compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
-    setColor(color);
-    setActive(active);
-    setCompactView(compactView);
+    setColor(this->color);
+    setActive(this->active);
+    setCompactView(this->compactView);
 
     this->command.setMediaName(this->model.getName());
 
-    this->labelDisconnected->setVisible(this->disconnected);
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
@@ -45,11 +44,17 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)),
-                     this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL)
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
+    checkDeviceConnection();
 
     qApp->installEventFilter(this);
 }
@@ -64,17 +69,31 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
 
         RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
         this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
         this->model.setName(rundownItemChangedEvent->getName());
         this->command.setMediaName(rundownItemChangedEvent->getName());
 
+        // Should we update the device name?
+        if (rundownItemChangedEvent->getDeviceName() != this->model.getDeviceName())
+        {
+            // Disconnect connectionStateChanged() from the old device.
+            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (oldDevice != NULL)
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+            // Update the model with the new device.
+            this->model.setDeviceName(rundownItemChangedEvent->getDeviceName());
+            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+
+            // Connect connectionStateChanged() to the new device.
+            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            if (newDevice != NULL)
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        }
+
         this->labelLabel->setText(this->model.getLabel());
-        this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-        this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
-        this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
-        this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
         checkEmptyDevice();
+        checkDeviceConnection();
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
     {
@@ -84,19 +103,6 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
 
         executePlay();
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ConnectionStateChanged))
-    {
-        ConnectionStateChangedEvent* connectionStateChangedEvent = dynamic_cast<ConnectionStateChangedEvent*>(event);
-        if (connectionStateChangedEvent->getDeviceName() == this->model.getDeviceName())
-        {
-            this->disconnected = !connectionStateChangedEvent->getConnected();
-
-            if (connectionStateChangedEvent->getConnected())
-                this->labelDisconnected->setVisible(false);
-            else
-                this->labelDisconnected->setVisible(true);
-        }
-    }
 
     return QObject::eventFilter(target, event);
 }
@@ -105,7 +111,7 @@ AbstractRundownWidget* RundownImageScrollerWidget::clone()
 {
     RundownImageScrollerWidget* widget = new RundownImageScrollerWidget(this->model, this->parentWidget(), this->color,
                                                                         this->active, this->loaded, this->paused, this->playing,
-                                                                        this->inGroup, this->disconnected, this->compactView);
+                                                                        this->inGroup, this->compactView);
 
     ImageScrollerCommand* command = dynamic_cast<ImageScrollerCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -179,7 +185,7 @@ void RundownImageScrollerWidget::setActive(bool active)
 void RundownImageScrollerWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
-    this->labelGroupColor->setVisible(inGroup);
+    this->labelGroupColor->setVisible(this->inGroup);
 
     if (this->inGroup)
     {
@@ -246,7 +252,7 @@ void RundownImageScrollerWidget::executeStop()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
 
@@ -255,7 +261,7 @@ void RundownImageScrollerWidget::executeStop()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -267,7 +273,7 @@ void RundownImageScrollerWidget::executeStop()
 
 void RundownImageScrollerWidget::executePlay()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
@@ -283,7 +289,7 @@ void RundownImageScrollerWidget::executePlay()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
@@ -305,7 +311,7 @@ void RundownImageScrollerWidget::executePause()
     if (!this->playing)
         return;
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
@@ -319,7 +325,7 @@ void RundownImageScrollerWidget::executePause()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
@@ -334,7 +340,7 @@ void RundownImageScrollerWidget::executePause()
 
 void RundownImageScrollerWidget::executeLoad()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                 this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
@@ -345,7 +351,7 @@ void RundownImageScrollerWidget::executeLoad()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                           this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
@@ -361,7 +367,7 @@ void RundownImageScrollerWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
 
@@ -370,7 +376,7 @@ void RundownImageScrollerWidget::executeClearVideolayer()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -384,7 +390,7 @@ void RundownImageScrollerWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getConnectionByName(this->model.getDeviceName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         device->clearChannel(this->command.getChannel());
@@ -396,7 +402,7 @@ void RundownImageScrollerWidget::executeClearChannel()
         if (model.getShadow() == "No")
             continue;
 
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getConnectionByName(model.getName());
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->clearChannel(this->command.getChannel());
@@ -426,12 +432,21 @@ void RundownImageScrollerWidget::delayChanged(int delay)
 
 void RundownImageScrollerWidget::checkGpiConnection()
 {
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownImageScrollerWidget::checkDeviceConnection()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device == NULL)
+        this->labelDisconnected->setVisible(true);
+    else
+        this->labelDisconnected->setVisible(!device->isConnected());
 }
 
 void RundownImageScrollerWidget::allowGpiChanged(bool allowGpi)
@@ -442,4 +457,17 @@ void RundownImageScrollerWidget::allowGpiChanged(bool allowGpi)
 void RundownImageScrollerWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownImageScrollerWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownImageScrollerWidget::deviceAdded(CasparDevice& device)
+{
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+    checkDeviceConnection();
 }

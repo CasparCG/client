@@ -12,7 +12,8 @@
 #include <QtGui/QApplication>
 
 InspectorVolumeWidget::InspectorVolumeWidget(QWidget* parent)
-    : QWidget(parent), preview(false), model(NULL), command(NULL)
+    : QWidget(parent),
+      model(NULL), command(NULL)
 {
     setupUi(this);
 
@@ -26,11 +27,12 @@ bool InspectorVolumeWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->model = rundownItemSelectedEvent->getLibraryModel();
+
+        blockAllSignals(true);
+
         if (dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->preview = false;
-
-            this->model = rundownItemSelectedEvent->getLibraryModel();
             this->command = dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand());
 
             // If getVolume() = 0.56999993 then
@@ -42,16 +44,23 @@ bool InspectorVolumeWidget::eventFilter(QObject* target, QEvent* event)
 
             // This will also set the slider value.
             this->spinBoxVolume->setValue(QString("%1").arg(this->command->getVolume() * 100).toFloat());
-
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
-
-            this->preview = true;
         }
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorVolumeWidget::blockAllSignals(bool block)
+{
+    this->spinBoxVolume->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
+    this->comboBoxTween->blockSignals(block);
+    this->checkBoxDefer->blockSignals(block);
 }
 
 void InspectorVolumeWidget::loadTween()
@@ -83,8 +92,7 @@ void InspectorVolumeWidget::sliderVolumeChanged(int volume)
 
     this->spinBoxVolume->setValue(volume);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorVolumeWidget::spinBoxVolumeChanged(int volume)
@@ -97,8 +105,7 @@ void InspectorVolumeWidget::resetVolume(QString volume)
     this->sliderVolume->setValue(Mixer::DEFAULT_VOLUME * 100);
     this->command->setVolume(static_cast<float>(this->sliderVolume->value()) / 100);
 
-    if (this->preview)
-        qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new RundownItemPreviewEvent());
 }
 
 void InspectorVolumeWidget::resetDuration(QString duration)

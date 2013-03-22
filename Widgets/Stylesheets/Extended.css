@@ -69,6 +69,20 @@
 /*
  * RundownWidget
  */
+#toolButtonRundownDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    padding: 0px;
+}
+
+#tabWidgetRundown::pane
+{
+    border-width: 0px;
+    position: absolute;
+    top: -1px;
+}
+
 #treeWidgetRundown
 {
     background-color: rgba(64, 64, 64, 255);

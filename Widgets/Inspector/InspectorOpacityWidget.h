@@ -22,11 +22,11 @@ class WIDGETS_EXPORT InspectorOpacityWidget : public QWidget, Ui::InspectorOpaci
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool preview;
         LibraryModel* model;
         OpacityCommand* command;
 
         void loadTween();
+        void blockAllSignals(bool block);
 
         Q_SLOT void sliderOpacityChanged(int);
         Q_SLOT void spinBoxOpacityChanged(int);

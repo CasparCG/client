@@ -1,16 +1,16 @@
 #include "MainWindow.h"
+#include "AboutDialog.h"
+#include "HelpDialog.h"
+#include "SettingsDialog.h"
 
 #include "Global.h"
 
 #include "Events/CompactViewEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/RefreshLibraryEvent.h"
+#include "Events/RundownIsEmptyEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/StatusbarEvent.h"
-
-#include "AboutDialog.h"
-#include "HelpDialog.h"
-#include "SettingsDialog.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QEvent>
@@ -225,10 +225,12 @@ void MainWindow::showHelpDialog()
 
 void MainWindow::showSettingsDialog()
 {
+    // Reset inspector panel.
+    qApp->sendEvent(qApp, new RundownIsEmptyEvent());
+
     SettingsDialog* dialog = new SettingsDialog(this);
 
-    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)),
-                     widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
+    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
 
     dialog->exec();
 }
