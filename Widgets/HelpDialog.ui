@@ -98,6 +98,10 @@ Ctrl+G / Ctrl+U
 Functioin: Group / Ungroup
 Description: Group / Ungroup one or more items in the rundown.
 
+Ctrl+D
+Function: Duplicate
+Description: Duplicate selected item in the rundown.
+
 Ctrl+C / Ctrl+V
 Function: Copy / Paste
 Description: Copy / Paste selected item in the rundown.

@@ -24,9 +24,9 @@ Q_GLOBAL_STATIC(LibraryManager, libraryManager)
 LibraryManager::LibraryManager(QObject* parent)
     : QObject(parent)
 {
-    QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
-    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
-    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
+    connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
+    connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
 
     qApp->installEventFilter(this);
 }
@@ -116,13 +116,13 @@ void LibraryManager::deviceRemoved()
 
 void LibraryManager::deviceAdded(CasparDevice& device)
 {
-    QObject::connect(&device, SIGNAL(versionChanged(const QString&, CasparDevice&)), this, SLOT(versionChanged(const QString&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(infoChanged(const QList<QString>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
-    QObject::connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(mediaChanged(const QList<CasparMedia>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(templateChanged(const QList<CasparTemplate>&, CasparDevice&)), this, SLOT(templateChanged(const QList<CasparTemplate>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(dataChanged(const QList<CasparData>&, CasparDevice&)));
-    QObject::connect(&device, SIGNAL(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)), this, SLOT(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)));
+    connect(&device, SIGNAL(versionChanged(const QString&, CasparDevice&)), this, SLOT(versionChanged(const QString&, CasparDevice&)));
+    connect(&device, SIGNAL(infoChanged(const QList<QString>&, CasparDevice&)), this, SLOT(infoChanged(const QList<QString>&, CasparDevice&)));
+    connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    connect(&device, SIGNAL(mediaChanged(const QList<CasparMedia>&, CasparDevice&)), this, SLOT(mediaChanged(const QList<CasparMedia>&, CasparDevice&)));
+    connect(&device, SIGNAL(templateChanged(const QList<CasparTemplate>&, CasparDevice&)), this, SLOT(templateChanged(const QList<CasparTemplate>&, CasparDevice&)));
+    connect(&device, SIGNAL(dataChanged(const QList<CasparData>&, CasparDevice&)), this, SLOT(dataChanged(const QList<CasparData>&, CasparDevice&)));
+    connect(&device, SIGNAL(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)), this, SLOT(thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&)));
 }
 
 void LibraryManager::versionChanged(const QString& version, CasparDevice& device)

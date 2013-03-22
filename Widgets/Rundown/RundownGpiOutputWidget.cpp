@@ -32,14 +32,14 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
 
     this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
-    QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
-    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
+    connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
     gpiOutputPortChanged(this->command.getGpoPort());
-    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+    connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
 

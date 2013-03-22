@@ -123,7 +123,7 @@ void AddDeviceDialog::testConnection()
 {
     this->device = QSharedPointer<CasparDevice>(new CasparDevice());
 
-    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 
     if (this->lineEditPort->text().isEmpty())
         this->device->connectDevice(this->lineEditAddress->text());

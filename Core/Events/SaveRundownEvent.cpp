@@ -2,13 +2,13 @@
 
 #include "Global.h"
 
-SaveRundownEvent::SaveRundownEvent(const QString& path)
+SaveRundownEvent::SaveRundownEvent(bool saveAs)
     : QEvent(static_cast<QEvent::Type>(Enum::EventType::SaveRundown)),
-      path(path)
+      saveAs(saveAs)
 {
 }
 
-const QString& SaveRundownEvent::getPath() const
+bool SaveRundownEvent::getSaveAs() const
 {
-    return this->path;
+    return this->saveAs;
 }

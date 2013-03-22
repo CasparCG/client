@@ -11,7 +11,7 @@ ClockWidget::ClockWidget(QWidget* parent)
     this->lcdNumber->hide();
 
     QTimer* timer = new QTimer(this);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
     //timer->start(40);
 }
 

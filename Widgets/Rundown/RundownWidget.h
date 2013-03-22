@@ -36,6 +36,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
     private:
         QString page;
+        QString currentFilename;
 
         QMenu* newMenu;
         QMenu* colorMenu;
@@ -67,11 +68,11 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         bool moveItemOutOfGroup();
         bool moveItemUp();
         void parsePage(QKeyEvent* event);
-        bool removeSelectedItems();
         void setupUiMenu();
         bool ungroupItems();
         bool copySelectedItem();
         bool pasteSelectedItem();
+        bool duplicateSelectedItem();
         void readRundownGroup(const QString& type, boost::property_tree::wptree& pt);
         void readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent);
         void writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* child);
@@ -111,4 +112,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
         Q_SLOT void newMenuTriggered(QAction*);
         Q_SLOT void selectItemBelow();
+        Q_SLOT bool removeSelectedItems();
 };

@@ -59,8 +59,6 @@
         <file>Images/TemplateColor.png</file>
         <file>Images/MovieColor.png</file>
         <file>Images/Thumbnail.png</file>
-        <file>Images/SplitterVertical.png</file>
-        <file>Images/SplitterHorizontal.png</file>
         <file>Images/Data.png</file>
         <file>Images/DataColor.png</file>
         <file>Images/AlphaPreview.png</file>
@@ -72,6 +70,9 @@
         <file>Images/Close.png</file>
         <file>Images/CloseHover.png</file>
         <file>Images/TabSplitter.png</file>
+        <file>Images/SplitterHorizontal.png</file>
+        <file>Images/SplitterVertical.png</file>
+        <file>Images/DropdownHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

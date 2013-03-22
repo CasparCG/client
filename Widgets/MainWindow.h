@@ -22,7 +22,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        QString currentFilename;
         QString applicationTitle;
 
         QMenu* fileMenu;

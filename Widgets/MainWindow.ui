@@ -30,7 +30,7 @@
        <enum>Qt::Vertical</enum>
       </property>
       <property name="handleWidth">
-       <number>6</number>
+       <number>9</number>
       </property>
       <widget class="QFrame" name="frameSplitterVertical">
        <property name="sizePolicy">
@@ -189,7 +189,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="handleWidth">
-        <number>6</number>
+        <number>9</number>
        </property>
        <widget class="LibraryWidget" name="widgetLibrary" native="true">
         <property name="sizePolicy">

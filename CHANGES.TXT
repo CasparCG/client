@@ -3,7 +3,8 @@ CasparCG Client 2.0 RC 2
 
 - FIX: Open rundowns containing mixer opacity item crash the client.
 - FIX: Rundown items device info is cleared if the device does not exists.
-- NEW: Support for adding offline devices.
+- NEW: Added initial support for multiple rundowns.
+- NEW: Added support for offline devices.
 - NEW: Added support for CasparCG 2.0.4 master volume feature.
 - NEW: Added support for CasparCG 2.0.4 thumbnail feature.
 - UPDATE: UI changes.

@@ -77,7 +77,8 @@ HEADERS += \
     Animations/ActiveAnimation.h \
     Commands/ColorProducerCommand.h \
     Models/ThumbnailModel.h \
-    ThumbnailWorker.h
+    ThumbnailWorker.h \
+    Events/WindowTitleEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -144,7 +145,8 @@ SOURCES += \
     Animations/ActiveAnimation.cpp \
     Commands/ColorProducerCommand.cpp \
     Models/ThumbnailModel.cpp \
-    ThumbnailWorker.cpp
+    ThumbnailWorker.cpp \
+    Events/WindowTitleEvent.cpp
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

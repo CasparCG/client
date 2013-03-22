@@ -11,28 +11,24 @@
 #include "Events/RundownIsEmptyEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/WindowTitleEvent.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QEvent>
-#include <QtCore/QString>
-#include <QtCore/QUrl>
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
-#include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent),
-    currentFilename("")
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
     setupUiMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
+    setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
     this->applicationTitle = this->windowTitle();
-    setWindowTitle(QString("%1 %2.%3 %4").arg(this->applicationTitle).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
 
     this->widgetOnAirNow->setVisible(false);
     this->widgetClock->setVisible(false);
@@ -110,50 +106,29 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         StatusbarEvent* statusbarEvent = dynamic_cast<StatusbarEvent*>(event);
         statusBar()->showMessage(statusbarEvent->getMessage(), statusbarEvent->getTimeout());
     }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::WindowTitle))
+    {
+        WindowTitleEvent* windowTitleEvent = dynamic_cast<WindowTitleEvent*>(event);
+        setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(windowTitleEvent->getTitle()));
+
+    }
 
     return QObject::eventFilter(target, event);
 }
 
 void MainWindow::openRundown()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
-    if (!filename.isEmpty())
-    {
-        qApp->postEvent(qApp, new StatusbarEvent("Opening rundown..."));
-        qApp->postEvent(qApp, new OpenRundownEvent(filename));
-
-        this->currentFilename = filename;
-        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
-                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
-    }
+    qApp->postEvent(qApp, new OpenRundownEvent());
 }
 
 void MainWindow::saveRundown()
 {
-    QString filename = (!this->currentFilename.isEmpty()) ? this->currentFilename : QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-    if (!filename.isEmpty())
-    {
-        qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
-        qApp->postEvent(qApp, new SaveRundownEvent(filename));
-
-        this->currentFilename = filename;
-        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
-                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
-    }
+    qApp->postEvent(qApp, new SaveRundownEvent(false));
 }
 
 void MainWindow::saveAsRundown()
 {
-    QString filename = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-    if (!filename.isEmpty())
-    {
-        qApp->postEvent(qApp, new StatusbarEvent("Saving rundown..."));
-        qApp->postEvent(qApp, new SaveRundownEvent(filename));
-
-        this->currentFilename = filename;
-        setWindowTitle(QString("%1 %2.%3 %4 - %5").arg(this->applicationTitle)
-                       .arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION).arg(this->currentFilename));
-    }
+    qApp->postEvent(qApp, new SaveRundownEvent(true));
 }
 
 void MainWindow::executeStop()
@@ -230,7 +205,7 @@ void MainWindow::showSettingsDialog()
 
     SettingsDialog* dialog = new SettingsDialog(this);
 
-    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
+    connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
 
     dialog->exec();
 }

@@ -11,9 +11,9 @@ AMCPDevice::AMCPDevice(QObject* parent)
 {
     this->socket = new QTcpSocket(this);
 
-    QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
-    QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
-    QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
+    connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
+    connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
+    connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
 AMCPDevice::~AMCPDevice()

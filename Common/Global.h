@@ -34,7 +34,8 @@ namespace Enum
             RundownIsEmpty = QEvent::User + 23,
             OpenRundown = QEvent::User + 24,
             SaveRundown = QEvent::User + 25,
-            ToggleCompactView = QEvent::User + 26
+            ToggleCompactView = QEvent::User + 26,
+            WindowTitle = QEvent::User + 27
         };
     };
 }

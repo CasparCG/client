@@ -8,10 +8,10 @@
 class CORE_EXPORT SaveRundownEvent : public QEvent
 {
     public:
-        explicit SaveRundownEvent(const QString& path);
+        explicit SaveRundownEvent(bool saveAs);
 
-        const QString& getPath() const;
+        bool getSaveAs() const;
 
     private:
-        QString path;
+        bool saveAs;
 };

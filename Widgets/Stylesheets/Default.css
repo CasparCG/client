@@ -926,6 +926,7 @@ QTabBar::tab
     padding-right: 20px;
     padding-top: 3px;
     margin-left: -1px;
+    min-height: 16px;
 }
 QTabBar::tab:only-one
 {

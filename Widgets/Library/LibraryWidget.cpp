@@ -56,16 +56,16 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetData->setColumnHidden(4, true);
     this->treeWidgetData->setColumnHidden(5, true);
 
-    this->toolBoxLibrary->setItemIcon(0, QIcon(":/Graphics/Images/AudioColor.png"));
-    this->toolBoxLibrary->setItemIcon(1, QIcon(":/Graphics/Images/StillColor.png"));
-    this->toolBoxLibrary->setItemIcon(2, QIcon(":/Graphics/Images/TemplateColor.png"));
-    this->toolBoxLibrary->setItemIcon(3, QIcon(":/Graphics/Images/MovieColor.png"));
-    this->toolBoxLibrary->setItemIcon(4, QIcon(":/Graphics/Images/DataColor.png"));
+    //this->toolBoxLibrary->setItemIcon(0, QIcon(":/Graphics/Images/AudioColor.png"));
+    //this->toolBoxLibrary->setItemIcon(1, QIcon(":/Graphics/Images/StillColor.png"));
+    //this->toolBoxLibrary->setItemIcon(2, QIcon(":/Graphics/Images/TemplateColor.png"));
+    //this->toolBoxLibrary->setItemIcon(3, QIcon(":/Graphics/Images/MovieColor.png"));
+    //this->toolBoxLibrary->setItemIcon(4, QIcon(":/Graphics/Images/DataColor.png"));
 
-    QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
-    QObject::connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
-    QObject::connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
-    QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
+    connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
 
     qApp->installEventFilter(this);
 
@@ -83,8 +83,8 @@ void LibraryWidget::setupUiMenu()
     this->contextMenuImage->addAction("Add as image...");
     this->contextMenuImage->addAction("Add image scroller...");
 
-    QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
-    QObject::connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
+    connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
+    connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
 }
 
 bool LibraryWidget::eventFilter(QObject* target, QEvent* event)

@@ -16,7 +16,7 @@ ThumbnailWorker::ThumbnailWorker(const QList<ThumbnailModel>& thumbnailModels, Q
     : QObject(parent),
       thumbnailModels(thumbnailModels)
 {
-    QObject::connect(&this->thumbnailTimer, SIGNAL(timeout()), this, SLOT(process()));
+    connect(&this->thumbnailTimer, SIGNAL(timeout()), this, SLOT(process()));
 }
 
 void ThumbnailWorker::start()
@@ -56,7 +56,7 @@ void ThumbnailWorker::process()
     qApp->postEvent(qApp, new StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
     qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
 
-    QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));
+    connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));
     device->retrieveThumbnail(this->currentName);
 
     this->thumbnailModels.removeAt(0);

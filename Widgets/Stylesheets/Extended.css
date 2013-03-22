@@ -73,18 +73,17 @@
 {
     background-color: transparent;
     border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
     padding: 0px;
+}
+#toolButtonRundownDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
 }
 
 #tabWidgetRundown::pane
 {
     border-width: 0px;
-    position: absolute;
-    top: 0px;
-}
-#tabWidgetRundown::tab:only-one
-{
-    border-bottom-width: 1px;
 }
 
 #treeWidgetRundown
