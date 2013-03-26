@@ -143,7 +143,7 @@ void RundownWidget::setupUiMenu()
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
-    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove Items", this, SLOT(removeSelectedItems()));
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove", this, SLOT(removeSelectedItems()));
 
     connect(this->contextMenuNew, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuNewTriggered(QAction*)));
     connect(this->contextMenuColor, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuColorTriggered(QAction*)));
