@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setupUiMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
+
     setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
     this->applicationTitle = this->windowTitle();
 
