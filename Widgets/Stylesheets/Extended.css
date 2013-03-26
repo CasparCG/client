@@ -16,6 +16,22 @@
 {
     background-color: rgba(42, 42, 42, 255);
 }
+#toolButtonAddDevice
+{
+    image: url(:/Graphics/Images/Add.png);
+}
+#toolButtonAddDevice:hover
+{
+    image: url(:/Graphics/Images/AddHover.png);
+}
+#toolButtonRemoveDevice
+{
+    image: url(:/Graphics/Images/Remove.png);
+}
+#toolButtonRemoveDevice:hover
+{
+    image: url(:/Graphics/Images/RemoveHover.png);
+}
 
 /*
  * LibraryWidget
@@ -42,6 +58,20 @@
 #treeWidgetInspector QLabel
 {
     color: rgba(190, 190, 190, 255);
+}
+#toolButtonMasterVolume
+{
+    image: url(:/Graphics/Images/MasterVolumeOn.png);
+    padding: 4px;
+}
+
+/*
+ * InspectorColorProducerWidget
+ */
+#toolButtonColor
+{
+    image: url(:/Graphics/Images/Color.png);
+    padding: 2px;
 }
 
 /*
@@ -74,7 +104,6 @@
     background-color: transparent;
     border-width: 0px;
     image: url(:/Graphics/Images/Dropdown.png);
-    padding: 0px;
 }
 #toolButtonRundownDropdown::hover
 {
@@ -138,8 +167,12 @@
 }
 #toolButtonPreviewAlpha
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    padding: 0px;
+    image: url(:/Graphics/Images/PreviewAlpha.png);
+}
+#toolButtonPreviewAlpha:hover
+{
+    image: url(:/Graphics/Images/PreviewAlphaHover.png);
+    padding: 1px;
 }
 
 /*

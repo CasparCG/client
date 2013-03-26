@@ -8,6 +8,9 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 
+
+#include <QtCore/QDebug>
+
 #include <QtGui/QColorDialog>
 
 InspectorColorProducerWidget::InspectorColorProducerWidget(QWidget* parent)
@@ -97,7 +100,37 @@ void InspectorColorProducerWidget::loadTween()
 
 void InspectorColorProducerWidget::colorDialogClicked()
 {
-    QColor color = QColorDialog::getColor();
+    QColorDialog dialog;
+    dialog.setOption(QColorDialog::ShowAlphaChannel);
+
+    if (!this->lineEditColor->text().isEmpty())
+    {
+        QString hexColor = this->lineEditColor->text().remove('#');
+        if (hexColor.length() == 8)
+        {
+            int alpha = hexColor.mid(0, 2).toInt(0, 16);
+            int red = hexColor.mid(2, 2).toInt(0, 16);
+            int green = hexColor.mid(4, 2).toInt(0, 16);
+            int blue = hexColor.mid(6, 2).toInt(0, 16);
+
+            QColor color;
+            color.setAlpha(alpha);
+            color.setRed(red);
+            color.setGreen(green);
+            color.setBlue(blue);
+
+            dialog.setCurrentColor(color);
+        }
+    }
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QString color;
+        color.sprintf("#%02x%02x%02x%02x", dialog.selectedColor().alpha(), dialog.selectedColor().red(),
+                      dialog.selectedColor().green(), dialog.selectedColor().blue());
+
+        this->lineEditColor->setText(color);
+    }
 }
 
 void InspectorColorProducerWidget::transitionChanged(QString transition)

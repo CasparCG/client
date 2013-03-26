@@ -28,11 +28,8 @@
         <file>Images/GreenBullet.png</file>
         <file>Images/Group.png</file>
         <file>Images/GreyBullet.png</file>
-        <file>Images/Audio.png</file>
         <file>Images/Mixer.png</file>
         <file>Images/Template.png</file>
-        <file>Images/Recorder.png</file>
-        <file>Images/Producer.png</file>
         <file>Images/Movie.png</file>
         <file>Images/Preview.png</file>
         <file>Images/Still.png</file>
@@ -48,7 +45,6 @@
         <file>Images/Print.png</file>
         <file>Images/Clear.png</file>
         <file>Images/AutoStep.png</file>
-        <file>Images/Snapshot.png</file>
         <file>Images/MasterVolumeOff.png</file>
         <file>Images/MasterVolumeOn.png</file>
         <file>Images/Delay.png</file>
@@ -61,7 +57,6 @@
         <file>Images/Thumbnail.png</file>
         <file>Images/Data.png</file>
         <file>Images/DataColor.png</file>
-        <file>Images/AlphaPreview.png</file>
         <file>Images/Checkerboard.png</file>
         <file>Images/TestConnection.png</file>
         <file>Images/Attention.png</file>
@@ -73,6 +68,60 @@
         <file>Images/SplitterHorizontal.png</file>
         <file>Images/SplitterVertical.png</file>
         <file>Images/DropdownHover.png</file>
+        <file>Images/PreviewAlpha.png</file>
+        <file>Images/PreviewAlphaHover.png</file>
+        <file>Images/Add.png</file>
+        <file>Images/AddHover.png</file>
+        <file>Images/Remove.png</file>
+        <file>Images/RemoveHover.png</file>
+        <file>Images/AudioSmall.png</file>
+        <file>Images/AudioSmallHover.png</file>
+        <file>Images/StillSmall.png</file>
+        <file>Images/StillSmallHover.png</file>
+        <file>Images/ImageScrollerSmall.png</file>
+        <file>Images/ImageScrollerSmallHover.png</file>
+        <file>Images/TemplateSmall.png</file>
+        <file>Images/TemplateSmallHover.png</file>
+        <file>Images/MovieSmall.png</file>
+        <file>Images/MovieSmallHover.png</file>
+        <file>Images/VolumeSmall.png</file>
+        <file>Images/VolumeSmallHover.png</file>
+        <file>Images/SaturationSmall.png</file>
+        <file>Images/SaturationSmallHover.png</file>
+        <file>Images/OpacitySmall.png</file>
+        <file>Images/OpacitySmallHover.png</file>
+        <file>Images/LevelsSmall.png</file>
+        <file>Images/LevelsSmallHover.png</file>
+        <file>Images/DeckLinkProducer.png</file>
+        <file>Images/SeparatorSmall.png</file>
+        <file>Images/SeparatorSmallHover.png</file>
+        <file>Images/Snapshot.png</file>
+        <file>Images/SnapshotSmall.png</file>
+        <file>Images/SnapshotSmallHover.png</file>
+        <file>Images/BrightnessSmall.png</file>
+        <file>Images/BrightnessSmallHover.png</file>
+        <file>Images/ClearSmall.png</file>
+        <file>Images/ClearSmallHover.png</file>
+        <file>Images/CommitSmall.png</file>
+        <file>Images/CommitSmallHover.png</file>
+        <file>Images/ContrastSmall.png</file>
+        <file>Images/ContrastSmallHover.png</file>
+        <file>Images/CropSmall.png</file>
+        <file>Images/CropSmallHover.png</file>
+        <file>Images/DeckLinkProducerSmall.png</file>
+        <file>Images/DeckLinkProducerSmallHover.png</file>
+        <file>Images/GridSmall.png</file>
+        <file>Images/GridSmallHover.png</file>
+        <file>Images/KeyerSmall.png</file>
+        <file>Images/KeyerSmallHover.png</file>
+        <file>Images/GeometrySmall.png</file>
+        <file>Images/GeometrySmallHover.png</file>
+        <file>Images/FileRecorder.png</file>
+        <file>Images/FileRecorderSmall.png</file>
+        <file>Images/FileRecorderSmallHover.png</file>
+        <file>Images/Audio.png</file>
+        <file>Images/GroupSmall.png</file>
+        <file>Images/GroupSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

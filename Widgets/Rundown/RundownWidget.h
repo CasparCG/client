@@ -38,11 +38,11 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QString page;
         QString currentFilename;
 
-        QMenu* newMenu;
-        QMenu* colorMenu;
-        QMenu* mixerMenu;
-        QMenu* libraryMenu;
-        QMenu* contextMenu;
+        QMenu* contextMenuNew;
+        QMenu* contextMenuColor;
+        QMenu* contextMenuMixer;
+        QMenu* contextMenuLibrary;
+        QMenu* contextMenuRundown;
 
         bool compactView;
         bool enterPressed;
@@ -102,15 +102,15 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void addOpacityCommand();
         Q_SLOT void addSaturationCommand();
         Q_SLOT void addVolumeCommand();
-        Q_SLOT void colorMenuTriggered(QAction*);
-        Q_SLOT void contextMenuTriggered(QAction*);
+        Q_SLOT void contextMenuColorTriggered(QAction*);
+        Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);
         Q_SLOT void gpiPortTriggered(int, GpiDevice*);
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
-        Q_SLOT void newMenuTriggered(QAction*);
+        Q_SLOT void contextMenuNewTriggered(QAction*);
         Q_SLOT void selectItemBelow();
         Q_SLOT bool removeSelectedItems();
 };

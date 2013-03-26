@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>198</height>
+    <height>199</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,19 +52,15 @@
       <widget class="QToolButton" name="toolButtonColor">
        <property name="minimumSize">
         <size>
-         <width>23</width>
-         <height>23</height>
+         <width>21</width>
+         <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>23</width>
-         <height>23</height>
+         <width>21</width>
+         <height>21</height>
         </size>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resource.qrc">
-         <normaloff>:/Graphics/Images/Color.png</normaloff>:/Graphics/Images/Color.png</iconset>
        </property>
       </widget>
      </item>
@@ -304,9 +300,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>spinBoxDuration</sender>
@@ -448,7 +442,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
-     <y>249</y>
+     <y>198</y>
     </hint>
    </hints>
   </connection>
@@ -464,7 +458,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
-     <y>247</y>
+     <y>198</y>
     </hint>
    </hints>
   </connection>
@@ -479,7 +473,7 @@
      <y>24</y>
     </hint>
     <hint type="destinationlabel">
-     <x>271</x>
+     <x>264</x>
      <y>20</y>
     </hint>
    </hints>

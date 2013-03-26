@@ -194,7 +194,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('BRIGHTNESS')");
     sql.exec("INSERT INTO Type (Value) VALUES('CONTRAST')");
     sql.exec("INSERT INTO Type (Value) VALUES('CROP')");
-    sql.exec("INSERT INTO Type (Value) VALUES('GEOMETRY')");
+    sql.exec("INSERT INTO Type (Value) VALUES('TRANSFORMATION')");
     sql.exec("INSERT INTO Type (Value) VALUES('GRID')");
     sql.exec("INSERT INTO Type (Value) VALUES('KEYER')");
     sql.exec("INSERT INTO Type (Value) VALUES('LEVELS')");

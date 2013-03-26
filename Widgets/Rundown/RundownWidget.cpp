@@ -76,77 +76,78 @@ RundownWidget::RundownWidget(QWidget* parent)
 
 void RundownWidget::setupUiMenu()
 {
-    this->mixerMenu = new QMenu(this);
-    this->mixerMenu->setTitle("Mixer");
-    //this->mixerMenu->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Blend Mode", this, SLOT(addBlendModeCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Brightness", this, SLOT(addBrightnessCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Contrast", this, SLOT(addContrastCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Crop", this, SLOT(addCropCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Geometry", this, SLOT(addGeometryCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Grid", this, SLOT(addGridCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Keyer", this, SLOT(addKeyerCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Levels", this, SLOT(addLevelsCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Opacity", this, SLOT(addOpacityCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Saturation", this, SLOT(addSaturationCommand()));
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Volume", this, SLOT(addVolumeCommand()));
-    this->mixerMenu->addSeparator();
-    this->mixerMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Commit", this, SLOT(addCommitCommand()));
+    this->contextMenuMixer = new QMenu(this);
+    this->contextMenuMixer->setTitle("Mixer");
+    //this->contextMenuMixer->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
+    this->contextMenuMixer->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Blend Mode", this, SLOT(addBlendModeCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GeometrySmall.png"), "Transformation", this, SLOT(addGeometryCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Keyer", this, SLOT(addKeyerCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeCommand()));
+    this->contextMenuMixer->addSeparator();
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitCommand()));
 
-    this->libraryMenu = new QMenu(this);
-    this->libraryMenu->setTitle("Library");
-    //this->mixerMenu->setIcon(QIcon(":/Graphics/Images/Library.png"));
-    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Audio", this, SLOT(addAudioCommand()));
-    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Image", this, SLOT(addImageCommand()));
-    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "Image Scroller", this, SLOT(addImageScrollerCommand()));
-    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Template", this, SLOT(addTemplateCommand()));
-    this->libraryMenu->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Video", this, SLOT(addVideoCommand()));
+    this->contextMenuLibrary = new QMenu(this);
+    this->contextMenuLibrary->setObjectName("contextMenuLibrary");
+    this->contextMenuLibrary->setTitle("Library");
+    //this->contextMenuLibrary->setIcon(QIcon(":/Graphics/Images/Library.png"));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/AudioSmall.png"), "Audio", this, SLOT(addAudioCommand()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/StillSmall.png"), "Image", this, SLOT(addImageCommand()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/ImageScrollerSmall.png"), "Image Scroller", this, SLOT(addImageScrollerCommand()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/TemplateSmall.png"), "Template", this, SLOT(addTemplateCommand()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/MovieSmall.png"), "Video", this, SLOT(addVideoCommand()));
 
-    this->newMenu = new QMenu(this);
-    this->newMenu->setTitle("New");
-    //this->newMenu->setIcon(QIcon(":/Graphics/Images/New.png"));
-    this->newMenu->addMenu(this->mixerMenu);
-    this->newMenu->addMenu(this->libraryMenu);
-    this->newMenu->addSeparator();
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Solid Color", this, SLOT(addColorProducerCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Consumer.png"),*/ "File Recorder", this, SLOT(addFileRecorderCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Channel Snapshot", this, SLOT(addPrintCommand()));
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Clear Output", this, SLOT(addClearOutputCommand()));
-    this->newMenu->addSeparator();
-    this->newMenu->addAction(/*QIcon(":/Graphics/Images/Producer.png"),*/ "Separator", this, SLOT(addSeparatorCommand()));
-    this->newMenu->actions().at(3)->setEnabled(false);
+    this->contextMenuNew = new QMenu(this);
+    this->contextMenuNew->setTitle("New");
+    //this->contextMenuNew->setIcon(QIcon(":/Graphics/Images/New.png"));
+    this->contextMenuNew->addMenu(this->contextMenuMixer);
+    this->contextMenuNew->addMenu(this->contextMenuLibrary);
+    this->contextMenuNew->addSeparator();
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/Color.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
+    this->contextMenuNew->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputCommand()));
+    this->contextMenuNew->addSeparator();
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorCommand()));
+    //this->contextMenuNew->actions().at(3)->setEnabled(false);
 
-    this->colorMenu = new QMenu(this);
-    this->colorMenu->setTitle("Colorize");
-    //this->colorMenu->setIcon(QIcon(":/Graphics/Images/Color.png"));  
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "MaroonLight");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
-    this->colorMenu->addSeparator();
-    this->colorMenu->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
+    this->contextMenuColor = new QMenu(this);
+    this->contextMenuColor->setTitle("Colorize");
+    //this->contextMenuColor->setIcon(QIcon(":/Graphics/Images/Color.png"));
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "MaroonLight");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
+    this->contextMenuColor->addSeparator();
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
 
-    this->contextMenu = new QMenu(this);
-    this->contextMenu->addMenu(this->newMenu);
-    this->contextMenu->addSeparator();
-    this->contextMenu->addAction(/*QIcon(":/Graphics/Images/Group.png"),*/ "Group");
-    this->contextMenu->addAction(/*QIcon(":/Graphics/Images/Ungroup.png"),*/ "Ungroup");
-    this->contextMenu->addSeparator();
-    this->contextMenu->addMenu(this->colorMenu);
-    this->contextMenu->addSeparator();
-    this->contextMenu->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove Items", this, SLOT(removeSelectedItems()));
+    this->contextMenuRundown = new QMenu(this);
+    this->contextMenuRundown->addMenu(this->contextMenuNew);
+    this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addAction(QIcon(":/Graphics/Images/GroupSmall.png"), "Group");
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Ungroup.png"),*/ "Ungroup");
+    this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addMenu(this->contextMenuColor);
+    this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove Items", this, SLOT(removeSelectedItems()));
 
-    connect(this->newMenu, SIGNAL(triggered(QAction*)), this, SLOT(newMenuTriggered(QAction*)));
-    connect(this->colorMenu, SIGNAL(triggered(QAction*)), this, SLOT(colorMenuTriggered(QAction*)));
-    connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
+    connect(this->contextMenuNew, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuNewTriggered(QAction*)));
+    connect(this->contextMenuColor, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuColorTriggered(QAction*)));
+    connect(this->contextMenuRundown, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuRundownTriggered(QAction*)));
 }
 
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
@@ -209,10 +210,6 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
                 playSelectedEvent();
         }
         */
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
-    {
-        this->treeWidgetRundown->setCurrentItem(NULL);
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
     {
@@ -375,7 +372,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownDeckLinkInputWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "FILERECORDER")
             widget = new RundownFileRecorderWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "GEOMETRY")
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "TRANSFORMATION")
             widget = new RundownGeometryWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "GRID")
             widget = new RundownGridWidget(addRudnownItemEvent->getLibraryModel(), this);
@@ -407,7 +404,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "CLEAROUTPUT")
             widget = new RundownClearOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "COLORPRODUCER")
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "SOLIDCOLOR")
             widget = new RundownColorProducerWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
@@ -526,7 +523,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownDeckLinkInputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type ==  "FILERECORDER")
         widget = new RundownFileRecorderWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "GEOMETRY")
+    else if (type == "TRANSFORMATION")
         widget = new RundownGeometryWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "GRID")
         widget = new RundownGridWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
@@ -556,7 +553,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownSeparatorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CLEAROUTPUT")
         widget = new RundownClearOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "COLORPRODUCER")
+    else if (type == "contextMenuRundown")
         widget = new RundownColorProducerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
 
     widget->setCompactView(this->compactView);
@@ -629,7 +626,7 @@ void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type bi
 
 void RundownWidget::customContextMenuRequested(const QPoint& point)
 {
-    foreach (QAction* action, this->contextMenu->actions())
+    foreach (QAction* action, this->contextMenuRundown->actions())
         action->setEnabled(true);
 
     bool isGroup = false;
@@ -648,29 +645,29 @@ void RundownWidget::customContextMenuRequested(const QPoint& point)
     }
 
     if (isGroup)
-        this->contextMenu->actions().at(2)->setEnabled(false); // We don't support group in groups.
+        this->contextMenuRundown->actions().at(2)->setEnabled(false); // We don't support group in groups.
 
     if (isGroupItem)
-        this->contextMenu->actions().at(2)->setEnabled(false); // We don't support group in groups.
+        this->contextMenuRundown->actions().at(2)->setEnabled(false); // We don't support group in groups.
 
     if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
-        this->contextMenu->actions().at(3)->setEnabled(false); // We don't have any group to ungroup.
+        this->contextMenuRundown->actions().at(3)->setEnabled(false); // We don't have any group to ungroup.
 
     if (!isTopItem && !isGroup && !isGroupItem)
     {
-        this->contextMenu->actions().at(2)->setEnabled(false); // Group.
-        this->contextMenu->actions().at(3)->setEnabled(false); // Ungroup.
-        this->contextMenu->actions().at(5)->setEnabled(false); // Colorize.
+        this->contextMenuRundown->actions().at(2)->setEnabled(false); // Group.
+        this->contextMenuRundown->actions().at(3)->setEnabled(false); // Ungroup.
+        this->contextMenuRundown->actions().at(5)->setEnabled(false); // Colorize.
     }
 
-    this->contextMenu->exec(this->treeWidgetRundown->mapToGlobal(point));
+    this->contextMenuRundown->exec(this->treeWidgetRundown->mapToGlobal(point));
 }
 
-void RundownWidget::newMenuTriggered(QAction* action)
+void RundownWidget::contextMenuNewTriggered(QAction* action)
 {
 }
 
-void RundownWidget::colorMenuTriggered(QAction* action)
+void RundownWidget::contextMenuColorTriggered(QAction* action)
 {
     if (action->text() == "Sienna")
         colorizeItems(Color::SIENNA_RGBA_COLOR);
@@ -696,7 +693,7 @@ void RundownWidget::colorMenuTriggered(QAction* action)
         colorizeItems(""); // Reset
 }
 
-void RundownWidget::contextMenuTriggered(QAction* action)
+void RundownWidget::contextMenuRundownTriggered(QAction* action)
 {
     if (action->text() == "Group")
         groupItems();
@@ -1220,7 +1217,7 @@ void RundownWidget::addClearOutputCommand()
 
 void RundownWidget::addGeometryCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Geometry", "", "", "GEOMETRY", 0)));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", "TRANSFORMATION", 0)));
 }
 
 void RundownWidget::addGpiOutputCommand()
@@ -1245,7 +1242,7 @@ void RundownWidget::addGridCommand()
 
 void RundownWidget::addColorProducerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Color Producer", "", "", "COLORPRODUCER", 0)));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", "", 0)));
 }
 
 void RundownWidget::addKeyerCommand()

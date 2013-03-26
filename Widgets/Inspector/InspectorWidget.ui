@@ -292,7 +292,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Geometry</string>
+               <string>Transformation</string>
               </property>
               <property name="font">
                <font>
@@ -600,7 +600,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Color Producer</string>
+               <string>Solid Color</string>
               </property>
               <property name="font">
                <font>
@@ -678,10 +678,6 @@
        <property name="toolTip">
         <string>Master Volume</string>
        </property>
-       <property name="icon">
-        <iconset resource="../Resource.qrc">
-         <normaloff>:/Graphics/Images/MasterVolumeOn.png</normaloff>:/Graphics/Images/MasterVolumeOn.png</iconset>
-       </property>
        <property name="iconSize">
         <size>
          <width>32</width>
@@ -694,9 +690,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>treeWidgetInspector</sender>

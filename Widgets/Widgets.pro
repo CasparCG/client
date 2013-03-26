@@ -232,8 +232,6 @@ OTHER_FILES += \
     Images/Audio.png \
     Images/Mixer.png \
     Images/Template.png \
-    Images/Recorder.png \
-    Images/Producer.png \
     Images/Preview.png \
     Images/Movie.png \
     Images/Still.png \
@@ -275,7 +273,6 @@ OTHER_FILES += \
     Images/Data.png \
     Images/DataColor.png \
     Images/Checkerboard.png \
-    Images/AlphaPreview.png \
     Images/TestConnection.png \
     Images/Information.png \
     Images/Attention.png \
@@ -283,7 +280,60 @@ OTHER_FILES += \
     Images/Close.png \
     Images/CloseHover.png \
     Images/TabSplitter.png \
-    Images/DropdownHover.png
+    Images/DropdownHover.png \
+    Images/PreviewAlpha.png \
+    Images/PreviewAlphaHover.png \
+    Images/RemoveHover.png \
+    Images/Remove.png \
+    Images/AddHover.png \
+    Images/Add.png \
+    Images/AudioSmallHover.png \
+    Images/AudioSmall.png \
+    Images/StillSmallHover.png \
+    Images/StillSmall.png \
+    Images/ImageScrollerSmallHover.png \
+    Images/ImageScrollerSmall.png \
+    Images/TemplateSmallHover.png \
+    Images/TemplateSmall.png \
+    Images/MovieSmallHover.png \
+    Images/MovieSmall.png \
+    Images/VolumeSmallHover.png \
+    Images/VolumeSmall.png \
+    Images/SaturationSmallHover.png \
+    Images/SaturationSmall.png \
+    Images/OpacitySmallHover.png \
+    Images/OpacitySmall.png \
+    Images/LevelsSmallHover.png \
+    Images/LevelsSmall.png \
+    Images/KeyerSmallHover.png \
+    Images/KeyerSmall.png \
+    Images/GridSmallHover.png \
+    Images/GridSmall.png \
+    Images/DeckLinkProducerSmallHover.png \
+    Images/DeckLinkProducerSmall.png \
+    Images/CropSmallHover.png \
+    Images/CropSmall.png \
+    Images/ContrastSmallHover.png \
+    Images/ContrastSmall.png \
+    Images/CommitSmallHover.png \
+    Images/CommitSmall.png \
+    Images/ClearSmallHover.png \
+    Images/ClearSmall.png \
+    Images/BrightnessSmallHover.png \
+    Images/BrightnessSmall.png \
+    Images/DeckLinkProducer.png \
+    Images/SeparatorSmallHover.png \
+    Images/SeparatorSmall.png \
+    Images/Snapshot.png \
+    Images/SnapshotSmallHover.png \
+    Images/SnapshotSmall.png \
+    Images/GeometrySmallHover.png \
+    Images/GeometrySmall.png \
+    Images/FileRecorder.png \
+    Images/FileRecorderSmallHover.png \
+    Images/FileRecorderSmall.png \
+    Images/GroupSmallHover.png \
+    Images/GroupSmall.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

@@ -77,11 +77,11 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 void LibraryWidget::setupUiMenu()
 {
     this->contextMenu = new QMenu(this);
-    this->contextMenu->addAction("Add...");
+    this->contextMenu->addAction("Add item");
 
     this->contextMenuImage = new QMenu(this);
-    this->contextMenuImage->addAction("Add as image...");
-    this->contextMenuImage->addAction("Add image scroller...");
+    this->contextMenuImage->addAction("Add as image");
+    this->contextMenuImage->addAction("Add as image scroller");
 
     connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
     connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
@@ -281,17 +281,17 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
 
 void LibraryWidget::contextMenuImageTriggered(QAction* action)
 {
-    if (action->text() == "Add to rundown as image")
+    if (action->text() == "Add as image")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
                                                                        item->text(3), item->text(4), item->text(5).toInt())));
     }
-    else if (action->text() == "Add to rundown as image scroller")
+    else if (action->text() == "Add as image scroller")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), item->text(4), item->text(5).toInt())));
+                                                                       item->text(3), "IMAGESCROLLER", item->text(5).toInt())));
     }
 }
 

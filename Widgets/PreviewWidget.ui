@@ -127,10 +127,6 @@
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset resource="Resource.qrc">
-             <normaloff>:/Graphics/Images/AlphaPreview.png</normaloff>:/Graphics/Images/AlphaPreview.png</iconset>
-           </property>
           </widget>
          </item>
          <item row="1" column="5">
@@ -192,9 +188,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="Resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>toolButtonPreviewAlpha</sender>

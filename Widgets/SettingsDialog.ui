@@ -404,9 +404,6 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="text">
-      <string>-</string>
-     </property>
     </widget>
     <widget class="QToolButton" name="toolButtonAddDevice">
      <property name="geometry">
@@ -428,9 +425,6 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
-     </property>
-     <property name="text">
-      <string>+</string>
      </property>
     </widget>
    </widget>
