@@ -138,8 +138,8 @@ void RundownWidget::setupUiMenu()
     this->contextMenuRundown = new QMenu(this);
     this->contextMenuRundown->addMenu(this->contextMenuNew);
     this->contextMenuRundown->addSeparator();
-    this->contextMenuRundown->addAction(QIcon(":/Graphics/Images/GroupSmall.png"), "Group");
-    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Ungroup.png"),*/ "Ungroup");
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/GroupSmall.png"),*/ "Group");
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/UngroupSmall.png"),*/ "Ungroup");
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
