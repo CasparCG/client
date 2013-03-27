@@ -3,6 +3,7 @@ CasparCG Client 2.0 RC 2
 
 - FIX: Open rundowns containing mixer opacity item crash the client.
 - FIX: Rundown items device info is cleared if the device does not exists.
+- NEW: Double click a library item adds it to the rundown.
 - NEW: Added support for duplicate rundown items using Ctrl+D.
 - NEW: Added support for the color producer in CasparCG.
 - NEW: Added initial support for multiple rundowns.
