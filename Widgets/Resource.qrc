@@ -132,6 +132,8 @@
         <file>Images/Brightness.png</file>
         <file>Images/Contrast.png</file>
         <file>Images/Opacity.png</file>
+        <file>Images/Geometry.png</file>
+        <file>Images/Grid.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
