@@ -113,6 +113,9 @@
 #tabWidgetRundown::pane
 {
     border-width: 0px;
+
+    position: absolute;
+    top: 0px;
 }
 
 #treeWidgetRundown
