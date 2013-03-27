@@ -66,6 +66,14 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
                        const QString& easing, const QString& direction, bool loop, bool useAuto);
         void stopAudio(int channel, int videolayer);
 
+        void pauseColor(int channel, int videolayer);
+        void playColor(int channel, int videolayer);
+        void playColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, bool useAuto);
+        void loadColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, bool useAuto);
+        void stopColor(int channel, int videolayer);
+
         void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
         void stopRecording(int channel);
 

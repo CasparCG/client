@@ -1,81 +1,81 @@
-#include "ColorCommand.h"
+#include "SolidColorCommand.h"
 
 #include "Global.h"
 
-ColorCommand::ColorCommand(QObject* parent)
+SolidColorCommand::SolidColorCommand(QObject* parent)
     : AbstractCommand(parent),
       color(Color::DEFAULT_COLOR_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
       tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(Color::DEFAULT_USE_AUTO)
 {
 }
 
-const QString& ColorCommand::getColor() const
+const QString& SolidColorCommand::getColor() const
 {
     return this->color;
 }
 
-const QString& ColorCommand::getTransition() const
+const QString& SolidColorCommand::getTransition() const
 {
     return this->transition;
 }
 
-int ColorCommand::getDuration() const
+int SolidColorCommand::getDuration() const
 {
     return this->duration;
 }
 
-const QString& ColorCommand::getDirection() const
+const QString& SolidColorCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& ColorCommand::getTween() const
+const QString& SolidColorCommand::getTween() const
 {
     return this->tween;
 }
 
-bool ColorCommand::getUseAuto() const
+bool SolidColorCommand::getUseAuto() const
 {
     return this->useAuto;
 }
 
-void ColorCommand::setColor(const QString& color)
+void SolidColorCommand::setColor(const QString& color)
 {
     this->color = color;
     emit colorChanged(this->color);
 }
 
-void ColorCommand::setTransition(const QString& transition)
+void SolidColorCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void ColorCommand::setDuration(int duration)
+void SolidColorCommand::setDuration(int duration)
 {
     this->duration = duration;
     emit durationChanged(this->duration);
 }
 
-void ColorCommand::setDirection(const QString& direction)
+void SolidColorCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void ColorCommand::setTween(const QString& tween)
+void SolidColorCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void ColorCommand::setUseAuto(bool useAuto)
+void SolidColorCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
 }
 
-void ColorCommand::readProperties(boost::property_tree::wptree& pt)
+void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -86,7 +86,7 @@ void ColorCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void ColorCommand::writeProperties(QXmlStreamWriter* writer)
+void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 

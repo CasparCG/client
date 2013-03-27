@@ -68,17 +68,17 @@ HEADERS += \
     Events/CompactViewEvent.h \
     Commands/SeparatorCommand.h \
     Commands/PrintCommand.h \
-    Commands/ColorCommand.h \
     Commands/AbstractCommand.h \
     Commands/AbstractProperties.h \
     Commands/AbstractPlayoutCommand.h \
     Commands/ClearOutputCommand.h \
     Animations/BorderAnimation.h \
     Animations/ActiveAnimation.h \
-    Commands/ColorProducerCommand.h \
     Models/ThumbnailModel.h \
     ThumbnailWorker.h \
-    Events/WindowTitleEvent.h
+    Events/WindowTitleEvent.h \
+    Commands/AudioCommand.h \
+    Commands/SolidColorCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -136,17 +136,17 @@ SOURCES += \
     Events/CompactViewEvent.cpp \
     Commands/SeparatorCommand.cpp \
     Commands/PrintCommand.cpp \
-    Commands/ColorCommand.cpp \
     Commands/AbstractCommand.cpp \
     Commands/ClearOutputCommand.cpp \
     Commands/AbstractPlayoutCommand.cpp \
     Commands/AbstractProperties.cpp \
     Animations/BorderAnimation.cpp \
     Animations/ActiveAnimation.cpp \
-    Commands/ColorProducerCommand.cpp \
     Models/ThumbnailModel.cpp \
     ThumbnailWorker.cpp \
-    Events/WindowTitleEvent.cpp
+    Events/WindowTitleEvent.cpp \
+    Commands/AudioCommand.cpp \
+    Commands/SolidColorCommand.cpp
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

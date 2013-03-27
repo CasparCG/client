@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownColorProducerWidget.h"
+#include "ui_RundownSolidColorWidget.h"
 
 #include "Global.h"
 
@@ -13,7 +13,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/ColorProducerCommand.h"
+#include "Commands/SolidColorCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -21,12 +21,12 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownColorProducerWidget : public QWidget, Ui::RundownColorProducerWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidColorWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownColorProducerWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+        explicit RundownSolidColorWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                             bool active = false, bool loaded = false, bool paused = false, bool playing = false,
                                             bool inGroup = false, bool compactView = false);
 
@@ -62,7 +62,7 @@ class WIDGETS_EXPORT RundownColorProducerWidget : public QWidget, Ui::RundownCol
         bool compactView;
         QString color;
         LibraryModel model;
-        ColorProducerCommand command;
+        SolidColorCommand command;
         ActiveAnimation* animation;
 
         QTimer executeTimer;

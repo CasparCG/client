@@ -12,42 +12,50 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT ColorCommand : public AbstractCommand
+class CORE_EXPORT AudioCommand : public AbstractCommand
 {
     Q_OBJECT
 
     public:
-        explicit ColorCommand(QObject* parent = 0);
+        explicit AudioCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getColor() const;
+        const QString& getAudioName() const;
         const QString& getTransition() const;
         int getDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
+        bool getLoop() const;
+        bool getTriggerOnNext() const;
         bool getUseAuto() const;
 
-        void setColor(const QString& color);
+        void setAudioName(const QString& audioName);
         void setTransition(const QString& transition);
         void setDuration(int duration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
+        void setTriggerOnNext(bool triggerOnNext);
+        void setLoop(bool loop);
         void setUseAuto(bool useAuto);
 
     private:
-        QString color;
+        QString audioName;
         QString transition;
         int duration;
         QString tween;
         QString direction;
+        bool loop;
+        bool triggerOnNext;
         bool useAuto;
 
-        Q_SIGNAL void colorChanged(const QString&);
+        Q_SIGNAL void audioNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void durationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
+        Q_SIGNAL void loopChanged(bool);
+        Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void useAutoChanged(bool);
 };

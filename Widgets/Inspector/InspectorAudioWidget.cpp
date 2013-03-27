@@ -1,4 +1,4 @@
-#include "InspectorColorProducerWidget.h"
+#include "InspectorAudioWidget.h"
 
 #include "Global.h"
 
@@ -8,12 +8,7 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 
-
-#include <QtCore/QDebug>
-
-#include <QtGui/QColorDialog>
-
-InspectorColorProducerWidget::InspectorColorProducerWidget(QWidget* parent)
+InspectorAudioWidget::InspectorAudioWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL)
 {
@@ -26,7 +21,7 @@ InspectorColorProducerWidget::InspectorColorProducerWidget(QWidget* parent)
     qApp->installEventFilter(this);
 }
 
-bool InspectorColorProducerWidget::eventFilter(QObject* target, QEvent* event)
+bool InspectorAudioWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
@@ -35,14 +30,17 @@ bool InspectorColorProducerWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(true);
 
-        if (dynamic_cast<ColorCommand*>(rundownItemSelectedEvent->getCommand()))
+        if (dynamic_cast<AudioCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->command = dynamic_cast<ColorCommand*>(rundownItemSelectedEvent->getCommand());
+            this->command = dynamic_cast<AudioCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
+            this->checkBoxLoop->setChecked(this->command->getLoop());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+            this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
         }
 
         blockAllSignals(false);
@@ -51,15 +49,18 @@ bool InspectorColorProducerWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void InspectorColorProducerWidget::blockAllSignals(bool block)
+void InspectorAudioWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
+    this->checkBoxLoop->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxUseAuto->blockSignals(block);
 }
 
-void InspectorColorProducerWidget::loadDirection()
+void InspectorAudioWidget::loadDirection()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -72,7 +73,7 @@ void InspectorColorProducerWidget::loadDirection()
     this->comboBoxDirection->blockSignals(false);
 }
 
-void InspectorColorProducerWidget::loadTransition()
+void InspectorAudioWidget::loadTransition()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -85,7 +86,7 @@ void InspectorColorProducerWidget::loadTransition()
     this->comboBoxTransition->blockSignals(false);
 }
 
-void InspectorColorProducerWidget::loadTween()
+void InspectorAudioWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -98,92 +99,79 @@ void InspectorColorProducerWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorColorProducerWidget::colorDialogClicked()
-{
-    QColorDialog dialog;
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-
-    if (!this->lineEditColor->text().isEmpty())
-    {
-        QString hexColor = this->lineEditColor->text().remove('#');
-        if (hexColor.length() == 8)
-        {
-            int alpha = hexColor.mid(0, 2).toInt(0, 16);
-            int red = hexColor.mid(2, 2).toInt(0, 16);
-            int green = hexColor.mid(4, 2).toInt(0, 16);
-            int blue = hexColor.mid(6, 2).toInt(0, 16);
-
-            QColor color;
-            color.setAlpha(alpha);
-            color.setRed(red);
-            color.setGreen(green);
-            color.setBlue(blue);
-
-            dialog.setCurrentColor(color);
-        }
-    }
-
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        QString color;
-        color.sprintf("#%02x%02x%02x%02x", dialog.selectedColor().alpha(), dialog.selectedColor().red(),
-                      dialog.selectedColor().green(), dialog.selectedColor().blue());
-
-        this->lineEditColor->setText(color);
-    }
-}
-
-void InspectorColorProducerWidget::transitionChanged(QString transition)
+void InspectorAudioWidget::transitionChanged(QString transition)
 {
     this->command->setTransition(transition);
 }
 
-void InspectorColorProducerWidget::durationChanged(int duration)
+void InspectorAudioWidget::durationChanged(int duration)
 {
     this->command->setDuration(duration);
 }
 
-void InspectorColorProducerWidget::directionChanged(QString direction)
+void InspectorAudioWidget::directionChanged(QString direction)
 {
     this->command->setDirection(direction);
 }
 
-void InspectorColorProducerWidget::tweenChanged(QString tween)
+void InspectorAudioWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorColorProducerWidget::useAutoChanged(int state)
+void InspectorAudioWidget::loopChanged(int state)
+{
+    this->command->setLoop((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAudioWidget::useAutoChanged(int state)
 {
     this->command->setUseAuto((state == Qt::Checked) ? true : false);
 }
 
-void InspectorColorProducerWidget::resetTransition(QString transition)
+void InspectorAudioWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAudioWidget::resetTransition(QString transition)
 {
     this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
     this->command->setTransition(this->comboBoxTransition->currentText());
 }
 
-void InspectorColorProducerWidget::resetDuration(QString duration)
+void InspectorAudioWidget::resetDuration(QString duration)
 {
     this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
     this->command->setDuration(this->spinBoxDuration->value());
 }
 
-void InspectorColorProducerWidget::resetDirection(QString direction)
+void InspectorAudioWidget::resetDirection(QString direction)
 {
     this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
     this->command->setDirection(this->comboBoxDirection->currentText());
 }
 
-void InspectorColorProducerWidget::resetTween(QString tween)
+void InspectorAudioWidget::resetTween(QString tween)
 {
     this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
     this->command->setTween(this->comboBoxTween->currentText());
 }
 
-void InspectorColorProducerWidget::resetUseAuto(QString useAuto)
+void InspectorAudioWidget::resetLoop(QString loop)
 {
-    this->checkBoxUseAuto->setChecked(false);
+    this->checkBoxLoop->setChecked(Media::DEFAULT_LOOP);
+    this->command->setLoop(this->checkBoxLoop->isChecked());
+}
+
+void InspectorAudioWidget::resetUseAuto(QString useAuto)
+{
+    this->checkBoxUseAuto->setChecked(Media::DEFAULT_USE_AUTO);
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
+}
+
+void InspectorAudioWidget::resetTriggerOnNext(QString triggerOnNext)
+{
+    this->checkBoxTriggerOnNext->setChecked(Media::DEFAULT_TRIGGER_ON_NEXT);
+    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

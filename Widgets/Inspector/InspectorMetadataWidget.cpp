@@ -7,7 +7,7 @@
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"
 #include "Commands/ContrastCommand.h"
-#include "Commands/ColorProducerCommand.h"
+#include "Commands/SolidColorCommand.h"
 #include "Commands/CropCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
 #include "Commands/FileRecorderCommand.h"
@@ -104,7 +104,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
                  dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                 dynamic_cast<ColorProducerCommand*>(rundownItemSelectedEvent->getCommand()))
+                 dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->lineEditName->setEnabled(false);
         }

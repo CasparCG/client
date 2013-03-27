@@ -52,8 +52,6 @@ HEADERS += \
     Rundown/RundownGridWidget.h \
     Inspector/InspectorGridWidget.h \
     Rundown/RundownGpiOutputWidget.h \
-    Rundown/RundownDeckLinkInputWidget.h \
-    Inspector/InspectorDeckLinkInputWidget.h \
     Rundown/RundownCommitWidget.h \
     Inspector/InspectorGpiOutputWidget.h \
     Rundown/RundownImageScrollerWidget.h \
@@ -69,8 +67,12 @@ HEADERS += \
     Rundown/RundownClearOutputWidget.h \
     Inspector/InspectorClearOutputWidget.h \
     Inspector/InspectorGroupWidget.h \
-    Rundown/RundownColorProducerWidget.h \
-    Inspector/InspectorColorProducerWidget.h
+    Rundown/RundownAudioWidget.h \
+    Inspector/InspectorAudioWidget.h \
+    Rundown/RundownDeckLinkInputWidget.h \
+    Inspector/InspectorDeckLinkInputWidget.h \
+    Rundown/RundownSolidColorWidget.h \
+    Inspector/InspectorSolidColorWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -96,7 +98,6 @@ SOURCES += \
     Inspector/InspectorContrastWidget.cpp \
     Inspector/InspectorVolumeWidget.cpp \
     Inspector/InspectorGridWidget.cpp \
-    Inspector/InspectorDeckLinkInputWidget.cpp \
     Inspector/InspectorGpiOutputWidget.cpp \
     Inspector/InspectorFileRecorderWidget.cpp \
     Library/LibraryWidget.cpp \
@@ -115,7 +116,6 @@ SOURCES += \
     Rundown/RundownKeyerWidget.cpp \
     Rundown/RundownGridWidget.cpp \
     Rundown/RundownGpiOutputWidget.cpp \
-    Rundown/RundownDeckLinkInputWidget.cpp \
     Rundown/RundownCommitWidget.cpp \
     Rundown/RundownImageScrollerWidget.cpp \
     Rundown/RundownFileRecorderWidget.cpp \
@@ -128,8 +128,12 @@ SOURCES += \
     Rundown/RundownClearOutputWidget.cpp \
     Inspector/InspectorClearOutputWidget.cpp \
     Inspector/InspectorGroupWidget.cpp \
-    Rundown/RundownColorProducerWidget.cpp \
-    Inspector/InspectorColorProducerWidget.cpp
+    Rundown/RundownAudioWidget.cpp \
+    Inspector/InspectorAudioWidget.cpp \
+    Inspector/InspectorDeckLinkInputWidget.cpp \
+    Rundown/RundownDeckLinkInputWidget.cpp \
+    Rundown/RundownSolidColorWidget.cpp \
+    Inspector/InspectorSolidColorWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -174,7 +178,6 @@ FORMS += \
     Rundown/RundownKeyerWidget.ui \
     Rundown/RundownGridWidget.ui \ 
     Rundown/RundownGpiOutputWidget.ui \
-    Rundown/RundownDeckLinkInputWidget.ui \ 
     Rundown/RundownCommitWidget.ui \
     Rundown/RundownImageScrollerWidget.ui \ 
     Rundown/RundownFileRecorderWidget.ui \
@@ -187,8 +190,11 @@ FORMS += \
     Rundown/RundownClearOutputWidget.ui \
     Inspector/InspectorClearOutputWidget.ui \
     Inspector/InspectorGroupWidget.ui \
-    Rundown/RundownColorProducerWidget.ui \
-    Inspector/InspectorColorProducerWidget.ui
+    Rundown/RundownAudioWidget.ui \
+    Inspector/InspectorAudioWidget.ui \
+    Rundown/RundownDeckLinkInputWidget.ui \
+    Rundown/RundownSolidColorWidget.ui \
+    Inspector/InspectorSolidColorWidget.ui
 
 RESOURCES += \
     Resource.qrc
@@ -237,7 +243,6 @@ OTHER_FILES += \
     Images/Still.png \
     Images/Consumer.png \
     Images/Disconnected.png \
-    Images/Ungroup.png \
     Images/New.png \
     Images/Color.png \
     Fonts/OpenSans-SemiboldItalic.ttf \
@@ -333,7 +338,13 @@ OTHER_FILES += \
     Images/FileRecorderSmallHover.png \
     Images/FileRecorderSmall.png \
     Images/GroupSmallHover.png \
-    Images/GroupSmall.png
+    Images/GroupSmall.png \
+    Images/UngroupSmallHover.png \
+    Images/UngroupSmall.png \
+    Images/ColorProducerSmallHover.png \
+    Images/ColorProducerSmall.png \
+    Images/GpiOutputSmallHover.png \
+    Images/GpiOutputSmall.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

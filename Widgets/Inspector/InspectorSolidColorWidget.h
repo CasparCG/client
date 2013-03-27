@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorColorProducerWidget.h"
+#include "ui_InspectorSolidColorWidget.h"
 
-#include "Commands/ColorCommand.h"
+#include "Commands/SolidColorCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -12,19 +12,19 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorColorProducerWidget : public QWidget, Ui::InspectorColorProducerWidget
+class WIDGETS_EXPORT InspectorSolidColorWidget : public QWidget, Ui::InspectorSolidColorWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorColorProducerWidget(QWidget* parent = 0);
+        explicit InspectorSolidColorWidget(QWidget* parent = 0);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
-        ColorCommand* command;
+        SolidColorCommand* command;
 
         void loadDirection();
         void loadTransition();

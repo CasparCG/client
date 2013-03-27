@@ -236,6 +236,41 @@ void CasparDevice::stopAudio(int channel, int videolayer)
     writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }
 
+void CasparDevice::pauseColor(int channel, int videolayer)
+{
+    writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playColor(int channel, int videolayer)
+{
+    writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playColor(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+                             const QString& easing, const QString& direction, bool useAuto)
+{
+    if (useAuto)
+        loadColor(channel, videolayer, name, transition, duration, easing, direction, useAuto);
+    else
+        writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7")
+                     .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                     .arg(direction));
+}
+
+void CasparDevice::loadColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                             const QString& easing, const QString& direction, bool useAuto)
+{
+    writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7 %8")
+                 .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                 .arg(direction)
+                 .arg((useAuto == true) ? "AUTO" : ""));
+}
+
+void CasparDevice::stopColor(int channel, int videolayer)
+{
+    writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::startRecording(int channel, const QString& filename, const QString& codec, const QString& preset,
                                   const QString& tune, bool withAlpha)
 {

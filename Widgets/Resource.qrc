@@ -36,7 +36,6 @@
         <file>Images/Consumer.png</file>
         <file>Images/Color.png</file>
         <file>Images/New.png</file>
-        <file>Images/Ungroup.png</file>
         <file>Images/ImageScroller.png</file>
         <file>Images/Disconnected.png</file>
         <file>Images/GpiConnected.png</file>
@@ -122,6 +121,12 @@
         <file>Images/Audio.png</file>
         <file>Images/GroupSmall.png</file>
         <file>Images/GroupSmallHover.png</file>
+        <file>Images/UngroupSmall.png</file>
+        <file>Images/UngroupSmallHover.png</file>
+        <file>Images/ColorProducerSmall.png</file>
+        <file>Images/ColorProducerSmallHover.png</file>
+        <file>Images/GpiOutputSmall.png</file>
+        <file>Images/GpiOutputSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

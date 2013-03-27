@@ -163,6 +163,14 @@ namespace Output
     static const bool DEFAULT_ALLOW_GPI = false;
 }
 
+namespace Audio
+{
+    static const QString DEFAULT_AUDIO_NAME = "";
+    static const bool DEFAULT_LOOP = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_USE_AUTO = false;
+}
+
 namespace Media
 {
     static const QString DEFAULT_MEDIA_NAME = "";

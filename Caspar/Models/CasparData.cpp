@@ -1,4 +1,4 @@
-#include "Models/CasparData.h"
+#include "CasparData.h"
 
 CasparData::CasparData(const QString& name)
     : name(name)

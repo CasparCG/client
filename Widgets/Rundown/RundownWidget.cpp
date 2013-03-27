@@ -21,7 +21,8 @@
 #include "RundownSeparatorWidget.h"
 #include "RundownPrintWidget.h"
 #include "RundownClearOutputWidget.h"
-#include "RundownColorProducerWidget.h"
+#include "RundownSolidColorWidget.h"
+#include "RundownAudioWidget.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -85,7 +86,7 @@ void RundownWidget::setupUiMenu()
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GeometrySmall.png"), "Transformation", this, SLOT(addGeometryCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Keyer", this, SLOT(addKeyerCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationCommand()));
@@ -109,8 +110,8 @@ void RundownWidget::setupUiMenu()
     this->contextMenuNew->addMenu(this->contextMenuMixer);
     this->contextMenuNew->addMenu(this->contextMenuLibrary);
     this->contextMenuNew->addSeparator();
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/Color.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
-    this->contextMenuNew->addAction(/*QIcon(":/Graphics/Images/Gpi.png"),*/ "GPI Output", this, SLOT(addGpiOutputCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ColorProducerSmall.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintCommand()));
@@ -382,8 +383,9 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownKeyerWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "LEVELS")
             widget = new RundownLevelsWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "AUDIO" ||
-                 addRudnownItemEvent->getLibraryModel().getType() == "STILL" ||
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "AUDIO")
+            widget = new RundownAudioWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "STILL" ||
                  addRudnownItemEvent->getLibraryModel().getType() == "MOVIE")
             widget = new RundownMediaWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "OPACITY")
@@ -405,7 +407,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         else if (addRudnownItemEvent->getLibraryModel().getType() == "CLEAROUTPUT")
             widget = new RundownClearOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "SOLIDCOLOR")
-            widget = new RundownColorProducerWidget(addRudnownItemEvent->getLibraryModel(), this);
+            widget = new RundownSolidColorWidget(addRudnownItemEvent->getLibraryModel(), this);
 
         widget->setCompactView(this->compactView);
 
@@ -533,7 +535,9 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownKeyerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "LEVELS")
         widget = new RundownLevelsWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "AUDIO" || type == "STILL" || type == "MOVIE")
+    else if (type == "AUDIO")
+        widget = new RundownAudioWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
+    else if (type == "STILL" || type == "MOVIE")
         widget = new RundownMediaWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "OPACITY")
         widget = new RundownOpacityWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
@@ -554,7 +558,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
     else if (type == "CLEAROUTPUT")
         widget = new RundownClearOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "contextMenuRundown")
-        widget = new RundownColorProducerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
+        widget = new RundownSolidColorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
 
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
@@ -1242,7 +1246,7 @@ void RundownWidget::addGridCommand()
 
 void RundownWidget::addColorProducerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", "", 0)));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", "SOLIDCOLOR", 0)));
 }
 
 void RundownWidget::addKeyerCommand()

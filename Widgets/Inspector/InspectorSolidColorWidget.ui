@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InspectorColorProducerWidget</class>
- <widget class="QWidget" name="InspectorColorProducerWidget">
+ <class>InspectorSolidColorWidget</class>
+ <widget class="QWidget" name="InspectorSolidColorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -305,7 +305,7 @@
   <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>durationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -321,7 +321,7 @@
   <connection>
    <sender>comboBoxTransition</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>transitionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -337,7 +337,7 @@
   <connection>
    <sender>comboBoxDirection</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>directionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -353,7 +353,7 @@
   <connection>
    <sender>comboBoxTween</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -369,7 +369,7 @@
   <connection>
    <sender>labelTransition</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>resetTransition(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -385,7 +385,7 @@
   <connection>
    <sender>labelDuration</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>resetDuration(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -401,7 +401,7 @@
   <connection>
    <sender>labelTween</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>resetTween(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -417,7 +417,7 @@
   <connection>
    <sender>labelDirection</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>resetDirection(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -433,7 +433,7 @@
   <connection>
    <sender>labelUseAuto</sender>
    <signal>linkActivated(QString)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>resetUseAuto(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -449,7 +449,7 @@
   <connection>
    <sender>checkBoxUseAuto</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>useAutoChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -465,7 +465,7 @@
   <connection>
    <sender>toolButtonColor</sender>
    <signal>clicked(bool)</signal>
-   <receiver>InspectorColorProducerWidget</receiver>
+   <receiver>InspectorSolidColorWidget</receiver>
    <slot>colorDialogClicked()</slot>
    <hints>
     <hint type="sourcelabel">

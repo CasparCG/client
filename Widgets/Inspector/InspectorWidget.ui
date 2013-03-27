@@ -620,6 +620,28 @@
                </brush>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>Audio</string>
+              </property>
+              <property name="font">
+               <font>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="textAlignment">
+               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="NoBrush">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -715,8 +737,8 @@
    <slot>masterVolumeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>587</y>
+     <x>285</x>
+     <y>598</y>
     </hint>
     <hint type="destinationlabel">
      <x>98</x>
