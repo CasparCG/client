@@ -199,6 +199,43 @@ void CasparDevice::stopMedia(int channel, int videolayer)
     writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }
 
+void CasparDevice::pauseAudio(int channel, int videolayer)
+{
+    writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playAudio(int channel, int videolayer)
+{
+    writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playAudio(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+                             const QString& easing, const QString& direction, bool loop, bool useAuto)
+{
+    if (useAuto)
+        loadAudio(channel, videolayer, name, transition, duration, easing, direction, loop, useAuto);
+    else
+        writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 %8")
+                     .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                     .arg(direction)
+                     .arg((loop == true) ? "LOOP" : ""));
+}
+
+void CasparDevice::loadAudio(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                             const QString& easing, const QString& direction, bool loop, bool useAuto)
+{
+    writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7 %8 %9")
+                 .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                 .arg(direction)
+                 .arg((loop == true) ? "LOOP" : "")
+                 .arg((useAuto == true) ? "AUTO" : ""));
+}
+
+void CasparDevice::stopAudio(int channel, int videolayer)
+{
+    writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::startRecording(int channel, const QString& filename, const QString& codec, const QString& preset,
                                   const QString& tune, bool withAlpha)
 {

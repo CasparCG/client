@@ -49,6 +49,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void removeTemplate(int channel, int videolayer, int flashlayer);
         void stopTemplate(int channel, int videolayer, int flashlayer);
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
+
         void pauseMedia(int channel, int videolayer);
         void playMedia(int channel, int videolayer);
         void playMedia(int channel, int videolayer, const QString& name, const QString& transition, int duration,
@@ -56,6 +57,14 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void loadMedia(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool freezeOnLoad, bool useAuto);
         void stopMedia(int channel, int videolayer);
+
+        void pauseAudio(int channel, int videolayer);
+        void playAudio(int channel, int videolayer);
+        void playAudio(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, bool loop, bool useAuto);
+        void loadAudio(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                       const QString& easing, const QString& direction, bool loop, bool useAuto);
+        void stopAudio(int channel, int videolayer);
 
         void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
         void stopRecording(int channel);
