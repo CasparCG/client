@@ -1,4 +1,4 @@
-#include "InspectorSolidColorWidget.h"
+#include "InspectorImageWidget.h"
 
 #include "Global.h"
 
@@ -8,12 +8,7 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 
-
-#include <QtCore/QDebug>
-
-#include <QtGui/QColorDialog>
-
-InspectorSolidColorWidget::InspectorSolidColorWidget(QWidget* parent)
+InspectorImageWidget::InspectorImageWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL)
 {
@@ -26,7 +21,7 @@ InspectorSolidColorWidget::InspectorSolidColorWidget(QWidget* parent)
     qApp->installEventFilter(this);
 }
 
-bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
+bool InspectorImageWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
@@ -35,14 +30,16 @@ bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(true);
 
-        if (dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()))
+        if (dynamic_cast<ImageCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->command = dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand());
+            this->command = dynamic_cast<ImageCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+            this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
         }
 
         blockAllSignals(false);
@@ -51,15 +48,17 @@ bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void InspectorSolidColorWidget::blockAllSignals(bool block)
+void InspectorImageWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxUseAuto->blockSignals(block);
 }
 
-void InspectorSolidColorWidget::loadDirection()
+void InspectorImageWidget::loadDirection()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -72,7 +71,7 @@ void InspectorSolidColorWidget::loadDirection()
     this->comboBoxDirection->blockSignals(false);
 }
 
-void InspectorSolidColorWidget::loadTransition()
+void InspectorImageWidget::loadTransition()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -85,7 +84,7 @@ void InspectorSolidColorWidget::loadTransition()
     this->comboBoxTransition->blockSignals(false);
 }
 
-void InspectorSolidColorWidget::loadTween()
+void InspectorImageWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -98,103 +97,68 @@ void InspectorSolidColorWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorSolidColorWidget::colorDialogClicked()
-{
-    QColorDialog dialog;
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-
-    if (!this->lineEditColor->text().isEmpty())
-    {
-        QString hexColor = this->lineEditColor->text().remove('#');
-        if (hexColor.length() == 8)
-        {
-            int alpha = hexColor.mid(0, 2).toInt(0, 16);
-            int red = hexColor.mid(2, 2).toInt(0, 16);
-            int green = hexColor.mid(4, 2).toInt(0, 16);
-            int blue = hexColor.mid(6, 2).toInt(0, 16);
-
-            QColor color;
-            color.setAlpha(alpha);
-            color.setRed(red);
-            color.setGreen(green);
-            color.setBlue(blue);
-
-            dialog.setCurrentColor(color);
-        }
-    }
-
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        QString color;
-        color.sprintf("#%02x%02x%02x%02x", dialog.selectedColor().alpha(), dialog.selectedColor().red(),
-                      dialog.selectedColor().green(), dialog.selectedColor().blue());
-
-        this->lineEditColor->setText(color);
-    }
-}
-
-void InspectorSolidColorWidget::transitionChanged(QString transition)
+void InspectorImageWidget::transitionChanged(QString transition)
 {
     this->command->setTransition(transition);
 }
 
-void InspectorSolidColorWidget::durationChanged(int duration)
+void InspectorImageWidget::durationChanged(int duration)
 {
     this->command->setDuration(duration);
 }
 
-void InspectorSolidColorWidget::directionChanged(QString direction)
+void InspectorImageWidget::directionChanged(QString direction)
 {
     this->command->setDirection(direction);
 }
 
-void InspectorSolidColorWidget::tweenChanged(QString tween)
+void InspectorImageWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorSolidColorWidget::colorChanged(QString color)
-{
-    this->command->setColor(color);
-}
-
-void InspectorSolidColorWidget::useAutoChanged(int state)
+void InspectorImageWidget::useAutoChanged(int state)
 {
     this->command->setUseAuto((state == Qt::Checked) ? true : false);
 }
 
-void InspectorSolidColorWidget::resetTransition(QString transition)
+void InspectorImageWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorImageWidget::resetTransition(QString transition)
 {
     this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
     this->command->setTransition(this->comboBoxTransition->currentText());
 }
 
-void InspectorSolidColorWidget::resetDuration(QString duration)
+void InspectorImageWidget::resetDuration(QString duration)
 {
     this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
     this->command->setDuration(this->spinBoxDuration->value());
 }
 
-void InspectorSolidColorWidget::resetDirection(QString direction)
+void InspectorImageWidget::resetDirection(QString direction)
 {
     this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
     this->command->setDirection(this->comboBoxDirection->currentText());
 }
 
-void InspectorSolidColorWidget::resetTween(QString tween)
+void InspectorImageWidget::resetTween(QString tween)
 {
     this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
     this->command->setTween(this->comboBoxTween->currentText());
 }
 
-void InspectorSolidColorWidget::resetUseAuto(QString useAuto)
+void InspectorImageWidget::resetUseAuto(QString useAuto)
 {
-    this->checkBoxUseAuto->setChecked(false);
+    this->checkBoxUseAuto->setChecked(Image::DEFAULT_USE_AUTO);
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
-void InspectorSolidColorWidget::resetColor(QString color)
+void InspectorImageWidget::resetTriggerOnNext(QString triggerOnNext)
 {
-    this->lineEditColor->setText(SolidColor::DEFAULT_NAME);
-    this->command->setColor(this->lineEditColor->text());
+    this->checkBoxTriggerOnNext->setChecked(Image::DEFAULT_TRIGGER_ON_NEXT);
+    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

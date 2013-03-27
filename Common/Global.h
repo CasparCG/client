@@ -165,25 +165,37 @@ namespace Output
 
 namespace Audio
 {
-    static const QString DEFAULT_AUDIO_NAME = "";
+    static const QString DEFAULT_NAME = "";
     static const bool DEFAULT_LOOP = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const bool DEFAULT_USE_AUTO = false;
 }
 
-namespace Media
+namespace Video
 {
-    static const QString DEFAULT_MEDIA_NAME = "";
+    static const QString DEFAULT_NAME = "";
     static const int DEFAULT_SEEK = 0;
     static const int DEFAULT_LENGTH = 0;
-    static const int DEFAULT_BLUR = 0;
-    static const int DEFAULT_SPEED = 8;
     static const bool DEFAULT_LOOP = false;
     static const bool DEFAULT_FREEZE_ON_LOAD = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_USE_AUTO = false;
+}
+
+namespace Image
+{
+    static const QString DEFAULT_NAME = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_USE_AUTO = false;
+}
+
+namespace ImageScroller
+{
+    static const QString DEFAULT_NAME = "";
+    static const int DEFAULT_BLUR = 0;
+    static const int DEFAULT_SPEED = 8;
     static const bool DEFAULT_PREMULTIPLY = false;
     static const bool DEFAULT_PROGRESSIVE = false;
-    static const bool DEFAULT_USE_AUTO = false;
 }
 
 namespace Template
@@ -206,6 +218,11 @@ namespace FileRecorder
     static const QString DEFAULT_PRESET = "";
     static const QString DEFAULT_TUNE = "";
     static const bool DEFAULT_WITH_ALPHA = false;
+}
+
+namespace SolidColor
+{
+    static const QString DEFAULT_NAME = "";
 }
 
 namespace Library

@@ -1,104 +1,93 @@
-#include "AudioCommand.h"
+#include "ImageCommand.h"
 
 #include "Global.h"
 
-AudioCommand::AudioCommand(QObject* parent)
+ImageCommand::ImageCommand(QObject* parent)
     : AbstractCommand(parent),
-      audioName(Audio::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
-      triggerOnNext(Audio::DEFAULT_TRIGGER_ON_NEXT), useAuto(Audio::DEFAULT_USE_AUTO)
+      imageName(Image::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
+      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), triggerOnNext(Image::DEFAULT_TRIGGER_ON_NEXT),
+      useAuto(Image::DEFAULT_USE_AUTO)
 {
 }
 
-const QString& AudioCommand::getAudioName() const
+const QString& ImageCommand::getImageName() const
 {
-    return this->audioName;
+    return this->imageName;
 }
 
-const QString& AudioCommand::getTransition() const
+const QString& ImageCommand::getTransition() const
 {
     return this->transition;
 }
 
-int AudioCommand::getDuration() const
+int ImageCommand::getDuration() const
 {
     return this->duration;
 }
 
-const QString& AudioCommand::getDirection() const
+const QString& ImageCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& AudioCommand::getTween() const
+const QString& ImageCommand::getTween() const
 {
     return this->tween;
 }
 
-bool AudioCommand::getLoop() const
-{
-    return this->loop;
-}
-
-bool AudioCommand::getTriggerOnNext() const
+bool ImageCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-bool AudioCommand::getUseAuto() const
+bool ImageCommand::getUseAuto() const
 {
     return this->useAuto;
 }
 
-void AudioCommand::setAudioName(const QString& audioName)
+void ImageCommand::setImageName(const QString& imageName)
 {
-    this->audioName = audioName;
-    emit audioNameChanged(this->audioName);
+    this->imageName = imageName;
+    emit imageNameChanged(this->imageName);
 }
 
-void AudioCommand::setTransition(const QString& transition)
+void ImageCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void AudioCommand::setDuration(int duration)
+void ImageCommand::setDuration(int duration)
 {
     this->duration = duration;
     emit durationChanged(this->duration);
 }
 
-void AudioCommand::setDirection(const QString& direction)
+void ImageCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void AudioCommand::setTween(const QString& tween)
+void ImageCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void AudioCommand::setLoop(bool loop)
-{
-    this->loop = loop;
-    emit loopChanged(this->loop);
-}
-
-void AudioCommand::setTriggerOnNext(bool triggerOnNext)
+void ImageCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void AudioCommand::setUseAuto(bool useAuto)
+void ImageCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
 }
 
-void AudioCommand::readProperties(boost::property_tree::wptree& pt)
+void ImageCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -106,12 +95,11 @@ void AudioCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
     if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
     if (pt.count(L"direction") > 0) setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
-    if (pt.count(L"loop") > 0) setLoop(pt.get<bool>(L"loop"));
     if (pt.count(L"useauto") > 0) setUseAuto(pt.get<bool>(L"useauto"));
     if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
 }
 
-void AudioCommand::writeProperties(QXmlStreamWriter* writer)
+void ImageCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
@@ -119,7 +107,6 @@ void AudioCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("duration", QString::number(this->getDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("direction", this->getDirection());
-    writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

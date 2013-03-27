@@ -21,7 +21,6 @@ HEADERS += \
     Shared.h \
     TimelineWidget.h \
     HelpDialog.h \
-    Inspector/InspectorMediaWidget.h \
     Inspector/InspectorWidget.h \
     Inspector/InspectorTemplateWidget.h \
     Inspector/InspectorOutputWidget.h \
@@ -30,7 +29,6 @@ HEADERS += \
     Inspector/InspectorGeometryWidget.h \
     Library/LibraryWidget.h \
     Rundown/RundownGroupWidget.h \
-    Rundown/RundownMediaWidget.h \
     Rundown/RundownTemplateWidget.h \
     Rundown/RundownWidget.h \
     Rundown/AbstractRundownWidget.h \
@@ -72,7 +70,11 @@ HEADERS += \
     Rundown/RundownDeckLinkInputWidget.h \
     Inspector/InspectorDeckLinkInputWidget.h \
     Rundown/RundownSolidColorWidget.h \
-    Inspector/InspectorSolidColorWidget.h
+    Inspector/InspectorSolidColorWidget.h \
+    Rundown/RundownImageWidget.h \
+    Inspector/InspectorImageWidget.h \
+    Inspector/InspectorVideoWidget.h \
+    Rundown/RundownVideoWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -83,7 +85,6 @@ SOURCES += \
     MainWindow.cpp \
     TimelineWidget.cpp \
     HelpDialog.cpp \
-    Inspector/InspectorMediaWidget.cpp \
     Inspector/InspectorWidget.cpp \
     Inspector/InspectorTemplateWidget.cpp \
     Inspector/InspectorOutputWidget.cpp \
@@ -103,7 +104,6 @@ SOURCES += \
     Library/LibraryWidget.cpp \
     Rundown/RundownCropWidget.cpp \
     Rundown/RundownGroupWidget.cpp \
-    Rundown/RundownMediaWidget.cpp \
     Rundown/RundownTemplateWidget.cpp \
     Rundown/RundownWidget.cpp \
     Rundown/RundownGeometryWidget.cpp \
@@ -133,7 +133,11 @@ SOURCES += \
     Inspector/InspectorDeckLinkInputWidget.cpp \
     Rundown/RundownDeckLinkInputWidget.cpp \
     Rundown/RundownSolidColorWidget.cpp \
-    Inspector/InspectorSolidColorWidget.cpp
+    Inspector/InspectorSolidColorWidget.cpp \
+    Rundown/RundownImageWidget.cpp \
+    Inspector/InspectorImageWidget.cpp \
+    Rundown/RundownVideoWidget.cpp \
+    Inspector/InspectorVideoWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -144,7 +148,6 @@ FORMS += \
     AddDeviceDialog.ui \
     TimelineWidget.ui \
     HelpDialog.ui \
-    Inspector/InspectorMediaWidget.ui \
     Inspector/InspectorVolumeWidget.ui \
     Inspector/InspectorWidget.ui \
     Inspector/InspectorTemplateWidget.ui \
@@ -159,7 +162,6 @@ FORMS += \
     Library/LibraryWidget.ui \
     Rundown/RundownWidget.ui \
     Rundown/RundownTemplateWidget.ui \
-    Rundown/RundownMediaWidget.ui \
     Rundown/RundownGroupWidget.ui \
     Inspector/InspectorLevelsWidget.ui \
     Inspector/InspectorCropWidget.ui \
@@ -194,7 +196,11 @@ FORMS += \
     Inspector/InspectorAudioWidget.ui \
     Rundown/RundownDeckLinkInputWidget.ui \
     Rundown/RundownSolidColorWidget.ui \
-    Inspector/InspectorSolidColorWidget.ui
+    Inspector/InspectorSolidColorWidget.ui \
+    Rundown/RundownImageWidget.ui \
+    Inspector/InspectorImageWidget.ui \
+    Rundown/RundownVideoWidget.ui \
+    Inspector/InspectorVideoWidget.ui
 
 RESOURCES += \
     Resource.qrc
@@ -344,7 +350,14 @@ OTHER_FILES += \
     Images/ColorProducerSmallHover.png \
     Images/ColorProducerSmall.png \
     Images/GpiOutputSmallHover.png \
-    Images/GpiOutputSmall.png
+    Images/GpiOutputSmall.png \
+    Images/SolidColorSmallHover.png \
+    Images/SolidColorSmall.png \
+    Images/Opacity.png \
+    Images/Contrast.png \
+    Images/Brightness.png \
+    Images/BlendModeSmallHover.png \
+    Images/BlendModeSmall.png
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32:LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

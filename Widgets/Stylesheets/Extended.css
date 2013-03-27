@@ -16,19 +16,19 @@
 {
     background-color: rgba(42, 42, 42, 255);
 }
-#toolButtonAddDevice
+#toolButtonAddDevice, #toolButtonAddTemplateData
 {
     image: url(:/Graphics/Images/Add.png);
 }
-#toolButtonAddDevice:hover
+#toolButtonAddDevice:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
 }
-#toolButtonRemoveDevice
+#toolButtonRemoveDevice, #toolButtonRemoveTemplateData
 {
     image: url(:/Graphics/Images/Remove.png);
 }
-#toolButtonRemoveDevice:hover
+#toolButtonRemoveDevice:hover, #toolButtonRemoveTemplateData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }

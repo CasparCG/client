@@ -160,18 +160,18 @@ void InspectorAudioWidget::resetTween(QString tween)
 
 void InspectorAudioWidget::resetLoop(QString loop)
 {
-    this->checkBoxLoop->setChecked(Media::DEFAULT_LOOP);
+    this->checkBoxLoop->setChecked(Audio::DEFAULT_LOOP);
     this->command->setLoop(this->checkBoxLoop->isChecked());
 }
 
 void InspectorAudioWidget::resetUseAuto(QString useAuto)
 {
-    this->checkBoxUseAuto->setChecked(Media::DEFAULT_USE_AUTO);
+    this->checkBoxUseAuto->setChecked(Audio::DEFAULT_USE_AUTO);
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
 void InspectorAudioWidget::resetTriggerOnNext(QString triggerOnNext)
 {
-    this->checkBoxTriggerOnNext->setChecked(Media::DEFAULT_TRIGGER_ON_NEXT);
+    this->checkBoxTriggerOnNext->setChecked(Audio::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

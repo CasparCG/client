@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownMediaWidget.h"
+#include "ui_RundownImageWidget.h"
 
 #include "Global.h"
 
@@ -13,7 +13,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/MediaCommand.h"
+#include "Commands/ImageCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -21,12 +21,12 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownImageWidget : public QWidget, Ui::RundownImageWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownMediaWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+        explicit RundownImageWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                     bool active = false, bool loaded = false, bool paused = false, bool playing = false,
                                     bool inGroup = false, bool compactView = false);
 
@@ -62,7 +62,7 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         bool compactView;
         QString color;
         LibraryModel model;
-        MediaCommand command;
+        ImageCommand command;
         ActiveAnimation* animation;
 
         QTimer executeTimer;
@@ -72,9 +72,9 @@ class WIDGETS_EXPORT RundownMediaWidget : public QWidget, Ui::RundownMediaWidget
         void checkGpiConnection();
         void checkDeviceConnection();
 
-        Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
+        Q_SLOT void channelChanged(int);
         Q_SLOT void executeLoad();
         Q_SLOT void executePlay();
         Q_SLOT void executePause();

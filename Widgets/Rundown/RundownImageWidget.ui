@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownMediaWidget</class>
- <widget class="QWidget" name="RundownMediaWidget">
+ <class>RundownImageWidget</class>
+ <widget class="QWidget" name="RundownImageWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
+    <width>863</width>
     <height>36</height>
    </rect>
   </property>
@@ -43,6 +43,9 @@
       <property name="text">
        <string/>
       </property>
+      <property name="pixmap">
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/Still.png</pixmap>
+      </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
@@ -57,7 +60,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Media</string>
+       <string>Image</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">

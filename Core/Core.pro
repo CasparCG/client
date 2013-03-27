@@ -17,7 +17,6 @@ HEADERS += \
     Shared.h \
     Commands/CropCommand.h \
     Commands/GeometryCommand.h \
-    Commands/MediaCommand.h \
     Commands/TemplateCommand.h \
     Events/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
@@ -78,14 +77,15 @@ HEADERS += \
     ThumbnailWorker.h \
     Events/WindowTitleEvent.h \
     Commands/AudioCommand.h \
-    Commands/SolidColorCommand.h
+    Commands/SolidColorCommand.h \
+    Commands/ImageCommand.h \
+    Commands/VideoCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
     DeviceManager.cpp \
     Commands/CropCommand.cpp \
     Commands/GeometryCommand.cpp \
-    Commands/MediaCommand.cpp \
     Commands/TemplateCommand.cpp \
     Events/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
@@ -146,7 +146,9 @@ SOURCES += \
     ThumbnailWorker.cpp \
     Events/WindowTitleEvent.cpp \
     Commands/AudioCommand.cpp \
-    Commands/SolidColorCommand.cpp
+    Commands/SolidColorCommand.cpp \
+    Commands/ImageCommand.cpp \
+    Commands/VideoCommand.cpp
 
 INCLUDEPATH += $$PWD/../../dependencies/boost
 win32: LIBS += -L$$PWD/../../dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

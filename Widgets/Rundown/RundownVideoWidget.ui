@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownImageScrollerWidget</class>
- <widget class="QWidget" name="RundownImageScrollerWidget">
+ <class>RundownVideoWidget</class>
+ <widget class="QWidget" name="RundownVideoWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>829</width>
+    <width>857</width>
     <height>36</height>
    </rect>
   </property>
@@ -44,7 +44,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/ImageScroller.png</pixmap>
+       <pixmap resource="../Resource.qrc">:/Graphics/Images/Movie.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -60,7 +60,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Image Scroller</string>
+       <string>Video</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">

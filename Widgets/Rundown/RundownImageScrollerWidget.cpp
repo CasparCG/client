@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -21,6 +22,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    setThumbnail();
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);
@@ -134,12 +136,14 @@ void RundownImageScrollerWidget::setCompactView(bool compactView)
         this->labelIcon->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::COMPACT_THUMBNAIL_WIDTH, Define::COMPACT_THUMBNAIL_HEIGHT);
     }
     else
     {
         this->labelIcon->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
+        this->labelThumbnail->setFixedSize(Define::DEFAULT_THUMBNAIL_WIDTH, Define::DEFAULT_THUMBNAIL_HEIGHT);
     }
 
     this->compactView = compactView;
@@ -168,6 +172,24 @@ AbstractCommand* RundownImageScrollerWidget::getCommand()
 LibraryModel* RundownImageScrollerWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownImageScrollerWidget::setThumbnail()
+{
+    if (this->model.getType() == "AUDIO")
+    {
+        this->labelThumbnail->setVisible(false);
+        return;
+    }
+
+    QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
+    QImage image;
+    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
+
+    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+    if (displayThumbnailTooltip)
+        this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
 }
 
 void RundownImageScrollerWidget::setActive(bool active)
@@ -342,9 +364,11 @@ void RundownImageScrollerWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                 this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                 this->command.getProgressive());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -353,9 +377,11 @@ void RundownImageScrollerWidget::executeLoad()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
                                           this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                           this->command.getProgressive());
+        }
     }
 
     this->loaded = true;

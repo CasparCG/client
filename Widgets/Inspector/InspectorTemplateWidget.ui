@@ -201,7 +201,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutRow">
      <item>
-      <widget class="QToolButton" name="toolButtonAddRow">
+      <widget class="QToolButton" name="toolButtonAddTemplateData">
        <property name="minimumSize">
         <size>
          <width>33</width>
@@ -223,13 +223,10 @@
        <property name="toolTip">
         <string>Add new device</string>
        </property>
-       <property name="text">
-        <string>+</string>
-       </property>
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonRemoveRow">
+      <widget class="QToolButton" name="toolButtonRemoveTemplateData">
        <property name="minimumSize">
         <size>
          <width>33</width>
@@ -250,9 +247,6 @@
        </property>
        <property name="toolTip">
         <string>Remove device</string>
-       </property>
-       <property name="text">
-        <string>-</string>
        </property>
       </widget>
      </item>
@@ -308,7 +302,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolButtonAddRow</sender>
+   <sender>toolButtonAddTemplateData</sender>
    <signal>clicked()</signal>
    <receiver>InspectorTemplateWidget</receiver>
    <slot>addRow()</slot>
@@ -324,7 +318,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolButtonRemoveRow</sender>
+   <sender>toolButtonRemoveTemplateData</sender>
    <signal>clicked()</signal>
    <receiver>InspectorTemplateWidget</receiver>
    <slot>removeRow()</slot>

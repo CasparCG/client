@@ -156,21 +156,21 @@ void CasparDevice::updateTemplate(int channel, int videolayer, int flashlayer, c
                  .arg(channel).arg(videolayer).arg(flashlayer).arg(data));
 }
 
-void CasparDevice::pauseMedia(int channel, int videolayer)
+void CasparDevice::pauseVideo(int channel, int videolayer)
 {
     writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer)
+void CasparDevice::playVideo(int channel, int videolayer)
 {
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playMedia(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+void CasparDevice::playVideo(int channel, int videolayer, const QString& name, const QString &transition, int duration,
                              const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto)
 {
     if (useAuto)
-        loadMedia(channel, videolayer, name, transition, duration, easing, direction, seek, length, loop, false, useAuto);
+        loadVideo(channel, videolayer, name, transition, duration, easing, direction, seek, length, loop, false, useAuto);
     else
         writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7 %8 %9 %10")
                      .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
@@ -180,7 +180,7 @@ void CasparDevice::playMedia(int channel, int videolayer, const QString& name, c
                      .arg((loop == true) ? "LOOP" : ""));
 }
 
-void CasparDevice::loadMedia(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+void CasparDevice::loadVideo(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                              const QString& easing, const QString& direction, int seek, int length, bool loop,
                              bool freezeOnLoad, bool useAuto)
 {
@@ -194,7 +194,7 @@ void CasparDevice::loadMedia(int channel, int videolayer, const QString& name, c
                  .arg((useAuto == true) ? "AUTO" : ""));
 }
 
-void CasparDevice::stopMedia(int channel, int videolayer)
+void CasparDevice::stopVideo(int channel, int videolayer)
 {
     writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }
@@ -267,6 +267,40 @@ void CasparDevice::loadColor(int channel, int videolayer, const QString& name, c
 }
 
 void CasparDevice::stopColor(int channel, int videolayer)
+{
+    writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::pauseImage(int channel, int videolayer)
+{
+    writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playImage(int channel, int videolayer)
+{
+    writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playImage(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+                             const QString& easing, const QString& direction, bool useAuto)
+{
+    if (useAuto)
+        loadImage(channel, videolayer, name, transition, duration, easing, direction, useAuto);
+    else
+        writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7")
+                     .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                     .arg(direction));
+}
+
+void CasparDevice::loadImage(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+                             const QString& easing, const QString& direction, bool useAuto)
+{
+    writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7")
+                 .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                 .arg(direction));
+}
+
+void CasparDevice::stopImage(int channel, int videolayer)
 {
     writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }

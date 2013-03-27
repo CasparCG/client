@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownImageScrollerWidget.h"
+#include "ui_RundownVideoWidget.h"
 
 #include "Global.h"
 
@@ -13,7 +13,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/ImageScrollerCommand.h"
+#include "Commands/VideoCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -21,14 +21,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownImageScrollerWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                            bool active = false, bool loaded = false, bool paused = false, bool playing = false,
-                                            bool inGroup = false, bool compactView = false);
+        explicit RundownVideoWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                    bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                    bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -62,7 +62,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         bool compactView;
         QString color;
         LibraryModel model;
-        ImageScrollerCommand command;
+        VideoCommand command;
         ActiveAnimation* animation;
 
         QTimer executeTimer;
@@ -72,9 +72,9 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         void checkGpiConnection();
         void checkDeviceConnection();
 
+        Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
-        Q_SLOT void channelChanged(int);
         Q_SLOT void executeLoad();
         Q_SLOT void executePlay();
         Q_SLOT void executePause();

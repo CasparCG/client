@@ -13,7 +13,7 @@
 #include "RundownGroupWidget.h"
 #include "RundownKeyerWidget.h"
 #include "RundownLevelsWidget.h"
-#include "RundownMediaWidget.h"
+#include "RundownVideoWidget.h"
 #include "RundownOpacityWidget.h"
 #include "RundownSaturationWidget.h"
 #include "RundownTemplateWidget.h"
@@ -23,6 +23,7 @@
 #include "RundownClearOutputWidget.h"
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
+#include "RundownImageWidget.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -80,7 +81,7 @@ void RundownWidget::setupUiMenu()
     this->contextMenuMixer = new QMenu(this);
     this->contextMenuMixer->setTitle("Mixer");
     //this->contextMenuMixer->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
-    this->contextMenuMixer->addAction(/*QIcon(":/Graphics/Images/Mixer.png"),*/ "Blend Mode", this, SLOT(addBlendModeCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastCommand()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropCommand()));
@@ -385,9 +386,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownLevelsWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "AUDIO")
             widget = new RundownAudioWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "STILL" ||
-                 addRudnownItemEvent->getLibraryModel().getType() == "MOVIE")
-            widget = new RundownMediaWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "MOVIE")
+            widget = new RundownVideoWidget(addRudnownItemEvent->getLibraryModel(), this);
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "STILL")
+            widget = new RundownImageWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "OPACITY")
             widget = new RundownOpacityWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "SATURATION")
@@ -537,8 +539,10 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownLevelsWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "AUDIO")
         widget = new RundownAudioWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "STILL" || type == "MOVIE")
-        widget = new RundownMediaWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
+    else if (type == "STILL")
+        widget = new RundownImageWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
+    else if (type == "MOVIE")
+        widget = new RundownVideoWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "OPACITY")
         widget = new RundownOpacityWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "SATURATION")

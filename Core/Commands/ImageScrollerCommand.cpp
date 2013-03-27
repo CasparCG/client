@@ -4,8 +4,8 @@
 
 ImageScrollerCommand::ImageScrollerCommand(QObject* parent)
     : AbstractCommand(parent),
-      mediaName(Media::DEFAULT_MEDIA_NAME), blur(Media::DEFAULT_BLUR), speed(Media::DEFAULT_SPEED),
-      premultiply(Media::DEFAULT_PREMULTIPLY), progressive(Media::DEFAULT_PROGRESSIVE)
+      mediaName(ImageScroller::DEFAULT_NAME), blur(ImageScroller::DEFAULT_BLUR), speed(ImageScroller::DEFAULT_SPEED),
+      premultiply(ImageScroller::DEFAULT_PREMULTIPLY), progressive(ImageScroller::DEFAULT_PROGRESSIVE)
 {
 }
 

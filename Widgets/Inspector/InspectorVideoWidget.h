@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorMediaWidget.h"
+#include "ui_InspectorVideoWidget.h"
 
-#include "Commands/MediaCommand.h"
+#include "Commands/VideoCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -12,19 +12,19 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorMediaWidget : public QWidget, Ui::InspectorMediaWidget
+class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorMediaWidget(QWidget* parent = 0);
+        explicit InspectorVideoWidget(QWidget* parent = 0);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
-        MediaCommand* command;
+        VideoCommand* command;
 
         void loadDirection();
         void loadTransition();

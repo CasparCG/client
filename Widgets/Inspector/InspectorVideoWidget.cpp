@@ -1,4 +1,4 @@
-#include "InspectorMediaWidget.h"
+#include "InspectorVideoWidget.h"
 
 #include "Global.h"
 
@@ -8,7 +8,7 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 
-InspectorMediaWidget::InspectorMediaWidget(QWidget* parent)
+InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL)
 {
@@ -21,7 +21,7 @@ InspectorMediaWidget::InspectorMediaWidget(QWidget* parent)
     qApp->installEventFilter(this);
 }
 
-bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
+bool InspectorVideoWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
@@ -30,9 +30,9 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(true);
 
-        if (dynamic_cast<MediaCommand*>(rundownItemSelectedEvent->getCommand()))
+        if (dynamic_cast<VideoCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->command = dynamic_cast<MediaCommand*>(rundownItemSelectedEvent->getCommand());
+            this->command = dynamic_cast<VideoCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
             this->spinBoxDuration->setValue(this->command->getDuration());
@@ -52,7 +52,7 @@ bool InspectorMediaWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void InspectorMediaWidget::blockAllSignals(bool block)
+void InspectorVideoWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
@@ -66,7 +66,7 @@ void InspectorMediaWidget::blockAllSignals(bool block)
     this->checkBoxUseAuto->blockSignals(block);
 }
 
-void InspectorMediaWidget::loadDirection()
+void InspectorVideoWidget::loadDirection()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -79,7 +79,7 @@ void InspectorMediaWidget::loadDirection()
     this->comboBoxDirection->blockSignals(false);
 }
 
-void InspectorMediaWidget::loadTransition()
+void InspectorVideoWidget::loadTransition()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -92,7 +92,7 @@ void InspectorMediaWidget::loadTransition()
     this->comboBoxTransition->blockSignals(false);
 }
 
-void InspectorMediaWidget::loadTween()
+void InspectorVideoWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -105,116 +105,116 @@ void InspectorMediaWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorMediaWidget::transitionChanged(QString transition)
+void InspectorVideoWidget::transitionChanged(QString transition)
 {
     this->command->setTransition(transition);
 }
 
-void InspectorMediaWidget::durationChanged(int duration)
+void InspectorVideoWidget::durationChanged(int duration)
 {
     this->command->setDuration(duration);
 }
 
-void InspectorMediaWidget::directionChanged(QString direction)
+void InspectorVideoWidget::directionChanged(QString direction)
 {
     this->command->setDirection(direction);
 }
 
-void InspectorMediaWidget::tweenChanged(QString tween)
+void InspectorVideoWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorMediaWidget::loopChanged(int state)
+void InspectorVideoWidget::loopChanged(int state)
 {
     this->command->setLoop((state == Qt::Checked) ? true : false);
 }
 
-void InspectorMediaWidget::useAutoChanged(int state)
+void InspectorVideoWidget::useAutoChanged(int state)
 {
     this->command->setUseAuto((state == Qt::Checked) ? true : false);
     if (state == Qt::Checked)
         this->checkBoxFreezeOnLoad->setChecked(false); // Auto is only supported for LOADBG.
 }
 
-void InspectorMediaWidget::freezeOnLoadChanged(int state)
+void InspectorVideoWidget::freezeOnLoadChanged(int state)
 {
     this->command->setFreezeOnLoad((state == Qt::Checked) ? true : false);
     if (state == Qt::Checked)
         this->checkBoxUseAuto->setChecked(false); // Auto is not supported for LOAD.
 }
 
-void InspectorMediaWidget::triggerOnNextChanged(int state)
+void InspectorVideoWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
-void InspectorMediaWidget::seekChanged(int seek)
+void InspectorVideoWidget::seekChanged(int seek)
 {
     this->command->setSeek(seek);
 }
 
-void InspectorMediaWidget::lengthChanged(int length)
+void InspectorVideoWidget::lengthChanged(int length)
 {
     this->command->setLength(length);
 }
 
-void InspectorMediaWidget::resetTransition(QString transition)
+void InspectorVideoWidget::resetTransition(QString transition)
 {
     this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
     this->command->setTransition(this->comboBoxTransition->currentText());
 }
 
-void InspectorMediaWidget::resetDuration(QString duration)
+void InspectorVideoWidget::resetDuration(QString duration)
 {
     this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
     this->command->setDuration(this->spinBoxDuration->value());
 }
 
-void InspectorMediaWidget::resetDirection(QString direction)
+void InspectorVideoWidget::resetDirection(QString direction)
 {
     this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
     this->command->setDirection(this->comboBoxDirection->currentText());
 }
 
-void InspectorMediaWidget::resetTween(QString tween)
+void InspectorVideoWidget::resetTween(QString tween)
 {
     this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
     this->command->setTween(this->comboBoxTween->currentText());
 }
 
-void InspectorMediaWidget::resetSeek(QString seek)
+void InspectorVideoWidget::resetSeek(QString seek)
 {
-    this->spinBoxSeek->setValue(Media::DEFAULT_SEEK);
+    this->spinBoxSeek->setValue(Video::DEFAULT_SEEK);
     this->command->setSeek(this->spinBoxSeek->value());
 }
 
-void InspectorMediaWidget::resetLength(QString length)
+void InspectorVideoWidget::resetLength(QString length)
 {
-    this->spinBoxLength->setValue(Media::DEFAULT_LENGTH);
+    this->spinBoxLength->setValue(Video::DEFAULT_LENGTH);
     this->command->setLength(this->spinBoxLength->value());
 }
 
-void InspectorMediaWidget::resetLoop(QString loop)
+void InspectorVideoWidget::resetLoop(QString loop)
 {
-    this->checkBoxLoop->setChecked(Media::DEFAULT_LOOP);
+    this->checkBoxLoop->setChecked(Video::DEFAULT_LOOP);
     this->command->setLoop(this->checkBoxLoop->isChecked());
 }
 
-void InspectorMediaWidget::resetUseAuto(QString useAuto)
+void InspectorVideoWidget::resetUseAuto(QString useAuto)
 {
-    this->checkBoxUseAuto->setChecked(Media::DEFAULT_USE_AUTO);
+    this->checkBoxUseAuto->setChecked(Video::DEFAULT_USE_AUTO);
     this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
 }
 
-void InspectorMediaWidget::resetFreezeOnLoad(QString freezeOnLoad)
+void InspectorVideoWidget::resetFreezeOnLoad(QString freezeOnLoad)
 {
-    this->checkBoxFreezeOnLoad->setChecked(Media::DEFAULT_FREEZE_ON_LOAD);
+    this->checkBoxFreezeOnLoad->setChecked(Video::DEFAULT_FREEZE_ON_LOAD);
     this->command->setFreezeOnLoad(this->checkBoxFreezeOnLoad->isChecked());
 }
 
-void InspectorMediaWidget::resetTriggerOnNext(QString triggerOnNext)
+void InspectorVideoWidget::resetTriggerOnNext(QString triggerOnNext)
 {
-    this->checkBoxTriggerOnNext->setChecked(Media::DEFAULT_TRIGGER_ON_NEXT);
+    this->checkBoxTriggerOnNext->setChecked(Video::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

@@ -127,6 +127,11 @@
         <file>Images/ColorProducerSmallHover.png</file>
         <file>Images/GpiOutputSmall.png</file>
         <file>Images/GpiOutputSmallHover.png</file>
+        <file>Images/BlendModeSmall.png</file>
+        <file>Images/BlendModeSmallHover.png</file>
+        <file>Images/Brightness.png</file>
+        <file>Images/Contrast.png</file>
+        <file>Images/Opacity.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

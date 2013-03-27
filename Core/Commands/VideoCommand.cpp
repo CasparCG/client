@@ -1,138 +1,138 @@
-#include "MediaCommand.h"
+#include "VideoCommand.h"
 
 #include "Global.h"
 
-MediaCommand::MediaCommand(QObject* parent)
+VideoCommand::VideoCommand(QObject* parent)
     : AbstractCommand(parent),
-      mediaName(Media::DEFAULT_MEDIA_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Media::DEFAULT_LOOP),
-      freezeOnLoad(Media::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Media::DEFAULT_TRIGGER_ON_NEXT), seek(Media::DEFAULT_SEEK),
-      length(Media::DEFAULT_LENGTH), useAuto(Media::DEFAULT_USE_AUTO)
+      videoName(Video::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
+      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Video::DEFAULT_LOOP),
+      freezeOnLoad(Video::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Video::DEFAULT_TRIGGER_ON_NEXT), seek(Video::DEFAULT_SEEK),
+      length(Video::DEFAULT_LENGTH), useAuto(Video::DEFAULT_USE_AUTO)
 {
 }
 
-const QString& MediaCommand::getMediaName() const
+const QString& VideoCommand::getVideoName() const
 {
-    return this->mediaName;
+    return this->videoName;
 }
 
-const QString& MediaCommand::getTransition() const
+const QString& VideoCommand::getTransition() const
 {
     return this->transition;
 }
 
-int MediaCommand::getDuration() const
+int VideoCommand::getDuration() const
 {
     return this->duration;
 }
 
-const QString& MediaCommand::getDirection() const
+const QString& VideoCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& MediaCommand::getTween() const
+const QString& VideoCommand::getTween() const
 {
     return this->tween;
 }
 
-bool MediaCommand::getLoop() const
+bool VideoCommand::getLoop() const
 {
     return this->loop;
 }
 
-bool MediaCommand::getFreezeOnLoad() const
+bool VideoCommand::getFreezeOnLoad() const
 {
     return this->freezeOnLoad;
 }
 
-bool MediaCommand::getTriggerOnNext() const
+bool VideoCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-int MediaCommand::getSeek() const
+int VideoCommand::getSeek() const
 {
     return this->seek;
 }
 
-int MediaCommand::getLength() const
+int VideoCommand::getLength() const
 {
     return this->length;
 }
 
-bool MediaCommand::getUseAuto() const
+bool VideoCommand::getUseAuto() const
 {
     return this->useAuto;
 }
 
-void MediaCommand::setMediaName(const QString& mediaName)
+void VideoCommand::setVideoName(const QString& videoName)
 {
-    this->mediaName = mediaName;
-    emit mediaNameChanged(this->mediaName);
+    this->videoName = videoName;
+    emit videoNameChanged(this->videoName);
 }
 
-void MediaCommand::setTransition(const QString& transition)
+void VideoCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void MediaCommand::setDuration(int duration)
+void VideoCommand::setDuration(int duration)
 {
     this->duration = duration;
     emit durationChanged(this->duration);
 }
 
-void MediaCommand::setDirection(const QString& direction)
+void VideoCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void MediaCommand::setTween(const QString& tween)
+void VideoCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void MediaCommand::setLoop(bool loop)
+void VideoCommand::setLoop(bool loop)
 {
     this->loop = loop;
     emit loopChanged(this->loop);
 }
 
-void MediaCommand::setFreezeOnLoad(bool freezeOnLoad)
+void VideoCommand::setFreezeOnLoad(bool freezeOnLoad)
 {
     this->freezeOnLoad = freezeOnLoad;
     emit freezeOnLoadChanged(this->freezeOnLoad);
 }
 
-void MediaCommand::setTriggerOnNext(bool triggerOnNext)
+void VideoCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void MediaCommand::setSeek(int seek)
+void VideoCommand::setSeek(int seek)
 {
     this->seek = seek;
     emit seekChanged(this->seek);
 }
 
-void MediaCommand::setLength(int length)
+void VideoCommand::setLength(int length)
 {
     this->length = length;
     emit lengthChanged(this->length);
 }
 
-void MediaCommand::setUseAuto(bool useAuto)
+void VideoCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
 }
 
-void MediaCommand::readProperties(boost::property_tree::wptree& pt)
+void VideoCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -148,7 +148,7 @@ void MediaCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
 }
 
-void MediaCommand::writeProperties(QXmlStreamWriter* writer)
+void VideoCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 

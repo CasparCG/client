@@ -68,13 +68,13 @@ void InspectorImageScrollerWidget::progressiveChanged(int state)
 
 void InspectorImageScrollerWidget::resetSpeed(QString speed)
 {
-    this->spinBoxSpeed->setValue(Media::DEFAULT_SPEED);
+    this->spinBoxSpeed->setValue(ImageScroller::DEFAULT_SPEED);
     this->command->setSpeed(this->spinBoxSpeed->value());
 }
 
 void InspectorImageScrollerWidget::resetBlur(QString blur)
 {
-    this->spinBoxBlur->setValue(Media::DEFAULT_BLUR);
+    this->spinBoxBlur->setValue(ImageScroller::DEFAULT_BLUR);
     this->command->setBlur(this->spinBoxBlur->value());
 }
 

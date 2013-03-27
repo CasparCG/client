@@ -310,7 +310,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>254</x>
-     <y>87</y>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>223</x>
@@ -326,7 +326,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>254</x>
-     <y>59</y>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
      <x>223</x>
@@ -374,7 +374,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>90</x>
-     <y>59</y>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -478,26 +478,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditColor</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorSolidColorWidget</receiver>
+   <slot>colorChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>labelColor</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>InspectorSolidColorWidget</receiver>
+   <slot>resetColor(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>-9</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>durationChanged(int)</slot>
-  <slot>loopChanged(int)</slot>
   <slot>transitionChanged(QString)</slot>
   <slot>directionChanged(QString)</slot>
-  <slot>seekChanged(int)</slot>
-  <slot>lengthChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>resetTransition(QString)</slot>
   <slot>resetDuration(QString)</slot>
   <slot>resetTween(QString)</slot>
   <slot>resetDirection(QString)</slot>
-  <slot>resetSeek(QString)</slot>
-  <slot>resetLength(QString)</slot>
-  <slot>resetLoop(QString)</slot>
   <slot>pauseOnLoadChanged(int)</slot>
   <slot>resetPauseOnLoad(QString)</slot>
   <slot>resetUseAuto(QString)</slot>
   <slot>useAutoChanged(int)</slot>
   <slot>colorDialogClicked()</slot>
+  <slot>colorChanged(QString)</slot>
+  <slot>resetColor(QString)</slot>
  </slots>
 </ui>
