@@ -316,6 +316,33 @@ void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
     qApp->sendEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
 }
 
+void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
+{
+    if (current == NULL)
+        return;
+
+    if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
+    {
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+    }
+    else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
+    {
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+    }
+    else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
+    {
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+    }
+    else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
+    {
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+    }
+}
+
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 { 
     if (current == NULL)

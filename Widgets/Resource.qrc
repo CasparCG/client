@@ -134,6 +134,7 @@
         <file>Images/Opacity.png</file>
         <file>Images/Geometry.png</file>
         <file>Images/Grid.png</file>
+        <file>Images/Crop.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
