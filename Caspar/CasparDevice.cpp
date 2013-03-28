@@ -585,7 +585,7 @@ void CasparDevice::sendNotification()
 
             break;
         case AMCPDevice::INFO:
-            this->response.removeFirst(); // First post is the header, 201 INFO OK.
+            this->response.removeFirst(); // First post is the header, 200 INFO OK.
             emit infoChanged(this->response, *this);
 
             break;
