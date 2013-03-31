@@ -108,8 +108,8 @@ void RundownWidget::setupUiMenu()
     this->contextMenuNew = new QMenu(this);
     this->contextMenuNew->setTitle("New");
     //this->contextMenuNew->setIcon(QIcon(":/Graphics/Images/New.png"));
-    this->contextMenuNew->addMenu(this->contextMenuMixer);
     this->contextMenuNew->addMenu(this->contextMenuLibrary);
+    this->contextMenuNew->addMenu(this->contextMenuMixer);
     this->contextMenuNew->addSeparator();
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ColorProducerSmall.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputCommand()));
