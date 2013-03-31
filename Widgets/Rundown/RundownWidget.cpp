@@ -561,7 +561,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownSeparatorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "CLEAROUTPUT")
         widget = new RundownClearOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "contextMenuRundown")
+    else if (type == "SOLIDCOLOR")
         widget = new RundownSolidColorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
 
     widget->setCompactView(this->compactView);

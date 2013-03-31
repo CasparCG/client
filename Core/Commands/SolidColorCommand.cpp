@@ -39,7 +39,7 @@ bool SolidColorCommand::getUseAuto() const
     return this->useAuto;
 }
 
-void SolidColorCommand::setColor(const QString& color)
+void SolidColorCommand:: setColor(const QString& color)
 {
     this->color = color;
     emit colorChanged(this->color);
@@ -83,7 +83,7 @@ void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
     if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
     if (pt.count(L"direction") > 0) setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
-    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    if (pt.count(L"solidcolor") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"solidcolor")));
 }
 
 void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
@@ -94,5 +94,5 @@ void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("duration", QString::number(this->getDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("direction", this->getDirection());
-    writer->writeTextElement("color", this->getColor());
+    writer->writeTextElement("solidcolor", this->getColor());
 }
