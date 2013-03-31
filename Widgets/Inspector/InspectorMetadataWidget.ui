@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>208</width>
-    <height>140</height>
+    <width>224</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,8 +47,8 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEditType">
-       <property name="readOnly">
-        <bool>true</bool>
+       <property name="enabled">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
