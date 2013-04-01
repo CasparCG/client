@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>287</width>
-        <height>539</height>
+        <height>536</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -73,7 +73,7 @@
             <x>0</x>
             <y>0</y>
             <width>285</width>
-            <height>537</height>
+            <height>534</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -512,7 +512,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Keyer</string>
+               <string>Mask</string>
               </property>
               <property name="font">
                <font>

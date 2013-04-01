@@ -380,7 +380,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget = new RundownGridWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "GPIOUTPUT")
             widget = new RundownGpiOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "KEYER")
+        else if (addRudnownItemEvent->getLibraryModel().getType() == "MASK")
             widget = new RundownKeyerWidget(addRudnownItemEvent->getLibraryModel(), this);
         else if (addRudnownItemEvent->getLibraryModel().getType() == "LEVELS")
             widget = new RundownLevelsWidget(addRudnownItemEvent->getLibraryModel(), this);
@@ -533,7 +533,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
         widget = new RundownGridWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "GPIOUTPUT")
         widget = new RundownGpiOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "KEYER")
+    else if (type == "MASK")
         widget = new RundownKeyerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
     else if (type == "LEVELS")
         widget = new RundownLevelsWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
@@ -1255,7 +1255,7 @@ void RundownWidget::addColorProducerCommand()
 
 void RundownWidget::addKeyerCommand()
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Keyer", "", "", "KEYER", 0)));
+    qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", "MASK", 0)));
 }
 
 void RundownWidget::addLevelsCommand()

@@ -73,7 +73,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Keyer</string>
+       <string>Mask</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelVideolayer">
