@@ -135,9 +135,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutName">
+    <layout class="QHBoxLayout" name="horizontalLayoutFile">
      <item>
-      <spacer name="horizontalSpacerName">
+      <spacer name="horizontalSpacerFile">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -146,16 +146,16 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>33</width>
+         <width>47</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelTargetName">
+      <widget class="QLabel" name="labelFile">
        <property name="text">
-        <string>Name</string>
+        <string>File</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -163,7 +163,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditName">
+      <widget class="QLineEdit" name="lineEditFile">
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -224,7 +224,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditName</sender>
+   <sender>lineEditFile</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorMetadataWidget</receiver>
    <slot>nameChanged(QString)</slot>
