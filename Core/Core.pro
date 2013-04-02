@@ -32,7 +32,6 @@ HEADERS += \
     Models/TemplateDataModel.h \
     Models/TypeModel.h \
     Events/LibraryItemSelectedEvent.h \
-    Events/RundownItemChangedEvent.h \
     Commands/BrightnessCommand.h \
     Commands/SaturationCommand.h \
     Commands/OpacityCommand.h \
@@ -79,7 +78,10 @@ HEADERS += \
     Commands/AudioCommand.h \
     Commands/SolidColorCommand.h \
     Commands/ImageCommand.h \
-    Commands/VideoCommand.h
+    Commands/VideoCommand.h \
+    Events/DeviceChangedEvent.h \
+    Events/LabelChangedEvent.h \
+    Events/TargetChangedEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -101,7 +103,6 @@ SOURCES += \
     Models/TypeModel.cpp \
     Events/LibraryItemSelectedEvent.cpp \
     Models/TemplateDataModel.cpp \
-    Events/RundownItemChangedEvent.cpp \
     Commands/BrightnessCommand.cpp \
     Commands/SaturationCommand.cpp \
     Commands/OpacityCommand.cpp \
@@ -148,7 +149,10 @@ SOURCES += \
     Commands/AudioCommand.cpp \
     Commands/SolidColorCommand.cpp \
     Commands/ImageCommand.cpp \
-    Commands/VideoCommand.cpp
+    Commands/VideoCommand.cpp \
+    Events/DeviceChangedEvent.cpp \
+    Events/LabelChangedEvent.cpp \
+    Events/TargetChangedEvent.cpp
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32: LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

@@ -392,7 +392,7 @@ void CasparDevice::setCommit(int channel)
 
 void CasparDevice::setBlendMode(int channel, int videolayer, const QString& blendMode)
 {
-    writeMessage(QString("MIXER %1-%2 BLEND %3 %4")
+    writeMessage(QString("MIXER %1-%2 BLEND %3")
                  .arg(channel).arg(videolayer).arg(blendMode));
 }
 

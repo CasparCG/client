@@ -3,9 +3,6 @@
 #include "../Shared.h"
 #include "ui_InspectorMetadataWidget.h"
 
-#include "CasparDevice.h"
-
-#include "Animations/BorderAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -26,14 +23,9 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
 
     private:
         LibraryModel* model;
-        BorderAnimation* animation;
 
-        void checkEmptyDevice();
         void blockAllSignals(bool block);
 
-        Q_SLOT void deviceAdded(CasparDevice&);
-        Q_SLOT void deviceRemoved();
         Q_SLOT void labelChanged(QString);
-        Q_SLOT void deviceNameChanged(QString);
-        Q_SLOT void nameChanged(QString);
+        Q_SLOT void targetChanged(QString);
 };

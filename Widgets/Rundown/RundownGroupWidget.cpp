@@ -3,7 +3,7 @@
 #include "Global.h"
 #include "GpiManager.h"
 
-#include "Events/RundownItemChangedEvent.h"
+#include "Events/LabelChangedEvent.h"
 
 #include <QtGui/QApplication>
 #include <QtCore/QObject>
@@ -40,15 +40,14 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
 bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemChanged))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
     {
         // This event is not for us.
         if (!this->active)
             return false;
 
-        RundownItemChangedEvent* rundownItemChangedEvent = dynamic_cast<RundownItemChangedEvent*>(event);
-        this->model.setLabel(rundownItemChangedEvent->getLabel());
-        this->model.setName(rundownItemChangedEvent->getName());
+        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
+        this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
     }

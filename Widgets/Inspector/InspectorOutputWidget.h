@@ -3,6 +3,9 @@
 #include "../Shared.h"
 #include "ui_InspectorOutputWidget.h"
 
+#include "CasparDevice.h"
+
+#include "Animations/BorderAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -25,9 +28,14 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
     private:
         AbstractCommand* command;
         LibraryModel* model;
+        BorderAnimation* animation;
 
+        void checkEmptyDevice();
         void blockAllSignals(bool block);
 
+        Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void deviceRemoved();
+        Q_SLOT void deviceNameChanged(QString);
         Q_SLOT void allowGpiChanged(int);
         Q_SLOT void channelChanged(int);
         Q_SLOT void videolayerChanged(int);

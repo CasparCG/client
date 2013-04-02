@@ -28,14 +28,16 @@ namespace Enum
             RefreshLibrary = QEvent::User + 17,
             AutoRefreshLibrary = QEvent::User + 18,
             AddRudnownItem = QEvent::User + 19,
-            RundownItemChanged = QEvent::User + 20,
-            RundownItemPreview = QEvent::User + 21,
-            ConnectionStateChanged = QEvent::User + 22,
-            RundownIsEmpty = QEvent::User + 23,
-            OpenRundown = QEvent::User + 24,
-            SaveRundown = QEvent::User + 25,
-            ToggleCompactView = QEvent::User + 26,
-            WindowTitle = QEvent::User + 27
+            RundownItemPreview = QEvent::User + 20,
+            ConnectionStateChanged = QEvent::User + 21,
+            RundownIsEmpty = QEvent::User + 22,
+            OpenRundown = QEvent::User + 23,
+            SaveRundown = QEvent::User + 24,
+            ToggleCompactView = QEvent::User + 25,
+            WindowTitle = QEvent::User + 26,
+            TargetChanged = QEvent::User + 27,
+            DeviceChanged = QEvent::User + 28,
+            LabelChanged = QEvent::User + 29
         };
     };
 }

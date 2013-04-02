@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>224</width>
-    <height>172</height>
+    <height>112</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,6 +55,43 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTarget">
+     <item>
+      <spacer name="horizontalSpacerTarget">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>32</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTarget">
+       <property name="text">
+        <string>Target</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditTarget">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutLabel">
      <item>
       <spacer name="horizontalSpacerLabel">
@@ -92,86 +129,6 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutDevice">
-     <item>
-      <spacer name="horizontalSpacerDevice">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelDeviceName">
-       <property name="text">
-        <string>Device</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxDevice">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutFile">
-     <item>
-      <spacer name="horizontalSpacerFile">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>47</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelFile">
-       <property name="text">
-        <string>File</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditFile">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <spacer name="verticalSpacerMetadata">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -192,57 +149,40 @@
  <resources/>
  <connections>
   <connection>
-   <sender>comboBoxDevice</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorMetadataWidget</receiver>
-   <slot>deviceNameChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>47</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>lineEditLabel</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorMetadataWidget</receiver>
    <slot>labelChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>48</y>
+     <x>157</x>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
-     <x>210</x>
-     <y>31</y>
+     <x>242</x>
+     <y>85</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>lineEditFile</sender>
+   <sender>lineEditTarget</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorMetadataWidget</receiver>
-   <slot>nameChanged(QString)</slot>
+   <slot>targetChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>152</x>
-     <y>108</y>
+     <x>175</x>
+     <y>56</y>
     </hint>
     <hint type="destinationlabel">
-     <x>152</x>
-     <y>139</y>
+     <x>243</x>
+     <y>44</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>nameChanged(QString)</slot>
-  <slot>deviceNameChanged(QString)</slot>
+  <slot>targetChanged(QString)</slot>
   <slot>labelChanged(QString)</slot>
  </slots>
 </ui>

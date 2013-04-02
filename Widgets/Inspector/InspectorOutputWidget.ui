@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>218</width>
-    <height>140</height>
+    <height>168</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,6 +17,65 @@
    </sizepolicy>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDevice">
+     <item>
+      <spacer name="horizontalSpacerDevice1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDeviceName">
+       <property name="text">
+        <string>&lt;a href=&quot;Device&quot; style=&quot;color: #BEBEBE;&quot;&gt;Device&lt;/a&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxDevice">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerDevice2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>22</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutChannel">
      <item>
@@ -274,8 +333,8 @@
    <slot>channelChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>196</x>
-     <y>29</y>
+     <x>179</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -290,8 +349,8 @@
    <slot>videolayerChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>196</x>
-     <y>57</y>
+     <x>179</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -306,8 +365,8 @@
    <slot>delayChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>196</x>
-     <y>85</y>
+     <x>188</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -322,8 +381,8 @@
    <slot>resetDelay(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>80</y>
+     <x>77</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -338,8 +397,8 @@
    <slot>resetVideolayer(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>63</x>
-     <y>54</y>
+     <x>73</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -354,8 +413,8 @@
    <slot>resetChannel(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>17</y>
+     <x>75</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -370,8 +429,8 @@
    <slot>allowGpiChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>92</x>
-     <y>109</y>
+     <x>87</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>185</x>
@@ -386,12 +445,28 @@
    <slot>resetAllowGpi(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>107</y>
+     <x>68</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>29</x>
      <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxDevice</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>deviceNameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>16</y>
     </hint>
    </hints>
   </connection>
@@ -405,5 +480,6 @@
   <slot>resetChannel(QString)</slot>
   <slot>allowGpiChanged(int)</slot>
   <slot>resetAllowGpi(QString)</slot>
+  <slot>deviceNameChanged(QString)</slot>
  </slots>
 </ui>

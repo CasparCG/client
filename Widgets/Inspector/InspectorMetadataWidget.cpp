@@ -2,7 +2,6 @@
 
 #include "Global.h"
 
-#include "DeviceManager.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"
@@ -24,7 +23,8 @@
 #include "Commands/PrintCommand.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/RundownIsEmptyEvent.h"
-#include "Events/RundownItemChangedEvent.h"
+#include "Events/LabelChangedEvent.h"
+#include "Events/TargetChangedEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 #include <QtGui/QApplication>
@@ -34,11 +34,6 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
       model(NULL)
 {
     setupUi(this);
-
-    this->animation = new BorderAnimation(this->comboBoxDevice, this);
-
-    connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
-    connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
 
     qApp->installEventFilter(this);
 }
@@ -50,44 +45,37 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
 
-         blockAllSignals(true);
+        blockAllSignals(true);
 
+        this->lineEditTarget->setReadOnly(true);
         this->lineEditLabel->setReadOnly(true);
-        this->comboBoxDevice->setEnabled(false);
-        this->lineEditFile->setReadOnly(true);
 
-        this->lineEditLabel->clear();
         this->lineEditType->setText(this->model->getType());
-        this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
-        this->lineEditFile->setText(this->model->getName());
+        this->lineEditTarget->setText(this->model->getName());
+        this->lineEditLabel->clear();
 
-        checkEmptyDevice();
-
-         blockAllSignals(false);
+        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
 
-         blockAllSignals(true);
+        blockAllSignals(true);
 
+        this->lineEditTarget->setReadOnly(false);
+        this->lineEditTarget->setEnabled(true);
         this->lineEditLabel->setReadOnly(false);
-        this->comboBoxDevice->setEnabled(true);
-        this->lineEditFile->setReadOnly(false);
-        this->lineEditFile->setEnabled(true);
 
         this->lineEditType->setText(this->model->getType());
+        this->lineEditTarget->setText(this->model->getName());
         this->lineEditLabel->setText(this->model->getLabel());
-        this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
-        this->lineEditFile->setText(this->model->getName());
 
         if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->comboBoxDevice->setEnabled(false);
-            this->lineEditFile->setEnabled(false);
+            this->lineEditTarget->setEnabled(false);
         }
         else if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
@@ -106,27 +94,21 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
                  dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
                  dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()))
         {
-            this->lineEditFile->setEnabled(false);
+            this->lineEditTarget->setEnabled(false);
         }
 
-        checkEmptyDevice();
-
-         blockAllSignals(false);
+        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
     {
-         blockAllSignals(true);
+        blockAllSignals(true);
 
+        this->lineEditTarget->setReadOnly(true);
         this->lineEditLabel->setReadOnly(true);
-        this->comboBoxDevice->setEnabled(false);
-        this->lineEditFile->setReadOnly(true);
 
         this->lineEditType->clear();
+        this->lineEditTarget->clear();
         this->lineEditLabel->clear();
-        this->comboBoxDevice->setCurrentIndex(-1);
-        this->lineEditFile->clear();
-
-        checkEmptyDevice();
 
         blockAllSignals(false);
     }
@@ -137,46 +119,16 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorMetadataWidget::blockAllSignals(bool block)
 {
     this->lineEditType->blockSignals(block);
+    this->lineEditTarget->blockSignals(block);
     this->lineEditLabel->blockSignals(block);
-    this->comboBoxDevice->blockSignals(block);
-    this->lineEditFile->blockSignals(block);
-}
-
-void InspectorMetadataWidget::checkEmptyDevice()
-{
-    (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "") ? this->animation->start() : this->animation->stop();
-}
-
-void InspectorMetadataWidget::deviceRemoved()
-{
-    this->comboBoxDevice->clear();
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-        this->comboBoxDevice->addItem(model.getName());
-}
-
-void InspectorMetadataWidget::deviceAdded(CasparDevice& device)
-{
-    int index = this->comboBoxDevice->currentIndex();
-
-    this->comboBoxDevice->addItem(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName());
-
-    if (index == -1)
-        this->comboBoxDevice->setCurrentIndex(index);
 }
 
 void InspectorMetadataWidget::labelChanged(QString name)
 {
-    qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditFile->text(), this->comboBoxDevice->currentText()));
+    qApp->postEvent(qApp, new LabelChangedEvent(this->lineEditLabel->text()));
 }
 
-void InspectorMetadataWidget::nameChanged(QString name)
+void InspectorMetadataWidget::targetChanged(QString name)
 {
-    qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditFile->text(), this->comboBoxDevice->currentText()));
-}
-
-void InspectorMetadataWidget::deviceNameChanged(QString deviceName)
-{
-    checkEmptyDevice();
-
-    qApp->postEvent(qApp, new RundownItemChangedEvent(this->lineEditLabel->text(), this->lineEditFile->text(), this->comboBoxDevice->currentText()));
+    qApp->postEvent(qApp, new TargetChangedEvent(this->lineEditTarget->text()));
 }
