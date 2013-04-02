@@ -8,6 +8,7 @@ TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
       flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)
 {
+    this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }
 
 int TemplateCommand::getFlashlayer() const

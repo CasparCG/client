@@ -158,7 +158,8 @@ namespace Output
 {
     static const int DEFAULT_CHANNEL = 1;
     static const int DEFAULT_VIDEOLAYER = 10;
-    static const int DEFAULT_VIDEOLAYER_FLASH = 20;
+    static const int DEFAULT_AUDIO_VIDEOLAYER = 30;
+    static const int DEFAULT_FLASH_VIDEOLAYER = 20;
     static const int DEFAULT_DELAY = 0;
     static const bool DEFAULT_ALLOW_GPI = false;
 }

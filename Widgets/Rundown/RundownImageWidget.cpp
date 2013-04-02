@@ -125,6 +125,8 @@ AbstractRundownWidget* RundownImageWidget::clone()
     command->setDuration(this->command.getDuration());
     command->setTween(this->command.getTween());
     command->setDirection(this->command.getDirection());
+    command->setUseAuto(this->command.getUseAuto());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }

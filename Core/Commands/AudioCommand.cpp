@@ -4,10 +4,11 @@
 
 AudioCommand::AudioCommand(QObject* parent)
     : AbstractCommand(parent),
-      audioName(Audio::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
+      audioName(Audio::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
+      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
       triggerOnNext(Audio::DEFAULT_TRIGGER_ON_NEXT), useAuto(Audio::DEFAULT_USE_AUTO)
 {
+    this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
 }
 
 const QString& AudioCommand::getAudioName() const

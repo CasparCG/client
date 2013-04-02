@@ -4,8 +4,8 @@
 
 VideoCommand::VideoCommand(QObject* parent)
     : AbstractCommand(parent),
-      videoName(Video::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Video::DEFAULT_LOOP),
+      videoName(Video::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
+      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Video::DEFAULT_LOOP),
       freezeOnLoad(Video::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Video::DEFAULT_TRIGGER_ON_NEXT), seek(Video::DEFAULT_SEEK),
       length(Video::DEFAULT_LENGTH), useAuto(Video::DEFAULT_USE_AUTO)
 {

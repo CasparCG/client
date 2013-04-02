@@ -4,8 +4,10 @@
 
 VolumeCommand::VolumeCommand(QObject* parent)
     : AbstractCommand(parent),
-      volume(Mixer::DEFAULT_VOLUME), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      volume(Mixer::DEFAULT_VOLUME), duration(Mixer::DEFAULT_DURATION),
+      tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
+    this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
 }
 
 float VolumeCommand::getVolume() const

@@ -4,7 +4,7 @@
 
 AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER_FLASH), delay(Output::DEFAULT_DELAY),
+      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
       allowGpi(Output::DEFAULT_ALLOW_GPI)
 {
 }

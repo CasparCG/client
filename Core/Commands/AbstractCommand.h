@@ -32,12 +32,12 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
     protected:
         explicit AbstractCommand(QObject* parent = 0);
 
-    private:
         int channel;
         int videolayer;
         int delay;
         bool allowGpi;
 
+    private:
         Q_SIGNAL void channelChanged(int);
         Q_SIGNAL void videolayerChanged(int);
         Q_SIGNAL void delayChanged(int);

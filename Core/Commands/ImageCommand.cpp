@@ -4,9 +4,9 @@
 
 ImageCommand::ImageCommand(QObject* parent)
     : AbstractCommand(parent),
-      imageName(Image::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), triggerOnNext(Image::DEFAULT_TRIGGER_ON_NEXT),
-      useAuto(Image::DEFAULT_USE_AUTO)
+      imageName(Image::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
+      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
+      triggerOnNext(Image::DEFAULT_TRIGGER_ON_NEXT), useAuto(Image::DEFAULT_USE_AUTO)
 {
 }
 

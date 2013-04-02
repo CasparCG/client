@@ -12,6 +12,8 @@ CasparCG Client 2.0 RC 2
 - NEW: Added support for CasparCG 2.0.4 thumbnail feature.
 - UPDATE: UI changes.
 
+Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
+
 
 CasparCG Client 2.0 RC 1
 ========================
