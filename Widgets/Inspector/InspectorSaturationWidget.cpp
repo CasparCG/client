@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemPreviewEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -84,7 +84,7 @@ void InspectorSaturationWidget::sliderSaturationChanged(int saturation)
 
     this->spinBoxSaturation->setValue(saturation);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorSaturationWidget::spinBoxSaturationChanged(int saturation)
@@ -97,7 +97,7 @@ void InspectorSaturationWidget::resetSaturation(QString saturation)
     this->sliderSaturation->setValue(Mixer::DEFAULT_SATURATION * 100);
     this->command->setSaturation(static_cast<float>(this->sliderSaturation->value()) / 100);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorSaturationWidget::resetDuration(QString duration)

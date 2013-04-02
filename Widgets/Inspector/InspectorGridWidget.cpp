@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemPreviewEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -79,7 +79,7 @@ void InspectorGridWidget::gridChanged(int grid)
 {
     this->command->setGrid(grid);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGridWidget::resetGrid(QString grid)
@@ -87,7 +87,7 @@ void InspectorGridWidget::resetGrid(QString grid)
     this->spinBoxGrid->setValue(1);
     this->command->setGrid(this->spinBoxGrid->value());
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGridWidget::resetDuration(QString duration)

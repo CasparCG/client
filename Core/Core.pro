@@ -21,7 +21,6 @@ HEADERS += \
     Events/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
     Events/MediaChangedEvent.h \
-    Events/RundownItemPreviewEvent.h \
     Events/RundownItemSelectedEvent.h \
     Events/StatusbarEvent.h \
     Events/TemplateChangedEvent.h \
@@ -81,7 +80,8 @@ HEADERS += \
     Commands/VideoCommand.h \
     Events/DeviceChangedEvent.h \
     Events/LabelChangedEvent.h \
-    Events/TargetChangedEvent.h
+    Events/TargetChangedEvent.h \
+    Events/PreviewEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -92,7 +92,6 @@ SOURCES += \
     Events/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
     Events/MediaChangedEvent.cpp \
-    Events/RundownItemPreviewEvent.cpp\
     Events/RundownItemSelectedEvent.cpp \
     Events/StatusbarEvent.cpp \
     Events/TemplateChangedEvent.cpp \
@@ -152,7 +151,8 @@ SOURCES += \
     Commands/VideoCommand.cpp \
     Events/DeviceChangedEvent.cpp \
     Events/LabelChangedEvent.cpp \
-    Events/TargetChangedEvent.cpp
+    Events/TargetChangedEvent.cpp \
+    Events/PreviewEvent.cpp
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32: LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

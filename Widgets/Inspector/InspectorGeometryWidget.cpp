@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemPreviewEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -103,7 +103,7 @@ void InspectorGeometryWidget::sliderPositionXChanged(int positionX)
 
     this->spinBoxPositionX->setValue(positionX);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionXChanged(int positionX)
@@ -117,7 +117,7 @@ void InspectorGeometryWidget::sliderPositionYChanged(int positionY)
 
     this->spinBoxPositionY->setValue(positionY);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionYChanged(int positionY)
@@ -131,7 +131,7 @@ void InspectorGeometryWidget::sliderScaleXChanged(int scaleX)
 
     this->spinBoxScaleX->setValue(scaleX);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleXChanged(int scaleX)
@@ -145,7 +145,7 @@ void InspectorGeometryWidget::sliderScaleYChanged(int scaleY)
 
     this->spinBoxScaleY->setValue(scaleY);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)
@@ -168,7 +168,7 @@ void InspectorGeometryWidget::resetPositionX(QString positionX)
     this->sliderPositionX->setValue(Mixer::DEFAULT_GEOMETRY_XPOS);
     this->command->setPositionX(this->sliderPositionX->value());
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::resetPositionY(QString positionY)
@@ -176,7 +176,7 @@ void InspectorGeometryWidget::resetPositionY(QString positionY)
     this->sliderPositionY->setValue(Mixer::DEFAULT_GEOMETRY_YPOS);
     this->command->setPositionY(this->sliderPositionY->value());
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::resetScaleX(QString scaleX)
@@ -184,7 +184,7 @@ void InspectorGeometryWidget::resetScaleX(QString scaleX)
     this->sliderScaleX->setValue(Mixer::DEFAULT_GEOMETRY_XSCALE * this->resolutionWidth);
     this->command->setScaleX(static_cast<float>(this->sliderScaleX->value( ) / this->resolutionWidth));
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::resetScaleY(QString scaleY)
@@ -192,7 +192,7 @@ void InspectorGeometryWidget::resetScaleY(QString scaleY)
     this->sliderScaleY->setValue(Mixer::DEFAULT_GEOMETRY_YSCALE * this->resolutionHeight);
     this->command->setScaleY(static_cast<float>(this->sliderScaleY->value() / this->resolutionHeight));
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorGeometryWidget::resetDuration(QString duration)

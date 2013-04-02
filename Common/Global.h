@@ -28,7 +28,7 @@ namespace Enum
             RefreshLibrary = QEvent::User + 17,
             AutoRefreshLibrary = QEvent::User + 18,
             AddRudnownItem = QEvent::User + 19,
-            RundownItemPreview = QEvent::User + 20,
+            Preview = QEvent::User + 20,
             ConnectionStateChanged = QEvent::User + 21,
             RundownIsEmpty = QEvent::User + 22,
             OpenRundown = QEvent::User + 23,

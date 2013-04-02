@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemPreviewEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -84,7 +84,7 @@ void InspectorBrightnessWidget::sliderBrightnessChanged(int brightness)
 
     this->spinBoxBrightness->setValue(brightness);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorBrightnessWidget::spinBoxBrightnessChanged(int brightness)
@@ -97,7 +97,7 @@ void InspectorBrightnessWidget::resetBrightness(QString brightness)
     this->sliderBrightness->setValue(Mixer::DEFAULT_BRIGHTNESS * 100);
     this->command->setBrightness(static_cast<float>(this->sliderBrightness->value()) / 100);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorBrightnessWidget::resetDuration(QString duration)

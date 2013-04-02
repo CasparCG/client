@@ -58,7 +58,7 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
 
 bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::Preview))
     {
         // This event is not for us.
         if (!this->active)

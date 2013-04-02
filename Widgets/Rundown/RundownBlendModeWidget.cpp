@@ -58,7 +58,7 @@ RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidge
 
 bool RundownBlendModeWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemPreview))
+    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::Preview))
     {
         // This event is not for us.
         if (!this->active)

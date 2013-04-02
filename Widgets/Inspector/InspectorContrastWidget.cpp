@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemPreviewEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -85,7 +85,7 @@ void InspectorContrastWidget::sliderContrastChanged(int contrast)
 
     this->spinBoxContrast->setValue(contrast);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorContrastWidget::spinBoxContrastChanged(int contrast)
@@ -98,7 +98,7 @@ void InspectorContrastWidget::resetContrast(QString contrast)
     this->sliderContrast->setValue(Mixer::DEFAULT_CONTRAST * 100);
     this->command->setContrast(static_cast<float>(this->sliderContrast->value()) / 100);
 
-    qApp->postEvent(qApp, new RundownItemPreviewEvent());
+    qApp->postEvent(qApp, new PreviewEvent());
 }
 
 void InspectorContrastWidget::resetDuration(QString duration)
