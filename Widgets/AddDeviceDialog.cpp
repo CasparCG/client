@@ -149,7 +149,7 @@ void AddDeviceDialog::addressChanged(QString name)
 
 void AddDeviceDialog::connectionStateChanged(CasparDevice& device)
 {
-    this->device->disconnect(); // Disconnect all events.
+    disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 
     QMessageBox box;
     box.setWindowTitle("Test Connection");
