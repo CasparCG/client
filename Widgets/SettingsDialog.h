@@ -23,12 +23,12 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         BorderAnimation* animation;
 
         void loadGpi();
+        void loadDevices();
         void checkEmptyDeviceList();
         void updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action);
         void updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
         void updateGpiDevice();
 
-        Q_SLOT void loadDevices();
         Q_SLOT void removeDevice();
         Q_SLOT void showAddDeviceDialog();
         Q_SLOT void startFullscreenChanged(int);

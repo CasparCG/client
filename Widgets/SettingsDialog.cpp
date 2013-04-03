@@ -143,9 +143,9 @@ void SettingsDialog::showAddDeviceDialog()
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 "", dialog->getShadow(), 0));
 
-        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+        loadDevices();
 
-        QTimer::singleShot(500, this, SLOT(loadDevices()));
+        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
     }
 }
 
