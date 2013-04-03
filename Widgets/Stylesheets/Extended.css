@@ -10,6 +10,14 @@
 }
 
 /*
+ * AddDeviceDialog
+ */
+#toolButtonTestConnection
+{
+    image: url(:/Graphics/Images/TestConnection.png);
+}
+
+/*
  * SettingsDialog
  */
 #lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
