@@ -177,9 +177,9 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 model.getVersion(), dialog->getShadow(), model.getChannels()));
 
-        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+        loadDevices();
 
-        QTimer::singleShot(500, this, SLOT(loadDevices()));
+        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
     }
 }
 
