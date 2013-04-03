@@ -22,19 +22,13 @@
         <file>Images/ArrowLeftDisabled.png</file>
         <file>Images/ArrowRight.png</file>
         <file>Images/ArrowRightDisabled.png</file>
-        <file>Images/BlueBullet.png</file>
-        <file>Images/YellowBullet.png</file>
-        <file>Images/RedBullet.png</file>
-        <file>Images/GreenBullet.png</file>
         <file>Images/Group.png</file>
-        <file>Images/GreyBullet.png</file>
         <file>Images/Mixer.png</file>
         <file>Images/Template.png</file>
         <file>Images/Movie.png</file>
         <file>Images/Preview.png</file>
         <file>Images/Still.png</file>
         <file>Images/Consumer.png</file>
-        <file>Images/Color.png</file>
         <file>Images/New.png</file>
         <file>Images/ImageScroller.png</file>
         <file>Images/Disconnected.png</file>
@@ -46,16 +40,10 @@
         <file>Images/AutoStep.png</file>
         <file>Images/MasterVolumeOff.png</file>
         <file>Images/MasterVolumeOn.png</file>
-        <file>Images/Delay.png</file>
         <file>Images/ServerBig.png</file>
         <file>Images/ServerSmall.png</file>
-        <file>Images/AudioColor.png</file>
-        <file>Images/StillColor.png</file>
-        <file>Images/TemplateColor.png</file>
-        <file>Images/MovieColor.png</file>
         <file>Images/Thumbnail.png</file>
         <file>Images/Data.png</file>
-        <file>Images/DataColor.png</file>
         <file>Images/Checkerboard.png</file>
         <file>Images/TestConnection.png</file>
         <file>Images/Attention.png</file>
@@ -123,8 +111,6 @@
         <file>Images/GroupSmallHover.png</file>
         <file>Images/UngroupSmall.png</file>
         <file>Images/UngroupSmallHover.png</file>
-        <file>Images/ColorProducerSmall.png</file>
-        <file>Images/ColorProducerSmallHover.png</file>
         <file>Images/GpiOutputSmall.png</file>
         <file>Images/GpiOutputSmallHover.png</file>
         <file>Images/BlendModeSmall.png</file>
@@ -135,6 +121,9 @@
         <file>Images/Geometry.png</file>
         <file>Images/Grid.png</file>
         <file>Images/Crop.png</file>
+        <file>Images/SolidColorSmall.png</file>
+        <file>Images/SolidColorSmallHover.png</file>
+        <file>Images/SolidColor.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

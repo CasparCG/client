@@ -111,7 +111,7 @@ void RundownWidget::setupUiMenu()
     this->contextMenuNew->addMenu(this->contextMenuLibrary);
     this->contextMenuNew->addMenu(this->contextMenuMixer);
     this->contextMenuNew->addSeparator();
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ColorProducerSmall.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderCommand()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));

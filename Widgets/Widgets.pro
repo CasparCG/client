@@ -234,13 +234,8 @@ OTHER_FILES += \
     Images/Forward.png \
     Images/Rewind.png \
     Images/RewindStart.png \
-    Images/GreenBullet.png \
-    Images/YellowBullet.png \
-    Images/RedBullet.png \
-    Images/BlueBullet.png \
     Images/CheckboxChecked.png \
     Images/Group.png \
-    Images/GreyBullet.png \
     Images/Audio.png \
     Images/Mixer.png \
     Images/Template.png \
@@ -250,7 +245,6 @@ OTHER_FILES += \
     Images/Consumer.png \
     Images/Disconnected.png \
     Images/New.png \
-    Images/Color.png \
     Fonts/OpenSans-SemiboldItalic.ttf \
     Fonts/OpenSans-Semibold.ttf \
     Fonts/OpenSans-Regular.ttf \
@@ -270,19 +264,12 @@ OTHER_FILES += \
     Images/Snapshot.png \
     Images/MasterVolumeOff.png \
     Images/MasterVolumeOn.png \
-    Images/Delay.png \
     Images/ServerSmall.png \
     Images/ServerBig.png \
-    Images/TemplateColor.png \
-    Images/AudioColor.png \
-    Images/StillColor.png \
-    Images/MovieColor.png \
-    Images/StillColor.png \
     Images/Thumbnail.png \
     Images/SplitterVertical.png \
     Images/SplitterHorizontal.png \
     Images/Data.png \
-    Images/DataColor.png \
     Images/Checkerboard.png \
     Images/TestConnection.png \
     Images/Information.png \
@@ -347,8 +334,6 @@ OTHER_FILES += \
     Images/GroupSmall.png \
     Images/UngroupSmallHover.png \
     Images/UngroupSmall.png \
-    Images/ColorProducerSmallHover.png \
-    Images/ColorProducerSmall.png \
     Images/GpiOutputSmallHover.png \
     Images/GpiOutputSmall.png \
     Images/SolidColorSmallHover.png \
@@ -360,7 +345,10 @@ OTHER_FILES += \
     Images/BlendModeSmall.png \
     Images/Grid.png \
     Images/Geometry.png \
-    Images/Crop.png
+    Images/Crop.png \
+    Images/SolidColorSmallHover.png \
+    Images/SolidColorSmall.png \
+    Images/SolidColor.png
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32:LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

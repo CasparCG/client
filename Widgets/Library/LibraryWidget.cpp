@@ -56,12 +56,6 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetData->setColumnHidden(4, true);
     this->treeWidgetData->setColumnHidden(5, true);
 
-    //this->toolBoxLibrary->setItemIcon(0, QIcon(":/Graphics/Images/AudioColor.png"));
-    //this->toolBoxLibrary->setItemIcon(1, QIcon(":/Graphics/Images/StillColor.png"));
-    //this->toolBoxLibrary->setItemIcon(2, QIcon(":/Graphics/Images/TemplateColor.png"));
-    //this->toolBoxLibrary->setItemIcon(3, QIcon(":/Graphics/Images/MovieColor.png"));
-    //this->toolBoxLibrary->setItemIcon(4, QIcon(":/Graphics/Images/DataColor.png"));
-
     connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
