@@ -460,10 +460,14 @@ QMenu
     border-radius: 0px;
     border-width: 1px;
 }
+QMenu::icon
+{
+    left: 5px;
+}
 QMenu::item
 {
     padding-bottom: 4px;
-    padding-left: 20px;
+    padding-left: 25px;
     padding-right: 19px;
     padding-top: 3px;
 }
