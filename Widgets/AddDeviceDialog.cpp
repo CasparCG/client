@@ -149,7 +149,7 @@ void AddDeviceDialog::addressChanged(QString name)
 
 void AddDeviceDialog::connectionStateChanged(CasparDevice& device)
 {
-    this->device->disconnect();
+    this->device->disconnect(); // Disconnect all events.
 
     QMessageBox box;
     box.setWindowTitle("Test Connection");
@@ -158,4 +158,6 @@ void AddDeviceDialog::connectionStateChanged(CasparDevice& device)
     box.setStandardButtons(QMessageBox::Ok);
     box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
     box.exec();
+
+    this->device->disconnectDevice();
 }

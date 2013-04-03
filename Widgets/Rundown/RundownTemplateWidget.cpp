@@ -97,7 +97,7 @@ bool RundownTemplateWidget::eventFilter(QObject* target, QEvent* event)
             // Disconnect connectionStateChanged() from the old device.
             const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
@@ -240,7 +240,7 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play)
     {
-        this->executeTimer.disconnect();
+        this->executeTimer.disconnect(); // Disconnect all events.
         connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
         this->executeTimer.setInterval(this->command.getDelay());
@@ -248,7 +248,7 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::Update)
     {
-        this->executeTimer.disconnect();
+        this->executeTimer.disconnect(); // Disconnect all events.
         connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
 
         this->executeTimer.setInterval(this->command.getDelay());

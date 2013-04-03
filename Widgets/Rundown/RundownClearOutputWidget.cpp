@@ -79,7 +79,7 @@ bool RundownClearOutputWidget::eventFilter(QObject* target, QEvent* event)
             // Disconnect connectionStateChanged() from the old device.
             const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
@@ -212,8 +212,7 @@ bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type ty
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) ||
              (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext()))
     {  
-        QObject::disconnect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
-        QObject::disconnect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
+        this->executeTimer.disconnect(); // Disconnect all events.
 
         if (this->command.getClearChannel())
             connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
