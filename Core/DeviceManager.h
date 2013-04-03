@@ -34,7 +34,5 @@ class CORE_EXPORT DeviceManager : public QObject
     private:
         QMap<QString, DeviceModel> deviceModels;
         QMap<QString, QSharedPointer<CasparDevice> > devices;
-
-        Q_SLOT void connectionStateChanged(CasparDevice&);
 };
 

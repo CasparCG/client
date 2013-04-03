@@ -34,7 +34,6 @@ void DeviceManager::initialize()
     foreach (const DeviceModel& model, models)
     {
         QSharedPointer<CasparDevice> device(new CasparDevice());
-        connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
         device->connectDevice(model.getAddress(), model.getPort());
 
         this->deviceModels.insert(model.getName(), model);
@@ -89,7 +88,6 @@ void DeviceManager::refresh()
         if (!this->devices.contains(model.getName()))
         {
             QSharedPointer<CasparDevice> device(new CasparDevice());
-            connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
             device->connectDevice(model.getAddress(), model.getPort());
 
             this->deviceModels.insert(model.getName(), model);
@@ -128,9 +126,4 @@ const int DeviceManager::getDeviceCount() const
 const QSharedPointer<CasparDevice> DeviceManager::getDeviceByName(const QString& name) const
 {
     return this->devices.value(name);
-}
-
-void DeviceManager::connectionStateChanged(CasparDevice& device)
-{
-    qApp->postEvent(qApp, new ConnectionStateChangedEvent(getDeviceModelByAddress(device.getAddress()).getName(), device.isConnected()));
 }
