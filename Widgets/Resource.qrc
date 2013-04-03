@@ -135,6 +135,8 @@
         <file>Images/Geometry.png</file>
         <file>Images/Grid.png</file>
         <file>Images/Crop.png</file>
+        <file>Images/ArrowDownBranch.png</file>
+        <file>Images/ArrowRightBranch.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

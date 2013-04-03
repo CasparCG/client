@@ -311,7 +311,7 @@ QTreeView
 }
 QTreeView::item:hover
 {
-    background-color: transparent;
+    /*background-color: transparent;*/
 }
 QTreeView::item:selected
 {
@@ -354,7 +354,7 @@ QTreeWidget
 }
 QTreeWidget::item:hover
 {
-    background-color: transparent;
+    /*background-color: transparent;*/
 }
 QTreeWidget::item:selected
 {

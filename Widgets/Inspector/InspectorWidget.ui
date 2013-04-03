@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>287</width>
-        <height>536</height>
+        <height>539</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -73,7 +73,7 @@
             <x>0</x>
             <y>0</y>
             <width>285</width>
-            <height>534</height>
+            <height>537</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -94,12 +94,6 @@
              <property name="verticalScrollMode">
               <enum>QAbstractItemView::ScrollPerPixel</enum>
              </property>
-             <property name="indentation">
-              <number>0</number>
-             </property>
-             <property name="rootIsDecorated">
-              <bool>false</bool>
-             </property>
              <property name="animated">
               <bool>true</bool>
              </property>
@@ -118,13 +112,14 @@
               <property name="text">
                <string>Metadata</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -140,13 +135,14 @@
               <property name="text">
                <string>Output</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -162,13 +158,14 @@
               <property name="text">
                <string>Template</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -182,15 +179,16 @@
              </item>
              <item>
               <property name="text">
-               <string>Media</string>
+               <string>Video</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -206,13 +204,14 @@
               <property name="text">
                <string>Blend Mode</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -228,13 +227,14 @@
               <property name="text">
                <string>Brightness</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -250,13 +250,14 @@
               <property name="text">
                <string>Contrast</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -272,13 +273,14 @@
               <property name="text">
                <string>Crop</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -294,13 +296,14 @@
               <property name="text">
                <string>Transformation</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -316,13 +319,14 @@
               <property name="text">
                <string>Grid</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -338,13 +342,14 @@
               <property name="text">
                <string>Levels</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -360,13 +365,14 @@
               <property name="text">
                <string>Opacity</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -382,13 +388,14 @@
               <property name="text">
                <string>Saturation</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -404,13 +411,14 @@
               <property name="text">
                <string>Volume</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -426,13 +434,14 @@
               <property name="text">
                <string>DeckLink Input</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -448,13 +457,14 @@
               <property name="text">
                <string>GPI Output</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -470,13 +480,14 @@
               <property name="text">
                <string>Image Scroller</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -492,13 +503,14 @@
               <property name="text">
                <string>File Recorder</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -514,13 +526,14 @@
               <property name="text">
                <string>Mask</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -536,13 +549,14 @@
               <property name="text">
                <string>Channel Snapshot</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="SolidPattern">
@@ -558,13 +572,14 @@
               <property name="text">
                <string>Clear Output</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="SolidPattern">
@@ -580,13 +595,14 @@
               <property name="text">
                <string>Group</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="SolidPattern">
@@ -602,13 +618,14 @@
               <property name="text">
                <string>Solid Color</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="SolidPattern">
@@ -624,13 +641,14 @@
               <property name="text">
                <string>Audio</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">
@@ -646,13 +664,14 @@
               <property name="text">
                <string>Image</string>
               </property>
-              <property name="font">
-               <font>
-                <underline>true</underline>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
               </property>
               <property name="foreground">
                <brush brushstyle="NoBrush">

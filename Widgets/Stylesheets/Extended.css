@@ -53,12 +53,21 @@
 }
 #treeWidgetInspector::item:hover
 {
-    background-color: rgba(60, 60, 60, 255);
+    /*background-color: rgba(60, 60, 60, 255);*/
+}
+#treeWidgetInspector::branch:closed:has-children:has-siblings, #treeWidgetInspector::branch:has-children:!has-siblings:closed
+{
+    image: url(:/Graphics/Images/ArrowRightBranch.png);
+}
+#treeWidgetInspector::branch:open:has-children:has-siblings, #treeWidgetInspector::branch:open:has-children:!has-siblings
+{
+    image: url(:/Graphics/Images/ArrowDownBranch.png);
 }
 #treeWidgetInspector QLabel
 {
     color: rgba(190, 190, 190, 255);
 }
+
 #toolButtonMasterVolume
 {
     image: url(:/Graphics/Images/MasterVolumeOn.png);
