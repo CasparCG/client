@@ -57,11 +57,13 @@
 }
 #treeWidgetInspector::branch:closed:has-children:has-siblings, #treeWidgetInspector::branch:has-children:!has-siblings:closed
 {
-    image: url(:/Graphics/Images/ArrowRightBranch.png);
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowRight.png);
 }
 #treeWidgetInspector::branch:open:has-children:has-siblings, #treeWidgetInspector::branch:open:has-children:!has-siblings
 {
-    image: url(:/Graphics/Images/ArrowDownBranch.png);
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowDown.png);
 }
 #treeWidgetInspector QLabel
 {
