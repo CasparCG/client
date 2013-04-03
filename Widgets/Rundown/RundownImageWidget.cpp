@@ -252,11 +252,13 @@ bool RundownImageWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play)
+    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
     {
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
