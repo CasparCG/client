@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelNotes">
        <property name="text">
-        <string>&lt;a href=&quot;Notes&quot; style=&quot;color: #BEBEBE;&quot;&gt;Notes&lt;/a&gt;</string>
+        <string>Notes</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -84,7 +84,7 @@
      <item>
       <widget class="QLabel" name="labelAutoStep">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Auto step&lt;/a&gt;</string>
+        <string>Auto step</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

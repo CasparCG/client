@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelSaturation">
        <property name="text">
-        <string>&lt;a href=&quot;Saturation&quot; style=&quot;color: #BEBEBE;&quot;&gt;Saturation&lt;/a&gt;</string>
+        <string>Saturation</string>
        </property>
       </widget>
      </item>
@@ -85,7 +85,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #BEBEBE;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>Duration</string>
        </property>
       </widget>
      </item>
@@ -125,7 +125,7 @@
      <item>
       <widget class="QLabel" name="labelEasing">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>Tween</string>
        </property>
       </widget>
      </item>
@@ -162,7 +162,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>Defer</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -215,38 +215,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSaturationWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>113</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSaturationWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>13</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorSaturationWidget</receiver>
@@ -259,38 +227,6 @@
     <hint type="destinationlabel">
      <x>206</x>
      <y>130</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTween</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorSaturationWidget</receiver>
-   <slot>tweenChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>196</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>206</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelSaturation</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSaturationWidget</receiver>
-   <slot>resetSaturation(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>21</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>18</y>
     </hint>
    </hints>
   </connection>
@@ -327,22 +263,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSaturationWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>7</x>
-     <y>103</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDefer</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorSaturationWidget</receiver>
@@ -355,6 +275,22 @@
     <hint type="destinationlabel">
      <x>207</x>
      <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTween</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorSaturationWidget</receiver>
+   <slot>tweenChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>139</y>
     </hint>
    </hints>
   </connection>

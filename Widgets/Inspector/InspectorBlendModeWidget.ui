@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelBlendMode">
        <property name="text">
-        <string>&lt;a href=&quot;Blend Mode&quot; style=&quot;color: #BEBEBE;&quot;&gt;Blend Mode&lt;/a&gt;</string>
+        <string>Blend Mode</string>
        </property>
       </widget>
      </item>

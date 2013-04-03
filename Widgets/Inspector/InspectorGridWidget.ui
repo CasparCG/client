@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelGrid">
        <property name="text">
-        <string>&lt;a href=&quot;Grid&quot; style=&quot;color: #BEBEBE;&quot;&gt;Grid&lt;/a&gt;</string>
+        <string>Grid</string>
        </property>
       </widget>
      </item>
@@ -78,7 +78,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #BEBEBE;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>Duration</string>
        </property>
       </widget>
      </item>
@@ -118,7 +118,7 @@
      <item>
       <widget class="QLabel" name="labelEasing">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>Tween</string>
        </property>
       </widget>
      </item>
@@ -155,7 +155,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>Defer</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

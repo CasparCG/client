@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>Defer</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

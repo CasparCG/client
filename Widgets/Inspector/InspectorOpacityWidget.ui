@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelOpacity">
        <property name="text">
-        <string>&lt;a href=&quot;Opacity&quot; style=&quot;color: #BEBEBE;&quot;&gt;Opacity&lt;/a&gt;</string>
+        <string>Opacity</string>
        </property>
       </widget>
      </item>
@@ -82,7 +82,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #BEBEBE;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>Duration</string>
        </property>
       </widget>
      </item>
@@ -122,7 +122,7 @@
      <item>
       <widget class="QLabel" name="labelEasing">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>Tween</string>
        </property>
       </widget>
      </item>
@@ -159,7 +159,7 @@
      <item>
       <widget class="QLabel" name="labelDefer">
        <property name="text">
-        <string>&lt;a href=&quot;Defer&quot; style=&quot;color: #BEBEBE;&quot;&gt;Defer&lt;/a&gt;</string>
+        <string>Defer</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -212,38 +212,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorOpacityWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>113</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorOpacityWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>13</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorOpacityWidget</receiver>
@@ -272,22 +240,6 @@
     <hint type="destinationlabel">
      <x>206</x>
      <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelOpacity</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorOpacityWidget</receiver>
-   <slot>resetOpacity(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>15</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>15</y>
     </hint>
    </hints>
   </connection>
@@ -324,22 +276,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorOpacityWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>103</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDefer</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorOpacityWidget</receiver>
@@ -358,13 +294,9 @@
  </connections>
  <slots>
   <slot>sliderOpacityChanged(int)</slot>
-  <slot>resetOpacity(QString)</slot>
-  <slot>resetDuration(QString)</slot>
-  <slot>resetTween(QString)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>durationChanged(int)</slot>
   <slot>spinBoxOpacityChanged(int)</slot>
-  <slot>resetDefer(QString)</slot>
   <slot>deferChanged(int)</slot>
  </slots>
 </ui>

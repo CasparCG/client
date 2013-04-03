@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelColor">
        <property name="text">
-        <string>&lt;a href=&quot;Color&quot; style=&quot;color: #BEBEBE;&quot;&gt;Color&lt;/a&gt;</string>
+        <string>Color</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -87,7 +87,7 @@
      <item>
       <widget class="QLabel" name="labelTransition">
        <property name="text">
-        <string>&lt;a href=&quot;Transition&quot; style=&quot;color: #BEBEBE;&quot;&gt;Transition&lt;/a&gt;</string>
+        <string>Transition</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -127,7 +127,7 @@
      <item>
       <widget class="QLabel" name="labelDuration">
        <property name="text">
-        <string>&lt;a href=&quot;Duration&quot; style=&quot;color: #BEBEBE;&quot;&gt;Duration&lt;/a&gt;</string>
+        <string>Duration</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -170,7 +170,7 @@
      <item>
       <widget class="QLabel" name="labelTween">
        <property name="text">
-        <string>&lt;a href=&quot;Tween&quot; style=&quot;color: #BEBEBE;&quot;&gt;Tween&lt;/a&gt;</string>
+        <string>Tween</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -210,7 +210,7 @@
      <item>
       <widget class="QLabel" name="labelDirection">
        <property name="text">
-        <string>&lt;a href=&quot;Direction&quot; style=&quot;color: #BEBEBE;&quot;&gt;Direction&lt;/a&gt;</string>
+        <string>Direction</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -250,7 +250,7 @@
      <item>
       <widget class="QLabel" name="labelUseAuto">
        <property name="text">
-        <string>&lt;a href=&quot;Use auto&quot; style=&quot;color: #BEBEBE;&quot;&gt;Use auto&lt;/a&gt;</string>
+        <string>Use auto</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

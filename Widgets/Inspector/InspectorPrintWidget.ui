@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelOutput">
        <property name="text">
-        <string>&lt;a href=&quot;Output&quot; style=&quot;color: #BEBEBE;&quot;&gt;Output&lt;/a&gt;</string>
+        <string>Output</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
