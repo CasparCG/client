@@ -3,6 +3,10 @@
 #include "Shared.h"
 #include "ThumbnailWorker.h"
 
+#include "Global.h"
+
+#include "CasparDevice.h"
+
 #include "Models/CasparData.h"
 #include "CasparDevice.h"
 #include "Models/CasparMedia.h"

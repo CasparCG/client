@@ -24,6 +24,7 @@
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
 #include "RundownImageWidget.h"
+#include "RundownWidgetFactory.h"
 
 #include "DatabaseManager.h"
 #include "Events/AddRudnownItemEvent.h"
@@ -361,56 +362,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     {
         AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
 
-        AbstractRundownWidget* widget = NULL;
-        if (addRudnownItemEvent->getLibraryModel().getType() == "BLENDMODE")
-            widget = new RundownBlendModeWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "BRIGHTNESS")
-            widget = new RundownBrightnessWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "CONTRAST")
-            widget = new RundownContrastWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "CROP")
-            widget = new RundownCropWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "DECKLINKINPUT")
-            widget = new RundownDeckLinkInputWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "FILERECORDER")
-            widget = new RundownFileRecorderWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "TRANSFORMATION")
-            widget = new RundownGeometryWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "GRID")
-            widget = new RundownGridWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "GPIOUTPUT")
-            widget = new RundownGpiOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "MASK")
-            widget = new RundownKeyerWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "LEVELS")
-            widget = new RundownLevelsWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "AUDIO")
-            widget = new RundownAudioWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "MOVIE")
-            widget = new RundownVideoWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "STILL")
-            widget = new RundownImageWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "OPACITY")
-            widget = new RundownOpacityWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "SATURATION")
-            widget = new RundownSaturationWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "TEMPLATE")
-            widget = new RundownTemplateWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "VOLUME")
-            widget = new RundownVolumeWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "COMMIT")
-            widget = new RundownCommitWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "IMAGESCROLLER")
-            widget = new RundownImageScrollerWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "SEPARATOR")
-            widget = new RundownSeparatorWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "CHANNELSNAPSHOT")
-            widget = new RundownPrintWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "CLEAROUTPUT")
-            widget = new RundownClearOutputWidget(addRudnownItemEvent->getLibraryModel(), this);
-        else if (addRudnownItemEvent->getLibraryModel().getType() == "SOLIDCOLOR")
-            widget = new RundownSolidColorWidget(addRudnownItemEvent->getLibraryModel(), this);
-
+        AbstractRundownWidget* widget = RundownWidgetFactory::getInstance().createWidget(addRudnownItemEvent->getLibraryModel());
         widget->setCompactView(this->compactView);
 
         QTreeWidgetItem* item = new QTreeWidgetItem();
@@ -514,56 +466,7 @@ void RundownWidget::readRundownItem(const QString& type, boost::property_tree::w
     QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
     QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
 
-    AbstractRundownWidget* widget = NULL;
-    if (type == "BLENDMODE")
-        widget = new RundownBlendModeWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "BRIGHTNESS")
-        widget = new RundownBrightnessWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "CONTRAST")
-        widget = new RundownContrastWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "CROP")
-        widget = new RundownCropWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "DECKLINKINPUT")
-        widget = new RundownDeckLinkInputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type ==  "FILERECORDER")
-        widget = new RundownFileRecorderWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "TRANSFORMATION")
-        widget = new RundownGeometryWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "GRID")
-        widget = new RundownGridWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "GPIOUTPUT")
-        widget = new RundownGpiOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "MASK")
-        widget = new RundownKeyerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "LEVELS")
-        widget = new RundownLevelsWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "AUDIO")
-        widget = new RundownAudioWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "STILL")
-        widget = new RundownImageWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "MOVIE")
-        widget = new RundownVideoWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "OPACITY")
-        widget = new RundownOpacityWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "SATURATION")
-        widget = new RundownSaturationWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "TEMPLATE")
-        widget = new RundownTemplateWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "VOLUME")
-        widget = new RundownVolumeWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "COMMIT")
-        widget = new RundownCommitWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "IMAGESCROLLER")
-        widget = new RundownImageScrollerWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "CHANNELSNAPSHOT")
-        widget = new RundownPrintWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "SEPARATOR")
-        widget = new RundownSeparatorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "CLEAROUTPUT")
-        widget = new RundownClearOutputWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-    else if (type == "SOLIDCOLOR")
-        widget = new RundownSolidColorWidget(LibraryModel(0, label, name, deviceName, type, 0), this);
-
+    AbstractRundownWidget* widget = RundownWidgetFactory::getInstance().createWidget(LibraryModel(0, label, name, deviceName, type, 0));
     widget->setCompactView(this->compactView);
     widget->getCommand()->readProperties(pt);
     widget->readProperties(pt);

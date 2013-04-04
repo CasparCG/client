@@ -21,7 +21,6 @@ DatabaseManager& DatabaseManager::getInstance()
     return *databaseManager();
 }
 
-
 void DatabaseManager::initialize()
 {
     QMutexLocker locker(&mutex);

@@ -9,10 +9,6 @@
 #include "Events/TemplateChangedEvent.h"
 #include "Models/DeviceModel.h"
 
-#include "Global.h"
-
-#include "CasparDevice.h"
-
 #include <QtCore/QSharedPointer>
 #include <QtCore/QTime>
 #include <QtCore/QTimer>
