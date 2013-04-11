@@ -30,5 +30,42 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>tabWidgetRundown</sender>
+   <signal>tabCloseRequested(int)</signal>
+   <receiver>RundownWidget</receiver>
+   <slot>tabCloseRequested(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>802</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1007</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidgetRundown</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>RundownWidget</receiver>
+   <slot>currentChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>937</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1015</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>tabCloseRequested(int)</slot>
+  <slot>currentChanged(int)</slot>
+ </slots>
 </ui>

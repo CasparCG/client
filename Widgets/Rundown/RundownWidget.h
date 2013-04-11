@@ -28,5 +28,6 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         void setupMenus();
 
         Q_SLOT void addNewRundown();
+        Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
 };

@@ -22,8 +22,6 @@ RundownWidget::RundownWidget(QWidget* parent)
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
-    connect(this->tabWidgetRundown, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
-
     if (this->tabWidgetRundown->count() == 0)
         EventManager::getInstance().fireNewRundownEvent();
 
@@ -41,7 +39,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundown))
     {
-        int index = this->tabWidgetRundown->addTab(new RundownTreeWidget(this), QIcon(":/Graphics/Images/TabSplitter.png"), QString("Rundown %1").arg(this->tabCount++));
+        RundownTreeWidget* widget = new RundownTreeWidget(this);
+        widget->setActive(true);
+
+        int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), QString("Rundown %1").arg(this->tabCount++));
         this->tabWidgetRundown->setCurrentIndex(index);
 
         return true;
@@ -59,4 +60,12 @@ void RundownWidget::tabCloseRequested(int index)
 {
     if (this->tabWidgetRundown->count() > 1)
         this->tabWidgetRundown->removeTab(index);
+}
+
+void RundownWidget::currentChanged(int index)
+{
+    for (int i = 0; i < this->tabWidgetRundown->count(); i++)
+        dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->setActive(false);
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->setActive(true);
 }

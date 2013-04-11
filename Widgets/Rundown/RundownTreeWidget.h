@@ -31,6 +31,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
     public:
         explicit RundownTreeWidget(QWidget* parent = 0);
 
+        void setActive(bool active);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
@@ -44,6 +46,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
 
+        bool active;
         bool compactView;
         bool enterPressed;
 

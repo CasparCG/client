@@ -34,8 +34,6 @@ void loadDatabase(QApplication& application)
     database.setDatabaseName(databaseLocation);
     if (!database.open())
         qCritical() << "Unable to open database";
-
-    DatabaseManager::getInstance().initialize();
 }
 
 void loadStyleSheets(QApplication& application)
@@ -122,13 +120,12 @@ int main(int argc, char* argv[])
     QApplication application(argc, argv);
     application.setStyle("plastique");
 
-    EventManager::getInstance().initialize();
-    DatabaseManager::getInstance().initialize();
-
     loadDatabase(application);
     loadStyleSheets(application);
     loadFonts(application);
 
+    DatabaseManager::getInstance().initialize();
+    EventManager::getInstance().initialize();
     GpiManager::getInstance().initialize();
 
     MainWindow window;

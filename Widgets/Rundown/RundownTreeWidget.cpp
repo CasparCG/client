@@ -50,7 +50,7 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      currentFilename(""), compactView(false), enterPressed(false)
+      currentFilename(""), active(false), compactView(false), enterPressed(false)
 {
     setupUi(this);
 
@@ -75,29 +75,29 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer = new QMenu(this);
     this->contextMenuMixer->setTitle("Mixer");
     //this->contextMenuMixer->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GeometrySmall.png"), "Transformation", this, SLOT(addGeometryCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationCommand()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GeometrySmall.png"), "Transformation", this, SLOT(addGeometryItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeItem()));
     this->contextMenuMixer->addSeparator();
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitCommand()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitItem()));
 
     this->contextMenuLibrary = new QMenu(this);
     this->contextMenuLibrary->setObjectName("contextMenuLibrary");
     this->contextMenuLibrary->setTitle("Library");
     //this->contextMenuLibrary->setIcon(QIcon(":/Graphics/Images/Library.png"));
-    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/AudioSmall.png"), "Audio", this, SLOT(addAudioCommand()));
-    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/StillSmall.png"), "Image", this, SLOT(addImageCommand()));
-    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/ImageScrollerSmall.png"), "Image Scroller", this, SLOT(addImageScrollerCommand()));
-    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/TemplateSmall.png"), "Template", this, SLOT(addTemplateCommand()));
-    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/MovieSmall.png"), "Video", this, SLOT(addVideoCommand()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/AudioSmall.png"), "Audio", this, SLOT(addAudioItem()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/StillSmall.png"), "Image", this, SLOT(addImageItem()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/ImageScrollerSmall.png"), "Image Scroller", this, SLOT(addImageScrollerItem()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/TemplateSmall.png"), "Template", this, SLOT(addTemplateItem()));
+    this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/MovieSmall.png"), "Video", this, SLOT(addVideoItem()));
 
     this->contextMenuNew = new QMenu(this);
     this->contextMenuNew->setTitle("New");
@@ -105,14 +105,14 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuNew->addMenu(this->contextMenuLibrary);
     this->contextMenuNew->addMenu(this->contextMenuMixer);
     this->contextMenuNew->addSeparator();
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addColorProducerCommand()));
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputCommand()));
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderCommand()));
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputCommand()));
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintCommand()));
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
     this->contextMenuNew->addSeparator();
-    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorCommand()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
     //this->contextMenuNew->actions().at(3)->setEnabled(false);
 
     this->contextMenuColor = new QMenu(this);
@@ -148,244 +148,252 @@ void RundownTreeWidget::setupMenus()
 
 bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == QEvent::KeyPress)
+    if (this->active)
     {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (keyEvent->key() == Qt::Key_F1) // Stop.
-            return executeCommand(Playout::PlayoutType::Stop, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F2) // Play.
-            return executeCommand(Playout::PlayoutType::Play, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F3) // Load.
-            return executeCommand(Playout::PlayoutType::Load, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F4) // Pause.
-            return executeCommand(Playout::PlayoutType::Pause, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F6) // Next.
-            return executeCommand(Playout::PlayoutType::Next, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F7) // Update.
-            return executeCommand(Playout::PlayoutType::Update, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F8) // Invoke.
-            return executeCommand(Playout::PlayoutType::Invoke, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F10) // Clear.
-            return executeCommand(Playout::PlayoutType::Clear, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F11) // Clear videolayer.
-            return executeCommand(Playout::PlayoutType::ClearVideolayer, KeyPress);
-        else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
-            return executeCommand(Playout::PlayoutType::ClearChannel, KeyPress);
-
-        if (target == treeWidgetRundown)
-        {
-            if (keyEvent->key() == Qt::Key_Delete)
-                return removeSelectedItems();
-            else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
-                return duplicateSelectedItem();
-            else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
-                return copySelectedItem();
-            else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
-                return pasteSelectedItem();
-            else if (keyEvent->key() == Qt::Key_G && keyEvent->modifiers() == Qt::ControlModifier)
-                return groupItems();
-            else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
-                return ungroupItems();
-            else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                return moveItemUp();
-            else if (keyEvent->key() == Qt::Key_Down && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                return moveItemDown();
-            else if (keyEvent->key() == Qt::Key_Left && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                return moveItemOutOfGroup();
-            else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                return moveItemIntoGroup();
-        }
-
-        /*
-        if (target == treeWidgetRundown)
+        if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-            parsePage(keyEvent);
+            if (keyEvent->key() == Qt::Key_F1) // Stop.
+                return executeCommand(Playout::PlayoutType::Stop, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F2) // Play.
+                return executeCommand(Playout::PlayoutType::Play, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F3) // Load.
+                return executeCommand(Playout::PlayoutType::Load, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F4) // Pause.
+                return executeCommand(Playout::PlayoutType::Pause, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F6) // Next.
+                return executeCommand(Playout::PlayoutType::Next, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F7) // Update.
+                return executeCommand(Playout::PlayoutType::Update, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F8) // Invoke.
+                return executeCommand(Playout::PlayoutType::Invoke, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F10) // Clear.
+                return executeCommand(Playout::PlayoutType::Clear, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F11) // Clear videolayer.
+                return executeCommand(Playout::PlayoutType::ClearVideolayer, KeyPress);
+            else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
+                return executeCommand(Playout::PlayoutType::ClearChannel, KeyPress);
 
-            if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Minus)
-                playSelectedEvent();
-        }
-        */
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
-    {
-        QString filename = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
-        if (!filename.isEmpty())
-        {
-            EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
-
-            QTime time;
-            time.start();
-
-            QFile file(filename);
-            if (file.open(QFile::ReadOnly | QIODevice::Text))
+            if (target == treeWidgetRundown)
             {
-                QTextStream stream(&file);
-                stream.setCodec(QTextCodec::codecForName("UTF-8"));
-
-                std::wstringstream wstringstream;
-                wstringstream << stream.readAll().toStdWString();
-
-                file.close();
-
-                this->treeWidgetRundown->clear();
-
-                boost::property_tree::wptree pt;
-                boost::property_tree::xml_parser::read_xml(wstringstream, pt);
-                BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
-                {
-                    QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-
-                    if (type == "GROUP")
-                        readRundownGroup(type, value.second);
-                    else
-                        readRundownItem(type, value.second, NULL);
-                }
-
-                qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
-
-                if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
-                    this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
-
-                this->treeWidgetRundown->setFocus();
+                if (keyEvent->key() == Qt::Key_Delete)
+                    return removeSelectedItems();
+                else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
+                    return duplicateSelectedItem();
+                else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
+                    return copySelectedItem();
+                else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
+                    return pasteSelectedItem();
+                else if (keyEvent->key() == Qt::Key_G && keyEvent->modifiers() == Qt::ControlModifier)
+                    return groupItems();
+                else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
+                    return ungroupItems();
+                else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
+                    return moveItemUp();
+                else if (keyEvent->key() == Qt::Key_Down && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
+                    return moveItemDown();
+                else if (keyEvent->key() == Qt::Key_Left && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
+                    return moveItemOutOfGroup();
+                else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
+                    return moveItemIntoGroup();
             }
 
-            checkEmptyRundown();
-
-            qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
-
-            this->currentFilename = filename;
-            EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
-        }
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::SaveRundown))
-    {
-        if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-            return false;
-
-        QString filename;
-        SaveRundownEvent* saveRundownEvent = dynamic_cast<SaveRundownEvent*>(event);
-        if (saveRundownEvent->getSaveAs())
-            filename = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-        else
-            filename = (!this->currentFilename.isEmpty()) ? this->currentFilename : QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-
-        if (!filename.isEmpty())
-        {
-            EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
-
-            QFile file(filename);
-            if (file.exists())
-                file.remove();
-
-            if (file.open(QFile::WriteOnly))
+            /*
+            if (target == treeWidgetRundown)
             {
-                QXmlStreamWriter* writer = new QXmlStreamWriter();
-                writer->setDevice(&file);
+                QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+                parsePage(keyEvent);
 
-                writer->writeStartDocument();
+                if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Minus)
+                    playSelectedEvent();
+            }
+            */
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
+        {
+            QString filename = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+            if (!filename.isEmpty())
+            {
+                EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
 
-                writer->writeStartElement("items");
-                for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+                QTime time;
+                time.start();
+
+                QFile file(filename);
+                if (file.open(QFile::ReadOnly | QIODevice::Text))
                 {
-                    QTreeWidgetItem* child = this->treeWidgetRundown->invisibleRootItem()->child(i);
-                    AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+                    QTextStream stream(&file);
+                    stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
-                    QString type = widget->getLibraryModel()->getType().toUpper();
+                    std::wstringstream wstringstream;
+                    wstringstream << stream.readAll().toStdWString();
 
-                    if (type == "GROUP")
-                        writeRundownGroup(type, writer, child);
-                    else
-                        writeRundownItem(type, writer, child);
+                    file.close();
+
+                    this->treeWidgetRundown->clear();
+
+                    boost::property_tree::wptree pt;
+                    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+                    BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
+                    {
+                        QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
+
+                        if (type == "GROUP")
+                            readRundownGroup(type, value.second);
+                        else
+                            readRundownItem(type, value.second, NULL);
+                    }
+
+                    qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
+
+                    if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
+                        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
+
+                    this->treeWidgetRundown->setFocus();
                 }
-                writer->writeEndElement();
 
-                writer->writeEndDocument();
-                delete writer;
+                checkEmptyRundown();
 
-                file.close();
+                qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+
+                this->currentFilename = filename;
+                EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
             }
 
-            checkEmptyRundown();
-
-            this->currentFilename = filename;
-            EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
+            return true;
         }
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
-    {
-        if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-            return false;
-
-        for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::SaveRundown))
         {
-            QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
-            QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+            if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+                return false;
 
-            dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->compactView);
-            if (this->compactView)
-                widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+            QString filename;
+            SaveRundownEvent* saveRundownEvent = dynamic_cast<SaveRundownEvent*>(event);
+            if (saveRundownEvent->getSaveAs())
+                filename = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
             else
-                widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+                filename = (!this->currentFilename.isEmpty()) ? this->currentFilename : QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
 
-            for (int j = 0; j < item->childCount(); j++)
+            if (!filename.isEmpty())
             {
-                QTreeWidgetItem* child = item->child(j);
-                QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+                EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
+
+                QFile file(filename);
+                if (file.exists())
+                    file.remove();
+
+                if (file.open(QFile::WriteOnly))
+                {
+                    QXmlStreamWriter* writer = new QXmlStreamWriter();
+                    writer->setDevice(&file);
+
+                    writer->writeStartDocument();
+
+                    writer->writeStartElement("items");
+                    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+                    {
+                        QTreeWidgetItem* child = this->treeWidgetRundown->invisibleRootItem()->child(i);
+                        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+                        QString type = widget->getLibraryModel()->getType().toUpper();
+
+                        if (type == "GROUP")
+                            writeRundownGroup(type, writer, child);
+                        else
+                            writeRundownItem(type, writer, child);
+                    }
+                    writer->writeEndElement();
+
+                    writer->writeEndDocument();
+                    delete writer;
+
+                    file.close();
+                }
+
+                checkEmptyRundown();
+
+                this->currentFilename = filename;
+                EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
+            }
+
+            return true;
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
+        {
+            if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+                return false;
+
+            for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+            {
+                QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
+                QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
 
                 dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->compactView);
                 if (this->compactView)
                     widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
                 else
                     widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+
+                for (int j = 0; j < item->childCount(); j++)
+                {
+                    QTreeWidgetItem* child = item->child(j);
+                    QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+                    dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->compactView);
+                    if (this->compactView)
+                        widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+                    else
+                        widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+                }
             }
+
+            this->treeWidgetRundown->doItemsLayout(); // Refresh
+
+            this->compactView = !this->compactView;
+
+            return true;
         }
-
-        this->treeWidgetRundown->doItemsLayout(); // Refresh
-
-        this->compactView = !this->compactView;
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddRudnownItem))
-    {
-        AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
-
-        AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(addRudnownItemEvent->getLibraryModel());
-        widget->setCompactView(this->compactView);
-
-        QTreeWidgetItem* item = new QTreeWidgetItem();
-        if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
-            this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
-        else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-            this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-        else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
+        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddRudnownItem))
         {
-            this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-            widget->setInGroup(true);
+            AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
+
+            AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(addRudnownItemEvent->getLibraryModel());
+            widget->setCompactView(this->compactView);
+
+            QTreeWidgetItem* item = new QTreeWidgetItem();
+            if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
+                this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
+            else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+                this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+            else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
+            {
+                this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+                widget->setInGroup(true);
+            }
+
+            this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
+            this->treeWidgetRundown->setCurrentItem(item);
+            this->treeWidgetRundown->setFocus();
+
+            if (this->compactView)
+                dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+            else
+                dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
+            this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+            checkEmptyRundown();
+
+            return true;
         }
-
-        this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
-        this->treeWidgetRundown->setCurrentItem(item);
-        this->treeWidgetRundown->setFocus();
-
-        if (this->compactView)
-            dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
-        else
-            dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
-
-        this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-        checkEmptyRundown();
-
-        return true;
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void RundownTreeWidget::setActive(bool active)
+{
+    this->active = active;
 }
 
 void RundownTreeWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
