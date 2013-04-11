@@ -38,7 +38,8 @@ namespace Enum
             TargetChanged = QEvent::User + 27,
             DeviceChanged = QEvent::User + 28,
             LabelChanged = QEvent::User + 29,
-            NewRundown = QEvent::User + 30
+            AddRundown = QEvent::User + 30,
+            RemoveRundown = QEvent::User + 31
         };
     };
 }
@@ -281,4 +282,5 @@ namespace Rundown
     static const QString IMAGE = "STILL";
     static const QString TEMPLATE = "TEMPLATE";
     static const QString VIDEO = "MOVIE";
+    static const int MAX_NUMBER_OF_RUNDONWS = 5;
 }

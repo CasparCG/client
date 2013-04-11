@@ -35,7 +35,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
         void setupUiMenu();
 
-        Q_SLOT void newRundown();
         Q_SLOT void openRundown();
         Q_SLOT void saveRundown();
         Q_SLOT void saveAsRundown();

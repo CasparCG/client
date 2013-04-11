@@ -22,9 +22,14 @@ void EventManager::uninitialize()
 {
 }
 
-void EventManager::fireNewRundownEvent()
+void EventManager::fireAddRundownEvent()
 {
-    qApp->postEvent(qApp, new NewRundownEvent());
+    qApp->postEvent(qApp, new AddRundownEvent());
+}
+
+void EventManager::fireRemoveRundownEvent(int index)
+{
+    qApp->postEvent(qApp, new RemoveRundownEvent(index));
 }
 
 void EventManager::fireOpenRundownEvent()

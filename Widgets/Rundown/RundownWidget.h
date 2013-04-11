@@ -23,11 +23,15 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
     private:
         int tabCount;
+
+        QMenu* contextMenuColor;
         QMenu* contextMenuRundownDropdown;
 
         void setupMenus();
 
-        Q_SLOT void addNewRundown();
+        Q_SLOT void addRundown();
+        Q_SLOT void renameRundown();
+        Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
 };

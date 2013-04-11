@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupUiMenu()
 {
     this->fileMenu = new QMenu(this);
-    //this->fileMenu->addAction("New", this, SLOT(newRundown()));
     this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
@@ -111,11 +110,6 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
-}
-
-void MainWindow::newRundown()
-{
-    EventManager::getInstance().fireNewRundownEvent();
 }
 
 void MainWindow::openRundown()
@@ -206,7 +200,6 @@ void MainWindow::showSettingsDialog()
     EventManager::getInstance().fireEmptyRundownEvent();
 
     SettingsDialog* dialog = new SettingsDialog(this);
-
     connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
 
     dialog->exec();

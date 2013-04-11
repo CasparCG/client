@@ -70,6 +70,11 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     qApp->installEventFilter(this);
 }
 
+RundownTreeWidget::~RundownTreeWidget()
+{
+    this->rundownAnimation->stop();
+}
+
 void RundownTreeWidget::setupMenus()
 {
     this->contextMenuMixer = new QMenu(this);
@@ -116,7 +121,7 @@ void RundownTreeWidget::setupMenus()
     //this->contextMenuNew->actions().at(3)->setEnabled(false);
 
     this->contextMenuColor = new QMenu(this);
-    this->contextMenuColor->setTitle("Colorize");
+    this->contextMenuColor->setTitle("Colorize Item");
     //this->contextMenuColor->setIcon(QIcon(":/Graphics/Images/Color.png"));
     this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
     this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");

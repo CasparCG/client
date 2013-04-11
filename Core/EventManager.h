@@ -5,7 +5,7 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
-#include "Events/NewRundownEvent.h"
+#include "Events/AddRundownEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/CompactViewEvent.h"
@@ -24,6 +24,7 @@
 #include "Events/LabelChangedEvent.h"
 #include "Events/TargetChangedEvent.h"
 #include "Events/DeviceChangedEvent.h"
+#include "Events/RemoveRundownEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -41,7 +42,8 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
-        void fireNewRundownEvent();
+        void fireAddRundownEvent();
+        void fireRemoveRundownEvent(int index);
         void fireOpenRundownEvent();
         void fireSaveRundownEvent(bool saveAs);
         void fireExecuteStopEvent();

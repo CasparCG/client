@@ -81,9 +81,10 @@ HEADERS += \
     Events/LabelChangedEvent.h \
     Events/TargetChangedEvent.h \
     Events/PreviewEvent.h \
-    Events/NewRundownEvent.h \
     EventManager.h \
-    Events/EmptyRundownEvent.h
+    Events/EmptyRundownEvent.h \
+    Events/RemoveRundownEvent.h \
+    Events/AddRundownEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -154,9 +155,10 @@ SOURCES += \
     Events/LabelChangedEvent.cpp \
     Events/TargetChangedEvent.cpp \
     Events/PreviewEvent.cpp \
-    Events/NewRundownEvent.cpp \
     EventManager.cpp \
-    Events/EmptyRundownEvent.cpp
+    Events/EmptyRundownEvent.cpp \
+    Events/RemoveRundownEvent.cpp \
+    Events/AddRundownEvent.cpp
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32: LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

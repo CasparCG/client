@@ -30,6 +30,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
     public:
         explicit RundownTreeWidget(QWidget* parent = 0);
+        ~RundownTreeWidget();
 
         void setActive(bool active);
 
