@@ -8,10 +8,10 @@
 class CORE_EXPORT TargetChangedEvent : public QEvent
 {
     public:
-        explicit TargetChangedEvent(const QString& name);
+        explicit TargetChangedEvent(const QString& target);
 
-        const QString& getName() const;
+        const QString& getTarget() const;
 
     private:
-        QString name;
+        QString target;
 };

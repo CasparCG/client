@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/PreviewEvent.h"
+#include "EventManager.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -92,7 +92,7 @@ void InspectorVolumeWidget::sliderVolumeChanged(int volume)
 
     this->spinBoxVolume->setValue(volume);
 
-    qApp->postEvent(qApp, new PreviewEvent());
+    EventManager::getInstance().firePreviewEvent();
 }
 
 void InspectorVolumeWidget::spinBoxVolumeChanged(int volume)
@@ -105,7 +105,7 @@ void InspectorVolumeWidget::resetVolume(QString volume)
     this->sliderVolume->setValue(Mixer::DEFAULT_VOLUME * 100);
     this->command->setVolume(static_cast<float>(this->sliderVolume->value()) / 100);
 
-    qApp->postEvent(qApp, new PreviewEvent());
+    EventManager::getInstance().firePreviewEvent();
 }
 
 void InspectorVolumeWidget::resetDuration(QString duration)

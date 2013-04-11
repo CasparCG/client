@@ -3,8 +3,7 @@
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
-#include "Events/AutoRefreshLibraryEvent.h"
-#include "Events/RefreshLibraryEvent.h"
+#include "EventManager.h"
 #include "Models/ConfigurationModel.h"
 #include "Models/GpiModel.h"
 
@@ -145,7 +144,7 @@ void SettingsDialog::showAddDeviceDialog()
 
         loadDevices();
 
-        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+        EventManager::getInstance().fireRefreshLibraryEvent();
     }
 }
 
@@ -159,7 +158,7 @@ void SettingsDialog::removeDevice()
 
     loadDevices();
 
-    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+    EventManager::getInstance().fireRefreshLibraryEvent();
 }
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -179,7 +178,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 
         loadDevices();
 
-        qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+        EventManager::getInstance().fireRefreshLibraryEvent();
     }
 }
 
@@ -204,8 +203,7 @@ void SettingsDialog::autoSynchronizeChanged(int state)
     this->spinBoxRefreshInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
     this->labelSeconds->setEnabled((isAutoSynchronize == "true") ? true : false);
 
-    qApp->postEvent(qApp, new AutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false,
-                                                       this->spinBoxRefreshInterval->value() * 1000));
+    EventManager::getInstance().fireAutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false, this->spinBoxRefreshInterval->value() * 1000);
 }
 
 void SettingsDialog::showThumbnailTooltipChanged(int state)
@@ -218,7 +216,7 @@ void SettingsDialog::synchronizeIntervalChanged(int interval)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
-    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000));
+    EventManager::getInstance().fireAutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000);
 }
 
 void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action)

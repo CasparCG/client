@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/PreviewEvent.h"
+#include "EventManager.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -84,7 +84,7 @@ void InspectorOpacityWidget::sliderOpacityChanged(int opacity)
 
     this->spinBoxOpacity->setValue(opacity);
 
-    qApp->postEvent(qApp, new PreviewEvent());
+    EventManager::getInstance().firePreviewEvent();
 }
 
 void InspectorOpacityWidget::spinBoxOpacityChanged(int opacity)
@@ -97,7 +97,7 @@ void InspectorOpacityWidget::resetOpacity(QString opacity)
     this->sliderOpacity->setValue(Mixer::DEFAULT_OPACITY * 100);
     this->command->setOpacity(static_cast<float>(this->sliderOpacity->value()) / 100);
 
-    qApp->postEvent(qApp, new PreviewEvent());
+    EventManager::getInstance().firePreviewEvent();
 }
 
 void InspectorOpacityWidget::resetDuration(QString duration)

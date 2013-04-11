@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "EventManager.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"
@@ -22,9 +23,6 @@
 #include "Commands/VolumeCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Events/LibraryItemSelectedEvent.h"
-#include "Events/RundownIsEmptyEvent.h"
-#include "Events/LabelChangedEvent.h"
-#include "Events/TargetChangedEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 #include <QtGui/QApplication>
@@ -99,7 +97,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
     {
         blockAllSignals(true);
 
@@ -125,10 +123,10 @@ void InspectorMetadataWidget::blockAllSignals(bool block)
 
 void InspectorMetadataWidget::labelChanged(QString name)
 {
-    qApp->postEvent(qApp, new LabelChangedEvent(this->lineEditLabel->text()));
+    EventManager::getInstance().fireLabelChangedEvent(this->lineEditLabel->text());
 }
 
 void InspectorMetadataWidget::targetChanged(QString name)
 {
-    qApp->postEvent(qApp, new TargetChangedEvent(this->lineEditTarget->text()));
+    EventManager::getInstance().fireTargetChangedEvent(this->lineEditTarget->text());
 }

@@ -9,14 +9,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownWidgetFactory : public QWidget
+class WIDGETS_EXPORT RundownItemFactory : public QWidget
 {
     Q_OBJECT
 
     public:
-        explicit RundownWidgetFactory() {}
+        explicit RundownItemFactory() {}
 
-        static RundownWidgetFactory& getInstance();
+        static RundownItemFactory& getInstance();
 
         AbstractRundownWidget* createWidget(const LibraryModel& model);
 };

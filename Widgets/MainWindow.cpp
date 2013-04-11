@@ -5,11 +5,7 @@
 
 #include "Global.h"
 
-#include "Events/CompactViewEvent.h"
-#include "Events/OpenRundownEvent.h"
-#include "Events/RefreshLibraryEvent.h"
-#include "Events/RundownIsEmptyEvent.h"
-#include "Events/SaveRundownEvent.h"
+#include "EventManager.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/WindowTitleEvent.h"
 
@@ -18,7 +14,6 @@
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
-#include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
@@ -43,6 +38,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupUiMenu()
 {
     this->fileMenu = new QMenu(this);
+    //this->fileMenu->addAction("New", this, SLOT(newRundown()));
     this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
@@ -117,74 +113,79 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
+void MainWindow::newRundown()
+{
+    EventManager::getInstance().fireNewRundownEvent();
+}
+
 void MainWindow::openRundown()
 {
-    qApp->postEvent(qApp, new OpenRundownEvent());
+    EventManager::getInstance().fireOpenRundownEvent();
 }
 
 void MainWindow::saveRundown()
 {
-    qApp->postEvent(qApp, new SaveRundownEvent(false));
+    EventManager::getInstance().fireSaveRundownEvent(false);
 }
 
 void MainWindow::saveAsRundown()
 {
-    qApp->postEvent(qApp, new SaveRundownEvent(true));
+    EventManager::getInstance().fireSaveRundownEvent(true);
 }
 
 void MainWindow::executeStop()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteStopEvent();
 }
 
 void MainWindow::executePlay()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier));
+    EventManager::getInstance().fireExecutePlayEvent();
 }
 
 void MainWindow::executePause()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier));
+    EventManager::getInstance().fireExecutePauseEvent();
 }
 
 void MainWindow::executeLoad()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteLoadEvent();
 }
 
 void MainWindow::executeNext()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteNextEvent();
 }
 
 void MainWindow::executeUpdate()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteUpdateEvent();
 }
 
 void MainWindow::executeInvoke()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F8, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteInvokeEvent();
 }
 
 void MainWindow::executeClear()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteClearEvent();
 }
 
 void MainWindow::executeClearVideolayer()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteClearVideolayerEvent();
 }
 
 void MainWindow::executeClearChannel()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
+    EventManager::getInstance().fireExecuteClearChannelEvent();
 }
 
 void MainWindow::toggleCompactView()
 {
-    qApp->postEvent(qApp, new CompactViewEvent());
+    EventManager::getInstance().fireToggleCompactViewEvent();
 }
 
 void MainWindow::showAboutDialog()
@@ -202,7 +203,7 @@ void MainWindow::showHelpDialog()
 void MainWindow::showSettingsDialog()
 {
     // Reset inspector panel.
-    qApp->sendEvent(qApp, new RundownIsEmptyEvent());
+    EventManager::getInstance().fireEmptyRundownEvent();
 
     SettingsDialog* dialog = new SettingsDialog(this);
 
@@ -218,5 +219,5 @@ void MainWindow::toggleFullscreen()
 
 void MainWindow::refreshLibrary()
 {
-    qApp->postEvent(qApp, new RefreshLibraryEvent(0));
+    EventManager::getInstance().fireRefreshLibraryEvent();
 }

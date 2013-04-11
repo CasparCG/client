@@ -17,8 +17,8 @@ class CORE_EXPORT GpiManager : public QObject
         static GpiManager& getInstance();
 
         void initialize();
-        void reinitialize();
         void uninitialize();
+        void reinitialize();
 
         GpiDevice::Ptr getGpiDevice();
 

@@ -1,9 +1,10 @@
 #include "Global.h"
 
+#include "EventManager.h"
 #include "DatabaseManager.h"
-#include "DeviceManager.h"
 #include "GpiManager.h"
 #include "LibraryManager.h"
+#include "DeviceManager.h"
 
 #include "MainWindow.h"
 
@@ -121,6 +122,9 @@ int main(int argc, char* argv[])
     QApplication application(argc, argv);
     application.setStyle("plastique");
 
+    EventManager::getInstance().initialize();
+    DatabaseManager::getInstance().initialize();
+
     loadDatabase(application);
     loadStyleSheets(application);
     loadFonts(application);
@@ -138,6 +142,8 @@ int main(int argc, char* argv[])
 
     int returnValue = application.exec();
 
+    EventManager::getInstance().uninitialize();
+    DatabaseManager::getInstance().uninitialize();
     GpiManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
     LibraryManager::getInstance().uninitialize();

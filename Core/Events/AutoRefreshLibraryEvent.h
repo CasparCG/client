@@ -7,7 +7,7 @@
 class CORE_EXPORT AutoRefreshLibraryEvent : public QEvent
 {
     public:
-        explicit AutoRefreshLibraryEvent(bool isAutoRefresh, int interval);
+        explicit AutoRefreshLibraryEvent(bool autoRefresh, int interval);
 
         int getInterval() const;
 
@@ -15,5 +15,5 @@ class CORE_EXPORT AutoRefreshLibraryEvent : public QEvent
 
     private:
         int interval;
-        bool isAutoRefresh;
+        bool autoRefresh;
 };

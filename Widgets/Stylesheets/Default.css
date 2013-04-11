@@ -589,6 +589,10 @@ QToolButton:pressed
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
 }
+QToolButton::menu-indicator
+{
+    image: none;
+}
 
 /*
  * QComboBox
@@ -906,15 +910,24 @@ QDateTimeEdit::down-button:pressed
 }
 
 /*
- * QTabWidget
+ * QTabWidget / QTabBar
  */
-QTabBar
+QTabWidget::pane
 {
-    background-color: transparent;
+    border-color: rgba(42, 42, 42, 255);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    position: absolute;
+    top: -1px;
 }
 QTabWidget::tab-bar
 {
     left: 0px;
+}
+QTabBar
+{
+    background-color: transparent;
 }
 QTabBar::tab
 {
@@ -943,6 +956,7 @@ QTabBar::tab:selected
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
     border-bottom-width: 0px;
+    padding-bottom: 4px;
 }
 QTabBar::tab:selected:disabled
 {
@@ -952,15 +966,6 @@ QTabBar::tab:selected:disabled
 QTabBar::tab:!selected:hover
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
-}
-QTabWidget::pane
-{
-    border-color: rgba(42, 42, 42, 255);
-    border-radius: 2px;
-    border-style: solid;
-    border-width: 1px;
-    position: absolute;
-    top: -1px;
 }
 QTabBar::close-button
 {

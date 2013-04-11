@@ -27,6 +27,7 @@ class CORE_EXPORT DatabaseManager
         static DatabaseManager& getInstance();
 
         void initialize();
+        void uninitialize();
 
         ConfigurationModel getConfigurationByName(const QString& name);
         void updateConfiguration(const ConfigurationModel& model);     

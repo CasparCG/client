@@ -5,8 +5,8 @@
 #include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT RundownIsEmptyEvent : public QEvent
+class CORE_EXPORT EmptyRundownEvent : public QEvent
 {
     public:
-        explicit RundownIsEmptyEvent();
+        explicit EmptyRundownEvent();
 };

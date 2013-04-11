@@ -70,8 +70,8 @@ bool RundownVideoWidget::eventFilter(QObject* target, QEvent* event)
         if (!this->active)
             return false;
 
-        TargetChangedEvent* rargetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(rargetChangedEvent->getName());
+        TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
+        this->model.setName(targetChangedEvent->getTarget());
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
     {

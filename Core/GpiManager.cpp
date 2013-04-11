@@ -27,15 +27,8 @@ void GpiManager::initialize()
     setupPorts();
 }
 
-void GpiManager::setupPorts()
+void GpiManager::uninitialize()
 {
-    DatabaseManager& database = DatabaseManager::getInstance();
-
-    foreach (const GpiPortModel gpiPort, database.getGpiPorts())
-        this->device->setupGpiPort(gpiPort.getPort(), gpiPort.isRisingEdge());
-
-    foreach (const GpoPortModel gpoPort, database.getGpoPorts())
-       this-> device->setupGpoPort(gpoPort.getPort(), gpoPort.getPulseLengthMillis(), gpoPort.isRisingEdge());
 }
 
 void GpiManager::reinitialize()
@@ -48,9 +41,15 @@ void GpiManager::reinitialize()
     setupPorts();
 }
 
-void GpiManager::uninitialize()
+void GpiManager::setupPorts()
 {
+    DatabaseManager& database = DatabaseManager::getInstance();
 
+    foreach (const GpiPortModel gpiPort, database.getGpiPorts())
+        this->device->setupGpiPort(gpiPort.getPort(), gpiPort.isRisingEdge());
+
+    foreach (const GpoPortModel gpoPort, database.getGpoPorts())
+       this-> device->setupGpoPort(gpoPort.getPort(), gpoPort.getPulseLengthMillis(), gpoPort.isRisingEdge());
 }
 
 GpiDevice::Ptr GpiManager::getGpiDevice()

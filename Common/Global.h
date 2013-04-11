@@ -30,14 +30,15 @@ namespace Enum
             AddRudnownItem = QEvent::User + 19,
             Preview = QEvent::User + 20,
             ConnectionStateChanged = QEvent::User + 21,
-            RundownIsEmpty = QEvent::User + 22,
+            EmptyRundown = QEvent::User + 22,
             OpenRundown = QEvent::User + 23,
             SaveRundown = QEvent::User + 24,
             ToggleCompactView = QEvent::User + 25,
             WindowTitle = QEvent::User + 26,
             TargetChanged = QEvent::User + 27,
             DeviceChanged = QEvent::User + 28,
-            LabelChanged = QEvent::User + 29
+            LabelChanged = QEvent::User + 29,
+            NewRundown = QEvent::User + 30
         };
     };
 }
@@ -252,4 +253,32 @@ namespace Group
 {
     static const QString DEFAULT_NOTE = "";
     static const bool DEFAULT_AUTO_STEP = false;
+}
+
+namespace Rundown
+{
+    static const QString BLENDMODE = "BLENDMODE";
+    static const QString BRIGHTNESS = "BRIGHTNESS";
+    static const QString CONTRAST = "CONTRAST";
+    static const QString CROP = "CROP";
+    static const QString IMAGESCROLLER = "IMAGESCROLLER";
+    static const QString DECKLINKINPUT = "DECKLINKINPUT";
+    static const QString PRINT = "CHANNELSNAPSHOT";
+    static const QString CLEAROUTPUT = "CLEAROUTPUT";
+    static const QString GEOMETRY = "BLENDMODE";
+    static const QString GPIOUTPUT = "GPIOUTPUT";
+    static const QString FILERECORDER = "FILERECORDER";
+    static const QString SEPARATOR = "SEPARATOR";
+    static const QString GRID = "GRID";
+    static const QString SOLIDCOLOR = "SOLIDCOLOR";
+    static const QString KEYER = "MASK";
+    static const QString LEVELS = "LEVELS";
+    static const QString OPACITY = "OPACITY";
+    static const QString SATURATION = "SATURATION";
+    static const QString VOLUME = "VOLUME";
+    static const QString COMMIT = "COMMIT";
+    static const QString AUDIO = "AUDIO";
+    static const QString IMAGE = "STILL";
+    static const QString TEMPLATE = "TEMPLATE";
+    static const QString VIDEO = "MOVIE";
 }

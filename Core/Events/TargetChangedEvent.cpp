@@ -3,11 +3,11 @@
 #include "Global.h"
 
 TargetChangedEvent::TargetChangedEvent(const QString& name)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::TargetChanged)), name(name)
+    : QEvent(static_cast<QEvent::Type>(Enum::EventType::TargetChanged)), target(target)
 {
 }
 
-const QString& TargetChangedEvent::getName() const
+const QString& TargetChangedEvent::getTarget() const
 {
-    return this->name;
+    return this->target;
 }

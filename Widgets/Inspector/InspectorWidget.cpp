@@ -50,6 +50,7 @@
 #include "Commands/ImageScrollerCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
+#include "Events/EmptyRundownEvent.h"
 
 InspectorWidget::InspectorWidget(QWidget* parent)
     : QWidget(parent),
@@ -119,7 +120,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
 bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected) ||
-        event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
+        event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
     {
         this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(2)->setHidden(true);

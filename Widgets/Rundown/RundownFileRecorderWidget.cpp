@@ -31,7 +31,6 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
@@ -65,8 +64,8 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
         if (!this->active)
             return false;
 
-        TargetChangedEvent* rargetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(rargetChangedEvent->getName());
+        TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
+        this->model.setName(targetChangedEvent->getTarget());
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
     {
@@ -196,10 +195,6 @@ void RundownFileRecorderWidget::setInGroup(bool inGroup)
                                         this->labelChannel->geometry().y(),
                                         this->labelChannel->geometry().width(),
                                         this->labelChannel->geometry().height());
-        this->labelVideolayer->setGeometry(this->labelVideolayer->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                           this->labelVideolayer->geometry().y(),
-                                           this->labelVideolayer->geometry().width(),
-                                           this->labelVideolayer->geometry().height());
         this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
                                       this->labelDelay->geometry().y(),
                                       this->labelDelay->geometry().width(),
@@ -288,11 +283,6 @@ void RundownFileRecorderWidget::executePlay()
 void RundownFileRecorderWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
-}
-
-void RundownFileRecorderWidget::videolayerChanged(int videolayer)
-{
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
 void RundownFileRecorderWidget::delayChanged(int delay)

@@ -186,26 +186,10 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('SCRIPT')");
     sql.exec("INSERT INTO Type (Value) VALUES('STILL')");
     sql.exec("INSERT INTO Type (Value) VALUES('TEMPLATE')");
-    sql.exec("INSERT INTO Type (Value) VALUES('FILERECORDER')");
-    sql.exec("INSERT INTO Type (Value) VALUES('DECKLINKINPUT')");
-    sql.exec("INSERT INTO Type (Value) VALUES('GPIOUTPUT')");
-    sql.exec("INSERT INTO Type (Value) VALUES('BLENDMODE')");
-    sql.exec("INSERT INTO Type (Value) VALUES('BRIGHTNESS')");
-    sql.exec("INSERT INTO Type (Value) VALUES('CONTRAST')");
-    sql.exec("INSERT INTO Type (Value) VALUES('CROP')");
-    sql.exec("INSERT INTO Type (Value) VALUES('TRANSFORMATION')");
-    sql.exec("INSERT INTO Type (Value) VALUES('GRID')");
-    sql.exec("INSERT INTO Type (Value) VALUES('KEYER')");
-    sql.exec("INSERT INTO Type (Value) VALUES('LEVELS')");
-    sql.exec("INSERT INTO Type (Value) VALUES('OPACITY')");
-    sql.exec("INSERT INTO Type (Value) VALUES('SATURATION')");
-    sql.exec("INSERT INTO Type (Value) VALUES('VOLUME')");
-    sql.exec("INSERT INTO Type (Value) VALUES('COMMIT')");
-    sql.exec("INSERT INTO Type (Value) VALUES('IMAGESCROLLER')");
-    sql.exec("INSERT INTO Type (Value) VALUES('SEPARATOR')");
-    sql.exec("INSERT INTO Type (Value) VALUES('CHANNELSNAPSHOT')");
-    sql.exec("INSERT INTO Type (Value) VALUES('CLEAROUTPUT')");
-    sql.exec("INSERT INTO Type (Value) VALUES('COLORPRODUCER')");
+}
+
+void DatabaseManager::uninitialize()
+{
 }
 
 void DatabaseManager::updateConfiguration(const ConfigurationModel& model)

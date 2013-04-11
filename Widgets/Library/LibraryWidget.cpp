@@ -3,12 +3,8 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/AddRudnownItemEvent.h"
-#include "Events/DataChangedEvent.h"
+#include "EventManager.h"
 #include "Events/LibraryItemSelectedEvent.h"
-#include "Events/MediaChangedEvent.h"
-#include "Events/StatusbarEvent.h"
-#include "Events/TemplateChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>
@@ -63,9 +59,9 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 
     qApp->installEventFilter(this);
 
-    qApp->postEvent(qApp, new MediaChangedEvent());
-    qApp->postEvent(qApp, new TemplateChangedEvent());
-    qApp->postEvent(qApp, new DataChangedEvent());
+    EventManager::getInstance().fireMediaChangedEvent();
+    EventManager::getInstance().fireTemplateChangedEvent();
+    EventManager::getInstance().fireDataChangedEvent();
 }
 
 void LibraryWidget::setupUiMenu()
@@ -256,20 +252,20 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
     if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), item->text(4), item->text(5).toInt())));
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
+                                                                             item->text(3), item->text(4), item->text(5).toInt()));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTemplate->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), item->text(4), item->text(5).toInt())));
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
+                                                                             item->text(3), item->text(4), item->text(5).toInt()));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), item->text(4), item->text(5).toInt())));
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
+                                                                             item->text(3), item->text(4), item->text(5).toInt()));
     }
 }
 
@@ -278,22 +274,22 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
     if (action->text() == "Add as image")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), item->text(4), item->text(5).toInt())));
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
+                                                                             item->text(3), item->text(4), item->text(5).toInt()));
     }
     else if (action->text() == "Add as image scroller")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
-            qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                       item->text(3), "IMAGESCROLLER", item->text(5).toInt())));
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
+                                                                             item->text(3), "IMAGESCROLLER", item->text(5).toInt()));
     }
 }
 
 void LibraryWidget::filterLibrary()
 {
-    qApp->postEvent(qApp, new MediaChangedEvent());
-    qApp->postEvent(qApp, new TemplateChangedEvent());
-    qApp->postEvent(qApp, new DataChangedEvent());
+    EventManager::getInstance().fireMediaChangedEvent();
+    EventManager::getInstance().fireTemplateChangedEvent();
+    EventManager::getInstance().fireDataChangedEvent();
 }
 
 void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
@@ -304,10 +300,7 @@ void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
                                                                 current->text(3), current->text(4), current->text(5).toInt()));
 
-    // Use synchronous event through sendEvent(). The inspector will update the selected
-    // rundown item. We want to be absolutely sure that we update the right item, which
-    // will not be the case with postEvent() if we trigger up/down arrow key really fast.
-    qApp->sendEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
+    EventManager::getInstance().fireLibraryItemSelectedEvent(NULL, this->model.data());
 }
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -317,23 +310,23 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 
     if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+        EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                         current->text(3), current->text(4), current->text(5).toInt()));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
     {
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+        EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                         current->text(3), current->text(4), current->text(5).toInt()));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+        EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                         current->text(3), current->text(4), current->text(5).toInt()));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                   current->text(3), current->text(4), current->text(5).toInt())));
+        EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
+                                                                         current->text(3), current->text(4), current->text(5).toInt()));
     }
 }
 
@@ -345,8 +338,5 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
                                                                 current->text(3), current->text(4), current->text(5).toInt()));
 
-    // Use synchronous event through sendEvent(). The inspector will update the selected
-    // rundown item. We want to be absolutely sure that we update the right item, which
-    // will not be the case with postEvent() if we trigger up/down arrow key really fast.
-    qApp->sendEvent(qApp, new LibraryItemSelectedEvent(NULL, this->model.data()));
+    EventManager::getInstance().fireLibraryItemSelectedEvent(NULL, this->model.data());
 }

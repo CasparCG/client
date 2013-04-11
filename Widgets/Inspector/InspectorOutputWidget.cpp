@@ -3,6 +3,7 @@
 #include "Global.h"
 
 #include "DeviceManager.h"
+#include "EventManager.h"
 #include "Commands/CommitCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
@@ -10,9 +11,9 @@
 #include "Commands/SeparatorCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/GridCommand.h"
-#include "Events/DeviceChangedEvent.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
+#include "Events/EmptyRundownEvent.h"
 
 #include <QtGui/QApplication>
 
@@ -47,7 +48,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
          blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownIsEmpty))
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
     {
         blockAllSignals(true);
 
@@ -154,7 +155,7 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 {
     checkEmptyDevice();
 
-    qApp->postEvent(qApp, new DeviceChangedEvent(this->comboBoxDevice->currentText()));
+    EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxDevice->currentText());
 }
 
 void InspectorOutputWidget::allowGpiChanged(int state)
