@@ -33,6 +33,8 @@ void AddDeviceDialog::setDeviceModel(const DeviceModel& model)
 void AddDeviceDialog::setEditMode(bool editMode)
 {
     this->editMode = editMode;
+
+    this->setWindowTitle("Edit Device");
     this->lineEditDeviceName->setEnabled(!this->editMode);
 }
 

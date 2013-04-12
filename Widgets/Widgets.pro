@@ -76,7 +76,8 @@ HEADERS += \
     Inspector/InspectorVideoWidget.h \
     Rundown/RundownVideoWidget.h \
     Rundown/RundownTreeWidget.h \
-    Rundown/RundownItemFactory.h
+    Rundown/RundownItemFactory.h \
+    Rundown/AddRundownDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -141,7 +142,8 @@ SOURCES += \
     Rundown/RundownVideoWidget.cpp \
     Inspector/InspectorVideoWidget.cpp \
     Rundown/RundownTreeWidget.cpp \
-    Rundown/RundownItemFactory.cpp
+    Rundown/RundownItemFactory.cpp \
+    Rundown/AddRundownDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -205,7 +207,8 @@ FORMS += \
     Inspector/InspectorImageWidget.ui \
     Rundown/RundownVideoWidget.ui \
     Inspector/InspectorVideoWidget.ui \
-    Rundown/RundownTreeWidget.ui
+    Rundown/RundownTreeWidget.ui \
+    Rundown/AddRundownDialog.ui
 
 RESOURCES += \
     Resource.qrc

@@ -23,10 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Add New Device</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true"/>
+   <string>Add Device</string>
   </property>
   <widget class="QLineEdit" name="lineEditUsername">
    <property name="geometry">

@@ -1,5 +1,6 @@
 #include "RundownWidget.h"
 #include "RundownTreeWidget.h"
+#include "AddRundownDialog.h"
 
 #include "EventManager.h"
 #include "Events/RemoveRundownEvent.h"
@@ -23,36 +24,22 @@ RundownWidget::RundownWidget(QWidget* parent)
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
-    if (this->tabWidgetRundown->count() == 0)
-        EventManager::getInstance().fireAddRundownEvent();
+    RundownTreeWidget* widget = new RundownTreeWidget(this);
+    widget->setActive(true);
+    int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), QString("Rundown %1").arg(this->tabCount++));
+    this->tabWidgetRundown->setCurrentIndex(index);
 
     qApp->installEventFilter(this);
 }
 
 void RundownWidget::setupMenus()
 {
-    this->contextMenuColor = new QMenu(this);
-    this->contextMenuColor->setTitle("Colorize Tab");
-    //this->contextMenuColor->setIcon(QIcon(":/Graphics/Images/Color.png"));
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "MaroonLight");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
-    this->contextMenuColor->addSeparator();
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
-
     this->contextMenuRundownDropdown = new QMenu(this);
     this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/AddRundown.png"),*/ "Add rundown", this, SLOT(addRundown()));
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Rename rundown", this, SLOT(renameRundown()));
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/AddRundown.png"),*/ "Add rundown...", this, SLOT(addRundown()));
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/AddRundown.png"),*/ "Remove rundown", this, SLOT(removeRundown()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addMenu(this->contextMenuColor);
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Edit rundown...", this, SLOT(renameRundown()));
 }
 
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
@@ -65,14 +52,21 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddRundown))
     {
-        RundownTreeWidget* widget = new RundownTreeWidget(this);
-        widget->setActive(true);
+        AddRundownDialog* dialog = new AddRundownDialog(this);
+        dialog->setName(QString("Rundown %1").arg(this->tabCount));
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            RundownTreeWidget* widget = new RundownTreeWidget(this);
+            widget->setActive(true);
 
-        int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), QString("Rundown %1").arg(this->tabCount++));
-        this->tabWidgetRundown->setCurrentIndex(index);
+            int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), QString("%1").arg(dialog->getName()));
+            this->tabWidgetRundown->setCurrentIndex(index);
 
-        if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
-            this->contextMenuRundownDropdown->actions().at(0)->setEnabled(false);
+            if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
+                this->contextMenuRundownDropdown->actions().at(0)->setEnabled(false);
+
+            this->tabCount++;
+        }
 
         return true;
     }
@@ -86,6 +80,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         // Delete the page widget, which automatically removes the tab as well.
         delete this->tabWidgetRundown->widget(removeRundownEvent->getIndex());
 
+        this->tabCount--;
+
         return true;
     }
 
@@ -98,8 +94,21 @@ void RundownWidget::addRundown()
         EventManager::getInstance().fireAddRundownEvent();
 }
 
+void RundownWidget::removeRundown()
+{
+    if (this->tabWidgetRundown->count() > 1)
+        EventManager::getInstance().fireRemoveRundownEvent(this->tabWidgetRundown->currentIndex());
+}
+
 void RundownWidget::renameRundown()
 {
+    AddRundownDialog* dialog = new AddRundownDialog(this);
+    dialog->setName(this->tabWidgetRundown->tabText(this->tabWidgetRundown->currentIndex()));
+    dialog->setEditMode(true);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), dialog->getName());
+    }
 }
 
 bool RundownWidget::selectTab(int index)
