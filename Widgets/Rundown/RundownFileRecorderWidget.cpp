@@ -38,7 +38,6 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
