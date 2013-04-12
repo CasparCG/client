@@ -110,7 +110,9 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
 
         QFileInfo info(activeRundownChangedEvent->getPath());
-        if (info.baseName() != Rundown::DEFAULT_NAME)
+        if (info.baseName() == Rundown::DEFAULT_NAME)
+            this->setWindowTitle(QString("%1").arg(this->applicationTitle));
+        else
             this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
 
     }
