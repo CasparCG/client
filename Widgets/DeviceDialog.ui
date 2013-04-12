@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddDeviceDialog</class>
- <widget class="QDialog" name="AddDeviceDialog">
+ <class>DeviceDialog</class>
+ <widget class="QDialog" name="DeviceDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Add Device</string>
+   <string>New Device</string>
   </property>
   <widget class="QLineEdit" name="lineEditUsername">
    <property name="geometry">
@@ -289,7 +289,7 @@
   <connection>
    <sender>pushButtonOK</sender>
    <signal>clicked()</signal>
-   <receiver>AddDeviceDialog</receiver>
+   <receiver>DeviceDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -305,7 +305,7 @@
   <connection>
    <sender>lineEditAddress</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>AddDeviceDialog</receiver>
+   <receiver>DeviceDialog</receiver>
    <slot>addressChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -321,7 +321,7 @@
   <connection>
    <sender>lineEditDeviceName</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>AddDeviceDialog</receiver>
+   <receiver>DeviceDialog</receiver>
    <slot>nameChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -337,7 +337,7 @@
   <connection>
    <sender>toolButtonTestConnection</sender>
    <signal>clicked()</signal>
-   <receiver>AddDeviceDialog</receiver>
+   <receiver>DeviceDialog</receiver>
    <slot>testConnection()</slot>
    <hints>
     <hint type="sourcelabel">

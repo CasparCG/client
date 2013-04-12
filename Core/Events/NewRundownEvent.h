@@ -5,8 +5,8 @@
 #include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT AddRundownEvent : public QEvent
+class CORE_EXPORT NewRundownEvent : public QEvent
 {
     public:
-        explicit AddRundownEvent();
+        explicit NewRundownEvent();
 };

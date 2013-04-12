@@ -4,10 +4,10 @@
 
 #include <QtCore/QEvent>
 
-class CORE_EXPORT RemoveRundownEvent : public QEvent
+class CORE_EXPORT DeleteRundownEvent : public QEvent
 {
     public:
-        explicit RemoveRundownEvent(int index);
+        explicit DeleteRundownEvent(int index);
 
         int getIndex() const;
 

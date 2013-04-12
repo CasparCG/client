@@ -1,4 +1,4 @@
-#include "AddDeviceDialog.h"
+#include "DeviceDialog.h"
 
 #include "DatabaseManager.h"
 
@@ -8,7 +8,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMessageBox>
 
-AddDeviceDialog::AddDeviceDialog(QWidget* parent)
+DeviceDialog::DeviceDialog(QWidget* parent)
     : QDialog(parent), editMode(false)
 {
     setupUi(this);
@@ -19,7 +19,7 @@ AddDeviceDialog::AddDeviceDialog(QWidget* parent)
     this->deviceNameAnimation->start();
 }
 
-void AddDeviceDialog::setDeviceModel(const DeviceModel& model)
+void DeviceDialog::setDeviceModel(const DeviceModel& model)
 {
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());
@@ -30,7 +30,7 @@ void AddDeviceDialog::setDeviceModel(const DeviceModel& model)
     this->checkBoxShadow->setChecked((model.getShadow() == "Yes") ? true : false);
 }
 
-void AddDeviceDialog::setEditMode(bool editMode)
+void DeviceDialog::setEditMode(bool editMode)
 {
     this->editMode = editMode;
 
@@ -38,17 +38,17 @@ void AddDeviceDialog::setEditMode(bool editMode)
     this->lineEditDeviceName->setEnabled(!this->editMode);
 }
 
-const QString AddDeviceDialog::getName() const
+const QString DeviceDialog::getName() const
 {
     return this->lineEditDeviceName->text();
 }
 
-const QString AddDeviceDialog::getAddress() const
+const QString DeviceDialog::getAddress() const
 {
     return this->lineEditAddress->text();
 }
 
-const QString AddDeviceDialog::getPort() const
+const QString DeviceDialog::getPort() const
 {
     if (!this->lineEditPort->text().isEmpty())
         return this->lineEditPort->text();
@@ -56,27 +56,27 @@ const QString AddDeviceDialog::getPort() const
         return this->lineEditPort->placeholderText();
 }
 
-const QString AddDeviceDialog::getUsername() const
+const QString DeviceDialog::getUsername() const
 {
     return this->lineEditUsername->text();
 }
 
-const QString AddDeviceDialog::getPassword() const
+const QString DeviceDialog::getPassword() const
 {
     return this->lineEditPassword->text();
 }
 
-const QString AddDeviceDialog::getDescription() const
+const QString DeviceDialog::getDescription() const
 {
     return this->lineEditDescription->text();
 }
 
-const QString AddDeviceDialog::getShadow() const
+const QString DeviceDialog::getShadow() const
 {
     return this->checkBoxShadow->checkState() == Qt::Checked ? "Yes" : "No";
 }
 
-void AddDeviceDialog::accept()
+void DeviceDialog::accept()
 {
     if (this->lineEditDeviceName->text().isEmpty() || this->lineEditAddress->text().isEmpty())
         return;
@@ -121,7 +121,7 @@ void AddDeviceDialog::accept()
     QDialog::accept();
 }
 
-void AddDeviceDialog::testConnection()
+void DeviceDialog::testConnection()
 {
     this->device = QSharedPointer<CasparDevice>(new CasparDevice());
 
@@ -133,7 +133,7 @@ void AddDeviceDialog::testConnection()
         this->device->connectDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt());
 }
 
-void AddDeviceDialog::nameChanged(QString name)
+void DeviceDialog::nameChanged(QString name)
 {
     if (!this->lineEditDeviceName->text().isEmpty())
         this->deviceNameAnimation->stop();
@@ -141,7 +141,7 @@ void AddDeviceDialog::nameChanged(QString name)
         this->deviceNameAnimation->start();
 }
 
-void AddDeviceDialog::addressChanged(QString name)
+void DeviceDialog::addressChanged(QString name)
 {
     if (!this->lineEditAddress->text().isEmpty())
         this->addressAnimation->stop();
@@ -149,7 +149,7 @@ void AddDeviceDialog::addressChanged(QString name)
         this->addressAnimation->start();
 }
 
-void AddDeviceDialog::connectionStateChanged(CasparDevice& device)
+void DeviceDialog::connectionStateChanged(CasparDevice& device)
 {
     disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 

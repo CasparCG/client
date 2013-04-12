@@ -5,7 +5,8 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
-#include "Events/AddRundownEvent.h"
+#include "Events/NewRundownEvent.h"
+#include "Events/NewRundownMenuEvent.h"
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/CompactViewEvent.h"
@@ -13,7 +14,7 @@
 #include "Events/EmptyRundownEvent.h"
 #include "Events/AddRudnownItemEvent.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/WindowTitleEvent.h"
+#include "Events/ActiveRundownChangedEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/AutoRefreshLibraryEvent.h"
@@ -24,7 +25,7 @@
 #include "Events/LabelChangedEvent.h"
 #include "Events/TargetChangedEvent.h"
 #include "Events/DeviceChangedEvent.h"
-#include "Events/RemoveRundownEvent.h"
+#include "Events/DeleteRundownEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -42,8 +43,10 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
-        void fireAddRundownEvent();
-        void fireRemoveRundownEvent(int index);
+        void fireProcessEvent();
+        void fireNewRundownEvent();
+        void fireNewRundownMenuEvent(bool enabled);
+        void fireDeleteRundownEvent(int index);
         void fireOpenRundownEvent();
         void fireSaveRundownEvent(bool saveAs);
         void fireExecuteStopEvent();
@@ -62,7 +65,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireAddRudnownItemEvent(const LibraryModel& model);
         void fireAddRudnownItemEvent(const QString& type);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);
-        void fireWindowTitleEvent(const QString& title);
+        void fireActiveRundownChangedEvent(const QString& path);
         void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
         void fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
         void fireAutoRefreshLibraryEvent(bool autoRefresh, int interval);

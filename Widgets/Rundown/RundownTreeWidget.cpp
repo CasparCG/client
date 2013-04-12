@@ -50,7 +50,7 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      currentFilename(""), active(false), compactView(false), enterPressed(false)
+      activeRundown(Rundown::DEFAULT_NAME), active(false), compactView(false), enterPressed(false)
 {
     setupUi(this);
 
@@ -202,126 +202,6 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
                     return moveItemIntoGroup();
             }
-
-            /*
-            if (target == treeWidgetRundown)
-            {
-                QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-                parsePage(keyEvent);
-
-                if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Plus || keyEvent->key() == Qt::Key_Minus)
-                    playSelectedEvent();
-            }
-            */
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
-        {
-            QString filename = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
-            if (!filename.isEmpty())
-            {
-                EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
-
-                QTime time;
-                time.start();
-
-                QFile file(filename);
-                if (file.open(QFile::ReadOnly | QIODevice::Text))
-                {
-                    QTextStream stream(&file);
-                    stream.setCodec(QTextCodec::codecForName("UTF-8"));
-
-                    std::wstringstream wstringstream;
-                    wstringstream << stream.readAll().toStdWString();
-
-                    file.close();
-
-                    this->treeWidgetRundown->clear();
-
-                    boost::property_tree::wptree pt;
-                    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
-                    BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
-                    {
-                        QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-
-                        if (type == "GROUP")
-                            readRundownGroup(type, value.second);
-                        else
-                            readRundownItem(type, value.second, NULL);
-                    }
-
-                    qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
-
-                    if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
-                        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
-
-                    this->treeWidgetRundown->setFocus();
-                }
-
-                checkEmptyRundown();
-
-                qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
-
-                this->currentFilename = filename;
-                EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
-            }
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::SaveRundown))
-        {
-            if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-                return false;
-
-            QString filename;
-            SaveRundownEvent* saveRundownEvent = dynamic_cast<SaveRundownEvent*>(event);
-            if (saveRundownEvent->getSaveAs())
-                filename = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-            else
-                filename = (!this->currentFilename.isEmpty()) ? this->currentFilename : QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
-
-            if (!filename.isEmpty())
-            {
-                EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
-
-                QFile file(filename);
-                if (file.exists())
-                    file.remove();
-
-                if (file.open(QFile::WriteOnly))
-                {
-                    QXmlStreamWriter* writer = new QXmlStreamWriter();
-                    writer->setDevice(&file);
-
-                    writer->writeStartDocument();
-
-                    writer->writeStartElement("items");
-                    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
-                    {
-                        QTreeWidgetItem* child = this->treeWidgetRundown->invisibleRootItem()->child(i);
-                        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
-
-                        QString type = widget->getLibraryModel()->getType().toUpper();
-
-                        if (type == "GROUP")
-                            writeRundownGroup(type, writer, child);
-                        else
-                            writeRundownItem(type, writer, child);
-                    }
-                    writer->writeEndElement();
-
-                    writer->writeEndDocument();
-                    delete writer;
-
-                    file.close();
-                }
-
-                checkEmptyRundown();
-
-                this->currentFilename = filename;
-                EventManager::getInstance().fireWindowTitleEvent(this->currentFilename);
-            }
-
-            return true;
         }
         else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
         {
@@ -399,6 +279,116 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 void RundownTreeWidget::setActive(bool active)
 {
     this->active = active;
+
+    EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+}
+
+void RundownTreeWidget::openRundown()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+    if (!path.isEmpty())
+    {
+        EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
+        EventManager::getInstance().fireProcessEvent();
+
+        QTime time;
+        time.start();
+
+        QFile file(path);
+        if (file.open(QFile::ReadOnly | QIODevice::Text))
+        {
+            QTextStream stream(&file);
+            stream.setCodec(QTextCodec::codecForName("UTF-8"));
+
+            std::wstringstream wstringstream;
+            wstringstream << stream.readAll().toStdWString();
+
+            file.close();
+
+            this->treeWidgetRundown->clear();
+
+            boost::property_tree::wptree pt;
+            boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+            BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
+            {
+                QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
+
+                if (type == "GROUP")
+                    readRundownGroup(type, value.second);
+                else
+                    readRundownItem(type, value.second, NULL);
+            }
+
+            qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
+
+            if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
+                this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
+
+            this->treeWidgetRundown->setFocus();
+        }
+
+        checkEmptyRundown();
+
+        qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+
+        this->activeRundown = path;
+        EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+    }
+}
+
+void RundownTreeWidget::saveRundown(bool saveAs)
+{
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+        return;
+
+    QString path;
+    if (saveAs)
+        path = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
+    else
+        path = (this->activeRundown == Rundown::DEFAULT_NAME) ? QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)") : this->activeRundown;
+
+    if (!path.isEmpty())
+    {
+        EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
+        EventManager::getInstance().fireProcessEvent();
+
+        QFile file(path);
+        if (file.exists())
+            file.remove();
+
+        if (file.open(QFile::WriteOnly))
+        {
+            QXmlStreamWriter* writer = new QXmlStreamWriter();
+            writer->setDevice(&file);
+
+            writer->writeStartDocument();
+
+            writer->writeStartElement("items");
+            for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+            {
+                QTreeWidgetItem* child = this->treeWidgetRundown->invisibleRootItem()->child(i);
+                AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+                QString type = widget->getLibraryModel()->getType().toUpper();
+
+                if (type == "GROUP")
+                    writeRundownGroup(type, writer, child);
+                else
+                    writeRundownItem(type, writer, child);
+            }
+            writer->writeEndElement();
+
+            writer->writeEndDocument();
+            delete writer;
+
+            file.close();
+        }
+
+        checkEmptyRundown();
+
+        this->activeRundown = path;
+        EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+    }
 }
 
 void RundownTreeWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
@@ -1286,32 +1276,4 @@ bool RundownTreeWidget::removeSelectedItems()
     checkEmptyRundown();
 
     return true;
-}
-
-void RundownTreeWidget::parsePage(QKeyEvent* keyEvent)
-{
-    /*if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
-        return;
-
-    if (keyEvent->key() == Qt::Key_Plus)
-    {
-        this->page = QString("%1").arg(this->page.toInt() + 1);
-        playSelectedEvent();
-    }
-    else if (keyEvent->key() == Qt::Key_Minus)
-    {
-        this->page = QString("%1").arg(this->page.toInt() - 1);
-        playSelectedEvent();
-    }
-    else if (keyEvent->key() >= 48 && keyEvent->key() <= 57)
-    {
-        if (this->enterPressed)
-        {
-            this->enterPressed = !this->enterPressed;
-            this->page = keyEvent->text();
-            playSelectedEvent();
-        }
-        else
-            this->page.append(keyEvent->text());
-    }*/
 }

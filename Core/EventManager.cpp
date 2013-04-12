@@ -22,14 +22,24 @@ void EventManager::uninitialize()
 {
 }
 
-void EventManager::fireAddRundownEvent()
+void EventManager::fireProcessEvent()
 {
-    qApp->postEvent(qApp, new AddRundownEvent());
+    qApp->processEvents();
 }
 
-void EventManager::fireRemoveRundownEvent(int index)
+void EventManager::fireNewRundownEvent()
 {
-    qApp->postEvent(qApp, new RemoveRundownEvent(index));
+    qApp->postEvent(qApp, new NewRundownEvent());
+}
+
+void EventManager::fireNewRundownMenuEvent(bool enabled)
+{
+    qApp->postEvent(qApp, new NewRundownMenuEvent(enabled));
+}
+
+void EventManager::fireDeleteRundownEvent(int index)
+{
+    qApp->postEvent(qApp, new DeleteRundownEvent(index));
 }
 
 void EventManager::fireOpenRundownEvent()
@@ -170,9 +180,9 @@ void EventManager::fireStatusbarEvent(const QString& message, int timeout)
     qApp->postEvent(qApp, new StatusbarEvent(message, timeout));
 }
 
-void EventManager::fireWindowTitleEvent(const QString& title)
+void EventManager::fireActiveRundownChangedEvent(const QString& path)
 {
-    qApp->postEvent(qApp, new WindowTitleEvent(title));
+    qApp->postEvent(qApp, new ActiveRundownChangedEvent(path));
 }
 
 void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model)

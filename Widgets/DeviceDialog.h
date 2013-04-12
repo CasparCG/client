@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shared.h"
-#include "ui_AddDeviceDialog.h"
+#include "ui_DeviceDialog.h"
 
 #include "CasparDevice.h"
 
@@ -14,12 +14,12 @@
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT AddDeviceDialog : public QDialog, Ui::AddDeviceDialog
+class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
 {
     Q_OBJECT
 
     public:
-        explicit AddDeviceDialog(QWidget* parent = 0);
+        explicit DeviceDialog(QWidget* parent = 0);
 
         void setDeviceModel(const DeviceModel& model);
         void setEditMode(bool editMode);

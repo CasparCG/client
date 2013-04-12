@@ -34,12 +34,13 @@ namespace Enum
             OpenRundown = QEvent::User + 23,
             SaveRundown = QEvent::User + 24,
             ToggleCompactView = QEvent::User + 25,
-            WindowTitle = QEvent::User + 26,
+            ActiveRundownChanged = QEvent::User + 26,
             TargetChanged = QEvent::User + 27,
             DeviceChanged = QEvent::User + 28,
             LabelChanged = QEvent::User + 29,
-            AddRundown = QEvent::User + 30,
-            RemoveRundown = QEvent::User + 31
+            NewRundown = QEvent::User + 30,
+            DeleteRundown = QEvent::User + 31,
+            NewRundownMenu = QEvent::User + 32
         };
     };
 }
@@ -266,7 +267,7 @@ namespace Rundown
     static const QString DECKLINKINPUT = "DECKLINKINPUT";
     static const QString PRINT = "CHANNELSNAPSHOT";
     static const QString CLEAROUTPUT = "CLEAROUTPUT";
-    static const QString GEOMETRY = "BLENDMODE";
+    static const QString GEOMETRY = "TRANSFORMATION";
     static const QString GPIOUTPUT = "GPIOUTPUT";
     static const QString FILERECORDER = "FILERECORDER";
     static const QString SEPARATOR = "SEPARATOR";
@@ -283,4 +284,5 @@ namespace Rundown
     static const QString TEMPLATE = "TEMPLATE";
     static const QString VIDEO = "MOVIE";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
+    static const QString DEFAULT_NAME = "New Rundown";
 }

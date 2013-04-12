@@ -1,5 +1,5 @@
 #include "SettingsDialog.h"
-#include "AddDeviceDialog.h"
+#include "DeviceDialog.h"
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
@@ -134,7 +134,7 @@ void SettingsDialog::checkEmptyDeviceList()
 
 void SettingsDialog::showAddDeviceDialog()
 {
-    AddDeviceDialog* dialog = new AddDeviceDialog(this);
+    DeviceDialog* dialog = new DeviceDialog(this);
     if (dialog->exec() == QDialog::Accepted)
     {
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
@@ -165,7 +165,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 {
     DeviceModel model = DatabaseManager::getInstance().getDeviceByAddress(current->text(3));
 
-    AddDeviceDialog* dialog = new AddDeviceDialog(this);
+    DeviceDialog* dialog = new DeviceDialog(this);
     dialog->setDeviceModel(model);
     dialog->setEditMode(true);
     if (dialog->exec() == QDialog::Accepted)

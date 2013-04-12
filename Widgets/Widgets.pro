@@ -17,7 +17,6 @@ HEADERS += \
     ClockWidget.h \
     PreviewWidget.h \
     AboutDialog.h \
-    AddDeviceDialog.h \
     Shared.h \
     TimelineWidget.h \
     HelpDialog.h \
@@ -77,14 +76,13 @@ HEADERS += \
     Rundown/RundownVideoWidget.h \
     Rundown/RundownTreeWidget.h \
     Rundown/RundownItemFactory.h \
-    Rundown/AddRundownDialog.h
+    DeviceDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
     ClockWidget.cpp \
     PreviewWidget.cpp \
     AboutDialog.cpp \
-    AddDeviceDialog.cpp \
     MainWindow.cpp \
     TimelineWidget.cpp \
     HelpDialog.cpp \
@@ -143,7 +141,7 @@ SOURCES += \
     Inspector/InspectorVideoWidget.cpp \
     Rundown/RundownTreeWidget.cpp \
     Rundown/RundownItemFactory.cpp \
-    Rundown/AddRundownDialog.cpp
+    DeviceDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -151,7 +149,6 @@ FORMS += \
     ClockWidget.ui \
     PreviewWidget.ui \
     AboutDialog.ui \
-    AddDeviceDialog.ui \
     TimelineWidget.ui \
     HelpDialog.ui \
     Inspector/InspectorVolumeWidget.ui \
@@ -208,7 +205,7 @@ FORMS += \
     Rundown/RundownVideoWidget.ui \
     Inspector/InspectorVideoWidget.ui \
     Rundown/RundownTreeWidget.ui \
-    Rundown/AddRundownDialog.ui
+    DeviceDialog.ui
 
 RESOURCES += \
     Resource.qrc

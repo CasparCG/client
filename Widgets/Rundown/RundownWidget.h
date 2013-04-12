@@ -22,15 +22,10 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        int tabCount;
-
-        QMenu* contextMenuRundownDropdown;
+        //QMenu* contextMenuRundownDropdown;
 
         void setupMenus();
 
-        Q_SLOT void addRundown();
-        Q_SLOT void removeRundown();
-        Q_SLOT void renameRundown();
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);

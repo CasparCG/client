@@ -33,13 +33,15 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         ~RundownTreeWidget();
 
         void setActive(bool active);
+        void openRundown();
+        void saveRundown(bool saveAs);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         QString page;
-        QString currentFilename;
+        QString activeRundown;
 
         QMenu* contextMenuNew;
         QMenu* contextMenuColor;
@@ -72,7 +74,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool moveItemIntoGroup();
         bool moveItemOutOfGroup();
         bool moveItemUp();
-        void parsePage(QKeyEvent* event);
         bool ungroupItems();
         bool copySelectedItem();
         bool pasteSelectedItem();

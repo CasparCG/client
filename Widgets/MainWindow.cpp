@@ -7,7 +7,8 @@
 
 #include "EventManager.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/WindowTitleEvent.h"
+#include "Events/ActiveRundownChangedEvent.h"
+#include "Events/NewRundownMenuEvent.h"
 
 #include <QtCore/QDebug>
 
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupUiMenu()
 {
     this->fileMenu = new QMenu(this);
+    this->fileMenu->addAction("New...", this, SLOT(newRundown()));
     this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
@@ -100,16 +102,26 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::StatusbarMessage))
     {
         StatusbarEvent* statusbarEvent = dynamic_cast<StatusbarEvent*>(event);
-        statusBar()->showMessage(statusbarEvent->getMessage(), statusbarEvent->getTimeout());
+        this->statusBar()->showMessage(statusbarEvent->getMessage(), statusbarEvent->getTimeout());
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::WindowTitle))
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ActiveRundownChanged))
     {
-        WindowTitleEvent* windowTitleEvent = dynamic_cast<WindowTitleEvent*>(event);
-        setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(windowTitleEvent->getTitle()));
+        ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
+        this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
 
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundownMenu))
+    {
+        NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
+        this->fileMenu->actions().at(0)->setEnabled(newRundownMenuEvent->getEnabled());
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void MainWindow::newRundown()
+{
+    EventManager::getInstance().fireNewRundownEvent();
 }
 
 void MainWindow::openRundown()
