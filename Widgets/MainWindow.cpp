@@ -11,6 +11,7 @@
 #include "Events/NewRundownMenuEvent.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QFileInfo>
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
@@ -107,7 +108,10 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ActiveRundownChanged))
     {
         ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
-        this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
+
+        QFileInfo info(activeRundownChangedEvent->getPath());
+        if (info.baseName() != Rundown::DEFAULT_NAME)
+            this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
 
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundownMenu))

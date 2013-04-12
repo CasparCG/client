@@ -5,6 +5,8 @@
 #include "Events/DeleteRundownEvent.h"
 #include "Events/ActiveRundownChangedEvent.h"
 
+#include <QtCore/QFileInfo>
+
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 #include <QtGui/QFileDialog>
