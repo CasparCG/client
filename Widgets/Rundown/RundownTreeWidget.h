@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Shared.h"
+#include "AbstractRundownWidget.h"
 #include "ui_RundownTreeWidget.h"
 
 #include "Global.h"
@@ -67,21 +68,20 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         void setupMenus();
         void checkEmptyRundown();
-        void colorizeItems(const QString& color);
-        bool executeCommand(Playout::PlayoutType::Type type, ActionSource source);
         bool groupItems();
         bool moveItemDown();
         bool moveItemIntoGroup();
         bool moveItemOutOfGroup();
         bool moveItemUp();
         bool ungroupItems();
-        bool copySelectedItem();
-        bool pasteSelectedItem();
-        bool duplicateSelectedItem();
-        void readRundownGroup(const QString& type, boost::property_tree::wptree& pt);
-        void readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent);
-        void writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* child);
-        void writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item);
+        bool copySelectedItems();
+        bool pasteSelectedItems();
+        bool duplicateSelectedItems();
+        void colorizeItems(const QString& color);
+        bool executeCommand(Playout::PlayoutType::Type type, ActionSource source);
+
+        void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer);
+        AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
 
         Q_SLOT void addPrintItem();
         Q_SLOT void addSeparatorItem();

@@ -44,6 +44,7 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
+#include <QtGui/QClipboard>
 #include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
 #include <QtGui/QTreeWidgetItem>
@@ -184,11 +185,11 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 if (keyEvent->key() == Qt::Key_Delete)
                     return removeSelectedItems();
                 else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
-                    return duplicateSelectedItem();
+                    return duplicateSelectedItems();
                 else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
-                    return copySelectedItem();
+                    return copySelectedItems();
                 else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
-                    return pasteSelectedItem();
+                    return pasteSelectedItems();
                 else if (keyEvent->key() == Qt::Key_G && keyEvent->modifiers() == Qt::ControlModifier)
                     return groupItems();
                 else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
@@ -300,24 +301,10 @@ void RundownTreeWidget::openRundown()
             QTextStream stream(&file);
             stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
-            std::wstringstream wstringstream;
-            wstringstream << stream.readAll().toStdWString();
+            qApp->clipboard()->setText(stream.readAll());
+            pasteSelectedItems();
 
             file.close();
-
-            this->treeWidgetRundown->clear();
-
-            boost::property_tree::wptree pt;
-            boost::property_tree::xml_parser::read_xml(wstringstream, pt);
-            BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
-            {
-                QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-
-                if (type == "GROUP")
-                    readRundownGroup(type, value.second);
-                else
-                    readRundownItem(type, value.second, NULL);
-            }
 
             qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
 
@@ -362,24 +349,12 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->setDevice(&file);
 
             writer->writeStartDocument();
-
             writer->writeStartElement("items");
             for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
-            {
-                QTreeWidgetItem* child = this->treeWidgetRundown->invisibleRootItem()->child(i);
-                AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+                writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
 
-                QString type = widget->getLibraryModel()->getType().toUpper();
-
-                if (type == "GROUP")
-                    writeRundownGroup(type, writer, child);
-                else
-                    writeRundownItem(type, writer, child);
-            }
             writer->writeEndElement();
-
             writer->writeEndDocument();
-            delete writer;
 
             file.close();
         }
@@ -389,122 +364,6 @@ void RundownTreeWidget::saveRundown(bool saveAs)
         this->activeRundown = path;
         EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
     }
-}
-
-void RundownTreeWidget::readRundownGroup(const QString& type, boost::property_tree::wptree& pt)
-{
-    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-    bool expanded = pt.get<bool>(L"expanded");
-
-    AbstractRundownWidget* widget = new RundownGroupWidget(LibraryModel(0, label, "", "", type, 0), this);
-    widget->setExpanded(true);
-    widget->setCompactView(this->compactView);
-    widget->getCommand()->readProperties(pt);
-    widget->readProperties(pt);
-
-    QTreeWidgetItem* parent = new QTreeWidgetItem();
-    this->treeWidgetRundown->invisibleRootItem()->addChild(parent);
-    this->treeWidgetRundown->setItemWidget(parent, 0, dynamic_cast<QWidget*>(widget));
-    this->treeWidgetRundown->expandItem(parent);
-
-    if (this->compactView)
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
-    else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-    parent->setExpanded(expanded);
-
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& value, pt.get_child(L"items"))
-    {
-        QString type = QString::fromStdWString(value.second.get<std::wstring>(L"type")).toUpper();
-
-        readRundownItem(type, value.second, parent);
-    }
-}
-
-void RundownTreeWidget::writeRundownGroup(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
-{
-    AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-    QString deviceName = widget->getLibraryModel()->getDeviceName();
-    QString label = widget->getLibraryModel()->getLabel();
-    QString name = widget->getLibraryModel()->getName();
-
-    writer->writeStartElement("item");
-
-    writer->writeTextElement("type", type);
-    writer->writeTextElement("label", label);
-    writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
-
-    widget->getCommand()->writeProperties(writer);
-    widget->writeProperties(writer);
-
-    writer->writeStartElement("items");
-    for (int i = 0; i < item->childCount(); i++)
-    {
-        QTreeWidgetItem* child = item->child(i);
-        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
-
-        QString type = widget->getLibraryModel()->getType().toUpper();
-
-        writeRundownItem(type, writer, child);
-    }
-    writer->writeEndElement();
-
-    writer->writeEndElement();
-}
-
-void RundownTreeWidget::readRundownItem(const QString& type, boost::property_tree::wptree& pt, QTreeWidgetItem* parent)
-{
-    QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
-    QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-    QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
-
-    AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(LibraryModel(0, label, name, deviceName, type, 0));
-    widget->setCompactView(this->compactView);
-    widget->getCommand()->readProperties(pt);
-    widget->readProperties(pt);
-
-    QTreeWidgetItem* child = new QTreeWidgetItem();
-    if (parent == NULL) // Top level item.
-        this->treeWidgetRundown->invisibleRootItem()->addChild(child);
-    else
-    {
-        parent->addChild(child);
-        widget->setInGroup(true);
-    }
-
-    this->treeWidgetRundown->setItemWidget(child, 0, dynamic_cast<QWidget*>(widget));
-
-    if (this->compactView)
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
-    else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh.
-}
-
-void RundownTreeWidget::writeRundownItem(const QString& type, QXmlStreamWriter* writer, QTreeWidgetItem* item)
-{
-    AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-    QString deviceName = widget->getLibraryModel()->getDeviceName();
-    QString label = widget->getLibraryModel()->getLabel();
-    QString name = widget->getLibraryModel()->getName();
-
-    writer->writeStartElement("item");
-
-    writer->writeTextElement("type", type);
-    writer->writeTextElement("devicename", deviceName);
-    writer->writeTextElement("label", label);
-    writer->writeTextElement("name", name);
-
-    widget->getCommand()->writeProperties(writer);
-    widget->writeProperties(writer);
-
-    writer->writeEndElement();
 }
 
 void RundownTreeWidget::checkEmptyRundown()
@@ -668,73 +527,165 @@ void RundownTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int index)
         rundownWidget->setExpanded(!item->isExpanded());
 }
 
-bool RundownTreeWidget::duplicateSelectedItem()
+bool RundownTreeWidget::duplicateSelectedItems()
 {
-    if (!copySelectedItem())
+    if (!copySelectedItems())
         return false;
 
-    if (!pasteSelectedItem())
+    if (!pasteSelectedItems())
         return false;
 
     return true;
 }
 
-bool RundownTreeWidget::copySelectedItem()
+void RundownTreeWidget::writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer)
 {
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
-
-    this->copyItem = this->treeWidgetRundown->currentItem();
-
-    return true;
-}
-
-bool RundownTreeWidget::pasteSelectedItem()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL || this->copyItem == NULL)
-        return false;
-
-    if (this->treeWidgetRundown->currentItem()->parent() != NULL && dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->copyItem, 0))->isGroup())
-        return false; // We don't support group in groups.
-
-    int row  = this->treeWidgetRundown->currentIndex().row();
-
-    QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-    AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->copyItem, 0))->clone();
-    parentWidget->setActive(false);
-
-    if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+    AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+    if (widget->getLibraryModel()->getType() == "GROUP")
     {
-        parentWidget->setInGroup(false);
-        parentWidget->setExpanded(false);
+        QString label = widget->getLibraryModel()->getLabel();
 
-        this->treeWidgetRundown->invisibleRootItem()->insertChild(row + 1, parentItem);
+        writer->writeStartElement("item");
+        writer->writeTextElement("type", widget->getLibraryModel()->getType());
+        writer->writeTextElement("label", label);
+        writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
+        widget->getCommand()->writeProperties(writer);
+        widget->writeProperties(writer);
+
+        writer->writeStartElement("items");
+        for (int i = 0; i < item->childCount(); i++)
+            writeProperties(item->child(i), writer);
+
+        writer->writeEndElement();
+        writer->writeEndElement();
     }
     else
     {
-        parentWidget->setInGroup(true);
-        parentWidget->setExpanded(true);
+        QString deviceName = widget->getLibraryModel()->getDeviceName();
+        QString label = widget->getLibraryModel()->getLabel();
+        QString name = widget->getLibraryModel()->getName();
 
-        this->treeWidgetRundown->currentItem()->parent()->insertChild(row + 1, parentItem);
+        writer->writeStartElement("item");
+        writer->writeTextElement("type", widget->getLibraryModel()->getType());
+        writer->writeTextElement("devicename", deviceName);
+        writer->writeTextElement("label", label);
+        writer->writeTextElement("name", name);
+        widget->getCommand()->writeProperties(writer);
+        widget->writeProperties(writer);
+        writer->writeEndElement();
     }
+}
 
-    this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+AbstractRundownWidget* RundownTreeWidget::readProperties(boost::property_tree::wptree& pt)
+{
+    QString type = QString::fromStdWString(pt.get<std::wstring>(L"type"));
 
-    for (int i = 0; i < this->copyItem->childCount(); i++)
+    AbstractRundownWidget* widget = NULL;
+    if (type == "GROUP")
     {
-        QTreeWidgetItem* item = this->copyItem->child(i);
+        QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
 
-        AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
+        widget = new RundownGroupWidget(LibraryModel(0, label, "", "", type, 0), this);
+        widget->setExpanded(true);
+        widget->setCompactView(this->compactView);
+        widget->getCommand()->readProperties(pt);
+        widget->readProperties(pt);
+    }
+    else
+    {
+        QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
+        QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+        QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
 
-        QTreeWidgetItem* childItem = new QTreeWidgetItem();
-        parentItem->addChild(childItem);
-        this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+        widget = RundownItemFactory::getInstance().createWidget(LibraryModel(0, label, name, deviceName, type, 0));
+        widget->setCompactView(this->compactView);
+        widget->getCommand()->readProperties(pt);
+        widget->readProperties(pt);
     }
 
-    if (this->copyItem->isExpanded())
-        this->treeWidgetRundown->expandItem(parentItem);
+    if (this->compactView)
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
 
-    this->treeWidgetRundown->doItemsLayout(); // Refresh
+    return widget;
+}
+
+bool RundownTreeWidget::copySelectedItems()
+{
+    QString data;
+    QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+
+    writer->writeStartDocument();
+    writer->writeStartElement("items");
+    for (int i = 0; i < this->treeWidgetRundown->selectedItems().count(); i++)
+        writeProperties(this->treeWidgetRundown->selectedItems().at(i), writer);
+
+    writer->writeEndElement();
+    writer->writeEndDocument();
+
+    qApp->clipboard()->setText(data);
+
+    delete writer;
+
+    return true;
+}
+
+bool RundownTreeWidget::pasteSelectedItems()
+{
+    std::wstringstream wstringstream;
+    wstringstream << qApp->clipboard()->text().toStdWString();
+
+    int offset = 1;
+    boost::property_tree::wptree pt;
+    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    {
+        AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
+
+        int row  = this->treeWidgetRundown->currentIndex().row();
+
+        QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+        if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+        {
+            parentWidget->setInGroup(false);
+            parentWidget->setExpanded(false);
+
+            this->treeWidgetRundown->invisibleRootItem()->insertChild(row + offset++, parentItem);
+        }
+        else
+        {
+            if (parentWidget->isGroup())
+                continue; // We don't support group in groups.
+
+            parentWidget->setInGroup(true);
+
+            this->treeWidgetRundown->currentItem()->parent()->insertChild(row + offset++, parentItem);
+        }
+
+        this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+        if (parentWidget->isGroup())
+        {
+            bool expanded = parentValue.second.get<bool>(L"expanded");
+            parentItem->setExpanded(expanded);
+
+            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            {
+                AbstractRundownWidget* childWidget = readProperties(childValue.second);
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+
+                this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+        }
+
+        this->treeWidgetRundown->doItemsLayout(); // Refresh
+    }
+
+    checkEmptyRundown();
 
     return true;
 }
