@@ -28,7 +28,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
     private:
         AbstractCommand* command;
         LibraryModel* model;
-        BorderAnimation* animation;
+        BorderAnimation* deviceAnimation;
 
         void checkEmptyDevice();
         void blockAllSignals(bool block);

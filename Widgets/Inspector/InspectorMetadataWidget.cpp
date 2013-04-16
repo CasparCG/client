@@ -3,6 +3,7 @@
 #include "Global.h"
 
 #include "EventManager.h"
+#include "DeviceManager.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"

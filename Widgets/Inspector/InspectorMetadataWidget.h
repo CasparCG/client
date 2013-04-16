@@ -8,6 +8,7 @@
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
+#include <QtCore/QSharedPointer>
 
 #include <QtGui/QWidget>
 

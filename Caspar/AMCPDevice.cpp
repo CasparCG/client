@@ -30,9 +30,7 @@ void AMCPDevice::connectDevice(const QString& address, int port)
 
 void AMCPDevice::disconnectDevice()
 {
-    //this->socket->blockSignals(true);
     this->socket->disconnectFromHost();
-    //this->socket->blockSignals(false);
 }
 
 void AMCPDevice::reconnectDevice()
@@ -165,16 +163,16 @@ void AMCPDevice::parseHeader(const QString& line)
     this->code = tokens.at(0).toInt();
     switch (this->code)
     {
-        case 200:
+        case 200: // The command has been executed and several lines of data are being returned.
             this->state = AMCPDevice::ExpectingMultiline;
             break;
-        case 201:
+        case 201: // The command has been executed and a line of data is being returned.
             this->state = AMCPDevice::ExpectingTwoline;
             break;
-        case 400:
-        case 401:
-        case 402:
-        case 500:
+        case 400: // Command not understood
+        case 401: // Illigal video channel.
+        case 402: // Parameter missing.
+        case 500: // Internal server error.
             resetDevice();
             return;
         default:
