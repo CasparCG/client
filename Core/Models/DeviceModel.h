@@ -8,7 +8,7 @@ class CORE_EXPORT DeviceModel
 {
     public:
         explicit DeviceModel(int id, const QString& name, const QString& address, int port, const QString& username,
-                             const QString& password, const QString& description, const QString& version, const QString& shadow, int channels);
+                             const QString& password, const QString& description, const QString& version, const QString& shadow, int channels, const QString& channelFormats);
 
         int getId() const;
         int getPort() const;
@@ -20,6 +20,7 @@ class CORE_EXPORT DeviceModel
         const QString& getVersion() const;
         const QString& getShadow() const;
         int getChannels() const;
+        const QString& getChannelFormats() const;
 
     private:
         int id;
@@ -32,4 +33,5 @@ class CORE_EXPORT DeviceModel
         QString version;
         QString shadow;
         int channels;
+        QString channelFormats;
 };

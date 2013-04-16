@@ -32,7 +32,7 @@ void DatabaseManager::initialize()
     QSqlQuery sql;
     sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER)");
+    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT)");
     sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
@@ -112,6 +112,14 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Format (Value) VALUES('1080p5000')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p5994')");
     sql.exec("INSERT INTO Format (Value) VALUES('1080p6000')");
+    sql.exec("INSERT INTO Format (Value) VALUES('2k2398')");
+    sql.exec("INSERT INTO Format (Value) VALUES('2k2400')");
+    sql.exec("INSERT INTO Format (Value) VALUES('2k2500')");
+    sql.exec("INSERT INTO Format (Value) VALUES('4k2398')");
+    sql.exec("INSERT INTO Format (Value) VALUES('4k2400')");
+    sql.exec("INSERT INTO Format (Value) VALUES('4k2500')");
+    sql.exec("INSERT INTO Format (Value) VALUES('4k2997')");
+    sql.exec("INSERT INTO Format (Value) VALUES('4k3000')");
 
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
@@ -411,7 +419,7 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 
 QList<DeviceModel> DatabaseManager::getDevice()
 {
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
                   "ORDER BY d.Name");
 
     QSqlQuery sql;
@@ -420,8 +428,9 @@ QList<DeviceModel> DatabaseManager::getDevice()
 
     QList<DeviceModel> models;
     while (sql.next())
-        models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                                     sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(), sql.value(8).toString(), sql.value(9).toInt()));
+        models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
+                                     sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
+                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString()));
 
     return models;
 }
@@ -430,7 +439,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
                             "WHERE d.Name = '%1'").arg(name);
 
     QSqlQuery sql;
@@ -439,15 +448,16 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     sql.first();
 
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
+    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
+                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString());
 }
 
 DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
                             "WHERE d.Address = '%1'").arg(address);
 
     QSqlQuery sql;
@@ -456,8 +466,9 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     sql.first();
 
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(), sql.value(4).toString(),
-                       sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(), sql.value(8).toString(), sql.value(9).toInt());
+    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
+                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString());
 }
 
 void DatabaseManager::insertDevice(const DeviceModel& model)
@@ -466,10 +477,11 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels) "
-                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9)")
-                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername()).arg(model.getPassword())
-                            .arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow()).arg(model.getChannels());
+    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) "
+                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9, '%10')")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
+                            .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
+                            .arg(model.getChannels()).arg(model.getChannelFormats());
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -502,6 +514,22 @@ void DatabaseManager::updateDeviceChannels(const DeviceModel& model)
 
     QString query = QString("UPDATE Device SET Channels = %1 "
                             "WHERE Address = '%2'").arg(model.getChannels()).arg(model.getAddress());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateDeviceChannelFormats(const DeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE Device SET ChannelFormats = '%1' "
+                            "WHERE Address = '%2'").arg(model.getChannelFormats()).arg(model.getAddress());
 
     QSqlQuery sql;
     if (!sql.exec(query))

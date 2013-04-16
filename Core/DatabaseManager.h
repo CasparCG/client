@@ -52,6 +52,7 @@ class CORE_EXPORT DatabaseManager
         void insertDevice(const DeviceModel& model);
         void updateDeviceVersion(const DeviceModel& model);
         void updateDeviceChannels(const DeviceModel& model);
+        void updateDeviceChannelFormats(const DeviceModel& model);
         void deleteDevice(int id);
 
         QList<LibraryModel> getLibraryMedia();

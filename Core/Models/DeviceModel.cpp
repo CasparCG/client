@@ -1,9 +1,10 @@
 #include "DeviceModel.h"
 
 DeviceModel::DeviceModel(int id, const QString& name, const QString& address, int port, const QString& username,
-                         const QString& password, const QString& description, const QString& version, const QString& shadow, int channels)
+                         const QString& password, const QString& description, const QString& version, const QString& shadow,
+                         int channels, const QString& channelFormats)
     : id(id), port(port), name(name), address(address), username(username),  password(password), description(description),
-      version(version), shadow(shadow), channels(channels)
+      version(version), shadow(shadow), channels(channels), channelFormats(channelFormats)
 {
 }
 
@@ -55,4 +56,9 @@ const QString& DeviceModel::getShadow() const
 int DeviceModel::getChannels() const
 {
     return this->channels;
+}
+
+const QString& DeviceModel::getChannelFormats() const
+{
+    return this->channelFormats;
 }

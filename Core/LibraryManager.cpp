@@ -117,12 +117,17 @@ void LibraryManager::deviceAdded(CasparDevice& device)
 
 void LibraryManager::versionChanged(const QString& version, CasparDevice& device)
 {
-    DatabaseManager::getInstance().updateDeviceVersion(DeviceModel(0, "", device.getAddress(), 0, "", "", "", version, "", 0));
+    DatabaseManager::getInstance().updateDeviceVersion(DeviceModel(0, "", device.getAddress(), 0, "", "", "", version, "", 0, ""));
 }
 
 void LibraryManager::infoChanged(const QList<QString>& info, CasparDevice& device)
 {
-    DatabaseManager::getInstance().updateDeviceChannels(DeviceModel(0, "", device.getAddress(), 0, "", "", "", "", "", info.count()));
+    QStringList channelFormats;
+    foreach (const QString& channelInfo, info)
+        channelFormats.push_back(channelInfo.split(" ")[1]);
+
+    DatabaseManager::getInstance().updateDeviceChannels(DeviceModel(0, "", device.getAddress(), 0, "", "", "", "", "", info.count(), ""));
+    DatabaseManager::getInstance().updateDeviceChannelFormats(DeviceModel(0, "", device.getAddress(), 0, "", "", "", "", "", 0, channelFormats.join(",")));
 }
 
 void LibraryManager::connectionStateChanged(CasparDevice& device)

@@ -64,6 +64,7 @@ void SettingsDialog::loadDevices()
         treeItem->setText(8, model.getVersion());
         treeItem->setText(9, model.getShadow());
         treeItem->setText(10, QString("%1").arg(model.getChannels()));
+        treeItem->setText(11, model.getChannelFormats());
     }
 
     checkEmptyDeviceList();
@@ -140,7 +141,7 @@ void SettingsDialog::showAddDeviceDialog()
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                "", dialog->getShadow(), 0));
+                                                                "", dialog->getShadow(), 0, ""));
 
         loadDevices();
 
@@ -174,7 +175,8 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                model.getVersion(), dialog->getShadow(), model.getChannels()));
+                                                                model.getVersion(), dialog->getShadow(),
+                                                                model.getChannels(), model.getChannelFormats()));
 
         loadDevices();
 

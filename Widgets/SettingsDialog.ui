@@ -382,6 +382,11 @@
        <string>Channels</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Channel Formats</string>
+      </property>
+     </column>
     </widget>
     <widget class="QToolButton" name="toolButtonRemoveDevice">
      <property name="geometry">
