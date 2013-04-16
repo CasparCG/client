@@ -33,14 +33,15 @@ bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
         { 
             this->command = dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
+            this->sliderMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
+            this->sliderMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
+            this->sliderMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
             this->spinBoxMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
             this->spinBoxMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
             this->spinBoxMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
             this->spinBoxMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
             this->spinBoxGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
-
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());

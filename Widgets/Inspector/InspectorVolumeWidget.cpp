@@ -35,14 +35,7 @@ bool InspectorVolumeWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->command = dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // If getVolume() = 0.56999993 then
-            // f1 = 56 and
-            // i = 57.
-            // Why???
-            float f1 = this->command->getVolume() * 100;
-            int i = f1;
-
-            // This will also set the slider value.
+            this->sliderVolume->setValue(QString("%1").arg(this->command->getVolume() * 100).toFloat());
             this->spinBoxVolume->setValue(QString("%1").arg(this->command->getVolume() * 100).toFloat());
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));

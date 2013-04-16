@@ -33,8 +33,7 @@ bool InspectorBrightnessWidget::eventFilter(QObject* target, QEvent* event)
         {   
             this->command = dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderBrightness->setValue(QString("%1").arg(this->command->getBrightness() * 100).toFloat());
             this->spinBoxBrightness->setValue(QString("%1").arg(this->command->getBrightness() * 100).toFloat());
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));

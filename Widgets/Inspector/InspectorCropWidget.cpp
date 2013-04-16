@@ -33,8 +33,10 @@ bool InspectorCropWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->command = dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
+            this->sliderCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
+            this->sliderCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
+            this->sliderCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
             this->spinBoxCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
             this->spinBoxCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
             this->spinBoxCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());

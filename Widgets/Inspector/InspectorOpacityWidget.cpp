@@ -33,8 +33,7 @@ bool InspectorOpacityWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->command = dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
             this->spinBoxOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));

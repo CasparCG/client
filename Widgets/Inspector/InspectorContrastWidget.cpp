@@ -33,8 +33,7 @@ bool InspectorContrastWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->command = dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand());
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderContrast->setValue(QString("%1").arg(this->command->getContrast() * 100).toFloat());
             this->spinBoxContrast->setValue(QString("%1").arg(this->command->getContrast() * 100).toFloat());
 
             this->spinBoxDuration->setValue(this->command->getDuration());

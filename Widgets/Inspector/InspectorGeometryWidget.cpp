@@ -55,8 +55,10 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxScaleY->setMinimum(0);
             this->spinBoxScaleY->setMaximum(this->resolutionHeight * 2);
 
-            // This will also set the slider value.
-            // TODO: Why QString -> float, see InspectorVolumeWidget.cpp
+            this->sliderPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
+            this->sliderPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
+            this->sliderScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
+            this->sliderScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
             this->spinBoxPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
             this->spinBoxPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
             this->spinBoxScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
