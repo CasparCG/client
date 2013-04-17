@@ -34,7 +34,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT)");
     sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Value TEXT)");
+    sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT)");
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
     sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER)");
@@ -77,8 +77,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltipInRundown', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionWidth', '1920')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ResolutionHeight', '1080')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
 #if defined(Q_OS_UNIX)
@@ -90,36 +88,36 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
     sql.exec("INSERT INTO Direction (Value) VALUES('LEFT')");
 
-    sql.exec("INSERT INTO Format (Value) VALUES('PAL')");
-    sql.exec("INSERT INTO Format (Value) VALUES('NTSC')");
-    sql.exec("INSERT INTO Format (Value) VALUES('576p2500')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p2398')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p2400')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p2500')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p5000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p2997')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p5994')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p3000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('720p6000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p2398')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p2400')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080i5000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080i5994')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080i6000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p2500')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p2997')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p3000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p5000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p5994')");
-    sql.exec("INSERT INTO Format (Value) VALUES('1080p6000')");
-    sql.exec("INSERT INTO Format (Value) VALUES('2k2398')");
-    sql.exec("INSERT INTO Format (Value) VALUES('2k2400')");
-    sql.exec("INSERT INTO Format (Value) VALUES('2k2500')");
-    sql.exec("INSERT INTO Format (Value) VALUES('4k2398')");
-    sql.exec("INSERT INTO Format (Value) VALUES('4k2400')");
-    sql.exec("INSERT INTO Format (Value) VALUES('4k2500')");
-    sql.exec("INSERT INTO Format (Value) VALUES('4k2997')");
-    sql.exec("INSERT INTO Format (Value) VALUES('4k3000')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('PAL', 720, 576, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('NTSC', 720, 486, '29.97')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('576p2500', 1024, 576, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2398', 1280, 720, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2400', 1280, 720, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2500', 1280, 720, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p5000', 1280, 720, '50')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2997', 1280, 720, '29.97')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p5994', 1280, 720, '59.94')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p3000', 1280, 720, '30')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p6000', 1280, 720, '60')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2398', 1920, 1080, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2400', 1920, 1080, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i5000', 1920, 1080, '50')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i5994', 1920, 1080, '59.94')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i6000', 1920, 1080, '60')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2500', 1920, 1080, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2997', 1920, 1080, '29.97')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p3000', 1920, 1080, '30')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5000', 1920, 1080, '50')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5994', 1920, 1080, '59.94')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p6000', 1920, 1080, '60')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2398', 2048, 1556, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2400', 2048, 1556, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2500', 2048, 1556, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2398', 3840, 2160, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2400', 3840, 2160, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2500', 3840, 2160, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2997', 3840, 2160, '29.97')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k3000', 3840, 2160, '30')");
 
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
@@ -232,6 +230,39 @@ ConfigurationModel DatabaseManager::getConfigurationByName(const QString& name)
     return ConfigurationModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString());
 }
 
+QList<FormatModel> DatabaseManager::getFormat()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT f.Id, f.Name, f.Width, f.Height, f.FramesPerSecond FROM Format f");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<FormatModel> models;
+    while (sql.next())
+        models.push_back(FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString()));
+
+    return models;
+}
+
+FormatModel DatabaseManager::getFormat(const QString& name)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT f.Id, f.Name, f.Width, f.Height, f.FramesPerSecond FROM Format f "
+                            "WHERE f.Name = '%1'").arg(name);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString());
+}
+
 QList<BlendModeModel> DatabaseManager::getBlendMode()
 {
     QMutexLocker locker(&mutex);
@@ -262,23 +293,6 @@ QList<DirectionModel> DatabaseManager::getDirection()
     QList<DirectionModel> models;
     while (sql.next())
         models.push_back(DirectionModel(sql.value(0).toInt(), sql.value(1).toString()));
-
-    return models;
-}
-
-QList<FormatModel> DatabaseManager::getFormat()
-{
-    QMutexLocker locker(&mutex);
-
-    QString query("SELECT f.Id, f.Value FROM Format f");
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    QList<FormatModel> models;
-    while (sql.next())
-        models.push_back(FormatModel(sql.value(0).toInt(), sql.value(1).toString()));
 
     return models;
 }

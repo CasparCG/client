@@ -15,6 +15,7 @@
 #include "Models/TweenModel.h"
 #include "Models/TypeModel.h"
 #include "Models/ThumbnailModel.h"
+#include "Models/FormatModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -30,11 +31,13 @@ class CORE_EXPORT DatabaseManager
         void uninitialize();
 
         ConfigurationModel getConfigurationByName(const QString& name);
-        void updateConfiguration(const ConfigurationModel& model);     
+        void updateConfiguration(const ConfigurationModel& model);
+
+        QList<FormatModel> getFormat();
+        FormatModel getFormat(const QString& name);
 
         QList<BlendModeModel> getBlendMode();
         QList<DirectionModel> getDirection();
-        QList<FormatModel> getFormat();
         QList<TransitionModel> getTransition();
         QList<TweenModel> getTween();
 

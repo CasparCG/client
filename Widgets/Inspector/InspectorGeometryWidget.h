@@ -29,6 +29,7 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
 
         void loadTween();
         void blockAllSignals(bool block);
+        void setScaleAndPositionValues();
 
         Q_SLOT void sliderPositionXChanged(int);
         Q_SLOT void spinBoxPositionXChanged(int);

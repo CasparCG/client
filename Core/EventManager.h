@@ -26,6 +26,7 @@
 #include "Events/TargetChangedEvent.h"
 #include "Events/DeviceChangedEvent.h"
 #include "Events/DeleteRundownEvent.h"
+#include "Events/ChannelChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -76,4 +77,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireLabelChangedEvent(const QString& label);
         void fireTargetChangedEvent(const QString& target);
         void fireDeviceChangedEvent(const QString& deviceName);
+        void fireChannelChangedEvent(int channel);
 };

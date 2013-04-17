@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/RundownItemSelectedEvent.h"
+#include "Events/DeviceChangedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>
@@ -33,40 +34,57 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
         if (dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->command = dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand());
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
-            this->resolutionWidth = DatabaseManager::getInstance().getConfigurationByName("ResolutionWidth").getValue().toInt();
-            this->resolutionHeight = DatabaseManager::getInstance().getConfigurationByName("ResolutionHeight").getValue().toInt();
+            this->resolutionWidth = formatModel.getWidth();
+            this->resolutionHeight = formatModel.getHeight();
 
-            this->sliderPositionX->setMinimum(-this->resolutionWidth);
-            this->sliderPositionX->setMaximum(this->resolutionWidth);
-            this->sliderPositionY->setMinimum(-this->resolutionHeight);
-            this->sliderPositionY->setMaximum(this->resolutionHeight);
-            this->spinBoxPositionX->setMinimum(-this->resolutionWidth);
-            this->spinBoxPositionX->setMaximum(this->resolutionWidth);
-            this->spinBoxPositionY->setMinimum(-this->resolutionHeight);
-            this->spinBoxPositionY->setMaximum(this->resolutionHeight);
-
-            this->sliderScaleX->setMinimum(0);
-            this->sliderScaleX->setMaximum(this->resolutionWidth * 2);
-            this->sliderScaleY->setMinimum(0);
-            this->sliderScaleY->setMaximum(this->resolutionHeight * 2);
-            this->spinBoxScaleX->setMinimum(0);
-            this->spinBoxScaleX->setMaximum(this->resolutionWidth * 2);
-            this->spinBoxScaleY->setMinimum(0);
-            this->spinBoxScaleY->setMaximum(this->resolutionHeight * 2);
-
-            this->sliderPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
-            this->sliderPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
-            this->sliderScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
-            this->sliderScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
-            this->spinBoxPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
-            this->spinBoxPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
-            this->spinBoxScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
-            this->spinBoxScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
+            setScaleAndPositionValues();
 
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxDefer->setChecked(this->command->getDefer());
+        }
+
+        blockAllSignals(false);
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    {
+        blockAllSignals(true);
+
+        if (this->command != NULL)
+        {
+            DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceChangedEvent->getDeviceName()).getChannelFormats().split(",");
+            const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+
+            this->resolutionWidth = formatModel.getWidth();
+            this->resolutionHeight = formatModel.getHeight();
+
+            setScaleAndPositionValues();
+        }
+
+        blockAllSignals(false);
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ChannelChanged))
+    {
+        blockAllSignals(true);
+
+        if (this->model != NULL)
+        {
+            ChannelChangedEvent* channelChangedEvent = dynamic_cast<ChannelChangedEvent*>(event);
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+
+            if (channelChangedEvent->getChannel() <= channelFormats.count())
+            {
+                const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(channelChangedEvent->getChannel() - 1));
+
+                this->resolutionWidth = formatModel.getWidth();
+                this->resolutionHeight = formatModel.getHeight();
+
+                setScaleAndPositionValues();
+            }
         }
 
         blockAllSignals(false);
@@ -97,6 +115,36 @@ void InspectorGeometryWidget::loadTween()
         this->comboBoxTween->addItem(model.getValue());
 
     this->comboBoxTween->blockSignals(false);
+}
+
+void InspectorGeometryWidget::setScaleAndPositionValues()
+{
+    this->sliderPositionX->setMinimum(-this->resolutionWidth);
+    this->sliderPositionX->setMaximum(this->resolutionWidth);
+    this->sliderPositionY->setMinimum(-this->resolutionHeight);
+    this->sliderPositionY->setMaximum(this->resolutionHeight);
+    this->spinBoxPositionX->setMinimum(-this->resolutionWidth);
+    this->spinBoxPositionX->setMaximum(this->resolutionWidth);
+    this->spinBoxPositionY->setMinimum(-this->resolutionHeight);
+    this->spinBoxPositionY->setMaximum(this->resolutionHeight);
+
+    this->sliderScaleX->setMinimum(0);
+    this->sliderScaleX->setMaximum(this->resolutionWidth * 2);
+    this->sliderScaleY->setMinimum(0);
+    this->sliderScaleY->setMaximum(this->resolutionHeight * 2);
+    this->spinBoxScaleX->setMinimum(0);
+    this->spinBoxScaleX->setMaximum(this->resolutionWidth * 2);
+    this->spinBoxScaleY->setMinimum(0);
+    this->spinBoxScaleY->setMaximum(this->resolutionHeight * 2);
+
+    this->sliderPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
+    this->sliderPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
+    this->sliderScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
+    this->sliderScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
+    this->spinBoxPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
+    this->spinBoxPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
+    this->spinBoxScaleX->setValue(QString("%1").arg(this->command->getScaleX() * this->resolutionWidth).toFloat());
+    this->spinBoxScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
 }
 
 void InspectorGeometryWidget::sliderPositionXChanged(int positionX)

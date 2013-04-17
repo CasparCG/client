@@ -238,3 +238,8 @@ void EventManager::fireDeviceChangedEvent(const QString& deviceName)
 {
     qApp->postEvent(qApp, new DeviceChangedEvent(deviceName));
 }
+
+void EventManager::fireChannelChangedEvent(int channel)
+{
+    qApp->postEvent(qApp, new ChannelChangedEvent(channel));
+}
