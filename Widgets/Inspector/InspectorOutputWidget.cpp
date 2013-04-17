@@ -4,6 +4,7 @@
 
 #include "DeviceManager.h"
 #include "EventManager.h"
+#include "DatabaseManager.h"
 #include "Commands/CommitCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
@@ -80,7 +81,11 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxChannel->setEnabled(true);
             this->spinBoxVideolayer->setEnabled(true);
 
-            this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
+            int index = this->comboBoxDevice->findText(this->model->getDeviceName());
+            if (index == -1)
+                this->spinBoxChannel->setMaximum(1);
+
+            this->comboBoxDevice->setCurrentIndex(index);
             this->spinBoxChannel->setValue(this->command->getChannel());
             this->spinBoxVideolayer->setValue(this->command->getVideolayer());
             this->spinBoxDelay->setValue(this->command->getDelay());
@@ -153,6 +158,9 @@ void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 
 void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 {
+    const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceName).getChannelFormats().split(",");
+    this->spinBoxChannel->setMaximum(channelFormats.count());
+
     checkEmptyDevice();
 
     EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxDevice->currentText());
@@ -166,6 +174,8 @@ void InspectorOutputWidget::allowGpiChanged(int state)
 void InspectorOutputWidget::channelChanged(int channel)
 {
     this->command->setChannel(channel);
+
+    EventManager::getInstance().fireChannelChangedEvent(channel);
 }
 
 void InspectorOutputWidget::videolayerChanged(int videolayer)

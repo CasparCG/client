@@ -41,7 +41,8 @@ namespace Enum
             LabelChanged = QEvent::User + 29,
             NewRundown = QEvent::User + 30,
             DeleteRundown = QEvent::User + 31,
-            NewRundownMenu = QEvent::User + 32
+            NewRundownMenu = QEvent::User + 32,
+            ChannelChanged = QEvent::User + 33
         };
     };
 }

@@ -78,7 +78,7 @@ void InspectorDeckLinkInputWidget::loadFormat()
 
     QList<FormatModel> models = DatabaseManager::getInstance().getFormat();
     foreach (FormatModel model, models)
-        this->comboBoxFormat->addItem(model.getValue());
+        this->comboBoxFormat->addItem(model.getName());
 
     this->comboBoxFormat->blockSignals(false);
 }
