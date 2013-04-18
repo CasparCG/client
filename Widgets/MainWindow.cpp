@@ -43,6 +43,9 @@ void MainWindow::setupUiMenu()
     this->fileMenu->addAction("New...", this, SLOT(newRundown()));
     this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
+    this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
+    this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
+    this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));
     //this->fileMenu->addSeparator();
@@ -123,6 +126,16 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void MainWindow::importPreset()
+{
+    EventManager::getInstance().fireImportPresetEvent();
+}
+
+void MainWindow::exportPreset()
+{
+    EventManager::getInstance().fireExportPresetEvent();
 }
 
 void MainWindow::newRundown()

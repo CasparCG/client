@@ -27,6 +27,16 @@ void EventManager::fireProcessEvent()
     qApp->processEvents();
 }
 
+void EventManager::fireImportPresetEvent()
+{
+    qApp->postEvent(qApp, new ImportPresetEvent());
+}
+
+void EventManager::fireExportPresetEvent()
+{
+    qApp->postEvent(qApp, new ExportPresetEvent());
+}
+
 void EventManager::fireNewRundownEvent()
 {
     qApp->postEvent(qApp, new NewRundownEvent());

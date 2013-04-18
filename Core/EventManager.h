@@ -29,6 +29,8 @@
 #include "Events/ChannelChangedEvent.h"
 #include "Events/PresetChangedEvent.h"
 #include "Events/AddPresetItemEvent.h"
+#include "Events/ImportPresetEvent.h"
+#include "Events/ExportPresetEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -48,6 +50,8 @@ class CORE_EXPORT EventManager : public QObject
 
         void fireProcessEvent();
         void fireNewRundownEvent();
+        void fireImportPresetEvent();
+        void fireExportPresetEvent();
         void fireNewRundownMenuEvent(bool enabled);
         void fireDeleteRundownEvent(int index);
         void fireOpenRundownEvent();

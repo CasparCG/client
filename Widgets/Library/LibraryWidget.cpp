@@ -5,15 +5,21 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/LibraryItemSelectedEvent.h"
+#include "Events/ImportPresetEvent.h"
+#include "Events/ExportPresetEvent.h"
 #include "Models/LibraryModel.h"
+#include "Models/PresetModel.h"
 
 #include <QtCore/QPoint>
+#include <QtCore/QFileInfo>
 #include <QtCore/QSharedDataPointer>
+#include <QtCore/QTextStream>
 
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
+#include <QtGui/QFileDialog>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
 
@@ -251,6 +257,52 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         }
 
         this->toolBoxLibrary->setItemText(5, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
+    }
+    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ImportPreset))
+    {
+        QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
+        if (!path.isEmpty())
+        {
+            QFile file(path);
+            if (file.open(QFile::ReadOnly | QIODevice::Text))
+            {
+                const QString& data = file.readAll();
+                if (!data.isEmpty())
+                {
+                    QFileInfo info(path);
+                    DatabaseManager::getInstance().insertPreset(PresetModel(0, info.baseName(), data));
+
+                    EventManager::getInstance().firePresetChangedEvent();
+                }
+
+                file.close();
+            }
+        }
+    }
+    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ExportPreset))
+    {
+        if (this->treeWidgetPreset->selectedItems().count() == 0)
+            return true;
+
+        const QString path = QFileDialog::getSaveFileName(this, "Export Preset", this->treeWidgetPreset->currentItem()->text(0), "Preset (*.xml)");
+        if (!path.isEmpty())
+        {
+            QFile file(path);
+            if (file.exists())
+                file.remove();
+
+            if (file.open(QFile::WriteOnly))
+            {
+                const QString& data = this->treeWidgetPreset->currentItem()->text(2);
+                if (!data.isEmpty())
+                {
+                    QTextStream stream(&file);
+                    stream << data;
+                }
+
+                file.close();
+            }
+        }
     }
 
     return QObject::eventFilter(target, event);

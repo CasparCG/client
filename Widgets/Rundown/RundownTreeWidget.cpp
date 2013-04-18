@@ -43,6 +43,7 @@
 #include <QtCore/QPoint>
 #include <QtCore/QTextCodec>
 #include <QtCore/QTime>
+#include <QtCore/QTextStream>
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -212,7 +213,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
         {
             if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-                return false;
+                return true;
 
             for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
             {
@@ -550,10 +551,10 @@ void RundownTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int index)
 bool RundownTreeWidget::duplicateSelectedItems()
 {
     if (!copySelectedItems())
-        return false;
+        return true;
 
     if (!pasteSelectedItems())
-        return false;
+        return true;
 
     return true;
 }
@@ -713,7 +714,7 @@ bool RundownTreeWidget::pasteSelectedItems()
 bool RundownTreeWidget::moveItemDown()
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
+        return true;
 
     int row  = this->treeWidgetRundown->currentIndex().row();
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
@@ -793,7 +794,7 @@ bool RundownTreeWidget::moveItemDown()
 bool RundownTreeWidget::moveItemUp()
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
+        return true;
 
     int row  = this->treeWidgetRundown->currentIndex().row();
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
@@ -865,13 +866,13 @@ bool RundownTreeWidget::moveItemUp()
 bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource source)
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
+        return true;
 
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 
     if (source == GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
-        return false; // Gpi pulses cannot trigger this item.
+        return true; // Gpi pulses cannot trigger this item.
 
     dynamic_cast<AbstractPlayoutCommand*>(selectedWidget)->executeCommand(type);
 
@@ -909,7 +910,7 @@ void RundownTreeWidget::selectItemBelow()
 bool RundownTreeWidget::groupItems()
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
+        return true;
 
     bool isGroup = false;
     bool isTopItem = false;
@@ -927,7 +928,7 @@ bool RundownTreeWidget::groupItems()
     }
 
     if (isGroup || isGroupItem)
-        return false; // We don't support group in groups.
+        return true; // We don't support group in groups.
 
     QTreeWidgetItem* parentItem = new QTreeWidgetItem();
 
@@ -969,7 +970,7 @@ bool RundownTreeWidget::groupItems()
 bool RundownTreeWidget::ungroupItems()
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
-        return false;
+        return true;
 
     bool isGroup = false;
     bool isTopItem = false;
@@ -987,7 +988,7 @@ bool RundownTreeWidget::ungroupItems()
     }
 
     if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
-        return false; // We don't have any group to ungroup.
+        return true; // We don't have any group to ungroup.
 
     QTreeWidgetItem* rootItem = this->treeWidgetRundown->invisibleRootItem();
 
@@ -1176,7 +1177,7 @@ void RundownTreeWidget::addVideoItem()
 bool RundownTreeWidget::moveItemOutOfGroup()
 {
     if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-        return false;
+        return true;
 
     QTreeWidgetItem* newItem = new QTreeWidgetItem();
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
@@ -1210,10 +1211,10 @@ bool RundownTreeWidget::moveItemOutOfGroup()
 bool RundownTreeWidget::moveItemIntoGroup()
 {
     if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Group item.
-        return false;
+        return true;
 
     if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup())
-        return false;
+        return true;
 
     QTreeWidgetItem* currentItemAbove = this->treeWidgetRundown->invisibleRootItem()->child(this->treeWidgetRundown->currentIndex().row() - 1);
     if (currentItemAbove != NULL && dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItemAbove, 0))->isGroup()) // Group.

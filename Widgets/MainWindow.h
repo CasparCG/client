@@ -55,4 +55,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void toggleFullscreen();
         Q_SLOT void toggleCompactView();
         Q_SLOT void refreshLibrary();
+        Q_SLOT void importPreset();
+        Q_SLOT void exportPreset();
 };

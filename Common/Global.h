@@ -44,7 +44,9 @@ namespace Enum
             NewRundownMenu = QEvent::User + 32,
             ChannelChanged = QEvent::User + 33,
             PresetChanged = QEvent::User + 34,
-            AddPresetItem = QEvent::User + 35
+            AddPresetItem = QEvent::User + 35,
+            ExportPreset = QEvent::User + 36,
+            ImportPreset = QEvent::User + 37
         };
     };
 }
