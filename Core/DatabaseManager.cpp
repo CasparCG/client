@@ -38,6 +38,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
     sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER)");
+    sql.exec("CREATE TABLE Preset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
@@ -261,6 +262,89 @@ FormatModel DatabaseManager::getFormat(const QString& name)
     sql.first();
 
     return FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString());
+}
+
+QList<PresetModel> DatabaseManager::getPreset()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT p.Id, p.Name, p.Value FROM Preset p");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<PresetModel> models;
+    while (sql.next())
+        models.push_back(PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+PresetModel DatabaseManager::getPreset(const QString& name)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT p.Id, p.Name, p.Value FROM Preset p "
+                            "WHERE p.Name = '%1'").arg(name);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString());
+}
+
+QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT p.Id, p.Name, p.Value "
+                            "WHERE p.Name LIKE '%%1%' OR p.Value LIKE '%%1%' "
+                            "ORDER BY p.Name, p.Id").arg(filter);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<PresetModel> models;
+    while (sql.next())
+        models.push_back(PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+void DatabaseManager::insertPreset(const PresetModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("INSERT INTO Preset (Name, Value) "
+                            "VALUES('%1', '%2')").arg(model.getName()).arg(model.getValue());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deletePreset(int id)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("DELETE FROM Preset WHERE Id = %1").arg(id);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
 }
 
 QList<BlendModeModel> DatabaseManager::getBlendMode()

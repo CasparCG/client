@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetDialog</class>
+ <widget class="QDialog" name="PresetDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>268</width>
+    <height>82</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>268</width>
+    <height>82</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>268</width>
+    <height>82</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Save Preset</string>
+  </property>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>183</x>
+     <y>50</y>
+     <width>75</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>&amp;OK</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelLogo">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Resource.qrc">:/Graphics/Images/Preset.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditName">
+   <property name="geometry">
+    <rect>
+     <x>98</x>
+     <y>17</y>
+     <width>160</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelName">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Name</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Resource.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButtonOK</sender>
+   <signal>clicked()</signal>
+   <receiver>PresetDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>267</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>PresetDialog</receiver>
+   <slot>nameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>268</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>nameChanged(QString)</slot>
+ </slots>
+</ui>

@@ -28,7 +28,6 @@
         <file>Images/Movie.png</file>
         <file>Images/Preview.png</file>
         <file>Images/Still.png</file>
-        <file>Images/Consumer.png</file>
         <file>Images/New.png</file>
         <file>Images/ImageScroller.png</file>
         <file>Images/Disconnected.png</file>
@@ -43,7 +42,6 @@
         <file>Images/ServerBig.png</file>
         <file>Images/ServerSmall.png</file>
         <file>Images/Thumbnail.png</file>
-        <file>Images/Data.png</file>
         <file>Images/Checkerboard.png</file>
         <file>Images/TestConnection.png</file>
         <file>Images/Attention.png</file>
@@ -124,6 +122,9 @@
         <file>Images/SolidColorSmall.png</file>
         <file>Images/SolidColorSmallHover.png</file>
         <file>Images/SolidColor.png</file>
+        <file>Images/PresetSmall.png</file>
+        <file>Images/DataSmall.png</file>
+        <file>Images/Preset.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

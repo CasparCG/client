@@ -42,7 +42,9 @@ namespace Enum
             NewRundown = QEvent::User + 30,
             DeleteRundown = QEvent::User + 31,
             NewRundownMenu = QEvent::User + 32,
-            ChannelChanged = QEvent::User + 33
+            ChannelChanged = QEvent::User + 33,
+            PresetChanged = QEvent::User + 34,
+            AddPresetItem = QEvent::User + 35
         };
     };
 }
@@ -240,6 +242,7 @@ namespace Library
     static const int TEMPLATE_PAGE_INDEX = 2;
     static const int MOVIE_PAGE_INDEX = 3;
     static const int DATA_PAGE_INDEX = 4;
+    static const int PRESET_PAGE_INDEX = 5;
 }
 
 namespace Print

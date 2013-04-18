@@ -86,7 +86,10 @@ HEADERS += \
     Events/NewRundownEvent.h \
     Events/DeleteRundownEvent.h \
     Events/ActiveRundownChangedEvent.h \
-    Events/ChannelChangedEvent.h
+    Events/ChannelChangedEvent.h \
+    Models/PresetModel.h \
+    Events/PresetChangedEvent.h \
+    Events/AddPresetItemEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -162,7 +165,10 @@ SOURCES += \
     Events/NewRundownEvent.cpp \
     Events/DeleteRundownEvent.cpp \
     Events/ActiveRundownChangedEvent.cpp \
-    Events/ChannelChangedEvent.cpp
+    Events/ChannelChangedEvent.cpp \
+    Models/PresetModel.cpp \
+    Events/PresetChangedEvent.cpp \
+    Events/AddPresetItemEvent.cpp
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32: LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

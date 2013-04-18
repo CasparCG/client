@@ -27,6 +27,8 @@
 #include "Events/DeviceChangedEvent.h"
 #include "Events/DeleteRundownEvent.h"
 #include "Events/ChannelChangedEvent.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/AddPresetItemEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -65,6 +67,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireEmptyRundownEvent();
         void fireAddRudnownItemEvent(const LibraryModel& model);
         void fireAddRudnownItemEvent(const QString& type);
+        void fireAddPresetItemEvent(const QString& preset);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);
         void fireActiveRundownChangedEvent(const QString& path);
         void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
@@ -73,6 +76,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireMediaChangedEvent();
         void fireTemplateChangedEvent();
         void fireDataChangedEvent();
+        void firePresetChangedEvent();
         void firePreviewEvent();
         void fireLabelChangedEvent(const QString& label);
         void fireTargetChangedEvent(const QString& target);

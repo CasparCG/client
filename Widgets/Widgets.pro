@@ -76,7 +76,8 @@ HEADERS += \
     Rundown/RundownVideoWidget.h \
     Rundown/RundownTreeWidget.h \
     Rundown/RundownItemFactory.h \
-    DeviceDialog.h
+    DeviceDialog.h \
+    PresetDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -141,7 +142,8 @@ SOURCES += \
     Inspector/InspectorVideoWidget.cpp \
     Rundown/RundownTreeWidget.cpp \
     Rundown/RundownItemFactory.cpp \
-    DeviceDialog.cpp
+    DeviceDialog.cpp \
+    PresetDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -205,7 +207,8 @@ FORMS += \
     Rundown/RundownVideoWidget.ui \
     Inspector/InspectorVideoWidget.ui \
     Rundown/RundownTreeWidget.ui \
-    DeviceDialog.ui
+    DeviceDialog.ui \
+    PresetDialog.ui
 
 RESOURCES += \
     Resource.qrc
@@ -247,7 +250,6 @@ OTHER_FILES += \
     Images/Preview.png \
     Images/Movie.png \
     Images/Still.png \
-    Images/Consumer.png \
     Images/Disconnected.png \
     Images/New.png \
     Fonts/OpenSans-SemiboldItalic.ttf \
@@ -274,7 +276,6 @@ OTHER_FILES += \
     Images/Thumbnail.png \
     Images/SplitterVertical.png \
     Images/SplitterHorizontal.png \
-    Images/Data.png \
     Images/Checkerboard.png \
     Images/TestConnection.png \
     Images/Information.png \
@@ -353,7 +354,10 @@ OTHER_FILES += \
     Images/Crop.png \
     Images/SolidColorSmallHover.png \
     Images/SolidColorSmall.png \
-    Images/SolidColor.png
+    Images/SolidColor.png \
+    Images/PresetSmall.png \
+    Images/DataSmall.png \
+    Images/Preset.png
 
 INCLUDEPATH += $$PWD/../Dependencies/boost
 win32:LIBS += -L$$PWD/../Dependencies/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

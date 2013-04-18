@@ -94,6 +94,10 @@ F12
 Function: Clear Channel
 Description: Call clear on selected items channel in the rundown.
 
+Alt+1 - Alt+5
+Function: Rundown
+Description: Switch between rundown tabs.
+
 Ctrl+G / Ctrl+U
 Functioin: Group / Ungroup
 Description: Group / Ungroup one or more items in the rundown.
@@ -142,7 +146,7 @@ Description: Show this help dialog.</string>
    <hints>
     <hint type="sourcelabel">
      <x>278</x>
-     <y>229</y>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>356</x>

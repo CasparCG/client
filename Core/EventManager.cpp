@@ -175,6 +175,11 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0)));
 }
 
+void EventManager::fireAddPresetItemEvent(const QString& preset)
+{
+    qApp->postEvent(qApp, new AddPresetItemEvent(preset));
+}
+
 void EventManager::fireStatusbarEvent(const QString& message, int timeout)
 {
     qApp->postEvent(qApp, new StatusbarEvent(message, timeout));
@@ -217,6 +222,11 @@ void EventManager::fireTemplateChangedEvent()
 void EventManager::fireDataChangedEvent()
 {
     qApp->postEvent(qApp, new DataChangedEvent());
+}
+
+void EventManager::firePresetChangedEvent()
+{
+    qApp->postEvent(qApp, new PresetChangedEvent());
 }
 
 void EventManager::firePreviewEvent()

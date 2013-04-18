@@ -16,6 +16,7 @@
 #include "Models/TypeModel.h"
 #include "Models/ThumbnailModel.h"
 #include "Models/FormatModel.h"
+#include "Models/PresetModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -35,6 +36,12 @@ class CORE_EXPORT DatabaseManager
 
         QList<FormatModel> getFormat();
         FormatModel getFormat(const QString& name);
+
+        QList<PresetModel> getPreset();
+        PresetModel getPreset(const QString& name);
+        QList<PresetModel> getPresetByFilter(const QString& filter);
+        void insertPreset(const PresetModel& model);
+        void deletePreset(int id);
 
         QList<BlendModeModel> getBlendMode();
         QList<DirectionModel> getDirection();
@@ -61,7 +68,6 @@ class CORE_EXPORT DatabaseManager
         QList<LibraryModel> getLibraryMedia();
         QList<LibraryModel> getLibraryTemplate();
         QList<LibraryModel> getLibraryData();
-
         QList<LibraryModel> getLibraryMediaByFilter(const QString& filter);
         QList<LibraryModel> getLibraryTemplateByFilter(const QString& filter);
         QList<LibraryModel> getLibraryDataByFilter(const QString& filter);

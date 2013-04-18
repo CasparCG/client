@@ -20,7 +20,6 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-#include <QtGui/QKeyEvent>
 #include <QtGui/QMenu>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
@@ -118,4 +117,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void contextMenuNewTriggered(QAction*);
         Q_SLOT void selectItemBelow();
         Q_SLOT bool removeSelectedItems();
+        Q_SLOT void saveAsPreset();
 };

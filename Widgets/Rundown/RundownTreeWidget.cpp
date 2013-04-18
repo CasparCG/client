@@ -25,6 +25,7 @@
 #include "RundownAudioWidget.h"
 #include "RundownImageWidget.h"
 #include "RundownItemFactory.h"
+#include "PresetDialog.h"
 
 #include "GpiManager.h"
 #include "DatabaseManager.h"
@@ -33,6 +34,7 @@
 #include "Events/OpenRundownEvent.h"
 #include "Events/SaveRundownEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
+#include "Events/AddPresetItemEvent.h"
 #include "Models/RundownModel.h"
 
 #include <iostream>
@@ -47,6 +49,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
@@ -145,6 +148,8 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Save as Preset", this, SLOT(saveAsPreset()));
+    this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove", this, SLOT(removeSelectedItems()));
 
     connect(this->contextMenuNew, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuNewTriggered(QAction*)));
@@ -180,7 +185,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
             else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
                 return executeCommand(Playout::PlayoutType::ClearChannel, KeyPress);
 
-            if (target == treeWidgetRundown)
+            if (target == this->treeWidgetRundown)
             {
                 if (keyEvent->key() == Qt::Key_Delete)
                     return removeSelectedItems();
@@ -265,6 +270,19 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
             else
                 dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+
+            this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+            checkEmptyRundown();
+
+            return true;
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddPresetItem))
+        {
+            AddPresetItemEvent* addPresetItemEvent = dynamic_cast<AddPresetItemEvent*>(event);
+
+            qApp->clipboard()->setText(addPresetItemEvent->getPreset());
+            pasteSelectedItems();
 
             this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
@@ -424,6 +442,8 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
         this->contextMenuRundown->actions().at(2)->setEnabled(false); // Group.
         this->contextMenuRundown->actions().at(3)->setEnabled(false); // Ungroup.
         this->contextMenuRundown->actions().at(5)->setEnabled(false); // Colorize.
+        this->contextMenuRundown->actions().at(7)->setEnabled(false); // Save as Preset.
+        this->contextMenuRundown->actions().at(9)->setEnabled(false); // Remove.
     }
 
     this->contextMenuRundown->exec(this->treeWidgetRundown->mapToGlobal(point));
@@ -1217,6 +1237,19 @@ bool RundownTreeWidget::moveItemIntoGroup()
     }
 
     return true;
+}
+
+void RundownTreeWidget::saveAsPreset()
+{
+    if (!copySelectedItems())
+        return;
+
+    PresetDialog* dialog = new PresetDialog(this);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().insertPreset(PresetModel(0, dialog->getName(), qApp->clipboard()->text()));
+        EventManager::getInstance().firePresetChangedEvent();
+    }
 }
 
 bool RundownTreeWidget::removeSelectedItems()

@@ -14,6 +14,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
@@ -52,16 +53,21 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetData->setColumnHidden(4, true);
     this->treeWidgetData->setColumnHidden(5, true);
 
+    this->treeWidgetPreset->setColumnHidden(1, true);
+    this->treeWidgetPreset->setColumnHidden(2, true);
+
     connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
+    connect(this->treeWidgetPreset, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuPresetRequested(const QPoint &)));
 
     qApp->installEventFilter(this);
 
     EventManager::getInstance().fireMediaChangedEvent();
     EventManager::getInstance().fireTemplateChangedEvent();
     EventManager::getInstance().fireDataChangedEvent();
+    EventManager::getInstance().firePresetChangedEvent();
 }
 
 void LibraryWidget::setupUiMenu()
@@ -73,13 +79,28 @@ void LibraryWidget::setupUiMenu()
     this->contextMenuImage->addAction("Add as image");
     this->contextMenuImage->addAction("Add as image scroller");
 
+    this->contextMenuPreset = new QMenu(this);
+    this->contextMenuPreset->addAction("Add item");
+    this->contextMenuPreset->addSeparator();
+    this->contextMenuPreset->addAction("Delete");
+
     connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
     connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
+    connect(this->contextMenuPreset, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuPresetTriggered(QAction*)));
 }
 
 bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::MediaChanged))
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if (target == this->treeWidgetPreset)
+        {
+            if (keyEvent->key() == Qt::Key_Delete)
+                return removeSelectedPresets();
+        }
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::MediaChanged))
     {
         MediaChangedEvent* mediaChangedEvent = dynamic_cast<MediaChangedEvent*>(event);
 
@@ -104,7 +125,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 if (model.getType() == "AUDIO")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetAudio);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Audio.png"));
+                    widget->setIcon(0, QIcon(":/Graphics/Images/AudioSmall.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, QString("%1").arg(model.getId()));
                     widget->setText(2, model.getLabel());
@@ -115,7 +136,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 else if (model.getType() == "STILL")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetImage);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Still.png"));
+                    widget->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, QString("%1").arg(model.getId()));
                     widget->setText(2, model.getLabel());
@@ -126,7 +147,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 else if (model.getType() == "MOVIE")
                 {
                     QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetVideo);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/Movie.png"));
+                    widget->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
                     widget->setText(0, model.getName());
                     widget->setText(1, QString("%1").arg(model.getId()));
                     widget->setText(2, model.getLabel());
@@ -160,7 +181,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             foreach (LibraryModel model, models)
             {
                 QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetTemplate);
-                widget->setIcon(0, QIcon(":/Graphics/Images/Template.png"));
+                widget->setIcon(0, QIcon(":/Graphics/Images/TemplateSmall.png"));
                 widget->setText(0, model.getName());
                 widget->setText(1, QString("%1").arg(model.getId()));
                 widget->setText(2, model.getLabel());
@@ -191,7 +212,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             foreach (LibraryModel model, models)
             {
                 QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetData);
-                widget->setIcon(0, QIcon(":/Graphics/Images/Data.png"));
+                widget->setIcon(0, QIcon(":/Graphics/Images/DataSmall.png"));
                 widget->setText(0, model.getName());
                 widget->setText(1, QString("%1").arg(model.getId()));
                 widget->setText(2, model.getLabel());
@@ -201,7 +222,35 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
 
-        this->toolBoxLibrary->setItemText(4, QString("Stored (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(4, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+    }
+    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::PresetChanged))
+    {
+        PresetChangedEvent* presetChangedEvent = dynamic_cast<PresetChangedEvent*>(event);
+
+        // TODO: Only add / remove necessary items.
+        this->treeWidgetPreset->clear();
+        this->treeWidgetPreset->clearSelection();
+
+        QList<PresetModel> models;
+        if (this->lineEditFilter->text().isEmpty())
+            models = DatabaseManager::getInstance().getPreset();
+        else
+            models = DatabaseManager::getInstance().getPresetByFilter(this->lineEditFilter->text());
+
+        if (models.count() > 0)
+        {
+            foreach (PresetModel model, models)
+            {
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetPreset);
+                widget->setIcon(0, QIcon(":/Graphics/Images/PresetSmall.png"));
+                widget->setText(0, model.getName());
+                widget->setText(1, QString("%1").arg(model.getId()));
+                widget->setText(2, model.getValue());
+            }
+        }
+
+        this->toolBoxLibrary->setItemText(5, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
     }
 
     return QObject::eventFilter(target, event);
@@ -247,6 +296,14 @@ void LibraryWidget::customContextMenuImageRequested(const QPoint& point)
     this->contextMenuImage->exec(this->treeWidgetImage->mapToGlobal(point));
 }
 
+void LibraryWidget::customContextMenuPresetRequested(const QPoint& point)
+{
+    if (this->treeWidgetPreset->selectedItems().count() == 0)
+        return;
+
+    this->contextMenuPreset->exec(this->treeWidgetPreset->mapToGlobal(point));
+}
+
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
@@ -285,16 +342,41 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
     }
 }
 
+void LibraryWidget::contextMenuPresetTriggered(QAction* action)
+{
+    if (action->text() == "Add item")
+    {
+        foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
+            EventManager::getInstance().fireAddPresetItemEvent(item->text(2));
+    }
+    else if (action->text() == "Delete")
+        removeSelectedPresets();
+}
+
+bool LibraryWidget::removeSelectedPresets()
+{
+    foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
+        DatabaseManager::getInstance().deletePreset(item->text(1).toInt());
+
+    EventManager::getInstance().firePresetChangedEvent();
+
+    return true;
+}
+
 void LibraryWidget::filterLibrary()
 {
     EventManager::getInstance().fireMediaChangedEvent();
     EventManager::getInstance().fireTemplateChangedEvent();
     EventManager::getInstance().fireDataChangedEvent();
+    EventManager::getInstance().firePresetChangedEvent();
 }
 
 void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
 {
     if (current == NULL)
+        return;
+
+    if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
         return;
 
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
@@ -328,11 +410,18 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
                                                                          current->text(3), current->text(4), current->text(5).toInt()));
     }
+    else if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
+    {
+        EventManager::getInstance().fireAddPresetItemEvent(current->text(2));
+    }
 }
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 { 
     if (current == NULL)
+        return;
+
+    if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
         return;
 
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
