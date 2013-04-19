@@ -265,12 +265,12 @@ bool RundownVideoWidget::executeCommand(enum Playout::PlayoutType::Type type)
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
-    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
-        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)

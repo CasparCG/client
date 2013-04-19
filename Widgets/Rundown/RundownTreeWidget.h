@@ -82,6 +82,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer);
         AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
 
+        Q_SLOT void addCustomCommandItem();
         Q_SLOT void addPrintItem();
         Q_SLOT void addSeparatorItem();
         Q_SLOT void addFileRecorderItem();

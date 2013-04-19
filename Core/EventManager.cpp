@@ -183,6 +183,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0)));
     else if (type == Rundown::VIDEO)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0)));
+    else if (type == Rundown::CUSTOMCOMMAND)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0)));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)

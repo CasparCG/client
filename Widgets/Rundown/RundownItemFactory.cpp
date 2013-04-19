@@ -25,6 +25,7 @@
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
 #include "RundownImageWidget.h"
+#include "RundownCustomCommandWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -59,6 +60,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::PRINT) return new RundownPrintWidget(model, this);
     else if (model.getType() == Rundown::CLEAROUTPUT) return new RundownClearOutputWidget(model, this);
     else if (model.getType() == Rundown::SOLIDCOLOR) return new RundownSolidColorWidget(model, this);
+    else if (model.getType() == Rundown::CUSTOMCOMMAND) return new RundownCustomCommandWidget(model, this);
 
     return NULL;
 }

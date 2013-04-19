@@ -12,6 +12,7 @@
 #include "Commands/SeparatorCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/GridCommand.h"
+#include "Commands/CustomCommand.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Events/EmptyRundownEvent.h"
@@ -114,7 +115,15 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
                 this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
-            } 
+            }
+            else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
+            {
+                this->spinBoxChannel->setEnabled(false);
+                this->spinBoxVideolayer->setEnabled(false);
+
+                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            }
         }
 
         checkEmptyDevice();

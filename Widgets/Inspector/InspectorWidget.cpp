@@ -24,6 +24,7 @@
 #include "Inspector/InspectorSolidColorWidget.h"
 #include "Inspector/InspectorAudioWidget.h"
 #include "Inspector/InspectorImageWidget.h"
+#include "Inspector/InspectorCustomCommandWidget.h"
 
 #include "Global.h"
 
@@ -49,6 +50,7 @@
 #include "Commands/DeckLinkInputCommand.h"
 #include "Commands/ImageScrollerCommand.h"
 #include "Commands/PrintCommand.h"
+#include "Commands/CustomCommand.h"
 #include "Events/RundownItemSelectedEvent.h"
 #include "Events/EmptyRundownEvent.h"
 
@@ -85,6 +87,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(22)), 0, new InspectorSolidColorWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(23)), 0, new InspectorAudioWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(24)), 0, new InspectorImageWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(25)), 0, new InspectorCustomCommandWidget(this));
 
     this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
@@ -110,6 +113,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
 
     this->treeWidgetInspector->expandAll();
     this->treeWidgetInspector->doItemsLayout();
@@ -146,6 +150,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
@@ -173,6 +178,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
 
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
@@ -292,31 +298,12 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
             this->treeWidgetInspector->topLevelItem(21)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
-            this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
-
-            this->treeWidgetInspector->expandAll();
+        }
+        else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+            this->treeWidgetInspector->topLevelItem(25)->setHidden(false);
         }
 
         this->treeWidgetInspector->expandAll();

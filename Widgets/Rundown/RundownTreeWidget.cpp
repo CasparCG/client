@@ -121,6 +121,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintItem()));
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
+    this->contextMenuNew->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
     this->contextMenuNew->addSeparator();
     this->contextMenuNew->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
     //this->contextMenuNew->actions().at(3)->setEnabled(false);
@@ -1117,6 +1118,11 @@ void RundownTreeWidget::addSeparatorItem()
 void RundownTreeWidget::addGridItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GRID);
+}
+
+void RundownTreeWidget::addCustomCommandItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CUSTOMCOMMAND);
 }
 
 void RundownTreeWidget::addSolidColorItem()

@@ -164,9 +164,9 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
 
-        this->toolBoxLibrary->setItemText(0, QString("Audio (%1)").arg(this->treeWidgetAudio->topLevelItemCount()));
-        this->toolBoxLibrary->setItemText(1, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
-        this->toolBoxLibrary->setItemText(3, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::AUDIO_PAGE_INDEX, QString("Audio (%1)").arg(this->treeWidgetAudio->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::STILL_PAGE_INDEX, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::MOVIE_PAGE_INDEX, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
     }
     else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::TemplateChanged))
     {
@@ -197,7 +197,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
 
-        this->toolBoxLibrary->setItemText(2, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::TEMPLATE_PAGE_INDEX, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
     }
     else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::DataChanged))
     {
@@ -228,7 +228,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
 
-        this->toolBoxLibrary->setItemText(4, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::DATA_PAGE_INDEX, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
     }
     else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::PresetChanged))
     {
@@ -256,7 +256,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
 
-        this->toolBoxLibrary->setItemText(5, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
+        this->toolBoxLibrary->setItemText(Library::PRESET_PAGE_INDEX, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
     }
     else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ImportPreset))
     {

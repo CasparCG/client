@@ -239,12 +239,12 @@ namespace SolidColor
 
 namespace Library
 {
-    static const int AUDIO_PAGE_INDEX = 0;
-    static const int STILL_PAGE_INDEX = 1;
-    static const int TEMPLATE_PAGE_INDEX = 2;
-    static const int MOVIE_PAGE_INDEX = 3;
-    static const int DATA_PAGE_INDEX = 4;
-    static const int PRESET_PAGE_INDEX = 5;
+    static const int PRESET_PAGE_INDEX = 0;
+    static const int AUDIO_PAGE_INDEX = 1;
+    static const int STILL_PAGE_INDEX = 2;
+    static const int TEMPLATE_PAGE_INDEX = 3;
+    static const int MOVIE_PAGE_INDEX = 4;
+    static const int DATA_PAGE_INDEX = 5;
 }
 
 namespace Print
@@ -290,6 +290,7 @@ namespace Rundown
     static const QString IMAGE = "STILL";
     static const QString TEMPLATE = "TEMPLATE";
     static const QString VIDEO = "MOVIE";
+    static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
 }

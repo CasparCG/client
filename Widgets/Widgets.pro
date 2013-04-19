@@ -77,7 +77,9 @@ HEADERS += \
     Rundown/RundownTreeWidget.h \
     Rundown/RundownItemFactory.h \
     DeviceDialog.h \
-    PresetDialog.h
+    PresetDialog.h \
+    Rundown/RundownCustomCommandWidget.h \
+    Inspector/InspectorCustomCommandWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -143,7 +145,9 @@ SOURCES += \
     Rundown/RundownTreeWidget.cpp \
     Rundown/RundownItemFactory.cpp \
     DeviceDialog.cpp \
-    PresetDialog.cpp
+    PresetDialog.cpp \
+    Rundown/RundownCustomCommandWidget.cpp \
+    Inspector/InspectorCustomCommandWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -208,7 +212,9 @@ FORMS += \
     Inspector/InspectorVideoWidget.ui \
     Rundown/RundownTreeWidget.ui \
     DeviceDialog.ui \
-    PresetDialog.ui
+    PresetDialog.ui \
+    Rundown/RundownCustomCommandWidget.ui \
+    Inspector/InspectorCustomCommandWidget.ui
 
 RESOURCES += \
     Resource.qrc
