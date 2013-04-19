@@ -1,6 +1,8 @@
 # /
 /bin/
-/Solution.pro.user
+
+# /src/
+/src/Solution.pro.user
 
 # /Dependencies/boost/
 /Dependencies/boost/
