@@ -368,50 +368,176 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelStop</sender>
-   <signal>linkActivated(QString)</signal>
+   <sender>lineEditStop</sender>
+   <signal>textChanged(QString)</signal>
    <receiver>InspectorCustomCommandWidget</receiver>
-   <slot>resetOutput(QString)</slot>
+   <slot>stopCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>46</x>
-     <y>24</y>
+     <x>155</x>
+     <y>21</y>
     </hint>
     <hint type="destinationlabel">
-     <x>3</x>
+     <x>227</x>
      <y>21</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>lineEditStop</sender>
+   <sender>lineEditPlay</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorCustomCommandWidget</receiver>
-   <slot>outputChanged(QString)</slot>
+   <slot>playCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>23</y>
+     <x>190</x>
+     <y>46</y>
     </hint>
     <hint type="destinationlabel">
-     <x>225</x>
-     <y>20</y>
+     <x>230</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditLoad</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>loadCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>241</x>
+     <y>80</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditPause</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>pauseCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>156</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>251</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditNext</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>nextCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditUpdate</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>updateCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditInvoke</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>invokeCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>201</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>189</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditClear</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>clearCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditClearVideolayer</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>clearVideolayerCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>227</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditClearChannel</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>clearChannelCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>275</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>containerChanged(QString)</slot>
-  <slot>resetContainer(QString)</slot>
-  <slot>resetCodec(QString)</slot>
-  <slot>codecChanged(QString)</slot>
-  <slot>resetPreset(QString)</slot>
-  <slot>presetChanged(QString)</slot>
-  <slot>resetTune(QString)</slot>
-  <slot>tuneChanged(QString)</slot>
-  <slot>resetOutput(QString)</slot>
-  <slot>outputChanged(QString)</slot>
-  <slot>resetWithAlpha(QString)</slot>
-  <slot>withAlphaChanged(int)</slot>
+  <slot>stopCommandChanged(QString)</slot>
+  <slot>playCommandChanged(QString)</slot>
+  <slot>loadCommandChanged(QString)</slot>
+  <slot>pauseCommandChanged(QString)</slot>
+  <slot>nextCommandChanged(QString)</slot>
+  <slot>updateCommandChanged(QString)</slot>
+  <slot>invokeCommandChanged(QString)</slot>
+  <slot>clearCommandChanged(QString)</slot>
+  <slot>clearVideolayerCommandChanged(QString)</slot>
+  <slot>clearChannelCommandChanged(QString)</slot>
  </slots>
 </ui>

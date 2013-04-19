@@ -167,14 +167,9 @@ void AMCPDevice::parseHeader(const QString& line)
             this->state = AMCPDevice::ExpectingMultiline;
             break;
         case 201: // The command has been executed and a line of data is being returned.
+        case 400: // Command not understood.
             this->state = AMCPDevice::ExpectingTwoline;
             break;
-        case 400: // Command not understood
-        case 401: // Illigal video channel.
-        case 402: // Parameter missing.
-        case 500: // Internal server error.
-            resetDevice();
-            return;
         default:
             this->state = AMCPDevice::ExpectingOneline;
             break;
