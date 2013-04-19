@@ -9,6 +9,6 @@ SUBDIRS += \
     Shell
 
 OTHER_FILES += \
-    CHANGES.TXT \
-    LICENSE.TXT \
-    README.TXT
+    ../CHANGES.TXT \
+    ../LICENSE.TXT \
+    ../README.TXT
