@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/Graphics">
-        <file>Images/CasparCG.ico</file>
-        <file>Images/CasparCG.icns</file>
-    </qresource>
-</RCC>
