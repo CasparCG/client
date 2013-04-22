@@ -125,6 +125,10 @@
         <file>Images/PresetSmall.png</file>
         <file>Images/DataSmall.png</file>
         <file>Images/Preset.png</file>
+        <file>Images/Levels.png</file>
+        <file>Images/BlendMode.png</file>
+        <file>Images/Mask.png</file>
+        <file>Images/Volume.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
