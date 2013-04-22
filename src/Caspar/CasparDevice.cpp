@@ -297,7 +297,8 @@ void CasparDevice::loadImage(int channel, int videolayer, const QString& name, c
 {
     writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7")
                  .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
-                 .arg(direction));
+                 .arg(direction)
+                 .arg((useAuto == true) ? "AUTO" : ""));
 }
 
 void CasparDevice::stopImage(int channel, int videolayer)
