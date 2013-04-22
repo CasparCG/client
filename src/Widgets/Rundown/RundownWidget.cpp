@@ -5,6 +5,7 @@
 #include "Events/DeleteRundownEvent.h"
 #include "Events/ActiveRundownChangedEvent.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
 #include <QtGui/QApplication>
@@ -45,8 +46,10 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == QEvent::KeyPress)
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+        qDebug() << keyEvent->key();
+        qDebug() << keyEvent->modifiers();
         if (keyEvent->key() >= 49 && keyEvent->key() <= 57 && keyEvent->modifiers() == Qt::AltModifier) // [1-9]
-            return selectTab(keyEvent->text().toInt());
+            return selectTab(QString(QChar(keyEvent->key())).toInt());
     }
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundown))
     {
