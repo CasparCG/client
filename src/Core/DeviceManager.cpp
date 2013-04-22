@@ -116,8 +116,6 @@ const DeviceModel DeviceManager::getDeviceModelByAddress(const QString& address)
     }
 
     qCritical() << "No DeviceModel found for specified address";
-
-    return NULL;
 }
 
 const int DeviceManager::getDeviceCount() const
