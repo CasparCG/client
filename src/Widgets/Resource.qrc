@@ -129,6 +129,11 @@
         <file>Images/BlendMode.png</file>
         <file>Images/Mask.png</file>
         <file>Images/Volume.png</file>
+        <file>Images/Saturation.png</file>
+        <file>Images/CustomCommand.png</file>
+        <file>Images/PresetSmallHover.png</file>
+        <file>Images/CustomCommandSmall.png</file>
+        <file>Images/CustomCommandSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

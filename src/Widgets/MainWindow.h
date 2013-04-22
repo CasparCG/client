@@ -19,6 +19,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         explicit MainWindow(QWidget* parent = 0);
 
     protected:
+        virtual void closeEvent(QCloseEvent* event);
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
