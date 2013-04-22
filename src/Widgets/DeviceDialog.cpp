@@ -88,6 +88,7 @@ void DeviceDialog::accept()
         {
             QMessageBox box;
             box.setWindowTitle("Add Device");
+            box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The name already exists in the database. Please choose a unique name.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
             box.setStandardButtons(QMessageBox::Ok);
@@ -105,6 +106,7 @@ void DeviceDialog::accept()
         {
             QMessageBox box;
             box.setWindowTitle("Add Device");
+            box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The address already exists in the database. Please choose a unique address.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
             box.setStandardButtons(QMessageBox::Ok);

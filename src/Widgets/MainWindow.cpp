@@ -16,6 +16,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
+#include <QtGui/QMessageBox>
 #include <QtGui/QMouseEvent>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
@@ -23,7 +24,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setupUi(this);
     setupUiMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
-
 
     setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
     this->applicationTitle = this->windowTitle();
@@ -126,6 +126,23 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    QMessageBox box;
+    box.setWindowTitle("Quit");
+    box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
+    box.setText("Are you sure you want to quit? Unsaved changes to your rundowns will be lost!");
+    box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
+    box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+    box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
+
+     if (box.exec() == QMessageBox::Yes)
+         event->accept();
+     else
+         event->ignore();
 }
 
 void MainWindow::importPreset()
