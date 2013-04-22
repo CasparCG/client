@@ -46,8 +46,6 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == QEvent::KeyPress)
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        qDebug() << keyEvent->key();
-        qDebug() << keyEvent->modifiers();
         if (keyEvent->key() >= 49 && keyEvent->key() <= 57 && keyEvent->modifiers() == Qt::AltModifier) // [1-9]
             return selectTab(QString(QChar(keyEvent->key())).toInt());
     }
