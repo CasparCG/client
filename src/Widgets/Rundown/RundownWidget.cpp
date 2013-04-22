@@ -46,7 +46,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
         if (keyEvent->key() >= 49 && keyEvent->key() <= 57 && keyEvent->modifiers() == Qt::AltModifier) // [1-9]
-            return selectTab(keyEvent->text().toInt());
+            return selectTab(QString(QChar(keyEvent->key())).toInt());
     }
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundown))
     {
