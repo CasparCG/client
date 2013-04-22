@@ -129,3 +129,9 @@ void RundownWidget::currentChanged(int index)
 
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->setActive(true);
 }
+
+void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)
+{
+    for (int i = 0; i < this->tabWidgetRundown->count(); i++)
+        dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->gpiBindingChanged(gpiPort, binding);
+}

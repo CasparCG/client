@@ -29,4 +29,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
+        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
 };

@@ -36,6 +36,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void openRundown();
         void saveRundown(bool saveAs);
 
+        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
@@ -111,7 +113,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);
         Q_SLOT void gpiPortTriggered(int, GpiDevice*);
-        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
