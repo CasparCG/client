@@ -17,7 +17,7 @@ SOURCES += \
 FORMS += \
 
 RESOURCES += \
-    Resource.qrc
+    Shell.qrc
 
 OTHER_FILES += \
     Images/CasparCG.ico \

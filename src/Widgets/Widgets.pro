@@ -217,7 +217,7 @@ FORMS += \
     Inspector/InspectorCustomCommandWidget.ui
 
 RESOURCES += \
-    Resource.qrc
+    Widgets.qrc
 
 OTHER_FILES += \
     Images/ArrowUpDisabled.png \
