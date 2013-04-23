@@ -130,7 +130,7 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    QMessageBox box;
+    QMessageBox box(this);
     box.setWindowTitle("Quit");
     box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
     box.setText("Are you sure you want to quit? Unsaved changes to your rundowns will be lost!");

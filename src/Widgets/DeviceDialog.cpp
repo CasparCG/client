@@ -86,7 +86,7 @@ void DeviceDialog::accept()
         DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->lineEditDeviceName->text());
         if (!model.getName().isEmpty())
         {
-            QMessageBox box;
+            QMessageBox box(this);
             box.setWindowTitle("Add Device");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The name already exists in the database. Please choose a unique name.");
@@ -104,7 +104,7 @@ void DeviceDialog::accept()
         model = DatabaseManager::getInstance().getDeviceByAddress(this->lineEditAddress->text());
         if (!model.getName().isEmpty())
         {
-            QMessageBox box;
+            QMessageBox box(this);
             box.setWindowTitle("Add Device");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The address already exists in the database. Please choose a unique address.");
@@ -155,7 +155,7 @@ void DeviceDialog::connectionStateChanged(CasparDevice& device)
 {
     disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 
-    QMessageBox box;
+    QMessageBox box(this);
     box.setWindowTitle("Test Connection");
     box.setText(QString("Successfully connected to device: %1:%2").arg(device.getAddress()).arg(device.getPort()));
     box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
