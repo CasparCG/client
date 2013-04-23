@@ -9,7 +9,8 @@
 #include <QtGui/QMessageBox>
 
 DeviceDialog::DeviceDialog(QWidget* parent)
-    : QDialog(parent), editMode(false)
+    : QDialog(parent),
+      editMode(false)
 {
     setupUi(this);
 
