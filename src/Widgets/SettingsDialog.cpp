@@ -136,7 +136,6 @@ void SettingsDialog::checkEmptyDeviceList()
 void SettingsDialog::showAddDeviceDialog()
 {
     DeviceDialog* dialog = new DeviceDialog(this);
-    dialog->setWindowModality(Qt::WindowModal);
     if (dialog->exec() == QDialog::Accepted)
     {
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),

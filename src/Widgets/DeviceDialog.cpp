@@ -157,6 +157,7 @@ void DeviceDialog::connectionStateChanged(CasparDevice& device)
     disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 
     QMessageBox box(this);
+    box.setWindowModality(Qt::WindowModal);
     box.setWindowTitle("Test Connection");
     box.setText(QString("Successfully connected to device: %1:%2").arg(device.getAddress()).arg(device.getPort()));
     box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
