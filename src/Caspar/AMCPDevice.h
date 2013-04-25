@@ -5,6 +5,7 @@
 #include <QtCore/QObject>
 
 #include <QtNetwork/QTcpSocket>
+#include <QtNetwork/QAbstractSocket>
 
 class CASPAR_EXPORT AMCPDevice : public QObject
 {
@@ -92,4 +93,5 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         Q_SLOT void setConnected();
         Q_SLOT void setDisconnected();
         Q_SLOT void reconnectDevice();
+        Q_SLOT void error(QAbstractSocket::SocketError error);
 };

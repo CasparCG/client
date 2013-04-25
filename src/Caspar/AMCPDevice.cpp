@@ -14,6 +14,7 @@ AMCPDevice::AMCPDevice(QObject* parent)
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
     connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
+    connect(this->socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 }
 
 AMCPDevice::~AMCPDevice()
@@ -27,6 +28,21 @@ void AMCPDevice::connectDevice(const QString& address, int port)
 
     this->socket->connectToHost(this->address, this->port);
 }
+
+
+
+
+
+void AMCPDevice::error(QAbstractSocket::SocketError error)
+{
+    qDebug() << "AMCPDevice::error: " << error;
+}
+
+
+
+
+
+
 
 void AMCPDevice::disconnectDevice()
 {
