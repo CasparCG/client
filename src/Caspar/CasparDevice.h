@@ -13,7 +13,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
     Q_OBJECT
 
     public:
-        explicit CasparDevice(QObject* parent = 0);
+        explicit CasparDevice(const QString& address, int port = 5250, QObject* parent = 0);
 
         const int getPort() const;
         const QString getAddress() const;

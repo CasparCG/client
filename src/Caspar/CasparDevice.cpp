@@ -3,8 +3,8 @@
 #include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 
-CasparDevice::CasparDevice(QObject* parent)
-    : AMCPDevice(parent)
+CasparDevice::CasparDevice(const QString& address, int port, QObject* parent)
+    : AMCPDevice(address, port, parent)
 {
 }
 

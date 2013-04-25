@@ -12,10 +12,10 @@ class CASPAR_EXPORT AMCPDevice : public QObject
     Q_OBJECT
 
     public:
-        explicit AMCPDevice(QObject* parent = 0);
+        explicit AMCPDevice(const QString& address, int port = 5250, QObject* parent = 0);
         virtual ~AMCPDevice();
 
-        void connectDevice(const QString& address, int port = 5250);
+        void connectDevice();
         void disconnectDevice();
 
         bool isConnected() const;
@@ -93,5 +93,4 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         Q_SLOT void setConnected();
         Q_SLOT void setDisconnected();
         Q_SLOT void reconnectDevice();
-        Q_SLOT void error(QAbstractSocket::SocketError error);
 };

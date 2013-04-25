@@ -33,13 +33,15 @@ void DeviceManager::initialize()
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
     foreach (const DeviceModel& model, models)
     {
-        QSharedPointer<CasparDevice> device(new CasparDevice());
-        device->connectDevice(model.getAddress(), model.getPort());
+        QSharedPointer<CasparDevice> device(new CasparDevice(model.getAddress(), model.getPort()));
 
         this->deviceModels.insert(model.getName(), model);
         this->devices.insert(model.getName(), device);
 
         emit deviceAdded(*device);
+
+        device->connectDevice();
+
     }
 }
 
@@ -87,13 +89,14 @@ void DeviceManager::refresh()
     {
         if (!this->devices.contains(model.getName()))
         {
-            QSharedPointer<CasparDevice> device(new CasparDevice());
-            device->connectDevice(model.getAddress(), model.getPort());
+            QSharedPointer<CasparDevice> device(new CasparDevice(model.getAddress(), model.getPort()));
 
             this->deviceModels.insert(model.getName(), model);
             this->devices.insert(model.getName(), device);
 
             emit deviceAdded(*device);
+
+            device->connectDevice();
         }
     }
 }

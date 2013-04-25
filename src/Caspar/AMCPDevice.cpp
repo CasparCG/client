@@ -5,44 +5,25 @@
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 
-AMCPDevice::AMCPDevice(QObject* parent)
+AMCPDevice::AMCPDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(AMCPDevice::NONE), state(AMCPDevice::ExpectingHeader), connected(false)
+      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
 
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
     connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
-    connect(this->socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
 }
 
 AMCPDevice::~AMCPDevice()
 {
 }
 
-void AMCPDevice::connectDevice(const QString& address, int port)
+void AMCPDevice::connectDevice()
 {
-    this->port = port;
-    this->address = address;
-
     this->socket->connectToHost(this->address, this->port);
 }
-
-
-
-
-
-void AMCPDevice::error(QAbstractSocket::SocketError error)
-{
-    qDebug() << "AMCPDevice::error: " << error;
-}
-
-
-
-
-
-
 
 void AMCPDevice::disconnectDevice()
 {
@@ -54,7 +35,7 @@ void AMCPDevice::reconnectDevice()
     if (this->connected)
         return;
 
-    this->connectDevice(this->address, this->port);
+    this->connectDevice();
 
     QTimer::singleShot(5000, this, SLOT(reconnectDevice()));
 }

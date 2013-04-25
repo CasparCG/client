@@ -35,7 +35,7 @@ void DeviceDialog::setEditMode(bool editMode)
 {
     this->editMode = editMode;
 
-    this->setWindowTitle("Edit Device");
+    setWindowTitle("Edit Device");
     this->lineEditDeviceName->setEnabled(!this->editMode);
 }
 
@@ -126,14 +126,13 @@ void DeviceDialog::accept()
 
 void DeviceDialog::testConnection()
 {
-    this->device = QSharedPointer<CasparDevice>(new CasparDevice());
+    if (this->lineEditPort->text().isEmpty())
+        this->device = QSharedPointer<CasparDevice>(new CasparDevice(this->lineEditAddress->text()));
+    else
+        this->device = QSharedPointer<CasparDevice>(new CasparDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt()));
 
     connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
-
-    if (this->lineEditPort->text().isEmpty())
-        this->device->connectDevice(this->lineEditAddress->text());
-    else
-        this->device->connectDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt());
+    this->device->connectDevice();
 }
 
 void DeviceDialog::nameChanged(QString name)
