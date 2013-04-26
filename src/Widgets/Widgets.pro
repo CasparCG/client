@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui sql opengl
+QT += core gui sql
 
 TARGET = widgets
 TEMPLATE = lib
