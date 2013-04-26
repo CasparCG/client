@@ -16,7 +16,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         virtual ~AMCPDevice();
 
         void connectDevice();
-        void disconnectDevice();
+        void disconnectDevice(bool reconnect = false);
 
         bool isConnected() const;
 
@@ -77,6 +77,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         int code;
         int state;
         bool connected;
+        bool reconnect;
         QString line;
         QString address;
         QString previousLine;

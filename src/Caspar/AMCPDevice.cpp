@@ -25,14 +25,15 @@ void AMCPDevice::connectDevice()
     this->socket->connectToHost(this->address, this->port);
 }
 
-void AMCPDevice::disconnectDevice()
+void AMCPDevice::disconnectDevice(bool reconnect)
 {
+    this->reconnect = reconnect;
     this->socket->disconnectFromHost();
 }
 
 void AMCPDevice::reconnectDevice()
 {
-    if (this->connected)
+    if (this->connected || !this->reconnect)
         return;
 
     this->connectDevice();

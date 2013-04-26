@@ -4,8 +4,8 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
-#define TAG_VERSION "RC 2"
-#define DATABASE_VERSION "20rc2"
+#define TAG_VERSION ""
+#define DATABASE_VERSION "20"
 
 #include <stdexcept>
 
