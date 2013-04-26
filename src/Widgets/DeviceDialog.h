@@ -5,7 +5,6 @@
 
 #include "CasparDevice.h"
 
-#include "Animations/BorderAnimation.h"
 #include "Models/DeviceModel.h"
 
 #include <QtCore/QList>
@@ -37,9 +36,6 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
 
     private:
         bool editMode;
-
-        BorderAnimation* addressAnimation;
-        BorderAnimation* deviceNameAnimation;
 
         QSharedPointer<CasparDevice> device;
 

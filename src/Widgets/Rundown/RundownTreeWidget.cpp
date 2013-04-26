@@ -61,9 +61,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 
     setupMenus();
 
-    this->rundownAnimation = new BorderAnimation(this->treeWidgetRundown);
-
-    // TODO: specific Gpi device.
+    // TODO: Specific Gpi device.
     connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
     connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
 
@@ -77,7 +75,6 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 
 RundownTreeWidget::~RundownTreeWidget()
 {
-    this->rundownAnimation->stop();
 }
 
 void RundownTreeWidget::setupMenus()
@@ -388,7 +385,8 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
 void RundownTreeWidget::checkEmptyRundown()
 {
-    (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? this->rundownAnimation->start() : this->rundownAnimation->stop();
+    this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "border-color: red;" : "");
+
 }
 
 void RundownTreeWidget::colorizeItems(const QString& color)

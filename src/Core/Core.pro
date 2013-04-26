@@ -68,7 +68,6 @@ HEADERS += \
     Commands/AbstractProperties.h \
     Commands/AbstractPlayoutCommand.h \
     Commands/ClearOutputCommand.h \
-    Animations/BorderAnimation.h \
     Animations/ActiveAnimation.h \
     Models/ThumbnailModel.h \
     ThumbnailWorker.h \
@@ -150,7 +149,6 @@ SOURCES += \
     Commands/ClearOutputCommand.cpp \
     Commands/AbstractPlayoutCommand.cpp \
     Commands/AbstractProperties.cpp \
-    Animations/BorderAnimation.cpp \
     Animations/ActiveAnimation.cpp \
     Models/ThumbnailModel.cpp \
     ThumbnailWorker.cpp \

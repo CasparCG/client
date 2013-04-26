@@ -5,8 +5,6 @@
 
 #include "Global.h"
 
-#include "Animations/BorderAnimation.h"
-
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
 
@@ -19,8 +17,6 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
 
     private:
         QString stylesheet;
-
-        BorderAnimation* animation;
 
         void loadGpi();
         void loadDevices();

@@ -14,10 +14,8 @@ DeviceDialog::DeviceDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->addressAnimation = new BorderAnimation(this->lineEditAddress);
-    this->deviceNameAnimation = new BorderAnimation(this->lineEditDeviceName);
-    this->addressAnimation->start();
-    this->deviceNameAnimation->start();
+    this->lineEditDeviceName->setStyleSheet("border-color: red;");
+    this->lineEditAddress->setStyleSheet("border-color: red;");
 }
 
 void DeviceDialog::setDeviceModel(const DeviceModel& model)
@@ -137,18 +135,18 @@ void DeviceDialog::testConnection()
 
 void DeviceDialog::nameChanged(QString name)
 {
-    if (!this->lineEditDeviceName->text().isEmpty())
-        this->deviceNameAnimation->stop();
+    if (this->lineEditDeviceName->text().isEmpty())
+        this->lineEditDeviceName->setStyleSheet("border-color: red;");
     else
-        this->deviceNameAnimation->start();
+        this->lineEditDeviceName->setStyleSheet("");
 }
 
 void DeviceDialog::addressChanged(QString name)
 {
-    if (!this->lineEditAddress->text().isEmpty())
-        this->addressAnimation->stop();
+    if (this->lineEditAddress->text().isEmpty())
+        this->lineEditAddress->setStyleSheet("border-color: red;");
     else
-        this->addressAnimation->start();
+        this->lineEditAddress->setStyleSheet("");
 }
 
 void DeviceDialog::connectionStateChanged(CasparDevice& device)

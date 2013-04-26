@@ -3,8 +3,6 @@
 #include "../Shared.h"
 #include "ui_InspectorWidget.h"
 
-#include "Animations/BorderAnimation.h"
-
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
@@ -24,8 +22,6 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
 
     private:
         bool masterVolumeMuted;
-
-        BorderAnimation* masterVolumeAnimation;
 
         Q_SLOT void masterVolumeClicked();
 };

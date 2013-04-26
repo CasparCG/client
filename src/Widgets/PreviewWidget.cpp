@@ -14,8 +14,6 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->previewAlphaAnimation = new BorderAnimation(this->toolButtonPreviewAlpha);
-
     qApp->installEventFilter(this);
 }
 
@@ -59,12 +57,12 @@ void PreviewWidget::switchPreview()
 {
     if (this->previewAlpha)
     {
-        this->previewAlphaAnimation->stop();
+        this->toolButtonPreviewAlpha->setStyleSheet("");
         this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
     }
     else
     {
-        this->previewAlphaAnimation->start();
+        this->toolButtonPreviewAlpha->setStyleSheet("border-color: red;");
         this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
     }
 

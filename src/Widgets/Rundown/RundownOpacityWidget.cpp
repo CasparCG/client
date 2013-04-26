@@ -85,7 +85,7 @@ bool RundownOpacityWidget::eventFilter(QObject* target, QEvent* event)
 
         // Should we update the device name?
         DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-        if (deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
+        if (!deviceChangedEvent->getDeviceName().isEmpty() && deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
         {
             // Disconnect connectionStateChanged() from the old device.
             const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());

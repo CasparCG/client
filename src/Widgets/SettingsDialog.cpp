@@ -18,7 +18,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     setupUi(this);
 
     this->stylesheet = qApp->styleSheet();
-    this->animation = new BorderAnimation(this->treeWidgetDevice);
 
     bool isFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
     this->checkBoxFullscreen->setChecked(isFullscreen);
@@ -124,13 +123,11 @@ void SettingsDialog::checkEmptyDeviceList()
 {
     if (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0)
     {
-        this->animation->start();
         this->tabWidget->setCurrentIndex(1);
-
-        return;
+        this->treeWidgetDevice->setStyleSheet("border-color: red;");
     }
-
-    this->animation->stop();
+    else
+        this->treeWidgetDevice->setStyleSheet("");
 }
 
 void SettingsDialog::showAddDeviceDialog()

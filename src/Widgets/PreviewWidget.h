@@ -3,8 +3,6 @@
 #include "Shared.h"
 #include "ui_PreviewWidget.h"
 
-#include "Animations/BorderAnimation.h"
-
 #include <QtGui/QImage>
 #include <QtGui/QWidget>
 
@@ -21,8 +19,6 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
     private:
         QImage image;
         bool previewAlpha;
-
-        BorderAnimation* previewAlphaAnimation;
 
         Q_SLOT void switchPreview();
 };

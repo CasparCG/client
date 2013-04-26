@@ -41,7 +41,6 @@ void DeviceManager::initialize()
         emit deviceAdded(*device);
 
         device->connectDevice();
-
     }
 }
 

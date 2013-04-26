@@ -8,8 +8,6 @@
 
 #include "GpiDevice.h"
 
-#include "Animations/BorderAnimation.h"
-
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -54,8 +52,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool active;
         bool compactView;
         bool enterPressed;
-
-        BorderAnimation* rundownAnimation;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 

@@ -5,7 +5,6 @@
 
 #include "CasparDevice.h"
 
-#include "Animations/BorderAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
 
@@ -28,7 +27,6 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
     private:
         AbstractCommand* command;
         LibraryModel* model;
-        BorderAnimation* deviceAnimation;
 
         void checkEmptyDevice();
         void blockAllSignals(bool block);

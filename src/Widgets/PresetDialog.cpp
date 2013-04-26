@@ -8,8 +8,7 @@ PresetDialog::PresetDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->nameAnimation = new BorderAnimation(this->lineEditName);
-    this->nameAnimation->start();
+    this->lineEditName->setStyleSheet("border-color: red;");
 }
 
 void PresetDialog::accept()
@@ -27,8 +26,9 @@ const QString PresetDialog::getName() const
 
 void PresetDialog::nameChanged(QString name)
 {
-    if (!this->lineEditName->text().isEmpty())
-        this->nameAnimation->stop();
+    if (this->lineEditName->text().isEmpty())
+        this->lineEditName->setStyleSheet("border-color: red;");
     else
-        this->nameAnimation->start();
+        this->lineEditName->setStyleSheet("");
+
 }

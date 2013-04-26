@@ -25,8 +25,6 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->deviceAnimation = new BorderAnimation(this->comboBoxDevice, this);
-
     connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
 
@@ -145,7 +143,10 @@ void InspectorOutputWidget::blockAllSignals(bool block)
 
 void InspectorOutputWidget::checkEmptyDevice()
 {
-    (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "") ? this->deviceAnimation->start() : this->deviceAnimation->stop();
+    if (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "")
+        this->comboBoxDevice->setStyleSheet("border-color: red;");
+    else
+        this->comboBoxDevice->setStyleSheet("");
 }
 
 void InspectorOutputWidget::deviceRemoved()
