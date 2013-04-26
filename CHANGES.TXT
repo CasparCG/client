@@ -1,5 +1,5 @@
-CasparCG Client 2.0 RC 2
-========================
+CasparCG Client 2.0
+===================
 
 - FIX: Open rundowns containing mixer opacity item crash the client.
 - FIX: Rundown items device info is cleared if the device does not exists.
@@ -12,6 +12,7 @@ CasparCG Client 2.0 RC 2
 - NEW: Added master volume, CasparCG 2.0.4 feature.
 - NEW: Added thumbnail support, CasparCG 2.0.4 feature.
 - NEW: Added presets support.
+- NEW: Added full linux support.
 - UPDATE: UI changes.
 
 Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
