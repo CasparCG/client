@@ -1,8 +1,8 @@
 ================================================================================
 CasparCG Client 2.0
 ================================================================================
-Thank you for your interest in CasparCG Client. The included software
-is provided as-is by Sveriges Televison AB.
+Thank you for your interest in the CasparCG Client. 
+The included software is provided as-is by Sveriges Televison AB.
 
 More information at http://casparcg.com/
 
@@ -11,7 +11,11 @@ More information at http://casparcg.com/
 SYSTEM REQUIREMENTS
 ===================
 The Windows version requires Windows XP or newer.
+
 The Mac version requires Mac OS X 10.5 or newer.
+
+The Linux version has been tested on Fedora 18 (64-bit), Kubuntu 13.04 (64-bit)
+   and Debian Weezy (64-bit.) The Linux version requires that you pre-install Qt libraries.
 
 
 INSTALLATION WINDOWS
@@ -26,16 +30,16 @@ Open the DMG file and drag the 'CasparCG Client' app to your Applications folder
 
 INSTALLATION LINUX
 ==================
-Unpack the tar file and run the run.sh. Require pre-installed Qt libraries. 
+Unpack the tar file and run the run.sh. Requires pre-installed Qt libraries.
 
 
 DOCUMENTATION
 =============
-Documentation will follow in later releases.
+Please see the Help menu item inside the Client.
 
 
-CHANGES
-=======
+CHANGES AND UPDATES
+===================
 See CHANGES.TXT for details.
 
 
