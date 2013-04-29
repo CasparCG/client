@@ -1,86 +1,92 @@
 CasparCG Client 2.0
 ===================
-
-- FIX: Open rundowns containing mixer opacity item crash the client.
+- FIX: Open rundowns containing mixer opacity item used to cause a crash.
 - FIX: Rundown items device info is cleared if the device does not exists.
-- NEW: Double click a library item adds it to the rundown.
-- NEW: Added custom command item.
-- NEW: Added Ctrl+D for duplicate rundown item.
-- NEW: Added solid color item.
-- NEW: Added multiple rundowns using tabs.
-- NEW: Added support for offline devices.
-- NEW: Added master volume, CasparCG 2.0.4 feature.
-- NEW: Added thumbnail support, CasparCG 2.0.4 feature.
 - NEW: Added presets support.
-- NEW: Added full linux support.
+- NEW: Double-clicking a library item adds it to the rundown.
+- NEW: Added 'Custom Command' item.
+- NEW: Added Ctrl+D / Cmd-D for duplicating rundown items.
+- NEW: Added solid color item.
+- NEW: Added support for multiple rundowns using tabs.
+- NEW: Added support for offline devices, so you don't need a running asparCG Server to add a device.
+- NEW: Added master volume. Requires CasparCG Server 2.0.4.
+- NEW: Added thumbnail support. Requires CasparCG Server 2.0.4.
+- NEW: Added full Linux support.
 - UPDATE: UI changes.
 
-Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
+Note: Previously saved rundowns created with an older versions of the Client are not compatible anymore!
+
 
 
 CasparCG Client 2.0 RC 1
 ========================
-
 - FIX: UPDATE on template item should use the delay value.
-- FIX: The client will not send UPDATE if template data is empty.
-- FIX: The name parameter in the image scroller is not set correctly when open a rundown.
+- FIX: The Client will not send UPDATE if template data is empty.
+- FIX: The name parameter in the image scroller was not set correctly when 
+       rundown was opened.
 - FIX: Better support for spaces in filenames.
-- FIX: Freeze on load does not work as expected.
-- FIX: Defer on mixer keyer is missing.
-- FIX: The parameters SEEK and LENGTH is sent regardless of whether it is set or not.
-- NEW: Added support for pause/resume on image scroller and DeckLink input items.
+- FIX: Freeze on load did not work as expected.
+- FIX: Defer on Mixer keyer is missing.
+- FIX: The parameters SEEK and LENGTH was sent regardless of whether they were set or not.
+- NEW: Added support for pause/resume on Image scroller and DeckLink input items.
 - NEW: Added trigger on next option for media items.
-- NEW: Added support for CasparCG PRINT command.
+- NEW: Added support for CasparCG Server PRINT command.
+- NEW: Added support for naming output using PRINT command. 
+       Requires CasparCG Server 2.0.4.
 - NEW: Added a separator item.
-- NEW: Added support for colorize groups.
-- NEW: Show active rundown in titlebar.
-- NEW: Added support for naming output using PRINT command. CasparCG 2.0.4 feature.
-- NEW: Support for cancel delayed commands.
-- NEW: Added a clear output item.
+- NEW: Added support for colorized groups.
+- NEW: Show active rundown in title bar.
+- NEW: Support for cancelling delayed commands.
+- NEW: Added a 'Clear Output' item.
 - NEW: Added support for notes on group items.
-- NEW: Added support for automatically step in the rundown.
+- NEW: Added support for automatic steps in the rundown.
 - NEW: Added execute indication on items.
-- UPDATE: UI changes.
-- UPDATE: The client will execute the mixer command when UPDATE is issued.
+- UPDATE: UI modifications.
+- UPDATE: The Client will execute the MIXER command when UPDATE is issued.
+
 
 
 CasparCG Client 2.0 Beta 3
 ==========================
+Note: Previously saved rundowns created with an older version of the client is not 
+      compatible anymore.
 
-- FIX: Disable videolayer in the inspector for the file recorder.
-- FIX: Fixed Ctrl/Command mapping on MacOSX.
-- FIX: The application crash if trying to execute command where channel is out of range for a specific device.
-- FIX: If up/down arrow key is triggered really fast in the rundown the inspector will update the wrong item.
-- FIX: Ungrouping rundown items not in a group, using CTRL+U, make the items disappear.
-- FIX: The rundown is using the wrong encoding when opening rundown from disk.
-- FIX: The client sends multiple VERSION commands to the server after a new device has been added.
-- FIX: Can not seeking in media if the length is zero.
-- FIX: Font rendering on MacOSX.
-- NEW: Added support for recording with separated alpha in CasparCG 2.0.4.
+- FIX: Disabled videolayer in the inspector for the File recorder.
+- FIX: Fixed Ctrl/Command mapping on Mac OS X.
+- FIX: The application crashed if trying to execute command where channel was out of 
+       range for a specific device.
+- FIX: If up/down arrow key was triggered really fast in the rundown, the inspector 
+       would update the wrong item.
+- FIX: Ungrouping rundown items not in a group, using CTRL+U, made the items disappear.
+- FIX: The rundown was using the wrong encoding when opening a rundown from disk.
+- FIX: The client sent multiple VERSION commands to the server after a new device was 
+       been added.
+- FIX: Could not seek in media if the length is zero.
+- FIX: Font rendering on Mac OS X.
+- NEW: Added support for recording with separated alpha in CasparCG Server 2.0.4.
 - NEW: Added support for the AUTO parameter on media items in the rundown.
-- NEW: Added application icon for MacOSX.
+- NEW: Added application icon for Mac OS X.
 - NEW: Added support for see stored data in the library.
 - NEW: Added support for the LOAD command through "Pause on load" property on media items.
 - NEW: The rundown now support compact view.
-- NEW: The color/expanded state on rundown items is now saved when you persist the rundown to disk.
+- NEW: The color/expanded state on rundown items is now saved when you persist the 
+       rundown to disk.
 - UPDATE: Changed colorization logic of rundown items.
-- UPDATE: UI changes.
+- UPDATE: Minor UI changes.
 - UPDATE: The client will execute the mixer command when UPDATE or INVOKE is issued.
 
-Note: Previously saved rundowns created with an older version of the client is not compatible anymore.
 
 
 CasparCG Client 2.0 Beta 2
 ==========================
-
 - FIX: Various bugs.
-- NEW: Added support for build the project on MacOSX with full GPI support.
-- UPDATE: UI changes.
+- NEW: Added support for build the project on Mac OS X with full GPI support.
+- UPDATE: UI modifications.
+
 
 
 CasparCG Client 2.0 Beta 1
 ==========================
-
 - FIX: Various bugs.
 - NEW: Support for open/save rundown lists.
 - NEW: Support for file recording using qtrle, dnxhd, prores, ffvhuff rawvideo, h264.
@@ -93,21 +99,5 @@ CasparCG Client 2.0 Beta 1
 
 CasparCG Client 2.0 Alpha 1
 ===========================
-
 - NEW: Initial version.
 
-
-TODO
-====
-
-- DND support.
-- Timeline view?
-- iNews integration.
-- Live view from CasparCG.
-- PBus support.
-- Automated rundowns.
-- Support for group in group, aka macro in macro.
-- Support for store the rundown in the database.
-- Support for filter in the rundown.
-- Review on Shift+F* buttons.
-- ...
