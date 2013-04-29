@@ -2,6 +2,7 @@ CasparCG Client 2.0
 ===================
 - FIX: Open rundowns containing mixer opacity item used to cause a crash.
 - FIX: Rundown items device info is cleared if the device does not exists.
+- FIX: Warns that unsaved changes will be lost upon Quit.
 - NEW: Added presets support.
 - NEW: Double-clicking a library item adds it to the rundown.
 - NEW: Added 'Custom Command' item.
