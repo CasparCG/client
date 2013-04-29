@@ -3,7 +3,6 @@ CasparCG Client 2.0
 ================================================================================
 Thank you for your interest in the CasparCG Client. 
 The included software is provided as-is by Sveriges Televison AB.
-
 More information at http://casparcg.com/
 
 
@@ -15,7 +14,8 @@ The Windows version requires Windows XP or newer.
 The Mac version requires Mac OS X 10.5 or newer.
 
 The Linux version has been tested on Fedora 18 (64-bit), Kubuntu 13.04 (64-bit)
-   and Debian Weezy (64-bit.) The Linux version requires that you pre-install Qt libraries.
+   and Debian Weezy (64-bit.) The Linux version requires that you 
+   pre-install Qt libraries.
 
 
 INSTALLATION WINDOWS
