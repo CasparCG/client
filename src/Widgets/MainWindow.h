@@ -34,7 +34,8 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* helpMenu;
         QMenuBar* menuBar;
 
-        void setupUiMenu();
+        void setupMenu();
+        void setupToolbar();
 
         Q_SLOT void newRundown();
         Q_SLOT void openRundown();

@@ -22,7 +22,8 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
-    setupUiMenu();
+    setupMenu();
+    setupToolbar();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
     setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     qApp->installEventFilter(this);
 }
 
-void MainWindow::setupUiMenu()
+void MainWindow::setupMenu()
 {
     this->fileMenu = new QMenu(this);
     this->fileMenu->addAction("New...", this, SLOT(newRundown()));
@@ -48,13 +49,8 @@ void MainWindow::setupUiMenu()
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));
-    //this->fileMenu->addSeparator();
-    //this->fileMenu->addAction("Import");//, this, SLOT(showAboutDialog()), QKeySequence::fromString("Ctrl+I"));
-    //this->fileMenu->addAction("Export");//, this, SLOT(showAboutDialog()), QKeySequence::fromString("Ctrl+E"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
-    //this->fileMenu->actions().at(3)->setEnabled(false);
-    //this->fileMenu->actions().at(4)->setEnabled(false);
 
     this->editMenu = new QMenu(this);
     this->editMenu->addAction("Settings", this, SLOT(showSettingsDialog()));
@@ -89,7 +85,7 @@ void MainWindow::setupUiMenu()
     this->helpMenu->actions().at(2)->setEnabled(false);
 
     this->menuBar = new QMenuBar(this);
-    this->menuBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    //this->menuBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     this->menuBar->addMenu(this->fileMenu)->setText("File");
     this->menuBar->addMenu(this->editMenu)->setText("Edit");
     this->menuBar->addMenu(this->viewMenu)->setText("View");
@@ -99,6 +95,10 @@ void MainWindow::setupUiMenu()
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
     this->setMenuBar(this->menuBar);
+}
+
+void MainWindow::setupToolbar()
+{
 }
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
