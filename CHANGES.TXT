@@ -5,7 +5,7 @@ CasparCG Client 2.0
 - FIX: Rundown items device info is cleared if the device does not exists.
 - NEW: Double click a library item adds it to the rundown.
 - NEW: Added custom command item.
-- NEW: Added Ctrl+D for duplicate rundown item .
+- NEW: Added Ctrl+D for duplicate rundown item.
 - NEW: Added solid color item.
 - NEW: Added multiple rundowns using tabs.
 - NEW: Added support for offline devices.

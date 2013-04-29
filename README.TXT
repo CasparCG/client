@@ -21,8 +21,12 @@ No installation required, just move the program to a suitable location and start
 
 INSTALLATION OS X
 =================
-On Mac OS X, just open the DMG file and drag the 'CasparCG Client' app to your
-Applications folder.
+Open the DMG file and drag the 'CasparCG Client' app to your Applications folder.
+
+
+INSTALLATION LINUX
+==================
+Unpack the tar file and run the run.sh. Require pre-installed Qt libraries. 
 
 
 DOCUMENTATION
