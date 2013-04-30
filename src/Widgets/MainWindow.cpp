@@ -41,8 +41,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupMenu()
 {
     this->fileMenu = new QMenu(this);
-    this->fileMenu->addAction("New...", this, SLOT(newRundown()));
-    this->fileMenu->addAction("Open...", this, SLOT(openRundown()));
+    this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
+    this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
