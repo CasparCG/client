@@ -5,8 +5,12 @@ Thank you for your interest in the CasparCG Client, a Mac/Windows/Linux client
 software used to control graphics, audio and video playout and recording
 by the CasparCG Server software.
 
-This release is considered tested and stable, and recommended for use in
+This release is considered tested and stable, and is intended for use in
 professional production.
+
+IMPORTANT: Previously saved rundown files created with versions prior to 
+version 2.0 are not compatible with this version. Sorry about that!
+
 
 
 SYSTEM REQUIREMENTS
