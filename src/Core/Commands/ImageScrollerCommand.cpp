@@ -4,7 +4,7 @@
 
 ImageScrollerCommand::ImageScrollerCommand(QObject* parent)
     : AbstractCommand(parent),
-      mediaName(ImageScroller::DEFAULT_NAME), blur(ImageScroller::DEFAULT_BLUR), speed(ImageScroller::DEFAULT_SPEED),
+      imageScrollerName(ImageScroller::DEFAULT_NAME), blur(ImageScroller::DEFAULT_BLUR), speed(ImageScroller::DEFAULT_SPEED),
       premultiply(ImageScroller::DEFAULT_PREMULTIPLY), progressive(ImageScroller::DEFAULT_PROGRESSIVE)
 {
 }
@@ -29,15 +29,15 @@ bool ImageScrollerCommand::getProgressive() const
     return this->progressive;
 }
 
-const QString& ImageScrollerCommand::getMediaName() const
+const QString& ImageScrollerCommand::getImageScrollerName() const
 {
-    return this->mediaName;
+    return this->imageScrollerName;
 }
 
-void ImageScrollerCommand::setMediaName(const QString& mediaName)
+void ImageScrollerCommand::setImageScrollerName(const QString& imageScrollerName)
 {
-    this->mediaName = mediaName;
-    emit mediaNameChanged(this->mediaName);
+    this->imageScrollerName = imageScrollerName;
+    emit imageScrollerNameChanged(this->imageScrollerName);
 }
 
 void ImageScrollerCommand::setBlur(int blur)

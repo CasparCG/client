@@ -29,7 +29,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     setActive(this->active);
     setCompactView(this->compactView);
 
-    this->command.setMediaName(this->model.getName());
+    this->command.setImageScrollerName(this->model.getName());
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -72,7 +72,9 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(targetChangedEvent->getTarget());
+        this->command.setImageScrollerName(targetChangedEvent->getTarget());
+
+        return true;
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
     {
@@ -84,6 +86,8 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        return true;
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
     {
@@ -128,7 +132,7 @@ AbstractRundownWidget* RundownImageScrollerWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
-    command->setMediaName(this->command.getMediaName());
+    command->setImageScrollerName(this->command.getImageScrollerName());
     command->setBlur(this->command.getBlur());
     command->setSpeed(this->command.getSpeed());
     command->setPremultiply(this->command.getPremultiply());
@@ -309,7 +313,7 @@ void RundownImageScrollerWidget::executePlay()
         if (this->loaded)
             device->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+            device->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                     this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                     this->command.getProgressive());
     }
@@ -325,7 +329,7 @@ void RundownImageScrollerWidget::executePlay()
             if (this->loaded)
                 deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+                deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                               this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                               this->command.getProgressive());
         }
@@ -373,7 +377,7 @@ void RundownImageScrollerWidget::executeLoad()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+        device->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                 this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                 this->command.getProgressive());
     }
@@ -386,7 +390,7 @@ void RundownImageScrollerWidget::executeLoad()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getMediaName(),
+            deviceShadow->loadImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                           this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
                                           this->command.getProgressive());
         }

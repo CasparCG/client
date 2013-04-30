@@ -50,6 +50,8 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        return true;
     }
 
     return QObject::eventFilter(target, event);

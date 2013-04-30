@@ -151,9 +151,13 @@ void InspectorOutputWidget::checkEmptyDevice()
 
 void InspectorOutputWidget::deviceRemoved()
 {
+    blockAllSignals(true);
+
     this->comboBoxDevice->clear();
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
         this->comboBoxDevice->addItem(model.getName());
+
+    blockAllSignals(false);
 }
 
 void InspectorOutputWidget::deviceAdded(CasparDevice& device)

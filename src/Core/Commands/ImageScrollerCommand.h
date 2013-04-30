@@ -22,20 +22,20 @@ class CORE_EXPORT ImageScrollerCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getMediaName() const;
+        const QString& getImageScrollerName() const;
         int getBlur() const;
         int getSpeed() const;
         bool getPremultiply() const;
         bool getProgressive() const;
 
-        void setMediaName(const QString& mediaName);
+        void setImageScrollerName(const QString& imageScrollerName);
         void setBlur(int blur);
         void setSpeed(int speed);
         void setPremultiply(bool premultiply);
         void setProgressive(bool progressive);
 
     private:
-        QString mediaName;
+        QString imageScrollerName;
         int blur;
         int speed;
         bool premultiply;
@@ -45,5 +45,5 @@ class CORE_EXPORT ImageScrollerCommand : public AbstractCommand
         Q_SIGNAL void speedChanged(int);
         Q_SIGNAL void progressiveChanged(bool);
         Q_SIGNAL void premultiplyChanged(bool);
-        Q_SIGNAL void mediaNameChanged(const QString&);
+        Q_SIGNAL void imageScrollerNameChanged(const QString&);
 };

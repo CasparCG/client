@@ -71,7 +71,7 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
     {
         blockAllSignals(true);
 
-        if (this->model != NULL)
+        if (this->model != NULL && this->command != NULL)
         {
             ChannelChangedEvent* channelChangedEvent = dynamic_cast<ChannelChangedEvent*>(event);
             const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");

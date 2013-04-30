@@ -9,6 +9,7 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
+#include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
@@ -33,6 +34,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* playoutMenu;
         QMenu* helpMenu;
         QMenuBar* menuBar;
+        QToolBar* toolBar;
 
         void setupMenu();
         void setupToolbar();
@@ -59,4 +61,5 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void refreshLibrary();
         Q_SLOT void importPreset();
         Q_SLOT void exportPreset();
+        Q_SLOT void addBlendModeItem();
 };

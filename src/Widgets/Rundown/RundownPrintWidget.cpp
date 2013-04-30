@@ -65,6 +65,8 @@ bool RundownPrintWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        return true;
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
     {

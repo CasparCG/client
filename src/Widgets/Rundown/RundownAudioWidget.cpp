@@ -70,7 +70,9 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(targetChangedEvent->getTarget());
+        this->command.setAudioName(targetChangedEvent->getTarget());
+
+        return true;
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
     {
@@ -82,6 +84,8 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        return true;
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
     {

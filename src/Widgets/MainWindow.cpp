@@ -23,10 +23,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
     setupMenu();
-    setupToolbar();
+    //setupToolbar();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
-    setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(TAG_VERSION));
+    setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
     this->applicationTitle = this->windowTitle();
 
     this->widgetOnAirNow->setVisible(false);
@@ -85,7 +85,6 @@ void MainWindow::setupMenu()
     this->helpMenu->actions().at(2)->setEnabled(false);
 
     this->menuBar = new QMenuBar(this);
-    //this->menuBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     this->menuBar->addMenu(this->fileMenu)->setText("File");
     this->menuBar->addMenu(this->editMenu)->setText("Edit");
     this->menuBar->addMenu(this->viewMenu)->setText("View");
@@ -94,11 +93,16 @@ void MainWindow::setupMenu()
     this->menuBar->addMenu(this->playoutMenu)->setText("Playout");
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
-    this->setMenuBar(this->menuBar);
+    setMenuBar(this->menuBar);
 }
 
 void MainWindow::setupToolbar()
 {
+    this->toolBar = new QToolBar(this);
+    this->toolBar->setMovable(false);
+    this->toolBar->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
+
+    addToolBar(this->toolBar);
 }
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
@@ -240,6 +244,11 @@ void MainWindow::showHelpDialog()
 {
     HelpDialog* dialog = new HelpDialog(this);
     dialog->exec();
+}
+
+void MainWindow::addBlendModeItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::BLENDMODE);
 }
 
 void MainWindow::showSettingsDialog()
