@@ -433,7 +433,7 @@ QMenuBar
     background-color: rgba(64, 64, 64, 255);
     border-bottom-width: 1px;
     border-radius: 0px;
-    min-height: 18px;
+    height: 18px;
 }
 QMenuBar::item
 {
