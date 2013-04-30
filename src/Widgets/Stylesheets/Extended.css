@@ -8,6 +8,11 @@
     border-bottom-width: 1px;
     border-radius: 0px;
 }
+#toolButtonBlendMode
+{
+    background-color: transparent;
+    border-width: 0px;
+}
 
 /*
  * AddDeviceDialog

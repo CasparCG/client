@@ -538,12 +538,12 @@ void CasparDevice::sendNotification()
     {
         case AMCPDevice::CLS:
         {
-            emit responseChanged(this->response.at(0), *this);
+            emit responseChanged(AMCPDevice::response.at(0), *this);
 
-            this->response.removeFirst(); // First post is the header, 200 CLS OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 CLS OK.
 
             QList<CasparMedia> items;
-            foreach (QString response, this->response)
+            foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
@@ -559,12 +559,12 @@ void CasparDevice::sendNotification()
         }
         case AMCPDevice::TLS:
         {
-            emit responseChanged(this->response.at(0), *this);
+            emit responseChanged(AMCPDevice::response.at(0), *this);
 
-            this->response.removeFirst(); // First post is the header, 200 TLS OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 TLS OK.
 
             QList<CasparTemplate> items;
-            foreach (QString response, this->response)
+            foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
@@ -578,27 +578,27 @@ void CasparDevice::sendNotification()
         }       
         case AMCPDevice::INFO:
         {
-            this->response.removeFirst(); // First post is the header, 200 INFO OK.
-            emit infoChanged(this->response, *this);
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 INFO OK.
+            emit infoChanged(AMCPDevice::response, *this);
 
             break;
         }
         case AMCPDevice::INFOSYSTEM:
         {
-            this->response.removeFirst(); // First post is the header, 201 INFO SYSTEM OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 201 INFO SYSTEM OK.
 
-            emit infoSystemChanged(this->response, *this);
+            emit infoSystemChanged(AMCPDevice::response, *this);
 
             break;
         }
         case AMCPDevice::DATALIST:
         {
-            emit responseChanged(this->response.at(0), *this);
+            emit responseChanged(AMCPDevice::response.at(0), *this);
 
-            this->response.removeFirst(); // First post is the header, 200 DATA LIST OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 DATA LIST OK.
 
             QList<CasparData> items;
-            foreach (QString response, this->response)
+            foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
@@ -612,12 +612,12 @@ void CasparDevice::sendNotification()
         }
         case AMCPDevice::THUMBNAILLIST:
         {
-            emit responseChanged(this->response.at(0), *this);
+            emit responseChanged(AMCPDevice::response.at(0), *this);
 
-            this->response.removeFirst(); // First post is the header, 200 THUMBNAIL LIST OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL LIST OK.
 
             QList<CasparThumbnail> items;
-            foreach (QString response, this->response)
+            foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
@@ -634,17 +634,17 @@ void CasparDevice::sendNotification()
         }
         case AMCPDevice::THUMBNAILRETRIEVE:
         {
-            this->response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
 
-            emit thumbnailRetrieveChanged(this->response.at(0), *this);
+            emit thumbnailRetrieveChanged(AMCPDevice::response.at(0), *this);
 
             break;
         }
         case AMCPDevice::VERSION:
         {
-            this->response.removeFirst(); // First post is the header, 200 VERSION OK.
+            AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
 
-            emit versionChanged(this->response.at(0), *this);
+            emit versionChanged(AMCPDevice::response.at(0), *this);
 
             break;
         }
@@ -656,7 +656,7 @@ void CasparDevice::sendNotification()
         }
         default:
         {
-            emit responseChanged(this->response.at(0), *this);
+            emit responseChanged(AMCPDevice::response.at(0), *this);
 
             break;
         }

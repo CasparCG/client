@@ -1,3 +1,11 @@
+CasparCG Client 2.0.1
+=====================
+- FIX: Menu problem on Ubuntu.
+- FIX: Can't change target name in the inspector panel output.
+- FIX: Change channel and hit ENTER will crash the client.
+
+
+
 CasparCG Client 2.0
 ===================
 - FIX: Open rundowns containing mixer opacity item used to cause a crash.

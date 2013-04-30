@@ -129,7 +129,7 @@ void DeviceDialog::testConnection()
     else
         this->device = QSharedPointer<CasparDevice>(new CasparDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt()));
 
-    connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
     this->device->connectDevice();
 }
 
@@ -151,7 +151,7 @@ void DeviceDialog::addressChanged(QString name)
 
 void DeviceDialog::connectionStateChanged(CasparDevice& device)
 {
-    disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
 
     QMessageBox box(this);
     box.setWindowTitle("Test Connection");

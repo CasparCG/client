@@ -35,16 +35,16 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
 
     this->executeTimer.setSingleShot(true);
 
-    connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
-    connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
-    connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
-        connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
-    connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
@@ -81,7 +81,7 @@ bool RundownClearOutputWidget::eventFilter(QObject* target, QEvent* event)
             // Disconnect connectionStateChanged() from the old device.
             const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (oldDevice != NULL)
-                disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
@@ -90,7 +90,7 @@ bool RundownClearOutputWidget::eventFilter(QObject* target, QEvent* event)
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (newDevice != NULL)
-                connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
         }
 
         checkEmptyDevice();
@@ -217,9 +217,9 @@ bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type ty
         this->executeTimer.disconnect(); // Disconnect all events.
 
         if (this->command.getClearChannel())
-            connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
         else
-            connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
+            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
 
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
@@ -333,7 +333,7 @@ void RundownClearOutputWidget::deviceConnectionStateChanged(CasparDevice& device
 void RundownClearOutputWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
-        connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
 }

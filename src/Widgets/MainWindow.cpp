@@ -100,7 +100,15 @@ void MainWindow::setupToolbar()
 {
     this->toolBar = new QToolBar(this);
     this->toolBar->setMovable(false);
-    this->toolBar->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
+
+    QToolButton* toolButtonBlendMode = new QToolButton(this);
+    toolButtonBlendMode->setObjectName("toolButtonBlendMode");
+    toolButtonBlendMode->setIcon(QIcon(":/Graphics/Images/BlendModeSmall.png"));
+    toolButtonBlendMode->setText("Blend Mode");
+
+    QObject::connect(toolButtonBlendMode, SIGNAL(clicked()), this, SLOT(addBlendModeItem()));
+
+    this->toolBar->addWidget(toolButtonBlendMode);
 
     addToolBar(this->toolBar);
 }
@@ -257,7 +265,7 @@ void MainWindow::showSettingsDialog()
     EventManager::getInstance().fireEmptyRundownEvent();
 
     SettingsDialog* dialog = new SettingsDialog(this);
-    connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
+    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
 
     dialog->exec();
 }

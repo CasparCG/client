@@ -21,9 +21,9 @@ No extra installations required.
 The Mac version requires Mac OS X 10.5 or newer. 
 No extra installations required.
 
-The Linux version has been tested on Fedora 18 (64-bit), Kubuntu 13.04 (64-bit)
+The Linux version has been tested on Fedora 18 (64-bit), Ubuntu 13.04 (64-bit)
 and Debian Weezy (64-bit.) 
-The Linux version requires that you pre-install Qt libraries.
+The Linux version requires that you pre-install Qt 4.8.* libraries.
 
 
 INSTALLATION WINDOWS
@@ -38,7 +38,7 @@ Open the DMG file and drag the 'CasparCG Client' app to your Applications folder
 
 INSTALLATION LINUX
 ==================
-Unpack the tar file and run the run.sh. Install Qt libraries.
+Unpack the tar file and run the run.sh.
 
 
 DOCUMENTATION

@@ -11,9 +11,9 @@ AMCPDevice::AMCPDevice(const QString& address, int port, QObject* parent)
 {
     this->socket = new QTcpSocket(this);
 
-    connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
-    connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
-    connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
+    QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
+    QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
+    QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
 AMCPDevice::~AMCPDevice()
@@ -177,29 +177,29 @@ void AMCPDevice::parseHeader(const QString& line)
     if (tokens.count() > 3)
         this->command = translateCommand(QString("%1 %2").arg(tokens.at(1)).arg(tokens.at(2)));
 
-    this->response.append(line);
+    AMCPDevice::response.append(line);
 }
 
 void AMCPDevice::parseOneline(const QString& line)
 {
     if (line.length() > 0)
-         this->response.append(line);
-    else if (line.length() == 0 && this->response.count() > 0)
+         AMCPDevice::response.append(line);
+    else if (line.length() == 0 && AMCPDevice::response.count() > 0)
         sendNotification();
 }
 
 void AMCPDevice::parseTwoline(const QString& line)
 {
     if (line.length() > 0)
-         this->response.append(line);
-    else if (line.length() == 0 && this->response.count() > 1)
+         AMCPDevice::response.append(line);
+    else if (line.length() == 0 && AMCPDevice::response.count() > 1)
         sendNotification();
 }
 
 void AMCPDevice::parseMultiline(const QString& line)
 {
     if (line.length() > 0)
-        this->response.append(line);
+        AMCPDevice::response.append(line);
     else if (line.length() == 0 && this->line.length() == 0 && this->previousLine.length() == 0)
         sendNotification();
 }
@@ -207,7 +207,7 @@ void AMCPDevice::parseMultiline(const QString& line)
 void AMCPDevice::resetDevice()
 {
     this->code = 0;
-    this->response.clear();
+    AMCPDevice::response.clear();
     this->command = AMCPDevice::NONE;
     this->state = AMCPDevice::ExpectingHeader;
 }

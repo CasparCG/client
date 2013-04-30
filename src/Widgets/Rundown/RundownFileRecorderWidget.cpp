@@ -35,18 +35,18 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
-    connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
-    connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
-    connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
-        connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
-    connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+    QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkEmptyDevice();
     checkGpiConnection();
@@ -94,7 +94,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             // Disconnect connectionStateChanged() from the old device.
             const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (oldDevice != NULL)
-                disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
@@ -103,7 +103,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (newDevice != NULL)
-                connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
         }
 
         checkEmptyDevice();
@@ -330,7 +330,7 @@ void RundownFileRecorderWidget::deviceConnectionStateChanged(CasparDevice& devic
 void RundownFileRecorderWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
-        connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
 }
