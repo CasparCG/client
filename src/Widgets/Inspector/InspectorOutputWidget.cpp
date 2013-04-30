@@ -46,7 +46,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
 
-         blockAllSignals(false);
+        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
     {
@@ -83,6 +83,11 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             int index = this->comboBoxDevice->findText(this->model->getDeviceName());
             if (index == -1)
                 this->spinBoxChannel->setMaximum(1);
+            else
+            {
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+                this->spinBoxChannel->setMaximum(channelFormats.count());
+            }
 
             this->comboBoxDevice->setCurrentIndex(index);
             this->spinBoxChannel->setValue(this->command->getChannel());
