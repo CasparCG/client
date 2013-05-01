@@ -8,10 +8,115 @@
     border-bottom-width: 1px;
     border-radius: 0px;
 }
+#toolButtonCtrlStop
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlStopSmall.png);
+}
+#toolButtonCtrlStop:hover
+{
+    image: url(:/Graphics/Images/CtrlStopSmallHover.png);
+}
+#toolButtonCtrlPlay
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlPlaySmall.png);
+}
+#toolButtonCtrlPlay:hover
+{
+    image: url(:/Graphics/Images/CtrlPlaySmallHover.png);
+}
+#toolButtonCtrlLoad
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlLoadSmall.png);
+}
+#toolButtonCtrlLoad:hover
+{
+    image: url(:/Graphics/Images/CtrlLoadSmallHover.png);
+}
+#toolButtonCtrlPause
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlPauseSmall.png);
+}
+#toolButtonCtrlPause:hover
+{
+    image: url(:/Graphics/Images/CtrlPauseSmallHover.png);
+}
+#toolButtonCtrlNext
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlNextSmall.png);
+}
+#toolButtonCtrlNext:hover
+{
+    image: url(:/Graphics/Images/CtrlNextSmallHover.png);
+}
+#toolButtonCtrlUpdate
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlUpdateSmall.png);
+}
+#toolButtonCtrlUpdate:hover
+{
+    image: url(:/Graphics/Images/CtrlUpdateSmallHover.png);
+}
+#toolButtonCtrlInvoke
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlInvokeSmall.png);
+}
+#toolButtonCtrlInvoke:hover
+{
+    image: url(:/Graphics/Images/CtrlInvokeSmallHover.png);
+}
+#toolButtonCtrlClear
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlClearSmall.png);
+}
+#toolButtonCtrlClear:hover
+{
+    image: url(:/Graphics/Images/CtrlClearSmallHover.png);
+}
+#toolButtonCtrlClearVideolayer
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlClearVideolayerSmall.png);
+}
+#toolButtonCtrlClearVideolayer:hover
+{
+    image: url(:/Graphics/Images/CtrlClearVideolayerSmallHover.png);
+}
+#toolButtonCtrlClearChannel
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CtrlClearChannelSmall.png);
+}
+#toolButtonCtrlClearChannel:hover
+{
+    image: url(:/Graphics/Images/CtrlClearChannelSmallHover.png);
+}
 #toolButtonBlendMode
 {
     background-color: transparent;
     border-width: 0px;
+    image: url(:/Graphics/Images/BlendModeSmall.png);
+}
+#toolButtonBlendMode:hover
+{
+    image: url(:/Graphics/Images/BlendModeSmallHover.png);
 }
 
 /*

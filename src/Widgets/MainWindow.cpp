@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
     setupMenu();
-    //setupToolbar();
+    setupToolbar();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
     setWindowTitle(QString("%1 %2.%3 %4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
@@ -101,13 +101,65 @@ void MainWindow::setupToolbar()
     this->toolBar = new QToolBar(this);
     this->toolBar->setMovable(false);
 
+    QToolButton* toolButtonCtrlStop = new QToolButton(this);
+    toolButtonCtrlStop->setObjectName("toolButtonCtrlStop");
+    toolButtonCtrlStop->setToolTip("Stop");
+
+    QToolButton* toolButtonCtrlPlay = new QToolButton(this);
+    toolButtonCtrlPlay->setObjectName("toolButtonCtrlPlay");
+    toolButtonCtrlPlay->setToolTip("Play");
+
+    QToolButton* toolButtonCtrlLoad = new QToolButton(this);
+    toolButtonCtrlLoad->setObjectName("toolButtonCtrlLoad");
+    toolButtonCtrlLoad->setToolTip("Load");
+
+    QToolButton* toolButtonCtrlPause = new QToolButton(this);
+    toolButtonCtrlPause->setObjectName("toolButtonCtrlPause");
+    toolButtonCtrlPause->setToolTip("Pause");
+
+    QToolButton* toolButtonCtrlNext = new QToolButton(this);
+    toolButtonCtrlNext->setObjectName("toolButtonCtrlNext");
+    toolButtonCtrlNext->setToolTip("Next");
+
+    QToolButton* toolButtonCtrlUpdate = new QToolButton(this);
+    toolButtonCtrlUpdate->setObjectName("toolButtonCtrlUpdate");
+    toolButtonCtrlUpdate->setToolTip("Update");
+
+    QToolButton* toolButtonCtrlInvoke = new QToolButton(this);
+    toolButtonCtrlInvoke->setObjectName("toolButtonCtrlInvoke");
+    toolButtonCtrlInvoke->setToolTip("Invoke");
+
+    QToolButton* toolButtonCtrlClear = new QToolButton(this);
+    toolButtonCtrlClear->setObjectName("toolButtonCtrlClear");
+    toolButtonCtrlClear->setToolTip("Clear");
+
+    QToolButton* toolButtonCtrlClearVideolayer = new QToolButton(this);
+    toolButtonCtrlClearVideolayer->setObjectName("toolButtonCtrlClearVideolayer");
+    toolButtonCtrlClearVideolayer->setToolTip("Clear Videolayer");
+
+    QToolButton* toolButtonCtrlClearChannel = new QToolButton(this);
+    toolButtonCtrlClearChannel->setObjectName("toolButtonCtrlClearChannel");
+    toolButtonCtrlClearChannel->setToolTip("Clear Channel");
+
     QToolButton* toolButtonBlendMode = new QToolButton(this);
     toolButtonBlendMode->setObjectName("toolButtonBlendMode");
-    toolButtonBlendMode->setIcon(QIcon(":/Graphics/Images/BlendModeSmall.png"));
-    toolButtonBlendMode->setText("Blend Mode");
+    toolButtonBlendMode->setToolTip("Blend Mode");
 
     QObject::connect(toolButtonBlendMode, SIGNAL(clicked()), this, SLOT(addBlendModeItem()));
 
+    this->toolBar->addWidget(toolButtonCtrlStop);
+    this->toolBar->addWidget(toolButtonCtrlPlay);
+    this->toolBar->addWidget(toolButtonCtrlLoad);
+    this->toolBar->addWidget(toolButtonCtrlPause);
+    this->toolBar->addSeparator();
+    this->toolBar->addWidget(toolButtonCtrlNext);
+    this->toolBar->addWidget(toolButtonCtrlUpdate);
+    this->toolBar->addWidget(toolButtonCtrlInvoke);
+    this->toolBar->addSeparator();
+    this->toolBar->addWidget(toolButtonCtrlClear);
+    this->toolBar->addWidget(toolButtonCtrlClearVideolayer);
+    this->toolBar->addWidget(toolButtonCtrlClearChannel);
+    this->toolBar->addSeparator();
     this->toolBar->addWidget(toolButtonBlendMode);
 
     addToolBar(this->toolBar);

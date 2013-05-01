@@ -368,7 +368,27 @@ OTHER_FILES += \
     Images/CustomCommand.png \
     Images/PresetSmallHover.png \
     Images/CustomCommandSmallHover.png \
-    Images/CustomCommandSmall.png
+    Images/CustomCommandSmall.png \
+    Images/CtrlStopSmallHover.png \
+    Images/CtrlStopSmall.png \
+    Images/CtrlPlaySmallHover.png \
+    Images/CtrlPlaySmall.png \
+    Images/CtrlPauseSmallHover.png \
+    Images/CtrlPauseSmall.png \
+    Images/CtrlLoadSmallHover.png \
+    Images/CtrlLoadSmall.png \
+    Images/CtrlUpdateSmallHover.png \
+    Images/CtrlUpdateSmall.png \
+    Images/CtrlNextSmallHover.png \
+    Images/CtrlNextSmall.png \
+    Images/CtrlInvokeSmallHover.png \
+    Images/CtrlInvokeSmall.png \
+    Images/CtrlClearVideolayerSmallHover.png \
+    Images/CtrlClearVideolayerSmall.png \
+    Images/CtrlClearSmallHover.png \
+    Images/CtrlClearSmall.png \
+    Images/CtrlClearChannelSmallHover.png \
+    Images/CtrlClearChannelSmall.png
 
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
