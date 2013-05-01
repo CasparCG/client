@@ -1,9 +1,9 @@
 CasparCG Client 2.0.1
 =====================
 - FIX: Menu problem on Ubuntu.
-- FIX: Can't change target name in the inspector panel output.
-- FIX: Change channel and hit ENTER will crash the client.
-- FIX: Channel value is not set in some cases.
+- FIX: Couldn't change Target name in the Inspector panel output.
+- FIX: Changing channel and hitting 'Enter' would cause a crash.
+- FIX: Channel values were not set in some cases.
 
 
 
