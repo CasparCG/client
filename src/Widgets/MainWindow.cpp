@@ -65,18 +65,18 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
     this->playoutMenu = new QMenu(this);
-    this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
-    this->playoutMenu->addAction("Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
-    this->playoutMenu->addAction("Load", this, SLOT(executeLoad()), QKeySequence::fromString("F3"));
-    this->playoutMenu->addAction("Pause", this, SLOT(executePause()), QKeySequence::fromString("F4"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlStopSmall.png"), "Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlPlaySmall.png"), "Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlLoadSmall.png"), "Load", this, SLOT(executeLoad()), QKeySequence::fromString("F3"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlPauseSmall.png"), "Pause", this, SLOT(executePause()), QKeySequence::fromString("F4"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction("Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
-    this->playoutMenu->addAction("Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
-    this->playoutMenu->addAction("Invoke", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlNextSmall.png"), "Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlUpdateSmall.png"), "Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlUpdateSmall.png"), "Update", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
-    this->playoutMenu->addAction("Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
-    this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearSmall.png"), "Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearVideolayerSmall.png"), "Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
+    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearChannelSmall.png"), "Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
 
     this->helpMenu = new QMenu(this);
     this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
@@ -135,7 +135,7 @@ void MainWindow::setupToolbar()
 
     QToolButton* toolButtonCtrlClearVideolayer = new QToolButton(this);
     toolButtonCtrlClearVideolayer->setObjectName("toolButtonCtrlClearVideolayer");
-    toolButtonCtrlClearVideolayer->setToolTip("Clear Videolayer");
+    toolButtonCtrlClearVideolayer->setToolTip("Clear Video Layer");
 
     QToolButton* toolButtonCtrlClearChannel = new QToolButton(this);
     toolButtonCtrlClearChannel->setObjectName("toolButtonCtrlClearChannel");
@@ -144,6 +144,50 @@ void MainWindow::setupToolbar()
     QToolButton* toolButtonBlendMode = new QToolButton(this);
     toolButtonBlendMode->setObjectName("toolButtonBlendMode");
     toolButtonBlendMode->setToolTip("Blend Mode");
+
+    QToolButton* toolButtonBrightness = new QToolButton(this);
+    toolButtonBrightness->setObjectName("toolButtonBrightness");
+    toolButtonBrightness->setToolTip("Brightness");
+
+    QToolButton* toolButtonContrast = new QToolButton(this);
+    toolButtonContrast->setObjectName("toolButtonContrast");
+    toolButtonContrast->setToolTip("Contrast");
+
+    QToolButton* toolButtonCrop = new QToolButton(this);
+    toolButtonCrop->setObjectName("toolButtonCrop");
+    toolButtonCrop->setToolTip("Crop");
+
+    QToolButton* toolButtonGeometry = new QToolButton(this);
+    toolButtonGeometry->setObjectName("toolButtonGeometry");
+    toolButtonGeometry->setToolTip("Transformation");
+
+    QToolButton* toolButtonGrid = new QToolButton(this);
+    toolButtonGrid->setObjectName("toolButtonGrid");
+    toolButtonGrid->setToolTip("Grid");
+
+    QToolButton* toolButtonKeyer = new QToolButton(this);
+    toolButtonKeyer->setObjectName("toolButtonKeyer");
+    toolButtonKeyer->setToolTip("Mask");
+
+    QToolButton* toolButtonLevels = new QToolButton(this);
+    toolButtonLevels->setObjectName("toolButtonLevels");
+    toolButtonLevels->setToolTip("Levels");
+
+    QToolButton* toolButtonOpacity = new QToolButton(this);
+    toolButtonOpacity->setObjectName("toolButtonOpacity");
+    toolButtonOpacity->setToolTip("Opacity");
+
+    QToolButton* toolButtonSaturation = new QToolButton(this);
+    toolButtonSaturation->setObjectName("toolButtonSaturation");
+    toolButtonSaturation->setToolTip("Saturation");
+
+    QToolButton* toolButtonVolume = new QToolButton(this);
+    toolButtonVolume->setObjectName("toolButtonVolume");
+    toolButtonVolume->setToolTip("Volume");
+
+    QToolButton* toolButtonCommit = new QToolButton(this);
+    toolButtonCommit->setObjectName("toolButtonCommit");
+    toolButtonCommit->setToolTip("Commit");
 
     QObject::connect(toolButtonBlendMode, SIGNAL(clicked()), this, SLOT(addBlendModeItem()));
 
@@ -161,6 +205,17 @@ void MainWindow::setupToolbar()
     this->toolBar->addWidget(toolButtonCtrlClearChannel);
     this->toolBar->addSeparator();
     this->toolBar->addWidget(toolButtonBlendMode);
+    this->toolBar->addWidget(toolButtonBrightness);
+    this->toolBar->addWidget(toolButtonContrast);
+    this->toolBar->addWidget(toolButtonCrop);
+    this->toolBar->addWidget(toolButtonGeometry);
+    this->toolBar->addWidget(toolButtonGrid);
+    this->toolBar->addWidget(toolButtonKeyer);
+    this->toolBar->addWidget(toolButtonLevels);
+    this->toolBar->addWidget(toolButtonOpacity);
+    this->toolBar->addWidget(toolButtonSaturation);
+    this->toolBar->addWidget(toolButtonVolume);
+    this->toolBar->addWidget(toolButtonCommit);
 
     addToolBar(this->toolBar);
 }

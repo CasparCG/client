@@ -118,6 +118,116 @@
 {
     image: url(:/Graphics/Images/BlendModeSmallHover.png);
 }
+#toolButtonBrightness
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/BrightnessSmall.png);
+}
+#toolButtonBrightness:hover
+{
+    image: url(:/Graphics/Images/BrightnessSmallHover.png);
+}
+#toolButtonContrast
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/ContrastSmall.png);
+}
+#toolButtonContrast:hover
+{
+    image: url(:/Graphics/Images/ContrastSmallHover.png);
+}
+#toolButtonCrop
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CropSmall.png);
+}
+#toolButtonCrop:hover
+{
+    image: url(:/Graphics/Images/CropSmallHover.png);
+}
+#toolButtonGeometry
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/GeometrySmall.png);
+}
+#toolButtonGeometry:hover
+{
+    image: url(:/Graphics/Images/GeometrySmallHover.png);
+}
+#toolButtonGrid
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/GridSmall.png);
+}
+#toolButtonGrid:hover
+{
+    image: url(:/Graphics/Images/GridSmallHover.png);
+}
+#toolButtonKeyer
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/KeyerSmall.png);
+}
+#toolButtonKeyer:hover
+{
+    image: url(:/Graphics/Images/KeyerSmallHover.png);
+}
+#toolButtonLevels
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/LevelsSmall.png);
+}
+#toolButtonLevels:hover
+{
+    image: url(:/Graphics/Images/LevelsSmallHover.png);
+}
+#toolButtonOpacity
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/OpacitySmall.png);
+}
+#toolButtonOpacity:hover
+{
+    image: url(:/Graphics/Images/OpacitySmallHover.png);
+}
+#toolButtonSaturation
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/SaturationSmall.png);
+}
+#toolButtonSaturation:hover
+{
+    image: url(:/Graphics/Images/SaturationSmallHover.png);
+}
+#toolButtonVolume
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/VolumeSmall.png);
+}
+#toolButtonVolume:hover
+{
+    image: url(:/Graphics/Images/VolumeSmallHover.png);
+}
+#toolButtonCommit
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CommitSmall.png);
+}
+#toolButtonCommit:hover
+{
+    image: url(:/Graphics/Images/CommitSmallHover.png);
+}
 
 /*
  * AddDeviceDialog
