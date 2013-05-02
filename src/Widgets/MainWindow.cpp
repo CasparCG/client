@@ -106,6 +106,7 @@ void MainWindow::setupToolbar()
     this->toolBar = new QToolBar(this);
     this->toolBar->setMovable(false);
     this->toolBar->setFloatable(false);
+    this->toolBar->setIconSize(QSize(28, 28));
     this->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 
     QToolButton* toolButtonCtrlStop = new QToolButton(this);

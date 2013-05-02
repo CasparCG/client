@@ -256,8 +256,7 @@ QPlainTextEdit::disabled
  */
 QToolBar
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(64, 64, 64, 255), stop:1 rgba(70, 70, 70, 255));
-    /*border-bottom-width: 1px;*/
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(64, 64, 64, 255), stop:1 rgba(74, 74, 74, 255));
     border-radius: 0px;
     padding: 1px;
 }
@@ -433,7 +432,7 @@ QProgressBar::chunk:disabled
  */
 QMenuBar
 {
-    background-color: rgba(70, 70, 70, 255);
+    background-color: rgba(74, 74, 74, 255);
     border-bottom-width: 1px;
     border-radius: 0px;
 }
