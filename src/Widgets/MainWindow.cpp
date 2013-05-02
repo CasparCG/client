@@ -326,7 +326,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
     box.setText("Are you sure you want to quit? Unsaved changes to your rundowns will be lost!");
     box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
     box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    box.buttons().at(0)->setIcon(QIcon());
     box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+    box.buttons().at(1)->setIcon(QIcon());
     box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
 
      if (box.exec() == QMessageBox::Yes)
