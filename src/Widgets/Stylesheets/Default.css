@@ -256,6 +256,7 @@ QPlainTextEdit::disabled
  */
 QToolBar
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(70, 70, 70, 255));
     border-bottom-width: 1px;
     border-radius: 0px;
     padding: 1px;
@@ -426,10 +427,10 @@ QProgressBar::chunk:disabled
 /*
  * QMenuBar
  */
-QMenuBar
-{
+/*QMenuBar
+/{
     /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));*/
-    background-color: rgba(64, 64, 64, 255);
+/*    background-color: rgba(64, 64, 64, 255);
     border-bottom-width: 1px;
     border-radius: 0px;
 }
@@ -438,20 +439,21 @@ QMenuBar::item
     background-color: transparent;
 }
 QMenuBar::item:selected
-{
-    background-color: rgba(60, 60, 60, 255); /* When selected using mouse or keyboard. */
-    border-color: rgba(42, 42, 42, 255);
+{*/
+    /*background-color: rgba(60, 60, 60, 255); /* When selected using mouse or keyboard. */
+    /*border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-width: 1px;
 }
 QMenuBar::item:pressed
 {
     background-color: rgba(60, 60, 60, 255);
-}
+}*/
 
 /*
  * QMenu
  */
+ /*
 QMenu
 {
     background-color: rgba(60, 60, 60, 255);
