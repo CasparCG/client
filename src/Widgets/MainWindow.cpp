@@ -245,6 +245,39 @@ void MainWindow::setupToolbar()
     toolButtonCustomCommand->setToolTip("Custom Command");
 
     QObject::connect(toolButtonBlendMode, SIGNAL(clicked()), this, SLOT(addBlendModeItem()));
+    QObject::connect(toolButtonBrightness, SIGNAL(clicked()), this, SLOT(addBrightnessItem()));
+    QObject::connect(toolButtonContrast, SIGNAL(clicked()), this, SLOT(addContrastItem()));
+    QObject::connect(toolButtonCrop, SIGNAL(clicked()), this, SLOT(addCropItem()));
+    QObject::connect(toolButtonGeometry, SIGNAL(clicked()), this, SLOT(addGeometryItem()));
+    QObject::connect(toolButtonGrid, SIGNAL(clicked()), this, SLOT(addGridItem()));
+    QObject::connect(toolButtonKeyer, SIGNAL(clicked()), this, SLOT(addKeyerItem()));
+    QObject::connect(toolButtonLevels, SIGNAL(clicked()), this, SLOT(addLevelsItem()));
+    QObject::connect(toolButtonOpacity, SIGNAL(clicked()), this, SLOT(addOpacityItem()));
+    QObject::connect(toolButtonSaturation, SIGNAL(clicked()), this, SLOT(addSaturationItem()));
+    QObject::connect(toolButtonVolume, SIGNAL(clicked()), this, SLOT(addVolumeItem()));
+    QObject::connect(toolButtonCommit, SIGNAL(clicked()), this, SLOT(addCommitItem()));
+    QObject::connect(toolButtonAudio, SIGNAL(clicked()), this, SLOT(addAudioItem()));
+    QObject::connect(toolButtonImage, SIGNAL(clicked()), this, SLOT(addImageItem()));
+    QObject::connect(toolButtonImageScroller, SIGNAL(clicked()), this, SLOT(addImageScrollerItem()));
+    QObject::connect(toolButtonTemplate, SIGNAL(clicked()), this, SLOT(addTemplateItem()));
+    QObject::connect(toolButtonVideo, SIGNAL(clicked()), this, SLOT(addVideoItem()));
+    QObject::connect(toolButtonSolidColor, SIGNAL(clicked()), this, SLOT(addSolidColorItem()));
+    QObject::connect(toolButtonGpiOutput, SIGNAL(clicked()), this, SLOT(addGpiOutputItem()));
+    QObject::connect(toolButtonFileRecorder, SIGNAL(clicked()), this, SLOT(addFileRecorderItem()));
+    QObject::connect(toolButtonDeckLinkInput, SIGNAL(clicked()), this, SLOT(addDeckLinkInputItem()));
+    QObject::connect(toolButtonChannelSnapshot, SIGNAL(clicked()), this, SLOT(addPrintItem()));
+    QObject::connect(toolButtonClearOutput, SIGNAL(clicked()), this, SLOT(addClearOutputItem()));
+    QObject::connect(toolButtonCustomCommand, SIGNAL(clicked()), this, SLOT(addCustomCommandItem()));
+    QObject::connect(toolButtonCtrlStop, SIGNAL(clicked()), this, SLOT(executeStop()));
+    QObject::connect(toolButtonCtrlPlay, SIGNAL(clicked()), this, SLOT(executePlay()));
+    QObject::connect(toolButtonCtrlLoad, SIGNAL(clicked()), this, SLOT(executeLoad()));
+    QObject::connect(toolButtonCtrlPause, SIGNAL(clicked()), this, SLOT(executePause()));
+    QObject::connect(toolButtonCtrlNext, SIGNAL(clicked()), this, SLOT(executeNext()));
+    QObject::connect(toolButtonCtrlUpdate, SIGNAL(clicked()), this, SLOT(executeUpdate()));
+    QObject::connect(toolButtonCtrlInvoke, SIGNAL(clicked()), this, SLOT(executeInvoke()));
+    QObject::connect(toolButtonCtrlClear, SIGNAL(clicked()), this, SLOT(executeClear()));
+    QObject::connect(toolButtonCtrlClearVideolayer, SIGNAL(clicked()), this, SLOT(executeClearVideolayer()));
+    QObject::connect(toolButtonCtrlClearChannel, SIGNAL(clicked()), this, SLOT(executeClearChannel()));
 
     this->toolBar->addWidget(toolButtonCtrlStop);
     this->toolBar->addWidget(toolButtonCtrlPlay);
@@ -437,6 +470,126 @@ void MainWindow::showHelpDialog()
 void MainWindow::addBlendModeItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::BLENDMODE);
+}
+
+void MainWindow::addBrightnessItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::BRIGHTNESS);
+}
+
+void MainWindow::addContrastItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CONTRAST);
+}
+
+void MainWindow::addCropItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CROP);
+}
+
+void MainWindow::addImageScrollerItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::IMAGESCROLLER);
+}
+
+void MainWindow::addDeckLinkInputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::DECKLINKINPUT);
+}
+
+void MainWindow::addPrintItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PRINT);
+}
+
+void MainWindow::addClearOutputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CLEAROUTPUT);
+}
+
+void MainWindow::addGeometryItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GEOMETRY);
+}
+
+void MainWindow::addGpiOutputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GPIOUTPUT);
+}
+
+void MainWindow::addFileRecorderItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::FILERECORDER);
+}
+
+void MainWindow::addSeparatorItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SEPARATOR);
+}
+
+void MainWindow::addGridItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GRID);
+}
+
+void MainWindow::addCustomCommandItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CUSTOMCOMMAND);
+}
+
+void MainWindow::addSolidColorItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SOLIDCOLOR);
+}
+
+void MainWindow::addKeyerItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::KEYER);
+}
+
+void MainWindow::addLevelsItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::LEVELS);
+}
+
+void MainWindow::addOpacityItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::OPACITY);
+}
+
+void MainWindow::addSaturationItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SATURATION);
+}
+
+void MainWindow::addVolumeItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::VOLUME);
+}
+
+void MainWindow::addCommitItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::COMMIT);
+}
+
+void MainWindow::addAudioItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::AUDIO);
+}
+
+void MainWindow::addImageItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::IMAGE);
+}
+
+void MainWindow::addTemplateItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TEMPLATE);
+}
+
+void MainWindow::addVideoItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::VIDEO);
 }
 
 void MainWindow::showSettingsDialog()

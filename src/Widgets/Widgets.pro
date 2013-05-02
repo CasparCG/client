@@ -388,7 +388,8 @@ OTHER_FILES += \
     Images/CtrlClearSmallHover.png \
     Images/CtrlClearSmall.png \
     Images/CtrlClearChannelSmallHover.png \
-    Images/CtrlClearChannelSmall.png
+    Images/CtrlClearChannelSmall.png \
+    Images/Commit.png
 
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

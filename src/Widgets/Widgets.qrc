@@ -154,6 +154,7 @@
         <file>Images/CtrlNextSmallHover.png</file>
         <file>Images/CtrlUpdateSmall.png</file>
         <file>Images/CtrlUpdateSmallHover.png</file>
+        <file>Images/Commit.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
