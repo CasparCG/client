@@ -44,7 +44,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/Template.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Template.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -204,7 +204,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/GpiConnected.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -235,7 +235,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Resource.qrc">:/Graphics/Images/Disconnected.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Disconnected.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -271,7 +271,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resource.qrc"/>
+  <include location="../Widgets.qrc"/>
  </resources>
  <connections/>
  <slots>

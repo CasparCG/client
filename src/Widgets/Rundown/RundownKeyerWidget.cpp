@@ -167,7 +167,7 @@ void RundownKeyerWidget::setActive(bool active)
     this->animation->stop();
 
     if (this->active)
-        this->labelActiveColor->setStyleSheet("background-color: red;");
+        this->labelActiveColor->setStyleSheet("background-color: lime;");
     else
         this->labelActiveColor->setStyleSheet("");
 }

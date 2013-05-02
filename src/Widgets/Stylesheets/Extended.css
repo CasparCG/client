@@ -108,6 +108,56 @@
 {
     image: url(:/Graphics/Images/CtrlClearChannelSmallHover.png);
 }
+#toolButtonAudio
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/AudioSmall.png);
+}
+#toolButtonAudio:hover
+{
+    image: url(:/Graphics/Images/AudioSmallHover.png);
+}
+#toolButtonImage
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/StillSmall.png);
+}
+#toolButtonImage:hover
+{
+    image: url(:/Graphics/Images/StillSmallHover.png);
+}
+#toolButtonImageScroller
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/ImageScrollerSmall.png);
+}
+#toolButtonImageScroller:hover
+{
+    image: url(:/Graphics/Images/ImageScrollerSmallHover.png);
+}
+#toolButtonTemplate
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/TemplateSmall.png);
+}
+#toolButtonTemplate:hover
+{
+    image: url(:/Graphics/Images/TemplateSmallHover.png);
+}
+#toolButtonVideo
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/MovieSmall.png);
+}
+#toolButtonVideo:hover
+{
+    image: url(:/Graphics/Images/MovieSmallHover.png);
+}
 #toolButtonBlendMode
 {
     background-color: transparent;
@@ -227,6 +277,76 @@
 #toolButtonCommit:hover
 {
     image: url(:/Graphics/Images/CommitSmallHover.png);
+}
+#toolButtonSolidColor
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/SolidColorSmall.png);
+}
+#toolButtonSolidColor:hover
+{
+    image: url(:/Graphics/Images/SolidColorSmallHover.png);
+}
+#toolButtonGpiOutput
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/GpiOutputSmall.png);
+}
+#toolButtonGpiOutput:hover
+{
+    image: url(:/Graphics/Images/GpiOutputSmallHover.png);
+}
+#toolButtonFileRecorder
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/FileRecorderSmall.png);
+}
+#toolButtonFileRecorder:hover
+{
+    image: url(:/Graphics/Images/FileRecorderSmallHover.png);
+}
+#toolButtonDeckLinkInput
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/DeckLinkProducerSmall.png);
+}
+#toolButtonDeckLinkInput:hover
+{
+    image: url(:/Graphics/Images/DeckLinkProducerSmallHover.png);
+}
+#toolButtonChannelSnapshot
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/SnapshotSmall.png);
+}
+#toolButtonChannelSnapshot:hover
+{
+    image: url(:/Graphics/Images/SnapshotSmallHover.png);
+}
+#toolButtonClearOutput
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/ClearSmall.png);
+}
+#toolButtonClearOutput:hover
+{
+    image: url(:/Graphics/Images/ClearSmallHover.png);
+}
+#toolButtonCustomCommand
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/CustomCommandSmall.png);
+}
+#toolButtonCustomCommand:hover
+{
+    image: url(:/Graphics/Images/CustomCommandSmallHover.png);
 }
 
 /*

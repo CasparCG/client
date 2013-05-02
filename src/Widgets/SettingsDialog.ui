@@ -48,7 +48,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>161</y>
+       <y>199</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -64,7 +64,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>169</y>
+       <y>207</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -77,7 +77,7 @@
      <property name="geometry">
       <rect>
        <x>111</x>
-       <y>227</y>
+       <y>265</y>
        <width>61</width>
        <height>20</height>
       </rect>
@@ -93,7 +93,7 @@
      <property name="geometry">
       <rect>
        <x>181</x>
-       <y>225</y>
+       <y>263</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -109,7 +109,7 @@
      <property name="geometry">
       <rect>
        <x>271</x>
-       <y>229</y>
+       <y>267</y>
        <width>62</width>
        <height>16</height>
       </rect>
@@ -238,7 +238,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>189</y>
+       <y>227</y>
        <width>211</width>
        <height>17</height>
       </rect>
@@ -254,7 +254,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>274</y>
+       <y>312</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -270,7 +270,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>282</y>
+       <y>320</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -283,7 +283,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>302</y>
+       <y>340</y>
        <width>171</width>
        <height>17</height>
       </rect>
@@ -293,6 +293,22 @@
      </property>
      <property name="text">
       <string>Show thumbnail tooltip</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxShowToolbar">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>154</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Show toolbar</string>
      </property>
     </widget>
    </widget>
@@ -2332,8 +2348,8 @@
    <slot>synchronizeIntervalChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>193</x>
-     <y>269</y>
+     <x>195</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2364,8 +2380,8 @@
    <slot>autoSynchronizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>221</y>
+     <x>127</x>
+     <y>275</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2924,8 +2940,8 @@
    <slot>showThumbnailTooltipChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>264</x>
-     <y>341</y>
+     <x>266</x>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -2946,6 +2962,22 @@
     <hint type="destinationlabel">
      <x>703</x>
      <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowToolbar</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showToolbarChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>765</y>
     </hint>
    </hints>
   </connection>
@@ -2978,5 +3010,6 @@
   <slot>baudRateChanged(QString)</slot>
   <slot>autoStepChanged(int)</slot>
   <slot>showThumbnailTooltipChanged(int)</slot>
+  <slot>showToolbarChanged(int)</slot>
  </slots>
 </ui>

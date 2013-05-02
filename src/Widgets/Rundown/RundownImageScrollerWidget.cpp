@@ -199,7 +199,7 @@ void RundownImageScrollerWidget::setThumbnail()
     image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
     this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
 
-    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
     if (displayThumbnailTooltip)
         this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
 }
@@ -211,7 +211,7 @@ void RundownImageScrollerWidget::setActive(bool active)
     this->animation->stop();
 
     if (this->active)
-        this->labelActiveColor->setStyleSheet("background-color: red;");
+        this->labelActiveColor->setStyleSheet("background-color: lime;");
     else
         this->labelActiveColor->setStyleSheet("");
 }

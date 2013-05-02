@@ -199,7 +199,6 @@ QLCDNumber
  */
 QStatusBar
 {
-    background-color: rgba(64, 64, 64, 255);
     min-height: 22px;
 }
 
@@ -257,8 +256,8 @@ QPlainTextEdit::disabled
  */
 QToolBar
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(70, 70, 70, 255));
     border-bottom-width: 1px;
+    border-radius: 0px;
     padding: 1px;
 }
 

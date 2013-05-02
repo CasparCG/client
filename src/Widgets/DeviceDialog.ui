@@ -247,7 +247,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Resource.qrc">:/Graphics/Images/ServerBig.png</pixmap>
+    <pixmap resource="Widgets.qrc">:/Graphics/Images/ServerBig.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -283,7 +283,7 @@
   <tabstop>checkBoxShadow</tabstop>
  </tabstops>
  <resources>
-  <include location="Resource.qrc"/>
+  <include location="Widgets.qrc"/>
  </resources>
  <connections>
   <connection>

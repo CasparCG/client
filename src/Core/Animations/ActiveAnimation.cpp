@@ -6,8 +6,8 @@ ActiveAnimation::ActiveAnimation(QWidget* target, QObject* parent)
 {
     this->animation = new QPropertyAnimation(this, "color");
     this->animation->setDuration(350);
-    this->animation->setKeyValueAt(0, 0);
-    this->animation->setKeyValueAt(1, 255);
+    this->animation->setKeyValueAt(0, 255);
+    this->animation->setKeyValueAt(1, 0);
 }
 
 void ActiveAnimation::start(int loopCount)

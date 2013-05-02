@@ -19,18 +19,24 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     this->stylesheet = qApp->styleSheet();
 
-    bool isFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
-    this->checkBoxFullscreen->setChecked(isFullscreen);
+    bool startFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
+    this->checkBoxFullscreen->setChecked(startFullscreen);
+
+    bool showToolbar = (DatabaseManager::getInstance().getConfigurationByName("ShowToolbar").getValue() == "true") ? true : false;
+    this->checkBoxShowToolbar->setChecked(showToolbar);
 
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
 
-    bool isAutoRefresh = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
-    this->checkBoxAutoRefresh->setChecked(isAutoRefresh);
-    this->labelInterval->setEnabled(isAutoRefresh);
-    this->spinBoxRefreshInterval->setEnabled(isAutoRefresh);
-    this->labelSeconds->setEnabled(isAutoRefresh);
+    bool autoRefreshLibrary = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
+    this->checkBoxAutoRefresh->setChecked(autoRefreshLibrary);
+    this->labelInterval->setEnabled(autoRefreshLibrary);
+    this->spinBoxRefreshInterval->setEnabled(autoRefreshLibrary);
+    this->labelSeconds->setEnabled(autoRefreshLibrary);
+
     this->spinBoxRefreshInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
-    bool showThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltipInRundown").getValue() == "true") ? true : false;
+
+    bool showThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
+
     this->checkBoxShowThumbnailTooltip->setChecked(showThumbnailTooltip);
 
     loadDevices();
@@ -205,10 +211,16 @@ void SettingsDialog::autoSynchronizeChanged(int state)
     EventManager::getInstance().fireAutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false, this->spinBoxRefreshInterval->value() * 1000);
 }
 
+void SettingsDialog::showToolbarChanged(int state)
+{
+    QString showToolbar = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowToolbar", showToolbar));
+}
+
 void SettingsDialog::showThumbnailTooltipChanged(int state)
 {
     QString showThumbnailTooltip = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowThumbnailTooltipInRundown", showThumbnailTooltip));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowThumbnailTooltip", showThumbnailTooltip));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)

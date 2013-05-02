@@ -6,6 +6,7 @@
 #include "Global.h"
 
 #include "EventManager.h"
+#include "DatabaseManager.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/ActiveRundownChangedEvent.h"
 #include "Events/NewRundownMenuEvent.h"
@@ -56,6 +57,10 @@ void MainWindow::setupMenu()
     this->editMenu->addAction("Settings", this, SLOT(showSettingsDialog()));
 
     this->viewMenu = new QMenu(this);
+    QAction* action = this->viewMenu->addAction("Show Toolbar", this, SLOT(toggleToolbar()));
+    action->setCheckable(true);
+    action->setChecked(true);
+    this->viewMenu->addSeparator();
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
 
     this->libraryMenu = new QMenu(this);
@@ -143,6 +148,26 @@ void MainWindow::setupToolbar()
     toolButtonCtrlClearChannel->setObjectName("toolButtonCtrlClearChannel");
     toolButtonCtrlClearChannel->setToolTip("Clear Channel");
 
+    QToolButton* toolButtonAudio = new QToolButton(this);
+    toolButtonAudio->setObjectName("toolButtonAudio");
+    toolButtonAudio->setToolTip("Audio");
+
+    QToolButton* toolButtonImage = new QToolButton(this);
+    toolButtonImage->setObjectName("toolButtonImage");
+    toolButtonImage->setToolTip("Image");
+
+    QToolButton* toolButtonImageScroller = new QToolButton(this);
+    toolButtonImageScroller->setObjectName("toolButtonImageScroller");
+    toolButtonImageScroller->setToolTip("Image Scroller");
+
+    QToolButton* toolButtonTemplate = new QToolButton(this);
+    toolButtonTemplate->setObjectName("toolButtonTemplate");
+    toolButtonTemplate->setToolTip("TEmplate");
+
+    QToolButton* toolButtonVideo = new QToolButton(this);
+    toolButtonVideo->setObjectName("toolButtonVideo");
+    toolButtonVideo->setToolTip("Video");
+
     QToolButton* toolButtonBlendMode = new QToolButton(this);
     toolButtonBlendMode->setObjectName("toolButtonBlendMode");
     toolButtonBlendMode->setToolTip("Blend Mode");
@@ -191,20 +216,52 @@ void MainWindow::setupToolbar()
     toolButtonCommit->setObjectName("toolButtonCommit");
     toolButtonCommit->setToolTip("Commit");
 
+    QToolButton* toolButtonSolidColor = new QToolButton(this);
+    toolButtonSolidColor->setObjectName("toolButtonSolidColor");
+    toolButtonSolidColor->setToolTip("Solid Color");
+
+    QToolButton* toolButtonGpiOutput = new QToolButton(this);
+    toolButtonGpiOutput->setObjectName("toolButtonGpiOutput");
+    toolButtonGpiOutput->setToolTip("GPI Output");
+
+    QToolButton* toolButtonFileRecorder = new QToolButton(this);
+    toolButtonFileRecorder->setObjectName("toolButtonFileRecorder");
+    toolButtonFileRecorder->setToolTip("File Recorder");
+
+    QToolButton* toolButtonDeckLinkInput = new QToolButton(this);
+    toolButtonDeckLinkInput->setObjectName("toolButtonDeckLinkInput");
+    toolButtonDeckLinkInput->setToolTip("DeckLink Input");
+
+    QToolButton* toolButtonChannelSnapshot = new QToolButton(this);
+    toolButtonChannelSnapshot->setObjectName("toolButtonChannelSnapshot");
+    toolButtonChannelSnapshot->setToolTip("Channel Snapshot");
+
+    QToolButton* toolButtonClearOutput = new QToolButton(this);
+    toolButtonClearOutput->setObjectName("toolButtonClearOutput");
+    toolButtonClearOutput->setToolTip("Clear Output");
+
+    QToolButton* toolButtonCustomCommand = new QToolButton(this);
+    toolButtonCustomCommand->setObjectName("toolButtonCustomCommand");
+    toolButtonCustomCommand->setToolTip("Custom Command");
+
     QObject::connect(toolButtonBlendMode, SIGNAL(clicked()), this, SLOT(addBlendModeItem()));
 
     this->toolBar->addWidget(toolButtonCtrlStop);
     this->toolBar->addWidget(toolButtonCtrlPlay);
     this->toolBar->addWidget(toolButtonCtrlLoad);
     this->toolBar->addWidget(toolButtonCtrlPause);
-    this->toolBar->addSeparator();
     this->toolBar->addWidget(toolButtonCtrlNext);
     this->toolBar->addWidget(toolButtonCtrlUpdate);
     this->toolBar->addWidget(toolButtonCtrlInvoke);
-    this->toolBar->addSeparator();
     this->toolBar->addWidget(toolButtonCtrlClear);
     this->toolBar->addWidget(toolButtonCtrlClearVideolayer);
     this->toolBar->addWidget(toolButtonCtrlClearChannel);
+    this->toolBar->addSeparator();
+    this->toolBar->addWidget(toolButtonAudio);
+    this->toolBar->addWidget(toolButtonImage);
+    this->toolBar->addWidget(toolButtonImageScroller);
+    this->toolBar->addWidget(toolButtonTemplate);
+    this->toolBar->addWidget(toolButtonVideo);
     this->toolBar->addSeparator();
     this->toolBar->addWidget(toolButtonBlendMode);
     this->toolBar->addWidget(toolButtonBrightness);
@@ -218,8 +275,20 @@ void MainWindow::setupToolbar()
     this->toolBar->addWidget(toolButtonSaturation);
     this->toolBar->addWidget(toolButtonVolume);
     this->toolBar->addWidget(toolButtonCommit);
+    this->toolBar->addSeparator();
+    this->toolBar->addWidget(toolButtonSolidColor);
+    this->toolBar->addWidget(toolButtonGpiOutput);
+    this->toolBar->addWidget(toolButtonFileRecorder);
+    this->toolBar->addWidget(toolButtonDeckLinkInput);
+    this->toolBar->addWidget(toolButtonChannelSnapshot);
+    this->toolBar->addWidget(toolButtonClearOutput);
+    this->toolBar->addWidget(toolButtonCustomCommand);
 
     addToolBar(this->toolBar);
+
+    bool showToolbar = (DatabaseManager::getInstance().getConfigurationByName("ShowToolbar").getValue() == "true") ? true : false;
+    this->toolBar->setVisible(showToolbar);
+    this->viewMenu->actions().at(0)->setChecked(showToolbar);
 }
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
@@ -382,6 +451,11 @@ void MainWindow::showSettingsDialog()
 void MainWindow::toggleFullscreen()
 {
     isFullScreen() ? showNormal() : showFullScreen();
+}
+
+void MainWindow::toggleToolbar()
+{
+    this->toolBar->setVisible(!this->toolBar->isVisible());
 }
 
 void MainWindow::refreshLibrary()
