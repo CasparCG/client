@@ -32,7 +32,6 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void autoSynchronizeChanged(int);
         Q_SLOT void synchronizeIntervalChanged(int);
         Q_SLOT void showThumbnailTooltipChanged(int);
-        Q_SLOT void showToolbarChanged(int);
         Q_SLOT void deviceItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void gpi1Changed();
         Q_SLOT void gpi2Changed();

@@ -319,10 +319,6 @@ void MainWindow::setupToolbar()
     this->toolBar->addWidget(toolButtonCustomCommand);
 
     addToolBar(this->toolBar);
-
-    bool showToolbar = (DatabaseManager::getInstance().getConfigurationByName("ShowToolbar").getValue() == "true") ? true : false;
-    this->toolBar->setVisible(showToolbar);
-    this->viewMenu->actions().at(0)->setChecked(showToolbar);
 }
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)

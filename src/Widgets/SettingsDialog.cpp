@@ -22,9 +22,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool startFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
     this->checkBoxFullscreen->setChecked(startFullscreen);
 
-    bool showToolbar = (DatabaseManager::getInstance().getConfigurationByName("ShowToolbar").getValue() == "true") ? true : false;
-    this->checkBoxShowToolbar->setChecked(showToolbar);
-
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
 
     bool autoRefreshLibrary = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
@@ -209,12 +206,6 @@ void SettingsDialog::autoSynchronizeChanged(int state)
     this->labelSeconds->setEnabled((isAutoSynchronize == "true") ? true : false);
 
     EventManager::getInstance().fireAutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false, this->spinBoxRefreshInterval->value() * 1000);
-}
-
-void SettingsDialog::showToolbarChanged(int state)
-{
-    QString showToolbar = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowToolbar", showToolbar));
 }
 
 void SettingsDialog::showThumbnailTooltipChanged(int state)

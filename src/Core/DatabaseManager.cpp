@@ -75,7 +75,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Luminosity')");
 
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowToolbar', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltip', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
