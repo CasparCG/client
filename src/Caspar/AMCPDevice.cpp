@@ -7,7 +7,7 @@
 
 AMCPDevice::AMCPDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), reconnect(true), address(address)
+      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), retry(true), connected(false), reconnect(true), address(address)
 {
     this->socket = new QTcpSocket(this);
 
@@ -20,9 +20,15 @@ AMCPDevice::~AMCPDevice()
 {
 }
 
-void AMCPDevice::connectDevice()
+void AMCPDevice::connectDevice(bool retry)
 {
+    if (this->connected)
+        return;
+
     this->socket->connectToHost(this->address, this->port);
+
+    if (retry)
+        QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void AMCPDevice::disconnectDevice(bool reconnect)
@@ -36,7 +42,7 @@ void AMCPDevice::reconnectDevice()
     if (this->connected || !this->reconnect)
         return;
 
-    this->connectDevice();
+    this->socket->connectToHost(this->address, this->port);
 
     QTimer::singleShot(5000, this, SLOT(reconnectDevice()));
 }

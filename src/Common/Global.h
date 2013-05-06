@@ -234,7 +234,7 @@ namespace FileRecorder
 
 namespace SolidColor
 {
-    static const QString DEFAULT_NAME = "";
+    static const QString DEFAULT_NAME = "#00000000";
 }
 
 namespace Library

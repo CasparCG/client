@@ -1,3 +1,10 @@
+CasparCG Client 2.0.2
+=====================
+- FIX: Connection issue if server not started.
+- NEW: Added toolbar.
+
+
+
 CasparCG Client 2.0.1
 =====================
 - FIX: Menu problem on Ubuntu.
