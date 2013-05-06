@@ -15,10 +15,11 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         explicit AMCPDevice(const QString& address, int port = 5250, QObject* parent = 0);
         virtual ~AMCPDevice();
 
-        void connectDevice(bool retry = true);
-        void disconnectDevice(bool reconnect = false);
+        void disconnectDevice();
 
         bool isConnected() const;
+
+        Q_SLOT void connectDevice();
 
     protected:
         enum AMCPCommand
@@ -77,7 +78,6 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         int code;
         int state;
         bool connected;
-        bool reconnect;
         QString line;
         QString address;
         QString previousLine;
@@ -93,5 +93,4 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         Q_SLOT void readMessage();
         Q_SLOT void setConnected();
         Q_SLOT void setDisconnected();
-        Q_SLOT void reconnectDevice();
 };

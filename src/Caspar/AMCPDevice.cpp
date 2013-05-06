@@ -7,7 +7,7 @@
 
 AMCPDevice::AMCPDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), reconnect(true), address(address)
+      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
 
@@ -20,31 +20,26 @@ AMCPDevice::~AMCPDevice()
 {
 }
 
-void AMCPDevice::connectDevice(bool retry)
+void AMCPDevice::connectDevice()
 {
     if (this->connected)
         return;
 
     this->socket->connectToHost(this->address, this->port);
 
-    if (retry)
-        QTimer::singleShot(5000, this, SLOT(reconnectDevice()));
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
-void AMCPDevice::disconnectDevice(bool reconnect)
+void AMCPDevice::disconnectDevice()
 {
-    this->reconnect = reconnect;
+    this->socket->blockSignals(true);
     this->socket->disconnectFromHost();
-}
+    this->socket->blockSignals(false);
 
-void AMCPDevice::reconnectDevice()
-{
-    if (this->connected || !this->reconnect)
-        return;
+    this->connected = false;
+    this->command = AMCPDevice::CONNECTIONSTATE;
 
-    this->socket->connectToHost(this->address, this->port);
-
-    QTimer::singleShot(5000, this, SLOT(reconnectDevice()));
+    sendNotification();
 }
 
 void AMCPDevice::setConnected()
@@ -62,7 +57,7 @@ void AMCPDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(reconnectDevice()));
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 bool AMCPDevice::isConnected() const
