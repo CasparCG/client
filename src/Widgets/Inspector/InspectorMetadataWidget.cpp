@@ -46,8 +46,9 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(true);
 
-        this->lineEditTarget->setReadOnly(true);
-        this->lineEditLabel->setReadOnly(true);
+        this->labelType->setEnabled(false);
+        this->lineEditTarget->setEnabled(false);
+        this->lineEditLabel->setEnabled(false);
 
         this->lineEditType->setText(this->model->getType());
         this->lineEditTarget->setText(this->model->getName());
@@ -62,8 +63,11 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(true);
 
-        this->lineEditTarget->setReadOnly(false);
+        this->labelType->setEnabled(true);
         this->lineEditTarget->setEnabled(true);
+        this->lineEditLabel->setEnabled(true);
+
+        this->lineEditTarget->setReadOnly(false);
         this->lineEditLabel->setReadOnly(false);
 
         this->lineEditType->setText(this->model->getType());
@@ -102,8 +106,9 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
     {
         blockAllSignals(true);
 
-        this->lineEditTarget->setReadOnly(true);
-        this->lineEditLabel->setReadOnly(true);
+        this->labelType->setEnabled(false);
+        this->lineEditTarget->setEnabled(false);
+        this->lineEditLabel->setEnabled(false);
 
         this->lineEditType->clear();
         this->lineEditTarget->clear();

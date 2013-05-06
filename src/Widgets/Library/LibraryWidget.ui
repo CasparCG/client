@@ -237,8 +237,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>287</width>
-        <height>444</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -608,86 +608,6 @@
     <hint type="destinationlabel">
      <x>225</x>
      <y>481</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetTemplate</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>153</x>
-     <y>217</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>225</x>
-     <y>221</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetVideo</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>229</x>
-     <y>154</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetData</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>175</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>224</x>
-     <y>213</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetImage</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>70</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>224</x>
-     <y>204</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetAudio</sender>
-   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>70</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>223</x>
-     <y>197</y>
     </hint>
    </hints>
   </connection>

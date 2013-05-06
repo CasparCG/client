@@ -423,20 +423,6 @@ void LibraryWidget::filterLibrary()
     EventManager::getInstance().firePresetChangedEvent();
 }
 
-void LibraryWidget::itemClicked(QTreeWidgetItem* current, int index)
-{
-    if (current == NULL)
-        return;
-
-    if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
-        return;
-
-    this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                current->text(3), current->text(4), current->text(5).toInt()));
-
-    EventManager::getInstance().fireLibraryItemSelectedEvent(NULL, this->model.data());
-}
-
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
     if (current == NULL)
@@ -459,7 +445,7 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 }
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
-{ 
+{
     if (current == NULL)
         return;
 

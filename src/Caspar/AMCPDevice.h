@@ -76,7 +76,6 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         int port;
         int code;
         int state;
-        bool retry;
         bool connected;
         bool reconnect;
         QString line;

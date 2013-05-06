@@ -38,9 +38,12 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
 
-         blockAllSignals(true);
+        blockAllSignals(true);
 
         this->comboBoxDevice->setEnabled(false);
+        this->spinBoxChannel->setEnabled(false);
+        this->spinBoxVideolayer->setEnabled(false);
+        this->spinBoxDelay->setEnabled(false);
 
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
 
