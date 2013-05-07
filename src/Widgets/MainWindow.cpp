@@ -19,6 +19,7 @@
 #include <QtGui/QIcon>
 #include <QtGui/QMessageBox>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QToolButton>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
