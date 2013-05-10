@@ -161,15 +161,5 @@
         <file>Stylesheets/Extended.css</file>
         <file>Stylesheets/Windows.css</file>
         <file>Stylesheets/Unix.css</file>
-        <file>Fonts/OpenSans-Bold.ttf</file>
-        <file>Fonts/OpenSans-BoldItalic.ttf</file>
-        <file>Fonts/OpenSans-ExtraBold.ttf</file>
-        <file>Fonts/OpenSans-ExtraBoldItalic.ttf</file>
-        <file>Fonts/OpenSans-Italic.ttf</file>
-        <file>Fonts/OpenSans-Light.ttf</file>
-        <file>Fonts/OpenSans-LightItalic.ttf</file>
-        <file>Fonts/OpenSans-Regular.ttf</file>
-        <file>Fonts/OpenSans-Semibold.ttf</file>
-        <file>Fonts/OpenSans-SemiboldItalic.ttf</file>
     </qresource>
 </RCC>

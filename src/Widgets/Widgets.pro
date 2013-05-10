@@ -258,16 +258,6 @@ OTHER_FILES += \
     Images/Still.png \
     Images/Disconnected.png \
     Images/New.png \
-    Fonts/OpenSans-SemiboldItalic.ttf \
-    Fonts/OpenSans-Semibold.ttf \
-    Fonts/OpenSans-Regular.ttf \
-    Fonts/OpenSans-LightItalic.ttf \
-    Fonts/OpenSans-Light.ttf \
-    Fonts/OpenSans-Italic.ttf \
-    Fonts/OpenSans-ExtraBoldItalic.ttf \
-    Fonts/OpenSans-ExtraBold.ttf \
-    Fonts/OpenSans-BoldItalic.ttf \
-    Fonts/OpenSans-Bold.ttf \
     Images/ImageScroller.png \
     Images/GpiDisconnected.png \
     Images/GpiConnected.png \

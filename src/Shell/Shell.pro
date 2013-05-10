@@ -22,7 +22,17 @@ RESOURCES += \
 OTHER_FILES += \
     Images/CasparCG.ico \
     Images/CasparCG.icns \
-    Windows.rc
+    Windows.rc \
+    Fonts/OpenSans-SemiboldItalic.ttf \
+    Fonts/OpenSans-Semibold.ttf \
+    Fonts/OpenSans-Regular.ttf \
+    Fonts/OpenSans-LightItalic.ttf \
+    Fonts/OpenSans-Light.ttf \
+    Fonts/OpenSans-Italic.ttf \
+    Fonts/OpenSans-ExtraBoldItalic.ttf \
+    Fonts/OpenSans-ExtraBold.ttf \
+    Fonts/OpenSans-BoldItalic.ttf \
+    Fonts/OpenSans-Bold.ttf
 
 win32:RC_FILE = Windows.rc
 else:macx:ICON = Images/CasparCG.icns
