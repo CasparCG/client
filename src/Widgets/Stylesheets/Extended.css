@@ -364,6 +364,10 @@
 {
     background-color: rgba(42, 42, 42, 255);
 }
+#toolButtonAddTemplateData
+{
+    min-height: 22px;
+}
 #toolButtonAddDevice, #toolButtonAddTemplateData
 {
     image: url(:/Graphics/Images/Add.png);
@@ -371,6 +375,10 @@
 #toolButtonAddDevice:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
+}
+#toolButtonRemoveTemplateData
+{
+    min-height: 22px;
 }
 #toolButtonRemoveDevice, #toolButtonRemoveTemplateData
 {
