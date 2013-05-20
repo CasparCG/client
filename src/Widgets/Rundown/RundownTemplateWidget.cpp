@@ -247,7 +247,10 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-        this->executeTimer.setInterval(this->command.getDelay());
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+
+        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Update)
@@ -255,7 +258,10 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
 
-        this->executeTimer.setInterval(this->command.getDelay());
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+
+        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Load)

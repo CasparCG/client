@@ -266,7 +266,10 @@ bool RundownVideoWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
-        this->executeTimer.setInterval(this->command.getDelay());
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+
+        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Pause)
