@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -221,7 +222,10 @@ bool RundownClearOutputWidget::executeCommand(enum Playout::PlayoutType::Type ty
         else
             QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
 
-        this->executeTimer.setInterval(this->command.getDelay());
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+
+        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Clear)

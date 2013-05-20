@@ -4,8 +4,8 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
-#define REVISION_VERSION 1
-#define DATABASE_VERSION "201"
+#define REVISION_VERSION 2
+#define DATABASE_VERSION "202"
 
 #include <stdexcept>
 
