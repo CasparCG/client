@@ -168,7 +168,6 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 
     DeviceDialog* dialog = new DeviceDialog(this);
     dialog->setDeviceModel(model);
-    dialog->setEditMode(true);
     if (dialog->exec() == QDialog::Accepted)
     {
         DatabaseManager::getInstance().deleteDevice(current->text(0).toInt());

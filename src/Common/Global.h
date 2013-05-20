@@ -51,6 +51,12 @@ namespace Enum
     };
 }
 
+namespace Xml
+{
+    QString encode(const QString& data);
+    QString decode(const QString& data);
+}
+
 namespace Playout
 {
     struct PlayoutType

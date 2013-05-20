@@ -364,10 +364,6 @@
 {
     background-color: rgba(42, 42, 42, 255);
 }
-#toolButtonAddTemplateData
-{
-    min-height: 22px;
-}
 #toolButtonAddDevice, #toolButtonAddTemplateData
 {
     image: url(:/Graphics/Images/Add.png);
@@ -375,10 +371,6 @@
 #toolButtonAddDevice:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
-}
-#toolButtonRemoveTemplateData
-{
-    min-height: 22px;
 }
 #toolButtonRemoveDevice, #toolButtonRemoveTemplateData
 {
@@ -407,10 +399,6 @@
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
 }
-#treeWidgetInspector::item:hover
-{
-    /*background-color: rgba(60, 60, 60, 255);*/
-}
 #treeWidgetInspector::branch:closed:has-children:has-siblings, #treeWidgetInspector::branch:has-children:!has-siblings:closed
 {
     background-color: rgba(55, 55, 55, 255);
@@ -425,7 +413,6 @@
 {
     color: rgba(190, 190, 190, 255);
 }
-
 #toolButtonMasterVolume
 {
     image: url(:/Graphics/Images/MasterVolumeOn.png);
@@ -433,11 +420,19 @@
 }
 
 /*
- * InspectorColorProducerWidget
+ * InspectorSolidColorWidget
  */
 #toolButtonColor
 {
     image: url(:/Graphics/Images/SolidColorSmall.png);
+}
+
+/*
+ * InspectorTemplateWidget
+ */
+#treeWidgetTemplateData
+{
+    alternate-background-color: rgba(60, 60, 60, 255);
 }
 
 /*

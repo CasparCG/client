@@ -20,6 +20,11 @@ DeviceDialog::DeviceDialog(QWidget* parent)
 
 void DeviceDialog::setDeviceModel(const DeviceModel& model)
 {
+    this->editMode = editMode;
+
+    setWindowTitle("Edit Device");
+    this->lineEditDeviceName->setEnabled(!this->editMode);
+
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());
     this->lineEditPort->setText(QString("%1").arg(model.getPort()));
@@ -27,14 +32,6 @@ void DeviceDialog::setDeviceModel(const DeviceModel& model)
     this->lineEditPassword->setText(model.getPassword());
     this->lineEditDescription->setText(model.getDescription());
     this->checkBoxShadow->setChecked((model.getShadow() == "Yes") ? true : false);
-}
-
-void DeviceDialog::setEditMode(bool editMode)
-{
-    this->editMode = editMode;
-
-    setWindowTitle("Edit Device");
-    this->lineEditDeviceName->setEnabled(!this->editMode);
 }
 
 const QString DeviceDialog::getName() const

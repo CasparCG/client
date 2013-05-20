@@ -216,8 +216,7 @@ FORMS += \
     DeviceDialog.ui \
     PresetDialog.ui \
     Rundown/RundownCustomCommandWidget.ui \
-    Inspector/InspectorCustomCommandWidget.ui \
-    TemplateDataDialog.ui
+    Inspector/InspectorCustomCommandWidget.ui
 
 RESOURCES += \
     Widgets.qrc

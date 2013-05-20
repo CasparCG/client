@@ -21,7 +21,6 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
         explicit DeviceDialog(QWidget* parent = 0);
 
         void setDeviceModel(const DeviceModel& model);
-        void setEditMode(bool editMode);
 
         const QString getName() const;
         const QString getAddress() const;
