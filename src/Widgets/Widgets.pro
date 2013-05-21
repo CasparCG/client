@@ -382,7 +382,9 @@ OTHER_FILES += \
     Images/CtrlClearSmall.png \
     Images/CtrlClearChannelSmallHover.png \
     Images/CtrlClearChannelSmall.png \
-    Images/Commit.png
+    Images/Commit.png \
+    Images/ToolbarSplitterHorizontal.png \
+    Images/ToolbarSplitterVertical.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

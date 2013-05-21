@@ -32,10 +32,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->applicationTitle = this->windowTitle();
 
     this->widgetOnAirNow->setVisible(false);
-    this->widgetClock->setVisible(false);
+    //this->widgetClock->setVisible(false);
     this->widgetOnAirNext->setVisible(false);
     this->widgetTimeline->setVisible(false);
-    this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
+    //this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
+    this->frameSplitterVertical->setMinimumHeight(250);//this->frameSplitterVertical->minimumHeight() - this->widgetTimeline->minimumHeight());
 
     qApp->installEventFilter(this);
 }
@@ -101,7 +102,7 @@ void MainWindow::setupMenu()
 void MainWindow::setupToolbar()
 {
     this->toolBar = new QToolBar(this);
-    this->toolBar->setMovable(false);
+    //this->toolBar->setMovable(false);
     this->toolBar->setFloatable(false);
     this->toolBar->setIconSize(QSize(28, 28));
     this->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);

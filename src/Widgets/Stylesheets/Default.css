@@ -260,10 +260,24 @@ QToolBar
     border-radius: 0px;
     padding: 1px;
 }
-QToolBar:handle
+QToolBar QToolButton
 {
-    image: url(:/Graphics/Images/TabSplitter.png);
+    background-color: transparent;
+    border-width: 0px;
 }
+QToolBar QToolButton:hover
+{
+    background-color: transparent;
+}
+QToolBar::handle:vertical
+{
+    image: url(:/Graphics/Images/ToolbarSplitterVertical.png);
+}
+QToolBar::handle:horizontal
+{
+    image: url(:/Graphics/Images/ToolbarSplitterHorizontal.png);
+}
+
 
 /*
  * QToolTip

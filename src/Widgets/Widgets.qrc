@@ -155,6 +155,8 @@
         <file>Images/CtrlUpdateSmall.png</file>
         <file>Images/CtrlUpdateSmallHover.png</file>
         <file>Images/Commit.png</file>
+        <file>Images/ToolbarSplitterVertical.png</file>
+        <file>Images/ToolbarSplitterHorizontal.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
