@@ -21,6 +21,8 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
 DeviceManager::DeviceManager()
 {
+    this->oscDevice = new OscDevice("localhost", 6250, this);
+    this->oscDevice->connectDevice();
 }
 
 DeviceManager& DeviceManager::getInstance()

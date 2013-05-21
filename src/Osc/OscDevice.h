@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Shared.h"
+#include "OscListener.h"
 
-#include <osc/OscReceivedElements.h>
-#include <osc/OscPacketListener.h>
 #include <ip/UdpSocket.h>
 
 #include <QtCore/QObject>
@@ -25,4 +24,7 @@ class OSC_EXPORT OscDevice : public QObject
     private:
             int port;
             QString address;
+
+            OscListener* listener;
+            UdpListeningReceiveSocket* socket;
 };

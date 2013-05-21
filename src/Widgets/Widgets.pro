@@ -384,6 +384,11 @@ OTHER_FILES += \
     Images/CtrlClearChannelSmall.png \
     Images/Commit.png
 
+INCLUDEPATH += $$PWD/../../lib/oscpack/include
+win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
+else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
+else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
+
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
@@ -402,6 +407,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Caspar/release/ -lca
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Caspar/debug/ -lcaspar
 else:macx:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 else:unix:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
+
+DEPENDPATH += $$PWD/../Osc $$OUT_PWD/../Osc
+INCLUDEPATH += $$PWD/../Osc $$OUT_PWD/../Osc
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Osc/release/ -losc
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Osc/debug/ -losc
+else:macx:LIBS += -L$$OUT_PWD/../Osc/ -losc
+else:unix:LIBS += -L$$OUT_PWD/../Osc/ -losc
 
 DEPENDPATH += $$PWD/../Gpi $$OUT_PWD/../Gpi
 INCLUDEPATH += $$PWD/../Gpi $$OUT_PWD/../Gpi

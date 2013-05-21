@@ -13,12 +13,13 @@ DEFINES += OSC_LIBRARY
 
 HEADERS += \
     Shared.h \
-    OscDevice.h
+    OscDevice.h \
+    OscListener.h
 	
 SOURCES += \
-    OscDevice.cpp
+    OscDevice.cpp \
+    OscListener.cpp
 
-DEPENDPATH += $$PWD/../../lib/oscpack/include
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
 else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
