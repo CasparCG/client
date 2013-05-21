@@ -299,6 +299,19 @@ void RundownTreeWidget::setActive(bool active)
     this->active = active;
 
     EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+
+    QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+    QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+    if (currentItem != NULL && currentItemWidget != NULL)
+    {
+        AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
+        LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
+
+        // Use synchronous event through sendEvent(). The inspector will update the selected
+        // rundown item. We want to be absolutely sure that we update the right item, which
+        // will not be the case with postEvent() if we trigger other keys really fast.
+        EventManager::getInstance().fireRundownItemSelectedEvent(command, model);
+    }
 }
 
 void RundownTreeWidget::openRundown()
