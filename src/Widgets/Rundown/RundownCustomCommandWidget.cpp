@@ -183,18 +183,6 @@ void RundownCustomCommandWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
-
-    if (this->inGroup)
-    {
-        this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                      this->labelDelay->geometry().y(),
-                                      this->labelDelay->geometry().width(),
-                                      this->labelDelay->geometry().height());
-        this->labelDevice->setGeometry(this->labelDevice->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                       this->labelDevice->geometry().y(),
-                                       this->labelDevice->geometry().width(),
-                                       this->labelDevice->geometry().height());
-    }
 }
 
 void RundownCustomCommandWidget::setColor(const QString& color)

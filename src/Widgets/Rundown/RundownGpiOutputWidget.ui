@@ -92,7 +92,7 @@
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
-        <x>142</x>
+        <x>62</x>
         <y>19</y>
         <width>83</width>
         <height>16</height>
@@ -105,7 +105,7 @@
      <widget class="QLabel" name="labelGpiOutputPort">
       <property name="geometry">
        <rect>
-        <x>235</x>
+        <x>155</x>
         <y>19</y>
         <width>260</width>
         <height>16</height>

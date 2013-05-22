@@ -138,18 +138,6 @@ void RundownGpiOutputWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
-
-    if (this->inGroup)
-    {
-        this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                      this->labelDelay->geometry().y(),
-                                      this->labelDelay->geometry().width(),
-                                      this->labelDelay->geometry().height());
-        this->labelGpiOutputPort->setGeometry(this->labelGpiOutputPort->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                              this->labelGpiOutputPort->geometry().y(),
-                                              this->labelGpiOutputPort->geometry().width(),
-                                              this->labelGpiOutputPort->geometry().height());
-    }
 }
 
 void RundownGpiOutputWidget::setColor(const QString& color)

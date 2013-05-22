@@ -545,27 +545,3 @@
 {
     image: url(:/Graphics/Images/PreviewAlphaHover.png);
 }
-
-/*
- * ClockWidget
- */
-#lcdNumber
-{
-    color: rgba(200, 65, 65, 255);
-}
-#lcdNumberShadowHour
-{
-    color: rgba(68, 68, 68, 128);
-}
-#lcdNumberShadowMinute
-{
-    color: rgba(68, 68, 68, 128);
-}
-#lcdNumberShadowSecond
-{
-    color: rgba(68, 68, 68, 128);
-}
-#lcdNumberShadowMillisecond
-{
-    color: rgba(68, 68, 68, 128);
-}

@@ -31,12 +31,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setWindowTitle(QString("%1 %2.%3.%4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
     this->applicationTitle = this->windowTitle();
 
-    this->widgetOnAirNow->setVisible(false);
-    this->widgetClock->setVisible(false);
-    this->widgetOnAirNext->setVisible(false);
-    this->widgetTimeline->setVisible(false);
-    this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
-
     qApp->installEventFilter(this);
 }
 

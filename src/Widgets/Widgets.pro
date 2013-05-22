@@ -14,11 +14,9 @@ DEFINES += WIDGETS_LIBRARY
 HEADERS += \
     SettingsDialog.h \
     MainWindow.h \
-    ClockWidget.h \
     PreviewWidget.h \
     AboutDialog.h \
     Shared.h \
-    TimelineWidget.h \
     HelpDialog.h \
     Inspector/InspectorWidget.h \
     Inspector/InspectorTemplateWidget.h \
@@ -84,11 +82,9 @@ HEADERS += \
 
 SOURCES += \
     SettingsDialog.cpp \
-    ClockWidget.cpp \
     PreviewWidget.cpp \
     AboutDialog.cpp \
     MainWindow.cpp \
-    TimelineWidget.cpp \
     HelpDialog.cpp \
     Inspector/InspectorWidget.cpp \
     Inspector/InspectorTemplateWidget.cpp \
@@ -154,10 +150,8 @@ SOURCES += \
 FORMS += \
     SettingsDialog.ui \
     MainWindow.ui \
-    ClockWidget.ui \
     PreviewWidget.ui \
     AboutDialog.ui \
-    TimelineWidget.ui \
     HelpDialog.ui \
     Inspector/InspectorVolumeWidget.ui \
     Inspector/InspectorWidget.ui \

@@ -53,7 +53,7 @@
      <widget class="QLabel" name="labelChannel">
       <property name="geometry">
        <rect>
-        <x>142</x>
+        <x>62</x>
         <y>19</y>
         <width>77</width>
         <height>16</height>
@@ -105,7 +105,7 @@
      <widget class="QLabel" name="labelDevice">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>240</x>
         <y>19</y>
         <width>260</width>
         <height>16</height>
@@ -118,7 +118,7 @@
      <widget class="QLabel" name="labelDelay">
       <property name="geometry">
        <rect>
-        <x>228</x>
+        <x>148</x>
         <y>19</y>
         <width>83</width>
         <height>16</height>

@@ -191,26 +191,6 @@ void RundownSaturationWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
-
-    if (this->inGroup)
-    {
-        this->labelChannel->setGeometry(this->labelChannel->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                        this->labelChannel->geometry().y(),
-                                        this->labelChannel->geometry().width(),
-                                        this->labelChannel->geometry().height());
-        this->labelVideolayer->setGeometry(this->labelVideolayer->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                           this->labelVideolayer->geometry().y(),
-                                           this->labelVideolayer->geometry().width(),
-                                           this->labelVideolayer->geometry().height());
-        this->labelDelay->setGeometry(this->labelDelay->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                      this->labelDelay->geometry().y(),
-                                      this->labelDelay->geometry().width(),
-                                      this->labelDelay->geometry().height());
-        this->labelDevice->setGeometry(this->labelDevice->geometry().x() + Define::GROUP_XPOS_OFFSET,
-                                       this->labelDevice->geometry().y(),
-                                       this->labelDevice->geometry().width(),
-                                       this->labelDevice->geometry().height());
-    }
 }
 
 void RundownSaturationWidget::setColor(const QString& color)
