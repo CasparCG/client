@@ -32,11 +32,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->applicationTitle = this->windowTitle();
 
     this->widgetOnAirNow->setVisible(false);
-    //this->widgetClock->setVisible(false);
+    this->widgetClock->setVisible(false);
     this->widgetOnAirNext->setVisible(false);
     this->widgetTimeline->setVisible(false);
-    //this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
-    this->frameSplitterVertical->setMinimumHeight(250);//this->frameSplitterVertical->minimumHeight() - this->widgetTimeline->minimumHeight());
+    this->splitterHorizontal->setSizes(QList<int>() << 0 << 1);
 
     qApp->installEventFilter(this);
 }

@@ -57,7 +57,7 @@ namespace Playout
         }
     }
 
-    const QList<PlayoutType::Type>& enumConstants()
+    QList<PlayoutType::Type> createConstantList()
     {
         QList<PlayoutType::Type> result;
 
@@ -71,6 +71,13 @@ namespace Playout
         result.push_back(PlayoutType::Clear);
         result.push_back(PlayoutType::ClearVideolayer);
         result.push_back(PlayoutType::ClearChannel);
+
+        return result;
+    }
+
+    const QList<PlayoutType::Type>& enumConstants()
+    {
+        static QList<PlayoutType::Type> result(createConstantList());
 
         return result;
     }
