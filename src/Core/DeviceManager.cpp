@@ -21,8 +21,8 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
 DeviceManager::DeviceManager()
 {
-    this->oscDevice = new OscDevice("localhost", 6250, this);
-    this->oscDevice->connectDevice();
+    this->oscReceiver = new OscReceiver(OscAddress("127.0.0.1", 6250), this);
+    this->oscReceiver->start();
 }
 
 DeviceManager& DeviceManager::getInstance()
@@ -130,4 +130,9 @@ const int DeviceManager::getDeviceCount() const
 const QSharedPointer<CasparDevice> DeviceManager::getDeviceByName(const QString& name) const
 {
     return this->devices.value(name);
+}
+
+const OscReceiver* DeviceManager::getOscReceiver() const
+{
+    return this->oscReceiver;
 }

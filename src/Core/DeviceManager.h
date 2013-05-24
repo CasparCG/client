@@ -4,7 +4,7 @@
 #include "Models/DeviceModel.h"
 
 #include "CasparDevice.h"
-#include "OscDevice.h"
+#include "OscReceiver.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QObject>
@@ -29,11 +29,13 @@ class CORE_EXPORT DeviceManager : public QObject
         const int getDeviceCount() const;
         const QSharedPointer<CasparDevice> getDeviceByName(const QString& name) const;
 
+        const OscReceiver* getOscReceiver() const;
+
         Q_SIGNAL void deviceRemoved();
         Q_SIGNAL void deviceAdded(CasparDevice&);
 
     private:
-        OscDevice* oscDevice;
+        OscReceiver* oscReceiver;
         QMap<QString, DeviceModel> deviceModels;
         QMap<QString, QSharedPointer<CasparDevice> > devices;
 };
