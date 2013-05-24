@@ -78,7 +78,9 @@ HEADERS += \
     PresetDialog.h \
     Rundown/RundownCustomCommandWidget.h \
     Inspector/InspectorCustomCommandWidget.h \
-    TemplateDataDialog.h
+    TemplateDataDialog.h \
+    OscWidget.h \
+    Library/DeviceFilterWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -145,7 +147,9 @@ SOURCES += \
     PresetDialog.cpp \
     Rundown/RundownCustomCommandWidget.cpp \
     Inspector/InspectorCustomCommandWidget.cpp \
-    TemplateDataDialog.cpp
+    TemplateDataDialog.cpp \
+    OscWidget.cpp \
+    Library/DeviceFilterWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -211,7 +215,9 @@ FORMS += \
     PresetDialog.ui \
     Rundown/RundownCustomCommandWidget.ui \
     Inspector/InspectorCustomCommandWidget.ui \
-    TemplateDataDialog.ui
+    TemplateDataDialog.ui \
+    OscWidget.ui \
+    Library/DeviceFilterWidget.ui
 
 RESOURCES += \
     Widgets.qrc

@@ -2,6 +2,7 @@ CasparCG Client 2.0.2
 =====================
 - FIX: Connection issue if server not started.
 - NEW: Added toolbar.
+- UPDATE: Changed filtering functionality.
 - UPDATE: Changed output delay to be frame based, depends on the channel format.
 - UPDATE: Template fields support multiline.
 

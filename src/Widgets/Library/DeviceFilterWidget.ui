@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DeviceFilterWidget</class>
+ <widget class="QWidget" name="DeviceFilterWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>139</width>
+    <height>22</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <widget class="QComboBox" name="comboBoxDeviceFilter">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>139</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string> All</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="lineEditDeviceFilter">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>2</y>
+     <width>117</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>durationChanged(int)</slot>
+  <slot>loopChanged(int)</slot>
+  <slot>transitionChanged(QString)</slot>
+  <slot>directionChanged(QString)</slot>
+  <slot>seekChanged(int)</slot>
+  <slot>lengthChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>resetTransition(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>resetDirection(QString)</slot>
+  <slot>resetSeek(QString)</slot>
+  <slot>resetLength(QString)</slot>
+  <slot>resetLoop(QString)</slot>
+  <slot>freezeOnLoadChanged(int)</slot>
+  <slot>resetFreezeOnLoad(QString)</slot>
+  <slot>resetUseAuto(QString)</slot>
+  <slot>useAutoChanged(int)</slot>
+  <slot>resetTriggerOnNext(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
+ </slots>
+</ui>

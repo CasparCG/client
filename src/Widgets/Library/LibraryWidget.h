@@ -3,6 +3,8 @@
 #include "../Shared.h"
 #include "ui_LibraryWidget.h"
 
+#include "CasparDevice.h"
+
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>

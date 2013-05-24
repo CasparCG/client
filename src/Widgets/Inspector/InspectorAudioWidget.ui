@@ -340,7 +340,7 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacerMedia">
+    <spacer name="verticalSpacerAudio">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>

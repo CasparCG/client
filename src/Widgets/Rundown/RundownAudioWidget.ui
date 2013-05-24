@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
+    <width>800</width>
     <height>36</height>
    </rect>
   </property>
@@ -147,13 +147,13 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>77</width>
+       <width>290</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>77</width>
+       <width>290</width>
        <height>16777215</height>
       </size>
      </property>
@@ -166,7 +166,7 @@
      <widget class="QLabel" name="labelGpiConnected">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>214</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -200,7 +200,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>32</x>
+        <x>245</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -231,7 +231,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>69</x>
+        <x>282</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -253,10 +253,28 @@
        <string/>
       </property>
      </widget>
+     <widget class="OscWidget" name="widgetOsc" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>3</y>
+        <width>200</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OscWidget</class>
+   <extends>QWidget</extends>
+   <header>OscWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Widgets.qrc"/>
  </resources>

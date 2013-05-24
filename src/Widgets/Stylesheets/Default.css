@@ -1,6 +1,17 @@
 /*
  * General.
  */
+*::indicator
+{
+    background-color: rgba(55, 55, 55, 255);
+    border-color: rgba(42, 42, 42, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+*::indicator:checked
+{
+    image: url(:/Graphics/Images/CheckboxChecked.png);
+}
 *::menu-indicator
 {
     image: url(:/Graphics/Images/ArrowDown.png);
@@ -53,6 +64,7 @@
 {
     image: url(:/Graphics/Images/ArrowRightDisabled.png);
 }
+
 
 /*
  * QWidget
@@ -159,12 +171,12 @@ QRadioButton::indicator:unchecked:hover
 QRadioButton::indicator:unchecked:pressed
 {
     image: url(:/Graphics/Images/RadiobuttonUncheckedPressed.png);
-}
+}*/
 QRadioButton::indicator::checked
 {
     image: url(:/Graphics/Images/RadiobuttonChecked.png);
 }
-QRadioButton::indicator:checked:hover
+/*QRadioButton::indicator:checked:hover
 {
     image: url(:/Graphics/Images/RadiobuttonCheckedHover.png);
 }
@@ -218,7 +230,7 @@ QLineEdit
 {
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
-    min-height: 19px;
+    min-height: 20px;
 }
 QLineEdit::disabled
 {
@@ -271,10 +283,12 @@ QToolBar QToolButton:hover
 }
 QToolBar::handle:vertical
 {
+    margin-top: 4px;
     image: url(:/Graphics/Images/ToolbarSplitterVertical.png);
 }
 QToolBar::handle:horizontal
 {
+    margin-left: 4px;
     image: url(:/Graphics/Images/ToolbarSplitterHorizontal.png);
 }
 

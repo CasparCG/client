@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OscWidget</class>
+ <widget class="QWidget" name="OscWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>200</width>
+    <height>42</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>00:00:00:00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>00:00:00:00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>00:00:00:00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>durationChanged(int)</slot>
+  <slot>loopChanged(int)</slot>
+  <slot>transitionChanged(QString)</slot>
+  <slot>directionChanged(QString)</slot>
+  <slot>seekChanged(int)</slot>
+  <slot>lengthChanged(int)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>resetTransition(QString)</slot>
+  <slot>resetDuration(QString)</slot>
+  <slot>resetTween(QString)</slot>
+  <slot>resetDirection(QString)</slot>
+  <slot>resetSeek(QString)</slot>
+  <slot>resetLength(QString)</slot>
+  <slot>resetLoop(QString)</slot>
+  <slot>freezeOnLoadChanged(int)</slot>
+  <slot>resetFreezeOnLoad(QString)</slot>
+  <slot>resetUseAuto(QString)</slot>
+  <slot>useAutoChanged(int)</slot>
+  <slot>resetTriggerOnNext(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
+ </slots>
+</ui>

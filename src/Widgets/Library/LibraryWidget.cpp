@@ -2,8 +2,10 @@
 
 #include "Global.h"
 
+#include "DeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "DeviceFilterWidget.h"
 #include "Events/LibraryItemSelectedEvent.h"
 #include "Events/ImportPresetEvent.h"
 #include "Events/ExportPresetEvent.h"
@@ -14,6 +16,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QTextStream>
+#include <QtCore/QModelIndex>
 
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
@@ -22,6 +25,7 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
+#include <QtGui/QStandardItemModel>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
     : QWidget(parent)
@@ -119,10 +123,10 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetVideo->clearSelection();
 
         QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty())
+        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
             models = DatabaseManager::getInstance().getLibraryMedia();
         else
-            models = DatabaseManager::getInstance().getLibraryMediaByFilter(this->lineEditFilter->text());
+            models = DatabaseManager::getInstance().getLibraryMediaByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
 
         if (models.count() > 0)
         {

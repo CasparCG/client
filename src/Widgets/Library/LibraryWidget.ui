@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>287</width>
+    <width>288</width>
     <height>600</height>
    </rect>
   </property>
@@ -33,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -91,8 +91,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -164,8 +164,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>287</width>
-        <height>444</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -237,8 +237,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -316,8 +316,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -389,8 +389,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>288</width>
+        <height>436</height>
        </rect>
       </property>
       <attribute name="label">
@@ -467,41 +467,28 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>6</height>
+       <height>16</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QLineEdit" name="lineEditFilter">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>147</width>
-         <height>22</height>
+         <width>139</width>
+         <height>0</height>
         </size>
        </property>
        <property name="placeholderText">
@@ -509,28 +496,65 @@
        </property>
       </widget>
      </item>
+     <item>
+      <spacer name="horizontalSpacerLeft">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>9</width>
+         <height>17</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="DeviceFilterWidget" name="widgetDeviceFilter" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>139</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerRight">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DeviceFilterWidget</class>
+   <extends>QWidget</extends>
+   <header>Library/DeviceFilterWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>lineEditFilter</sender>
-   <signal>editingFinished()</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>filterLibrary()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>212</x>
-     <y>581</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>324</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>treeWidgetTemplate</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
