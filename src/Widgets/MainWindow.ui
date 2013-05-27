@@ -20,34 +20,34 @@
    <string>CasparCG Client</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <property name="margin">
      <number>6</number>
     </property>
     <item>
-     <widget class="QSplitter" name="splitterVertical">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="LibraryWidget" name="widgetLibrary" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>287</width>
-         <height>0</height>
-        </size>
-       </property>
+      <widget class="QWidget" name="layoutWidget1">
+       <layout class="QVBoxLayout" name="verticalLayoutLeft">
+        <item>
+         <widget class="LibraryWidget" name="widgetLibrary" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>287</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="RundownWidget" name="widgetRundown" native="true">
        <property name="minimumSize">
@@ -57,11 +57,27 @@
         </size>
        </property>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout">
+      <widget class="QWidget" name="layoutWidget2">
+       <layout class="QVBoxLayout" name="verticalLayoutRight">
         <property name="spacing">
          <number>6</number>
         </property>
+        <item>
+         <widget class="TimeWidget" name="widgetTime" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>287</width>
+            <height>100</height>
+           </size>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="PreviewWidget" name="widgetPreview" native="true">
           <property name="sizePolicy">
@@ -148,6 +164,12 @@
    <class>RundownWidget</class>
    <extends>QWidget</extends>
    <header>Rundown/RundownWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimeWidget</class>
+   <extends>QWidget</extends>
+   <header>TimeWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

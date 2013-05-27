@@ -80,7 +80,8 @@ HEADERS += \
     Inspector/InspectorCustomCommandWidget.h \
     TemplateDataDialog.h \
     OscWidget.h \
-    Library/DeviceFilterWidget.h
+    Library/DeviceFilterWidget.h \
+    TimeWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -149,7 +150,8 @@ SOURCES += \
     Inspector/InspectorCustomCommandWidget.cpp \
     TemplateDataDialog.cpp \
     OscWidget.cpp \
-    Library/DeviceFilterWidget.cpp
+    Library/DeviceFilterWidget.cpp \
+    TimeWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -217,7 +219,8 @@ FORMS += \
     Inspector/InspectorCustomCommandWidget.ui \
     TemplateDataDialog.ui \
     OscWidget.ui \
-    Library/DeviceFilterWidget.ui
+    Library/DeviceFilterWidget.ui \
+    TimeWidget.ui
 
 RESOURCES += \
     Widgets.qrc

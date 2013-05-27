@@ -567,3 +567,27 @@
 {
     image: url(:/Graphics/Images/PreviewAlphaHover.png);
 }
+
+/*
+ * TimeWidget
+ */
+#frameTime, #pageTime
+{
+    background-color: rgba(60, 60, 60, 255);
+}
+#lcdNumber
+{
+    color: rgba(200, 55, 55, 255);
+}
+#lcdNumberShadowHour
+{
+    color: rgba(55, 55, 55, 255);
+}
+#lcdNumberShadowMinute
+{
+    color: rgba(55, 55, 55, 255);
+}
+#lcdNumberShadowSecond
+{
+    color: rgba(55, 55, 55, 255);
+}
