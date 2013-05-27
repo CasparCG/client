@@ -13,14 +13,20 @@ DEFINES += OSC_LIBRARY
 
 HEADERS += \
     Shared.h \
-    OscDevice.h \
-    OscListener.h
+    OscInMessage.h \
+    OscMessageFilter.h \
+    Predicate.h \
+    OscReceiver.h
 	
 SOURCES += \
-    OscDevice.cpp \
-    OscListener.cpp
+    OscInMessage.cpp \
+    OscMessageFilter.cpp \
+    Predicate.cpp \
+    OscReceiver.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
 else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
 else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
+
+INCLUDEPATH += $$PWD/../../lib/boost
