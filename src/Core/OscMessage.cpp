@@ -14,5 +14,5 @@ OscMessage::OscMessage(const QString& predicate, QObject *parent)
 void OscMessage::oscMessageReceived(const QString& address, const QString& pattern, const QList<QVariant>& arguments)
 {
     if (predicate.exactMatch(QString("/%1%2").arg(address).arg(pattern)))
-        emit messageReceived(predicate.pattern(), arguments);
+        emit messageReceived(pattern, arguments);
 }

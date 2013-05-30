@@ -60,13 +60,13 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
 
     qApp->installEventFilter(this);
 
-    this->oscMessage = new OscMessage("^/127.0.0.1/channel.*", this);
+    this->oscMessage = new OscMessage(QString("^/127.0.0.1/channel/%1/stage/layer/.*/file/time.*").arg(this->command.getChannel()), this);
     QObject::connect(this->oscMessage, SIGNAL(messageReceived(const QString&, const QList<QVariant>&)), this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownAudioWidget::messageReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAudioWidget::messageReceived(const QString& pattern, const QList<QVariant>& arguments)
 {
-    qDebug() << predicate;
+    qDebug() << pattern << " " << arguments.at(0);
 }
 
 bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)

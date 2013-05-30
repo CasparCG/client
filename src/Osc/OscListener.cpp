@@ -44,8 +44,10 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
 
         if (argument.IsBool())
             arguments.push_back(argument.AsBool());
+        else if (argument.IsInt32())
+            arguments.push_back(QVariant::fromValue<qint32>(argument.AsInt32()));
         else if (argument.IsInt64())
-            arguments.push_back(argument.AsInt64());
+            arguments.push_back(QVariant::fromValue<qint64>(argument.AsInt64()));
         else if (argument.IsFloat())
             arguments.push_back(argument.AsFloat());
         else if (argument.IsDouble())
