@@ -59,6 +59,14 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 
     qApp->installEventFilter(this);
+
+    this->oscMessage = new OscMessage("^/127.0.0.1/channel.*", this);
+    QObject::connect(this->oscMessage, SIGNAL(messageReceived(const QString&, const QList<QVariant>&)), this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));
+}
+
+void RundownAudioWidget::messageReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    qDebug() << predicate;
 }
 
 bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)

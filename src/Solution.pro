@@ -3,8 +3,8 @@ TEMPLATE = subdirs
 SUBDIRS += \
     Common \
     Caspar \
-    Osc \
     Gpi \
+    Osc \
     Core \
     Widgets \
     Shell

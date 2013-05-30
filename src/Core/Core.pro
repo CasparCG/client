@@ -91,7 +91,8 @@ HEADERS += \
     Events/AddPresetItemEvent.h \
     Events/ImportPresetEvent.h \
     Events/ExportPresetEvent.h \
-    Commands/CustomCommand.h
+    Commands/CustomCommand.h \
+    OscMessage.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -172,7 +173,8 @@ SOURCES += \
     Events/AddPresetItemEvent.cpp \
     Events/ImportPresetEvent.cpp \
     Events/ExportPresetEvent.cpp \
-    Commands/CustomCommand.cpp
+    Commands/CustomCommand.cpp \
+    OscMessage.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

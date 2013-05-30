@@ -10,6 +10,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscMessage.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -64,6 +65,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         LibraryModel model;
         AudioCommand command;
         ActiveAnimation* animation;
+        OscMessage* oscMessage;
 
         QTimer executeTimer;
 
@@ -84,4 +86,5 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void messageReceived(const QString&, const QList<QVariant>&);
 };

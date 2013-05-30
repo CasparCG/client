@@ -11,7 +11,6 @@
 
 #include <QtCore/QEvent>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
 #include <QtCore/QList>
 
 namespace Enum

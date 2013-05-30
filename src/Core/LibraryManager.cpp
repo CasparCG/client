@@ -7,6 +7,7 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QTime>
 #include <QtCore/QTimer>
+#include <QtCore/QStringList>
 
 #include <QtGui/QApplication>
 

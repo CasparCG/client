@@ -14,6 +14,7 @@
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
+#include <QtCore/QRegExp>
 
 #include <QtGui/QApplication>
 
@@ -21,8 +22,8 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
 DeviceManager::DeviceManager()
 {
-    this->oscReceiver = new OscReceiver(OscAddress("127.0.0.1", 6250), this);
-    this->oscReceiver->start();
+    this->oscListener = QSharedPointer<OscListener>(new OscListener("127.0.0.1", 6250, this));
+    this->oscListener->start();
 }
 
 DeviceManager& DeviceManager::getInstance()
@@ -132,7 +133,7 @@ const QSharedPointer<CasparDevice> DeviceManager::getDeviceByName(const QString&
     return this->devices.value(name);
 }
 
-const OscReceiver* DeviceManager::getOscReceiver() const
+const QSharedPointer<OscListener> DeviceManager::getOscListener() const
 {
-    return this->oscReceiver;
+    return this->oscListener;
 }
