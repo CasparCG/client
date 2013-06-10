@@ -7,7 +7,7 @@
 class CORE_EXPORT FormatModel
 {
     public:
-        explicit FormatModel(int id, const QString& name, int width, int height, const QString& framesPerSecond);
+        explicit FormatModel(int id, const QString& name, int width, int height, const QString& fps);
 
         int getId() const;
         const QString& getName() const;
@@ -20,7 +20,7 @@ class CORE_EXPORT FormatModel
         QString name;
         int width;
         int height;
-        QString framesPerSecond;
+        QString fps;
 };
 
 

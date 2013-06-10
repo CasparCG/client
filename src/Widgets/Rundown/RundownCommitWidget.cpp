@@ -33,7 +33,7 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
-    this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+    this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
@@ -88,7 +88,7 @@ bool RundownCommitWidget::eventFilter(QObject* target, QEvent* event)
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());

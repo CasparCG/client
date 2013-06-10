@@ -203,6 +203,8 @@ void InspectorOutputWidget::channelChanged(int channel)
 void InspectorOutputWidget::videolayerChanged(int videolayer)
 {
     this->command->setVideolayer(videolayer);
+
+    EventManager::getInstance().fireVideolayerChangedEvent(videolayer);
 }
 
 void InspectorOutputWidget::delayChanged(int delay)

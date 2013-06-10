@@ -12,6 +12,13 @@ class WIDGETS_EXPORT OscWidget : public QWidget, Ui::OscWidget
     public:
         explicit OscWidget(QWidget* parent = 0);
 
+        void setTime(float time);
+        void setInpoint(float time, int offset);
+        void setOutpoint(float time, int offset);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
+
+    private:
+        const QString& getCalculatedTime(float time, int offset);
 };

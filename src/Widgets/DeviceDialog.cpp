@@ -22,7 +22,7 @@ void DeviceDialog::setDeviceModel(const DeviceModel& model)
 {
     this->editMode = editMode;
 
-    setWindowTitle("Edit Device");
+    setWindowTitle("Edit Server");
     this->lineEditDeviceName->setEnabled(!this->editMode);
 
     this->lineEditDeviceName->setText(model.getName());

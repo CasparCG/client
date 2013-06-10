@@ -83,6 +83,7 @@ class CORE_EXPORT DatabaseManager
 
         ThumbnailModel getThumbnailById(int id);
         QList<ThumbnailModel> getThumbnailByDeviceAddress(const QString& address);
+        ThumbnailModel getThumbnailByNameAndDeviceName(const QString& name, const QString& deviceName);
         void updateThumbnail(const ThumbnailModel& model);
 
     private:

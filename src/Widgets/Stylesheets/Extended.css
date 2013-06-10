@@ -577,7 +577,7 @@
 }
 #lcdNumber
 {
-    color: rgba(200, 55, 55, 255);
+    color: rgba(255, 55, 55, 225);
 }
 #lcdNumberShadowHour
 {
@@ -590,4 +590,21 @@
 #lcdNumberShadowSecond
 {
     color: rgba(55, 55, 55, 255);
+}
+
+/*
+ * TimeWidget
+ */
+#labelOscTime
+{
+    color: rgba(255, 55, 55, 225);
+    font-size: 13px;
+}
+#progressBarOscTime
+{
+    border-radius: 0px;
+}
+#progressBarOscTime::chunk
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
 }

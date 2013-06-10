@@ -25,11 +25,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
     setupUi(this);
     setupMenu();
-    setupToolbar();
+    //setupToolbar();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
     setWindowTitle(QString("%1 %2.%3.%4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
     this->applicationTitle = this->windowTitle();
+
+    this->widgetTime->setVisible(false);
 
     qApp->installEventFilter(this);
 }

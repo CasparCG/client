@@ -45,7 +45,8 @@ namespace Enum
             PresetChanged = QEvent::User + 34,
             AddPresetItem = QEvent::User + 35,
             ExportPreset = QEvent::User + 36,
-            ImportPreset = QEvent::User + 37
+            ImportPreset = QEvent::User + 37,
+            VideolayerChanged = QEvent::User + 38
         };
     };
 }
@@ -298,4 +299,12 @@ namespace Rundown
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
+}
+
+namespace Osc
+{
+    static const QString DEFAULT_TIME = "00:00:00:00";
+    static const QString DEFAULT_PAUSED_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
+    static const QString DEFAULT_FRAME_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame.*";
+    static const QString DEFAULT_FPS_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
 }

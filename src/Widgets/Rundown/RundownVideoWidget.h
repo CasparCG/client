@@ -10,6 +10,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscSubscription.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -65,12 +66,17 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         VideoCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* frameSubscription;
+        OscSubscription* fpsSubscription;
+        OscSubscription* pausedSubscription;
+
         QTimer executeTimer;
 
         void setThumbnail();
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
+        void configureOscSubscriptions();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
@@ -85,4 +91,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

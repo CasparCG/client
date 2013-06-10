@@ -22,21 +22,30 @@ bool PreviewWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected) ||
         event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
     {
+        QString name;
+        QString deviceName;
         int thumbnailId = 0;
         if (dynamic_cast<LibraryItemSelectedEvent*>(event))
         {
             LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
             thumbnailId = libraryItemSelectedEvent->getLibraryModel()->getThumbnailId();
+            name = libraryItemSelectedEvent->getLibraryModel()->getName();
+            deviceName = libraryItemSelectedEvent->getLibraryModel()->getDeviceName();
         }
         else if (dynamic_cast<RundownItemSelectedEvent*>(event))
         {
             RundownItemSelectedEvent* rundownItemSelected = dynamic_cast<RundownItemSelectedEvent*>(event);
             thumbnailId = rundownItemSelected->getLibraryModel()->getThumbnailId();
+            name = rundownItemSelected->getLibraryModel()->getName();
+            deviceName = rundownItemSelected->getLibraryModel()->getDeviceName();
         }
 
-        if (thumbnailId > 0)
+        QString data = DatabaseManager::getInstance().getThumbnailById(thumbnailId).getData();
+        if (data.isEmpty())
+            data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(name, deviceName).getData();
+
+        if (!data.isEmpty())
         {
-            QString data = DatabaseManager::getInstance().getThumbnailById(thumbnailId).getData();
             this->image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
 
             if (this->previewAlpha)

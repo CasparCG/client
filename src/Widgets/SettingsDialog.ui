@@ -298,7 +298,7 @@
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
-     <string>Devices</string>
+     <string>Servers</string>
     </attribute>
     <widget class="QTreeWidget" name="treeWidgetDevice">
      <property name="geometry">

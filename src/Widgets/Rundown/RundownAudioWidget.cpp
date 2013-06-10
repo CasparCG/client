@@ -37,7 +37,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
-    this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+    this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
@@ -59,14 +59,6 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 
     qApp->installEventFilter(this);
-
-    this->oscMessage = new OscMessage(QString("^/127.0.0.1/channel/%1/stage/layer/.*/file/time.*").arg(this->command.getChannel()), this);
-    QObject::connect(this->oscMessage, SIGNAL(messageReceived(const QString&, const QList<QVariant>&)), this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));
-}
-
-void RundownAudioWidget::messageReceived(const QString& pattern, const QList<QVariant>& arguments)
-{
-    qDebug() << pattern << " " << arguments.at(0);
 }
 
 bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
@@ -78,6 +70,7 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
+        this->model.setName(targetChangedEvent->getTarget());
         this->command.setAudioName(targetChangedEvent->getTarget());
 
         return true;
@@ -112,7 +105,7 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());

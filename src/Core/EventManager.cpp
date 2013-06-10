@@ -265,3 +265,8 @@ void EventManager::fireChannelChangedEvent(int channel)
 {
     qApp->postEvent(qApp, new ChannelChangedEvent(channel));
 }
+
+void EventManager::fireVideolayerChangedEvent(int videolayer)
+{
+    qApp->postEvent(qApp, new VideolayerChangedEvent(videolayer));
+}

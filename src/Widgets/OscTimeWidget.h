@@ -1,0 +1,30 @@
+#pragma once
+
+#include "Shared.h"
+#include "ui_OscTimeWidget.h"
+
+#include <QtGui/QWidget>
+
+class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
+{
+    Q_OBJECT
+
+    public:
+        explicit OscTimeWidget(QWidget* parent = 0);
+
+        void setTime(int current);
+        void setInOutTime(int total, int start, int duration);
+        void setProgress(int current);
+        void setFramesPerSecond(int fps);
+        void setPaused(bool paused);
+        void reset();
+
+    private:
+        int fps;
+        bool paused;
+        qint64 timestamp;
+
+        QString convertToTimecode(double time);
+
+        Q_SLOT void checkState();
+};

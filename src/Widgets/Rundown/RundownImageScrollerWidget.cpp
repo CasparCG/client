@@ -39,7 +39,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
-    this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+    this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
@@ -72,6 +72,7 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
+        this->model.setName(targetChangedEvent->getTarget());
         this->command.setImageScrollerName(targetChangedEvent->getTarget());
 
         return true;
@@ -106,7 +107,7 @@ bool RundownImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -195,6 +196,9 @@ void RundownImageScrollerWidget::setThumbnail()
     }
 
     QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
+    if (data.isEmpty())
+        data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+
     QImage image;
     image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
     this->labelThumbnail->setPixmap(QPixmap::fromImage(image));

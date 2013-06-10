@@ -38,7 +38,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(this->command.getFlashlayer()));
-    this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+    this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
 
@@ -71,6 +71,7 @@ bool RundownTemplateWidget::eventFilter(QObject* target, QEvent* event)
             return false;
 
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
+        this->model.setName(targetChangedEvent->getTarget());
         this->command.setTemplateName(targetChangedEvent->getTarget());
 
         return true;
@@ -105,7 +106,7 @@ bool RundownTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Device: %1").arg(this->model.getDeviceName()));
+            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
             // Connect connectionStateChanged() to the new device.
             const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());

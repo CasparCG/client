@@ -86,6 +86,8 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #endif
 
+    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) VALUES('Local CasparCG', 'localhost', 5250, '', '', '', '', 'No', 0, '')");
+
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
     sql.exec("INSERT INTO Direction (Value) VALUES('LEFT')");
 
@@ -1086,6 +1088,23 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
                                         sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString()));
 
     return models;
+}
+
+ThumbnailModel DatabaseManager::getThumbnailByNameAndDeviceName(const QString& name, const QString& deviceName)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Name, d.Address FROM Thumbnail t, Library l, Device d "
+                            "WHERE l.Name = '%1' AND d.Name = '%2' AND l.ThumbnailId = t.Id").arg(name).arg(deviceName);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
+                          sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString());
 }
 
 void DatabaseManager::updateThumbnail(const ThumbnailModel& model)

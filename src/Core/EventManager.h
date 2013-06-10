@@ -27,6 +27,7 @@
 #include "Events/DeviceChangedEvent.h"
 #include "Events/DeleteRundownEvent.h"
 #include "Events/ChannelChangedEvent.h"
+#include "Events/VideolayerChangedEvent.h"
 #include "Events/PresetChangedEvent.h"
 #include "Events/AddPresetItemEvent.h"
 #include "Events/ImportPresetEvent.h"
@@ -86,4 +87,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireTargetChangedEvent(const QString& target);
         void fireDeviceChangedEvent(const QString& deviceName);
         void fireChannelChangedEvent(int channel);
+        void fireVideolayerChangedEvent(int videolayer);
 };

@@ -56,5 +56,5 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
             arguments.push_back(argument.AsString());
     }
 
-    emit oscMessageReceived(QString(addressBuffer), QString(message.AddressPattern()), arguments);
+    emit messageReceived(QString(addressBuffer), QString(message.AddressPattern()), arguments);
 }

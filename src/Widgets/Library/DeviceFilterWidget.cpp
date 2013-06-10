@@ -49,7 +49,7 @@ QList<QString> DeviceFilterWidget::getDeviceFilter()
 {
     QList<QString> devices;
 
-    if (this->comboBoxDeviceFilter->model() == NULL)
+    if (this->comboBoxDeviceFilter->count() == 0)
         return devices;
 
     if (dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->checkState() == Qt::Checked)

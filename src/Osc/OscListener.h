@@ -21,7 +21,7 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
 
         void start();
 
-        Q_SIGNAL void oscMessageReceived(const QString&, const QString&, const QList<QVariant>&);
+        Q_SIGNAL void messageReceived(const QString&, const QString&, const QList<QVariant>&);
 
     protected:
         virtual void ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint);

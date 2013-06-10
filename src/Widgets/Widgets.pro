@@ -79,9 +79,9 @@ HEADERS += \
     Rundown/RundownCustomCommandWidget.h \
     Inspector/InspectorCustomCommandWidget.h \
     TemplateDataDialog.h \
-    OscWidget.h \
     Library/DeviceFilterWidget.h \
-    TimeWidget.h
+    TimeWidget.h \
+    OscTimeWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -149,9 +149,9 @@ SOURCES += \
     Rundown/RundownCustomCommandWidget.cpp \
     Inspector/InspectorCustomCommandWidget.cpp \
     TemplateDataDialog.cpp \
-    OscWidget.cpp \
     Library/DeviceFilterWidget.cpp \
-    TimeWidget.cpp
+    TimeWidget.cpp \
+    OscTimeWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -218,9 +218,9 @@ FORMS += \
     Rundown/RundownCustomCommandWidget.ui \
     Inspector/InspectorCustomCommandWidget.ui \
     TemplateDataDialog.ui \
-    OscWidget.ui \
     Library/DeviceFilterWidget.ui \
-    TimeWidget.ui
+    TimeWidget.ui \
+    OscTimeWidget.ui
 
 RESOURCES += \
     Widgets.qrc

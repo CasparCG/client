@@ -1,7 +1,7 @@
 #include "FormatModel.h"
 
-FormatModel::FormatModel(int id, const QString& name, int width, int height, const QString& framesPerSecond)
-    : id(id), name(name), width(width), height(height), framesPerSecond(framesPerSecond)
+FormatModel::FormatModel(int id, const QString& name, int width, int height, const QString& fps)
+    : id(id), name(name), width(width), height(height), fps(fps)
 {    
 }
 
@@ -27,5 +27,5 @@ int FormatModel::getHeight() const
 
 const QString& FormatModel::getFramesPerSecond() const
 {
-    return this->framesPerSecond;
+    return this->fps;
 }
