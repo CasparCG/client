@@ -16,6 +16,7 @@
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/VideoCommand.h"
 #include "Models/LibraryModel.h"
+#include "Models/OscFileModel.h"
 
 #include <QtCore/QString>
 #include <QtCore/QTimer>
@@ -66,8 +67,11 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         VideoCommand command;
         ActiveAnimation* animation;
 
+        OscFileModel* fileModel;
+        OscSubscription* timeSubscription;
         OscSubscription* frameSubscription;
         OscSubscription* fpsSubscription;
+        OscSubscription* pathSubscription;
         OscSubscription* pausedSubscription;
 
         QTimer executeTimer;
@@ -91,7 +95,9 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void timeSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

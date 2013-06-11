@@ -224,22 +224,28 @@ bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        {
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
 
-        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
-        this->executeTimer.start();
+            this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::Update)
     {
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
 
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        {
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
 
-        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
-        this->executeTimer.start();
+            this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));

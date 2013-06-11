@@ -93,7 +93,8 @@ HEADERS += \
     Events/ExportPresetEvent.h \
     Commands/CustomCommand.h \
     OscSubscription.h \
-    Events/VideolayerChangedEvent.h
+    Events/VideolayerChangedEvent.h \
+    Models/OscFileModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -176,7 +177,8 @@ SOURCES += \
     Events/ExportPresetEvent.cpp \
     Commands/CustomCommand.cpp \
     OscSubscription.cpp \
-    Events/VideolayerChangedEvent.cpp
+    Events/VideolayerChangedEvent.cpp \
+    Models/OscFileModel.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

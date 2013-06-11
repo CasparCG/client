@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
+    <width>289</width>
     <height>600</height>
    </rect>
   </property>
@@ -33,7 +33,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -91,7 +91,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -164,7 +164,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -237,7 +237,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -316,7 +316,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -389,7 +389,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>288</width>
+        <width>289</width>
         <height>436</height>
        </rect>
       </property>
@@ -646,7 +646,7 @@
      <y>170</y>
     </hint>
     <hint type="destinationlabel">
-     <x>295</x>
+     <x>288</x>
      <y>170</y>
     </hint>
    </hints>
@@ -662,7 +662,7 @@
      <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>291</x>
+     <x>288</x>
      <y>143</y>
     </hint>
    </hints>
@@ -678,7 +678,7 @@
      <y>108</y>
     </hint>
     <hint type="destinationlabel">
-     <x>290</x>
+     <x>288</x>
      <y>115</y>
     </hint>
    </hints>
@@ -694,7 +694,7 @@
      <y>352</y>
     </hint>
     <hint type="destinationlabel">
-     <x>293</x>
+     <x>288</x>
      <y>353</y>
     </hint>
    </hints>
@@ -710,8 +710,24 @@
      <y>379</y>
     </hint>
     <hint type="destinationlabel">
-     <x>290</x>
+     <x>288</x>
      <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditFilter</sender>
+   <signal>returnPressed()</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>filterLibrary()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-3</x>
+     <y>572</y>
     </hint>
    </hints>
   </connection>

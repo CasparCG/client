@@ -11,6 +11,7 @@
 #include "Events/DeviceChangedEvent.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QFileInfo>
 
 #include <QtGui/QPixmap>
 
@@ -18,7 +19,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
-      frameSubscription(NULL), fpsSubscription(NULL), pausedSubscription(NULL)
+      fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL)
 {
     setupUi(this);
 
@@ -263,11 +264,14 @@ bool RundownVideoWidget::executeCommand(enum Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-        int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        {
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
 
-        this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
-        this->executeTimer.start();
+            this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
@@ -495,14 +499,25 @@ void RundownVideoWidget::checkDeviceConnection()
 
 void RundownVideoWidget::configureOscSubscriptions()
 {
+    if (this->timeSubscription != NULL)
+        this->timeSubscription->disconnect(); // Disconnect all events.
+
     if (this->frameSubscription != NULL)
         this->frameSubscription->disconnect(); // Disconnect all events.
 
     if (this->fpsSubscription != NULL)
         this->fpsSubscription->disconnect(); // Disconnect all events.
 
+    if (this->pathSubscription != NULL)
+        this->pathSubscription->disconnect(); // Disconnect all events.
+
     if (this->pausedSubscription != NULL)
         this->pausedSubscription->disconnect(); // Disconnect all events.
+
+    QString timeFilter = Osc::DEFAULT_TIME_FILTER;
+    timeFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    this->timeSubscription = new OscSubscription(timeFilter, this);
+    QObject::connect(this->timeSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString frameFilter = Osc::DEFAULT_FRAME_FILTER;
     frameFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -513,6 +528,11 @@ void RundownVideoWidget::configureOscSubscriptions()
     fpsFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString pathFilter = Osc::DEFAULT_PATH_FILTER;
+    pathFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    this->pathSubscription = new OscSubscription(pathFilter, this);
+    QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pausedFilter = Osc::DEFAULT_PAUSED_FILTER;
     pausedFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -558,20 +578,46 @@ void RundownVideoWidget::deviceAdded(CasparDevice& device)
     checkDeviceConnection();
 }
 
+void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->fileModel != NULL)
+        delete this->fileModel;
+
+    this->fileModel = new OscFileModel();
+    this->fileModel->setTime(arguments.at(0).toDouble());
+    this->fileModel->setTotalTime(arguments.at(1).toDouble());
+}
+
 void RundownVideoWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    this->widgetOscTime->setTime(arguments.at(0).toInt());
-    this->widgetOscTime->setProgress(arguments.at(0).toInt());
-
-    if (this->command.getSeek() == 0 && this->command.getLength() == 0)
-        this->widgetOscTime->setInOutTime(arguments.at(1).toInt(), 0, arguments.at(1).toInt());
-    else
-        this->widgetOscTime->setInOutTime(arguments.at(1).toInt(), this->command.getSeek(), this->command.getLength());
+    this->fileModel->setFrame(arguments.at(0).toInt());
+    this->fileModel->setTotalFrames(arguments.at(1).toInt());
 }
 
 void RundownVideoWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    this->widgetOscTime->setFramesPerSecond(arguments.at(0).toInt());
+    this->fileModel->setFramesPerSecond(arguments.at(0).toInt());
+}
+
+void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    QString name = arguments.at(0).toString();
+    name.remove(name.lastIndexOf('.'), name.length()); // Remove extension.
+
+    if (this->model.getName().toLower() != name.toLower())
+        return; // Wrong file.
+
+    this->fileModel->setPath(arguments.at(0).toString());
+
+    this->widgetOscTime->setTime(this->fileModel->getFrame());
+    this->widgetOscTime->setProgress(this->fileModel->getFrame());
+
+    if (this->command.getSeek() == 0 && this->command.getLength() == 0)
+        this->widgetOscTime->setInOutTime(0, this->fileModel->getTotalFrames());
+    else
+        this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
+
+    this->widgetOscTime->setFramesPerSecond(this->fileModel->getFramesPerSecond());
 }
 
 void RundownVideoWidget::pausedSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

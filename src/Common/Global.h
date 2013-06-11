@@ -304,7 +304,9 @@ namespace Rundown
 namespace Osc
 {
     static const QString DEFAULT_TIME = "00:00:00:00";
-    static const QString DEFAULT_PAUSED_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
+    static const QString DEFAULT_TIME_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time.*";
     static const QString DEFAULT_FRAME_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame.*";
     static const QString DEFAULT_FPS_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
+    static const QString DEFAULT_PATH_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
+    static const QString DEFAULT_PAUSED_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
 }

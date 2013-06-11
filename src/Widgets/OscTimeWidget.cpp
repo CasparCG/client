@@ -15,14 +15,14 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     this->setVisible(false);
 }
 
-void OscTimeWidget::setTime(int current)
+void OscTimeWidget::setTime(int currentFrame)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
 
-    double currentTime = current * (1.0 / this->fps);
+    double currentTime = currentFrame * (1.0 / this->fps);
 
     this->labelOscTime->setText(convertToTimecode(currentTime));
 
@@ -32,30 +32,30 @@ void OscTimeWidget::setTime(int current)
     this->timestamp = QDateTime::currentMSecsSinceEpoch();
 }
 
-void OscTimeWidget::setInOutTime(int total, int start, int duration)
+void OscTimeWidget::setInOutTime(int seek, int length)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
 
-    double inTime = start * (1.0 / this->fps);
-    double outTime = (start + duration) * (1.0 / this->fps);
+    double inTime = seek * (1.0 / this->fps);
+    double outTime = (seek + length) * (1.0 / this->fps);
 
     this->labelOscInTime->setText(convertToTimecode(inTime));
     this->labelOscOutTime->setText(convertToTimecode(outTime));
 
-    this->progressBarOscTime->setRange(start, start + duration);
+    this->progressBarOscTime->setRange(seek, seek + length);
 }
 
-void OscTimeWidget::setProgress(int current)
+void OscTimeWidget::setProgress(int currentFrame)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
 
-    this->progressBarOscTime->setValue(current);
+    this->progressBarOscTime->setValue(currentFrame);
 }
 
 void OscTimeWidget::setFramesPerSecond(int fps)
