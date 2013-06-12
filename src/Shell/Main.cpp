@@ -67,10 +67,12 @@ void loadStyleSheets(QApplication& application)
     }
 
     // Load platform stylesheet.
-#if defined(Q_OS_UNIX)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Unix.css");
-#elif defined(Q_OS_WIN32)
+#if defined(Q_WS_WIN)
     QFile platformStylesheet(":/Appearances/Stylesheets/Windows.css");
+#elif defined(Q_WS_MAC)
+    QFile platformStylesheet(":/Appearances/Stylesheets/Mac.css");
+#elif defined(Q_WS_X11)
+    QFile platformStylesheet(":/Appearances/Stylesheets/Linux.css");
 #endif
     if (platformStylesheet.open(QFile::ReadOnly))
     {

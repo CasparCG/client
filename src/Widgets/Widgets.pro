@@ -232,7 +232,6 @@ OTHER_FILES += \
     Images/ArrowDown.png \
     Stylesheets/Default.css \
     Stylesheets/Extended.css \
-    Stylesheets/Unix.css \
     Stylesheets/Windows.css \
     Images/RadiobuttonUncheckedPressed.png \
     Images/RadiobuttonUncheckedHover.png \
@@ -387,7 +386,9 @@ OTHER_FILES += \
     Images/CtrlClearChannelSmall.png \
     Images/Commit.png \
     Images/ToolbarSplitterHorizontal.png \
-    Images/ToolbarSplitterVertical.png
+    Images/ToolbarSplitterVertical.png \
+    Stylesheets/Linux.css \
+    Stylesheets/Mac.css
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

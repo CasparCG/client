@@ -162,6 +162,7 @@
         <file>Stylesheets/Default.css</file>
         <file>Stylesheets/Extended.css</file>
         <file>Stylesheets/Windows.css</file>
-        <file>Stylesheets/Unix.css</file>
+        <file>Stylesheets/Linux.css</file>
+        <file>Stylesheets/Mac.css</file>
     </qresource>
 </RCC>
