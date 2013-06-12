@@ -147,7 +147,7 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>347</width>
+       <width>367</width>
        <height>0</height>
       </size>
      </property>
@@ -166,7 +166,7 @@
      <widget class="QLabel" name="labelGpiConnected">
       <property name="geometry">
        <rect>
-        <x>271</x>
+        <x>291</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -200,7 +200,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>302</x>
+        <x>322</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -231,7 +231,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>339</x>
+        <x>359</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -256,7 +256,7 @@
      <widget class="QLabel" name="labelThumbnail">
       <property name="geometry">
        <rect>
-        <x>209</x>
+        <x>229</x>
         <y>2</y>
         <width>57</width>
         <height>32</height>
@@ -289,7 +289,7 @@
        <rect>
         <x>3</x>
         <y>3</y>
-        <width>200</width>
+        <width>220</width>
         <height>31</height>
        </rect>
       </property>
