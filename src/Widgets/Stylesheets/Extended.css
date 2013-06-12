@@ -600,6 +600,10 @@
     color: rgba(255, 55, 55, 225);
     font-size: 13px;
 }
+#labelOscInTime, #labelOscOutTime
+{
+    font-size: 11px;
+}
 #progressBarOscTime
 {
     border-radius: 0px;
