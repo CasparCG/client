@@ -27,5 +27,6 @@ QTabBar::tab
  */
 #labelOscTime
 {
+    font-size: 12px;
     qproperty-alignment: 'AlignTop';
 }
