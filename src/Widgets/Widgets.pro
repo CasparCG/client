@@ -364,26 +364,6 @@ OTHER_FILES += \
     Images/PresetSmallHover.png \
     Images/CustomCommandSmallHover.png \
     Images/CustomCommandSmall.png \
-    Images/CtrlStopSmallHover.png \
-    Images/CtrlStopSmall.png \
-    Images/CtrlPlaySmallHover.png \
-    Images/CtrlPlaySmall.png \
-    Images/CtrlPauseSmallHover.png \
-    Images/CtrlPauseSmall.png \
-    Images/CtrlLoadSmallHover.png \
-    Images/CtrlLoadSmall.png \
-    Images/CtrlUpdateSmallHover.png \
-    Images/CtrlUpdateSmall.png \
-    Images/CtrlNextSmallHover.png \
-    Images/CtrlNextSmall.png \
-    Images/CtrlInvokeSmallHover.png \
-    Images/CtrlInvokeSmall.png \
-    Images/CtrlClearVideolayerSmallHover.png \
-    Images/CtrlClearVideolayerSmall.png \
-    Images/CtrlClearSmallHover.png \
-    Images/CtrlClearSmall.png \
-    Images/CtrlClearChannelSmallHover.png \
-    Images/CtrlClearChannelSmall.png \
     Images/Commit.png \
     Images/ToolbarSplitterHorizontal.png \
     Images/ToolbarSplitterVertical.png \

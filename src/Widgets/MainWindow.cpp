@@ -62,18 +62,18 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
 
     this->playoutMenu = new QMenu(this);
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlStopSmall.png"), "Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlPlaySmall.png"), "Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlLoadSmall.png"), "Load", this, SLOT(executeLoad()), QKeySequence::fromString("F3"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlPauseSmall.png"), "Pause", this, SLOT(executePause()), QKeySequence::fromString("F4"));
+    this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
+    this->playoutMenu->addAction("Play", this, SLOT(executePlay()), QKeySequence::fromString("F2"));
+    this->playoutMenu->addAction("Load", this, SLOT(executeLoad()), QKeySequence::fromString("F3"));
+    this->playoutMenu->addAction("Pause", this, SLOT(executePause()), QKeySequence::fromString("F4"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlNextSmall.png"), "Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlUpdateSmall.png"), "Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlUpdateSmall.png"), "Update", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
+    this->playoutMenu->addAction("Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
+    this->playoutMenu->addAction("Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
+    this->playoutMenu->addAction("Update", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearSmall.png"), "Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearVideolayerSmall.png"), "Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
-    this->playoutMenu->addAction(QIcon(":/Graphics/Images/CtrlClearChannelSmall.png"), "Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
+    this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
+    this->playoutMenu->addAction("Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
+    this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
 
     this->helpMenu = new QMenu(this);
     this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
