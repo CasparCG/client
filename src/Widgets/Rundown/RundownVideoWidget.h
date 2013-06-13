@@ -30,7 +30,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
     public:
         explicit RundownVideoWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                     bool active = false, bool loaded = false, bool paused = false, bool playing = false,
-                                    bool inGroup = false, bool compactView = false);
+                                    bool inGroup = false, bool loop = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -61,6 +61,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         bool paused;
         bool playing;
         bool inGroup;
+        bool loop;
         bool compactView;
         QString color;
         LibraryModel model;
@@ -73,6 +74,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         OscSubscription* fpsSubscription;
         OscSubscription* pathSubscription;
         OscSubscription* pausedSubscription;
+        OscSubscription* loopSubscription;
 
         QTimer executeTimer;
 
@@ -92,6 +94,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void loopChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
@@ -100,4 +103,5 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void loopSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

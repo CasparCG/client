@@ -16,10 +16,11 @@
 #include <QtGui/QPixmap>
 
 RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
+                                       bool loaded, bool paused, bool playing, bool inGroup, bool loop, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
-      fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL)
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), loop(loop), compactView(compactView), color(color), model(model),
+      fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
+      loopSubscription(NULL)
 {
     setupUi(this);
 
@@ -31,6 +32,10 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     setCompactView(this->compactView);
 
     this->command.setVideoName(this->model.getName());
+
+    this->labelPlay->setVisible(false);
+    this->labelPause->setVisible(false);
+    this->labelLoop->setVisible(this->loop);
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -49,6 +54,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -138,7 +144,8 @@ bool RundownVideoWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownVideoWidget::clone()
 {
     RundownVideoWidget* widget = new RundownVideoWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
+                                                        this->loaded, this->paused, this->playing, this->inGroup, this->loop,
+                                                        this->compactView);
 
     VideoCommand* command = dynamic_cast<VideoCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -313,6 +320,9 @@ void RundownVideoWidget::executeStop()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+
+    this->labelPlay->setVisible(this->playing);
+    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executePlay()
@@ -358,6 +368,9 @@ void RundownVideoWidget::executePlay()
     this->paused = false;
     this->loaded = false;
     this->playing = true;
+
+    this->labelPlay->setVisible(this->playing);
+    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executePause()
@@ -390,6 +403,9 @@ void RundownVideoWidget::executePause()
     }
 
     this->paused = !this->paused;
+
+    this->labelPlay->setVisible(!this->paused);
+    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executeLoad()
@@ -444,6 +460,9 @@ void RundownVideoWidget::executeClearVideolayer()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+
+    this->labelPlay->setVisible(this->playing);
+    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executeClearChannel()
@@ -473,6 +492,9 @@ void RundownVideoWidget::executeClearChannel()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+
+    this->labelPlay->setVisible(this->playing);
+    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::checkGpiConnection()
@@ -514,6 +536,9 @@ void RundownVideoWidget::configureOscSubscriptions()
     if (this->pausedSubscription != NULL)
         this->pausedSubscription->disconnect(); // Disconnect all events.
 
+    if (this->loopSubscription != NULL)
+        this->loopSubscription->disconnect(); // Disconnect all events.
+
     QString timeFilter = Osc::DEFAULT_TIME_FILTER;
     timeFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->timeSubscription = new OscSubscription(timeFilter, this);
@@ -538,6 +563,11 @@ void RundownVideoWidget::configureOscSubscriptions()
     pausedFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->pausedSubscription = new OscSubscription(pausedFilter, this);
     QObject::connect(this->pausedSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString loopFilter = Osc::DEFAULT_LOOP_FILTER;
+    loopFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    this->loopSubscription = new OscSubscription(loopFilter, this);
+    QObject::connect(this->loopSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(loopSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
 void RundownVideoWidget::channelChanged(int channel)
@@ -558,6 +588,11 @@ void RundownVideoWidget::delayChanged(int delay)
 void RundownVideoWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
+}
+
+void RundownVideoWidget::loopChanged(bool loop)
+{
+    this->labelLoop->setVisible(loop);
 }
 
 void RundownVideoWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
@@ -623,4 +658,9 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
 void RundownVideoWidget::pausedSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     this->widgetOscTime->setPaused(arguments.at(0).toBool());
+}
+
+void RundownVideoWidget::loopSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    this->widgetOscTime->setLoop(arguments.at(0).toBool());
 }

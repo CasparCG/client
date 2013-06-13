@@ -9,7 +9,6 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
-#include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
@@ -34,10 +33,8 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* playoutMenu;
         QMenu* helpMenu;
         QMenuBar* menuBar;
-        QToolBar* toolBar;
 
         void setupMenu();
-        void setupToolbar();
 
         Q_SLOT void newRundown();
         Q_SLOT void openRundown();
@@ -61,30 +58,4 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void refreshLibrary();
         Q_SLOT void importPreset();
         Q_SLOT void exportPreset();
-        Q_SLOT void addBlendModeItem();
-        Q_SLOT void addCustomCommandItem();
-        Q_SLOT void addPrintItem();
-        Q_SLOT void addSeparatorItem();
-        Q_SLOT void addFileRecorderItem();
-        Q_SLOT void addImageScrollerItem();
-        Q_SLOT void addAudioItem();
-        Q_SLOT void addImageItem();
-        Q_SLOT void addTemplateItem();
-        Q_SLOT void addVideoItem();
-        Q_SLOT void addSolidColorItem();
-        Q_SLOT void addBrightnessItem();
-        Q_SLOT void addCommitItem();
-        Q_SLOT void addContrastItem();
-        Q_SLOT void addCropItem();
-        Q_SLOT void addDeckLinkInputItem();
-        Q_SLOT void addGeometryItem();
-        Q_SLOT void addGpiOutputItem();
-        Q_SLOT void addGridItem();
-        Q_SLOT void addClearOutputItem();
-        Q_SLOT void addKeyerItem();
-        Q_SLOT void addLevelsItem();
-        Q_SLOT void addOpacityItem();
-        Q_SLOT void addSaturationItem();
-        Q_SLOT void addVolumeItem();
-        Q_SLOT void toggleToolbar();
 };

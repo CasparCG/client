@@ -198,6 +198,13 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                     return groupItems();
                 else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
                     return ungroupItems();
+                else if (keyEvent->key() == Qt::Key_X && keyEvent->modifiers() == Qt::ControlModifier)
+                {
+                    copySelectedItems();
+                    removeSelectedItems();
+
+                    return true;
+                }
                 else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
                     return moveItemUp();
                 else if (keyEvent->key() == Qt::Key_Down && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))

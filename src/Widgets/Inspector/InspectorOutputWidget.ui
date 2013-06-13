@@ -38,7 +38,7 @@
      <item>
       <widget class="QLabel" name="labelDeviceName">
        <property name="text">
-        <string>Device</string>
+        <string>Server</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

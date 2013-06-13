@@ -309,4 +309,5 @@ namespace Osc
     static const QString DEFAULT_FPS_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
     static const QString DEFAULT_PATH_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
     static const QString DEFAULT_PAUSED_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
+    static const QString DEFAULT_LOOP_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
 }

@@ -134,29 +134,15 @@
         <file>Images/PresetSmallHover.png</file>
         <file>Images/CustomCommandSmall.png</file>
         <file>Images/CustomCommandSmallHover.png</file>
-        <file>Images/CtrlLoadSmall.png</file>
-        <file>Images/CtrlLoadSmallHover.png</file>
-        <file>Images/CtrlPauseSmall.png</file>
-        <file>Images/CtrlPauseSmallHover.png</file>
-        <file>Images/CtrlPlaySmall.png</file>
-        <file>Images/CtrlPlaySmallHover.png</file>
-        <file>Images/CtrlStopSmall.png</file>
-        <file>Images/CtrlStopSmallHover.png</file>
-        <file>Images/CtrlClearChannelSmall.png</file>
-        <file>Images/CtrlClearChannelSmallHover.png</file>
-        <file>Images/CtrlClearSmall.png</file>
-        <file>Images/CtrlClearSmallHover.png</file>
-        <file>Images/CtrlClearVideolayerSmall.png</file>
-        <file>Images/CtrlClearVideolayerSmallHover.png</file>
-        <file>Images/CtrlInvokeSmall.png</file>
-        <file>Images/CtrlInvokeSmallHover.png</file>
-        <file>Images/CtrlNextSmall.png</file>
-        <file>Images/CtrlNextSmallHover.png</file>
-        <file>Images/CtrlUpdateSmall.png</file>
-        <file>Images/CtrlUpdateSmallHover.png</file>
         <file>Images/Commit.png</file>
         <file>Images/ToolbarSplitterVertical.png</file>
         <file>Images/ToolbarSplitterHorizontal.png</file>
+        <file>Images/LoopIconOverlay.png</file>
+        <file>Images/LoopProgressbarOverlay.png</file>
+        <file>Images/PauseIconOverlay.png</file>
+        <file>Images/PauseProgressbarOverlay.png</file>
+        <file>Images/PlayIconOverlay.png</file>
+        <file>Images/PlayProgressbarOverlay.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>
