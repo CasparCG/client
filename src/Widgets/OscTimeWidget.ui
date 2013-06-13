@@ -110,7 +110,7 @@
     <rect>
      <x>2</x>
      <y>4</y>
-     <width>65</width>
+     <width>67</width>
      <height>16</height>
     </rect>
    </property>
@@ -124,9 +124,9 @@
   <widget class="QLabel" name="labelOscOutTime">
    <property name="geometry">
     <rect>
-     <x>153</x>
+     <x>151</x>
      <y>4</y>
-     <width>65</width>
+     <width>67</width>
      <height>16</height>
     </rect>
    </property>
