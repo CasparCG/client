@@ -110,6 +110,10 @@ Ctrl+C / Ctrl+V
 Function: Copy / Paste
 Description: Copy / Paste selected item in the rundown.
 
+Ctrl+X
+Function: Cut
+Description: Cut selected item in the rundown.
+
 Ctrl+Up / Ctrl+Down
 Function: Navigation.
 Description: Move item up / down in the rundown.
