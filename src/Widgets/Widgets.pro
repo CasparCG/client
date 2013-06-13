@@ -368,7 +368,13 @@ OTHER_FILES += \
     Images/ToolbarSplitterHorizontal.png \
     Images/ToolbarSplitterVertical.png \
     Stylesheets/Linux.css \
-    Stylesheets/Mac.css
+    Stylesheets/Mac.css \
+    Images/PlayProgressbarOverlay.png \
+    Images/PlayIconOverlay.png \
+    Images/PauseProgressbarOverlay.png \
+    Images/PauseIconOverlay.png \
+    Images/LoopProgressbarOverlay.png \
+    Images/LoopIconOverlay.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

@@ -137,6 +137,12 @@
         <file>Images/Commit.png</file>
         <file>Images/ToolbarSplitterVertical.png</file>
         <file>Images/ToolbarSplitterHorizontal.png</file>
+        <file>Images/LoopIconOverlay.png</file>
+        <file>Images/LoopProgressbarOverlay.png</file>
+        <file>Images/PauseIconOverlay.png</file>
+        <file>Images/PauseProgressbarOverlay.png</file>
+        <file>Images/PlayIconOverlay.png</file>
+        <file>Images/PlayProgressbarOverlay.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

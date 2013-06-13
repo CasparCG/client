@@ -12,12 +12,13 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
     public:
         explicit OscTimeWidget(QWidget* parent = 0);
 
+        void reset();
         void setTime(int currentFrame);
         void setInOutTime(int seek, int length);
         void setProgress(int currentFrame);
         void setFramesPerSecond(int fps);
         void setPaused(bool paused);
-        void reset();
+        void setLoop(bool loop);
 
     private:
         int fps;

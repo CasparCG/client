@@ -16,78 +16,131 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>1</number>
+  <widget class="QProgressBar" name="progressBarOscTime">
+   <property name="geometry">
+    <rect>
+     <x>2</x>
+     <y>20</y>
+     <width>216</width>
+     <height>6</height>
+    </rect>
    </property>
-   <property name="leftMargin">
-    <number>2</number>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>6</height>
+    </size>
    </property>
-   <property name="topMargin">
-    <number>3</number>
+   <property name="maximum">
+    <number>999999999</number>
    </property>
-   <property name="rightMargin">
-    <number>2</number>
+   <property name="textVisible">
+    <bool>false</bool>
    </property>
-   <property name="bottomMargin">
-    <number>5</number>
+   <property name="format">
+    <string>%p%</string>
    </property>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="labelOscInTime">
-       <property name="text">
-        <string>00:00:00:00</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelOscTime">
-       <property name="text">
-        <string>00:00:00:00</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelOscOutTime">
-       <property name="text">
-        <string>00:00:00:00</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QProgressBar" name="progressBarOscTime">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>6</height>
-      </size>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-     <property name="textVisible">
-      <bool>false</bool>
-     </property>
-     <property name="format">
-      <string>%p%</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  </widget>
+  <widget class="QLabel" name="labelLoop">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>15</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Widgets.qrc">:/Graphics/Images/LoopProgressbarOverlay.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelPlay">
+   <property name="geometry">
+    <rect>
+     <x>102</x>
+     <y>15</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Widgets.qrc">:/Graphics/Images/PlayProgressbarOverlay.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelPause">
+   <property name="geometry">
+    <rect>
+     <x>102</x>
+     <y>14</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Widgets.qrc">:/Graphics/Images/PauseProgressbarOverlay.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelOscTime">
+   <property name="geometry">
+    <rect>
+     <x>76</x>
+     <y>3</y>
+     <width>68</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>00:00:00:00</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelOscInTime">
+   <property name="geometry">
+    <rect>
+     <x>2</x>
+     <y>4</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>00:00:00:00</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelOscOutTime">
+   <property name="geometry">
+    <rect>
+     <x>158</x>
+     <y>4</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>00:00:00:00</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Widgets.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>durationChanged(int)</slot>

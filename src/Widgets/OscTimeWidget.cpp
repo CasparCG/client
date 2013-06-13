@@ -13,6 +13,20 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     setupUi(this);
 
     this->setVisible(false);
+    this->labelLoop->setVisible(false);
+    this->labelPlay->setVisible(false);
+    this->labelPause->setVisible(false);
+}
+
+void OscTimeWidget::reset()
+{
+    this->timestamp = 0;
+    this->progressBarOscTime->reset();
+    this->labelOscTime->setText(Osc::DEFAULT_TIME);
+    this->labelOscInTime->setText(Osc::DEFAULT_TIME);
+    this->labelOscOutTime->setText(Osc::DEFAULT_TIME);
+
+    this->setVisible(false);
 }
 
 void OscTimeWidget::setTime(int currentFrame)
@@ -66,17 +80,22 @@ void OscTimeWidget::setFramesPerSecond(int fps)
 void OscTimeWidget::setPaused(bool paused)
 {
     this->paused = paused;
+
+    if (this->paused)
+    {
+        this->labelPlay->setVisible(false);
+        this->labelPause->setVisible(true);
+    }
+    else
+    {
+        this->labelPlay->setVisible(true);
+        this->labelPause->setVisible(false);
+    }
 }
 
-void OscTimeWidget::reset()
+void OscTimeWidget::setLoop(bool loop)
 {
-    this->timestamp = 0;
-    this->progressBarOscTime->reset();
-    this->labelOscTime->setText(Osc::DEFAULT_TIME);
-    this->labelOscInTime->setText(Osc::DEFAULT_TIME);
-    this->labelOscOutTime->setText(Osc::DEFAULT_TIME);
-
-    this->setVisible(false);
+    this->labelLoop->setVisible(loop);
 }
 
 QString OscTimeWidget::convertToTimecode(double time)
