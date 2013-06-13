@@ -141,11 +141,11 @@
        <string>Delay:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelLoop">
+     <widget class="QLabel" name="labelLoopOverlay">
       <property name="geometry">
        <rect>
         <x>22</x>
-        <y>2</y>
+        <y>1</y>
         <width>32</width>
         <height>32</height>
        </rect>
@@ -155,44 +155,6 @@
       </property>
       <property name="pixmap">
        <pixmap resource="../Widgets.qrc">:/Graphics/Images/LoopIconOverlay.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelPlay">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>2</y>
-        <width>32</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/PlayIconOverlay.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelPause">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>2</y>
-        <width>32</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/PauseIconOverlay.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>

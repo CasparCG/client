@@ -16,9 +16,9 @@
 #include <QtGui/QPixmap>
 
 RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool loop, bool compactView)
+                                       bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), loop(loop), compactView(compactView), color(color), model(model),
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
       loopSubscription(NULL)
 {
@@ -33,9 +33,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
 
     this->command.setVideoName(this->model.getName());
 
-    this->labelPlay->setVisible(false);
-    this->labelPause->setVisible(false);
-    this->labelLoop->setVisible(this->loop);
+    this->labelLoopOverlay->setVisible(false);
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -144,8 +142,7 @@ bool RundownVideoWidget::eventFilter(QObject* target, QEvent* event)
 AbstractRundownWidget* RundownVideoWidget::clone()
 {
     RundownVideoWidget* widget = new RundownVideoWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->loaded, this->paused, this->playing, this->inGroup, this->loop,
-                                                        this->compactView);
+                                                        this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
 
     VideoCommand* command = dynamic_cast<VideoCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
@@ -320,9 +317,6 @@ void RundownVideoWidget::executeStop()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
-
-    this->labelPlay->setVisible(this->playing);
-    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executePlay()
@@ -368,9 +362,6 @@ void RundownVideoWidget::executePlay()
     this->paused = false;
     this->loaded = false;
     this->playing = true;
-
-    this->labelPlay->setVisible(this->playing);
-    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executePause()
@@ -403,9 +394,6 @@ void RundownVideoWidget::executePause()
     }
 
     this->paused = !this->paused;
-
-    this->labelPlay->setVisible(!this->paused);
-    this->labelPause->setVisible(this->paused);
 }
 
 void RundownVideoWidget::executeLoad()
@@ -461,8 +449,7 @@ void RundownVideoWidget::executeClearVideolayer()
     this->loaded = false;
     this->playing = false;
 
-    this->labelPlay->setVisible(this->playing);
-    this->labelPause->setVisible(this->paused);
+    this->widgetOscTime->reset();
 }
 
 void RundownVideoWidget::executeClearChannel()
@@ -493,8 +480,7 @@ void RundownVideoWidget::executeClearChannel()
     this->loaded = false;
     this->playing = false;
 
-    this->labelPlay->setVisible(this->playing);
-    this->labelPause->setVisible(this->paused);
+    this->widgetOscTime->reset();
 }
 
 void RundownVideoWidget::checkGpiConnection()
@@ -592,7 +578,7 @@ void RundownVideoWidget::allowGpiChanged(bool allowGpi)
 
 void RundownVideoWidget::loopChanged(bool loop)
 {
-    this->labelLoop->setVisible(loop);
+    this->labelLoopOverlay->setVisible(loop);
 }
 
 void RundownVideoWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)

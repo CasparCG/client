@@ -30,7 +30,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
     public:
         explicit RundownVideoWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                     bool active = false, bool loaded = false, bool paused = false, bool playing = false,
-                                    bool inGroup = false, bool loop = false, bool compactView = false);
+                                    bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -61,7 +61,6 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         bool paused;
         bool playing;
         bool inGroup;
-        bool loop;
         bool compactView;
         QString color;
         LibraryModel model;
