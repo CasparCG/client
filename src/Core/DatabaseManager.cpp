@@ -192,7 +192,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Type (Value) VALUES('AUDIO')");
     sql.exec("INSERT INTO Type (Value) VALUES('DATA')");
     sql.exec("INSERT INTO Type (Value) VALUES('MOVIE')");
-    sql.exec("INSERT INTO Type (Value) VALUES('SCRIPT')");
     sql.exec("INSERT INTO Type (Value) VALUES('STILL')");
     sql.exec("INSERT INTO Type (Value) VALUES('TEMPLATE')");
 }
@@ -818,7 +817,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
     QMutexLocker locker(&mutex);
 
     QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE d.Id = %1 AND t.Id = l.TypeId "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND d.Id = %1 "
                             "ORDER BY l.Name, l.DeviceId").arg(deviceId);
 
     QSqlQuery sql;

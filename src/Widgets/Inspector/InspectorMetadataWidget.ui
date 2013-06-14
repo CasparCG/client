@@ -83,8 +83,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditTarget">
-       <property name="readOnly">
+      <widget class="QComboBox" name="comboBoxTarget">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editable">
         <bool>true</bool>
        </property>
       </widget>
@@ -121,6 +130,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEditLabel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -165,18 +177,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditTarget</sender>
-   <signal>textChanged(QString)</signal>
+   <sender>comboBoxTarget</sender>
+   <signal>editTextChanged(QString)</signal>
    <receiver>InspectorMetadataWidget</receiver>
    <slot>targetChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>175</x>
-     <y>56</y>
+     <x>110</x>
+     <y>52</y>
     </hint>
     <hint type="destinationlabel">
-     <x>243</x>
-     <y>44</y>
+     <x>-1</x>
+     <y>46</y>
     </hint>
    </hints>
   </connection>

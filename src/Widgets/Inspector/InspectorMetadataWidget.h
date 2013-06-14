@@ -25,7 +25,9 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
     private:
         LibraryModel* model;
 
+        void checkEmptyDevice();
         void blockAllSignals(bool block);
+        void fillTargetCombo(const QString& type);
 
         Q_SLOT void labelChanged(QString);
         Q_SLOT void targetChanged(QString);

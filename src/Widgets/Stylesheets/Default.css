@@ -637,9 +637,11 @@ QComboBox:disabled
 {
     background-color: transparent;
 }
-QComboBox:hover
+QComboBox:hover, QComboBox::drop-down:hover
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 QComboBox::drop-down
 {
@@ -648,9 +650,9 @@ QComboBox::drop-down
     border-left-style: solid;
     border-top-width: 0px;
 }
-QComboBox::drop-down:editable
+QComboBox:editable:on
 {
-    background-color: rgba(60, 60, 60, 255);
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
 }
 QComboBox:!editable:on, QComboBox::drop-down:editable:on
 {
