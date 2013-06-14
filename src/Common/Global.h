@@ -83,7 +83,26 @@ namespace Playout
 
 namespace Define
 {
-    static const int GROUP_XPOS_OFFSET = -65;
+    static const int DEFAULT_PROGRESSBAR_X = 2;
+    static const int DEFAULT_PROGRESSBAR_Y = 20;
+    static const int COMPACT_PROGRESSBAR_X = 2;
+    static const int COMPACT_PROGRESSBAR_Y = 5;
+
+    static const int DEFAULT_LOOP_X = 180;
+    static const int DEFAULT_LOOP_Y = 15;
+    static const int COMPACT_LOOP_X = 180;
+    static const int COMPACT_LOOP_Y = 0;
+
+    static const int DEFAULT_PLAY_X = 102;
+    static const int DEFAULT_PLAY_Y = 15;
+    static const int COMPACT_PLAY_X = 102;
+    static const int COMPACT_PLAY_Y = 0;
+
+    static const int DEFAULT_PAUSE_X = 102;
+    static const int DEFAULT_PAUSE_Y = 14;
+    static const int COMPACT_PAUSE_X = 102;
+    static const int COMPACT_PAUSE_Y = 0;
+
     static const int DEFAULT_ICON_WIDTH = 32;
     static const int DEFAULT_ICON_HEIGHT = 32;
     static const int COMPACT_ICON_WIDTH = 16;

@@ -169,6 +169,7 @@ void RundownVideoWidget::setCompactView(bool compactView)
     if (compactView)
     {
         this->labelIcon->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
+        this->labelLoopOverlay->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Define::COMPACT_ICON_WIDTH, Define::COMPACT_ICON_HEIGHT);
         this->labelThumbnail->setFixedSize(Define::COMPACT_THUMBNAIL_WIDTH, Define::COMPACT_THUMBNAIL_HEIGHT);
@@ -176,10 +177,13 @@ void RundownVideoWidget::setCompactView(bool compactView)
     else
     {
         this->labelIcon->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
+        this->labelLoopOverlay->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Define::DEFAULT_ICON_WIDTH, Define::DEFAULT_ICON_HEIGHT);
         this->labelThumbnail->setFixedSize(Define::DEFAULT_THUMBNAIL_WIDTH, Define::DEFAULT_THUMBNAIL_HEIGHT);
     }
+
+    this->widgetOscTime->setCompactView(compactView);
 
     this->compactView = compactView;
 }
@@ -639,6 +643,8 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
         this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
 
     this->widgetOscTime->setFramesPerSecond(this->fileModel->getFramesPerSecond());
+
+    this->playing = true;
 }
 
 void RundownVideoWidget::pausedSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

@@ -20,6 +20,8 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         void setPaused(bool paused);
         void setLoop(bool loop);
 
+        void setCompactView(bool compactView);
+
     private:
         int fps;
         bool paused;

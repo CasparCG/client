@@ -128,3 +128,29 @@ void OscTimeWidget::checkState()
 
     QTimer::singleShot(100, this, SLOT(checkState()));
 }
+
+void OscTimeWidget::setCompactView(bool compactView)
+{
+    if (compactView)
+    {
+        this->labelOscTime->setVisible(!compactView);
+        this->labelOscInTime->setVisible(!compactView);
+        this->labelOscOutTime->setVisible(!compactView);
+
+        this->labelLoop->move(Define::COMPACT_LOOP_X, Define::COMPACT_LOOP_Y);
+        this->labelPlay->move(Define::COMPACT_PLAY_X, Define::COMPACT_PLAY_Y);
+        this->labelPause->move(Define::COMPACT_PAUSE_X, Define::COMPACT_PAUSE_Y);
+        this->progressBarOscTime->move(Define::COMPACT_PROGRESSBAR_X, Define::COMPACT_PROGRESSBAR_Y);
+    }
+    else
+    {
+        this->labelOscTime->setVisible(!compactView);
+        this->labelOscInTime->setVisible(!compactView);
+        this->labelOscOutTime->setVisible(!compactView);
+
+        this->labelLoop->move(Define::DEFAULT_LOOP_X, Define::DEFAULT_LOOP_Y);
+        this->labelPlay->move(Define::DEFAULT_PLAY_X, Define::DEFAULT_PLAY_Y);
+        this->labelPause->move(Define::DEFAULT_PAUSE_X, Define::DEFAULT_PAUSE_Y);
+        this->progressBarOscTime->move(Define::DEFAULT_PROGRESSBAR_X, Define::DEFAULT_PROGRESSBAR_Y);
+    }
+}
