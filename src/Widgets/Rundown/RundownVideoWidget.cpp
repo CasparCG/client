@@ -563,11 +563,15 @@ void RundownVideoWidget::configureOscSubscriptions()
 void RundownVideoWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
+
+    configureOscSubscriptions();
 }
 
 void RundownVideoWidget::videolayerChanged(int videolayer)
 {
     this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
+
+    configureOscSubscriptions();
 }
 
 void RundownVideoWidget::delayChanged(int delay)
