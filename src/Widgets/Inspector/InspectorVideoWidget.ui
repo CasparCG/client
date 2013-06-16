@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
-    <height>280</height>
+    <width>235</width>
+    <height>308</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -223,6 +223,26 @@
         <number>999999999</number>
        </property>
       </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutLength">
+     <item>
+      <spacer name="horizontalSpacerSeekLength_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>46</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="labelLength">
@@ -491,7 +511,7 @@
    <slot>durationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
+     <x>139</x>
      <y>57</y>
     </hint>
     <hint type="destinationlabel">
@@ -507,8 +527,8 @@
    <slot>loopChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>165</y>
+     <x>113</x>
+     <y>206</y>
     </hint>
     <hint type="destinationlabel">
      <x>220</x>
@@ -523,7 +543,7 @@
    <slot>transitionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
+     <x>165</x>
      <y>29</y>
     </hint>
     <hint type="destinationlabel">
@@ -565,29 +585,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxLength</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>InspectorVideoWidget</receiver>
-   <slot>lengthChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>192</x>
-     <y>168</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBoxTween</sender>
    <signal>currentIndexChanged(QString)</signal>
    <receiver>InspectorVideoWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
+     <x>169</x>
      <y>85</y>
     </hint>
     <hint type="destinationlabel">
@@ -677,30 +681,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelLength</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorVideoWidget</receiver>
-   <slot>resetLength(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>194</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>228</x>
-     <y>148</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>labelLoop</sender>
    <signal>linkActivated(QString)</signal>
    <receiver>InspectorVideoWidget</receiver>
    <slot>resetLoop(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>169</y>
+     <x>94</x>
+     <y>210</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -715,8 +703,8 @@
    <slot>resetUseAuto(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>239</y>
+     <x>95</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
@@ -731,8 +719,8 @@
    <slot>useAutoChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>238</y>
+     <x>114</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
@@ -747,8 +735,8 @@
    <slot>resetFreezeOnLoad(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>187</y>
+     <x>66</x>
+     <y>266</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -763,8 +751,8 @@
    <slot>freezeOnLoadChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>187</y>
+     <x>111</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>264</x>
@@ -779,8 +767,8 @@
    <slot>resetTriggerOnNext(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>221</y>
+     <x>70</x>
+     <y>294</y>
     </hint>
     <hint type="destinationlabel">
      <x>17</x>
@@ -795,12 +783,28 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>216</y>
+     <x>110</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
      <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxLength</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorVideoWidget</receiver>
+   <slot>lengthChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>162</y>
     </hint>
    </hints>
   </connection>

@@ -11,6 +11,7 @@
 #include "Commands/BrightnessCommand.h"
 #include "Commands/CommitCommand.h"
 #include "Commands/ContrastCommand.h"
+#include "Commands/CustomCommand.h"
 #include "Commands/SolidColorCommand.h"
 #include "Commands/CropCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
@@ -103,7 +104,8 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
             dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-            dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()))
+            dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()) ||
+            dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
         }
@@ -156,6 +158,8 @@ void InspectorMetadataWidget::blockAllSignals(bool block)
 
 void InspectorMetadataWidget::fillTargetCombo(const QString& type)
 {
+    this->comboBoxTarget->clear();
+
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
     if (device == NULL)
         return;
@@ -167,7 +171,6 @@ void InspectorMetadataWidget::fillTargetCombo(const QString& type)
     if (models.count() == 0)
         return;
 
-    this->comboBoxTarget->clear();
     foreach (LibraryModel model, models)
     {
         if (type == "DATA" && model.getType() == "DATA")
