@@ -23,24 +23,24 @@
    <item>
     <widget class="QToolBox" name="toolBoxLibrary">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="tabSpacing">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="pagePreset">
+     <widget class="QWidget" name="pageTools">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>436</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Presets</string>
+       <string>Tools</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -48,23 +48,23 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetPreset">
-         <property name="contextMenuPolicy">
-          <enum>Qt::CustomContextMenu</enum>
+        <widget class="QTreeWidget" name="treeWidgetTools">
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
-         <property name="rootIsDecorated">
-          <bool>false</bool>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>
          <property name="uniformRowHeights">
           <bool>true</bool>
          </property>
-         <attribute name="headerVisible">
+         <property name="animated">
+          <bool>true</bool>
+         </property>
+         <property name="expandsOnDoubleClick">
           <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
+         </property>
+         <attribute name="headerVisible">
           <bool>false</bool>
          </attribute>
          <column>
@@ -79,9 +79,93 @@
          </column>
          <column>
           <property name="text">
-           <string>Value</string>
+           <string>Label</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>DeviceName</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ThumbnailId</string>
+          </property>
+         </column>
+         <item>
+          <property name="text">
+           <string>Library</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>55</red>
+             <green>55</green>
+             <blue>55</blue>
+            </color>
+           </brush>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mixer</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>55</red>
+             <green>55</green>
+             <blue>55</blue>
+            </color>
+           </brush>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Other</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>55</red>
+             <green>55</green>
+             <blue>55</blue>
+            </color>
+           </brush>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -91,8 +175,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>436</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -117,12 +201,6 @@
           <bool>true</bool>
          </property>
          <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
          <column>
@@ -164,8 +242,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>436</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -190,12 +268,6 @@
           <bool>true</bool>
          </property>
          <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
          <column>
@@ -237,8 +309,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>436</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -269,12 +341,6 @@
           <bool>true</bool>
          </property>
          <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
          <column>
@@ -316,8 +382,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>436</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -342,12 +408,6 @@
           <bool>true</bool>
          </property>
          <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
          <column>
@@ -389,8 +449,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>436</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -412,12 +472,6 @@
           <bool>true</bool>
          </property>
          <attribute name="headerVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="headerDefaultSectionSize">
-          <number>100</number>
-         </attribute>
-         <attribute name="headerShowSortIndicator" stdset="0">
           <bool>false</bool>
          </attribute>
          <column>
@@ -448,6 +502,58 @@
          <column>
           <property name="text">
            <string>ThumbnailId</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pagePreset">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>289</width>
+        <height>415</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Presets</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTreeWidget" name="treeWidgetPreset">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+         <property name="uniformRowHeights">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Value</string>
           </property>
          </column>
         </widget>
@@ -578,8 +684,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>154</y>
+     <x>96</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>228</x>
@@ -595,7 +701,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>97</x>
-     <y>70</y>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>254</x>
@@ -626,8 +732,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>175</y>
+     <x>96</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -658,8 +764,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>201</x>
-     <y>139</y>
+     <x>97</x>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -690,8 +796,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>249</x>
-     <y>352</y>
+     <x>97</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -706,8 +812,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>234</x>
-     <y>379</y>
+     <x>97</x>
+     <y>70</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -731,6 +837,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidgetTools</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>226</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>33</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetTools</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetTools</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>-5</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>filterLibrary()</slot>
@@ -739,5 +893,6 @@
   <slot>itemClicked(QTreeWidgetItem*,int)</slot>
   <slot>itemEntered(QTreeWidgetItem*,int)</slot>
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

@@ -29,8 +29,10 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         QMenu* contextMenuPreset;
         QSharedPointer<LibraryModel> model;
 
+        void setupTools();
         void setupUiMenu();
 
+        Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
         Q_SLOT bool removeSelectedPresets();
         Q_SLOT void filterLibrary();
         Q_SLOT void contextMenuTriggered(QAction*);

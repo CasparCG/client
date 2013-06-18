@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/TargetChangedEvent.h"
 #include "Events/LabelChangedEvent.h"
@@ -74,6 +75,8 @@ bool RundownImageWidget::eventFilter(QObject* target, QEvent* event)
         TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
         this->model.setName(targetChangedEvent->getTarget());
         this->command.setImageName(targetChangedEvent->getTarget());
+
+        setThumbnail();
 
         return true;
     }

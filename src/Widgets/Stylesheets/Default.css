@@ -332,6 +332,14 @@ QGroupBox::title
 }
 
 /*
+ * QAbstractItemView
+ */
+QAbstractItemView
+{
+    outline: 0;
+}
+
+/*
  * QTreeView
  */
 QTreeView

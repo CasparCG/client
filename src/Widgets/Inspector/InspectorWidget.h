@@ -18,10 +18,9 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
-        Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
-
     private:
         bool masterVolumeMuted;
 
         Q_SLOT void masterVolumeClicked();
+        Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
 };

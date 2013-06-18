@@ -66,10 +66,26 @@
 {
     color: rgba(255, 255, 255, 255);
 }
-#treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
+#treeWidgetTools, #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
 {
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
+}
+#treeWidgetTools
+{
+    background-color: rgba(60, 60, 60, 255);
+    border-width: 0px;
+    color: rgba(190, 190, 190, 255);
+}
+#treeWidgetTools::branch:closed:has-children:has-siblings, #treeWidgetTools::branch:has-children:!has-siblings:closed
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowRight.png);
+}
+#treeWidgetTools::branch:open:has-children:has-siblings, #treeWidgetTools::branch:open:has-children:!has-siblings
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowDown.png);
 }
 
 /*

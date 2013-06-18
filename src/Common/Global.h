@@ -87,22 +87,18 @@ namespace Define
     static const int DEFAULT_PROGRESSBAR_Y = 20;
     static const int COMPACT_PROGRESSBAR_X = 2;
     static const int COMPACT_PROGRESSBAR_Y = 5;
-
     static const int DEFAULT_LOOP_X = 180;
     static const int DEFAULT_LOOP_Y = 15;
     static const int COMPACT_LOOP_X = 180;
     static const int COMPACT_LOOP_Y = 0;
-
     static const int DEFAULT_PLAY_X = 102;
     static const int DEFAULT_PLAY_Y = 15;
     static const int COMPACT_PLAY_X = 102;
     static const int COMPACT_PLAY_Y = 0;
-
     static const int DEFAULT_PAUSE_X = 102;
     static const int DEFAULT_PAUSE_Y = 14;
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
-
     static const int DEFAULT_ICON_WIDTH = 32;
     static const int DEFAULT_ICON_HEIGHT = 32;
     static const int COMPACT_ICON_WIDTH = 16;
@@ -264,12 +260,13 @@ namespace SolidColor
 
 namespace Library
 {
-    static const int PRESET_PAGE_INDEX = 0;
+    static const int TOOLS_PAGE_INDEX = 0;
     static const int AUDIO_PAGE_INDEX = 1;
     static const int STILL_PAGE_INDEX = 2;
     static const int TEMPLATE_PAGE_INDEX = 3;
     static const int MOVIE_PAGE_INDEX = 4;
     static const int DATA_PAGE_INDEX = 5;
+    static const int PRESET_PAGE_INDEX = 6;
 }
 
 namespace Print

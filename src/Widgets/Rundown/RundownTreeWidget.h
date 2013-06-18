@@ -43,7 +43,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QString page;
         QString activeRundown;
 
-        QMenu* contextMenuNew;
+        QMenu* contextMenuTools;
         QMenu* contextMenuColor;
         QMenu* contextMenuMixer;
         QMenu* contextMenuLibrary;
