@@ -26,7 +26,6 @@
 #include "RundownImageWidget.h"
 #include "RundownItemFactory.h"
 #include "PresetDialog.h"
-#include "StyledItemDelegate.h"
 
 #include "GpiManager.h"
 #include "DatabaseManager.h"
