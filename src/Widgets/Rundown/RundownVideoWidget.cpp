@@ -638,7 +638,7 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
 
     this->fileModel->setPath(arguments.at(0).toString());
 
-    this->widgetOscTime->setTime(this->fileModel->getFrame());
+    this->widgetOscTime->setTime(this->fileModel->getFrame(), this->fileModel->getTotalFrames());
     this->widgetOscTime->setProgress(this->fileModel->getFrame());
 
     if (this->command.getSeek() == 0 && this->command.getLength() == 0)
