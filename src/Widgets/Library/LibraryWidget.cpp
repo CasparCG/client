@@ -79,6 +79,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
     QObject::connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    QObject::connect(this->treeWidgetData, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuDataRequested(const QPoint &)));
 
     qApp->installEventFilter(this);
 
@@ -323,8 +324,12 @@ void LibraryWidget::setupUiMenu()
     this->contextMenu = new QMenu(this);
     this->contextMenu->addAction("Add item");
 
+    this->contextMenuData = new QMenu(this);
+    this->contextMenuData->addAction("Add template data");
+    this->contextMenuData->addAction("Add template data as stored data");
+
     this->contextMenuImage = new QMenu(this);
-    this->contextMenuImage->addAction("Add as image");
+    this->contextMenuImage->addAction("Add image");
     this->contextMenuImage->addAction("Add as image scroller");
 
     this->contextMenuPreset = new QMenu(this);
@@ -335,6 +340,7 @@ void LibraryWidget::setupUiMenu()
     QObject::connect(this->contextMenu, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuTriggered(QAction*)));
     QObject::connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
     QObject::connect(this->contextMenuPreset, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuPresetTriggered(QAction*)));
+    QObject::connect(this->contextMenuData, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuDataTriggered(QAction*)));
 }
 
 bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
@@ -348,7 +354,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 return removeSelectedPresets();
         }
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::MediaChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged))
     {
         MediaChangedEvent* mediaChangedEvent = dynamic_cast<MediaChangedEvent*>(event);
 
@@ -410,7 +416,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->toolBoxLibrary->setItemText(Library::STILL_PAGE_INDEX, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
         this->toolBoxLibrary->setItemText(Library::MOVIE_PAGE_INDEX, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::TemplateChanged))
+    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
     {
         TemplateChangedEvent* templateChangedEvent = dynamic_cast<TemplateChangedEvent*>(event);
 
@@ -441,7 +447,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::TEMPLATE_PAGE_INDEX, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::DataChanged))
+    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::DataChanged))
     {
         DataChangedEvent* dataChangedEvent = dynamic_cast<DataChangedEvent*>(event);
 
@@ -472,7 +478,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::DATA_PAGE_INDEX, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::PresetChanged))
+    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::PresetChanged))
     {
         PresetChangedEvent* presetChangedEvent = dynamic_cast<PresetChangedEvent*>(event);
 
@@ -500,7 +506,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::PRESET_PAGE_INDEX, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ImportPreset))
+    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::ImportPreset))
     {
         QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
         if (!path.isEmpty())
@@ -521,7 +527,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
     }
-    else if(event->type() == static_cast<QEvent::Type>(Enum::EventType::ExportPreset))
+    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::ExportPreset))
     {
         if (this->treeWidgetPreset->selectedItems().count() == 0)
             return true;
@@ -554,8 +560,14 @@ void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
     {
-        if (this->treeWidgetTools->currentItem()->parent() == NULL) // Top level item.
+        if (this->treeWidgetTools->selectedItems().count() == 0)
             return;
+
+        foreach (QTreeWidgetItem* item, this->treeWidgetTools->selectedItems())
+        {
+            if (item->parent() == NULL) // Top level item.
+                return;
+        }
 
         this->contextMenu->exec(this->treeWidgetTools->mapToGlobal(point));
     }
@@ -605,6 +617,14 @@ void LibraryWidget::customContextMenuPresetRequested(const QPoint& point)
     this->contextMenuPreset->exec(this->treeWidgetPreset->mapToGlobal(point));
 }
 
+void LibraryWidget::customContextMenuDataRequested(const QPoint& point)
+{
+    if (this->treeWidgetData->selectedItems().count() == 0)
+        return;
+
+    this->contextMenuData->exec(this->treeWidgetData->mapToGlobal(point));
+}
+
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
@@ -635,7 +655,7 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
 
 void LibraryWidget::contextMenuImageTriggered(QAction* action)
 {
-    if (action->text() == "Add as image")
+    if (action->text() == "Add image")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
@@ -646,6 +666,20 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
                                                                              item->text(3), "IMAGESCROLLER", item->text(5).toInt()));
+    }
+}
+
+void LibraryWidget::contextMenuDataTriggered(QAction* action)
+{
+    if (action->text() == "Add template data")
+    {
+        foreach (QTreeWidgetItem* item, this->treeWidgetData->selectedItems())
+            EventManager::getInstance().fireAddTemplateDataEvent(item->text(0), false);
+    }
+    else if (action->text() == "Add template data as stored data")
+    {
+        foreach (QTreeWidgetItem* item, this->treeWidgetData->selectedItems())
+            EventManager::getInstance().fireAddTemplateDataEvent(item->text(0), true);
     }
 }
 
@@ -713,6 +747,9 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
                                                                 current->text(3), current->text(4), current->text(5).toInt()));
 
+    if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
+        return;
+
     EventManager::getInstance().fireLibraryItemSelectedEvent(NULL, this->model.data());
 }
 
@@ -722,4 +759,6 @@ void LibraryWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
         return;
 
     item->setExpanded(!item->isExpanded());
+
+    this->treeWidgetTools->clearSelection();
 }

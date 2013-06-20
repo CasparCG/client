@@ -3,6 +3,7 @@
 
 #include "Global.h"
 
+#include "Events/AddTemplateDataEvent.h"
 #include "Events/RundownItemSelectedEvent.h"
 
 #include <QtCore/QDebug>
@@ -23,7 +24,7 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
 
 bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
@@ -56,6 +57,21 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddTemplateData))
+    {
+        AddTemplateDataEvent* addTemplateDataEvent = dynamic_cast<AddTemplateDataEvent*>(event);
+
+        QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+        treeItem->setText(0, QString("f%1").arg(this->rowIndex));
+        treeItem->setText(1, addTemplateDataEvent->getValue());
+
+        this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
+        this->treeWidgetTemplateData->setCurrentItem(treeItem);
+
+        this->checkBoxUseStoredData->setChecked(addTemplateDataEvent->getStoredData());
+
+        this->rowIndex++;
+    }
 
     return QObject::eventFilter(target, event);
 }
@@ -84,7 +100,6 @@ void InspectorTemplateWidget::addRow()
     dialog->setName(QString("f%1").arg(this->rowIndex));
     if (dialog->exec() == QDialog::Accepted)
     {
-        this->treeWidgetTemplateData->clearSelection();
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
         treeItem->setText(0, dialog->getName());
         treeItem->setText(1, dialog->getValue());

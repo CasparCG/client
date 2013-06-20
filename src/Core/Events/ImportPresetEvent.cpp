@@ -3,6 +3,6 @@
 #include "Global.h"
 
 ImportPresetEvent::ImportPresetEvent()
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::ImportPreset))
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::ImportPreset))
 {
 }

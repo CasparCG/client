@@ -27,6 +27,7 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         QMenu* contextMenu;
         QMenu* contextMenuImage;
         QMenu* contextMenuPreset;
+        QMenu* contextMenuData;
         QSharedPointer<LibraryModel> model;
 
         void setupTools();
@@ -38,9 +39,11 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         Q_SLOT void contextMenuTriggered(QAction*);
         Q_SLOT void contextMenuImageTriggered(QAction*);
         Q_SLOT void contextMenuPresetTriggered(QAction*);
+        Q_SLOT void contextMenuDataTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint& point);
         Q_SLOT void customContextMenuImageRequested(const QPoint& point);
         Q_SLOT void customContextMenuPresetRequested(const QPoint& point);
+        Q_SLOT void customContextMenuDataRequested(const QPoint& point);
         Q_SLOT void currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
 };

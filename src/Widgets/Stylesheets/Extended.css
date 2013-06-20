@@ -190,35 +190,11 @@
     background-color: rgba(64, 64, 64, 255);
     border-top-left-radius: 0px;
 }
-#treeWidgetRundown::item:hover
-{
-    background-color: transparent;
-}
 #treeWidgetRundown::item:hover:selected
 {
     background-color: rgba(80, 80, 80, 255);
 }
 #treeWidgetRundown::branch
-{
-    background-color: transparent;
-}
-#treeWidgetRundown::branch:!has-children:!has-siblings:adjoins-item
-{
-    background-color: transparent;
-}
-#treeWidgetRundown::branch:closed:has-children:has-siblings, QTreeWidget::branch:has-children:!has-siblings:closed
-{
-    background-color: transparent;
-}
-#treeWidgetRundown::branch:closed:has-children:has-siblings:hover, QTreeWidget::branch:has-children:!has-siblings:closed:hover
-{
-    background-color: transparent;
-}
-#treeWidgetRundown::branch:open:has-children:has-siblings, QTreeWidget::branch:open:has-children:!has-siblings
-{
-    background-color: transparent;
-}
-#treeWidgetRundown::branch:open:has-children:has-siblings:hover, QTreeWidget::branch:open:has-children:!has-siblings:hover
 {
     background-color: transparent;
 }

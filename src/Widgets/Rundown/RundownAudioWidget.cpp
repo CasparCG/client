@@ -29,6 +29,8 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
 
     this->command.setAudioName(this->model.getName());
 
+    this->labelLoopOverlay->setVisible(false);
+
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_AUDIO_COLOR));
@@ -46,6 +48,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -63,7 +66,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
 
 bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::TargetChanged))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::TargetChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -75,7 +78,7 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -88,7 +91,7 @@ bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -192,7 +195,7 @@ void RundownAudioWidget::setActive(bool active)
     this->animation->stop();
 
     if (this->active)
-        this->labelActiveColor->setStyleSheet("background-color: lime;");
+        this->labelActiveColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_ACTIVE_COLOR));
     else
         this->labelActiveColor->setStyleSheet("");
 }
@@ -467,6 +470,11 @@ void RundownAudioWidget::delayChanged(int delay)
 void RundownAudioWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
+}
+
+void RundownAudioWidget::loopChanged(bool loop)
+{
+    this->labelLoopOverlay->setVisible(loop);
 }
 
 void RundownAudioWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)

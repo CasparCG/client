@@ -3,7 +3,7 @@
 #include "Global.h"
 
 NewRundownMenuEvent::NewRundownMenuEvent(bool enabled)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::NewRundownMenu)), enabled(enabled)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::NewRundownMenu)), enabled(enabled)
 {
 }
 

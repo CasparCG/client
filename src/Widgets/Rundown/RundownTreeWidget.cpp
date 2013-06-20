@@ -214,7 +214,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                     return moveItemIntoGroup();
             }
         }
-        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ToggleCompactView))
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ToggleCompactView))
         {
             if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
                 return true;
@@ -249,7 +249,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
             return true;
         }
-        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddRudnownItem))
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddRudnownItem))
         {
             AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
 
@@ -285,7 +285,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
             return true;
         }
-        else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AddPresetItem))
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddPresetItem))
         {
             AddPresetItemEvent* addPresetItemEvent = dynamic_cast<AddPresetItemEvent*>(event);
 

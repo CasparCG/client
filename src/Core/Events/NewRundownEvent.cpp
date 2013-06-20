@@ -3,6 +3,6 @@
 #include "Global.h"
 
 NewRundownEvent::NewRundownEvent()
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::NewRundown))
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::NewRundown))
 {
 }

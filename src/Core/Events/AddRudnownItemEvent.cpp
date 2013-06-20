@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AddRudnownItemEvent::AddRudnownItemEvent(const LibraryModel& model)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::AddRudnownItem)), model(model)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::AddRudnownItem)), model(model)
 {
 }
 

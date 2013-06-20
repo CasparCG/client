@@ -18,7 +18,7 @@ TemplateDataDialog::TemplateDataDialog(QWidget* parent)
 
 void TemplateDataDialog::accept()
 {
-    if (this->lineEditName->text().isEmpty() || this->textEditValue->toPlainText().isEmpty())
+    if (this->lineEditName->text().isEmpty())
         return;
 
     QDialog::accept();

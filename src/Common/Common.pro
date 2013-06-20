@@ -15,5 +15,4 @@ HEADERS += \
     Global.h \
     Shared.h
 	
-SOURCES += \
-    Global.cpp
+SOURCES +=

@@ -95,12 +95,12 @@ void MainWindow::setupMenu()
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::StatusbarMessage))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::StatusbarMessage))
     {
         StatusbarEvent* statusbarEvent = dynamic_cast<StatusbarEvent*>(event);
         this->statusBar()->showMessage(statusbarEvent->getMessage(), statusbarEvent->getTimeout());
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ActiveRundownChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ActiveRundownChanged))
     {
         ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
 
@@ -111,7 +111,7 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
             this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
 
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundownMenu))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::NewRundownMenu))
     {
         NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
         this->fileMenu->actions().at(0)->setEnabled(newRundownMenuEvent->getEnabled());

@@ -41,12 +41,12 @@ void LibraryManager::uninitialize()
 
 bool LibraryManager::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RefreshLibrary))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RefreshLibrary))
     {
         RefreshLibraryEvent* refreshLibraryEvent = dynamic_cast<RefreshLibraryEvent*>(event);
         QTimer::singleShot(refreshLibraryEvent->getDelay(), this, SLOT(refresh()));
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::AutoRefreshLibrary))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoRefreshLibrary))
     {
         AutoRefreshLibraryEvent* autoRefreshLibraryEvent = dynamic_cast<AutoRefreshLibraryEvent*>(event);
         if (this->refreshTimer.interval() != autoRefreshLibraryEvent->getInterval())

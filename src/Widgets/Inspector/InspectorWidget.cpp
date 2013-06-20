@@ -121,8 +121,8 @@ InspectorWidget::InspectorWidget(QWidget* parent)
 
 bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected) ||
-        event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected) ||
+        event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
     {
         this->treeWidgetInspector->topLevelItem(0)->setHidden(false);
         this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
@@ -153,7 +153,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
 
         this->treeWidgetInspector->expandAll();
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(2)->setHidden(true);

@@ -19,8 +19,8 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
 bool PreviewWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected) ||
-        event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected) ||
+        event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         QString name;
         QString deviceName;

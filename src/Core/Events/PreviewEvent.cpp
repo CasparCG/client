@@ -3,6 +3,6 @@
 #include "Global.h"
 
 PreviewEvent::PreviewEvent()
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::Preview))
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::Preview))
 {
 }

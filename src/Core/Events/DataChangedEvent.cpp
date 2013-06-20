@@ -3,7 +3,7 @@
 #include "Global.h"
 
 DataChangedEvent::DataChangedEvent(int deviceId)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::DataChanged)), deviceId(deviceId)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::DataChanged)), deviceId(deviceId)
 {
 }
 

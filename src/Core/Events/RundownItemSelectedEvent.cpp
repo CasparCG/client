@@ -3,7 +3,7 @@
 #include "Global.h"
 
 RundownItemSelectedEvent::RundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected)), command(command), model(model)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::RundownItemSelected)), command(command), model(model)
 {
 }
 

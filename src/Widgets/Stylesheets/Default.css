@@ -347,39 +347,22 @@ QTreeView
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
-QTreeView::item:hover
-{
-    /*background-color: transparent;*/
-}
 QTreeView::item:selected
 {
     background-color: rgba(80, 80, 80, 255);
+    color: rgba(255, 255, 255, 255);
 }
 QTreeView::branch
 {
     background-color: transparent;
 }
-QTreeView::branch:!has-children:!has-siblings:adjoins-item
+QTreeView::branch:closed:has-children
 {
-    background-color: rgba(60, 60, 60, 255);
-}
-QTreeView::branch:closed:has-children:has-siblings, QTreeView::branch:has-children:!has-siblings:closed
-{
-    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowRight.png);
 }
-QTreeView::branch:closed:has-children:has-siblings:hover, QTreeView::branch:has-children:!has-siblings:closed:hover
+QTreeView::branch:open:has-children
 {
-    background-color: rgba(60, 60, 60, 255);
-}
-QTreeView::branch:open:has-children:has-siblings, QTreeView::branch:open:has-children:!has-siblings
-{
-    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowDown.png);
-}
-QTreeView::branch:open:has-children:has-siblings:hover, QTreeView::branch:open:has-children:!has-siblings:hover
-{
-    background-color: rgba(60, 60, 60, 255);
 }
 
 /*
@@ -390,10 +373,6 @@ QTreeWidget
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
-QTreeWidget::item:hover
-{
-    /*background-color: transparent;*/
-}
 QTreeWidget::item:selected
 {
     background-color: rgba(80, 80, 80, 255);
@@ -403,27 +382,13 @@ QTreeWidget::branch
 {
     background-color: transparent;
 }
-QTreeWidget::branch:!has-children:!has-siblings:adjoins-item
+QTreeWidget::branch:closed:has-children
 {
-    background-color: rgba(60, 60, 60, 255);
-}
-QTreeWidget::branch:closed:has-children:has-siblings, QTreeWidget::branch:has-children:!has-siblings:closed
-{
-    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowRight.png);
 }
-QTreeWidget::branch:closed:has-children:has-siblings:hover, QTreeWidget::branch:has-children:!has-siblings:closed:hover
+QTreeWidget::branch:open:has-children
 {
-    background-color: rgba(60, 60, 60, 255);
-}
-QTreeWidget::branch:open:has-children:has-siblings, QTreeWidget::branch:open:has-children:!has-siblings
-{
-    background-color: rgba(60, 60, 60, 255);
     image: url(:/Graphics/Images/ArrowDown.png);
-}
-QTreeWidget::branch:open:has-children:has-siblings:hover, QTreeWidget::branch:open:has-children:!has-siblings:hover
-{
-    background-color: rgba(60, 60, 60, 255);
 }
 
 /*
@@ -433,10 +398,6 @@ QTableWidget
 {
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
-}
-QTableWidget::item:hover
-{
-    background-color: transparent;
 }
 QTableWidget::item:selected
 {

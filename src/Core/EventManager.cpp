@@ -133,6 +133,11 @@ void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
     qApp->postEvent(qApp, new AddRudnownItemEvent(model));
 }
 
+void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedData)
+{
+    qApp->postEvent(qApp, new AddTemplateDataEvent(value, storedData));
+}
+
 void EventManager::fireAddRudnownItemEvent(const QString& type)
 {
     if (type == Rundown::BLENDMODE)

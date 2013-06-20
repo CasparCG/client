@@ -3,7 +3,7 @@
 #include "Global.h"
 
 TemplateChangedEvent::TemplateChangedEvent(int deviceId)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::TemplateChanged)), deviceId(deviceId)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::TemplateChanged)), deviceId(deviceId)
 {
 }
 

@@ -1,10 +1,16 @@
-CasparCG Client 2.0.2
+CasparCG Client 2.0.4
 =====================
 - FIX: Connection issue if server not started.
-- NEW: Added toolbar.
+- FIX: Client crash when loading GPI settings.
+- FIX: Wrong item is selected when changing rundown tab.
+- NEW: Added tools to the sidebar.
+- NEW: Added OSC messages in video items.
+- NEW: Added in/out points to video items.
+- NEW: Added support for Ctrl+X between rundowns.
 - UPDATE: Changed filtering functionality.
-- UPDATE: Changed output delay to be frame based, depends on the channel format.
-- UPDATE: Template fields support multiline.
+- UPDATE: Changed output delay to be frame based.
+- UPDATE: Support for multiline in template fields.
+- UPDATE: UI changes.
 
 Note: Previously saved rundowns created with an older versions of the Client 
       are not compatible anymore!

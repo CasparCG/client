@@ -3,7 +3,7 @@
 #include "Global.h"
 
 RefreshLibraryEvent::RefreshLibraryEvent(int delay)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::RefreshLibrary)), delay(delay)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::RefreshLibrary)), delay(delay)
 {
 }
 

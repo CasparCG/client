@@ -59,7 +59,7 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
 
 bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::Preview))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::Preview))
     {
         // This event is not for us.
         if (!this->active)
@@ -69,7 +69,7 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -82,7 +82,7 @@ bool RundownVolumeWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         // This event is not for us.
         if (!this->active)

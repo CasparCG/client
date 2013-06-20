@@ -33,7 +33,7 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 
 bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected))
     {
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
@@ -51,7 +51,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
     {
         blockAllSignals(true);
 
@@ -63,7 +63,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();

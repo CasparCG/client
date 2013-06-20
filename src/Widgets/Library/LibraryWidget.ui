@@ -22,6 +22,9 @@
    </property>
    <item>
     <widget class="QToolBox" name="toolBoxLibrary">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -49,8 +52,11 @@
        </property>
        <item>
         <widget class="QTreeWidget" name="treeWidgetTools">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
+          <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
          <property name="verticalScrollMode">
           <enum>QAbstractItemView::ScrollPerPixel</enum>
@@ -175,8 +181,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -242,8 +248,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -309,8 +315,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -382,8 +388,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -449,8 +455,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">

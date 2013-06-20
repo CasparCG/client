@@ -3,7 +3,7 @@
 #include "Global.h"
 
 SaveRundownEvent::SaveRundownEvent(bool saveAs)
-    : QEvent(static_cast<QEvent::Type>(Enum::EventType::SaveRundown)),
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::SaveRundown)),
       saveAs(saveAs)
 {
 }

@@ -98,11 +98,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditInvoke">
-       <property name="placeholderText">
-        <string/>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEditInvoke"/>
      </item>
     </layout>
    </item>

@@ -49,7 +49,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
         if (keyEvent->key() >= 49 && keyEvent->key() <= 57 && keyEvent->modifiers() == Qt::AltModifier) // [1-9]
             return selectTab(QString(QChar(keyEvent->key())).toInt());
     }
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::NewRundown))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::NewRundown))
     {
         RundownTreeWidget* widget = new RundownTreeWidget(this);
 
@@ -61,7 +61,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeleteRundown))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeleteRundown))
     {
         if (this->tabWidgetRundown->count() <= Rundown::MAX_NUMBER_OF_RUNDONWS)
             EventManager::getInstance().fireNewRundownMenuEvent(true);
@@ -73,7 +73,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::OpenRundown))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::OpenRundown))
     {
         RundownTreeWidget* widget = new RundownTreeWidget(this);
         widget->openRundown();
@@ -86,14 +86,14 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::SaveRundown))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::SaveRundown))
     {
         SaveRundownEvent* saveRundownEvent = dynamic_cast<SaveRundownEvent*>(event);
         dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->saveRundown(saveRundownEvent->getSaveAs());
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ActiveRundownChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ActiveRundownChanged))
     {
         ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
 

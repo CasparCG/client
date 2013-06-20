@@ -22,7 +22,7 @@ InspectorContrastWidget::InspectorContrastWidget(QWidget* parent)
 
 bool InspectorContrastWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();

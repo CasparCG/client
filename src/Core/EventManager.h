@@ -32,6 +32,7 @@
 #include "Events/AddPresetItemEvent.h"
 #include "Events/ImportPresetEvent.h"
 #include "Events/ExportPresetEvent.h"
+#include "Events/AddTemplateDataEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -71,6 +72,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireRefreshLibraryEvent(int delay = 0);
         void fireEmptyRundownEvent();
         void fireAddRudnownItemEvent(const LibraryModel& model);
+        void fireAddTemplateDataEvent(const QString& value, bool storedData);
         void fireAddRudnownItemEvent(const QString& type);
         void fireAddPresetItemEvent(const QString& preset);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);

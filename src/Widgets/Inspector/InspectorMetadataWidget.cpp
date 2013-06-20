@@ -48,7 +48,7 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
 
 bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LibraryItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected))
     {
         LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
         this->model = libraryItemSelectedEvent->getLibraryModel();
@@ -68,7 +68,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
@@ -114,7 +114,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::EmptyRundown))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
     {
         blockAllSignals(true);
 
@@ -130,7 +130,7 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         if (this->model == NULL)
             return true;

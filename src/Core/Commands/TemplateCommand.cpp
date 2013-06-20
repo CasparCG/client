@@ -50,7 +50,8 @@ const QString TemplateCommand::getTemplateData() const
             componentData.replace(QRegExp("#KEY"), model.getKey());
 
             QString value = model.getValue();
-            value = value.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;").replace("\\", "\\\\");
+            value = Xml::encode(value).replace("\\", "\\\\");
+            //value = value.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;").replace("\\", "\\\\");
             componentData.replace(QRegExp("#VALUE"), value);
 
             templateData.append(componentData);

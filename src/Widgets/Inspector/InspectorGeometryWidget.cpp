@@ -24,7 +24,7 @@ InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
 
 bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::RundownItemSelected))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
@@ -49,7 +49,7 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         blockAllSignals(true);
 
@@ -67,7 +67,7 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
 
         blockAllSignals(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::ChannelChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ChannelChanged))
     {
         blockAllSignals(true);
 

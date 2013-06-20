@@ -4,8 +4,8 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
-#define REVISION_VERSION 2
-#define DATABASE_VERSION "202"
+#define REVISION_VERSION 4
+#define DATABASE_VERSION "204"
 
 #include <stdexcept>
 
@@ -13,7 +13,7 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 
-namespace Enum
+namespace Event
 {
     struct EventType
     {
@@ -46,39 +46,10 @@ namespace Enum
             AddPresetItem = QEvent::User + 35,
             ExportPreset = QEvent::User + 36,
             ImportPreset = QEvent::User + 37,
-            VideolayerChanged = QEvent::User + 38
+            VideolayerChanged = QEvent::User + 38,
+            AddTemplateData = QEvent::User + 39
         };
     };
-}
-
-namespace Xml
-{
-    QString encode(const QString& data);
-    QString decode(const QString& data);
-}
-
-namespace Playout
-{
-    struct PlayoutType
-    {
-        enum Type
-        {
-            Stop = QEvent::User + 110,
-            Play = QEvent::User + 120,
-            Pause = QEvent::User + 130,
-            Load = QEvent::User + 140,
-            Next = QEvent::User + 150,
-            Update = QEvent::User + 160,
-            Invoke = QEvent::User + 170,
-            Clear = QEvent::User + 180,
-            ClearVideolayer = QEvent::User + 190,
-            ClearChannel = QEvent::User + 200
-        };
-    };
-
-    PlayoutType::Type fromString(const QString& value);
-    QString toString(PlayoutType::Type value);
-    const QList<PlayoutType::Type>& enumConstants();
 }
 
 namespace Define
@@ -149,6 +120,7 @@ namespace Color
 {
     static const bool DEFAULT_USE_AUTO = false;
     static const QString DEFAULT_COLOR_NAME = "";
+    static const QString DEFAULT_ACTIVE_COLOR = "Lime";
     static const QString DEFAULT_CONSUMER_COLOR = "DarkSlateGray";
     static const QString DEFAULT_GPI_COLOR = "Chocolate";
     static const QString DEFAULT_GROUP_COLOR = "SteelBlue";
@@ -326,4 +298,153 @@ namespace Osc
     static const QString DEFAULT_PATH_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
     static const QString DEFAULT_PAUSED_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
     static const QString DEFAULT_LOOP_FILTER = "^/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
+}
+
+namespace Xml
+{
+    static QString encode(const QString& data)
+    {
+        QString temp;
+
+        for (int index = 0; index < data.size(); index++)
+        {
+            QChar character(data.at(index));
+            switch (character.unicode())
+            {
+                case '&':
+                    temp += "&amp;";
+                    break;
+                case '\'':
+                    temp += "&apos;";
+                    break;
+                case '"':
+                    temp += "&quot;";
+                    break;
+                case '<':
+                    temp += "&lt;";
+                    break;
+                case '>':
+                    temp += "&gt;";
+                    break;
+                default:
+                    temp += character;
+                    break;
+            }
+        }
+
+        return temp;
+     }
+
+    static QString decode(const QString& data)
+    {
+        QString temp(data);
+
+        temp.replace("&amp;", "&");
+        temp.replace("&apos;", "'");
+        temp.replace("&quot;", "\"");
+        temp.replace("&lt;", "<");
+        temp.replace("&gt;", ">");
+
+        return temp;
+    }
+}
+
+namespace Playout
+{
+    struct PlayoutType
+    {
+        enum Type
+        {
+            Stop = QEvent::User + 110,
+            Play = QEvent::User + 120,
+            Pause = QEvent::User + 130,
+            Load = QEvent::User + 140,
+            Next = QEvent::User + 150,
+            Update = QEvent::User + 160,
+            Invoke = QEvent::User + 170,
+            Clear = QEvent::User + 180,
+            ClearVideolayer = QEvent::User + 190,
+            ClearChannel = QEvent::User + 200
+        };
+    };
+
+    static PlayoutType::Type fromString(const QString& value)
+    {
+        if (value == "Stop")
+            return PlayoutType::Stop;
+        else if (value == "Play")
+            return PlayoutType::Play;
+        else if (value == "Pause")
+            return PlayoutType::Pause;
+        else if (value == "Load")
+            return PlayoutType::Load;
+        else if (value == "Next")
+            return PlayoutType::Next;
+        else if (value == "Update")
+            return PlayoutType::Update;
+        else if (value == "Invoke")
+            return PlayoutType::Invoke;
+        else if (value == "Clear")
+            return PlayoutType::Clear;
+        else if (value == "ClearVideolayer")
+            return PlayoutType::ClearVideolayer;
+        else if (value == "ClearChannel")
+            return PlayoutType::ClearChannel;
+        else
+            throw std::invalid_argument(value.toStdString());
+    }
+
+    static QString toString(PlayoutType::Type value)
+    {
+        switch (value)
+        {
+        case PlayoutType::Stop:
+            return "Stop";
+        case PlayoutType::Play:
+            return "Play";
+        case PlayoutType::Pause:
+            return "Pause";
+        case PlayoutType::Load:
+            return "Load";
+        case PlayoutType::Next:
+            return "Next";
+        case PlayoutType::Update:
+            return "Update";
+        case PlayoutType::Invoke:
+            return "Invoke";
+        case PlayoutType::Clear:
+            return "Clear";
+        case PlayoutType::ClearVideolayer:
+            return "ClearVideolayer";
+        case PlayoutType::ClearChannel:
+            return "ClearChannel";
+        default:
+            throw std::invalid_argument("Invalid enum constant");
+        }
+    }
+
+    static QList<PlayoutType::Type> createConstantList()
+    {
+        QList<PlayoutType::Type> result;
+
+        result.push_back(PlayoutType::Stop);
+        result.push_back(PlayoutType::Play);
+        result.push_back(PlayoutType::Pause);
+        result.push_back(PlayoutType::Load);
+        result.push_back(PlayoutType::Next);
+        result.push_back(PlayoutType::Update);
+        result.push_back(PlayoutType::Invoke);
+        result.push_back(PlayoutType::Clear);
+        result.push_back(PlayoutType::ClearVideolayer);
+        result.push_back(PlayoutType::ClearChannel);
+
+        return result;
+    }
+
+    static const QList<PlayoutType::Type>& enumConstants()
+    {
+        static QList<PlayoutType::Type> result(createConstantList());
+
+        return result;
+    }
 }

@@ -58,7 +58,7 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
 
 bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Enum::EventType::TargetChanged))
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::TargetChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -69,7 +69,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::LabelChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -82,7 +82,7 @@ bool RundownFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
 
         return true;
     }
-    else if (event->type() == static_cast<QEvent::Type>(Enum::EventType::DeviceChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         // This event is not for us.
         if (!this->active)
@@ -183,7 +183,7 @@ void RundownFileRecorderWidget::setActive(bool active)
     this->animation->stop();
 
     if (this->active)
-        this->labelActiveColor->setStyleSheet("background-color: lime;");
+        this->labelActiveColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_ACTIVE_COLOR));
     else
         this->labelActiveColor->setStyleSheet("");
 }
