@@ -667,7 +667,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
     QMutexLocker locker(&mutex);
 
     QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) "
+                  "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) "
                   "ORDER BY l.Name, l.DeviceId");
 
     QSqlQuery sql;
@@ -687,7 +687,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
     QMutexLocker locker(&mutex);
 
     QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                  "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 "
+                  "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 "
                   "ORDER BY l.Name, l.DeviceId");
 
     QSqlQuery sql;
@@ -731,7 +731,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND l.Name LIKE '%%1%' "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
@@ -743,7 +743,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) "
                         "AND l.Name LIKE '%%1%' AND (%2) "
                         "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
     }
@@ -756,7 +756,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND (%1) "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND (%1) "
                         "ORDER BY l.Name, l.DeviceId").arg(address);
     }
 
@@ -777,7 +777,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     QMutexLocker locker(&mutex);
 
     QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
                             "ORDER BY l.Name, l.DeviceId").arg(filter);
 
     QSqlQuery sql;
@@ -837,7 +837,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
     QMutexLocker locker(&mutex);
 
     QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 5) AND d.Address = '%1' "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND d.Address = '%1' "
                             "ORDER BY l.Id, l.DeviceId").arg(address);
 
     QSqlQuery sql;
@@ -857,7 +857,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
     QMutexLocker locker(&mutex);
 
     QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 6 AND d.Address = '%1' "
+                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND d.Address = '%1' "
                             "ORDER BY l.Id, l.DeviceId").arg(address);
 
     QSqlQuery sql;
