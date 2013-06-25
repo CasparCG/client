@@ -8,6 +8,8 @@
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/LabelChangedEvent.h"
 
+#include <math.h>
+
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
@@ -155,9 +157,9 @@ bool RundownGpiOutputWidget::executeCommand(enum Playout::PlayoutType::Type type
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
             const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            int framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toInt();
+            double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-            this->executeTimer.setInterval(this->command.getDelay() * (1000 / framesPerSecond));
+            this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
             this->executeTimer.start();
         }
     }
