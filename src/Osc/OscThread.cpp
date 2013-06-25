@@ -4,7 +4,6 @@ OscThread::OscThread(SocketReceiveMultiplexer* multiplexer, QObject* parent)
     : QThread(parent),
       multiplexer(multiplexer)
 {
-
 }
 
 void OscThread::run()

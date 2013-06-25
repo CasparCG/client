@@ -22,7 +22,7 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
 DeviceManager::DeviceManager()
 {
-    this->oscListener = QSharedPointer<OscListener>(new OscListener("0.0.0.0", 6250, this));
+    this->oscListener = QSharedPointer<OscListener>(new OscListener("0.0.0.0", 6250));
     this->oscListener->start();
 }
 

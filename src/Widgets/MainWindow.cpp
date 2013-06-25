@@ -133,10 +133,10 @@ void MainWindow::closeEvent(QCloseEvent* event)
     box.buttons().at(1)->setIcon(QIcon());
     box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
 
-     if (box.exec() == QMessageBox::Yes)
-         event->accept();
-     else
-         event->ignore();
+    if (box.exec() == QMessageBox::Yes)
+        event->accept();
+    else
+        event->ignore();
 }
 
 void MainWindow::importPreset()
