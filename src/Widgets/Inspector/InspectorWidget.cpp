@@ -87,6 +87,8 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(24)), 0, new InspectorImageWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(25)), 0, new InspectorCustomCommandWidget(this));
 
+    this->treeWidgetInspector->expandAll();
+
     this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
@@ -112,9 +114,6 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
-
-    this->treeWidgetInspector->expandAll();
-    this->treeWidgetInspector->doItemsLayout();
 
     qApp->installEventFilter(this);
 }
@@ -150,8 +149,6 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
-
-        this->treeWidgetInspector->expandAll();
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
@@ -306,8 +303,6 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
             this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
             this->treeWidgetInspector->topLevelItem(25)->setHidden(false);
         }
-
-        this->treeWidgetInspector->expandAll();
     }
 
     return QObject::eventFilter(target, event);
