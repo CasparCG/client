@@ -80,13 +80,15 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
-#if defined(Q_OS_UNIX)
+#if defined(Q_OS_MAC)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #elif defined(Q_OS_WIN32)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #endif
 
+#if defined(Q_OS_WN32)
     sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) VALUES('Local CasparCG', 'localhost', 5250, '', '', '', '', 'No', 0, '')");
+#endif
 
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
     sql.exec("INSERT INTO Direction (Value) VALUES('LEFT')");
