@@ -112,6 +112,17 @@ QList<DeviceModel> DeviceManager::getDeviceModels() const
     return models;
 }
 
+const DeviceModel DeviceManager::getDeviceModelByName(const QString& name) const
+{
+    foreach (const DeviceModel& model, this->deviceModels)
+    {
+        if (model.getName() == name)
+            return model;
+    }
+
+    qCritical() << "No DeviceModel found for specified name";
+}
+
 const DeviceModel DeviceManager::getDeviceModelByAddress(const QString& address) const
 {
     foreach (const DeviceModel& model, this->deviceModels)

@@ -25,11 +25,6 @@
      <height>22</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string> All</string>
-    </property>
-   </item>
   </widget>
   <widget class="QLineEdit" name="lineEditDeviceFilter">
    <property name="enabled">

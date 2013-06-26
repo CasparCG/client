@@ -164,8 +164,7 @@ void InspectorMetadataWidget::fillTargetCombo(const QString& type)
     if (device == NULL)
         return;
 
-    const QString address = DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName())->getAddress();
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByAddress(address);
+    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model->getDeviceName());
 
     QList<LibraryModel> models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel.getId());
     if (models.count() == 0)

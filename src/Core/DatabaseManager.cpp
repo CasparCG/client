@@ -745,8 +745,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) "
-                        "AND l.Name LIKE '%%1%' AND (%2) "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE '%%1%' AND (%2) "
                         "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
     }
     else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.

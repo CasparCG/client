@@ -17,6 +17,8 @@ DeviceFilterWidget::DeviceFilterWidget(QWidget* parent)
 
     this->lineEditDeviceFilter->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
+    this->comboBoxDeviceFilter->addItem("All");
+
     QObject::connect(this->comboBoxDeviceFilter->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(dataChanged(const QModelIndex&, const QModelIndex&)));
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setData(Qt::Checked, Qt::CheckStateRole);
@@ -58,7 +60,10 @@ QList<QString> DeviceFilterWidget::getDeviceFilter()
     for (int i = 1; i < this->comboBoxDeviceFilter->count(); i++)
     {
         if (dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->checkState() == Qt::Checked)
-            devices.push_back(dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->text().trimmed());
+        {
+            QString name = dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->text();
+            devices.push_back(DeviceManager::getInstance().getDeviceModelByName(name).getAddress());
+        }
     }
 
     return devices;
@@ -68,9 +73,25 @@ void DeviceFilterWidget::deviceRemoved()
 {
     blockAllSignals(true);
 
+    this->lineEditDeviceFilter->clear();
     this->comboBoxDeviceFilter->clear();
+
+    blockAllSignals(false);
+
+    this->comboBoxDeviceFilter->addItem("All");
+    QObject::connect(this->comboBoxDeviceFilter->model(), SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(dataChanged(const QModelIndex&, const QModelIndex&)));
+    dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+    dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setData(Qt::Checked, Qt::CheckStateRole);
+
+    blockAllSignals(true);
+
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-        this->comboBoxDeviceFilter->addItem(QString(" %1").arg(model.getName()));
+    {
+        this->comboBoxDeviceFilter->addItem(QString("%1").arg(model.getName()));
+
+        dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
+    }
 
     blockAllSignals(false);
 }
@@ -79,7 +100,7 @@ void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
     blockAllSignals(true);
 
-    this->comboBoxDeviceFilter->addItem(QString(" %1").arg(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName()));
+    this->comboBoxDeviceFilter->addItem(QString("%1").arg(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
