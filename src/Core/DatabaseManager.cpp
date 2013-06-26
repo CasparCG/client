@@ -773,13 +773,42 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
     return models;
 }
 
-QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& filter)
+QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& filter, QList<QString> devices)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
-                            "ORDER BY l.Name, l.DeviceId").arg(filter);
+    QString query;
+
+    if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
+    {
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "ORDER BY l.Name, l.DeviceId").arg(filter);
+    }
+    else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
+    {
+        QString address;
+        foreach (QString device, devices)
+            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
+
+        address = address.mid(0, address.length() - 4); // Remove the last OR.
+
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE '%%1%' AND (%2) "
+                        "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
+    }
+    else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.
+    {
+        QString address;
+        foreach (QString device, devices)
+            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
+
+        address = address.mid(0, address.length() - 4); // Remove the last OR.
+
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (%1) "
+                        "ORDER BY l.Name, l.DeviceId").arg(address);
+    }
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -793,13 +822,42 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     return models;
 }
 
-QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filter)
+QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filter, QList<QString> devices)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
-                            "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
-                            "ORDER BY l.Name, l.DeviceId").arg(filter);
+    QString query;
+
+    if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
+    {
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "ORDER BY l.Name, l.DeviceId").arg(filter);
+    }
+    else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
+    {
+        QString address;
+        foreach (QString device, devices)
+            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
+
+        address = address.mid(0, address.length() - 4); // Remove the last OR.
+
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE '%%1%' AND (%2) "
+                        "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
+    }
+    else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.
+    {
+        QString address;
+        foreach (QString device, devices)
+            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
+
+        address = address.mid(0, address.length() - 4); // Remove the last OR.
+
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (%1) "
+                        "ORDER BY l.Name, l.DeviceId").arg(address);
+    }
 
     QSqlQuery sql;
     if (!sql.exec(query))

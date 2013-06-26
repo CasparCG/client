@@ -425,10 +425,10 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetTemplate->clearSelection();
 
         QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty())
+        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
             models = DatabaseManager::getInstance().getLibraryTemplate();
         else
-            models = DatabaseManager::getInstance().getLibraryTemplateByFilter(this->lineEditFilter->text());
+            models = DatabaseManager::getInstance().getLibraryTemplateByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
 
         if (models.count() > 0)
         {
@@ -456,10 +456,10 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetData->clearSelection();
 
         QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty())
+        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
             models = DatabaseManager::getInstance().getLibraryData();
         else
-            models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text());
+            models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
 
         if (models.count() > 0)
         {
