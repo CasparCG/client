@@ -8,6 +8,7 @@
 
 #include <QtCore/QDebug>
 
+#include <QtGui/QCursor>
 #include <QtGui/QResizeEvent>
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
@@ -97,6 +98,7 @@ void InspectorTemplateWidget::updateDataTemplateModels()
 void InspectorTemplateWidget::addRow()
 {
     TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
     dialog->setName(QString("f%1").arg(this->rowIndex));
     if (dialog->exec() == QDialog::Accepted)
     {
@@ -123,6 +125,7 @@ void InspectorTemplateWidget::itemDoubleClicked(QTreeWidgetItem* current, int in
         return;
 
     TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
     dialog->setName(current->text(0));
     dialog->setValue(current->text(1));
     if (dialog->exec() == QDialog::Accepted)

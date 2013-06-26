@@ -98,14 +98,10 @@ void DeviceFilterWidget::deviceRemoved()
 
 void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
-    blockAllSignals(true);
-
     this->comboBoxDeviceFilter->addItem(QString("%1").arg(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
-
-    blockAllSignals(false);
 }
 
 void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)
