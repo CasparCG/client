@@ -115,14 +115,14 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5000', 1920, 1080, '50')");
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5994', 1920, 1080, '59.94')");
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p6000', 1920, 1080, '60')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2398', 2048, 1556, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2400', 2048, 1556, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2k2500', 2048, 1556, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2398', 3840, 2160, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2400', 3840, 2160, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2500', 3840, 2160, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k2997', 3840, 2160, '29.97')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4k3000', 3840, 2160, '30')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2398', 2048, 1556, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2400', 2048, 1556, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2500', 2048, 1556, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2398', 3840, 2160, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2400', 3840, 2160, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2500', 3840, 2160, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2997', 3840, 2160, '29.97')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p3000', 3840, 2160, '30')");
 
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
