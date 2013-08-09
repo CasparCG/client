@@ -5,7 +5,7 @@
 CustomCommand::CustomCommand(QObject* parent)
     : AbstractCommand(parent),
       stopCommand(""), playCommand(""), loadCommand(""), pauseCommand(""), nextCommand(""), updateCommand(""),
-      invokeCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand("")
+      invokeCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""), triggerOnNext(CustomCmd::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 
@@ -57,6 +57,11 @@ const QString& CustomCommand::getClearVideolayerCommand() const
 const QString& CustomCommand::getClearChannelCommand() const
 {
     return this->clearChannelCommand;
+}
+
+bool CustomCommand::getTriggerOnNext() const
+{
+    return this->triggerOnNext;
 }
 
 void CustomCommand::setStopCommand(const QString& command)
@@ -119,6 +124,12 @@ void CustomCommand::setClearChannelCommand(const QString& command)
     emit clearChannelCommandChanged(this->clearChannelCommand);
 }
 
+void CustomCommand::setTriggerOnNext(bool triggerOnNext)
+{
+    this->triggerOnNext = triggerOnNext;
+    emit triggerOnNextChanged(this->triggerOnNext);
+}
+
 void CustomCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -133,6 +144,7 @@ void CustomCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"clearCommand") > 0) setClearCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearCommand")));
     if (pt.count(L"clearVideolayerCommand") > 0) setClearVideolayerCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearVideolayerCommand")));
     if (pt.count(L"clearChannelCommand") > 0) setClearChannelCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearChannelCommand")));
+    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
 }
 
 void CustomCommand::writeProperties(QXmlStreamWriter* writer)
@@ -149,4 +161,5 @@ void CustomCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("clearCommand", this->getClearCommand());
     writer->writeTextElement("clearVideolayerCommand", this->getClearVideolayerCommand());
     writer->writeTextElement("clearChannelCommand", this->getClearChannelCommand());
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

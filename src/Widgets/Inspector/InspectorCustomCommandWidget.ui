@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>226</width>
-    <height>308</height>
+    <width>235</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -348,6 +348,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerFileRecorder">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -364,6 +417,7 @@
     </spacer>
    </item>
   </layout>
+  <zorder>labelTriggerOnNext</zorder>
  </widget>
  <resources/>
  <connections>
@@ -410,7 +464,7 @@
      <y>80</y>
     </hint>
     <hint type="destinationlabel">
-     <x>241</x>
+     <x>234</x>
      <y>80</y>
     </hint>
    </hints>
@@ -426,7 +480,7 @@
      <y>101</y>
     </hint>
     <hint type="destinationlabel">
-     <x>251</x>
+     <x>234</x>
      <y>103</y>
     </hint>
    </hints>
@@ -442,7 +496,7 @@
      <y>131</y>
     </hint>
     <hint type="destinationlabel">
-     <x>240</x>
+     <x>234</x>
      <y>127</y>
     </hint>
    </hints>
@@ -458,7 +512,7 @@
      <y>156</y>
     </hint>
     <hint type="destinationlabel">
-     <x>239</x>
+     <x>234</x>
      <y>153</y>
     </hint>
    </hints>
@@ -490,7 +544,7 @@
      <y>219</y>
     </hint>
     <hint type="destinationlabel">
-     <x>240</x>
+     <x>234</x>
      <y>217</y>
     </hint>
    </hints>
@@ -522,8 +576,24 @@
      <y>267</y>
     </hint>
     <hint type="destinationlabel">
-     <x>237</x>
+     <x>234</x>
      <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>310</y>
     </hint>
    </hints>
   </connection>
@@ -539,5 +609,6 @@
   <slot>clearCommandChanged(QString)</slot>
   <slot>clearVideolayerCommandChanged(QString)</slot>
   <slot>clearChannelCommandChanged(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

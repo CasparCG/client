@@ -38,6 +38,7 @@ bool InspectorCustomCommandWidget::eventFilter(QObject* target, QEvent* event)
             this->lineEditClear->setText(this->command->getClearCommand());
             this->lineEditClearVideolayer->setText(this->command->getClearVideolayerCommand());
             this->lineEditClearChannel->setText(this->command->getClearChannelCommand());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -58,6 +59,7 @@ void InspectorCustomCommandWidget::blockAllSignals(bool block)
     this->lineEditClear->blockSignals(block);
     this->lineEditClearVideolayer->blockSignals(block);
     this->lineEditClearChannel->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorCustomCommandWidget::stopCommandChanged(QString command)
@@ -109,3 +111,9 @@ void InspectorCustomCommandWidget::clearChannelCommandChanged(QString command)
 {
     this->command->setClearChannelCommand(command);
 }
+
+void InspectorCustomCommandWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+

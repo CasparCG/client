@@ -122,6 +122,7 @@ AbstractRundownWidget* RundownCustomCommandWidget::clone()
     command->setClearCommand(this->command.getClearCommand());
     command->setClearVideolayerCommand(this->command.getClearVideolayerCommand());
     command->setClearChannelCommand(this->command.getClearChannelCommand());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -205,7 +206,7 @@ bool RundownCustomCommandWidget::executeCommand(enum Playout::PlayoutType::Type 
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play)
+    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
@@ -221,7 +222,12 @@ bool RundownCustomCommandWidget::executeCommand(enum Playout::PlayoutType::Type 
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Next)
-        QTimer::singleShot(0, this, SLOT(executeNext()));
+    {
+        if (this->command.getTriggerOnNext())
+            QTimer::singleShot(0, this, SLOT(executePlay()));
+        else
+            QTimer::singleShot(0, this, SLOT(executeNext()));
+    }
     else if (type == Playout::PlayoutType::Update)
         QTimer::singleShot(0, this, SLOT(executeUpdate()));
     else if (type == Playout::PlayoutType::Invoke)

@@ -108,6 +108,7 @@ void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"scaley") > 0) setScaleY(pt.get<float>(L"scaley"));
     if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
     if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
+    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
     if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
 }
 
@@ -121,5 +122,6 @@ void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("scaley", QString::number(this->getScaleY()));
     writer->writeTextElement("duration", QString::number(this->getDuration()));
     writer->writeTextElement("tween", this->getTween());
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

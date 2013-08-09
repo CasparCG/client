@@ -38,4 +38,5 @@ class WIDGETS_EXPORT InspectorCustomCommandWidget : public QWidget, Ui::Inspecto
         Q_SLOT void clearCommandChanged(QString);
         Q_SLOT void clearVideolayerCommandChanged(QString);
         Q_SLOT void clearChannelCommandChanged(QString);
+        Q_SLOT void triggerOnNextChanged(int);
 };

@@ -32,6 +32,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         const QString& getClearCommand() const;
         const QString& getClearVideolayerCommand() const;
         const QString& getClearChannelCommand() const;
+        bool getTriggerOnNext() const;
 
         void setStopCommand(const QString& command);
         void setPlayCommand(const QString& command);
@@ -43,6 +44,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         void setClearCommand(const QString& command);
         void setClearVideolayerCommand(const QString& command);
         void setClearChannelCommand(const QString& command);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString stopCommand;
@@ -55,6 +57,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         QString clearCommand;
         QString clearVideolayerCommand;
         QString clearChannelCommand;
+        bool triggerOnNext;
 
         Q_SIGNAL void stopCommandChanged(const QString&);
         Q_SIGNAL void playCommandChanged(const QString&);
@@ -66,4 +69,5 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         Q_SIGNAL void clearCommandChanged(const QString&);
         Q_SIGNAL void clearVideolayerCommandChanged(const QString&);
         Q_SIGNAL void clearChannelCommandChanged(const QString&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };
