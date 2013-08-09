@@ -48,6 +48,7 @@ bool InspectorOpacityWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorOpacityWidget::blockAllSignals(bool block)
 {
+    this->sliderOpacity->blockSignals(block);
     this->spinBoxOpacity->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);

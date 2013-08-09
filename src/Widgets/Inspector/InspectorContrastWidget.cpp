@@ -49,6 +49,7 @@ bool InspectorContrastWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorContrastWidget::blockAllSignals(bool block)
 {
+    this->sliderContrast->blockSignals(block);
     this->spinBoxContrast->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);

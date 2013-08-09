@@ -54,6 +54,10 @@ bool InspectorCropWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorCropWidget::blockAllSignals(bool block)
 {
+    this->sliderCropLeft->blockSignals(block);
+    this->sliderCropRight->blockSignals(block);
+    this->sliderCropTop->blockSignals(block);
+    this->sliderCropBottom->blockSignals(block);
     this->spinBoxCropLeft->blockSignals(block);
     this->spinBoxCropRight->blockSignals(block);
     this->spinBoxCropTop->blockSignals(block);

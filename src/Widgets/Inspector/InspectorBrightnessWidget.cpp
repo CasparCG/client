@@ -48,6 +48,7 @@ bool InspectorBrightnessWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorBrightnessWidget::blockAllSignals(bool block)
 {
+    this->sliderBrightness->blockSignals(block);
     this->spinBoxBrightness->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);

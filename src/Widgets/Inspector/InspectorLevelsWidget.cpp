@@ -41,6 +41,7 @@ bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
             this->spinBoxMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
             this->spinBoxMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
+            this->sliderGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
             this->spinBoxGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
@@ -55,6 +56,11 @@ bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorLevelsWidget::blockAllSignals(bool block)
 {
+    this->sliderMinIn->blockSignals(block);
+    this->sliderMaxIn->blockSignals(block);
+    this->sliderMinOut->blockSignals(block);
+    this->sliderMaxOut->blockSignals(block);
+    this->sliderGamma->blockSignals(block);
     this->spinBoxMinIn->blockSignals(block);
     this->spinBoxMaxIn->blockSignals(block);
     this->spinBoxMinOut->blockSignals(block);

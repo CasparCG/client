@@ -200,6 +200,46 @@
 }
 
 /*
+ * ActionWidget
+ */
+#tabWidgetAction::pane
+{
+    border-width: 0px;
+
+    position: absolute;
+    top: 0px;
+}
+#tabWidgetAction QTabBar::tab
+{
+    border-bottom-width: 0px;
+}
+#tabWidgetAction QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#listWidgetAction
+{
+    background-color: rgba(64, 64, 64, 255);
+    border-top-left-radius: 0px;
+}
+#listWidgetAction::item
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+    border-color: rgba(42, 42, 42, 255);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+
+    min-width: 64px;
+    min-height: 64px;
+}
+#listWidgetAction::item:hover
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
+}
+
+/*
  * PreviewWidget
  */
 #pagePreview

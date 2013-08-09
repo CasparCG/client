@@ -81,7 +81,8 @@ HEADERS += \
     TemplateDataDialog.h \
     Library/DeviceFilterWidget.h \
     TimeWidget.h \
-    OscTimeWidget.h
+    OscTimeWidget.h \
+    ActionWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -151,7 +152,8 @@ SOURCES += \
     TemplateDataDialog.cpp \
     Library/DeviceFilterWidget.cpp \
     TimeWidget.cpp \
-    OscTimeWidget.cpp
+    OscTimeWidget.cpp \
+    ActionWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -220,7 +222,8 @@ FORMS += \
     TemplateDataDialog.ui \
     Library/DeviceFilterWidget.ui \
     TimeWidget.ui \
-    OscTimeWidget.ui
+    OscTimeWidget.ui \
+    ActionWidget.ui
 
 RESOURCES += \
     Widgets.qrc

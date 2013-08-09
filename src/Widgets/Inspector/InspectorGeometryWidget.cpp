@@ -99,6 +99,10 @@ void InspectorGeometryWidget::blockAllSignals(bool block)
     this->sliderPositionY->blockSignals(block);
     this->sliderScaleX->blockSignals(block);
     this->sliderScaleY->blockSignals(block);
+    this->spinBoxPositionX->blockSignals(block);
+    this->spinBoxPositionY->blockSignals(block);
+    this->spinBoxScaleX->blockSignals(block);
+    this->spinBoxScaleY->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);

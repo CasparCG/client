@@ -48,6 +48,7 @@ bool InspectorSaturationWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorSaturationWidget::blockAllSignals(bool block)
 {
+    this->sliderSaturation->blockSignals(block);
     this->spinBoxSaturation->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
