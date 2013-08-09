@@ -129,6 +129,7 @@ AbstractRundownWidget* RundownOpacityWidget::clone()
     command->setOpacity(this->command.getOpacity());
     command->setDuration(this->command.getDuration());
     command->setTween(this->command.getTween());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
     command->setDefer(this->command.getDefer());
 
     return widget;
@@ -213,7 +214,7 @@ bool RundownOpacityWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
@@ -224,6 +225,8 @@ bool RundownOpacityWidget::executeCommand(enum Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::ClearVideolayer)

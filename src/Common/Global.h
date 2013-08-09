@@ -203,6 +203,11 @@ namespace ImageScroller
     static const bool DEFAULT_PROGRESSIVE = false;
 }
 
+namespace Opacity
+{
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
 namespace Template
 {
     static const int DEFAULT_FLASHLAYER = 1;

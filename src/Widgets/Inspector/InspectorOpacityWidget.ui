@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>207</width>
-    <height>140</height>
+    <width>213</width>
+    <height>168</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>24</width>
+         <width>48</width>
          <height>20</height>
         </size>
        </property>
@@ -73,7 +73,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>17</width>
+         <width>41</width>
          <height>20</height>
         </size>
        </property>
@@ -113,7 +113,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>30</width>
+         <width>54</width>
          <height>20</height>
         </size>
        </property>
@@ -139,6 +139,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutDefer">
      <item>
       <spacer name="horizontalSpacerDefer1">
@@ -150,7 +203,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>29</width>
+         <width>53</width>
          <height>20</height>
         </size>
        </property>
@@ -282,12 +335,28 @@
    <slot>deferChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>88</x>
-     <y>106</y>
+     <x>90</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
      <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorOpacityWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -298,5 +367,6 @@
   <slot>durationChanged(int)</slot>
   <slot>spinBoxOpacityChanged(int)</slot>
   <slot>deferChanged(int)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>
