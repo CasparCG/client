@@ -41,12 +41,6 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
         Q_SLOT void spinBoxScaleYChanged(int);
         Q_SLOT void durationChanged(int);
         Q_SLOT void tweenChanged(QString);
-        Q_SLOT void resetPositionX(QString);
-        Q_SLOT void resetPositionY(QString);
-        Q_SLOT void resetScaleX(QString);
-        Q_SLOT void resetScaleY(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetTween(QString);
+        Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);
-        Q_SLOT void resetDefer(QString);
 };

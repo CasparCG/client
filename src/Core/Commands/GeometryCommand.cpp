@@ -5,7 +5,8 @@
 GeometryCommand::GeometryCommand(QObject* parent)
     : AbstractCommand(parent),
       positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS), scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE),
-      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT),
+      defer(Mixer::DEFAULT_DEFER)
 {
 }
 
@@ -37,6 +38,11 @@ int GeometryCommand::getDuration() const
 const QString& GeometryCommand::getTween() const
 {
     return this->tween;
+}
+
+bool GeometryCommand::getTriggerOnNext() const
+{
+    return this->triggerOnNext;
 }
 
 bool GeometryCommand::getDefer() const
@@ -78,6 +84,12 @@ void GeometryCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
+}
+
+void GeometryCommand::setTriggerOnNext(bool triggerOnNext)
+{
+    this->triggerOnNext = triggerOnNext;
+    emit triggerOnNextChanged(this->triggerOnNext);
 }
 
 void GeometryCommand::setDefer(bool defer)

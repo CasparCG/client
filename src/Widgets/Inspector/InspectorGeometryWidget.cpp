@@ -44,6 +44,7 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
 
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
             this->checkBoxDefer->setChecked(this->command->getDefer());
         }
 
@@ -105,6 +106,7 @@ void InspectorGeometryWidget::blockAllSignals(bool block)
     this->spinBoxScaleY->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
 
@@ -217,57 +219,12 @@ void InspectorGeometryWidget::tweenChanged(QString tween)
     this->command->setTween(tween);
 }
 
-void InspectorGeometryWidget::resetPositionX(QString positionX)
+void InspectorGeometryWidget::triggerOnNextChanged(int state)
 {
-    this->sliderPositionX->setValue(Mixer::DEFAULT_GEOMETRY_XPOS);
-    this->command->setPositionX(this->sliderPositionX->value());
-
-    EventManager::getInstance().firePreviewEvent();
-}
-
-void InspectorGeometryWidget::resetPositionY(QString positionY)
-{
-    this->sliderPositionY->setValue(Mixer::DEFAULT_GEOMETRY_YPOS);
-    this->command->setPositionY(this->sliderPositionY->value());
-
-    EventManager::getInstance().firePreviewEvent();
-}
-
-void InspectorGeometryWidget::resetScaleX(QString scaleX)
-{
-    this->sliderScaleX->setValue(Mixer::DEFAULT_GEOMETRY_XSCALE * this->resolutionWidth);
-    this->command->setScaleX(static_cast<float>(this->sliderScaleX->value( ) / this->resolutionWidth));
-
-    EventManager::getInstance().firePreviewEvent();
-}
-
-void InspectorGeometryWidget::resetScaleY(QString scaleY)
-{
-    this->sliderScaleY->setValue(Mixer::DEFAULT_GEOMETRY_YSCALE * this->resolutionHeight);
-    this->command->setScaleY(static_cast<float>(this->sliderScaleY->value() / this->resolutionHeight));
-
-    EventManager::getInstance().firePreviewEvent();
-}
-
-void InspectorGeometryWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorGeometryWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
 void InspectorGeometryWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorGeometryWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

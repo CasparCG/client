@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>207</width>
-    <height>224</height>
+    <width>246</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>11</width>
+         <width>35</width>
          <height>20</height>
         </size>
        </property>
@@ -66,7 +66,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>11</width>
+         <width>35</width>
          <height>20</height>
         </size>
        </property>
@@ -103,7 +103,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>28</width>
+         <width>52</width>
          <height>20</height>
         </size>
        </property>
@@ -140,7 +140,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>28</width>
+         <width>52</width>
          <height>20</height>
         </size>
        </property>
@@ -177,7 +177,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>17</width>
+         <width>41</width>
          <height>20</height>
         </size>
        </property>
@@ -217,7 +217,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>30</width>
+         <width>54</width>
          <height>20</height>
         </size>
        </property>
@@ -243,6 +243,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutDefer">
      <item>
       <spacer name="horizontalSpacerDefer1">
@@ -254,7 +307,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>29</width>
+         <width>53</width>
          <height>20</height>
         </size>
        </property>
@@ -386,8 +439,8 @@
    <slot>resetDuration(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>132</y>
+     <x>97</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -466,8 +519,8 @@
    <slot>spinBoxPositionXChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>189</x>
-     <y>20</y>
+     <x>235</x>
+     <y>29</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -482,8 +535,8 @@
    <slot>sliderPositionYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>51</y>
+     <x>187</x>
+     <y>56</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -498,8 +551,8 @@
    <slot>spinBoxPositionYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>42</y>
+     <x>235</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -530,8 +583,8 @@
    <slot>spinBoxScaleXChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>180</x>
-     <y>70</y>
+     <x>235</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -546,8 +599,8 @@
    <slot>sliderScaleYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>97</y>
+     <x>187</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -562,8 +615,8 @@
    <slot>spinBoxScaleYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>189</x>
-     <y>104</y>
+     <x>235</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -578,8 +631,8 @@
    <slot>resetDefer(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>186</y>
+     <x>95</x>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
      <x>21</x>
@@ -594,12 +647,28 @@
    <slot>deferChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>89</x>
-     <y>185</y>
+     <x>114</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
      <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -609,12 +678,6 @@
   <slot>scaleYChanged(int)</slot>
   <slot>sliderPositionXChanged(int)</slot>
   <slot>sliderPositionYChanged(int)</slot>
-  <slot>resetPositionX(QString)</slot>
-  <slot>resetPositionY(QString)</slot>
-  <slot>resetScaleX(QString)</slot>
-  <slot>resetScaleY(QString)</slot>
-  <slot>resetDuration(QString)</slot>
-  <slot>resetTween(QString)</slot>
   <slot>durationChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>spinBoxPositionXChanged(int)</slot>
@@ -625,5 +688,6 @@
   <slot>spinBoxScaleYChanged(int)</slot>
   <slot>resetDefer(QString)</slot>
   <slot>deferChanged(int)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>
