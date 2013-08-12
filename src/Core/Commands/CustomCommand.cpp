@@ -5,7 +5,7 @@
 CustomCommand::CustomCommand(QObject* parent)
     : AbstractCommand(parent),
       stopCommand(""), playCommand(""), loadCommand(""), pauseCommand(""), nextCommand(""), updateCommand(""),
-      invokeCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""), triggerOnNext(CustomCmd::DEFAULT_TRIGGER_ON_NEXT)
+      invokeCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""), triggerOnNext(Custom::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 

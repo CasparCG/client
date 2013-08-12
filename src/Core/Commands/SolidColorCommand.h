@@ -28,6 +28,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         const QString& getTween() const;
         const QString& getDirection() const;
         bool getUseAuto() const;
+        bool getTriggerOnNext() const;
 
         void setColor(const QString& color);
         void setTransition(const QString& transition);
@@ -35,6 +36,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
         void setUseAuto(bool useAuto);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString color;
@@ -43,6 +45,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         QString tween;
         QString direction;
         bool useAuto;
+        bool triggerOnNext;
 
         Q_SIGNAL void colorChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
@@ -50,4 +53,5 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void useAutoChanged(bool);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };

@@ -124,6 +124,7 @@ AbstractRundownWidget* RundownSolidColorWidget::clone()
     command->setTween(this->command.getTween());
     command->setDirection(this->command.getDirection());
     command->setUseAuto(this->command.getUseAuto());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -207,7 +208,7 @@ bool RundownSolidColorWidget::executeCommand(enum Playout::PlayoutType::Type typ
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play)
+    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
@@ -222,6 +223,8 @@ bool RundownSolidColorWidget::executeCommand(enum Playout::PlayoutType::Type typ
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
+    else if (type == Playout::PlayoutType::Next)
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)

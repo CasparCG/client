@@ -38,10 +38,5 @@ class WIDGETS_EXPORT InspectorSolidColorWidget : public QWidget, Ui::InspectorSo
         Q_SLOT void directionChanged(QString);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void useAutoChanged(int);
-        Q_SLOT void resetTransition(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetDirection(QString);
-        Q_SLOT void resetTween(QString);
-        Q_SLOT void resetUseAuto(QString);
-        Q_SLOT void resetColor(QString);
+        Q_SLOT void triggerOnNextChanged(int);
 };

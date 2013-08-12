@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
-    <height>199</height>
+    <width>220</width>
+    <height>225</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>50</width>
+         <width>59</width>
          <height>20</height>
         </size>
        </property>
@@ -78,7 +78,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>29</width>
+         <width>35</width>
          <height>20</height>
         </size>
        </property>
@@ -118,7 +118,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>35</width>
+         <width>41</width>
          <height>20</height>
         </size>
        </property>
@@ -161,7 +161,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>48</width>
+         <width>54</width>
          <height>20</height>
         </size>
        </property>
@@ -201,7 +201,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>34</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
@@ -241,7 +241,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>30</width>
+         <width>36</width>
          <height>20</height>
         </size>
        </property>
@@ -283,6 +283,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerColor">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -309,11 +362,11 @@
    <slot>durationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
+     <x>209</x>
      <y>86</y>
     </hint>
     <hint type="destinationlabel">
-     <x>223</x>
+     <x>219</x>
      <y>46</y>
     </hint>
    </hints>
@@ -325,11 +378,11 @@
    <slot>transitionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
+     <x>209</x>
      <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>223</x>
+     <x>219</x>
      <y>15</y>
     </hint>
    </hints>
@@ -341,8 +394,8 @@
    <slot>directionChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>143</y>
+     <x>209</x>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -357,8 +410,8 @@
    <slot>tweenChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>115</y>
+     <x>209</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -390,7 +443,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>91</x>
-     <y>87</y>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -406,7 +459,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>94</x>
-     <y>115</y>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -422,7 +475,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>91</x>
-     <y>143</y>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -438,7 +491,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>88</x>
-     <y>171</y>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>73</x>
@@ -454,7 +507,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>107</x>
-     <y>167</y>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
@@ -469,11 +522,11 @@
    <slot>colorDialogClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>24</y>
+     <x>209</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>264</x>
+     <x>219</x>
      <y>20</y>
     </hint>
    </hints>
@@ -506,7 +559,23 @@
     </hint>
     <hint type="destinationlabel">
      <x>11</x>
-     <y>-9</y>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorSolidColorWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>212</y>
     </hint>
    </hints>
   </connection>
@@ -516,16 +585,10 @@
   <slot>transitionChanged(QString)</slot>
   <slot>directionChanged(QString)</slot>
   <slot>tweenChanged(QString)</slot>
-  <slot>resetTransition(QString)</slot>
-  <slot>resetDuration(QString)</slot>
-  <slot>resetTween(QString)</slot>
-  <slot>resetDirection(QString)</slot>
   <slot>pauseOnLoadChanged(int)</slot>
-  <slot>resetPauseOnLoad(QString)</slot>
-  <slot>resetUseAuto(QString)</slot>
   <slot>useAutoChanged(int)</slot>
   <slot>colorDialogClicked()</slot>
   <slot>colorChanged(QString)</slot>
-  <slot>resetColor(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

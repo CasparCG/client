@@ -213,7 +213,7 @@ namespace Geometry
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
-namespace CustomCmd
+namespace Custom
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
@@ -242,6 +242,7 @@ namespace FileRecorder
 
 namespace SolidColor
 {
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const QString DEFAULT_NAME = "#00000000";
 }
 

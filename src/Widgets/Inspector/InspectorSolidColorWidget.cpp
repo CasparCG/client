@@ -43,6 +43,7 @@ bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -57,6 +58,7 @@ void InspectorSolidColorWidget::blockAllSignals(bool block)
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorSolidColorWidget::loadDirection()
@@ -163,38 +165,7 @@ void InspectorSolidColorWidget::useAutoChanged(int state)
     this->command->setUseAuto((state == Qt::Checked) ? true : false);
 }
 
-void InspectorSolidColorWidget::resetTransition(QString transition)
+void InspectorSolidColorWidget::triggerOnNextChanged(int state)
 {
-    this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
-    this->command->setTransition(this->comboBoxTransition->currentText());
-}
-
-void InspectorSolidColorWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorSolidColorWidget::resetDirection(QString direction)
-{
-    this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
-    this->command->setDirection(this->comboBoxDirection->currentText());
-}
-
-void InspectorSolidColorWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
-void InspectorSolidColorWidget::resetUseAuto(QString useAuto)
-{
-    this->checkBoxUseAuto->setChecked(false);
-    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
-}
-
-void InspectorSolidColorWidget::resetColor(QString color)
-{
-    this->lineEditColor->setText(SolidColor::DEFAULT_NAME);
-    this->command->setColor(this->lineEditColor->text());
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
