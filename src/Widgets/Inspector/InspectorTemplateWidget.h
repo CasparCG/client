@@ -31,7 +31,10 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         void blockAllSignals(bool block);
 
         Q_SLOT void addRow();
-        Q_SLOT void removeRow();
+        Q_SLOT bool removeRow();
+        Q_SLOT bool duplicateSelectedItem();
+        Q_SLOT bool copySelectedItem();
+        Q_SLOT bool pasteSelectedItem();
         Q_SLOT void invokeChanged(QString);
         Q_SLOT void flashlayerChanged(int);
         Q_SLOT void useStoredDataChanged(int);

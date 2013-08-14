@@ -8,6 +8,8 @@
 
 #include <QtCore/QDebug>
 
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
 #include <QtGui/QCursor>
 #include <QtGui/QResizeEvent>
 
@@ -25,7 +27,22 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
 
 bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if (target == this->treeWidgetTemplateData)
+        {
+            if (keyEvent->key() == Qt::Key_Delete)
+                return removeRow();
+            else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
+                return duplicateSelectedItem();
+            else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
+                return copySelectedItem();
+            else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
+                return pasteSelectedItem();
+        }
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         this->model = rundownItemSelectedEvent->getLibraryModel();
@@ -106,17 +123,64 @@ void InspectorTemplateWidget::addRow()
         treeItem->setText(0, dialog->getName());
         treeItem->setText(1, dialog->getValue());
 
-        this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
+        this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
         this->treeWidgetTemplateData->setCurrentItem(treeItem);
 
         this->rowIndex++;
     }
 }
 
-void InspectorTemplateWidget::removeRow()
+bool InspectorTemplateWidget::removeRow()
 {
     delete this->treeWidgetTemplateData->currentItem();
     updateDataTemplateModels();
+
+    return true;
+}
+
+bool InspectorTemplateWidget::duplicateSelectedItem()
+{
+    if (!copySelectedItem())
+        return true;
+
+    if (!pasteSelectedItem())
+        return true;
+
+    return true;
+}
+
+bool InspectorTemplateWidget::copySelectedItem()
+{
+    QString data;
+
+    if (this->treeWidgetTemplateData->selectedItems().count() == 0)
+        return true;
+
+    data = this->treeWidgetTemplateData->selectedItems().at(0)->text(0);
+    data += "#" + this->treeWidgetTemplateData->selectedItems().at(0)->text(1);
+
+    qApp->clipboard()->setText(data);
+
+    return true;
+}
+
+bool InspectorTemplateWidget::pasteSelectedItem()
+{
+    if (qApp->clipboard()->text().isEmpty())
+        return true;
+
+    if (qApp->clipboard()->text().split("#").count() < 2)
+        return true;
+
+    QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+    treeItem->setText(0, qApp->clipboard()->text().split("#").at(0));
+    treeItem->setText(1, qApp->clipboard()->text().split("#").at(1));
+
+    this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
+
+    this->rowIndex++;
+
+    return true;
 }
 
 void InspectorTemplateWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
