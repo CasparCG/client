@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/FormatModel.h"
 
 InspectorCustomCommandWidget::InspectorCustomCommandWidget(QWidget* parent)

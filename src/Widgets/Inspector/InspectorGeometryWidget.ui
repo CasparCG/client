@@ -369,102 +369,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelPositionX</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetPositionX(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>65</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelPositionY</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetPositionY(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>65</x>
-     <y>38</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelScaleX</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetScaleX(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>77</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>147</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelScaleY</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetScaleY(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>77</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>177</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>113</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>72</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>13</x>
-     <y>171</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorGeometryWidget</receiver>
@@ -621,22 +525,6 @@
     <hint type="destinationlabel">
      <x>206</x>
      <y>104</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGeometryWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>95</x>
-     <y>225</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>21</x>
-     <y>207</y>
     </hint>
    </hints>
   </connection>

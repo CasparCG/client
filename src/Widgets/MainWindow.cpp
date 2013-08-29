@@ -8,8 +8,8 @@
 #include "EventManager.h"
 #include "DatabaseManager.h"
 #include "Events/StatusbarEvent.h"
-#include "Events/ActiveRundownChangedEvent.h"
-#include "Events/NewRundownMenuEvent.h"
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/NewRundownMenuEvent.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
@@ -31,6 +31,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->applicationTitle = this->windowTitle();
 
     this->widgetTime->setVisible(false);
+    this->widgetAction->setVisible(false);
+
+    this->splitterHorizontal->setSizes(QList<int>() << 1 << 0);
 
     qApp->installEventFilter(this);
 }

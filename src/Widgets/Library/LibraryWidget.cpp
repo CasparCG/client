@@ -6,7 +6,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "DeviceFilterWidget.h"
-#include "Events/LibraryItemSelectedEvent.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/ImportPresetEvent.h"
 #include "Events/ExportPresetEvent.h"
 #include "Models/LibraryModel.h"

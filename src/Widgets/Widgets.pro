@@ -82,7 +82,7 @@ HEADERS += \
     Library/DeviceFilterWidget.h \
     TimeWidget.h \
     OscTimeWidget.h \
-    ActionWidget.h
+    Action/ActionWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -153,7 +153,7 @@ SOURCES += \
     Library/DeviceFilterWidget.cpp \
     TimeWidget.cpp \
     OscTimeWidget.cpp \
-    ActionWidget.cpp
+    Action/ActionWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -223,7 +223,7 @@ FORMS += \
     Library/DeviceFilterWidget.ui \
     TimeWidget.ui \
     OscTimeWidget.ui \
-    ActionWidget.ui
+    Action/ActionWidget.ui
 
 RESOURCES += \
     Widgets.qrc

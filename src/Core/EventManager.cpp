@@ -52,6 +52,11 @@ void EventManager::fireDeleteRundownEvent(int index)
     qApp->postEvent(qApp, new DeleteRundownEvent(index));
 }
 
+void EventManager::fireRundownIsChangedEvent(bool changed)
+{
+    qApp->postEvent(qApp, new RundownIsChangedEvent(changed));
+}
+
 void EventManager::fireOpenRundownEvent()
 {
     qApp->postEvent(qApp, new OpenRundownEvent());

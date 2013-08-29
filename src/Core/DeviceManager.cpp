@@ -3,7 +3,7 @@
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/DataChangedEvent.h"
 #include "Events/MediaChangedEvent.h"
-#include "Events/TemplateChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
 #include "Models/DeviceModel.h"
 
 #include "CasparDevice.h"

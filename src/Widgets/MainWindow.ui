@@ -212,7 +212,7 @@
   <customwidget>
    <class>ActionWidget</class>
    <extends>QWidget</extends>
-   <header>ActionWidget.h</header>
+   <header>Action/ActionWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

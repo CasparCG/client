@@ -27,9 +27,9 @@
 #include "Commands/SeparatorCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Commands/PrintCommand.h"
-#include "Events/DeviceChangedEvent.h"
-#include "Events/LibraryItemSelectedEvent.h"
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include <QtCore/QSharedPointer>
 

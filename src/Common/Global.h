@@ -47,7 +47,9 @@ namespace Event
             ExportPreset = QEvent::User + 36,
             ImportPreset = QEvent::User + 37,
             VideolayerChanged = QEvent::User + 38,
-            AddTemplateData = QEvent::User + 39
+            AddTemplateData = QEvent::User + 39,
+            RundownIsChanged = QEvent::User + 40,
+            AddActionItem = QEvent::User + 41
         };
     };
 }

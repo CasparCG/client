@@ -3,7 +3,7 @@
 #include "Global.h"
 #include "GpiManager.h"
 
-#include "Events/LabelChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 
 #include <QtGui/QApplication>
 #include <QtCore/QObject>

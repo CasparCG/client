@@ -420,86 +420,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelTransition</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetTransition(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>90</x>
-     <y>58</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>91</x>
-     <y>86</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>48</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTween</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>94</x>
-     <y>114</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDirection</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetDirection(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>91</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>9</x>
-     <y>89</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelUseAuto</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetUseAuto(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>88</x>
-     <y>170</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>73</x>
-     <y>198</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxUseAuto</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorSolidColorWidget</receiver>
@@ -544,22 +464,6 @@
     <hint type="destinationlabel">
      <x>1</x>
      <y>9</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelColor</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorSolidColorWidget</receiver>
-   <slot>resetColor(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>80</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>11</x>
-     <y>0</y>
     </hint>
    </hints>
   </connection>

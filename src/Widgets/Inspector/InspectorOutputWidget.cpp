@@ -13,9 +13,9 @@
 #include "Commands/PrintCommand.h"
 #include "Commands/GridCommand.h"
 #include "Commands/CustomCommand.h"
-#include "Events/LibraryItemSelectedEvent.h"
-#include "Events/RundownItemSelectedEvent.h"
-#include "Events/EmptyRundownEvent.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
 
 #include <QtGui/QApplication>
 

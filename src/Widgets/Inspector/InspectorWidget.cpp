@@ -51,8 +51,8 @@
 #include "Commands/ImageScrollerCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/CustomCommand.h"
-#include "Events/RundownItemSelectedEvent.h"
-#include "Events/EmptyRundownEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
 
 InspectorWidget::InspectorWidget(QWidget* parent)
     : QWidget(parent),

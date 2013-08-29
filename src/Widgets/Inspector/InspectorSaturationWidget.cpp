@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>

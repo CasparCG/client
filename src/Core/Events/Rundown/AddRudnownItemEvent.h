@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Shared.h"
-#include "../Models/LibraryModel.h"
+#include "../../Shared.h"
+#include "../../Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QSharedPointer>

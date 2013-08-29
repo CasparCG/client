@@ -2,8 +2,8 @@
 #include "RundownTreeWidget.h"
 
 #include "EventManager.h"
-#include "Events/DeleteRundownEvent.h"
-#include "Events/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/DeleteRundownEvent.h"
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
@@ -99,6 +99,20 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         QFileInfo info(activeRundownChangedEvent->getPath());
         this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), info.baseName());
+
+        return true;
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownIsChanged))
+    {
+        RundownIsChangedEvent* rundownIsChangedEvent = dynamic_cast<RundownIsChangedEvent*>(event);
+
+        if (rundownIsChangedEvent->getChanged())
+        {
+            this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(),
+                                               this->tabWidgetRundown->tabText(this->tabWidgetRundown->currentIndex()) + " *");
+
+            //EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+        }
 
         return true;
     }

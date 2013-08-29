@@ -18,19 +18,19 @@ HEADERS += \
     Commands/CropCommand.h \
     Commands/GeometryCommand.h \
     Commands/TemplateCommand.h \
-    Events/AddRudnownItemEvent.h \
+    Events/Rundown/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
     Events/MediaChangedEvent.h \
-    Events/RundownItemSelectedEvent.h \
+    Events/Rundown/RundownItemSelectedEvent.h \
     Events/StatusbarEvent.h \
-    Events/TemplateChangedEvent.h \
+    Events/Inspector/TemplateChangedEvent.h \
     Models/ConfigurationModel.h \
     Models/DeviceModel.h \
     Models/LibraryModel.h \
     Models/RundownModel.h \
     Models/TemplateDataModel.h \
     Models/TypeModel.h \
-    Events/LibraryItemSelectedEvent.h \
+    Events/Library/LibraryItemSelectedEvent.h \
     Commands/BrightnessCommand.h \
     Commands/SaturationCommand.h \
     Commands/OpacityCommand.h \
@@ -54,14 +54,14 @@ HEADERS += \
     Commands/ImageScrollerCommand.h \
     Commands/FileRecorderCommand.h \
     Commands/GroupCommand.h \
-    Events/OpenRundownEvent.h \
+    Events/Rundown/OpenRundownEvent.h \
     Commands/BlendModeCommand.h \
     Models/BlendModeModel.h \
-    Events/SaveRundownEvent.h \
+    Events/Rundown/SaveRundownEvent.h \
     LibraryManager.h \
-    Events/RefreshLibraryEvent.h \
-    Events/AutoRefreshLibraryEvent.h \
-    Events/CompactViewEvent.h \
+    Events/Library/RefreshLibraryEvent.h \
+    Events/Library/AutoRefreshLibraryEvent.h \
+    Events/Rundown/CompactViewEvent.h \
     Commands/SeparatorCommand.h \
     Commands/PrintCommand.h \
     Commands/AbstractCommand.h \
@@ -75,17 +75,17 @@ HEADERS += \
     Commands/SolidColorCommand.h \
     Commands/ImageCommand.h \
     Commands/VideoCommand.h \
-    Events/DeviceChangedEvent.h \
-    Events/LabelChangedEvent.h \
-    Events/TargetChangedEvent.h \
+    Events/Inspector/DeviceChangedEvent.h \
+    Events/Inspector/LabelChangedEvent.h \
+    Events/Inspector/TargetChangedEvent.h \
     Events/PreviewEvent.h \
     EventManager.h \
-    Events/EmptyRundownEvent.h \
-    Events/NewRundownMenuEvent.h \
-    Events/NewRundownEvent.h \
-    Events/DeleteRundownEvent.h \
-    Events/ActiveRundownChangedEvent.h \
-    Events/ChannelChangedEvent.h \
+    Events/Rundown/EmptyRundownEvent.h \
+    Events/Rundown/NewRundownMenuEvent.h \
+    Events/Rundown/NewRundownEvent.h \
+    Events/Rundown/DeleteRundownEvent.h \
+    Events/Rundown/ActiveRundownChangedEvent.h \
+    Events/Inspector/ChannelChangedEvent.h \
     Models/PresetModel.h \
     Events/PresetChangedEvent.h \
     Events/AddPresetItemEvent.h \
@@ -93,9 +93,11 @@ HEADERS += \
     Events/ExportPresetEvent.h \
     Commands/CustomCommand.h \
     OscSubscription.h \
-    Events/VideolayerChangedEvent.h \
+    Events/Inspector/VideolayerChangedEvent.h \
     Models/OscFileModel.h \
-    Events/AddTemplateDataEvent.h
+    Events/Inspector/AddTemplateDataEvent.h \
+    Events/Rundown/RundownIsChangedEvent.h \
+    Events/Action/AddActionItemEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -103,18 +105,18 @@ SOURCES += \
     Commands/CropCommand.cpp \
     Commands/GeometryCommand.cpp \
     Commands/TemplateCommand.cpp \
-    Events/AddRudnownItemEvent.cpp \
+    Events/Rundown/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
     Events/MediaChangedEvent.cpp \
-    Events/RundownItemSelectedEvent.cpp \
+    Events/Rundown/RundownItemSelectedEvent.cpp \
     Events/StatusbarEvent.cpp \
-    Events/TemplateChangedEvent.cpp \
+    Events/Inspector/TemplateChangedEvent.cpp \
     Models/ConfigurationModel.cpp \
     Models/DeviceModel.cpp \
     Models/LibraryModel.cpp \
     Models/RundownModel.cpp \
     Models/TypeModel.cpp \
-    Events/LibraryItemSelectedEvent.cpp \
+    Events/Library/LibraryItemSelectedEvent.cpp \
     Models/TemplateDataModel.cpp \
     Commands/BrightnessCommand.cpp \
     Commands/SaturationCommand.cpp \
@@ -139,14 +141,14 @@ SOURCES += \
     Commands/ImageScrollerCommand.cpp \
     Commands/FileRecorderCommand.cpp \
     Commands/GroupCommand.cpp \
-    Events/OpenRundownEvent.cpp \
+    Events/Rundown/OpenRundownEvent.cpp \
     Models/BlendModeModel.cpp \
     Commands/BlendModeCommand.cpp \
-    Events/SaveRundownEvent.cpp \
+    Events/Rundown/SaveRundownEvent.cpp \
     LibraryManager.cpp \
-    Events/AutoRefreshLibraryEvent.cpp \
-    Events/RefreshLibraryEvent.cpp \
-    Events/CompactViewEvent.cpp \
+    Events/Library/AutoRefreshLibraryEvent.cpp \
+    Events/Library/RefreshLibraryEvent.cpp \
+    Events/Rundown/CompactViewEvent.cpp \
     Commands/SeparatorCommand.cpp \
     Commands/PrintCommand.cpp \
     Commands/AbstractCommand.cpp \
@@ -160,17 +162,17 @@ SOURCES += \
     Commands/SolidColorCommand.cpp \
     Commands/ImageCommand.cpp \
     Commands/VideoCommand.cpp \
-    Events/DeviceChangedEvent.cpp \
-    Events/LabelChangedEvent.cpp \
-    Events/TargetChangedEvent.cpp \
+    Events/Inspector/DeviceChangedEvent.cpp \
+    Events/Inspector/LabelChangedEvent.cpp \
+    Events/Inspector/TargetChangedEvent.cpp \
     Events/PreviewEvent.cpp \
     EventManager.cpp \
-    Events/EmptyRundownEvent.cpp \
-    Events/NewRundownMenuEvent.cpp \
-    Events/NewRundownEvent.cpp \
-    Events/DeleteRundownEvent.cpp \
-    Events/ActiveRundownChangedEvent.cpp \
-    Events/ChannelChangedEvent.cpp \
+    Events/Rundown/EmptyRundownEvent.cpp \
+    Events/Rundown/NewRundownMenuEvent.cpp \
+    Events/Rundown/NewRundownEvent.cpp \
+    Events/Rundown/DeleteRundownEvent.cpp \
+    Events/Rundown/ActiveRundownChangedEvent.cpp \
+    Events/Inspector/ChannelChangedEvent.cpp \
     Models/PresetModel.cpp \
     Events/PresetChangedEvent.cpp \
     Events/AddPresetItemEvent.cpp \
@@ -178,9 +180,11 @@ SOURCES += \
     Events/ExportPresetEvent.cpp \
     Commands/CustomCommand.cpp \
     OscSubscription.cpp \
-    Events/VideolayerChangedEvent.cpp \
+    Events/Inspector/VideolayerChangedEvent.cpp \
     Models/OscFileModel.cpp \
-    Events/AddTemplateDataEvent.cpp
+    Events/Inspector/AddTemplateDataEvent.cpp \
+    Events/Rundown/RundownIsChangedEvent.cpp \
+    Events/Action/AddActionItemEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

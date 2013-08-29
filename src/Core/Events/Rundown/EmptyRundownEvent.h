@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Shared.h"
+#include "../../Shared.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QString>

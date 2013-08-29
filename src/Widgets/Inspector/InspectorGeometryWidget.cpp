@@ -4,8 +4,8 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/RundownItemSelectedEvent.h"
-#include "Events/DeviceChangedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>

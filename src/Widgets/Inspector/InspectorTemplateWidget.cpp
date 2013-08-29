@@ -3,8 +3,8 @@
 
 #include "Global.h"
 
-#include "Events/AddTemplateDataEvent.h"
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Inspector/AddTemplateDataEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include <QtCore/QDebug>
 
@@ -177,8 +177,6 @@ bool InspectorTemplateWidget::pasteSelectedItem()
     treeItem->setText(1, qApp->clipboard()->text().split("#").at(1));
 
     this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
-
-    this->rowIndex++;
 
     return true;
 }

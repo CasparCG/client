@@ -2,7 +2,7 @@
 
 #include "Global.h"
 
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 InspectorImageScrollerWidget::InspectorImageScrollerWidget(QWidget* parent)
     : QWidget(parent),

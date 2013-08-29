@@ -4,11 +4,12 @@
 
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
+#include "EventManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/TargetChangedEvent.h"
-#include "Events/LabelChangedEvent.h"
-#include "Events/DeviceChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
 
 #include <math.h>
 
@@ -62,6 +63,8 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
+
+    EventManager::getInstance().fireRundownIsChangedEvent(false);
 
     qApp->installEventFilter(this);
 }

@@ -1,6 +1,6 @@
 #include "InspectorGpiOutputWidget.h"
 
-#include "Events/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include "Global.h"
 

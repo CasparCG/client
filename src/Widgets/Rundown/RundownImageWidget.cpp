@@ -7,9 +7,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/TargetChangedEvent.h"
-#include "Events/LabelChangedEvent.h"
-#include "Events/DeviceChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
 
 #include <math.h>
 
