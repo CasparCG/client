@@ -2,6 +2,8 @@
 
 #include "Global.h"
 
+#include "DatabaseManager.h"
+
 #include <QtCore/QDateTime>
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
@@ -29,14 +31,21 @@ void OscTimeWidget::reset()
     this->setVisible(false);
 }
 
-void OscTimeWidget::setTime(int currentFrame)
+void OscTimeWidget::setTime(int currentFrame, int length)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
 
-    double currentTime = currentFrame * (1.0 / this->fps);
+    bool countTimeDown = (DatabaseManager::getInstance().getConfigurationByName("CountTimeDown").getValue() == "true") ? true : false;
+
+    double currentTime;
+    if(countTimeDown) {
+      currentTime = (length - currentFrame) * (1.0 / this->fps);
+    } else {
+      currentTime = currentFrame * (1.0 / this->fps);
+    }
 
     this->labelOscTime->setText(convertToTimecode(currentTime));
 

@@ -36,6 +36,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     this->checkBoxShowThumbnailTooltip->setChecked(showThumbnailTooltip);
 
+    bool countTimeDown = (DatabaseManager::getInstance().getConfigurationByName("CountTimeDown").getValue() == "true") ? true : false;
+
+    this->checkBoxCountTimeDown->setChecked(countTimeDown);
+
     loadDevices();
     loadGpi();
 }
@@ -211,6 +215,12 @@ void SettingsDialog::showThumbnailTooltipChanged(int state)
 {
     QString showThumbnailTooltip = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowThumbnailTooltip", showThumbnailTooltip));
+}
+
+void SettingsDialog::countTimeDownChanged(int state)
+{
+    QString countTimeDown = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "CountTimeDown", countTimeDown));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)

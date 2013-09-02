@@ -295,6 +295,22 @@
       <string>Show thumbnail tooltip</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxCountTimeDown">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>320</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Count video progress down</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
@@ -2268,8 +2284,8 @@
    <slot>showAddDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>700</y>
+     <x>46</x>
+     <y>699</y>
     </hint>
     <hint type="destinationlabel">
      <x>39</x>
@@ -2284,8 +2300,8 @@
    <slot>removeDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>700</y>
+     <x>88</x>
+     <y>699</y>
     </hint>
     <hint type="destinationlabel">
      <x>80</x>
@@ -2300,8 +2316,8 @@
    <slot>fontSizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>165</y>
+     <x>180</x>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>437</x>
@@ -2332,8 +2348,8 @@
    <slot>synchronizeIntervalChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>195</x>
-     <y>316</y>
+     <x>197</x>
+     <y>273</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2364,8 +2380,8 @@
    <slot>autoSynchronizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>275</y>
+     <x>129</x>
+     <y>232</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2460,8 +2476,8 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>345</y>
+     <x>246</x>
+     <y>344</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -2492,8 +2508,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>401</y>
+     <x>249</x>
+     <y>400</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -2604,8 +2620,8 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>345</y>
+     <x>303</x>
+     <y>344</y>
     </hint>
     <hint type="destinationlabel">
      <x>551</x>
@@ -2620,8 +2636,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>373</y>
+     <x>303</x>
+     <y>372</y>
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
@@ -2636,8 +2652,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>353</x>
-     <y>401</y>
+     <x>355</x>
+     <y>400</y>
     </hint>
     <hint type="destinationlabel">
      <x>705</x>
@@ -2748,8 +2764,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>217</x>
-     <y>569</y>
+     <x>219</x>
+     <y>568</y>
     </hint>
     <hint type="destinationlabel">
      <x>-61</x>
@@ -2924,8 +2940,8 @@
    <slot>showThumbnailTooltipChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>388</y>
+     <x>268</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -2946,6 +2962,22 @@
     <hint type="destinationlabel">
      <x>703</x>
      <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxCountTimeDown</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>countTimeDownChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>832</x>
+     <y>402</y>
     </hint>
    </hints>
   </connection>
@@ -2978,5 +3010,6 @@
   <slot>baudRateChanged(QString)</slot>
   <slot>autoStepChanged(int)</slot>
   <slot>showThumbnailTooltipChanged(int)</slot>
+  <slot>countTimeDownChanged(int)</slot>
  </slots>
 </ui>
