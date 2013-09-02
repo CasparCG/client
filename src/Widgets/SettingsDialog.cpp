@@ -33,8 +33,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->spinBoxRefreshInterval->setValue(DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt());
 
     bool showThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
-
     this->checkBoxShowThumbnailTooltip->setChecked(showThumbnailTooltip);
+
+    bool reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
+    this->checkBoxReverseOscTime->setChecked(reverseOscTime);
 
     loadDevices();
     loadGpi();
@@ -211,6 +213,12 @@ void SettingsDialog::showThumbnailTooltipChanged(int state)
 {
     QString showThumbnailTooltip = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowThumbnailTooltip", showThumbnailTooltip));
+}
+
+void SettingsDialog::reverseOscTimeChanged(int state)
+{
+    QString reverseOscTime = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ReverseOscTime", reverseOscTime));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)

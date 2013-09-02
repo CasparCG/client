@@ -295,6 +295,22 @@
       <string>Show thumbnail tooltip</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxReverseOscTime">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>320</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Reverse OSC time</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
@@ -2332,8 +2348,8 @@
    <slot>synchronizeIntervalChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>195</x>
-     <y>316</y>
+     <x>197</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2364,8 +2380,8 @@
    <slot>autoSynchronizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>275</y>
+     <x>129</x>
+     <y>233</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -2924,8 +2940,8 @@
    <slot>showThumbnailTooltipChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>388</y>
+     <x>268</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -2946,6 +2962,22 @@
     <hint type="destinationlabel">
      <x>703</x>
      <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxReverseOscTime</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>reverseOscTimeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>364</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>418</y>
     </hint>
    </hints>
   </connection>
@@ -2978,5 +3010,6 @@
   <slot>baudRateChanged(QString)</slot>
   <slot>autoStepChanged(int)</slot>
   <slot>showThumbnailTooltipChanged(int)</slot>
+  <slot>reverseOscTimeChanged(int)</slot>
  </slots>
 </ui>

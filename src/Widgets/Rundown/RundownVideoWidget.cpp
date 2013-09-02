@@ -22,7 +22,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
-      loopSubscription(NULL)
+      loopSubscription(NULL), animation(NULL), reverseOscTime(false)
 {
     setupUi(this);
 
@@ -62,6 +62,8 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
         QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
+
+    this->reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
 
     checkEmptyDevice();
     checkGpiConnection();
@@ -641,6 +643,12 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
     this->fileModel->setPath(arguments.at(0).toString());
 
     this->widgetOscTime->setTime(this->fileModel->getFrame());
+
+    if (this->reverseOscTime && this->fileModel->getFrame() > 0)
+        this->widgetOscTime->setTime(this->fileModel->getTotalFrames() - this->fileModel->getFrame());
+    else
+        this->widgetOscTime->setTime(this->fileModel->getFrame());
+
     this->widgetOscTime->setProgress(this->fileModel->getFrame());
 
     if (this->command.getSeek() == 0 && this->command.getLength() == 0)

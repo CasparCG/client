@@ -66,6 +66,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         LibraryModel model;
         VideoCommand command;
         ActiveAnimation* animation;
+        bool reverseOscTime;
 
         OscFileModel* fileModel;
         OscSubscription* timeSubscription;
