@@ -11,7 +11,7 @@
 #include <QtGui/QStandardItemModel>
 
 DeviceFilterWidget::DeviceFilterWidget(QWidget* parent)
-    : QWidget(parent)
+    : QWidget(parent), sendEvents(false)
 {
     setupUi(this);
 
@@ -98,10 +98,14 @@ void DeviceFilterWidget::deviceRemoved()
 
 void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
+    this->sendEvents = false;
+
     this->comboBoxDeviceFilter->addItem(QString("%1").arg(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
+
+    this->sendEvents = true;
 }
 
 void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)
@@ -145,10 +149,13 @@ void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelInd
 
     this->lineEditDeviceFilter->setText(devices);
 
-    EventManager::getInstance().fireMediaChangedEvent();
-    EventManager::getInstance().fireTemplateChangedEvent();
-    EventManager::getInstance().fireDataChangedEvent();
-    EventManager::getInstance().firePresetChangedEvent();
+    if (this->sendEvents)
+    {
+        EventManager::getInstance().fireMediaChangedEvent();
+        EventManager::getInstance().fireTemplateChangedEvent();
+        EventManager::getInstance().fireDataChangedEvent();
+        EventManager::getInstance().firePresetChangedEvent();
+    }
 
     blockAllSignals(false);
 }

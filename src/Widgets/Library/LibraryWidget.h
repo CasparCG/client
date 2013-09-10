@@ -33,6 +33,7 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         void setupTools();
         void setupUiMenu();
 
+        Q_SLOT void loadLibrary();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
         Q_SLOT bool removeSelectedPresets();
         Q_SLOT void filterLibrary();

@@ -27,6 +27,8 @@
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QStandardItemModel>
 
+#include <QtCore/QTimer>
+
 LibraryWidget::LibraryWidget(QWidget* parent)
     : QWidget(parent)
 {
@@ -83,6 +85,11 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 
     qApp->installEventFilter(this);
 
+    QTimer::singleShot(1, this, SLOT(loadLibrary()));
+}
+
+void LibraryWidget::loadLibrary()
+{
     EventManager::getInstance().fireMediaChangedEvent();
     EventManager::getInstance().fireTemplateChangedEvent();
     EventManager::getInstance().fireDataChangedEvent();

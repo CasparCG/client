@@ -20,6 +20,8 @@ class WIDGETS_EXPORT DeviceFilterWidget : public QWidget, Ui::DeviceFilterWidget
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
+        bool sendEvents;
+
         void blockAllSignals(bool block);
 
         Q_SLOT void deviceAdded(CasparDevice&);
