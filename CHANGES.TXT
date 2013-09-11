@@ -3,10 +3,11 @@ CasparCG Client 2.0.4
 - FIX: Connection issue if server not started.
 - FIX: Client crash when loading GPI settings.
 - FIX: Wrong item is selected when changing rundown tab.
+- FIX: Performance issues.
 - NEW: Added tools to the sidebar.
 - NEW: Added OSC messages in video items.
 - NEW: Added in/out points to video items.
-- NEW: Added support for Ctrl+X between rundowns.
+- NEW: Added support for cut/copy/paste between rundowns.
 - UPDATE: Changed filtering functionality.
 - UPDATE: Changed output delay to be frame based.
 - UPDATE: Support for multiline in template fields.
