@@ -10,9 +10,11 @@ TARGET = shell
 TEMPLATE = app
 
 HEADERS += \
+    Application.h
 
 SOURCES += \
     Main.cpp \
+    Application.cpp
 
 FORMS += \
 

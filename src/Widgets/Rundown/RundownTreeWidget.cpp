@@ -675,67 +675,60 @@ bool RundownTreeWidget::copySelectedItems()
 
 bool RundownTreeWidget::pasteSelectedItems()
 {
-    try
+    std::wstringstream wstringstream;
+    wstringstream << qApp->clipboard()->text().toStdWString();
+
+    int offset = 1;
+    boost::property_tree::wptree pt;
+    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
-        std::wstringstream wstringstream;
-        wstringstream << qApp->clipboard()->text().toStdWString();
+        AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
 
-        int offset = 1;
-        boost::property_tree::wptree pt;
-        boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+        int row  = this->treeWidgetRundown->currentIndex().row();
 
-        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+        QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+        if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
         {
-            AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
+            parentWidget->setInGroup(false);
+            parentWidget->setExpanded(false);
 
-            int row  = this->treeWidgetRundown->currentIndex().row();
-
-            QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-            if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-            {
-                parentWidget->setInGroup(false);
-                parentWidget->setExpanded(false);
-
-                this->treeWidgetRundown->invisibleRootItem()->insertChild(row + offset++, parentItem);
-            }
-            else
-            {
-                if (parentWidget->isGroup())
-                    continue; // We don't support group in groups.
-
-                parentWidget->setInGroup(true);
-
-                this->treeWidgetRundown->currentItem()->parent()->insertChild(row + offset++, parentItem);
-            }
-
-            this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
-
+            this->treeWidgetRundown->invisibleRootItem()->insertChild(row + offset++, parentItem);
+        }
+        else
+        {
             if (parentWidget->isGroup())
-            {
-                bool expanded = parentValue.second.get<bool>(L"expanded");
-                parentItem->setExpanded(expanded);
+                continue; // We don't support group in groups.
 
-                BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
-                {
-                    AbstractRundownWidget* childWidget = readProperties(childValue.second);
-                    childWidget->setInGroup(true);
+            parentWidget->setInGroup(true);
 
-                    QTreeWidgetItem* childItem = new QTreeWidgetItem();
-                    parentItem->addChild(childItem);
-
-                    this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
-                }
-            }
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
+            this->treeWidgetRundown->currentItem()->parent()->insertChild(row + offset++, parentItem);
         }
 
-        checkEmptyRundown();
+        this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+        if (parentWidget->isGroup())
+        {
+            bool expanded = parentValue.second.get<bool>(L"expanded");
+            parentItem->setExpanded(expanded);
+
+            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            {
+                AbstractRundownWidget* childWidget = readProperties(childValue.second);
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+
+                this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+        }
+
+        this->treeWidgetRundown->doItemsLayout(); // Refresh
     }
-    catch (boost::property_tree::file_parser_error e)
-    {
-        qDebug() << "RundownTreeWidget::pasteSelectedItems: Parse xml failed";
-    }
+
+    checkEmptyRundown();
 
     return true;
 }

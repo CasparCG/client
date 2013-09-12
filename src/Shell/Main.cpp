@@ -1,5 +1,7 @@
 #include "Global.h"
 
+#include "Application.h"
+
 #include "EventManager.h"
 #include "DatabaseManager.h"
 #include "GpiManager.h"
@@ -118,8 +120,8 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
 
 int main(int argc, char* argv[])
 {
-    QApplication::setGraphicsSystem("raster");
-    QApplication application(argc, argv);
+    Application::setGraphicsSystem("raster");
+    Application application(argc, argv);
     application.setStyle("plastique");
 
     loadDatabase(application);
