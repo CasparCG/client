@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include <boost/property_tree/xml_parser.hpp>
+#include <exception>
 
 #include <QtCore/QDebug>
 
@@ -8,13 +8,13 @@ Application::Application(int& argc, char** argv) : QApplication(argc, argv)
 {
 }
 
-bool Application::notify(QObject * receiver, QEvent * event)
+bool Application::notify(QObject* receiver, QEvent* event)
 {
     try
     {
         return QApplication::notify(receiver, event);
     }
-    catch (boost::property_tree::file_parser_error& e)
+    catch (std::exception& e)
     {
         qCritical() << "Exception thrown: " << e.what();
     }
