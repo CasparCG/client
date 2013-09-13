@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>478</height>
+    <width>264</width>
+    <height>518</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,7 +105,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutLoop">
      <item>
-      <spacer name="horizontalSpacerLoop1">
+      <spacer name="horizontalSpacerUseStoredData1">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -114,7 +114,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>2</width>
+         <width>22</width>
          <height>20</height>
         </size>
        </property>
@@ -141,7 +141,60 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacerLoop2">
+      <spacer name="horizontalSpacerUseStoredData2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutLoop_2">
+     <item>
+      <spacer name="horizontalSpacerUseUppercaseData1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelUseUppercaseData">
+       <property name="text">
+        <string>Use uppercase data</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUseUppercaseData">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerUseUppercaseData2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -319,7 +372,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>145</y>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -335,7 +388,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>173</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>211</x>
@@ -398,8 +451,8 @@
    <slot>useStoredDataChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>113</x>
-     <y>75</y>
+     <x>133</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>236</x>
@@ -434,7 +487,7 @@
      <y>143</y>
     </hint>
     <hint type="destinationlabel">
-     <x>281</x>
+     <x>263</x>
      <y>147</y>
     </hint>
    </hints>
@@ -450,8 +503,24 @@
      <y>228</y>
     </hint>
     <hint type="destinationlabel">
-     <x>286</x>
+     <x>263</x>
      <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseUppercaseData</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorTemplateWidget</receiver>
+   <slot>useUppercaseDataChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>115</y>
     </hint>
    </hints>
   </connection>
@@ -461,11 +530,9 @@
   <slot>addRow()</slot>
   <slot>removeRow()</slot>
   <slot>invokeChanged(QString)</slot>
-  <slot>resetFlashlayer(QString)</slot>
-  <slot>resetInvoke(QString)</slot>
   <slot>useStoredDataChanged(int)</slot>
-  <slot>resetUseStoredData(QString)</slot>
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+  <slot>useUppercaseDataChanged(int)</slot>
  </slots>
 </ui>

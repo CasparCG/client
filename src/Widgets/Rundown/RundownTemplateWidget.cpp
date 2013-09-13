@@ -138,6 +138,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
     command->setTemplateName(this->command.getTemplateName());
     command->setTemplateDataModels(this->command.getTemplateDataModels());
     command->setUseStoredData(this->command.getUseStoredData());
+    command->setUseUppercaseData(this->command.getUseUppercaseData());
 
     return widget;
 }

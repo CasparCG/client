@@ -56,6 +56,7 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxFlashlayer->setValue(this->command->getFlashlayer());
             this->lineEditInvoke->setText(this->command->getInvoke());
             this->checkBoxUseStoredData->setChecked(this->command->getUseStoredData());
+            this->checkBoxUseUppercaseData->setChecked(this->command->getUseUppercaseData());
 
             for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
                 delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
@@ -99,6 +100,7 @@ void InspectorTemplateWidget::blockAllSignals(bool block)
     this->spinBoxFlashlayer->blockSignals(block);
     this->lineEditInvoke->blockSignals(block);
     this->checkBoxUseStoredData->blockSignals(block);
+    this->checkBoxUseUppercaseData->blockSignals(block);
     this->treeWidgetTemplateData->blockSignals(block);
 }
 
@@ -214,28 +216,15 @@ void InspectorTemplateWidget::useStoredDataChanged(int state)
     this->command->setUseStoredData((state == Qt::Checked) ? true : false);
 }
 
+void InspectorTemplateWidget::useUppercaseDataChanged(int state)
+{
+    this->command->setUseUppercaseData((state == Qt::Checked) ? true : false);
+}
+
 void InspectorTemplateWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
     if (current == NULL)
         return;
 
     updateDataTemplateModels();
-}
-
-void InspectorTemplateWidget::resetFlashlayer(QString flashlayer)
-{
-    this->spinBoxFlashlayer->setValue(Template::DEFAULT_FLASHLAYER);
-    this->command->setFlashlayer(this->spinBoxFlashlayer->value());
-}
-
-void InspectorTemplateWidget::resetUseStoredData(QString)
-{
-    this->checkBoxUseStoredData->setChecked(false);
-    this->command->setUseStoredData(this->checkBoxUseStoredData->isChecked());
-}
-
-void InspectorTemplateWidget::resetInvoke(QString invoke)
-{
-    this->lineEditInvoke->clear();
-    this->command->setInvoke(this->lineEditInvoke->text());
 }

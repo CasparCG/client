@@ -26,13 +26,15 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         int getFlashlayer() const;
         const QString& getInvoke() const;
         bool getUseStoredData() const;
+        bool getUseUppercaseData() const;
         const QString& getTemplateName() const;
         const QString getTemplateData() const;
         const QList<TemplateDataModel>& getTemplateDataModels() const;
 
         void setFlashlayer(int flashlayer); 
         void setInvoke(const QString& invoke);
-        virtual void setUseStoredData(bool useStoredData);
+        void setUseStoredData(bool useStoredData);
+        void setUseUppercaseData(bool useUppercaseData);
         void setTemplateName(const QString& templateName);
         void setTemplateDataModels(const QList<TemplateDataModel>& models);
 
@@ -40,12 +42,14 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         int flashlayer;
         QString invoke;
         bool useStoredData;
+        bool useUppercaseData;
         QString templateName;
         QList<TemplateDataModel> models;
 
         Q_SIGNAL void flashlayerChanged(int);
         Q_SIGNAL void invokeChanged(const QString&);
         Q_SIGNAL void useStoredDataChanged(bool);
+        Q_SIGNAL void useUppercaseDataChanged(bool);
         Q_SIGNAL void templateNameChanged(const QString&);
         Q_SIGNAL void templateDataChanged(const QList<TemplateDataModel>&);
 };

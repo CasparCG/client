@@ -6,7 +6,7 @@
 
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
-      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(false), templateName(Template::DEFAULT_TEMPLATENAME)
+      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(false), useUppercaseData(false), templateName(Template::DEFAULT_TEMPLATENAME)
 {
     this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }
@@ -24,6 +24,11 @@ const QString& TemplateCommand::getInvoke() const
 bool TemplateCommand::getUseStoredData() const
 {
     return this->useStoredData;
+}
+
+bool TemplateCommand::getUseUppercaseData() const
+{
+    return this->useUppercaseData;
 }
 
 const QString& TemplateCommand::getTemplateName() const
@@ -51,8 +56,7 @@ const QString TemplateCommand::getTemplateData() const
 
             QString value = model.getValue();
             value = Xml::encode(value).replace("\\", "\\\\");
-            //value = value.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;").replace("\\", "\\\\");
-            componentData.replace(QRegExp("#VALUE"), value);
+            componentData.replace(QRegExp("#VALUE"), (this->useUppercaseData == true) ? value.toUpper() : value);
 
             templateData.append(componentData);
         }
@@ -85,6 +89,12 @@ void TemplateCommand::setUseStoredData(bool useStoredData)
     emit useStoredDataChanged(this->useStoredData);
 }
 
+void TemplateCommand::setUseUppercaseData(bool useUppercaseData)
+{
+    this->useUppercaseData = useUppercaseData;
+    emit useUppercaseDataChanged(this->useUppercaseData);
+}
+
 void TemplateCommand::setTemplateName(const QString& templateName)
 {
     this->templateName = templateName;
@@ -104,6 +114,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"flashlayer") > 0) setFlashlayer(pt.get<int>(L"flashlayer"));
     if (pt.count(L"invoke") > 0) setInvoke(QString::fromStdWString(pt.get<std::wstring>(L"invoke")));
     if (pt.count(L"usestoreddata") > 0) setUseStoredData(pt.get<bool>(L"usestoreddata"));
+    if (pt.count(L"useuppercasedata") > 0) setUseUppercaseData(pt.get<bool>(L"useuppercasedata"));
 
     if (pt.count(L"templatedata") > 0)
     {
@@ -122,6 +133,7 @@ void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("flashlayer", QString::number(this->getFlashlayer()));
     writer->writeTextElement("invoke", this->getInvoke());
     writer->writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");
+    writer->writeTextElement("useuppercasedata", (getUseUppercaseData() == true) ? "true" : "false");
 
     if (this->models.count() > 0)
     {
