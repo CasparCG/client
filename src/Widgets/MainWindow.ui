@@ -26,6 +26,12 @@
     </property>
     <item>
      <widget class="QSplitter" name="splitterVertical">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -33,15 +39,9 @@
        <layout class="QVBoxLayout" name="verticalLayoutLeft">
         <item>
          <widget class="LibraryWidget" name="widgetLibrary" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <property name="minimumSize">
            <size>
-            <width>287</width>
+            <width>289</width>
             <height>0</height>
            </size>
           </property>
@@ -72,12 +72,6 @@
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>260</width>
-          <height>0</height>
-         </size>
-        </property>
        </widget>
        <widget class="ActionWidget" name="widgetAction" native="true">
         <property name="sizePolicy">
@@ -88,7 +82,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>260</width>
+          <width>0</width>
           <height>200</height>
          </size>
         </property>
@@ -102,14 +96,14 @@
         <item>
          <widget class="TimeWidget" name="widgetTime" native="true">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>287</width>
+            <width>289</width>
             <height>100</height>
            </size>
           </property>
@@ -118,14 +112,14 @@
         <item>
          <widget class="PreviewWidget" name="widgetPreview" native="true">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>287</width>
+            <width>289</width>
             <height>200</height>
            </size>
           </property>
@@ -133,15 +127,9 @@
         </item>
         <item>
          <widget class="InspectorWidget" name="widgetInspector" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <property name="minimumSize">
            <size>
-            <width>287</width>
+            <width>289</width>
             <height>0</height>
            </size>
           </property>
