@@ -17,12 +17,13 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QFontDatabase>
+#include <QtGui/QDesktopServices>
 
 #include <QtSql/QSqlDatabase>
 
 void loadDatabase(QApplication& application)
 {
-    QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
+    QString path = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 
     QDir directory;
     if (!directory.exists(path))
@@ -120,6 +121,8 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
 
 int main(int argc, char* argv[])
 {
+    Application::setOrganizationName("CasparCG");
+    Application::setApplicationName("CasparCG Client");
     Application::setGraphicsSystem("raster");
     Application application(argc, argv);
     application.setStyle("plastique");
