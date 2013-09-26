@@ -413,38 +413,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelFlashlayer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>resetFlashlayer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>63</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelInvoke</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>resetInvoke(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>100</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>68</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxUseStoredData</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorTemplateWidget</receiver>
@@ -457,22 +425,6 @@
     <hint type="destinationlabel">
      <x>236</x>
      <y>73</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelUseStoredData</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>resetUseStoredData(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>55</x>
-     <y>81</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>102</y>
     </hint>
    </hints>
   </connection>

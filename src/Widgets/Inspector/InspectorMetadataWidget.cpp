@@ -27,6 +27,7 @@
 #include "Commands/SeparatorCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Commands/PrintCommand.h"
+#include "Commands/ClearOutputCommand.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -105,7 +106,8 @@ bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
             dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
             dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()) ||
-            dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
+            dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()) ||
+            dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
         }
