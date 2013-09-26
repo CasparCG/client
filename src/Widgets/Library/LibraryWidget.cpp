@@ -363,8 +363,6 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged))
     {
-        MediaChangedEvent* mediaChangedEvent = dynamic_cast<MediaChangedEvent*>(event);
-
         // TODO: Only add / remove necessary items.
         this->treeWidgetAudio->clear();
         this->treeWidgetImage->clear();
@@ -425,8 +423,6 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if(event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
     {
-        TemplateChangedEvent* templateChangedEvent = dynamic_cast<TemplateChangedEvent*>(event);
-
         // TODO: Only add / remove necessary items.
         this->treeWidgetTemplate->clear();
         this->treeWidgetTemplate->clearSelection();
@@ -456,8 +452,6 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if(event->type() == static_cast<QEvent::Type>(Event::EventType::DataChanged))
     {
-        DataChangedEvent* dataChangedEvent = dynamic_cast<DataChangedEvent*>(event);
-
         // TODO: Only add / remove necessary items.
         this->treeWidgetData->clear();
         this->treeWidgetData->clearSelection();
@@ -487,8 +481,6 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if(event->type() == static_cast<QEvent::Type>(Event::EventType::PresetChanged))
     {
-        PresetChangedEvent* presetChangedEvent = dynamic_cast<PresetChangedEvent*>(event);
-
         // TODO: Only add / remove necessary items.
         this->treeWidgetPreset->clear();
         this->treeWidgetPreset->clearSelection();
