@@ -300,6 +300,22 @@
       <rect>
        <x>110</x>
        <y>320</y>
+       <width>201</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Count video progress down</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxDisableVideoProgress">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>346</y>
        <width>171</width>
        <height>17</height>
       </rect>
@@ -308,7 +324,23 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Reverse OSC time</string>
+      <string>Disable video progress</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxDisableInAndOutPoints">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>372</y>
+       <width>291</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Disable in and out points in video progress</string>
      </property>
     </widget>
    </widget>
@@ -2234,6 +2266,19 @@
     <string>&amp;OK</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelSettingsInformation">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>720</y>
+     <width>591</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>* Some changes require a restart of the application</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditSerialPort</tabstop>
@@ -2981,6 +3026,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxDisableVideoProgress</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>disableVideoProgressChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>387</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDisableInAndOutPoints</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>disableInAndOutPointsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>428</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -3011,5 +3088,7 @@
   <slot>autoStepChanged(int)</slot>
   <slot>showThumbnailTooltipChanged(int)</slot>
   <slot>reverseOscTimeChanged(int)</slot>
+  <slot>disableVideoProgressChanged(int)</slot>
+  <slot>disableInAndOutPointsChanged(int)</slot>
  </slots>
 </ui>

@@ -78,6 +78,8 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltip', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ReverseOscTime', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableVideoProgress', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableInAndOutPoints', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");

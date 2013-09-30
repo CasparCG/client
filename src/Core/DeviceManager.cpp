@@ -23,7 +23,8 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 DeviceManager::DeviceManager()
 {
     this->oscListener = QSharedPointer<OscListener>(new OscListener("0.0.0.0", 6250));
-    this->oscListener->start();
+    if (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "false")
+        this->oscListener->start();
 }
 
 DeviceManager& DeviceManager::getInstance()

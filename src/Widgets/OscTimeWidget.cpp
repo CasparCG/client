@@ -2,6 +2,8 @@
 
 #include "Global.h"
 
+#include "DatabaseManager.h"
+
 #include <QtCore/QDateTime>
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
@@ -16,6 +18,12 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     this->labelLoop->setVisible(false);
     this->labelPlay->setVisible(false);
     this->labelPause->setVisible(false);
+
+    if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
+    {
+        this->labelOscInTime->setVisible(false);
+        this->labelOscOutTime->setVisible(false);
+    }
 }
 
 void OscTimeWidget::reset()
@@ -134,8 +142,11 @@ void OscTimeWidget::setCompactView(bool compactView)
     if (compactView)
     {
         this->labelOscTime->setVisible(!compactView);
-        this->labelOscInTime->setVisible(!compactView);
-        this->labelOscOutTime->setVisible(!compactView);
+        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
+        {
+            this->labelOscInTime->setVisible(!compactView);
+            this->labelOscOutTime->setVisible(!compactView);
+        }
 
         this->labelLoop->move(Define::COMPACT_LOOP_X, Define::COMPACT_LOOP_Y);
         this->labelPlay->move(Define::COMPACT_PLAY_X, Define::COMPACT_PLAY_Y);
@@ -145,8 +156,11 @@ void OscTimeWidget::setCompactView(bool compactView)
     else
     {
         this->labelOscTime->setVisible(!compactView);
-        this->labelOscInTime->setVisible(!compactView);
-        this->labelOscOutTime->setVisible(!compactView);
+        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
+        {
+            this->labelOscInTime->setVisible(!compactView);
+            this->labelOscOutTime->setVisible(!compactView);
+        }
 
         this->labelLoop->move(Define::DEFAULT_LOOP_X, Define::DEFAULT_LOOP_Y);
         this->labelPlay->move(Define::DEFAULT_PLAY_X, Define::DEFAULT_PLAY_Y);

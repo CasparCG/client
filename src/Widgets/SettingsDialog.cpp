@@ -38,6 +38,12 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
     this->checkBoxReverseOscTime->setChecked(reverseOscTime);
 
+    bool disableVideoProgress = (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "true") ? true : false;
+    this->checkBoxDisableVideoProgress->setChecked(disableVideoProgress);
+
+    bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
+    this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
+
     loadDevices();
     loadGpi();
 }
@@ -219,6 +225,18 @@ void SettingsDialog::reverseOscTimeChanged(int state)
 {
     QString reverseOscTime = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ReverseOscTime", reverseOscTime));
+}
+
+void SettingsDialog::disableVideoProgressChanged(int state)
+{
+    QString disableVideoProgress = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DisableVideoProgress", disableVideoProgress));
+}
+
+void SettingsDialog::disableInAndOutPointsChanged(int state)
+{
+    QString disableInAndOutPoints = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DisableInAndOutPoints", disableInAndOutPoints));
 }
 
 void SettingsDialog::synchronizeIntervalChanged(int interval)

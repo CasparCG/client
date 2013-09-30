@@ -32,6 +32,8 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void autoSynchronizeChanged(int);
         Q_SLOT void synchronizeIntervalChanged(int);
         Q_SLOT void showThumbnailTooltipChanged(int);
+        Q_SLOT void disableVideoProgressChanged(int);
+        Q_SLOT void disableInAndOutPointsChanged(int);
         Q_SLOT void reverseOscTimeChanged(int);
         Q_SLOT void deviceItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void gpi1Changed();
