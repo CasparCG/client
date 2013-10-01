@@ -614,7 +614,10 @@ void RundownVideoWidget::deviceAdded(CasparDevice& device)
 void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->fileModel != NULL)
+    {
         delete this->fileModel;
+        this->fileModel = NULL;
+    }
 
     this->fileModel = new OscFileModel();
     this->fileModel->setTime(arguments.at(0).toDouble());
@@ -623,12 +626,18 @@ void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, cons
 
 void RundownVideoWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (this->fileModel == NULL)
+        return;
+
     this->fileModel->setFrame(arguments.at(0).toInt());
     this->fileModel->setTotalFrames(arguments.at(1).toInt());
 }
 
 void RundownVideoWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (this->fileModel == NULL)
+        return;
+
     this->fileModel->setFramesPerSecond(arguments.at(0).toInt());
 }
 
@@ -639,6 +648,9 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
 
     if (this->model.getName().toLower() != name.toLower())
         return; // Wrong file.
+
+    if (this->fileModel == NULL)
+        return;
 
     this->fileModel->setPath(arguments.at(0).toString());
 
