@@ -23,6 +23,10 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     {
         this->labelOscInTime->setVisible(false);
         this->labelOscOutTime->setVisible(false);
+        this->labelOscTime->setStyleSheet("font-size: 16px;");
+        this->labelOscTime->setFixedWidth(this->labelOscTime->width() + 20);
+        this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() - 10, this->labelOscTime->geometry().y(),
+                                        this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
     }
 }
 

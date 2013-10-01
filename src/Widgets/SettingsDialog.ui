@@ -2276,7 +2276,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>* Some changes require a restart of the application</string>
+    <string>* It is recommended you restart CasparCG Client for the changes to take effect</string>
    </property>
   </widget>
  </widget>
