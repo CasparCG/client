@@ -53,7 +53,7 @@ void OscTimeWidget::setTime(int currentFrame)
     this->labelOscTime->setText(convertToTimecode(currentTime));
 
     if (this->timestamp == 0) // First time.
-        QTimer::singleShot(100, this, SLOT(checkState()));
+        QTimer::singleShot(200, this, SLOT(checkState()));
 
     this->timestamp = QDateTime::currentMSecsSinceEpoch();
 }
@@ -131,14 +131,14 @@ void OscTimeWidget::checkState()
 {
     qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
 
-    if (!this->paused && (currentTimestamp - this->timestamp) >= 100)
+    if (!this->paused && (currentTimestamp - this->timestamp) >= 200)
     {
         reset();
 
         return;
     }
 
-    QTimer::singleShot(100, this, SLOT(checkState()));
+    QTimer::singleShot(200, this, SLOT(checkState()));
 }
 
 void OscTimeWidget::setCompactView(bool compactView)

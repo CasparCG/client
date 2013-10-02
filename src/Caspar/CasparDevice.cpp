@@ -3,19 +3,23 @@
 #include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 
+#include <QtNetwork/QHostInfo>
+
 CasparDevice::CasparDevice(const QString& address, int port, QObject* parent)
     : AMCPDevice(address, port, parent)
 {
 }
 
-const int CasparDevice::getPort() const
+const QString CasparDevice::getIpAddress() const
 {
-    return AMCPDevice::getPort();
-}
+    QHostInfo hostInfo = QHostInfo::fromName(getAddress());
+    if (hostInfo.error() != QHostInfo::NoError)
+        return "";
 
-const QString CasparDevice::getAddress() const
-{
-    return AMCPDevice::getAddress();
+    if (hostInfo.addresses().isEmpty())
+        return "";
+
+    return hostInfo.addresses().at(0).toString();
 }
 
 void CasparDevice::refreshData()

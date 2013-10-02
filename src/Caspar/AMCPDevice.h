@@ -18,6 +18,8 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         void disconnectDevice();
 
         bool isConnected() const;
+        int getPort() const;
+        const QString& getAddress() const;
 
         Q_SLOT void connectDevice();
 
@@ -58,9 +60,6 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         QList<QString> response;
 
         virtual void sendNotification() = 0;
-
-        int getPort() const;
-        const QString& getAddress() const;
 
         void resetDevice();
         void writeMessage(const QString& message);

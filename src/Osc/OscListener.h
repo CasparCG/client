@@ -8,6 +8,10 @@
 #include <ip/UdpSocket.h>
 
 #include <QtCore/QObject>
+#include <QtCore/QMap>
+#include <QtCore/QTimer>
+#include <QtCore/QVariant>
+#include <QtCore/QMutex>
 
 #include <QtNetwork/QHostAddress>
 
@@ -21,13 +25,18 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
 
         void start();
 
-        Q_SIGNAL void messageReceived(const QString&, const QString&, const QList<QVariant>&);
+        Q_SIGNAL void messageReceived(const QString&, const QList<QVariant>&);
 
     protected:
         virtual void ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint);
 
     private:
+        QTimer* timer;
+        QMutex eventsMutex;
+        QMap<QString, QList<QVariant> > events;
         OscThread* thread;
         UdpSocket* socket;
         SocketReceiveMultiplexer* multiplexer;
+
+        Q_SLOT void sendBatch();
 };

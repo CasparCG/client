@@ -21,5 +21,5 @@ class CORE_EXPORT OscSubscription : public QObject
     private:
         QRegExp predicate;
 
-        Q_SLOT void messageReceived(const QString&, const QString&, const QList<QVariant>&);
+        Q_SLOT void messageReceived(const QString&, const QList<QVariant>&);
 };

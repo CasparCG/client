@@ -138,6 +138,7 @@ bool RundownVideoWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
         checkDeviceConnection();
+        configureOscSubscriptions();
     }
 
     return QObject::eventFilter(target, event);
@@ -534,34 +535,52 @@ void RundownVideoWidget::configureOscSubscriptions()
         this->loopSubscription->disconnect(); // Disconnect all events.
 
     QString timeFilter = Osc::DEFAULT_TIME_FILTER;
-    timeFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    timeFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->timeSubscription = new OscSubscription(timeFilter, this);
-    QObject::connect(this->timeSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->timeSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString frameFilter = Osc::DEFAULT_FRAME_FILTER;
-    frameFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->frameSubscription = new OscSubscription(frameFilter, this);
-    QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString fpsFilter = Osc::DEFAULT_FPS_FILTER;
-    fpsFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+             .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+             .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
-    QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pathFilter = Osc::DEFAULT_PATH_FILTER;
-    pathFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->pathSubscription = new OscSubscription(pathFilter, this);
-    QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pausedFilter = Osc::DEFAULT_PAUSED_FILTER;
-    pausedFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+                .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+                .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->pausedSubscription = new OscSubscription(pausedFilter, this);
-    QObject::connect(this->pausedSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->pausedSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString loopFilter = Osc::DEFAULT_LOOP_FILTER;
-    loopFilter.replace("#CHANNEL#", QString("%1").arg(this->command.getChannel())).replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    loopFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->loopSubscription = new OscSubscription(loopFilter, this);
-    QObject::connect(this->loopSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)), this, SLOT(loopSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(this->loopSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(loopSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
 void RundownVideoWidget::channelChanged(int channel)
@@ -609,6 +628,7 @@ void RundownVideoWidget::deviceAdded(CasparDevice& device)
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
+    configureOscSubscriptions();
 }
 
 void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

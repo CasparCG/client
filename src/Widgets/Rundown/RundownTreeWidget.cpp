@@ -359,6 +359,8 @@ void RundownTreeWidget::openRundown()
 
         this->activeRundown = path;
         EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+        EventManager::getInstance().fireStatusbarEvent("");
+        EventManager::getInstance().fireProcessEvent();
     }
 }
 
@@ -402,13 +404,14 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
         this->activeRundown = path;
         EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+        EventManager::getInstance().fireStatusbarEvent("");
+        EventManager::getInstance().fireProcessEvent();
     }
 }
 
 void RundownTreeWidget::checkEmptyRundown()
 {
     this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "border-color: red;" : "");
-
 }
 
 void RundownTreeWidget::colorizeItems(const QString& color)
