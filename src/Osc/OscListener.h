@@ -9,11 +9,8 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QMap>
-#include <QtCore/QTimer>
 #include <QtCore/QVariant>
 #include <QtCore/QMutex>
-
-#include <QtNetwork/QHostAddress>
 
 class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
 {
@@ -31,12 +28,11 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
         virtual void ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint);
 
     private:
-        QTimer* timer;
         QMutex eventsMutex;
         QMap<QString, QList<QVariant> > events;
         OscThread* thread;
         UdpSocket* socket;
         SocketReceiveMultiplexer* multiplexer;
 
-        Q_SLOT void sendBatch();
+        Q_SLOT void sendEventBatch();
 };

@@ -2,6 +2,7 @@
 
 #include <QtCore/QString>
 #include <QtCore/QThread>
+#include <QtCore/QTimer>
 #include <QtCore/QPair>
 
 OscListener::OscListener(const QString& address, int port, QObject* parent)
@@ -16,9 +17,7 @@ OscListener::OscListener(const QString& address, int port, QObject* parent)
 
     this->thread = new OscThread(this->multiplexer, this);
 
-    this->timer = new QTimer(this);
-    this->timer->connect(this->timer, SIGNAL(timeout()), this, SLOT(sendBatch()));
-    this->timer->start(100);
+    QTimer::singleShot(100, this, SLOT(sendEventBatch()));
 }
 
 OscListener::~OscListener()
@@ -66,11 +65,16 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     this->events[eventPath] = arguments;
 }
 
-void OscListener::sendBatch()
+void OscListener::sendEventBatch()
 {
-    QMutexLocker locker(&eventsMutex);
-    foreach (const QString& eventPath, this->events.keys())
-        emit messageReceived(eventPath, this->events[eventPath]);
+    QMap<QString, QList<QVariant> > other;
+    {
+        QMutexLocker locker(&eventsMutex);
+        this->events.swap(other);
+    }
 
-    this->events.clear();
+    foreach (const QString& eventPath, other.keys())
+        emit messageReceived(eventPath, other[eventPath]);
+
+    QTimer::singleShot(100, this, SLOT(sendEventBatch()));
 }
