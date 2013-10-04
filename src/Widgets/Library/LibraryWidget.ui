@@ -57,9 +57,18 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetTools">
+        <widget class="TreeWidget" name="treeWidgetTool">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::CopyAction</enum>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -131,6 +140,9 @@
             </color>
            </brush>
           </property>
+          <property name="flags">
+           <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+          </property>
          </item>
          <item>
           <property name="text">
@@ -153,6 +165,9 @@
              <blue>255</blue>
             </color>
            </brush>
+          </property>
+          <property name="flags">
+           <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
           </property>
          </item>
          <item>
@@ -177,6 +192,9 @@
             </color>
            </brush>
           </property>
+          <property name="flags">
+           <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+          </property>
          </item>
         </widget>
        </item>
@@ -199,9 +217,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetAudio">
+        <widget class="TreeWidget" name="treeWidgetAudio">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -266,9 +290,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetImage">
+        <widget class="TreeWidget" name="treeWidgetImage">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -336,9 +366,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetTemplate">
+        <widget class="TreeWidget" name="treeWidgetTemplate">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -406,9 +442,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetVideo">
+        <widget class="TreeWidget" name="treeWidgetVideo">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -670,6 +712,11 @@
    <header>Library/DeviceFilterWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>TreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/TreeWidget.h</header>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections>
@@ -850,7 +897,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetTools</sender>
+   <sender>treeWidgetTool</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
@@ -866,7 +913,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetTools</sender>
+   <sender>treeWidgetTool</sender>
    <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
@@ -882,7 +929,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetTools</sender>
+   <sender>treeWidgetTool</sender>
    <signal>itemClicked(QTreeWidgetItem*,int)</signal>
    <receiver>LibraryWidget</receiver>
    <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>

@@ -2,6 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
+#include "RundownTreeBaseWidget.h"
 #include "ui_RundownTreeWidget.h"
 
 #include "Global.h"

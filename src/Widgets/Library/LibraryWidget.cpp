@@ -36,11 +36,11 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     setupUiMenu();
     setupTools();
 
-    this->treeWidgetTools->setColumnHidden(1, true);
-    this->treeWidgetTools->setColumnHidden(2, true);
-    this->treeWidgetTools->setColumnHidden(3, true);
-    this->treeWidgetTools->setColumnHidden(4, true);
-    this->treeWidgetTools->setColumnHidden(5, true);
+    this->treeWidgetTool->setColumnHidden(1, true);
+    this->treeWidgetTool->setColumnHidden(2, true);
+    this->treeWidgetTool->setColumnHidden(3, true);
+    this->treeWidgetTool->setColumnHidden(4, true);
+    this->treeWidgetTool->setColumnHidden(5, true);
 
     this->treeWidgetAudio->setColumnHidden(1, true);
     this->treeWidgetAudio->setColumnHidden(2, true);
@@ -75,7 +75,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetPreset->setColumnHidden(1, true);
     this->treeWidgetPreset->setColumnHidden(2, true);
 
-    QObject::connect(this->treeWidgetTools, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+    QObject::connect(this->treeWidgetTool, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetPreset, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuPresetRequested(const QPoint &)));
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetImage, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuImageRequested(const QPoint &)));
@@ -98,7 +98,7 @@ void LibraryWidget::loadLibrary()
 
 void LibraryWidget::setupTools()
 {
-    QTreeWidgetItem* widgetAudio = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(0));
+    QTreeWidgetItem* widgetAudio = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetAudio->setIcon(0, QIcon(":/Graphics/Images/AudioSmall.png"));
     widgetAudio->setText(0, "Audio");
     widgetAudio->setText(1, "0");
@@ -107,7 +107,7 @@ void LibraryWidget::setupTools()
     widgetAudio->setText(4, Rundown::AUDIO);
     widgetAudio->setText(5, "0");
 
-    QTreeWidgetItem* widgetImage = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(0));
+    QTreeWidgetItem* widgetImage = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImage->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
     widgetImage->setText(0, "Image");
     widgetImage->setText(1, "0");
@@ -116,7 +116,7 @@ void LibraryWidget::setupTools()
     widgetImage->setText(4, Rundown::IMAGE);
     widgetImage->setText(5, "0");
 
-    QTreeWidgetItem* widgetImageScroller = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(0));
+    QTreeWidgetItem* widgetImageScroller = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImageScroller->setIcon(0, QIcon(":/Graphics/Images/ImageScrollerSmall.png"));
     widgetImageScroller->setText(0, "Image Scroller");
     widgetImageScroller->setText(1, "0");
@@ -125,7 +125,7 @@ void LibraryWidget::setupTools()
     widgetImageScroller->setText(4, Rundown::IMAGESCROLLER);
     widgetImageScroller->setText(5, "0");
 
-    QTreeWidgetItem* widgetTemplate = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(0));
+    QTreeWidgetItem* widgetTemplate = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetTemplate->setIcon(0, QIcon(":/Graphics/Images/TemplateSmall.png"));
     widgetTemplate->setText(0, "Template");
     widgetTemplate->setText(1, "0");
@@ -134,7 +134,7 @@ void LibraryWidget::setupTools()
     widgetTemplate->setText(4, Rundown::TEMPLATE);
     widgetTemplate->setText(5, "0");
 
-    QTreeWidgetItem* widgetVideo = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(0));
+    QTreeWidgetItem* widgetVideo = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetVideo->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
     widgetVideo->setText(0, "Video");
     widgetVideo->setText(1, "0");
@@ -143,7 +143,7 @@ void LibraryWidget::setupTools()
     widgetVideo->setText(4, Rundown::VIDEO);
     widgetVideo->setText(5, "0");
 
-    QTreeWidgetItem* widgetBlendMode = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetBlendMode = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetBlendMode->setIcon(0, QIcon(":/Graphics/Images/BlendModeSmall.png"));
     widgetBlendMode->setText(0, "Blend Mode");
     widgetBlendMode->setText(1, "0");
@@ -152,7 +152,7 @@ void LibraryWidget::setupTools()
     widgetBlendMode->setText(4, Rundown::BLENDMODE);
     widgetBlendMode->setText(5, "0");
 
-    QTreeWidgetItem* widgetBrightness = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetBrightness = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetBrightness->setIcon(0, QIcon(":/Graphics/Images/BrightnessSmall.png"));
     widgetBrightness->setText(0, "Brightness");
     widgetBrightness->setText(1, "0");
@@ -161,7 +161,7 @@ void LibraryWidget::setupTools()
     widgetBrightness->setText(4, Rundown::BRIGHTNESS);
     widgetBrightness->setText(5, "0");
 
-    QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetContrast->setIcon(0, QIcon(":/Graphics/Images/ContrastSmall.png"));
     widgetContrast->setText(0, "Contrast");
     widgetContrast->setText(1, "0");
@@ -170,7 +170,7 @@ void LibraryWidget::setupTools()
     widgetContrast->setText(4, Rundown::CONTRAST);
     widgetContrast->setText(5, "0");
 
-    QTreeWidgetItem* widgetCrop = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetCrop = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetCrop->setIcon(0, QIcon(":/Graphics/Images/CropSmall.png"));
     widgetCrop->setText(0, "Crop");
     widgetCrop->setText(1, "0");
@@ -179,7 +179,7 @@ void LibraryWidget::setupTools()
     widgetCrop->setText(4, Rundown::CROP);
     widgetCrop->setText(5, "0");
 
-    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetGeometry->setIcon(0, QIcon(":/Graphics/Images/GeometrySmall.png"));
     widgetGeometry->setText(0, "Transformation");
     widgetGeometry->setText(1, "0");
@@ -188,7 +188,7 @@ void LibraryWidget::setupTools()
     widgetGeometry->setText(4, Rundown::GEOMETRY);
     widgetGeometry->setText(5, "0");
 
-    QTreeWidgetItem* widgetGrid = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetGrid = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetGrid->setIcon(0, QIcon(":/Graphics/Images/GridSmall.png"));
     widgetGrid->setText(0, "Grid");
     widgetGrid->setText(1, "0");
@@ -197,7 +197,7 @@ void LibraryWidget::setupTools()
     widgetGrid->setText(4, Rundown::GRID);
     widgetGrid->setText(5, "0");
 
-    QTreeWidgetItem* widgetKeyer = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetKeyer = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetKeyer->setIcon(0, QIcon(":/Graphics/Images/KeyerSmall.png"));
     widgetKeyer->setText(0, "Mask");
     widgetKeyer->setText(1, "0");
@@ -206,7 +206,7 @@ void LibraryWidget::setupTools()
     widgetKeyer->setText(4, Rundown::KEYER);
     widgetKeyer->setText(5, "0");
 
-    QTreeWidgetItem* widgetLevels = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetLevels = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetLevels->setIcon(0, QIcon(":/Graphics/Images/LevelsSmall.png"));
     widgetLevels->setText(0, "Levels");
     widgetLevels->setText(1, "0");
@@ -215,7 +215,7 @@ void LibraryWidget::setupTools()
     widgetLevels->setText(4, Rundown::LEVELS);
     widgetLevels->setText(5, "0");
 
-    QTreeWidgetItem* widgetOpacity = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetOpacity = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetOpacity->setIcon(0, QIcon(":/Graphics/Images/OpacitySmall.png"));
     widgetOpacity->setText(0, "Opacity");
     widgetOpacity->setText(1, "0");
@@ -224,7 +224,7 @@ void LibraryWidget::setupTools()
     widgetOpacity->setText(4, Rundown::OPACITY);
     widgetOpacity->setText(5, "0");
 
-    QTreeWidgetItem* widgetSaturation = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetSaturation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetSaturation->setIcon(0, QIcon(":/Graphics/Images/SaturationSmall.png"));
     widgetSaturation->setText(0, "Saturation");
     widgetSaturation->setText(1, "0");
@@ -233,7 +233,7 @@ void LibraryWidget::setupTools()
     widgetSaturation->setText(4, Rundown::SATURATION);
     widgetSaturation->setText(5, "0");
 
-    QTreeWidgetItem* widgetVolume = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetVolume = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetVolume->setIcon(0, QIcon(":/Graphics/Images/VolumeSmall.png"));
     widgetVolume->setText(0, "Volume");
     widgetVolume->setText(1, "0");
@@ -242,7 +242,7 @@ void LibraryWidget::setupTools()
     widgetVolume->setText(4, Rundown::VOLUME);
     widgetVolume->setText(5, "0");
 
-    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(1));
+    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
     widgetCommit->setText(0, "Commit");
     widgetCommit->setText(1, "0");
@@ -251,7 +251,7 @@ void LibraryWidget::setupTools()
     widgetCommit->setText(4, Rundown::COMMIT);
     widgetCommit->setText(5, "0");
 
-    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
     widgetSolidColor->setText(0, "Solid Color");
     widgetSolidColor->setText(1, "0");
@@ -260,7 +260,7 @@ void LibraryWidget::setupTools()
     widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
     widgetSolidColor->setText(5, "0");
 
-    QTreeWidgetItem* widgetGpiOutput = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetGpiOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetGpiOutput->setIcon(0, QIcon(":/Graphics/Images/GpiOutputSmall.png"));
     widgetGpiOutput->setText(0, "GPI Output");
     widgetGpiOutput->setText(1, "0");
@@ -269,7 +269,7 @@ void LibraryWidget::setupTools()
     widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
     widgetGpiOutput->setText(5, "0");
 
-    QTreeWidgetItem* widgetFileRecorder = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetFileRecorder = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetFileRecorder->setIcon(0, QIcon(":/Graphics/Images/FileRecorderSmall.png"));
     widgetFileRecorder->setText(0, "File Recorder");
     widgetFileRecorder->setText(1, "0");
@@ -278,7 +278,7 @@ void LibraryWidget::setupTools()
     widgetFileRecorder->setText(4, Rundown::FILERECORDER);
     widgetFileRecorder->setText(5, "0");
 
-    QTreeWidgetItem* widgetDeckLinkInput = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetDeckLinkInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetDeckLinkInput->setIcon(0, QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"));
     widgetDeckLinkInput->setText(0, "DeckLink Input");
     widgetDeckLinkInput->setText(1, "0");
@@ -287,7 +287,7 @@ void LibraryWidget::setupTools()
     widgetDeckLinkInput->setText(4, Rundown::DECKLINKINPUT);
     widgetDeckLinkInput->setText(5, "0");
 
-    QTreeWidgetItem* widgetChannelSnapshot = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetChannelSnapshot = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetChannelSnapshot->setIcon(0, QIcon(":/Graphics/Images/SnapshotSmall.png"));
     widgetChannelSnapshot->setText(0, "Channel Snapshot");
     widgetChannelSnapshot->setText(1, "0");
@@ -296,7 +296,7 @@ void LibraryWidget::setupTools()
     widgetChannelSnapshot->setText(4, Rundown::PRINT);
     widgetChannelSnapshot->setText(5, "0");
 
-    QTreeWidgetItem* widgetClearOutput = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetClearOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetClearOutput->setIcon(0, QIcon(":/Graphics/Images/ClearSmall.png"));
     widgetClearOutput->setText(0, "Clear Output");
     widgetClearOutput->setText(1, "0");
@@ -305,7 +305,7 @@ void LibraryWidget::setupTools()
     widgetClearOutput->setText(4, Rundown::CLEAROUTPUT);
     widgetClearOutput->setText(5, "0");
 
-    QTreeWidgetItem* widgetCustomCommand = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetCustomCommand = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetCustomCommand->setIcon(0, QIcon(":/Graphics/Images/CustomCommandSmall.png"));
     widgetCustomCommand->setText(0, "Custom Command");
     widgetCustomCommand->setText(1, "0");
@@ -314,7 +314,7 @@ void LibraryWidget::setupTools()
     widgetCustomCommand->setText(4, Rundown::CUSTOMCOMMAND);
     widgetCustomCommand->setText(5, "0");
 
-    QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTools->topLevelItem(2));
+    QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
     widgetSeparator->setText(0, "Separator");
     widgetSeparator->setText(1, "0");
@@ -323,7 +323,7 @@ void LibraryWidget::setupTools()
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");
 
-    this->treeWidgetTools->expandAll();
+    this->treeWidgetTool->expandAll();
 }
 
 void LibraryWidget::setupUiMenu()
@@ -559,16 +559,16 @@ void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
     {
-        if (this->treeWidgetTools->selectedItems().count() == 0)
+        if (this->treeWidgetTool->selectedItems().count() == 0)
             return;
 
-        foreach (QTreeWidgetItem* item, this->treeWidgetTools->selectedItems())
+        foreach (QTreeWidgetItem* item, this->treeWidgetTool->selectedItems())
         {
             if (item->parent() == NULL) // Top level item.
                 return;
         }
 
-        this->contextMenu->exec(this->treeWidgetTools->mapToGlobal(point));
+        this->contextMenu->exec(this->treeWidgetTool->mapToGlobal(point));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
@@ -628,7 +628,7 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
     {
-        foreach (QTreeWidgetItem* item, this->treeWidgetTools->selectedItems())
+        foreach (QTreeWidgetItem* item, this->treeWidgetTool->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
                                                                              item->text(3), item->text(4), item->text(5).toInt()));
     }
@@ -759,5 +759,5 @@ void LibraryWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 
     item->setExpanded(!item->isExpanded());
 
-    this->treeWidgetTools->clearSelection();
+    this->treeWidgetTool->clearSelection();
 }
