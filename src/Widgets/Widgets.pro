@@ -84,7 +84,13 @@ HEADERS += \
     OscTimeWidget.h \
     Action/ActionWidget.h \
     Rundown/RundownTreeBaseWidget.h \
-    Library/TreeWidget.h
+    Inspector/TemplateDataTreeBaseWidget.h \
+    Library/DataTreeBaseWidget.h \
+    Library/ToolTreeBaseWidget.h \
+    Library/AudioTreeBaseWidget.h \
+    Library/ImageTreeBaseWidget.h \
+    Library/TemplateTreeBaseWidget.h \
+    Library/VideoTreeBaseWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -157,7 +163,13 @@ SOURCES += \
     OscTimeWidget.cpp \
     Action/ActionWidget.cpp \
     Rundown/RundownTreeBaseWidget.cpp \
-    Library/TreeWidget.cpp
+    Inspector/TemplateDataTreeBaseWidget.cpp \
+    Library/DataTreeBaseWidget.cpp \
+    Library/ToolTreeBaseWidget.cpp \
+    Library/AudioTreeBaseWidget.cpp \
+    Library/ImageTreeBaseWidget.cpp \
+    Library/TemplateTreeBaseWidget.cpp \
+    Library/VideoTreeBaseWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \

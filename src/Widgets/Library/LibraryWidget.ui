@@ -57,7 +57,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TreeWidget" name="treeWidgetTool">
+        <widget class="ToolTreeBaseWidget" name="treeWidgetTool">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -217,7 +217,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TreeWidget" name="treeWidgetAudio">
+        <widget class="AudioTreeBaseWidget" name="treeWidgetAudio">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -290,7 +290,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TreeWidget" name="treeWidgetImage">
+        <widget class="ImageTreeBaseWidget" name="treeWidgetImage">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -366,7 +366,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TreeWidget" name="treeWidgetTemplate">
+        <widget class="TemplateTreeBaseWidget" name="treeWidgetTemplate">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -442,7 +442,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="TreeWidget" name="treeWidgetVideo">
+        <widget class="VideoTreeBaseWidget" name="treeWidgetVideo">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
@@ -515,9 +515,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetData">
+        <widget class="DataTreeBaseWidget" name="treeWidgetData">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
          <property name="rootIsDecorated">
           <bool>false</bool>
@@ -713,9 +719,34 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TreeWidget</class>
+   <class>DataTreeBaseWidget</class>
    <extends>QTreeWidget</extends>
-   <header>Library/TreeWidget.h</header>
+   <header>Library/DataTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ToolTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/ToolTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AudioTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/AudioTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TemplateTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/TemplateTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ImageTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/ImageTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>VideoTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/VideoTreeBaseWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

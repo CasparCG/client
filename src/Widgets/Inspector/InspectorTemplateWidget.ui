@@ -299,7 +299,13 @@
         </layout>
        </item>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetTemplateData">
+        <widget class="TemplateDataTreeBaseWidget" name="treeWidgetTemplateData">
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DropOnly</enum>
+         </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -346,6 +352,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TemplateDataTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Inspector/TemplateDataTreeBaseWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
