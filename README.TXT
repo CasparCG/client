@@ -1,5 +1,5 @@
 ================================================================================
-CasparCG Client 2.0.1
+CasparCG Client 2.0.4
 ================================================================================
 Thank you for your interest in the CasparCG Client, a Mac/Windows/Linux client 
 software used to control graphics, audio and video playout and recording
@@ -9,7 +9,7 @@ This release is considered tested and stable, and is intended for use in
 professional production.
 
 IMPORTANT: Previously saved rundown files created with versions prior to 
-version 2.0 are not compatible with this version. Sorry about that!
+version 2.0.4 are not compatible with this version. Sorry about that!
 
 
 
