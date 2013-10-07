@@ -12,7 +12,7 @@ QMimeData* ToolTreeBaseWidget::mimeData(const QList<QTreeWidgetItem*> items) con
     QString data;
     foreach (QTreeWidgetItem* item, items)
     {
-        data.append(QString("%1:%2:%3:%4:%5:%6#").arg(item->text(1)).arg(item->text(2)).arg(item->text(0))
+        data.append(QString("%1:%2:%3:%4:%5:%6#").arg(item->text(0)).arg(item->text(1)).arg(item->text(2))
                                                  .arg(item->text(3)).arg(item->text(4)).arg(item->text(5)));
     }
     data.remove(QRegExp("#$"));
