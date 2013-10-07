@@ -25,8 +25,11 @@
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
      <property name="dragDropMode">
-      <enum>QAbstractItemView::DropOnly</enum>
+      <enum>QAbstractItemView::DragDrop</enum>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>

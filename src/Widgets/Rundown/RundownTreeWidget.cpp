@@ -170,11 +170,11 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 return executeCommand(Playout::PlayoutType::Load, KeyPress);
             else if (keyEvent->key() == Qt::Key_F4) // Pause.
                 return executeCommand(Playout::PlayoutType::Pause, KeyPress);
-            else if (keyEvent->key() == Qt::Key_F6) // Next.
+            else if (keyEvent->key() == Qt::Key_F5) // Next.
                 return executeCommand(Playout::PlayoutType::Next, KeyPress);
-            else if (keyEvent->key() == Qt::Key_F7) // Update.
+            else if (keyEvent->key() == Qt::Key_F6) // Update.
                 return executeCommand(Playout::PlayoutType::Update, KeyPress);
-            else if (keyEvent->key() == Qt::Key_F8) // Invoke.
+            else if (keyEvent->key() == Qt::Key_F7) // Invoke.
                 return executeCommand(Playout::PlayoutType::Invoke, KeyPress);
             else if (keyEvent->key() == Qt::Key_F10) // Clear.
                 return executeCommand(Playout::PlayoutType::Clear, KeyPress);
@@ -316,9 +316,8 @@ void RundownTreeWidget::setActive(bool active)
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). The inspector will update the selected
-        // rundown item. We want to be absolutely sure that we update the right item, which
-        // will not be the case with postEvent() if we trigger other keys really fast.
+        // Use synchronous event through sendEvent(). Make sure we update the right item in the
+        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(command, model);
     }
 }
@@ -524,9 +523,8 @@ void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). The inspector will update the selected
-        // rundown item. We want to be absolutely sure that we update the right item, which
-        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        // Use synchronous event through sendEvent(). Make sure we update the right item in the
+        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(command, model);
     }
 }
@@ -549,16 +547,14 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). The inspector will update the selected
-        // rundown item. We want to be absolutely sure that we update the right item, which
-        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        // Use synchronous event through sendEvent(). Make sure we update the right item in the
+        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(command, model);
     }
     else if (currentItem == NULL && previous != NULL && this->treeWidgetRundown->invisibleRootItem()->childCount() == 1) // Last item was removed form the rundown.
     {
-        // Use synchronous event through sendEvent(). The inspector will update the selected
-        // rundown item. We want to be absolutely sure that we update the right item, which
-        // will not be the case with postEvent() if we trigger up/down arrow key really fast.
+        // Use synchronous event through sendEvent(). Make sure we update the right item in the
+        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireEmptyRundownEvent();
     }
 }

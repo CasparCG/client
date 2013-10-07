@@ -69,61 +69,83 @@ void EventManager::fireSaveRundownEvent(bool saveAs)
 
 void EventManager::fireExecuteStopEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecutePlayEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier));
-}
-
-void EventManager::fireExecutePauseEvent()
-{
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteLoadEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
+}
+
+void EventManager::fireExecutePauseEvent()
+{
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteNextEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteUpdateEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteInvokeEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F8, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteClearEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteClearVideolayerEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireExecuteClearChannelEvent()
 {
-    qApp->postEvent(qApp, new QKeyEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
+    // Use synchronous event through sendEvent().
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireToggleCompactViewEvent()
 {
+    // Use synchronous event through sendEvent().
     qApp->postEvent(qApp, new CompactViewEvent());
 }
 
 void EventManager::fireRefreshLibraryEvent(int delay)
 {
+    // Use synchronous event through sendEvent().
     qApp->postEvent(qApp, new RefreshLibraryEvent(delay));
 }
 
@@ -204,7 +226,9 @@ void EventManager::fireAddPresetItemEvent(const QString& preset)
 
 void EventManager::fireStatusbarEvent(const QString& message, int timeout)
 {
-    qApp->postEvent(qApp, new StatusbarEvent(message, timeout));
+    // Use synchronous event through sendEvent().
+    StatusbarEvent event(message, timeout);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireActiveRundownChangedEvent(const QString& path)
@@ -215,15 +239,15 @@ void EventManager::fireActiveRundownChangedEvent(const QString& path)
 void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
 {
     // Use synchronous event through sendEvent().
-    qApp->sendEvent(qApp, new RundownItemSelectedEvent(command, model));
+    RundownItemSelectedEvent event(command, model);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
 {
-    // Use synchronous event through sendEvent(). The inspector will update the selected
-    // rundown item. We want to be absolutely sure that we update the right item, which
-    // will not be the case with postEvent() if we trigger up/down arrow key really fast.
-    qApp->sendEvent(qApp, new LibraryItemSelectedEvent(command, model));
+    // Use synchronous event through sendEvent().
+    LibraryItemSelectedEvent event(command, model);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireAutoRefreshLibraryEvent(bool autoRefresh, int interval)
