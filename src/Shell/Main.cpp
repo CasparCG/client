@@ -23,7 +23,8 @@
 
 void loadDatabase(QApplication& application)
 {
-    QString path = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    //QString path = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    QString path = QString("%1/.CasparCG/Client").arg(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
 
     QDir directory;
     if (!directory.exists(path))
@@ -121,8 +122,8 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
 
 int main(int argc, char* argv[])
 {
-    Application::setOrganizationName("CasparCG");
-    Application::setApplicationName("CasparCG Client");
+    //Application::setOrganizationName("CasparCG");
+    //Application::setApplicationName("CasparCG Client");
     Application::setGraphicsSystem("raster");
     Application application(argc, argv);
     application.setStyle("plastique");
