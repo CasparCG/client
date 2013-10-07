@@ -516,6 +516,9 @@ void RundownVideoWidget::checkDeviceConnection()
 
 void RundownVideoWidget::configureOscSubscriptions()
 {
+    if (this->model.getDeviceName().isEmpty())
+        return;
+
     if (this->timeSubscription != NULL)
         this->timeSubscription->disconnect(); // Disconnect all events.
 
