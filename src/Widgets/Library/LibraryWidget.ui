@@ -61,6 +61,9 @@
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
          <property name="dragEnabled">
           <bool>true</bool>
          </property>
@@ -205,8 +208,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -220,6 +223,9 @@
         <widget class="AudioTreeBaseWidget" name="treeWidgetAudio">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>
@@ -278,8 +284,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -293,6 +299,9 @@
         <widget class="ImageTreeBaseWidget" name="treeWidgetImage">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>
@@ -351,8 +360,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -369,6 +378,9 @@
         <widget class="TemplateTreeBaseWidget" name="treeWidgetTemplate">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>
@@ -430,8 +442,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -445,6 +457,9 @@
         <widget class="VideoTreeBaseWidget" name="treeWidgetVideo">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>
@@ -519,6 +534,9 @@
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
          <property name="dragEnabled">
           <bool>true</bool>
          </property>
@@ -588,9 +606,12 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeWidget" name="treeWidgetPreset">
+        <widget class="PresetTreeBaseWidget" name="treeWidgetPreset">
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
          <property name="rootIsDecorated">
           <bool>false</bool>
@@ -747,6 +768,11 @@
    <class>VideoTreeBaseWidget</class>
    <extends>QTreeWidget</extends>
    <header>Library/VideoTreeBaseWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PresetTreeBaseWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>Library/PresetTreeBaseWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -300,6 +300,9 @@
        </item>
        <item>
         <widget class="TemplateDataTreeBaseWidget" name="treeWidgetTemplateData">
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
          <property name="dragEnabled">
           <bool>true</bool>
          </property>

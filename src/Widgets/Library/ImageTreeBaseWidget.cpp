@@ -1,24 +1,49 @@
 #include "ImageTreeBaseWidget.h"
 
+#include <QtCore/QMimeData>
 #include <QtCore/QRegExp>
+
+#include <QtGui/QApplication>
+#include <QtGui/QTreeWidgetItem>
 
 ImageTreeBaseWidget::ImageTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent)
 {
 }
 
-QMimeData* ImageTreeBaseWidget::mimeData(const QList<QTreeWidgetItem*> items) const
+void ImageTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 {
+    if (event->button() == Qt::LeftButton)
+        dragStartPosition = event->pos();
+
+    QTreeWidget::mousePressEvent(event);
+}
+
+void ImageTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+             return;
+
+    if ((event->pos() - dragStartPosition).manhattanLength() < qApp->startDragDistance())
+         return;
+
     QString data;
-    foreach (QTreeWidgetItem* item, items)
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
     {
-        data.append(QString("%1:%2:%3:%4:%5:%6#").arg(item->text(0)).arg(item->text(1)).arg(item->text(2))
-                                                 .arg(item->text(3)).arg(item->text(4)).arg(item->text(5)));
+        data.append(QString("%1:%2:%3:%4:%5:%6#").arg(item->text(0))
+                                                 .arg(item->text(1))
+                                                 .arg(item->text(2))
+                                                 .arg(item->text(3))
+                                                 .arg(item->text(4))
+                                                 .arg(item->text(5)));
     }
     data.remove(QRegExp("#$"));
 
     QMimeData* mimeData = new QMimeData();
     mimeData->setText(data);
 
-    return mimeData;
+    QDrag* drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+
+    drag->exec(Qt::CopyAction);
 }

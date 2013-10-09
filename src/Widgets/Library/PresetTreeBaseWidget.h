@@ -8,12 +8,12 @@
 #include <QtGui/QWidget>
 #include <QtGui/QTreeWidget>
 
-class WIDGETS_EXPORT TemplateTreeBaseWidget : public QTreeWidget
+class WIDGETS_EXPORT PresetTreeBaseWidget : public QTreeWidget
 {
     Q_OBJECT
 
     public:
-        explicit TemplateTreeBaseWidget(QWidget* parent = 0);
+        explicit PresetTreeBaseWidget(QWidget* parent = 0);
 
     protected:
         void mouseMoveEvent(QMouseEvent* event);

@@ -90,7 +90,8 @@ HEADERS += \
     Library/AudioTreeBaseWidget.h \
     Library/ImageTreeBaseWidget.h \
     Library/TemplateTreeBaseWidget.h \
-    Library/VideoTreeBaseWidget.h
+    Library/VideoTreeBaseWidget.h \
+    Library/PresetTreeBaseWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -169,7 +170,8 @@ SOURCES += \
     Library/AudioTreeBaseWidget.cpp \
     Library/ImageTreeBaseWidget.cpp \
     Library/TemplateTreeBaseWidget.cpp \
-    Library/VideoTreeBaseWidget.cpp
+    Library/VideoTreeBaseWidget.cpp \
+    Library/PresetTreeBaseWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \

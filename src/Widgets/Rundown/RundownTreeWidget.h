@@ -39,6 +39,9 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
+        virtual bool pasteSelectedItems();
+        virtual bool duplicateSelectedItems();
+        virtual bool copySelectedItems() const;
 
     private:
         QString page;
@@ -51,7 +54,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuRundown;
 
         bool active;
-        bool compactView;
         bool enterPressed;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
@@ -72,14 +74,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool moveItemOutOfGroup();
         bool moveItemUp();
         bool ungroupItems();
-        bool copySelectedItems();
-        bool pasteSelectedItems();
-        bool duplicateSelectedItems();
         void colorizeItems(const QString& color);
         bool executeCommand(Playout::PlayoutType::Type type, ActionSource source);
-
-        void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer);
-        AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
 
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addPrintItem();

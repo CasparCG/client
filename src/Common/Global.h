@@ -82,6 +82,7 @@ namespace Define
     static const int DEFAULT_THUMBNAIL_HEIGHT = 32;
     static const int COMPACT_THUMBNAIL_WIDTH = 28;
     static const int COMPACT_THUMBNAIL_HEIGHT = 16;
+    static const int GROUP_INDENTION = 65;
 }
 
 namespace Gpi
