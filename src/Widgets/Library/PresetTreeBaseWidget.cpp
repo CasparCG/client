@@ -29,9 +29,10 @@ void PresetTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
          return;
 
     QMimeData* mimeData = new QMimeData();
-    mimeData->setText(QString("%1-%2-%3").arg(QTreeWidget::selectedItems().at(0)->text(0))
-                                         .arg(QTreeWidget::selectedItems().at(0)->text(1))
-                                         .arg(QTreeWidget::selectedItems().at(0)->text(2)));
+    mimeData->setText(QString("<%1>:%2:%3:%4").arg(this->objectName())
+                                             .arg(QTreeWidget::selectedItems().at(0)->text(0))
+                                             .arg(QTreeWidget::selectedItems().at(0)->text(1))
+                                             .arg(QTreeWidget::selectedItems().at(0)->text(2)));
 
     QDrag* drag = new QDrag(this);
     drag->setMimeData(mimeData);

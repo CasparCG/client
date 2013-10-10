@@ -236,7 +236,33 @@ void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
 
 bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
-    if (mimeData->text().contains("<items>")) // Internal drop
+    if (!mimeData->hasText())
+        return false;
+
+    if (mimeData->text().startsWith("<treeWidgetVideo>") ||
+        mimeData->text().startsWith("<treeWidgetTool>") ||
+        mimeData->text().startsWith("<treeWidgetTemplate>") ||
+        mimeData->text().startsWith("<treeWidgetImage>") ||
+        mimeData->text().startsWith("<treeWidgetAudio>")) // External drop from the library.
+    {
+        QTreeWidget::setCurrentItem(parent);
+
+        QStringList mimeDataSplit = mimeData->text().split("#");
+        foreach(QString data, mimeDataSplit)
+        {
+            QStringList dataSplit = data.split(":");
+            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
+                                                                             dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt()));
+        }
+    }
+    else if (mimeData->text().startsWith("<treeWidgetPreset>")) // External drop from the preset library.
+    {
+        QTreeWidget::setCurrentItem(parent);
+
+        QStringList dataSplit = mimeData->text().split(":");
+        EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
+    }
+    else if (mimeData->text().contains("<items>")) // Internal drop
     {
         QList<QTreeWidgetItem*> items = QTreeWidget::selectedItems();
 
@@ -247,25 +273,6 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
 
         foreach (QTreeWidgetItem* item, items)
            delete item;
-    }
-    if (mimeData->text().contains(":")) // External drop from the library.
-    {
-        QTreeWidget::setCurrentItem(parent);
-
-        QStringList mimeDataSplit = mimeData->text().split("#");
-        foreach(QString data, mimeDataSplit)
-        {
-            QStringList dataSplit = data.split(":");
-            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(1).toInt(), dataSplit.at(2), dataSplit.at(0),
-                                                                             dataSplit.at(3), dataSplit.at(4), dataSplit.at(5).toInt()));
-        }
-    }
-    else if (mimeData->text().contains("-")) // External drop from the preset library.
-    {
-        QTreeWidget::setCurrentItem(parent);
-
-        QStringList dataSplit = mimeData->text().split(":");
-        EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(2));
     }
 
     return true;
