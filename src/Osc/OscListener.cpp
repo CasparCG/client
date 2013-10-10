@@ -23,7 +23,7 @@ OscListener::OscListener(const QString& address, int port, QObject* parent)
 OscListener::~OscListener()
 {
     this->thread->stop();
-    this->thread->wait();
+    //this->thread->wait();
 
     delete this->socket;
     delete this->multiplexer;
