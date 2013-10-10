@@ -142,7 +142,12 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
             parentWidget->setInGroup(false);
             parentWidget->setExpanded(false);
 
-            QTreeWidget::invisibleRootItem()->insertChild(row + offset++, parentItem);
+            // If we don't have a selected row then we add the item to the bottom of the
+            // rundown. This can be the case when we drag and drop a preset to the rundown.
+            if (row != -1)
+                QTreeWidget::invisibleRootItem()->insertChild(row + offset++, parentItem);
+            else
+                QTreeWidget::invisibleRootItem()->addChild(parentItem);
         }
         else
         {
