@@ -291,6 +291,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
             qApp->clipboard()->setText(addPresetItemEvent->getPreset());
             pasteSelectedItems();
+            selectItemBelow();
 
             this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
@@ -770,17 +771,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
 
 void RundownTreeWidget::selectItemBelow()
 {
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return;
-
-    QTreeWidgetItem* itemBelow = NULL;
-    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup()) // Group.
-        itemBelow = this->treeWidgetRundown->invisibleRootItem()->child(this->treeWidgetRundown->currentIndex().row() + 1);
-    else
-        itemBelow = this->treeWidgetRundown->itemBelow(this->treeWidgetRundown->currentItem());
-
-    if (itemBelow != NULL)
-        this->treeWidgetRundown->setCurrentItem(itemBelow);
+    this->treeWidgetRundown->selectItemBelow();
 }
 
 bool RundownTreeWidget::groupItems()

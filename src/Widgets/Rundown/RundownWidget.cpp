@@ -108,8 +108,8 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         if (rundownIsChangedEvent->getChanged())
         {
-            this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(),
-                                               this->tabWidgetRundown->tabText(this->tabWidgetRundown->currentIndex()) + " *");
+            //this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(),
+            //                                   this->tabWidgetRundown->tabText(this->tabWidgetRundown->currentIndex()) + " *");
 
             //EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
         }

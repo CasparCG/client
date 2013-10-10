@@ -39,9 +39,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
-        virtual bool pasteSelectedItems();
-        virtual bool duplicateSelectedItems();
-        virtual bool copySelectedItems() const;
 
     private:
         QString page;
@@ -66,6 +63,9 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
             GpiPulse
         };
 
+        bool pasteSelectedItems();
+        bool duplicateSelectedItems();
+        bool copySelectedItems() const;
         void setupMenus();
         void checkEmptyRundown();
         bool groupItems();

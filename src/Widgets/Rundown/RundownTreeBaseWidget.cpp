@@ -160,7 +160,6 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
         }
 
         QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
-        QTreeWidget::setCurrentItem(parentItem);
 
         if (parentWidget->isGroup())
         {
@@ -266,6 +265,8 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
 
         QStringList dataSplit = mimeData->text().split(":");
         EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
+
+        selectItemBelow();
     }
     else if (mimeData->text().contains("<items>")) // Internal drop
     {
@@ -276,9 +277,29 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
         if (!pasteSelectedItems())
             return false;
 
+        selectItemBelow();
+
         foreach (QTreeWidgetItem* item, items)
            delete item;
     }
 
     return true;
+}
+
+void RundownTreeBaseWidget::selectItemBelow()
+{
+    if (QTreeWidget::currentItem() == NULL)
+    {
+        QTreeWidget::setCurrentItem(QTreeWidget::invisibleRootItem()->child(QTreeWidget::invisibleRootItem()->childCount() - 1));
+        return;
+    }
+
+    QTreeWidgetItem* itemBelow = NULL;
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0))->isGroup()) // Group.
+        itemBelow = QTreeWidget::invisibleRootItem()->child(QTreeWidget::currentIndex().row() + 1);
+    else
+        itemBelow = QTreeWidget::itemBelow(QTreeWidget::currentItem());
+
+    if (itemBelow != NULL)
+        QTreeWidget::setCurrentItem(itemBelow);
 }

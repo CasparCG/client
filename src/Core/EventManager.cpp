@@ -221,7 +221,9 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)
 {
-    qApp->postEvent(qApp, new AddPresetItemEvent(preset));
+    // Use synchronous event through sendEvent().
+    AddPresetItemEvent event(preset);
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireStatusbarEvent(const QString& message, int timeout)

@@ -44,9 +44,11 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
         void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer) const;
 
-        virtual bool pasteSelectedItems();
-        virtual bool duplicateSelectedItems();
-        virtual bool copySelectedItems() const;
+        void selectItemBelow();
+        bool pasteSelectedItems();
+        bool duplicateSelectedItems();
+        bool copySelectedItems() const;
+
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 
     protected:

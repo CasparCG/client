@@ -516,7 +516,7 @@ void RundownVideoWidget::checkDeviceConnection()
 
 void RundownVideoWidget::configureOscSubscriptions()
 {
-    if (this->model.getDeviceName().isEmpty())
+    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
         return;
 
     if (this->timeSubscription != NULL)
