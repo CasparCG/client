@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>224</width>
-    <height>112</height>
+    <height>84</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,52 +49,6 @@
       <widget class="QLineEdit" name="lineEditType">
        <property name="enabled">
         <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutTarget">
-     <item>
-      <spacer name="horizontalSpacerTarget">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>32</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTarget">
-       <property name="text">
-        <string>Target</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxTarget">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -173,22 +127,6 @@
     <hint type="destinationlabel">
      <x>242</x>
      <y>85</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTarget</sender>
-   <signal>editTextChanged(QString)</signal>
-   <receiver>InspectorMetadataWidget</receiver>
-   <slot>targetChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>110</x>
-     <y>52</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>46</y>
     </hint>
    </hints>
   </connection>

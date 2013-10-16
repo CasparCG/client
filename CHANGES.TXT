@@ -1,5 +1,6 @@
-C H A N G E S
-=============
+CasparCG Client 2.0.6
+=====================
+
 
 
 
@@ -8,8 +9,6 @@ CasparCG Client 2.0.5
 - NEW: Added support for uppercase template data.
 - NEW: Added drag and drop support.
 - NEW: Added option for disable OSC progress.
-- NEW: Rundown XMLs saved from Client 2.0.4 or later can now
-       be opened.
 - UPDATE: Performance improvement using OSC message cache.
 
 

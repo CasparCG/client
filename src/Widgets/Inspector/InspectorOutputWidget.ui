@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>218</width>
-    <height>168</height>
+    <height>196</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,6 +55,52 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTarget">
+     <item>
+      <spacer name="horizontalSpacerTarget">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>31</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTarget">
+       <property name="text">
+        <string>Target</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTarget">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -269,8 +315,8 @@
    <slot>channelChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
-     <y>57</y>
+     <x>207</x>
+     <y>85</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -285,8 +331,8 @@
    <slot>videolayerChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
-     <y>85</y>
+     <x>207</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -301,8 +347,8 @@
    <slot>delayChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>113</y>
+     <x>207</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -318,7 +364,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>87</x>
-     <y>137</y>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>185</x>
@@ -337,8 +383,24 @@
      <y>21</y>
     </hint>
     <hint type="destinationlabel">
-     <x>223</x>
+     <x>217</x>
      <y>16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTarget</sender>
+   <signal>editTextChanged(QString)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>targetChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -347,11 +409,8 @@
   <slot>channelChanged(int)</slot>
   <slot>videolayerChanged(int)</slot>
   <slot>delayChanged(int)</slot>
-  <slot>resetDelay(QString)</slot>
-  <slot>resetVideolayer(QString)</slot>
-  <slot>resetChannel(QString)</slot>
   <slot>allowGpiChanged(int)</slot>
-  <slot>resetAllowGpi(QString)</slot>
   <slot>deviceNameChanged(QString)</slot>
+  <slot>targetChanged(QString)</slot>
  </slots>
 </ui>

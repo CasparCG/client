@@ -29,8 +29,11 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         LibraryModel* model;
 
         void checkEmptyDevice();
+        void checkEmptyTarget();
         void blockAllSignals(bool block);
+        void fillTargetCombo(const QString& type);
 
+        Q_SLOT void targetChanged(QString);
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void deviceRemoved();
         Q_SLOT void deviceNameChanged(QString);
@@ -38,8 +41,4 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void channelChanged(int);
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
-        Q_SLOT void resetAllowGpi(QString);
-        Q_SLOT void resetChannel(QString);
-        Q_SLOT void resetVideolayer(QString);
-        Q_SLOT void resetDelay(QString);
 };
