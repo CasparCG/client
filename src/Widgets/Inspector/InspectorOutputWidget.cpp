@@ -205,6 +205,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorOutputWidget::blockAllSignals(bool block)
 {
     this->comboBoxDevice->blockSignals(block);
+    this->comboBoxTarget->blockSignals(block);
     this->spinBoxChannel->blockSignals(block);
     this->spinBoxVideolayer->blockSignals(block);
     this->spinBoxDelay->blockSignals(block);
