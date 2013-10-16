@@ -226,9 +226,9 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
                 dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
                 if (this->treeWidgetRundown->getCompactView())
-                    widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+                    widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
                 else
-                    widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+                    widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
 
                 for (int j = 0; j < item->childCount(); j++)
                 {
@@ -237,9 +237,9 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
                     dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
                     if (this->treeWidgetRundown->getCompactView())
-                        widget->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+                        widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
                     else
-                        widget->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+                        widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
                 }
             }
 
@@ -275,9 +275,9 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
             this->treeWidgetRundown->setFocus();
 
             if (this->treeWidgetRundown->getCompactView())
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
             else
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
 
             this->treeWidgetRundown->doItemsLayout(); // Refresh.
 
@@ -810,9 +810,9 @@ bool RundownTreeWidget::groupItems()
     this->treeWidgetRundown->expandItem(parentItem);
 
     if (this->treeWidgetRundown->getCompactView())
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
     else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
 
     foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
     {

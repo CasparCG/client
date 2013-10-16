@@ -152,10 +152,10 @@ void OscTimeWidget::setCompactView(bool compactView)
             this->labelOscOutTime->setVisible(!compactView);
         }
 
-        this->labelLoop->move(Define::COMPACT_LOOP_X, Define::COMPACT_LOOP_Y);
-        this->labelPlay->move(Define::COMPACT_PLAY_X, Define::COMPACT_PLAY_Y);
-        this->labelPause->move(Define::COMPACT_PAUSE_X, Define::COMPACT_PAUSE_Y);
-        this->progressBarOscTime->move(Define::COMPACT_PROGRESSBAR_X, Define::COMPACT_PROGRESSBAR_Y);
+        this->labelLoop->move(Osc::COMPACT_LOOP_X, Osc::COMPACT_LOOP_Y);
+        this->labelPlay->move(Osc::COMPACT_PLAY_X, Osc::COMPACT_PLAY_Y);
+        this->labelPause->move(Osc::COMPACT_PAUSE_X, Osc::COMPACT_PAUSE_Y);
+        this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
     }
     else
     {
@@ -166,9 +166,9 @@ void OscTimeWidget::setCompactView(bool compactView)
             this->labelOscOutTime->setVisible(!compactView);
         }
 
-        this->labelLoop->move(Define::DEFAULT_LOOP_X, Define::DEFAULT_LOOP_Y);
-        this->labelPlay->move(Define::DEFAULT_PLAY_X, Define::DEFAULT_PLAY_Y);
-        this->labelPause->move(Define::DEFAULT_PAUSE_X, Define::DEFAULT_PAUSE_Y);
-        this->progressBarOscTime->move(Define::DEFAULT_PROGRESSBAR_X, Define::DEFAULT_PROGRESSBAR_Y);
+        this->labelLoop->move(Osc::DEFAULT_LOOP_X, Osc::DEFAULT_LOOP_Y);
+        this->labelPlay->move(Osc::DEFAULT_PLAY_X, Osc::DEFAULT_PLAY_Y);
+        this->labelPause->move(Osc::DEFAULT_PAUSE_X, Osc::DEFAULT_PAUSE_Y);
+        this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X, Osc::DEFAULT_PROGRESSBAR_Y);
     }
 }

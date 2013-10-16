@@ -54,7 +54,7 @@ namespace Event
     };
 }
 
-namespace Define
+namespace Osc
 {
     static const int DEFAULT_PROGRESSBAR_X = 2;
     static const int DEFAULT_PROGRESSBAR_Y = 20;
@@ -72,17 +72,6 @@ namespace Define
     static const int DEFAULT_PAUSE_Y = 14;
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
-    static const int DEFAULT_ICON_WIDTH = 32;
-    static const int DEFAULT_ICON_HEIGHT = 32;
-    static const int COMPACT_ICON_WIDTH = 16;
-    static const int COMPACT_ICON_HEIGHT = 16;
-    static const int DEFAULT_ITEM_HEIGHT = 36;
-    static const int COMPACT_ITEM_HEIGHT = 21;
-    static const int DEFAULT_THUMBNAIL_WIDTH = 57;
-    static const int DEFAULT_THUMBNAIL_HEIGHT = 32;
-    static const int COMPACT_THUMBNAIL_WIDTH = 28;
-    static const int COMPACT_THUMBNAIL_HEIGHT = 16;
-    static const int GROUP_INDENTION = 65;
 }
 
 namespace Gpi
@@ -306,6 +295,17 @@ namespace Rundown
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
+    static const int DEFAULT_ICON_WIDTH = 32;
+    static const int DEFAULT_ICON_HEIGHT = 32;
+    static const int COMPACT_ICON_WIDTH = 16;
+    static const int COMPACT_ICON_HEIGHT = 16;
+    static const int DEFAULT_ITEM_HEIGHT = 36;
+    static const int COMPACT_ITEM_HEIGHT = 21;
+    static const int DEFAULT_THUMBNAIL_WIDTH = 57;
+    static const int DEFAULT_THUMBNAIL_HEIGHT = 32;
+    static const int COMPACT_THUMBNAIL_WIDTH = 28;
+    static const int COMPACT_THUMBNAIL_HEIGHT = 16;
+    static const int GROUP_INDENTION = 65;
 }
 
 namespace Osc

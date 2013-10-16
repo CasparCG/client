@@ -94,9 +94,9 @@ AbstractRundownWidget* RundownTreeBaseWidget::readProperties(boost::property_tre
     }
 
     if (this->compactView)
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::COMPACT_ITEM_HEIGHT);
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
     else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Define::DEFAULT_ITEM_HEIGHT);
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
 
     return widget;
 }
