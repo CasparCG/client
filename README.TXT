@@ -1,5 +1,5 @@
 ================================================================================
-CasparCG Client 2.0.4
+CasparCG Client 2.0.5
 ================================================================================
 Thank you for your interest in the CasparCG Client, a Mac/Windows/Linux client 
 software used to control graphics, audio and video playout and recording
@@ -28,7 +28,8 @@ The Linux version requires that you pre-install Qt 4.8.* libraries.
 
 INSTALLATION WINDOWS
 ====================
-No installation required, just move the program to a suitable location and start it.
+No installation required, just move the program to a suitable location and 
+start it.
 
 
 INSTALLATION OS X
