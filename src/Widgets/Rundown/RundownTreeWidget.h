@@ -32,7 +32,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         ~RundownTreeWidget();
 
         void setActive(bool active);
-        void openRundown();
+        void openRundown(const QString& path);
         void saveRundown(bool saveAs);
 
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);

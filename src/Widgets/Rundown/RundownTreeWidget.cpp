@@ -323,45 +323,35 @@ void RundownTreeWidget::setActive(bool active)
     }
 }
 
-void RundownTreeWidget::openRundown()
+void RundownTreeWidget::openRundown(const QString& path)
 {
-    QString path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
-    if (!path.isEmpty())
+    QTime time;
+    time.start();
+
+    QFile file(path);
+    if (file.open(QFile::ReadOnly | QIODevice::Text))
     {
-        EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
-        EventManager::getInstance().fireProcessEvent();
+        QTextStream stream(&file);
+        stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
-        QTime time;
-        time.start();
+        qApp->clipboard()->setText(stream.readAll());
+        pasteSelectedItems();
 
-        QFile file(path);
-        if (file.open(QFile::ReadOnly | QIODevice::Text))
-        {
-            QTextStream stream(&file);
-            stream.setCodec(QTextCodec::codecForName("UTF-8"));
+        file.close();
 
-            qApp->clipboard()->setText(stream.readAll());
-            pasteSelectedItems();
+        qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
 
-            file.close();
+        if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
+            this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
-            qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
-
-            if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
-                this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
-
-            this->treeWidgetRundown->setFocus();
-        }
-
-        checkEmptyRundown();
-
-        qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
-
-        this->activeRundown = path;
-        EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
-        EventManager::getInstance().fireStatusbarEvent("");
-        EventManager::getInstance().fireProcessEvent();
+        this->treeWidgetRundown->setFocus();
     }
+
+    checkEmptyRundown();
+
+    qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+
+    this->activeRundown = path;
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)

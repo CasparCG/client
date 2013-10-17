@@ -20,11 +20,11 @@ RundownWidget::RundownWidget(QWidget* parent)
 
     setupMenus();
 
-    //QToolButton* toolButtonRundownDropdown = new QToolButton(this);
-    //toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
-    //toolButtonRundownDropdown->setMenu(this->contextMenuRundownDropdown);
-    //toolButtonRundownDropdown->setPopupMode(QToolButton::InstantPopup);
-    //this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
+    QToolButton* toolButtonRundownDropdown = new QToolButton(this);
+    toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
+    toolButtonRundownDropdown->setMenu(this->contextMenuRundownDropdown);
+    toolButtonRundownDropdown->setPopupMode(QToolButton::InstantPopup);
+    this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
@@ -36,9 +36,15 @@ RundownWidget::RundownWidget(QWidget* parent)
 
 void RundownWidget::setupMenus()
 {
-    //this->contextMenuRundownDropdown = new QMenu(this);
-    //this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
-    //this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Edit...", this, SLOT(editRundown()));
+    this->contextMenuRundownDropdown = new QMenu(this);
+    this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(newRundown()));
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundown()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundown()));
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundown()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
 }
 
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
@@ -75,14 +81,26 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::OpenRundown))
     {
-        RundownTreeWidget* widget = new RundownTreeWidget(this);
-        widget->openRundown();
+        QString path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+        if (!path.isEmpty())
+        {
+            EventManager::getInstance().fireStatusbarEvent("Opening rundown...");
+            EventManager::getInstance().fireProcessEvent();
 
-        int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), "");
-        this->tabWidgetRundown->setCurrentIndex(index);
+            RundownTreeWidget* widget = new RundownTreeWidget(this);
+            widget->openRundown(path);
 
-        if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
-            EventManager::getInstance().fireNewRundownMenuEvent(false);
+            QFileInfo info(path);
+            int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), info.baseName());
+            this->tabWidgetRundown->setCurrentIndex(index);
+
+            if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
+                EventManager::getInstance().fireNewRundownMenuEvent(false);
+
+            EventManager::getInstance().fireActiveRundownChangedEvent(path);
+            EventManager::getInstance().fireStatusbarEvent("");
+            EventManager::getInstance().fireProcessEvent();
+        }
 
         return true;
     }
@@ -118,6 +136,31 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void RundownWidget::newRundown()
+{
+    EventManager::getInstance().fireNewRundownEvent();
+}
+
+void RundownWidget::openRundown()
+{
+    EventManager::getInstance().fireOpenRundownEvent();
+}
+
+void RundownWidget::saveRundown()
+{
+    EventManager::getInstance().fireSaveRundownEvent(false);
+}
+
+void RundownWidget::saveAsRundown()
+{
+    EventManager::getInstance().fireSaveRundownEvent(true);
+}
+
+void RundownWidget::toggleCompactView()
+{
+    EventManager::getInstance().fireToggleCompactViewEvent();
 }
 
 bool RundownWidget::selectTab(int index)
