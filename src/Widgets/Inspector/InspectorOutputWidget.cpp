@@ -26,6 +26,7 @@
 #include "Commands/SeparatorCommand.h"
 #include "Commands/SolidColorCommand.h"
 #include "Commands/VolumeCommand.h"
+#include "Commands/ChromaCommand.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
@@ -171,7 +172,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                      dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
+                     dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->comboBoxTarget->setEnabled(false);
             }

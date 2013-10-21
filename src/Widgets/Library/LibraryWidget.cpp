@@ -314,6 +314,15 @@ void LibraryWidget::setupTools()
     widgetCustomCommand->setText(4, Rundown::CUSTOMCOMMAND);
     widgetCustomCommand->setText(5, "0");
 
+    QTreeWidgetItem* widgetChroma = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetChroma->setIcon(0, QIcon(":/Graphics/Images/ChromaSmall.png"));
+    widgetChroma->setText(0, "Chroma Key");
+    widgetChroma->setText(1, "0");
+    widgetChroma->setText(2, "Chroma Key");
+    widgetChroma->setText(3, "");
+    widgetChroma->setText(4, Rundown::CHROMAKEY);
+    widgetChroma->setText(5, "0");
+
     QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
     widgetSeparator->setText(0, "Separator");

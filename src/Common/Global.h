@@ -81,31 +81,36 @@ namespace Gpi
 
 namespace Mixer
 {
-    static const float DEFAULT_GRID = 2;
-    static const float DEFAULT_BRIGHTNESS = 1;
-    static const float DEFAULT_CONTRAST = 1;
-    static const float DEFAULT_CROP_LEFT = 0;
-    static const float DEFAULT_CROP_RIGHT = 0;
-    static const float DEFAULT_CROP_TOP = 1;
-    static const float DEFAULT_CROP_BOTTOM = 1;
-    static const float DEFAULT_GEOMETRY_XPOS = 0;
-    static const float DEFAULT_GEOMETRY_YPOS = 0;
-    static const float DEFAULT_GEOMETRY_XSCALE = 1;
-    static const float DEFAULT_GEOMETRY_YSCALE = 1;
-    static const float DEFAULT_LEVELS_MIN_IN = 0;
-    static const float DEFAULT_LEVELS_MAX_IN = 1;
-    static const float DEFAULT_LEVELS_MIN_OUT = 0;
-    static const float DEFAULT_LEVELS_MAX_OUT = 1;
-    static const float DEFAULT_LEVELS_GAMMA = 1;
-    static const float DEFAULT_OPACITY = 1;
-    static const float DEFAULT_SATURATION = 1;
-    static const float DEFAULT_VOLUME = 1;
+    static const float DEFAULT_GRID = 2.0f;
+    static const float DEFAULT_BRIGHTNESS = 1.0f;
+    static const float DEFAULT_CONTRAST = 1.0f;
+    static const float DEFAULT_CROP_LEFT = 0.0f;
+    static const float DEFAULT_CROP_RIGHT = 0.0f;
+    static const float DEFAULT_CROP_TOP = 1.0f;
+    static const float DEFAULT_CROP_BOTTOM = 1.0f;
+    static const float DEFAULT_GEOMETRY_XPOS = 0.0f;
+    static const float DEFAULT_GEOMETRY_YPOS = 0.0f;
+    static const float DEFAULT_GEOMETRY_XSCALE = 1.0f;
+    static const float DEFAULT_GEOMETRY_YSCALE = 1.0f;
+    static const float DEFAULT_LEVELS_MIN_IN = 0.0f;
+    static const float DEFAULT_LEVELS_MAX_IN = 1.0f;
+    static const float DEFAULT_LEVELS_MIN_OUT = 0.0f;
+    static const float DEFAULT_LEVELS_MAX_OUT = 1.0f;
+    static const float DEFAULT_LEVELS_GAMMA = 1.0f;
+    static const float DEFAULT_OPACITY = 1.0f;
+    static const float DEFAULT_SATURATION = 1.0f;
+    static const float DEFAULT_VOLUME = 1.0f;
+    static const float DEFAULT_CHROMABLUR = 0.0f;
+    static const float DEFAULT_CHROMABLENDSTART = 0.340f;
+    static const float DEFAULT_CHROMABLENDSTOP = 0.440f;
+    static const float DEFAULT_CHROMASPILL = 1.0f;
     static const int DEFAULT_DURATION = 1;
     static const bool DEFAULT_DEFER = false;
     static const QString DEFAULT_BLENDMODE = "Normal";
-    static const QString DEFAULT_TWEEN = "bnear";
+    static const QString DEFAULT_TWEEN = "Linear";
     static const QString DEFAULT_DIRECTION = "RIGHT";
     static const QString DEFAULT_TRANSITION = "CUT";
+    static const QString DEFAULT_CHROMAKEY = "None";
 }
 
 namespace Color
@@ -293,6 +298,7 @@ namespace Rundown
     static const QString TEMPLATE = "TEMPLATE";
     static const QString VIDEO = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
+    static const QString CHROMAKEY = "CHROMAKEY";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

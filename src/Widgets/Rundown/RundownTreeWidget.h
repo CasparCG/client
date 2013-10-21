@@ -78,6 +78,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool executeCommand(Playout::PlayoutType::Type type, ActionSource source);
 
         Q_SLOT void addCustomCommandItem();
+        Q_SLOT void addChromaKeyItem();
         Q_SLOT void addPrintItem();
         Q_SLOT void addSeparatorItem();
         Q_SLOT void addFileRecorderItem();

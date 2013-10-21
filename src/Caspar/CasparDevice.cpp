@@ -12,6 +12,9 @@ CasparDevice::CasparDevice(const QString& address, int port, QObject* parent)
 
 const QString CasparDevice::getIpAddress() const
 {
+    if (getAddress() == "localhost")
+        return "127.0.0.1";
+
     QHostInfo hostInfo = QHostInfo::fromName(getAddress());
     if (hostInfo.error() != QHostInfo::NoError)
         return "";
@@ -393,6 +396,12 @@ void CasparDevice::stopImageScroll(int channel, int videolayer)
 void CasparDevice::setCommit(int channel)
 {
     writeMessage(QString("MIXER %1 COMMIT").arg(channel));
+}
+
+void CasparDevice::setChroma(int channel, int videolayer, const QString& key, float threshold, float softness, float spill, float blur, bool mask)
+{
+    AMCPDevice::writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6 %7 %8")
+                             .arg(channel).arg(videolayer).arg(key).arg(threshold).arg(softness).arg(spill).arg(blur).arg(mask));
 }
 
 void CasparDevice::setBlendMode(int channel, int videolayer, const QString& blendMode)

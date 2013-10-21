@@ -141,6 +141,8 @@
         <file>Images/LoopProgressBarOverlay.png</file>
         <file>Images/PlayProgressBarOverlay.png</file>
         <file>Images/PauseProgressBarOverlay.png</file>
+        <file>Images/Chroma.png</file>
+        <file>Images/ChromaSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

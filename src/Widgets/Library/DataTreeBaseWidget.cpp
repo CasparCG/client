@@ -28,8 +28,10 @@ void DataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
          return;
 
     QMimeData* mimeData = new QMimeData();
-    mimeData->setText(QString("<%1>:%2").arg(this->objectName())
-                                        .arg(QTreeWidget::selectedItems().at(0)->text(2)));
+    mimeData->setData("application/dataitem", QString("<%1>:%2").arg(this->objectName())
+                                                                .arg(QTreeWidget::selectedItems().at(0)->text(2)).toUtf8());
+    //mimeData->setText(QString("<%1>:%2").arg(this->objectName())
+     //                                   .arg(QTreeWidget::selectedItems().at(0)->text(2)));
 
     QDrag* drag = new QDrag(this);
     drag->setMimeData(mimeData);

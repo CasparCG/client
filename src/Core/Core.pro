@@ -97,7 +97,9 @@ HEADERS += \
     Models/OscFileModel.h \
     Events/Inspector/AddTemplateDataEvent.h \
     Events/Rundown/RundownIsChangedEvent.h \
-    Events/Action/AddActionItemEvent.h
+    Events/Action/AddActionItemEvent.h \
+    Commands/ChromaCommand.h \
+    Models/ChromaModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -184,7 +186,9 @@ SOURCES += \
     Models/OscFileModel.cpp \
     Events/Inspector/AddTemplateDataEvent.cpp \
     Events/Rundown/RundownIsChangedEvent.cpp \
-    Events/Action/AddActionItemEvent.cpp
+    Events/Action/AddActionItemEvent.cpp \
+    Commands/ChromaCommand.cpp \
+    Models/ChromaModel.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

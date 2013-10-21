@@ -99,6 +99,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
         void stopImageScroll(int channel, int videolayer);
 
         void setCommit(int channel);
+        void setChroma(int channel, int videolayer, const QString& key, float threshold, float softness, float spill, float blur, bool mask);
         void setBlendMode(int channel, int videolayer, const QString& blendMode);
         void setGrid(int channel, int grid, int duration, const QString& easing, bool defer = false);
         void setKeyer(int channel, int videolayer, int keyer, bool defer = false);

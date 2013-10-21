@@ -3,6 +3,7 @@
 #include "Shared.h"
 #include "Models/BlendModeModel.h"
 #include "Models/ConfigurationModel.h"
+#include "Models/ChromaModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/DirectionModel.h"
 #include "Models/FormatModel.h"
@@ -44,6 +45,7 @@ class CORE_EXPORT DatabaseManager
         void deletePreset(int id);
 
         QList<BlendModeModel> getBlendMode();
+        QList<ChromaModel> getChroma();
         QList<DirectionModel> getDirection();
         QList<TransitionModel> getTransition();
         QList<TweenModel> getTween();

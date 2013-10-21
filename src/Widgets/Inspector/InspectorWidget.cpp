@@ -25,6 +25,7 @@
 #include "Inspector/InspectorAudioWidget.h"
 #include "Inspector/InspectorImageWidget.h"
 #include "Inspector/InspectorCustomCommandWidget.h"
+#include "Inspector/InspectorChromaWidget.h"
 
 #include "Global.h"
 
@@ -86,6 +87,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(23)), 0, new InspectorAudioWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(24)), 0, new InspectorImageWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(25)), 0, new InspectorCustomCommandWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(26)), 0, new InspectorChromaWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -114,6 +116,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
 
     qApp->installEventFilter(this);
 }
@@ -149,6 +152,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
@@ -177,6 +181,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
 
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
@@ -302,6 +307,11 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
             this->treeWidgetInspector->topLevelItem(25)->setHidden(false);
+        }
+        else if (dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+            this->treeWidgetInspector->topLevelItem(26)->setHidden(false);
         }
     }
 

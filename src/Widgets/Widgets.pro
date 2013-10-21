@@ -91,7 +91,9 @@ HEADERS += \
     Library/TemplateTreeBaseWidget.h \
     Library/VideoTreeBaseWidget.h \
     Library/PresetTreeBaseWidget.h \
-    Inspector/InspectorTemplateDataTreeBaseWidget.h
+    Inspector/InspectorTemplateDataTreeBaseWidget.h \
+    Rundown/RundownChromaWidget.h \
+    Inspector/InspectorChromaWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -171,7 +173,9 @@ SOURCES += \
     Library/TemplateTreeBaseWidget.cpp \
     Library/VideoTreeBaseWidget.cpp \
     Library/PresetTreeBaseWidget.cpp \
-    Inspector/InspectorTemplateDataTreeBaseWidget.cpp
+    Inspector/InspectorTemplateDataTreeBaseWidget.cpp \
+    Rundown/RundownChromaWidget.cpp \
+    Inspector/InspectorChromaWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -241,7 +245,9 @@ FORMS += \
     Library/DeviceFilterWidget.ui \
     TimeWidget.ui \
     OscTimeWidget.ui \
-    Action/ActionWidget.ui
+    Action/ActionWidget.ui \
+    Rundown/RundownChromaWidget.ui \
+    Inspector/InspectorChromaWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -393,7 +399,9 @@ OTHER_FILES += \
     Images/LoopIconOverlay.png \
     Images/PlayProgressBarOverlay.png \
     Images/PauseProgressBarOverlay.png \
-    Images/LoopProgressBarOverlay.png
+    Images/LoopProgressBarOverlay.png \
+    Images/ChromaSmall.png \
+    Images/Chroma.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

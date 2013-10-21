@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorChromaWidget</class>
+ <widget class="QWidget" name="InspectorChromaWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>243</width>
+    <height>199</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutKey">
+     <item>
+      <spacer name="horizontalSpacerKey1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>45</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelKey">
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>18</width>
+         <height>13</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Key</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBoxKey</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxKey">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
+     <item>
+      <spacer name="horizontalSpacerShowMask1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>5</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDefer">
+       <property name="text">
+        <string>Show Mask</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxShowMask">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerShowMask2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutThreshold">
+     <item>
+      <spacer name="horizontalSpacerThreshold1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>11</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelThreshold">
+       <property name="text">
+        <string>Threshold</string>
+       </property>
+       <property name="buddy">
+        <cstring>sliderThreshold</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderThreshold">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxThreshold">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSoftness">
+     <item>
+      <spacer name="horizontalSpacerSoftness1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSoftness">
+       <property name="text">
+        <string>Softness</string>
+       </property>
+       <property name="buddy">
+        <cstring>sliderSoftness</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderSoftness">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxSoftness">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutBlur">
+     <item>
+      <spacer name="horizontalSpacerBlur1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>42</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelBlur">
+       <property name="text">
+        <string>Blur</string>
+       </property>
+       <property name="buddy">
+        <cstring>sliderBlur</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderBlur">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxBlur">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSpill">
+     <item>
+      <spacer name="horizontalSpacerSpill1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>42</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSpill">
+       <property name="text">
+        <string>Spill</string>
+       </property>
+       <property name="buddy">
+        <cstring>sliderSpill</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="sliderSpill">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxSpill">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerChroma">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>comboBoxKey</tabstop>
+  <tabstop>sliderThreshold</tabstop>
+  <tabstop>spinBoxThreshold</tabstop>
+  <tabstop>sliderSoftness</tabstop>
+  <tabstop>spinBoxSoftness</tabstop>
+  <tabstop>sliderSpill</tabstop>
+  <tabstop>spinBoxSpill</tabstop>
+  <tabstop>sliderBlur</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>spinBoxThreshold</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderThreshold</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSoftness</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderSoftness</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>437</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxBlur</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderBlur</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>444</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>390</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSpill</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderSpill</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderThreshold</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>spinBoxThreshold</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>66</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>421</x>
+     <y>52</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderSoftness</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>spinBoxSoftness</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>455</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderBlur</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>spinBoxBlur</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>137</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderSpill</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>spinBoxSpill</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>425</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxThreshold</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>thresholdChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSoftness</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>softnessChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>431</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxBlur</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>blurChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>481</x>
+     <y>312</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSpill</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>spillChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>451</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>492</x>
+     <y>352</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxKey</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>keyChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>315</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>640</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowMask</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>InspectorChromaWidget</receiver>
+   <slot>showMaskChanged(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>376</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>367</x>
+     <y>641</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>thresholdChanged(int)</slot>
+  <slot>softnessChanged(int)</slot>
+  <slot>blurChanged(int)</slot>
+  <slot>spillChanged(int)</slot>
+  <slot>keyChanged(QString)</slot>
+  <slot>showMaskChanged(bool)</slot>
+ </slots>
+</ui>

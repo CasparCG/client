@@ -118,6 +118,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTools->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintItem()));
     this->contextMenuTools->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
     this->contextMenuTools->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
+    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
     this->contextMenuTools->addSeparator();
     this->contextMenuTools->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
     //this->contextMenuTools->actions().at(3)->setEnabled(false);
@@ -981,6 +982,11 @@ void RundownTreeWidget::addCustomCommandItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CUSTOMCOMMAND);
 }
 
+void RundownTreeWidget::addChromaKeyItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CHROMAKEY);
+}
+
 void RundownTreeWidget::addSolidColorItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SOLIDCOLOR);
@@ -1118,7 +1124,7 @@ void RundownTreeWidget::saveAsPreset()
 bool RundownTreeWidget::removeSelectedItems()
 {
     foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
-       delete item;
+        delete item;
 
     checkEmptyRundown();
 

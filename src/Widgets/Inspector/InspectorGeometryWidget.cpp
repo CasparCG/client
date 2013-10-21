@@ -13,13 +13,20 @@
 #include <QtGui/QApplication>
 
 InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
-    : QWidget(parent), model(NULL), command(NULL), resolutionWidth(0), resolutionHeight(0)
+    : QWidget(parent),
+      model(NULL), command(NULL), resolutionWidth(0), resolutionHeight(0)
 {
     setupUi(this);
 
     loadTween();
 
     qApp->installEventFilter(this);
+}
+
+InspectorGeometryWidget::~InspectorGeometryWidget()
+{
+    qDebug() << "Here";
+    qApp->removeEventFilter(this);
 }
 
 bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
@@ -47,6 +54,8 @@ bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
             this->checkBoxDefer->setChecked(this->command->getDefer());
         }
+        else
+            this->command = NULL;
 
         blockAllSignals(false);
     }

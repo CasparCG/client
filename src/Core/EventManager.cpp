@@ -175,6 +175,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0)));
     else if (type == Rundown::CROP)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0)));
+    else if (type == Rundown::CHROMAKEY)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0)));
     else if (type == Rundown::IMAGESCROLLER)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0)));
     else if (type == Rundown::DECKLINKINPUT)

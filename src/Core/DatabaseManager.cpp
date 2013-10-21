@@ -32,6 +32,7 @@ void DatabaseManager::initialize()
     QSqlQuery sql;
     sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE Chroma (Id INTEGR PRIMARY KEY, Key TEXT)");
     sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT)");
     sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT)");
@@ -83,14 +84,22 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
-#if defined(Q_OS_UNIX)
+#if defined(Q_OS_LINUX)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
-#elif defined(Q_OS_WIN32)
+#elif defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #endif
 
-#if defined(Q_OS_WN32)
-    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) VALUES('Local CasparCG', 'localhost', 5250, '', '', '', '', 'No', 0, '')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('None')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Red')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Yellow')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Green')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Torquise')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Blue')");
+    sql.exec("INSERT INTO Chroma (Key) VALUES('Magenta')");
+
+#if defined(Q_OS_WIN)
+    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '')");
 #endif
 
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
@@ -366,6 +375,23 @@ QList<BlendModeModel> DatabaseManager::getBlendMode()
     QList<BlendModeModel> models;
     while (sql.next())
         models.push_back(BlendModeModel(sql.value(0).toInt(), sql.value(1).toString()));
+
+    return models;
+}
+
+QList<ChromaModel> DatabaseManager::getChroma()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT c.Id, c.Key FROM Chroma c");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<ChromaModel> models;
+    while (sql.next())
+        models.push_back(ChromaModel(sql.value(0).toInt(), sql.value(1).toString()));
 
     return models;
 }

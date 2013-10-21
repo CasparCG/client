@@ -26,6 +26,7 @@
 #include "RundownAudioWidget.h"
 #include "RundownImageWidget.h"
 #include "RundownCustomCommandWidget.h"
+#include "RundownChromaWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -40,6 +41,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::BRIGHTNESS) return new RundownBrightnessWidget(model, this);
     else if (model.getType() == Rundown::CONTRAST) return new RundownContrastWidget(model, this);
     else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
+    else if (model.getType() == Rundown::CHROMAKEY) return new RundownChromaWidget(model, this);
     else if (model.getType() == Rundown::DECKLINKINPUT) return new RundownDeckLinkInputWidget(model, this);
     else if (model.getType() == Rundown::FILERECORDER) return new RundownFileRecorderWidget(model, this);
     else if (model.getType() == Rundown::GEOMETRY) return new RundownGeometryWidget(model, this);

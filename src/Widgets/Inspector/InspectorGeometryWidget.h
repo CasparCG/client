@@ -17,6 +17,7 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
 
     public:
         explicit InspectorGeometryWidget(QWidget* parent = 0);
+        ~InspectorGeometryWidget();
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
