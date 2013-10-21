@@ -23,12 +23,6 @@ InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
     qApp->installEventFilter(this);
 }
 
-InspectorGeometryWidget::~InspectorGeometryWidget()
-{
-    qDebug() << "Here";
-    qApp->removeEventFilter(this);
-}
-
 bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
