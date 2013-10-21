@@ -83,7 +83,7 @@
     </rect>
    </property>
    <property name="placeholderText">
-    <string>Hostname / IP address</string>
+    <string>IP address / Hostname</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelAddress">

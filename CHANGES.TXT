@@ -1,6 +1,8 @@
 CasparCG Client 2.0.6
 =====================
-
+- NEW: Added support for chroma key, basted on code contribution by cambell. Requires CasparCG Server 2.0.4 or later.
+- FIX: OSC progress using localhost server.
+- FIX: Drag and drop changes.
 
 
 
@@ -55,8 +57,8 @@ CasparCG Client 2.0
 - NEW: Added support for multiple rundowns using tabs.
 - NEW: Added support for offline devices, so you don't need a running CasparCG Server 
        to add a device.
-- NEW: Added master volume. Requires CasparCG Server 2.0.4.
-- NEW: Added thumbnail support. Requires CasparCG Server 2.0.4.
+- NEW: Added master volume. Requires CasparCG Server 2.0.4 or later.
+- NEW: Added thumbnail support. Requires CasparCG Server 2.0.4 or later.
 - NEW: Added full Linux support.
 - UPDATE: UI changes.
 
@@ -79,7 +81,7 @@ CasparCG Client 2.0 RC 1
 - NEW: Added trigger on next option for media items.
 - NEW: Added support for CasparCG Server PRINT command.
 - NEW: Added support for naming output using PRINT command. 
-       Requires CasparCG Server 2.0.4.
+       Requires CasparCG Server 2.0.4 or later.
 - NEW: Added a separator item.
 - NEW: Added support for colorized groups.
 - NEW: Show active rundown in title bar.
@@ -110,7 +112,7 @@ Note: Previously saved rundowns created with an older version of the client is n
        been added.
 - FIX: Could not seek in media if the length is zero.
 - FIX: Font rendering on Mac OS X.
-- NEW: Added support for recording with separated alpha in CasparCG Server 2.0.4.
+- NEW: Added support for recording with separated alpha in CasparCG Server 2.0.4 or later.
 - NEW: Added support for the AUTO parameter on media items in the rundown.
 - NEW: Added application icon for Mac OS X.
 - NEW: Added support for see stored data in the library.

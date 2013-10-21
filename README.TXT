@@ -1,5 +1,5 @@
 ================================================================================
-CasparCG Client 2.0.5
+CasparCG Client 2.0.6
 ================================================================================
 Thank you for your interest in the CasparCG Client, a Mac/Windows/Linux client 
 software used to control graphics, audio and video playout and recording
