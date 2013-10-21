@@ -41,7 +41,7 @@ void ImageTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     data.remove(QRegExp("#$"));
 
     QMimeData* mimeData = new QMimeData();
-    mimeData->setText(data);
+    mimeData->setData("application/library-item", data.toUtf8());
 
     QDrag* drag = new QDrag(this);
     drag->setMimeData(mimeData);

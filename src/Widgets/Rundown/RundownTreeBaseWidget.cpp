@@ -230,7 +230,7 @@ Qt::DropActions RundownTreeBaseWidget::supportedDropActions() const
 
 QStringList RundownTreeBaseWidget::mimeTypes() const
 {
-    return QStringList("text/plain");
+    return QStringList("application/library-item");
 }
 
 void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -240,35 +240,36 @@ void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
 
 bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
-    if (!mimeData->hasText())
+    if (!mimeData->hasFormat("application/library-item"))
         return false;
 
-    if (mimeData->text().startsWith("<treeWidgetVideo>") ||
-        mimeData->text().startsWith("<treeWidgetTool>") ||
-        mimeData->text().startsWith("<treeWidgetTemplate>") ||
-        mimeData->text().startsWith("<treeWidgetImage>") ||
-        mimeData->text().startsWith("<treeWidgetAudio>")) // External drop from the library.
+    QString dndData = QString::fromUtf8(mimeData->data("application/library-item"));
+    if (dndData.startsWith("<treeWidgetVideo>") ||
+        dndData.startsWith("<treeWidgetTool>") ||
+        dndData.startsWith("<treeWidgetTemplate>") ||
+        dndData.startsWith("<treeWidgetImage>") ||
+        dndData.startsWith("<treeWidgetAudio>")) // External drop from the library.
     {
         QTreeWidget::setCurrentItem(parent);
 
-        QStringList mimeDataSplit = mimeData->text().split("#");
-        foreach(QString data, mimeDataSplit)
+        QStringList dndDataSplit = dndData.split("#");
+        foreach(QString data, dndDataSplit)
         {
             QStringList dataSplit = data.split(":");
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
                                                                              dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt()));
         }
     }
-    else if (mimeData->text().startsWith("<treeWidgetPreset>")) // External drop from the preset library.
+    else if (dndData.startsWith("<treeWidgetPreset>")) // External drop from the preset library.
     {
         QTreeWidget::setCurrentItem(parent);
 
-        QStringList dataSplit = mimeData->text().split(":");
+        QStringList dataSplit = dndData.split(":");
         EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
 
         selectItemBelow();
     }
-    else if (mimeData->text().contains("<items>")) // Internal drop
+    else if (dndData.contains("<items>")) // Internal drop
     {
         QList<QTreeWidgetItem*> items = QTreeWidget::selectedItems();
 

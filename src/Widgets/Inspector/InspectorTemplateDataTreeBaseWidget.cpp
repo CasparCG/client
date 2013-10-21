@@ -16,7 +16,7 @@ Qt::DropActions InspectorTemplateDataTreeBaseWidget::supportedDropActions () con
 
 QStringList InspectorTemplateDataTreeBaseWidget::mimeTypes () const
 {
-    return QStringList("application/dataitem");
+    return QStringList("application/library-dataitem");
 }
 
 void InspectorTemplateDataTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -31,12 +31,13 @@ void InspectorTemplateDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
 
 bool InspectorTemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
-    if (!mimeData->hasFormat("application/dataitem"))
+    if (!mimeData->hasFormat("application/library-dataitem"))
         return false;
 
-    if (QString::fromUtf8(mimeData->data("application/dataitem")).startsWith("<treeWidgetData>"))
+    QString dndData = QString::fromUtf8(mimeData->data("application/library-dataitem"));
+    if (dndData.startsWith("<treeWidgetData>"))
     {
-        QStringList dataSplit = QString::fromUtf8(mimeData->data("application/dataitem")).split(":");
+        QStringList dataSplit = dndData.split(":");
         EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
     }
 
