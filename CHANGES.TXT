@@ -2,7 +2,7 @@ CasparCG Client 2.0.6
 =====================
 - NEW: Added support for chroma key, basted on code contribution by cambell. Requires CasparCG Server 2.0.4 or later.
 - FIX: OSC progress using localhost server.
-- FIX: Drag and drop changes.
+- UPDATE: Drag and drop changes.
 
 
 
