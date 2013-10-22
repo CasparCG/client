@@ -266,8 +266,6 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
 
         QStringList dataSplit = dndData.split(":");
         EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
-
-        selectItemBelow();
     }
     else if (dndData.contains("<items>")) // Internal drop
     {
