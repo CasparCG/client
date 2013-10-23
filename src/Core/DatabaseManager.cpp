@@ -84,6 +84,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
 #if defined(Q_OS_LINUX)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #elif defined(Q_OS_WIN)
@@ -612,6 +613,22 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
                             .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
                             .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
                             .arg(model.getChannels()).arg(model.getChannelFormats());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateDevice(const DeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE Device SET Name = '%1', Address = '%2', Port = %3, Username = '%4', Password = '%5', Description = '%6', Shadow = '%7' WHERE Id = %8")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername()).arg(model.getPassword()).arg(model.getDescription()).arg(model.getShadow()).arg(model.getId());
 
     QSqlQuery sql;
     if (!sql.exec(query))

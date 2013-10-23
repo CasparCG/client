@@ -54,6 +54,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void gpo8Changed();
         Q_SLOT void serialPortChanged();
         Q_SLOT void baudRateChanged(QString);
+        Q_SLOT void oscPortChanged();
 
         Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType::Type);
 };

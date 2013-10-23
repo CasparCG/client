@@ -44,6 +44,11 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
 
+    this->lineEditOscPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
+    QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
+    if (!oscPort.isEmpty())
+        this->lineEditOscPort->setText(oscPort);
+
     loadDevices();
     loadGpi();
 }
@@ -178,8 +183,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
     dialog->setDeviceModel(model);
     if (dialog->exec() == QDialog::Accepted)
     {
-        DatabaseManager::getInstance().deleteDevice(current->text(0).toInt());
-        DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
+        DatabaseManager::getInstance().updateDevice(DeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 model.getVersion(), dialog->getShadow(),
@@ -367,8 +371,9 @@ void SettingsDialog::updateGpiDevice()
     if (!isVisible()) // During construction of dialog we don't want to rewrite
         return;       // values in the database that are already there.
 
-    QString serialPort = lineEditSerialPort->text().trimmed();
-    int baudRate = comboBoxGpiBaudRate->currentText().toInt();
+    QString serialPort = this->lineEditSerialPort->text().trimmed();
+    int baudRate = this->comboBoxGpiBaudRate->currentText().toInt();
+
     qDebug() << "GPO Device changed -- Serial port: "
              << serialPort << " Baud rate: " << baudRate;
 
@@ -386,4 +391,15 @@ void SettingsDialog::serialPortChanged()
 void SettingsDialog::baudRateChanged(QString baudRate)
 {
     updateGpiDevice();
+}
+
+void SettingsDialog::oscPortChanged()
+{
+    QString oscPort = this->lineEditOscPort->text().trimmed();
+    if (oscPort.isEmpty())
+        oscPort = Osc::DEFAULT_PORT;
+
+    qDebug() << "OSC port: " << oscPort;
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
 }

@@ -62,6 +62,7 @@ class CORE_EXPORT DatabaseManager
         DeviceModel getDeviceByName(const QString& name);
         DeviceModel getDeviceByAddress(const QString& address);
         void insertDevice(const DeviceModel& model);
+        void updateDevice(const DeviceModel& model);
         void updateDeviceVersion(const DeviceModel& model);
         void updateDeviceChannels(const DeviceModel& model);
         void updateDeviceChannelFormats(const DeviceModel& model);

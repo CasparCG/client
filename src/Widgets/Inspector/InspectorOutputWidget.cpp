@@ -274,9 +274,13 @@ void InspectorOutputWidget::deviceRemoved()
 
 void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 {
+    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model.getShadow() == "Yes")
+        return; // Don't add shadow systems.
+
     int index = this->comboBoxDevice->currentIndex();
 
-    this->comboBoxDevice->addItem(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName());
+    this->comboBoxDevice->addItem(model.getName());
 
     if (index == -1)
         this->comboBoxDevice->setCurrentIndex(index);

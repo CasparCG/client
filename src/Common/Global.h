@@ -56,6 +56,7 @@ namespace Event
 
 namespace Osc
 {
+    static const int DEFAULT_PORT = 6250;
     static const int DEFAULT_PROGRESSBAR_X = 2;
     static const int DEFAULT_PROGRESSBAR_Y = 20;
     static const int COMPACT_PROGRESSBAR_X = 2;

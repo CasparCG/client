@@ -20,10 +20,9 @@ DeviceDialog::DeviceDialog(QWidget* parent)
 
 void DeviceDialog::setDeviceModel(const DeviceModel& model)
 {
-    this->editMode = editMode;
+    this->editMode = true;
 
     setWindowTitle("Edit Server");
-    this->lineEditDeviceName->setEnabled(!this->editMode);
 
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());

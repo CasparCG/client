@@ -26,7 +26,7 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineOsc, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
 {
     background-color: rgba(42, 42, 42, 255);
 }

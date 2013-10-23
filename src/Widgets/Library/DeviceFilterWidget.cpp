@@ -100,7 +100,11 @@ void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
     this->sendEvents = false;
 
-    this->comboBoxDeviceFilter->addItem(QString("%1").arg(DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName()));
+    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model.getShadow() == "Yes")
+        return; // Don't add shadow systems.
+
+    this->comboBoxDeviceFilter->addItem(QString("%1").arg(model.getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
