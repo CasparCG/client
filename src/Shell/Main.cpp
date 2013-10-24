@@ -105,7 +105,7 @@ void loadFonts(QApplication& application)
 
 #if defined(Q_OS_UNIX)
     application.setFont(QFont("Open Sans"));
-#elif defined(Q_OS_WIN32)
+#elif defined(Q_OS_WIN)
    application.setFont(QFont("Open Sans Semibold"));
 #endif
 }

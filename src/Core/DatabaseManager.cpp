@@ -85,10 +85,10 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
-#if defined(Q_OS_LINUX)
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #elif defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
+#else
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #endif
 
     sql.exec("INSERT INTO Chroma (Key) VALUES('None')");
