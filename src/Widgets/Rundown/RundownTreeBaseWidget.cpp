@@ -215,7 +215,7 @@ void RundownTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
         return;
 
     QMimeData* mimeData = new QMimeData();
-    mimeData->setText(qApp->clipboard()->text());
+    mimeData->setData("application/rundown-item", qApp->clipboard()->text().toUtf8());
 
     QDrag* drag = new QDrag(this);
     drag->setMimeData(mimeData);
@@ -230,7 +230,11 @@ Qt::DropActions RundownTreeBaseWidget::supportedDropActions() const
 
 QStringList RundownTreeBaseWidget::mimeTypes() const
 {
-    return QStringList("application/library-item");
+    QStringList list;
+    list.append("application/library-item");
+    list.append("application/rundown-item");
+
+    return list;
 }
 
 void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -240,46 +244,53 @@ void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
 
 bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
-    if (!mimeData->hasFormat("application/library-item"))
+    if (!mimeData->hasFormat("application/library-item") && !mimeData->hasFormat("application/rundown-item"))
         return false;
 
-    QString dndData = QString::fromUtf8(mimeData->data("application/library-item"));
-    if (dndData.startsWith("<treeWidgetVideo>") ||
-        dndData.startsWith("<treeWidgetTool>") ||
-        dndData.startsWith("<treeWidgetTemplate>") ||
-        dndData.startsWith("<treeWidgetImage>") ||
-        dndData.startsWith("<treeWidgetAudio>")) // External drop from the library.
+    if (mimeData->hasFormat("application/library-item"))
     {
-        QTreeWidget::setCurrentItem(parent);
-
-        QStringList dndDataSplit = dndData.split("#");
-        foreach(QString data, dndDataSplit)
+        QString dndData = QString::fromUtf8(mimeData->data("application/library-item"));
+        if (dndData.startsWith("<treeWidgetVideo>") ||
+            dndData.startsWith("<treeWidgetTool>") ||
+            dndData.startsWith("<treeWidgetTemplate>") ||
+            dndData.startsWith("<treeWidgetImage>") ||
+            dndData.startsWith("<treeWidgetAudio>")) // External drop from the library.
         {
-            QStringList dataSplit = data.split(":");
-            EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
-                                                                             dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt()));
+            QTreeWidget::setCurrentItem(parent);
+
+            QStringList dndDataSplit = dndData.split("#");
+            foreach(QString data, dndDataSplit)
+            {
+                QStringList dataSplit = data.split(":");
+                EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
+                                                                                 dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt()));
+            }
+        }
+        else if (dndData.startsWith("<treeWidgetPreset>")) // External drop from the preset library.
+        {
+            QTreeWidget::setCurrentItem(parent);
+
+            QStringList dataSplit = dndData.split(":");
+            EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
         }
     }
-    else if (dndData.startsWith("<treeWidgetPreset>")) // External drop from the preset library.
+    else if (mimeData->hasFormat("application/rundown-item"))
     {
-        QTreeWidget::setCurrentItem(parent);
+        QString dndData = QString::fromUtf8(mimeData->data("application/rundown-item"));
+        if (dndData.contains("<items>")) // Internal drop
+        {
+            QList<QTreeWidgetItem*> items = QTreeWidget::selectedItems();
 
-        QStringList dataSplit = dndData.split(":");
-        EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
-    }
-    else if (dndData.contains("<items>")) // Internal drop
-    {
-        QList<QTreeWidgetItem*> items = QTreeWidget::selectedItems();
+            QTreeWidget::setCurrentItem(parent);
 
-        QTreeWidget::setCurrentItem(parent);
+            if (!pasteSelectedItems())
+                return false;
 
-        if (!pasteSelectedItems())
-            return false;
+            selectItemBelow();
 
-        selectItemBelow();
-
-        foreach (QTreeWidgetItem* item, items)
-           delete item;
+            foreach (QTreeWidgetItem* item, items)
+               delete item;
+        }
     }
 
     return true;
