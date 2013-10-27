@@ -122,6 +122,11 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
 
 int main(int argc, char* argv[])
 {
+#if defined(Q_OS_MAC)
+    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
+        QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande"); // FIX: Mac OSX 10.9 (Mavericks) font issue: https://bugreports.qt-project.org/browse/QTBUG-32789
+#endif
+
     //Application::setOrganizationName("CasparCG");
     //Application::setApplicationName("CasparCG Client");
     Application::setGraphicsSystem("raster");
