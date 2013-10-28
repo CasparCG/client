@@ -21,7 +21,7 @@ No extra installations required.
 The Mac version requires Mac OS X 10.5 or newer. 
 No extra installations required.
 
-The Linux version has been tested on Ubuntu 13.04 (64-bit).
+The Linux version has been tested on Ubuntu 13.10 64-bit.
 The Linux version requires that you pre-install Qt 4.8.* libraries.
 
 
