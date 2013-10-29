@@ -15,10 +15,10 @@ version 2.0.4 are not compatible with this version. Sorry about that!
 
 SYSTEM REQUIREMENTS
 ===================
-The Windows version requires Windows XP or newer. 
+The Windows version has been tested on Windows 7 x64. 
 No extra installations required.
 
-The Mac version requires Mac OS X 10.5 or newer. 
+The Mac version has been tested on Mac OS X 10.7 / 10.9.
 No extra installations required.
 
 The Linux version has been tested on Ubuntu 13.10 64-bit.
