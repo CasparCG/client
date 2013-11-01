@@ -1044,7 +1044,7 @@ void RundownTreeWidget::addVideoItem()
 
 bool RundownTreeWidget::moveItemOutOfGroup()
 {
-    if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+    if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
         return true;
 
     QTreeWidgetItem* newItem = new QTreeWidgetItem();
@@ -1078,7 +1078,7 @@ bool RundownTreeWidget::moveItemOutOfGroup()
 
 bool RundownTreeWidget::moveItemIntoGroup()
 {
-    if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Group item.
+    if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() != NULL) // Group item.
         return true;
 
     if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup())
