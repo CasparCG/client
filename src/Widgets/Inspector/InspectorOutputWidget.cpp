@@ -302,6 +302,8 @@ void InspectorOutputWidget::targetChanged(QString name)
     checkEmptyTarget();
 
     EventManager::getInstance().fireTargetChangedEvent(this->comboBoxTarget->currentText());
+    if (this->model->getLabel() == this->comboBoxTarget->getPreviousText())
+        EventManager::getInstance().fireLabelChangedEvent(this->comboBoxTarget->currentText());
 }
 
 void InspectorOutputWidget::channelChanged(int channel)

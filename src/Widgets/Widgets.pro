@@ -91,9 +91,10 @@ HEADERS += \
     Library/TemplateTreeBaseWidget.h \
     Library/VideoTreeBaseWidget.h \
     Library/PresetTreeBaseWidget.h \
-    Inspector/InspectorTemplateDataTreeBaseWidget.h \
     Rundown/RundownChromaWidget.h \
-    Inspector/InspectorChromaWidget.h
+    Inspector/InspectorChromaWidget.h \
+    Inspector/TemplateDataTreeBaseWidget.h \
+    Inspector/TargetComboBaseWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -173,9 +174,10 @@ SOURCES += \
     Library/TemplateTreeBaseWidget.cpp \
     Library/VideoTreeBaseWidget.cpp \
     Library/PresetTreeBaseWidget.cpp \
-    Inspector/InspectorTemplateDataTreeBaseWidget.cpp \
     Rundown/RundownChromaWidget.cpp \
-    Inspector/InspectorChromaWidget.cpp
+    Inspector/InspectorChromaWidget.cpp \
+    Inspector/TemplateDataTreeBaseWidget.cpp \
+    Inspector/TargetComboBaseWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \

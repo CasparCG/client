@@ -299,7 +299,7 @@
         </layout>
        </item>
        <item>
-        <widget class="InspectorTemplateDataTreeBaseWidget" name="treeWidgetTemplateData">
+        <widget class="TemplateDataTreeBaseWidget" name="treeWidgetTemplateData">
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>
          </property>
@@ -357,9 +357,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>InspectorTemplateDataTreeBaseWidget</class>
+   <class>TemplateDataTreeBaseWidget</class>
    <extends>QTreeWidget</extends>
-   <header>Inspector/InspectorTemplateDataTreeBaseWidget.h</header>
+   <header>Inspector/TemplateDataTreeBaseWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

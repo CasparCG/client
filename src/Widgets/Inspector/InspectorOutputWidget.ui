@@ -89,7 +89,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxTarget">
+      <widget class="TargetComboBaseWidget" name="comboBoxTarget">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -306,6 +306,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TargetComboBaseWidget</class>
+   <extends>QComboBox</extends>
+   <header>Inspector/TargetComboBaseWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

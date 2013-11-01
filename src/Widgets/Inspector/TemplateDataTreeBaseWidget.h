@@ -11,12 +11,12 @@
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QDragEnterEvent>
 
-class WIDGETS_EXPORT InspectorTemplateDataTreeBaseWidget : public QTreeWidget
+class WIDGETS_EXPORT TemplateDataTreeBaseWidget : public QTreeWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorTemplateDataTreeBaseWidget(QWidget* parent = 0);
+        explicit TemplateDataTreeBaseWidget(QWidget* parent = 0);
 
         QStringList mimeTypes () const;
         Qt::DropActions supportedDropActions () const;

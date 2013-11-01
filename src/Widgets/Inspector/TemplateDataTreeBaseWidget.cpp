@@ -1,35 +1,35 @@
-#include "InspectorTemplateDataTreeBaseWidget.h"
+#include "TemplateDataTreeBaseWidget.h"
 
 #include "EventManager.h"
 
 #include <QtCore/QRegExp>
 
-InspectorTemplateDataTreeBaseWidget::InspectorTemplateDataTreeBaseWidget(QWidget* parent)
+TemplateDataTreeBaseWidget::TemplateDataTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent)
 {
 }
 
-Qt::DropActions InspectorTemplateDataTreeBaseWidget::supportedDropActions () const
+Qt::DropActions TemplateDataTreeBaseWidget::supportedDropActions () const
 {
     return Qt::CopyAction;
 }
 
-QStringList InspectorTemplateDataTreeBaseWidget::mimeTypes () const
+QStringList TemplateDataTreeBaseWidget::mimeTypes () const
 {
     return QStringList("application/library-dataitem");
 }
 
-void InspectorTemplateDataTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
+void TemplateDataTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
  {
     event->acceptProposedAction();
  }
 
-void InspectorTemplateDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
+void TemplateDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
 {
     QTreeWidget::dragLeaveEvent(event);
 }
 
-bool InspectorTemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
+bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
     if (!mimeData->hasFormat("application/library-dataitem"))
         return false;

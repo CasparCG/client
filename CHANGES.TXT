@@ -6,6 +6,7 @@ CasparCG Client 2.0.6
 - FIX: Font rendering issue on Mac OS X Mavericks.
 - UPDATE: Drag and drop changes.
 - UPDATE: Devices marked as "Shadow system" will not show up in the device lists.
+- UPDATE: Changed target in the inspector changes the rundown item label if they have the same name. 
 
 
 
