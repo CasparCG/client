@@ -187,7 +187,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
         if (this->model == NULL)
-            return true;
+            return false;
 
         DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
         if (!deviceChangedEvent->getDeviceName().isEmpty())
@@ -199,6 +199,14 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
         checkEmptyTarget();
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged) ||
+             event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
+    {
+        if (this->model == NULL)
+            return false;
+
+        fillTargetCombo(this->model->getType());
     }
 
     return QObject::eventFilter(target, event);
@@ -230,9 +238,7 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type)
 
     foreach (LibraryModel model, models)
     {
-        if (type == "DATA" && model.getType() == "DATA")
-            this->comboBoxTarget->addItem(model.getName());
-        else if (type == "MOVIE" && model.getType() == "MOVIE")
+        if (type == "MOVIE" && model.getType() == "MOVIE")
             this->comboBoxTarget->addItem(model.getName());
         else if (type == Rundown::AUDIO && model.getType() == Rundown::AUDIO)
             this->comboBoxTarget->addItem(model.getName());

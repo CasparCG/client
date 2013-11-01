@@ -4,6 +4,7 @@ CasparCG Client 2.0.6
 - NEW: Added support for chroma key, based on code contribution by cambell. Requires CasparCG Server 2.0.4 or later.
 - FIX: OSC progress using localhost server.
 - FIX: Font rendering issue on Mac OS X Mavericks.
+- UPDATE: Reload targets when refreshing the library.
 - UPDATE: Drag and drop changes.
 - UPDATE: Devices marked as "Shadow system" will not show up in the device lists.
 - UPDATE: Changed target in the inspector changes the rundown item label if they have the same name. 

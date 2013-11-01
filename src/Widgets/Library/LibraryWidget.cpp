@@ -430,7 +430,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
         this->toolBoxLibrary->setItemText(Library::STILL_PAGE_INDEX, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
         this->toolBoxLibrary->setItemText(Library::MOVIE_PAGE_INDEX, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
     {
         // TODO: Only add / remove necessary items.
         this->treeWidgetTemplate->clear();
@@ -459,7 +459,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::TEMPLATE_PAGE_INDEX, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::DataChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DataChanged))
     {
         // TODO: Only add / remove necessary items.
         this->treeWidgetData->clear();
@@ -488,7 +488,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::DATA_PAGE_INDEX, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::PresetChanged))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::PresetChanged))
     {
         // TODO: Only add / remove necessary items.
         this->treeWidgetPreset->clear();
@@ -514,7 +514,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
 
         this->toolBoxLibrary->setItemText(Library::PRESET_PAGE_INDEX, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
     }
-    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::ImportPreset))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ImportPreset))
     {
         QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
         if (!path.isEmpty())
@@ -535,7 +535,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
             }
         }
     }
-    else if(event->type() == static_cast<QEvent::Type>(Event::EventType::ExportPreset))
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExportPreset))
     {
         if (this->treeWidgetPreset->selectedItems().count() == 0)
             return true;
