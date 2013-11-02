@@ -189,6 +189,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         if (this->model == NULL)
             return false;
 
+        blockAllSignals(true);
+
         DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
         if (!deviceChangedEvent->getDeviceName().isEmpty())
         {
@@ -199,6 +201,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         checkEmptyDevice();
         checkEmptyTarget();
+
+        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged) ||
              event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
@@ -206,7 +210,11 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         if (this->model == NULL)
             return false;
 
+        blockAllSignals(true);
+
         fillTargetCombo(this->model->getType());
+
+        blockAllSignals(false);
     }
 
     return QObject::eventFilter(target, event);
