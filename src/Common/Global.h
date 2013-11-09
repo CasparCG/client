@@ -5,7 +5,7 @@
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
 #define REVISION_VERSION 6
-#define DATABASE_VERSION "206"
+#define DATABASE_VERSION "206DH"
 
 #include <stdexcept>
 
@@ -49,7 +49,10 @@ namespace Event
             VideolayerChanged = QEvent::User + 38,
             AddTemplateData = QEvent::User + 39,
             RundownIsChanged = QEvent::User + 40,
-            AddActionItem = QEvent::User + 41
+            AddActionItem = QEvent::User + 41,
+            AutoPlayRundownItem = QEvent::User + 42,
+            AutoPlayChanged =  QEvent::User + 43,
+            AutoPlayNextRundownItem =  QEvent::User + 44
         };
     };
 }
@@ -57,10 +60,12 @@ namespace Event
 namespace Osc
 {
     static const int DEFAULT_PORT = 6250;
-    static const int DEFAULT_PROGRESSBAR_X = 2;
-    static const int DEFAULT_PROGRESSBAR_Y = 20;
-    static const int COMPACT_PROGRESSBAR_X = 2;
-    static const int COMPACT_PROGRESSBAR_Y = 5;
+    static const int DEFAULT_PROGRESSBAR_X = 64;
+    static const int DEFAULT_PROGRESSBAR_Y = 3;
+    static const int DEFAULT_PROGRESSBAR_HEIGHT = 24;
+    static const int COMPACT_PROGRESSBAR_X = 64;
+    static const int COMPACT_PROGRESSBAR_Y = 2;
+    static const int COMPACT_PROGRESSBAR_HEIGHT = 11;
     static const int DEFAULT_LOOP_X = 180;
     static const int DEFAULT_LOOP_Y = 15;
     static const int COMPACT_LOOP_X = 180;
@@ -75,9 +80,9 @@ namespace Osc
     static const int COMPACT_PAUSE_Y = 0;
 }
 
-namespace Gpi
+namespace GpiOutput
 {
-    static const int DEFAULT_GPO_PORT = 0;
+    static const int DEFAULT_PORT = 0;
 }
 
 namespace Mixer
@@ -116,8 +121,6 @@ namespace Mixer
 
 namespace Color
 {
-    static const bool DEFAULT_USE_AUTO = false;
-    static const QString DEFAULT_COLOR_NAME = "";
     static const QString DEFAULT_ACTIVE_COLOR = "Lime";
     static const QString DEFAULT_CONSUMER_COLOR = "DarkSlateGray";
     static const QString DEFAULT_GPI_COLOR = "Chocolate";
@@ -182,7 +185,7 @@ namespace Video
     static const bool DEFAULT_LOOP = false;
     static const bool DEFAULT_FREEZE_ON_LOAD = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-    static const bool DEFAULT_USE_AUTO = false;
+    static const bool DEFAULT_AUTO_PLAY = false;
 }
 
 namespace Image
@@ -221,6 +224,8 @@ namespace Template
     static const int DEFAULT_FLASHLAYER = 1;
     static const QString DEFAULT_INVOKE = "";
     static const QString DEFAULT_TEMPLATENAME = "";
+    static const bool DEFAULT_USE_STORED_DATA = false;
+    static const bool DEFAULT_USE_UPPERCASE_DATA = false;
 }
 
 namespace DeckLinkInput
@@ -240,8 +245,9 @@ namespace FileRecorder
 
 namespace SolidColor
 {
+    static const bool DEFAULT_USE_AUTO = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-    static const QString DEFAULT_NAME = "#00000000";
+    static const QString DEFAULT_COLOR = "#00000000";
 }
 
 namespace Library
@@ -270,6 +276,7 @@ namespace Group
 {
     static const QString DEFAULT_NOTE = "";
     static const bool DEFAULT_AUTO_STEP = false;
+    static const bool DEFAULT_AUTO_PLAY = false;
 }
 
 namespace Rundown

@@ -37,6 +37,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
+        virtual bool isInGroup() const;
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();

@@ -152,6 +152,11 @@ bool RundownClearOutputWidget::isGroup() const
     return false;
 }
 
+bool RundownClearOutputWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownClearOutputWidget::getCommand()
 {
     return &this->command;

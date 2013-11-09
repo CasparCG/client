@@ -140,4 +140,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
 
     protected:
         void sendNotification();
+
+    private:
+        QString convertToTimecode(double time, int fps);
 };

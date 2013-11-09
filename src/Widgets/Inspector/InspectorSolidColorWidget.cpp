@@ -39,6 +39,7 @@ bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->command = dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand());
 
+            this->lineEditColor->setText(this->command->getColor());
             this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
             this->spinBoxDuration->setValue(this->command->getDuration());
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
@@ -54,6 +55,7 @@ bool InspectorSolidColorWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorSolidColorWidget::blockAllSignals(bool block)
 {
+    this->lineEditColor->blockSignals(block);
     this->comboBoxTransition->blockSignals(block);
     this->spinBoxDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);

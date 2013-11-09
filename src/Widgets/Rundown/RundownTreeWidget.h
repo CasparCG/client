@@ -55,6 +55,9 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
+        AbstractRundownWidget* currentAutoPlayWidget;
+        QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
+
         QTreeWidgetItem* copyItem;
 
         enum ActionSource

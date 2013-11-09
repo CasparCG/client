@@ -117,6 +117,11 @@
 {
     color: rgba(190, 190, 190, 255);
 }
+#treeWidgetInspector QLabel:disabled
+{
+    color: rgba(128, 128, 128, 255);
+}
+
 #toolButtonMasterVolume
 {
     image: url(:/Graphics/Images/MasterVolumeOn.png);
@@ -304,11 +309,13 @@
 }
 #progressBarOscTime
 {
+    border-color: lime;
     border-radius: 0px;
 }
 #progressBarOscTime::chunk
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
-    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
+    background-color: green;
+    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
     border-radius: 2px;*/
 }

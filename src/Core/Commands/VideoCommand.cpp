@@ -7,7 +7,7 @@ VideoCommand::VideoCommand(QObject* parent)
       videoName(Video::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
       duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Video::DEFAULT_LOOP),
       freezeOnLoad(Video::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Video::DEFAULT_TRIGGER_ON_NEXT), seek(Video::DEFAULT_SEEK),
-      length(Video::DEFAULT_LENGTH), useAuto(Video::DEFAULT_USE_AUTO)
+      length(Video::DEFAULT_LENGTH), autoPlay(Video::DEFAULT_AUTO_PLAY)
 {
 }
 
@@ -61,9 +61,9 @@ int VideoCommand::getLength() const
     return this->length;
 }
 
-bool VideoCommand::getUseAuto() const
+bool VideoCommand::getAutoPlay() const
 {
-    return this->useAuto;
+    return this->autoPlay;
 }
 
 void VideoCommand::setVideoName(const QString& videoName)
@@ -126,26 +126,26 @@ void VideoCommand::setLength(int length)
     emit lengthChanged(this->length);
 }
 
-void VideoCommand::setUseAuto(bool useAuto)
+void VideoCommand::setAutoPlay(bool autoPlay)
 {
-    this->useAuto = useAuto;
-    emit useAutoChanged(this->useAuto);
+    this->autoPlay = autoPlay;
+    emit autoPlayChanged(this->autoPlay);
 }
 
 void VideoCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"transition") > 0) setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"direction") > 0) setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
-    if (pt.count(L"seek") > 0) setSeek(pt.get<int>(L"seek"));
-    if (pt.count(L"length") > 0) setLength(pt.get<int>(L"length"));
-    if (pt.count(L"loop") > 0) setLoop(pt.get<bool>(L"loop"));
-    if (pt.count(L"freezeonload") > 0) setFreezeOnLoad(pt.get<bool>(L"freezeonload"));
-    if (pt.count(L"useauto") > 0) setUseAuto(pt.get<bool>(L"useauto"));
-    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
+    setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
+    setSeek(pt.get<int>(L"seek", Video::DEFAULT_SEEK));
+    setLength(pt.get(L"length", Video::DEFAULT_LENGTH));
+    setLoop(pt.get(L"loop", Video::DEFAULT_LOOP));
+    setFreezeOnLoad(pt.get(L"freezeonload", Video::DEFAULT_FREEZE_ON_LOAD));
+    setTriggerOnNext(pt.get(L"triggeronnext", Video::DEFAULT_TRIGGER_ON_NEXT));
+    setAutoPlay(pt.get(L"autoplay", Video::DEFAULT_AUTO_PLAY));
 }
 
 void VideoCommand::writeProperties(QXmlStreamWriter* writer)
@@ -160,6 +160,6 @@ void VideoCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("length", QString::number(this->getLength()));
     writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
     writer->writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
-    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer->writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
 }

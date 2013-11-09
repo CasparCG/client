@@ -176,6 +176,11 @@ bool RundownTemplateWidget::isGroup() const
     return false;
 }
 
+bool RundownTemplateWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownTemplateWidget::getCommand()
 {
     return &this->command;

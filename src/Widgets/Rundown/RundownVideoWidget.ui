@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>832</width>
     <height>36</height>
    </rect>
   </property>
@@ -169,13 +169,13 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>367</width>
+       <width>399</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>347</width>
+       <width>399</width>
        <height>16777215</height>
       </size>
      </property>
@@ -222,7 +222,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>322</x>
+        <x>355</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -253,7 +253,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>359</x>
+        <x>391</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -314,6 +314,43 @@
         <width>220</width>
         <height>31</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelAutoPlay">
+      <property name="geometry">
+       <rect>
+        <x>323</x>
+        <y>2</y>
+        <width>32</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/AutoPlayItem.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="margin">
+       <number>0</number>
       </property>
      </widget>
     </widget>

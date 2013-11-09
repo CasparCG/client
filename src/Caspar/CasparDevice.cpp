@@ -545,6 +545,23 @@ void CasparDevice::setClipping(int channel, int videolayer, float positionX, flo
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
+QString CasparDevice::convertToTimecode(double time, int fps)
+{
+    int hour;
+    int minutes;
+    int seconds;
+    int frames;
+
+    QString smpteFormat;
+
+    hour = time / 3600;
+    minutes = (time - hour * 3600) / 60;
+    seconds = time - hour * 3600 - minutes * 60;
+    frames = (time - hour * 3600 - minutes * 60 - seconds) * fps;
+
+    return smpteFormat.sprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
+}
+
 void CasparDevice::sendNotification()
 {
     switch (this->command)
@@ -563,7 +580,25 @@ void CasparDevice::sendNotification()
 
                 QString type = response.split("\" ").at(1).trimmed().split(" ").at(0);
 
-                items.push_back(CasparMedia(name, type));
+                QString timecode;
+                if (response.split("\" ").at(1).trimmed().split(" ").count() > 5)
+                {
+                    // Format:
+                    // "AMB"  MOVIE  6445960 20121101160514 643 1/60
+                    // "CG1080I50"  MOVIE  6159792 20121101150514 264 1/25
+                    // "GO1080P25"  MOVIE  16694084 20121101150514 445 1/25
+                    // "WIPE"  MOVIE  1268784 20121101150514 31 1/25
+                    QString totalFrames = response.split("\" ").at(1).trimmed().split(" ").at(4);
+                    QString timeBase = response.split("\" ").at(1).trimmed().split(" ").at(5);
+
+                    int frames = totalFrames.toInt();
+                    int fps = timeBase.split("/").at(1).toInt();
+
+                    double time = frames * (1.0 / fps);
+                    timecode = convertToTimecode(time, fps);
+                }
+
+                items.push_back(CasparMedia(name, type, timecode));
             }
 
             emit mediaChanged(items, *this);

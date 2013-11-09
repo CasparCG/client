@@ -33,6 +33,7 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
         virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
+        virtual bool isInGroup() const;
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();

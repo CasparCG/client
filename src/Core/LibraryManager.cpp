@@ -183,7 +183,7 @@ void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDe
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, mediaItem.getName(), mediaItem.getName(), "", mediaItem.getType(), 0));
+            insertModels.push_back(LibraryModel(0, mediaItem.getName(), mediaItem.getName(), "", mediaItem.getType(), 0, mediaItem.getTimecode()));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -229,7 +229,7 @@ void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems,
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, templateItem.getName(), templateItem.getName(), "", "TEMPLATE", 0));
+            insertModels.push_back(LibraryModel(0, templateItem.getName(), templateItem.getName(), "", "TEMPLATE", 0, ""));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)
@@ -275,7 +275,7 @@ void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevic
         }
 
         if (!found)
-            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "DATA", 0));
+            insertModels.push_back(LibraryModel(0, dataItem.getName(), dataItem.getName(), "", "DATA", 0, ""));
     }
 
     if (deleteModels.count() > 0 || insertModels.count() > 0)

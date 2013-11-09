@@ -23,7 +23,7 @@ void KeyerCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"defer") > 0) setDefer(pt.get<int>(L"defer"));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void KeyerCommand::writeProperties(QXmlStreamWriter* writer)

@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
     private:
         LibraryModel* model;
         VideoCommand* command;
+        bool disableVideoProgress;
 
         void loadDirection();
         void loadTransition();
@@ -36,7 +37,6 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         Q_SLOT void directionChanged(QString);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void loopChanged(int);
-        Q_SLOT void useAutoChanged(int);
         Q_SLOT void freezeOnLoadChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void seekChanged(int);
@@ -50,5 +50,5 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         Q_SLOT void resetLoop(QString);
         Q_SLOT void resetFreezeOnLoad(QString);
         Q_SLOT void resetTriggerOnNext(QString);
-        Q_SLOT void resetUseAuto(QString);
+        Q_SLOT void autoPlayChanged(int);
 };

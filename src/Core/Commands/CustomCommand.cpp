@@ -134,17 +134,17 @@ void CustomCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"stopCommand") > 0) setStopCommand(QString::fromStdWString(pt.get<std::wstring>(L"stopCommand")));
-    if (pt.count(L"playCommand") > 0) setPlayCommand(QString::fromStdWString(pt.get<std::wstring>(L"playCommand")));
-    if (pt.count(L"loadCommand") > 0) setLoadCommand(QString::fromStdWString(pt.get<std::wstring>(L"loadCommand")));
-    if (pt.count(L"pauseCommand") > 0) setPauseCommand(QString::fromStdWString(pt.get<std::wstring>(L"pauseCommand")));
-    if (pt.count(L"nextCommand") > 0) setNextCommand(QString::fromStdWString(pt.get<std::wstring>(L"nextCommand")));
-    if (pt.count(L"updateCommand") > 0) setUpdateCommand(QString::fromStdWString(pt.get<std::wstring>(L"updateCommand")));
-    if (pt.count(L"invokeCommand") > 0) setInvokeCommand(QString::fromStdWString(pt.get<std::wstring>(L"invokeCommand")));
-    if (pt.count(L"clearCommand") > 0) setClearCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearCommand")));
-    if (pt.count(L"clearVideolayerCommand") > 0) setClearVideolayerCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearVideolayerCommand")));
-    if (pt.count(L"clearChannelCommand") > 0) setClearChannelCommand(QString::fromStdWString(pt.get<std::wstring>(L"clearChannelCommand")));
-    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
+    setStopCommand(QString::fromStdWString(pt.get(L"stopCommand", L"")));
+    setPlayCommand(QString::fromStdWString(pt.get(L"playCommand", L"")));
+    setLoadCommand(QString::fromStdWString(pt.get(L"loadCommand", L"")));
+    setPauseCommand(QString::fromStdWString(pt.get(L"pauseCommand", L"")));
+    setNextCommand(QString::fromStdWString(pt.get(L"nextCommand", L"")));
+    setUpdateCommand(QString::fromStdWString(pt.get(L"updateCommand", L"")));
+    setInvokeCommand(QString::fromStdWString(pt.get(L"invokeCommand", L"")));
+    setClearCommand(QString::fromStdWString(pt.get(L"clearCommand", L"")));
+    setClearVideolayerCommand(QString::fromStdWString(pt.get(L"clearVideolayerCommand", L"")));
+    setClearChannelCommand(QString::fromStdWString(pt.get(L"clearChannelCommand", L"")));
+    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void CustomCommand::writeProperties(QXmlStreamWriter* writer)

@@ -18,6 +18,7 @@ class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
         virtual AbstractRundownWidget* clone() = 0;
 
         virtual bool isGroup() const = 0;
+        virtual bool isInGroup() const = 0;
 
         virtual AbstractCommand* getCommand() = 0;
         virtual LibraryModel* getLibraryModel() = 0;

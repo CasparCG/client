@@ -56,10 +56,10 @@ void BrightnessCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"brightness") > 0) setBrightness(pt.get<float>(L"brightness"));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setBrightness(pt.get(L"brightness", Mixer::DEFAULT_BRIGHTNESS));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void BrightnessCommand::writeProperties(QXmlStreamWriter* writer)

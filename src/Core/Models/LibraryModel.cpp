@@ -1,7 +1,7 @@
 #include "LibraryModel.h"
 
-LibraryModel::LibraryModel(int id, const QString& label, const QString& name, const QString& deviceName, const QString& type, int thumbnailId)
-    : id(id), label(label), name(name), deviceName(deviceName), type(type), thumbnailId(thumbnailId)
+LibraryModel::LibraryModel(int id, const QString& label, const QString& name, const QString& deviceName, const QString& type, int thumbnailId, const QString& timecode)
+    : id(id), label(label), name(name), deviceName(deviceName), type(type), thumbnailId(thumbnailId), timecode(timecode)
 {
 }
 
@@ -30,6 +30,11 @@ const QString& LibraryModel::getType() const
     return this->type;
 }
 
+const QString& LibraryModel::getTimecode() const
+{
+    return this->timecode;
+}
+
 void LibraryModel::setLabel(const QString& label)
 {
     this->label = label;
@@ -43,6 +48,11 @@ void LibraryModel::setName(const QString& name)
 void LibraryModel::setDeviceName(const QString& deviceName)
 {
     this->deviceName = deviceName;
+}
+
+void LibraryModel::setTimecode(const QString& timecode)
+{
+    this->timecode = timecode;
 }
 
 int LibraryModel::getThumbnailId() const

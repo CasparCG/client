@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
@@ -22,7 +23,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
-      loopSubscription(NULL), animation(NULL), reverseOscTime(false)
+      loopSubscription(NULL), animation(NULL), reverseOscTime(false), sendAutoPlay(false)
 {
     setupUi(this);
 
@@ -35,6 +36,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
 
     this->command.setVideoName(this->model.getName());
 
+    this->labelAutoPlay->setVisible(false);
     this->labelLoopOverlay->setVisible(false);
 
     this->labelGroupColor->setVisible(this->inGroup);
@@ -55,6 +57,7 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(autoPlayChanged(bool)), this, SLOT(autoPlayChanged(bool)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -70,6 +73,8 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 
     configureOscSubscriptions();
+
+    this->widgetOscTime->setStartTime(this->model.getTimecode(), this->reverseOscTime);
 
     qApp->installEventFilter(this);
 }
@@ -162,9 +167,9 @@ AbstractRundownWidget* RundownVideoWidget::clone()
     command->setLoop(this->command.getLoop());
     command->setSeek(this->command.getSeek());
     command->setLength(this->command.getLength());
-    command->setUseAuto(this->command.getUseAuto());
     command->setFreezeOnLoad(this->command.getFreezeOnLoad());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setAutoPlay(this->command.getAutoPlay());
 
     return widget;
 }
@@ -178,6 +183,7 @@ void RundownVideoWidget::setCompactView(bool compactView)
         this->labelGpiConnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelThumbnail->setFixedSize(Rundown::COMPACT_THUMBNAIL_WIDTH, Rundown::COMPACT_THUMBNAIL_HEIGHT);
+        this->labelAutoPlay->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
     }
     else
     {
@@ -186,6 +192,7 @@ void RundownVideoWidget::setCompactView(bool compactView)
         this->labelGpiConnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelThumbnail->setFixedSize(Rundown::DEFAULT_THUMBNAIL_WIDTH, Rundown::DEFAULT_THUMBNAIL_HEIGHT);
+        this->labelAutoPlay->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
     }
 
     this->widgetOscTime->setCompactView(compactView);
@@ -195,17 +202,24 @@ void RundownVideoWidget::setCompactView(bool compactView)
 
 void RundownVideoWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
+    setColor(QString::fromStdWString(pt.get(L"color", Color::DEFAULT_TRANSPARENT_COLOR.toStdWString())));
+    setTimecode(QString::fromStdWString(pt.get(L"timecode", L"")));
 }
 
 void RundownVideoWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
+    writer->writeTextElement("timecode", this->model.getTimecode());
 }
 
 bool RundownVideoWidget::isGroup() const
 {
     return false;
+}
+
+bool RundownVideoWidget::isInGroup() const
+{
+    return this->inGroup;
 }
 
 AbstractCommand* RundownVideoWidget::getCommand()
@@ -255,12 +269,24 @@ void RundownVideoWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
+
+    if (!this->inGroup)
+    {
+        this->labelAutoPlay->setVisible(this->inGroup);
+        this->command.setAutoPlay(this->inGroup);
+    }
 }
 
 void RundownVideoWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
+}
+
+void RundownVideoWidget::setTimecode(const QString& timecode)
+{
+    this->model.setTimecode(timecode);
+    this->widgetOscTime->setStartTime(this->model.getTimecode(), this->reverseOscTime);
 }
 
 void RundownVideoWidget::checkEmptyDevice()
@@ -275,23 +301,33 @@ bool RundownVideoWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
+    else if (type == Playout::PlayoutType::Play)
     {
-        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        if (this->command.getAutoPlay())
+            QTimer::singleShot(0, this, SLOT(executePlay()));
+        else if (!this->command.getTriggerOnNext() || type == Playout::PlayoutType::Update)
         {
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+            if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+            {
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-            this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
-            this->executeTimer.start();
+                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                this->executeTimer.start();
+            }
         }
     }
     else if (type == Playout::PlayoutType::Pause)
         QTimer::singleShot(0, this, SLOT(executePause()));
     else if (type == Playout::PlayoutType::Load)
         QTimer::singleShot(0, this, SLOT(executeLoad()));
-    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
-        QTimer::singleShot(0, this, SLOT(executePlay()));
+    else if (type == Playout::PlayoutType::Next)
+    {
+        if (this->command.getAutoPlay())
+            QTimer::singleShot(0, this, SLOT(executeNext()));
+        else if (this->command.getTriggerOnNext())
+            QTimer::singleShot(0, this, SLOT(executePlay()));
+    }
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
@@ -326,6 +362,7 @@ void RundownVideoWidget::executeStop()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+    this->sendAutoPlay= false;
 }
 
 void RundownVideoWidget::executePlay()
@@ -339,10 +376,20 @@ void RundownVideoWidget::executePlay()
         }
         else
         {
-            device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                              this->command.getLoop(), this->command.getUseAuto());
+            if (this->command.getAutoPlay())
+            {
+                device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                  this->command.getLoop(), true);
+            }
+            else
+            {
+                device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                  this->command.getLoop(), this->command.getAutoPlay());
+            }
         }
     }
 
@@ -360,10 +407,20 @@ void RundownVideoWidget::executePlay()
             }
             else
             {
-                deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                        this->command.getLoop(), this->command.getUseAuto());
+                if (this->command.getAutoPlay())
+                {
+                    deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                            this->command.getLoop(), true);
+                }
+                else
+                {
+                    deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                            this->command.getLoop(), this->command.getAutoPlay());
+                }
             }
         }
     }
@@ -371,6 +428,9 @@ void RundownVideoWidget::executePlay()
     this->paused = false;
     this->loaded = false;
     this->playing = true;
+
+    if (this->command.getAutoPlay())
+        this->sendAutoPlay= true;
 }
 
 void RundownVideoWidget::executePause()
@@ -413,7 +473,7 @@ void RundownVideoWidget::executeLoad()
         device->loadVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
                           this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                          this->command.getLoop(), this->command.getFreezeOnLoad(), this->command.getUseAuto());
+                          this->command.getLoop(), this->command.getFreezeOnLoad(), false);
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -427,13 +487,52 @@ void RundownVideoWidget::executeLoad()
             deviceShadow->loadVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
                                     this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                    this->command.getLoop(), this->command.getFreezeOnLoad(), this->command.getUseAuto());
+                                    this->command.getLoop(), this->command.getFreezeOnLoad(), false);
         }
     }
 
     this->loaded = true;
     this->paused = false;
     this->playing = false;
+    this->sendAutoPlay= false;
+}
+
+void RundownVideoWidget::executeNext()
+{
+    if (this->command.getAutoPlay())
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+        {
+            device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                              this->command.getLoop(), false);
+
+        }
+
+        foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+        {
+            if (model.getShadow() == "No")
+                continue;
+
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+            {
+                deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                        this->command.getLoop(), false);
+            }
+        }
+
+        this->paused = false;
+        this->loaded = false;
+        this->playing = true;
+
+        if (this->command.getAutoPlay())
+            this->sendAutoPlay= true;
+    }
 }
 
 void RundownVideoWidget::executeClearVideolayer()
@@ -457,6 +556,7 @@ void RundownVideoWidget::executeClearVideolayer()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+    this->sendAutoPlay= false;
 
     this->widgetOscTime->reset();
 }
@@ -488,6 +588,7 @@ void RundownVideoWidget::executeClearChannel()
     this->paused = false;
     this->loaded = false;
     this->playing = false;
+    this->sendAutoPlay= false;
 
     this->widgetOscTime->reset();
 }
@@ -678,13 +779,12 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
     this->fileModel->setPath(arguments.at(0).toString());
 
     this->widgetOscTime->setTime(this->fileModel->getFrame());
+    this->widgetOscTime->setProgress(this->fileModel->getFrame());
 
     if (this->reverseOscTime && this->fileModel->getFrame() > 0)
         this->widgetOscTime->setTime(this->fileModel->getTotalFrames() - this->fileModel->getFrame());
     else
         this->widgetOscTime->setTime(this->fileModel->getFrame());
-
-    this->widgetOscTime->setProgress(this->fileModel->getFrame());
 
     if (this->command.getSeek() == 0 && this->command.getLength() == 0)
         this->widgetOscTime->setInOutTime(0, this->fileModel->getTotalFrames());
@@ -692,6 +792,13 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
         this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
 
     this->widgetOscTime->setFramesPerSecond(this->fileModel->getFramesPerSecond());
+
+    if (this->sendAutoPlay && (this->fileModel->getTotalFrames() - this->fileModel->getFrame()) < this->fileModel->getFramesPerSecond())
+    {
+        EventManager::getInstance().fireAutoPlayRundownItemEvent(this);
+
+        this->sendAutoPlay = false;
+    }
 
     this->playing = true;
 }
@@ -704,4 +811,9 @@ void RundownVideoWidget::pausedSubscriptionReceived(const QString& predicate, co
 void RundownVideoWidget::loopSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     this->widgetOscTime->setLoop(arguments.at(0).toBool());
+}
+
+void RundownVideoWidget::autoPlayChanged(bool autoPlay)
+{
+    this->labelAutoPlay->setVisible(autoPlay);
 }

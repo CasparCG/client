@@ -167,6 +167,11 @@ bool RundownVolumeWidget::isGroup() const
     return false;
 }
 
+bool RundownVolumeWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownVolumeWidget::getCommand()
 {
     return &this->command;

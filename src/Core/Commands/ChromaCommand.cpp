@@ -79,12 +79,12 @@ void ChromaCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"blur") > 0) setSpread(pt.get<float>(L"blur"));
-    if (pt.count(L"key") > 0) setKey(QString::fromStdWString(pt.get<std::wstring>(L"key")));
-    if (pt.count(L"softness") > 0) setSpread(pt.get<float>(L"softness"));
-    if (pt.count(L"spill") > 0) setSpill(pt.get<float>(L"spill"));
-    if (pt.count(L"threshold") > 0) setThreshold(pt.get<float>(L"threshold"));
-    if (pt.count(L"showmask") > 0) setShowMask(pt.get<bool>(L"showmask"));
+    setSpread(pt.get(L"blur", Mixer::DEFAULT_CHROMABLUR));
+    setKey(QString::fromStdWString(pt.get(L"key", Mixer::DEFAULT_CHROMAKEY.toStdWString())));
+    setSpread(pt.get(L"spread", Mixer::DEFAULT_CHROMABLENDSTOP));
+    setSpill(pt.get(L"spill", Mixer::DEFAULT_CHROMASPILL));
+    setThreshold(pt.get(L"threshold", Mixer::DEFAULT_CHROMABLENDSTART));
+    setShowMask(pt.get(L"showmask", false));
 }
 
 void ChromaCommand::writeProperties(QXmlStreamWriter* writer)

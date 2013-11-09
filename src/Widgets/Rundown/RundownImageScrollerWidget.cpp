@@ -182,6 +182,11 @@ bool RundownImageScrollerWidget::isGroup() const
     return false;
 }
 
+bool RundownImageScrollerWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownImageScrollerWidget::getCommand()
 {
     return &this->command;

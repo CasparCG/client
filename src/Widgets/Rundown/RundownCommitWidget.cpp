@@ -151,6 +151,11 @@ bool RundownCommitWidget::isGroup() const
     return false;
 }
 
+bool RundownCommitWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownCommitWidget::getCommand()
 {
     return &this->command;

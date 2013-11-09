@@ -68,14 +68,14 @@ void RundownTreeBaseWidget::writeProperties(QTreeWidgetItem* item, QXmlStreamWri
 
 AbstractRundownWidget* RundownTreeBaseWidget::readProperties(boost::property_tree::wptree& pt)
 {
-    QString type = QString::fromStdWString(pt.get<std::wstring>(L"type"));
+    QString type = QString::fromStdWString(pt.get(L"type", L""));
 
     AbstractRundownWidget* widget = NULL;
     if (type == "GROUP")
     {
-        QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
+        QString label = QString::fromStdWString(pt.get(L"label", L""));
 
-        widget = new RundownGroupWidget(LibraryModel(0, label, "", "", type, 0), this);
+        widget = new RundownGroupWidget(LibraryModel(0, label, "", "", type, 0, ""), this);
         widget->setExpanded(true);
         widget->setCompactView(this->compactView);
         widget->getCommand()->readProperties(pt);
@@ -83,11 +83,11 @@ AbstractRundownWidget* RundownTreeBaseWidget::readProperties(boost::property_tre
     }
     else
     {
-        QString deviceName = QString::fromStdWString(pt.get<std::wstring>(L"devicename"));
-        QString label = QString::fromStdWString(pt.get<std::wstring>(L"label"));
-        QString name = QString::fromStdWString(pt.get<std::wstring>(L"name"));
+        QString deviceName = QString::fromStdWString(pt.get(L"devicename", L""));
+        QString label = QString::fromStdWString(pt.get(L"label", L""));
+        QString name = QString::fromStdWString(pt.get(L"name", L""));
 
-        widget = RundownItemFactory::getInstance().createWidget(LibraryModel(0, label, name, deviceName, type, 0));
+        widget = RundownItemFactory::getInstance().createWidget(LibraryModel(0, label, name, deviceName, type, 0, ""));
         widget->setCompactView(this->compactView);
         widget->getCommand()->readProperties(pt);
         widget->readProperties(pt);
@@ -163,7 +163,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
 
         if (parentWidget->isGroup())
         {
-            bool expanded = parentValue.second.get<bool>(L"expanded");
+            bool expanded = parentValue.second.get(L"expanded", false);
             parentItem->setExpanded(expanded);
 
             BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
@@ -258,19 +258,20 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
         {
             QTreeWidget::setCurrentItem(parent);
 
-            QStringList dndDataSplit = dndData.split("#");
+            QStringList dndDataSplit = dndData.split(";");
             foreach(QString data, dndDataSplit)
             {
-                QStringList dataSplit = data.split(":");
+                QStringList dataSplit = data.split(",");
                 EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
-                                                                                 dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt()));
+                                                                                 dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt(),
+                                                                                 dataSplit.at(7)));
             }
         }
         else if (dndData.startsWith("<treeWidgetPreset>")) // External drop from the preset library.
         {
             QTreeWidget::setCurrentItem(parent);
 
-            QStringList dataSplit = dndData.split(":");
+            QStringList dataSplit = dndData.split(",");
             EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
         }
     }
@@ -294,6 +295,20 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
     }
 
     return true;
+}
+
+bool RundownTreeBaseWidget::hasItemBelow() const
+{
+    if (QTreeWidget::currentItem() == NULL)
+        return false;
+
+    QTreeWidgetItem* itemBelow = NULL;
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0))->isGroup()) // Group.
+        itemBelow = QTreeWidget::invisibleRootItem()->child(QTreeWidget::currentIndex().row() + 1);
+    else
+        itemBelow = QTreeWidget::itemBelow(QTreeWidget::currentItem());
+
+    return (itemBelow == NULL) ? false : true;
 }
 
 void RundownTreeBaseWidget::selectItemBelow()

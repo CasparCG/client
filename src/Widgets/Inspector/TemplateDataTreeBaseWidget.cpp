@@ -37,7 +37,7 @@ bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index
     QString dndData = QString::fromUtf8(mimeData->data("application/library-dataitem"));
     if (dndData.startsWith("<treeWidgetData>"))
     {
-        QStringList dataSplit = dndData.split(":");
+        QStringList dataSplit = dndData.split(",");
         EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
     }
 

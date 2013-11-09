@@ -183,6 +183,11 @@ bool RundownAudioWidget::isGroup() const
     return false;
 }
 
+bool RundownAudioWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownAudioWidget::getCommand()
 {
     return &this->command;

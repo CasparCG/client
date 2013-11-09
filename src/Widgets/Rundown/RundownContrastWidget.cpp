@@ -167,6 +167,11 @@ bool RundownContrastWidget::isGroup() const
     return false;
 }
 
+bool RundownContrastWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownContrastWidget::getCommand()
 {
     return &this->command;

@@ -56,10 +56,10 @@ void ContrastCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"contrast") > 0) setContrast(pt.get<float>(L"contrast"));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setContrast(pt.get(L"contrast", Mixer::DEFAULT_CONTRAST));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void ContrastCommand::writeProperties(QXmlStreamWriter* writer)

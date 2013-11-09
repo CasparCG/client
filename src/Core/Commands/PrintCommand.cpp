@@ -23,7 +23,7 @@ void PrintCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"output") > 0) setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
+    setOutput(QString::fromStdWString(pt.get(L"output", Print::DEFAULT_OUTPUT.toStdWString())));
 }
 
 void PrintCommand::writeProperties(QXmlStreamWriter* writer)

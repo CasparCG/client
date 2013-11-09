@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>266</width>
-    <height>104</height>
+    <height>132</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -117,6 +117,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoPlay">
+     <item>
+      <spacer name="horizontalSpacerAutoPlay1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>8</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelAutoPlay">
+       <property name="text">
+        <string>Auto play</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoPlay">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoPlay2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerGroup">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -191,12 +244,28 @@
    <slot>autoStepChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>67</y>
+     <x>89</x>
+     <y>73</y>
     </hint>
     <hint type="destinationlabel">
      <x>103</x>
      <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoPlay</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorGroupWidget</receiver>
+   <slot>autoPlayChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>96</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>120</y>
     </hint>
    </hints>
   </connection>
@@ -206,5 +275,6 @@
   <slot>notesChanged()</slot>
   <slot>resetAutoStep(QString)</slot>
   <slot>autoStepChanged(int)</slot>
+  <slot>autoPlayChanged(int)</slot>
  </slots>
 </ui>

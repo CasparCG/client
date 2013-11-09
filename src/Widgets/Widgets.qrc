@@ -143,6 +143,8 @@
         <file>Images/PauseProgressBarOverlay.png</file>
         <file>Images/Chroma.png</file>
         <file>Images/ChromaSmall.png</file>
+        <file>Images/AutoPlayGroup.png</file>
+        <file>Images/AutoPlayItem.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

@@ -208,8 +208,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -275,6 +275,11 @@
            <string>ThumbnailId</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Timecode</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -284,8 +289,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -351,6 +356,11 @@
            <string>ThumbnailId</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Timecode</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -360,8 +370,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -433,6 +443,11 @@
            <string>ThumbnailId</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>Timecode</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -442,8 +457,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -479,6 +494,9 @@
          <attribute name="headerVisible">
           <bool>false</bool>
          </attribute>
+         <attribute name="headerStretchLastSection">
+          <bool>false</bool>
+         </attribute>
          <column>
           <property name="text">
            <string>Name</string>
@@ -507,6 +525,11 @@
          <column>
           <property name="text">
            <string>ThumbnailId</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Timecode</string>
           </property>
          </column>
         </widget>
@@ -580,6 +603,11 @@
          <column>
           <property name="text">
            <string>ThumbnailId</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Timecode</string>
           </property>
          </column>
         </widget>

@@ -1,8 +1,11 @@
 #include "InspectorVideoWidget.h"
+#include "Rundown/AbstractRundownWidget.h"
+#include "Rundown/RundownGroupWidget.h"
 
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "Commands/GroupCommand.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/DirectionModel.h"
 #include "Models/TransitionModel.h"
@@ -10,9 +13,11 @@
 
 InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL)
+      model(NULL), command(NULL), disableVideoProgress(false)
 {
     setupUi(this);
+
+    this->disableVideoProgress = (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "true") ? true : false;
 
     loadDirection();
     loadTransition();
@@ -43,7 +48,23 @@ bool InspectorVideoWidget::eventFilter(QObject* target, QEvent* event)
             this->checkBoxLoop->setChecked(this->command->getLoop());
             this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-            this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
+
+            RundownGroupWidget* parent = dynamic_cast<RundownGroupWidget*>(rundownItemSelectedEvent->getParent());
+            AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(rundownItemSelectedEvent->getSource());
+
+            // Only show auto play option if we are in a group. OSC needs to be enabled.
+            if (!this->disableVideoProgress && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
+            {
+                this->labelAutoPlay->setEnabled(true);
+                this->checkBoxAutoPlay->setEnabled(true);
+                this->checkBoxAutoPlay->setChecked(this->command->getAutoPlay());
+            }
+            else
+            {
+                this->labelAutoPlay->setEnabled(false);
+                this->checkBoxAutoPlay->setEnabled(false);
+                this->checkBoxAutoPlay->setChecked(false);
+            }
         }
 
         blockAllSignals(false);
@@ -63,7 +84,7 @@ void InspectorVideoWidget::blockAllSignals(bool block)
     this->checkBoxLoop->blockSignals(block);
     this->checkBoxFreezeOnLoad->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
-    this->checkBoxUseAuto->blockSignals(block);
+    this->checkBoxAutoPlay->blockSignals(block);
 }
 
 void InspectorVideoWidget::loadDirection()
@@ -130,18 +151,9 @@ void InspectorVideoWidget::loopChanged(int state)
     this->command->setLoop((state == Qt::Checked) ? true : false);
 }
 
-void InspectorVideoWidget::useAutoChanged(int state)
-{
-    this->command->setUseAuto((state == Qt::Checked) ? true : false);
-    if (state == Qt::Checked)
-        this->checkBoxFreezeOnLoad->setChecked(false); // Auto is only supported for LOADBG.
-}
-
 void InspectorVideoWidget::freezeOnLoadChanged(int state)
 {
     this->command->setFreezeOnLoad((state == Qt::Checked) ? true : false);
-    if (state == Qt::Checked)
-        this->checkBoxUseAuto->setChecked(false); // Auto is not supported for LOAD.
 }
 
 void InspectorVideoWidget::triggerOnNextChanged(int state)
@@ -201,12 +213,6 @@ void InspectorVideoWidget::resetLoop(QString loop)
     this->command->setLoop(this->checkBoxLoop->isChecked());
 }
 
-void InspectorVideoWidget::resetUseAuto(QString useAuto)
-{
-    this->checkBoxUseAuto->setChecked(Video::DEFAULT_USE_AUTO);
-    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
-}
-
 void InspectorVideoWidget::resetFreezeOnLoad(QString freezeOnLoad)
 {
     this->checkBoxFreezeOnLoad->setChecked(Video::DEFAULT_FREEZE_ON_LOAD);
@@ -217,4 +223,9 @@ void InspectorVideoWidget::resetTriggerOnNext(QString triggerOnNext)
 {
     this->checkBoxTriggerOnNext->setChecked(Video::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
+}
+
+void InspectorVideoWidget::autoPlayChanged(int state)
+{
+    this->command->setAutoPlay((state == Qt::Checked) ? true : false);
 }

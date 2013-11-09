@@ -23,7 +23,7 @@ void BlendModeCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"blendmode") > 0) setBlendMode(QString::fromStdWString(pt.get<std::wstring>(L"blendmode")));
+    setBlendMode(QString::fromStdWString(pt.get(L"blendmode", Mixer::DEFAULT_BLENDMODE.toStdWString())));
 }
 
 void BlendModeCommand::writeProperties(QXmlStreamWriter* writer)

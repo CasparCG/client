@@ -68,11 +68,11 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"output") > 0) setOutput(QString::fromStdWString(pt.get<std::wstring>(L"output")));
-    if (pt.count(L"codec") > 0) setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec")));
-    if (pt.count(L"preset") > 0) setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset")));
-    if (pt.count(L"tune") > 0) setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune")));
-    if (pt.count(L"withalpha") > 0) setWithAlpha(pt.get<bool>(L"withalpha"));
+    setOutput(QString::fromStdWString(pt.get(L"output", FileRecorder::DEFAULT_OUTPUT.toStdWString())));
+    setCodec(QString::fromStdWString(pt.get<std::wstring>(L"codec", FileRecorder::DEFAULT_CODEC.toStdWString())));
+    setPreset(QString::fromStdWString(pt.get<std::wstring>(L"preset", FileRecorder::DEFAULT_PRESET.toStdWString())));
+    setTune(QString::fromStdWString(pt.get<std::wstring>(L"tune", FileRecorder::DEFAULT_TUNE.toStdWString())));
+    setWithAlpha(pt.get(L"withalpha", FileRecorder::DEFAULT_WITH_ALPHA));
 }
 
 void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)

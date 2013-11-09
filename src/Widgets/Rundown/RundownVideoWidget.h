@@ -35,6 +35,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
+        virtual bool isInGroup() const;
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();
@@ -67,6 +68,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         VideoCommand command;
         ActiveAnimation* animation;
         bool reverseOscTime;
+        bool sendAutoPlay;
 
         OscFileModel* fileModel;
         OscSubscription* timeSubscription;
@@ -83,6 +85,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
+        void setTimecode(const QString& timecode);
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
@@ -91,6 +94,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void executePlay();
         Q_SLOT void executePause();
         Q_SLOT void executeStop();
+        Q_SLOT void executeNext();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
@@ -104,4 +108,5 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loopSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void autoPlayChanged(bool);
 };

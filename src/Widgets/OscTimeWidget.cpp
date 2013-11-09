@@ -10,20 +10,17 @@
 
 OscTimeWidget::OscTimeWidget(QWidget* parent)
     : QWidget(parent),
-      fps(0), paused(false), timestamp(0)
+      fps(0), paused(false), timestamp(0), startTime(""), reverseOscTime(false)
 {
     setupUi(this);
 
     this->setVisible(false);
-    this->labelLoop->setVisible(false);
-    this->labelPlay->setVisible(false);
-    this->labelPause->setVisible(false);
+    this->progressBarOscTime->setVisible(false);
 
     if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
     {
         this->labelOscInTime->setVisible(false);
         this->labelOscOutTime->setVisible(false);
-        this->labelOscTime->setStyleSheet("font-size: 16px;");
         this->labelOscTime->setFixedWidth(this->labelOscTime->width() + 20);
         this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() - 10, this->labelOscTime->geometry().y(),
                                         this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
@@ -34,11 +31,17 @@ void OscTimeWidget::reset()
 {
     this->timestamp = 0;
     this->progressBarOscTime->reset();
-    this->labelOscTime->setText(Osc::DEFAULT_TIME);
-    this->labelOscInTime->setText(Osc::DEFAULT_TIME);
-    this->labelOscOutTime->setText(Osc::DEFAULT_TIME);
 
-    this->setVisible(false);
+    if (this->startTime.isEmpty())
+    {
+        this->setVisible(false);
+        this->labelOscTime->setText(Osc::DEFAULT_TIME);
+    }
+    else
+    {
+        this->progressBarOscTime->setVisible(false);
+        this->labelOscTime->setText(this->startTime);
+    }
 }
 
 void OscTimeWidget::setTime(int currentFrame)
@@ -56,6 +59,21 @@ void OscTimeWidget::setTime(int currentFrame)
         QTimer::singleShot(200, this, SLOT(checkState()));
 
     this->timestamp = QDateTime::currentMSecsSinceEpoch();
+}
+
+void OscTimeWidget::setStartTime(const QString& startTime, bool reverseOscTime)
+{
+    if (startTime.isEmpty())
+        return;
+
+    this->startTime = startTime;
+    this->reverseOscTime = reverseOscTime;
+    this->labelOscTime->setText(this->startTime);
+
+    if (this->reverseOscTime)
+        this->progressBarOscTime->setValue(this->progressBarOscTime->maximum());
+
+    this->setVisible(true);
 }
 
 void OscTimeWidget::setInOutTime(int seek, int length)
@@ -81,7 +99,9 @@ void OscTimeWidget::setProgress(int currentFrame)
 
     this->setVisible(true);
 
+    this->progressBarOscTime->setVisible(true);
     this->progressBarOscTime->setValue(currentFrame);
+    this->progressBarOscTime->update();
 }
 
 void OscTimeWidget::setFramesPerSecond(int fps)
@@ -91,23 +111,12 @@ void OscTimeWidget::setFramesPerSecond(int fps)
 
 void OscTimeWidget::setPaused(bool paused)
 {
-    this->paused = paused;
-
-    if (this->paused)
-    {
-        this->labelPlay->setVisible(false);
-        this->labelPause->setVisible(true);
-    }
-    else
-    {
-        this->labelPlay->setVisible(true);
-        this->labelPause->setVisible(false);
-    }
+    // Indicate paused state. Border change?
 }
 
 void OscTimeWidget::setLoop(bool loop)
 {
-    this->labelLoop->setVisible(loop);
+    // Indicate loop state.
 }
 
 QString OscTimeWidget::convertToTimecode(double time)
@@ -152,9 +161,7 @@ void OscTimeWidget::setCompactView(bool compactView)
             this->labelOscOutTime->setVisible(!compactView);
         }
 
-        this->labelLoop->move(Osc::COMPACT_LOOP_X, Osc::COMPACT_LOOP_Y);
-        this->labelPlay->move(Osc::COMPACT_PLAY_X, Osc::COMPACT_PLAY_Y);
-        this->labelPause->move(Osc::COMPACT_PAUSE_X, Osc::COMPACT_PAUSE_Y);
+        this->progressBarOscTime->setFixedHeight(Osc::COMPACT_PROGRESSBAR_HEIGHT);
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
     }
     else
@@ -166,9 +173,7 @@ void OscTimeWidget::setCompactView(bool compactView)
             this->labelOscOutTime->setVisible(!compactView);
         }
 
-        this->labelLoop->move(Osc::DEFAULT_LOOP_X, Osc::DEFAULT_LOOP_Y);
-        this->labelPlay->move(Osc::DEFAULT_PLAY_X, Osc::DEFAULT_PLAY_Y);
-        this->labelPause->move(Osc::DEFAULT_PAUSE_X, Osc::DEFAULT_PAUSE_Y);
+        this->progressBarOscTime->setFixedHeight(Osc::DEFAULT_PROGRESSBAR_HEIGHT);
         this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X, Osc::DEFAULT_PROGRESSBAR_Y);
     }
 }
