@@ -6,7 +6,8 @@
 
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
-      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(false), useUppercaseData(false), templateName(Template::DEFAULT_TEMPLATENAME)
+      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(Template::DEFAULT_USE_STORED_DATA),
+      useUppercaseData(Template::DEFAULT_USE_UPPERCASE_DATA), templateName(Template::DEFAULT_TEMPLATENAME)
 {
     this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }
@@ -111,10 +112,10 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"flashlayer") > 0) setFlashlayer(pt.get<int>(L"flashlayer"));
-    if (pt.count(L"invoke") > 0) setInvoke(QString::fromStdWString(pt.get<std::wstring>(L"invoke")));
-    if (pt.count(L"usestoreddata") > 0) setUseStoredData(pt.get<bool>(L"usestoreddata"));
-    if (pt.count(L"useuppercasedata") > 0) setUseUppercaseData(pt.get<bool>(L"useuppercasedata"));
+    setFlashlayer(pt.get(L"flashlayer", Template::DEFAULT_FLASHLAYER));
+    setInvoke(QString::fromStdWString(pt.get(L"invoke", Template::DEFAULT_INVOKE.toStdWString())));
+    setUseStoredData(pt.get(L"usestoreddata", Template::DEFAULT_USE_STORED_DATA));
+    setUseUppercaseData(pt.get(L"useuppercasedata", Template::DEFAULT_USE_UPPERCASE_DATA));
 
     if (pt.count(L"templatedata") > 0)
     {

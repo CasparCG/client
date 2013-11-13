@@ -82,6 +82,11 @@ bool RundownSeparatorWidget::isGroup() const
     return false;
 }
 
+bool RundownSeparatorWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownSeparatorWidget::getCommand()
 {
     return &this->command;

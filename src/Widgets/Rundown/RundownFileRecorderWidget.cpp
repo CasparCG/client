@@ -168,6 +168,11 @@ bool RundownFileRecorderWidget::isGroup() const
     return false;
 }
 
+bool RundownFileRecorderWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownFileRecorderWidget::getCommand()
 {
     return &this->command;

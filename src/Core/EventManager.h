@@ -33,11 +33,16 @@
 #include "Events/ImportPresetEvent.h"
 #include "Events/ExportPresetEvent.h"
 #include "Events/Rundown/RundownIsChangedEvent.h"
+#include "Events/Rundown/AutoPlayRundownItemEvent.h"
+#include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
+#include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QObject>
+
+#include <QtGui/QWidget>
 
 class CORE_EXPORT EventManager : public QObject
 {
@@ -79,7 +84,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireAddPresetItemEvent(const QString& preset);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);
         void fireActiveRundownChangedEvent(const QString& path);
-        void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
+        void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source = NULL, QWidget* parent = NULL);
         void fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
         void fireAutoRefreshLibraryEvent(bool autoRefresh, int interval);
         void fireMediaChangedEvent();
@@ -92,4 +97,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireDeviceChangedEvent(const QString& deviceName);
         void fireChannelChangedEvent(int channel);
         void fireVideolayerChangedEvent(int videolayer);
+        void fireAutoPlayRundownItemEvent(QWidget* widget);
+        void fireAutoPlayNextRundownItemEvent(QWidget* widget);
+        void fireAutoPlayChangedEvent(bool autoPlay);
 };

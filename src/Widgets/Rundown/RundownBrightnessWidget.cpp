@@ -167,6 +167,11 @@ bool RundownBrightnessWidget::isGroup() const
     return false;
 }
 
+bool RundownBrightnessWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownBrightnessWidget::getCommand()
 {
     return &this->command;

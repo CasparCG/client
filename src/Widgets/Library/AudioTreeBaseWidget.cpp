@@ -30,15 +30,16 @@ void AudioTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     QString data;
     foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
     {
-        data.append(QString("<%1>:%2:%3:%4:%5:%6:%7#").arg(this->objectName())
-                                                      .arg(item->text(0))
-                                                      .arg(item->text(1))
-                                                      .arg(item->text(2))
-                                                      .arg(item->text(3))
-                                                      .arg(item->text(4))
-                                                      .arg(item->text(5)));
+        data.append(QString("<%1>,%2,%3,%4,%5,%6,%7,%8;").arg(this->objectName())
+                                                         .arg(item->text(0))
+                                                         .arg(item->text(1))
+                                                         .arg(item->text(2))
+                                                         .arg(item->text(3))
+                                                         .arg(item->text(4))
+                                                         .arg(item->text(5))
+                                                         .arg(item->text(6)));
     }
-    data.remove(QRegExp("#$"));
+    data.remove(QRegExp(";$"));
 
     QMimeData* mimeData = new QMimeData();
     mimeData->setData("application/library-item", data.toUtf8());

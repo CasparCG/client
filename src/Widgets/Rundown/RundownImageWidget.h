@@ -33,6 +33,7 @@ class WIDGETS_EXPORT RundownImageWidget : public QWidget, Ui::RundownImageWidget
         virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
+        virtual bool isInGroup() const;
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();

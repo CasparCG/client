@@ -153,6 +153,11 @@ bool RundownKeyerWidget::isGroup() const
     return false;
 }
 
+bool RundownKeyerWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownKeyerWidget::getCommand()
 {
     return &this->command;

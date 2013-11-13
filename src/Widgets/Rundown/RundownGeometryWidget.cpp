@@ -171,6 +171,11 @@ bool RundownGeometryWidget::isGroup() const
     return false;
 }
 
+bool RundownGeometryWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownGeometryWidget::getCommand()
 {
     return &this->command;

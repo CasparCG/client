@@ -213,7 +213,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>32</x>
+        <x>33</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>

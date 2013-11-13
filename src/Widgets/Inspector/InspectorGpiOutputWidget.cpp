@@ -46,6 +46,6 @@ void InspectorGpiOutputWidget::gpoPortChanged(int port)
 
 void InspectorGpiOutputWidget::resetGpoPort(QString)
 {
-    this->spinBoxGpoPort->setValue(Gpi::DEFAULT_GPO_PORT + 1);
+    this->spinBoxGpoPort->setValue(GpiOutput::DEFAULT_PORT + 1);
     this->command->setGpoPort(this->spinBoxGpoPort->value() - 1);
 }

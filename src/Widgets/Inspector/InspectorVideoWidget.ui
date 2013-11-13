@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>235</width>
+    <width>240</width>
     <height>308</height>
    </rect>
   </property>
@@ -326,59 +326,6 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUseAuto">
-     <item>
-      <spacer name="horizontalSpacerUseAuto1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>36</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUseAuto">
-       <property name="text">
-        <string>Use auto</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUseAuto">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerUseAuto2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutFreezeOnLoad">
      <item>
       <spacer name="horizontalSpacerFreezeOnLoad1">
@@ -485,6 +432,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoPlay">
+     <item>
+      <spacer name="horizontalSpacerAutoPlay1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>32</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelAutoPlay">
+       <property name="text">
+        <string>Auto play</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoPlay">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoPlay2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerMedia">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -527,8 +527,8 @@
    <slot>loopChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>113</x>
-     <y>206</y>
+     <x>112</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>220</x>
@@ -687,44 +687,12 @@
    <slot>resetLoop(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>210</y>
+     <x>93</x>
+     <y>197</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
      <y>182</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelUseAuto</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorVideoWidget</receiver>
-   <slot>resetUseAuto(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>95</x>
-     <y>238</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>73</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxUseAuto</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>InspectorVideoWidget</receiver>
-   <slot>useAutoChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>114</x>
-     <y>234</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>146</x>
-     <y>247</y>
     </hint>
    </hints>
   </connection>
@@ -735,8 +703,8 @@
    <slot>resetFreezeOnLoad(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>266</y>
+     <x>87</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -751,11 +719,11 @@
    <slot>freezeOnLoadChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>262</y>
+     <x>110</x>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>264</x>
+     <x>239</x>
      <y>209</y>
     </hint>
    </hints>
@@ -767,8 +735,8 @@
    <slot>resetTriggerOnNext(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>294</y>
+     <x>88</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
      <x>17</x>
@@ -783,8 +751,8 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>290</y>
+     <x>109</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -799,12 +767,28 @@
    <slot>lengthChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>234</x>
-     <y>164</y>
+     <x>229</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>266</x>
+     <x>239</x>
      <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoPlay</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorVideoWidget</receiver>
+   <slot>autoPlayChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>303</y>
     </hint>
    </hints>
   </connection>
@@ -830,5 +814,6 @@
   <slot>useAutoChanged(int)</slot>
   <slot>resetTriggerOnNext(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>autoPlayChanged(int)</slot>
  </slots>
 </ui>

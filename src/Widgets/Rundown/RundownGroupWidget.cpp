@@ -8,10 +8,9 @@
 #include <QtGui/QApplication>
 #include <QtCore/QObject>
 
-RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool autoStep, bool compactView)
+RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
-      active(active), autoStep(autoStep), compactView(compactView), color(color), model(model)
+      active(active), compactView(compactView), color(color), model(model)
 {
     setupUi(this);
 
@@ -21,7 +20,9 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     setActive(this->active);
     setCompactView(this->compactView);
 
-    this->labelAutoStep->setVisible(this->autoStep);
+    this->labelAutoStep->setVisible(false);
+    this->labelAutoPlay->setVisible(false);
+
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
 
@@ -30,6 +31,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(notesChanged(const QString&)), this, SLOT(notesChanged(const QString&)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(autoPlayChanged(bool)), this, SLOT(autoPlayChanged(bool)));
 
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
@@ -59,7 +61,7 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 
 AbstractRundownWidget* RundownGroupWidget::clone()
 {
-    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color, this->autoStep,
+    RundownGroupWidget* widget = new RundownGroupWidget(this->model, this->parentWidget(), this->color,
                                                         this->active, this->compactView);
 
     GroupCommand* command = dynamic_cast<GroupCommand*>(widget->getCommand());
@@ -69,6 +71,7 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setNotes(this->command.getNotes());
     command->setAutoStep(this->command.getAutoStep());
+    command->setAutoPlay(this->command.getAutoPlay());
 
     return widget;
 }
@@ -91,6 +94,7 @@ void RundownGroupWidget::setCompactView(bool compactView)
         this->labelIcon->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelAutoStep->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
+        this->labelAutoPlay->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
     }
     else
     {
@@ -98,6 +102,7 @@ void RundownGroupWidget::setCompactView(bool compactView)
         this->labelIcon->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelAutoStep->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
+        this->labelAutoPlay->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
     }
 
     this->compactView = compactView;
@@ -106,6 +111,11 @@ void RundownGroupWidget::setCompactView(bool compactView)
 bool RundownGroupWidget::isGroup() const
 {
     return true;
+}
+
+bool RundownGroupWidget::isInGroup() const
+{
+    return false;
 }
 
 AbstractCommand* RundownGroupWidget::getCommand()
@@ -166,11 +176,15 @@ void RundownGroupWidget::allowGpiChanged(bool allowGpi)
 
 void RundownGroupWidget::autoStepChanged(bool autoStep)
 {
-    this->autoStep = autoStep;
-    this->labelAutoStep->setVisible(this->autoStep);
+    this->labelAutoStep->setVisible(autoStep);
 }
 
 void RundownGroupWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownGroupWidget::autoPlayChanged(bool autoPlay)
+{
+    this->labelAutoPlay->setVisible(autoPlay);
 }

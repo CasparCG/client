@@ -91,12 +91,12 @@ void ImageCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"transition") > 0) setTransition(QString::fromStdWString(pt.get<std::wstring>(L"transition")));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"direction") > 0) setDirection(QString::fromStdWString(pt.get<std::wstring>(L"direction")));
-    if (pt.count(L"useauto") > 0) setUseAuto(pt.get<bool>(L"useauto"));
-    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
+    setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
+    setUseAuto(pt.get(L"useauto", Image::DEFAULT_USE_AUTO));
+    setTriggerOnNext(pt.get(L"triggeronnext", Image::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void ImageCommand::writeProperties(QXmlStreamWriter* writer)

@@ -113,6 +113,10 @@ QCheckBox::indicator
     border-style: solid;
     border-width: 1px;
 }
+QCheckBox::indicator:disabled
+{
+    background-color: transparent;
+}
 /*QCheckBox::indicator:unchecked
 {
     image: url(:/Graphics/Images/CheckboxUnchecked.png);
@@ -172,7 +176,7 @@ QRadioButton::indicator:unchecked:pressed
 {
     image: url(:/Graphics/Images/RadiobuttonUncheckedPressed.png);
 }*/
-QRadioButton::indicator::checked
+QRadioButton::indicator:checked
 {
     image: url(:/Graphics/Images/RadiobuttonChecked.png);
 }
@@ -232,7 +236,7 @@ QLineEdit
     border-width: 1px;
     min-height: 20px;
 }
-QLineEdit::disabled
+QLineEdit:disabled
 {
     background-color: transparent;
 }
@@ -245,7 +249,7 @@ QTextEdit
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
-QTextEdit::disabled
+QTextEdit:disabled
 {
     background-color: transparent;
 }
@@ -258,7 +262,7 @@ QPlainTextEdit
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
-QPlainTextEdit::disabled
+QPlainTextEdit:disabled
 {
     background-color: transparent;
 }

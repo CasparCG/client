@@ -102,14 +102,14 @@ void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"positionx") > 0) setPositionX(pt.get<float>(L"positionx"));
-    if (pt.count(L"positiony") > 0) setPositionY(pt.get<float>(L"positiony"));
-    if (pt.count(L"scalex") > 0) setScaleX(pt.get<float>(L"scalex"));
-    if (pt.count(L"scaley") > 0) setScaleY(pt.get<float>(L"scaley"));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"triggeronnext") > 0) setTriggerOnNext(pt.get<bool>(L"triggeronnext"));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setPositionX(pt.get(L"positionx", Mixer::DEFAULT_GEOMETRY_XPOS));
+    setPositionY(pt.get(L"positiony", Mixer::DEFAULT_GEOMETRY_YPOS));
+    setScaleX(pt.get(L"scalex", Mixer::DEFAULT_GEOMETRY_XSCALE));
+    setScaleY(pt.get(L"scaley", Mixer::DEFAULT_GEOMETRY_YSCALE));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void GeometryCommand::writeProperties(QXmlStreamWriter* writer)

@@ -99,7 +99,10 @@ HEADERS += \
     Events/Rundown/RundownIsChangedEvent.h \
     Events/Action/AddActionItemEvent.h \
     Commands/ChromaCommand.h \
-    Models/ChromaModel.h
+    Models/ChromaModel.h \
+    Events/Rundown/AutoPlayRundownItemEvent.h \
+    Events/Inspector/AutoPlayChangedEvent.h \
+    Events/Rundown/AutoPlayNextRundownItemEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -188,7 +191,10 @@ SOURCES += \
     Events/Rundown/RundownIsChangedEvent.cpp \
     Events/Action/AddActionItemEvent.cpp \
     Commands/ChromaCommand.cpp \
-    Models/ChromaModel.cpp
+    Models/ChromaModel.cpp \
+    Events/Rundown/AutoPlayRundownItemEvent.cpp \
+    Events/Inspector/AutoPlayChangedEvent.cpp \
+    Events/Rundown/AutoPlayNextRundownItemEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

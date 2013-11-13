@@ -32,6 +32,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         virtual AbstractRundownWidget* clone();
 
         virtual bool isGroup() const;
+        virtual bool isInGroup() const;
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();

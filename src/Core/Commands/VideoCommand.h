@@ -32,7 +32,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
         bool getTriggerOnNext() const;
         int getSeek() const;
         int getLength() const;
-        bool getUseAuto() const;
+        bool getAutoPlay() const;
 
         void setVideoName(const QString& videoName);
         void setTransition(const QString& transition);
@@ -44,7 +44,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
         void setLoop(bool loop);
         void setSeek(int seek);
         void setLength(int length);
-        void setUseAuto(bool useAuto);
+        void setAutoPlay(bool autoPlay);
 
     private:
         QString videoName;
@@ -57,7 +57,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
         bool triggerOnNext;
         int seek;
         int length;
-        bool useAuto;
+        bool autoPlay;
 
         Q_SIGNAL void videoNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
@@ -69,5 +69,5 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void seekChanged(int);
         Q_SIGNAL void lengthChanged(int);
-        Q_SIGNAL void useAutoChanged(bool);
+        Q_SIGNAL void autoPlayChanged(bool);
 };

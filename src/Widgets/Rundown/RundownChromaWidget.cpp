@@ -169,6 +169,11 @@ bool RundownChromaWidget::isGroup() const
     return false;
 }
 
+bool RundownChromaWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownChromaWidget::getCommand()
 {
     return &this->command;

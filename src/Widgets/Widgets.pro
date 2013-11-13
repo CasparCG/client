@@ -403,7 +403,9 @@ OTHER_FILES += \
     Images/PauseProgressBarOverlay.png \
     Images/LoopProgressBarOverlay.png \
     Images/ChromaSmall.png \
-    Images/Chroma.png
+    Images/Chroma.png \
+    Images/AutoPlayItem.png \
+    Images/AutoPlayGroup.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

@@ -24,6 +24,7 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
     private:
         LibraryModel* model;
         GroupCommand* command;
+        bool disableVideoProgress;
 
         void blockAllSignals(bool block);
 
@@ -31,4 +32,5 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
         Q_SLOT void resetNotes(QString);
         Q_SLOT void autoStepChanged(int);
         Q_SLOT void resetAutoStep(QString);
+        Q_SLOT void autoPlayChanged(int);
 };

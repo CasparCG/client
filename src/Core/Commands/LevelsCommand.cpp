@@ -102,14 +102,14 @@ void LevelsCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"minin") > 0) setMinIn(pt.get<float>(L"minin"));
-    if (pt.count(L"maxin") > 0) setMaxIn(pt.get<float>(L"maxin"));
-    if (pt.count(L"minout") > 0) setMinOut(pt.get<float>(L"minout"));
-    if (pt.count(L"maxout") > 0) setMaxOut(pt.get<float>(L"maxout"));
-    if (pt.count(L"gamma") > 0) setGamma(pt.get<float>(L"gamma"));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setMinIn(pt.get(L"minin", Mixer::DEFAULT_LEVELS_MIN_IN));
+    setMaxIn(pt.get(L"maxin", Mixer::DEFAULT_LEVELS_MAX_IN));
+    setMinOut(pt.get(L"minout", Mixer::DEFAULT_LEVELS_MIN_OUT));
+    setMaxOut(pt.get(L"maxout", Mixer::DEFAULT_LEVELS_MAX_OUT));
+    setGamma(pt.get(L"gamma", Mixer::DEFAULT_LEVELS_GAMMA));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void LevelsCommand::writeProperties(QXmlStreamWriter* writer)

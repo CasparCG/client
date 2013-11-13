@@ -170,6 +170,11 @@ bool RundownCropWidget::isGroup() const
     return false;
 }
 
+bool RundownCropWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownCropWidget::getCommand()
 {
     return &this->command;

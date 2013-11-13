@@ -167,6 +167,11 @@ bool RundownGridWidget::isGroup() const
     return false;
 }
 
+bool RundownGridWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownGridWidget::getCommand()
 {
     return &this->command;

@@ -162,6 +162,11 @@ bool RundownSolidColorWidget::isGroup() const
     return false;
 }
 
+bool RundownSolidColorWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownSolidColorWidget::getCommand()
 {
     return &this->command;

@@ -14,6 +14,7 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
 
         void reset();
         void setTime(int currentFrame);
+        void setStartTime(const QString& startTime, bool reverseOscTime);
         void setInOutTime(int seek, int length);
         void setProgress(int currentFrame);
         void setFramesPerSecond(int fps);
@@ -26,6 +27,8 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         int fps;
         bool paused;
         qint64 timestamp;
+        QString startTime;
+        bool reverseOscTime;
 
         QString convertToTimecode(double time);
 

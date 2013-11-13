@@ -184,6 +184,11 @@ bool RundownImageWidget::isGroup() const
     return false;
 }
 
+bool RundownImageWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownImageWidget::getCommand()
 {
     return &this->command;

@@ -168,57 +168,57 @@ void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedDat
 void EventManager::fireAddRudnownItemEvent(const QString& type)
 {
     if (type == Rundown::BLENDMODE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0, "")));
     else if (type == Rundown::BRIGHTNESS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
     else if (type == Rundown::CONTRAST)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
     else if (type == Rundown::CROP)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
     else if (type == Rundown::CHROMAKEY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
     else if (type == Rundown::IMAGESCROLLER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0, "")));
     else if (type == Rundown::DECKLINKINPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0, "")));
     else if (type == Rundown::PRINT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
     else if (type == Rundown::CLEAROUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
     else if (type == Rundown::GEOMETRY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
     else if (type == Rundown::GPIOUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
     else if (type == Rundown::FILERECORDER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
     else if (type == Rundown::SEPARATOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
     else if (type == Rundown::GRID)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
     else if (type == Rundown::SOLIDCOLOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0, "")));
     else if (type == Rundown::KEYER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0, "")));
     else if (type == Rundown::LEVELS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0, "")));
     else if (type == Rundown::OPACITY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0, "")));
     else if (type == Rundown::SATURATION)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0, "")));
     else if (type == Rundown::VOLUME)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0, "")));
     else if (type == Rundown::COMMIT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
     else if (type == Rundown::AUDIO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
     else if (type == Rundown::IMAGE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
     else if (type == Rundown::TEMPLATE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
     else if (type == Rundown::VIDEO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0)));
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)
@@ -240,10 +240,10 @@ void EventManager::fireActiveRundownChangedEvent(const QString& path)
     qApp->postEvent(qApp, new ActiveRundownChangedEvent(path));
 }
 
-void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
+void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source, QWidget* parent)
 {
     // Use synchronous event through sendEvent().
-    RundownItemSelectedEvent event(command, model);
+    RundownItemSelectedEvent event(command, model, source, parent);
     qApp->sendEvent(qApp, &event);
 }
 
@@ -307,4 +307,23 @@ void EventManager::fireChannelChangedEvent(int channel)
 void EventManager::fireVideolayerChangedEvent(int videolayer)
 {
     qApp->postEvent(qApp, new VideolayerChangedEvent(videolayer));
+}
+
+void EventManager::fireAutoPlayRundownItemEvent(QWidget* widget)
+{
+    // Use synchronous event through sendEvent().
+    AutoPlayRundownItemEvent event(widget);
+    qApp->sendEvent(qApp, &event);
+}
+
+void EventManager::fireAutoPlayNextRundownItemEvent(QWidget* widget)
+{
+    // Use synchronous event through sendEvent().
+    AutoPlayNextRundownItemEvent event(widget);
+    qApp->sendEvent(qApp, &event);
+}
+
+void EventManager::fireAutoPlayChangedEvent(bool autoPlay)
+{
+    qApp->postEvent(qApp, new AutoPlayChangedEvent(autoPlay));
 }

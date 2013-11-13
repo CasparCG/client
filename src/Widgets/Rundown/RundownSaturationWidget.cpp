@@ -167,6 +167,11 @@ bool RundownSaturationWidget::isGroup() const
     return false;
 }
 
+bool RundownSaturationWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownSaturationWidget::getCommand()
 {
     return &this->command;

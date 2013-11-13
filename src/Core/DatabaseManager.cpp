@@ -38,7 +38,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT)");
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
     sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
-    sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER)");
+    sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER, Timecode TEXT)");
     sql.exec("CREATE TABLE Preset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
@@ -78,9 +78,9 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltip', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ReverseOscTime', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ReverseOscTime', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableVideoProgress', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableInAndOutPoints', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableInAndOutPoints', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
@@ -714,7 +714,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) "
                   "ORDER BY l.Name, l.DeviceId");
 
@@ -725,7 +725,8 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -734,7 +735,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 "
                   "ORDER BY l.Name, l.DeviceId");
 
@@ -745,7 +746,8 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -754,7 +756,7 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                   "WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 "
                   "ORDER BY l.Name, l.DeviceId");
 
@@ -765,7 +767,8 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -778,7 +781,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
@@ -790,7 +793,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE '%%1%' AND (%2) "
                         "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
     }
@@ -802,7 +805,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND (%1) "
                         "ORDER BY l.Name, l.DeviceId").arg(address);
     }
@@ -814,7 +817,8 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -827,7 +831,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
@@ -839,7 +843,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE '%%1%' AND (%2) "
                         "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
     }
@@ -851,7 +855,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (%1) "
                         "ORDER BY l.Name, l.DeviceId").arg(address);
     }
@@ -863,7 +867,8 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -876,7 +881,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
@@ -888,7 +893,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE '%%1%' AND (%2) "
                         "ORDER BY l.Name, l.DeviceId").arg(filter).arg(address);
     }
@@ -900,7 +905,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 
         address = address.mid(0, address.length() - 4); // Remove the last OR.
 
-        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                         "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (%1) "
                         "ORDER BY l.Name, l.DeviceId").arg(address);
     }
@@ -912,7 +917,8 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -921,7 +927,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND d.Id = %1 "
                             "ORDER BY l.Name, l.DeviceId").arg(deviceId);
 
@@ -932,7 +938,8 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -941,7 +948,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND d.Address = '%1' "
                             "ORDER BY l.Id, l.DeviceId").arg(address);
 
@@ -952,7 +959,8 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -961,7 +969,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND d.Address = '%1' "
                             "ORDER BY l.Id, l.DeviceId").arg(address);
 
@@ -972,7 +980,8 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -981,7 +990,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND d.Address = '%1' "
                             "ORDER BY l.Id, l.DeviceId").arg(address);
 
@@ -992,7 +1001,8 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -1001,7 +1011,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId FROM Library l, Device d, Type t "
+    QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE  l.Name = '%1' AND l.DeviceId = %2 AND l.DeviceId = d.Id AND l.TypeId = t.Id")
                             .arg(name).arg(deviceId);
 
@@ -1012,7 +1022,8 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
     QList<LibraryModel> models;
     while (sql.next())
         models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt()));
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
 
     return models;
 }
@@ -1050,8 +1061,8 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
             else if (insertModels.at(i).getType() == "STILL")
                 typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("STILL"))->getId();
 
-            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2, %3, %4)")
-                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId, Timecode) VALUES('%1', %2, %3, %4, '%5')")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
                qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
@@ -1087,8 +1098,8 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
     {
         for (int i = 0; i < insertModels.count(); i++)
         {
-            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
-                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId, Timecode) VALUES('%1', %2, %3, %4, '%5')")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
                qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
@@ -1132,8 +1143,8 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
             if (insertModels.at(i).getType() == "DATA")
                 typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("DATA"))->getId();
 
-            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId) VALUES('%1', %2 ,%3, %4)")
-                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId());
+            QString query = QString("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId, Timecode) VALUES('%1', %2, %3, %4, '%5')")
+                                    .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
                qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());

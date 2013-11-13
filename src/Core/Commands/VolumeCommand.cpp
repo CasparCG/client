@@ -58,10 +58,10 @@ void VolumeCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"volume") > 0) setVolume(pt.get<float>(L"volume"));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setVolume(pt.get(L"volume", Mixer::DEFAULT_VOLUME));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void VolumeCommand::writeProperties(QXmlStreamWriter* writer)

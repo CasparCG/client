@@ -24,14 +24,18 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
 
         bool getAutoStep() const;
         const QString& getNotes() const;
+        bool getAutoPlay() const;
 
         void setAutoStep(bool autoStep);
         void setNotes(const QString& notes);
+        void setAutoPlay(bool autoPlay);
 
     private:
         QString notes;
         bool autoStep;
+        bool autoPlay;
 
         Q_SIGNAL void notesChanged(const QString&);
         Q_SIGNAL void autoStepChanged(bool);
+        Q_SIGNAL void autoPlayChanged(bool);
 };

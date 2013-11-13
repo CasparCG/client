@@ -173,6 +173,11 @@ bool RundownDeckLinkInputWidget::isGroup() const
     return false;
 }
 
+bool RundownDeckLinkInputWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownDeckLinkInputWidget::getCommand()
 {
     return &this->command;

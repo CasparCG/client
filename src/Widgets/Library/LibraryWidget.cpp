@@ -41,36 +41,43 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetTool->setColumnHidden(3, true);
     this->treeWidgetTool->setColumnHidden(4, true);
     this->treeWidgetTool->setColumnHidden(5, true);
+    this->treeWidgetTool->setColumnHidden(6, true);
 
     this->treeWidgetAudio->setColumnHidden(1, true);
     this->treeWidgetAudio->setColumnHidden(2, true);
     this->treeWidgetAudio->setColumnHidden(3, true);
     this->treeWidgetAudio->setColumnHidden(4, true);
     this->treeWidgetAudio->setColumnHidden(5, true);
+    this->treeWidgetAudio->setColumnHidden(6, true);
 
     this->treeWidgetImage->setColumnHidden(1, true);
     this->treeWidgetImage->setColumnHidden(2, true);
     this->treeWidgetImage->setColumnHidden(3, true);
     this->treeWidgetImage->setColumnHidden(4, true);
     this->treeWidgetImage->setColumnHidden(5, true);
+    this->treeWidgetImage->setColumnHidden(6, true);
 
     this->treeWidgetTemplate->setColumnHidden(1, true);
     this->treeWidgetTemplate->setColumnHidden(2, true);
     this->treeWidgetTemplate->setColumnHidden(3, true);
     this->treeWidgetTemplate->setColumnHidden(4, true);
     this->treeWidgetTemplate->setColumnHidden(5, true);
+    this->treeWidgetTemplate->setColumnHidden(6, true);
 
+    this->treeWidgetVideo->header()->setResizeMode(0, QHeaderView::Stretch);
     this->treeWidgetVideo->setColumnHidden(1, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
     this->treeWidgetVideo->setColumnHidden(5, true);
+    this->treeWidgetVideo->setColumnWidth(6, 65);
 
     this->treeWidgetData->setColumnHidden(1, true);
     this->treeWidgetData->setColumnHidden(2, true);
     this->treeWidgetData->setColumnHidden(3, true);
     this->treeWidgetData->setColumnHidden(4, true);
     this->treeWidgetData->setColumnHidden(5, true);
+    this->treeWidgetData->setColumnHidden(6, true);
 
     this->treeWidgetPreset->setColumnHidden(1, true);
     this->treeWidgetPreset->setColumnHidden(2, true);
@@ -106,6 +113,7 @@ void LibraryWidget::setupTools()
     widgetAudio->setText(3, "");
     widgetAudio->setText(4, Rundown::AUDIO);
     widgetAudio->setText(5, "0");
+    widgetAudio->setText(6, "");
 
     QTreeWidgetItem* widgetImage = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImage->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
@@ -115,6 +123,7 @@ void LibraryWidget::setupTools()
     widgetImage->setText(3, "");
     widgetImage->setText(4, Rundown::IMAGE);
     widgetImage->setText(5, "0");
+    widgetImage->setText(6, "");
 
     QTreeWidgetItem* widgetImageScroller = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImageScroller->setIcon(0, QIcon(":/Graphics/Images/ImageScrollerSmall.png"));
@@ -124,6 +133,7 @@ void LibraryWidget::setupTools()
     widgetImageScroller->setText(3, "");
     widgetImageScroller->setText(4, Rundown::IMAGESCROLLER);
     widgetImageScroller->setText(5, "0");
+    widgetImageScroller->setText(6, "");
 
     QTreeWidgetItem* widgetTemplate = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetTemplate->setIcon(0, QIcon(":/Graphics/Images/TemplateSmall.png"));
@@ -133,6 +143,7 @@ void LibraryWidget::setupTools()
     widgetTemplate->setText(3, "");
     widgetTemplate->setText(4, Rundown::TEMPLATE);
     widgetTemplate->setText(5, "0");
+    widgetTemplate->setText(6, "");
 
     QTreeWidgetItem* widgetVideo = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetVideo->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
@@ -142,6 +153,7 @@ void LibraryWidget::setupTools()
     widgetVideo->setText(3, "");
     widgetVideo->setText(4, Rundown::VIDEO);
     widgetVideo->setText(5, "0");
+    widgetVideo->setText(6, "");
 
     QTreeWidgetItem* widgetBlendMode = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetBlendMode->setIcon(0, QIcon(":/Graphics/Images/BlendModeSmall.png"));
@@ -400,6 +412,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setText(3, model.getDeviceName());
                     widget->setText(4, model.getType());
                     widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                    widget->setText(6, model.getTimecode());
                 }    
                 else if (model.getType() == "STILL")
                 {
@@ -411,6 +424,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setText(3, model.getDeviceName());
                     widget->setText(4, model.getType());
                     widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                    widget->setText(6, model.getTimecode());
                 }
                 else if (model.getType() == "MOVIE")
                 {
@@ -422,6 +436,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                     widget->setText(3, model.getDeviceName());
                     widget->setText(4, model.getType());
                     widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                    widget->setText(6, model.getTimecode());
                 }
             }
         }
@@ -454,6 +469,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 widget->setText(3, model.getDeviceName());
                 widget->setText(4, model.getType());
                 widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                widget->setText(6, model.getTimecode());
             }
         }
 
@@ -483,6 +499,7 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 widget->setText(3, model.getDeviceName());
                 widget->setText(4, model.getType());
                 widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                widget->setText(6, model.getTimecode());
             }
         }
 
@@ -639,25 +656,29 @@ void LibraryWidget::contextMenuTriggered(QAction* action)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTool->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), item->text(4), item->text(5).toInt()));
+                                                                             item->text(3), item->text(4), item->text(5).toInt(),
+                                                                             item->text(6)));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetAudio->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), item->text(4), item->text(5).toInt()));
+                                                                             item->text(3), item->text(4), item->text(5).toInt(),
+                                                                             item->text(6)));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTemplate->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), item->text(4), item->text(5).toInt()));
+                                                                             item->text(3), item->text(4), item->text(5).toInt(),
+                                                                             item->text(6)));
     }
     else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetVideo->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), item->text(4), item->text(5).toInt()));
+                                                                             item->text(3), item->text(4), item->text(5).toInt(),
+                                                                             item->text(6)));
     }
 }
 
@@ -667,13 +688,15 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), item->text(4), item->text(5).toInt()));
+                                                                             item->text(3), item->text(4), item->text(5).toInt(),
+                                                                             item->text(6)));
     }
     else if (action->text() == "Add as image scroller")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetImage->selectedItems())
             EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(item->text(1).toInt(), item->text(2), item->text(0),
-                                                                             item->text(3), "IMAGESCROLLER", item->text(5).toInt()));
+                                                                             item->text(3), "IMAGESCROLLER", item->text(5).toInt(),
+                                                                             item->text(6)));
     }
 }
 
@@ -727,19 +750,24 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                         current->text(3), current->text(4), current->text(5).toInt()));
+                                                                         current->text(3), current->text(4), current->text(5).toInt(),
+                                                                         current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::AUDIO_PAGE_INDEX)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                         current->text(3), current->text(4), current->text(5).toInt()));
+                                                                         current->text(3), current->text(4), current->text(5).toInt(),
+                                                                         current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::STILL_PAGE_INDEX)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                         current->text(3), current->text(4), current->text(5).toInt()));
+                                                                         current->text(3), current->text(4), current->text(5).toInt(),
+                                                                         current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::TEMPLATE_PAGE_INDEX)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                         current->text(3), current->text(4), current->text(5).toInt()));
+                                                                         current->text(3), current->text(4), current->text(5).toInt(),
+                                                                         current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::MOVIE_PAGE_INDEX)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                         current->text(3), current->text(4), current->text(5).toInt()));
+                                                                         current->text(3), current->text(4), current->text(5).toInt(),
+                                                                         current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
         EventManager::getInstance().fireAddPresetItemEvent(current->text(2));
 }
@@ -753,7 +781,8 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
         return;
 
     this->model = QSharedPointer<LibraryModel>(new LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
-                                                                current->text(3), current->text(4), current->text(5).toInt()));
+                                                                current->text(3), current->text(4), current->text(5).toInt(),
+                                                                current->text(6)));
 
     if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
         return;

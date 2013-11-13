@@ -68,10 +68,10 @@ void ImageScrollerCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"blur") > 0) setBlur(pt.get<int>(L"blur"));
-    if (pt.count(L"speed") > 0) setSpeed(pt.get<int>(L"speed"));
-    if (pt.count(L"premultiply") > 0) setPremultiply(pt.get<bool>(L"premultiply"));
-    if (pt.count(L"progressive") > 0) setProgressive(pt.get<bool>(L"progressive"));
+    setBlur(pt.get(L"blur", ImageScroller::DEFAULT_BLUR));
+    setSpeed(pt.get(L"speed", ImageScroller::DEFAULT_SPEED));
+    setPremultiply(pt.get(L"premultiply", ImageScroller::DEFAULT_PREMULTIPLY));
+    setProgressive(pt.get(L"progressive", ImageScroller::DEFAULT_PROGRESSIVE));
 }
 
 void ImageScrollerCommand::writeProperties(QXmlStreamWriter* writer)

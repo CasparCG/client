@@ -114,6 +114,11 @@ bool RundownGpiOutputWidget::isGroup() const
     return false;
 }
 
+bool RundownGpiOutputWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownGpiOutputWidget::getCommand()
 {
     return &this->command;

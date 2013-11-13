@@ -4,7 +4,7 @@
 
 GpiOutputCommand::GpiOutputCommand(QObject* parent)
     : AbstractCommand(parent),
-      gpoPort(Gpi::DEFAULT_GPO_PORT)
+      gpoPort(GpiOutput::DEFAULT_PORT)
 {
 }
 
@@ -23,7 +23,7 @@ void GpiOutputCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"gpoport") > 0) setGpoPort(pt.get<float>(L"gpoport"));
+    setGpoPort(pt.get(L"gpoport", GpiOutput::DEFAULT_PORT));
 }
 
 void GpiOutputCommand::writeProperties(QXmlStreamWriter* writer)

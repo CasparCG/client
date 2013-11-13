@@ -171,6 +171,11 @@ bool RundownLevelsWidget::isGroup() const
     return false;
 }
 
+bool RundownLevelsWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownLevelsWidget::getCommand()
 {
     return &this->command;

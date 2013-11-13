@@ -150,6 +150,11 @@ bool RundownPrintWidget::isGroup() const
     return false;
 }
 
+bool RundownPrintWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownPrintWidget::getCommand()
 {
     return &this->command;

@@ -164,6 +164,11 @@ bool RundownBlendModeWidget::isGroup() const
     return false;
 }
 
+bool RundownBlendModeWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownBlendModeWidget::getCommand()
 {
     return &this->command;

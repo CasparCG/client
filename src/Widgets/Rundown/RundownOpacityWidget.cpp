@@ -168,6 +168,11 @@ bool RundownOpacityWidget::isGroup() const
     return false;
 }
 
+bool RundownOpacityWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownOpacityWidget::getCommand()
 {
     return &this->command;

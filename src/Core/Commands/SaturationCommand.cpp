@@ -56,10 +56,10 @@ void SaturationCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    if (pt.count(L"saturation") > 0) setSaturation(pt.get<float>(L"saturation"));
-    if (pt.count(L"saturation") > 0) setDuration(pt.get<int>(L"duration"));
-    if (pt.count(L"tween") > 0) setTween(QString::fromStdWString(pt.get<std::wstring>(L"tween")));
-    if (pt.count(L"defer") > 0) setDefer(pt.get<bool>(L"defer"));
+    setSaturation(pt.get(L"saturation", Mixer::DEFAULT_SATURATION));
+    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
+    setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
 void SaturationCommand::writeProperties(QXmlStreamWriter* writer)

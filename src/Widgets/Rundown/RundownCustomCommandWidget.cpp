@@ -160,6 +160,11 @@ bool RundownCustomCommandWidget::isGroup() const
     return false;
 }
 
+bool RundownCustomCommandWidget::isInGroup() const
+{
+    return this->inGroup;
+}
+
 AbstractCommand* RundownCustomCommandWidget::getCommand()
 {
     return &this->command;
