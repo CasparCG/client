@@ -857,13 +857,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
 
     if (rundownWidget != NULL && rundownWidget->isGroup())
     {
-        if (type == Playout::PlayoutType::Next &&
-            dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
-        {
+        if (type == Playout::PlayoutType::Next && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
             EventManager::getInstance().fireAutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget));
-        }
-        else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) &&
-                 dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
+        else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
             // The group have auto play enabled, then we want to play the items within the group.
             bool isFirstChild = true;
