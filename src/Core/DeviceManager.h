@@ -5,6 +5,7 @@
 
 #include "CasparDevice.h"
 #include "OscListener.h"
+#include "TriCasterDevice.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QObject>
@@ -31,12 +32,14 @@ class CORE_EXPORT DeviceManager : public QObject
         const QSharedPointer<CasparDevice> getDeviceByName(const QString& name) const;
 
         const QSharedPointer<OscListener> getOscListener() const;
+        const QSharedPointer<TriCasterDevice> getTriCasterDevice() const;
 
         Q_SIGNAL void deviceRemoved();
         Q_SIGNAL void deviceAdded(CasparDevice&);
 
     private:
         QSharedPointer<OscListener> oscListener;
+        QSharedPointer<TriCasterDevice> triCasterDevice;
         QMap<QString, DeviceModel> deviceModels;
         QMap<QString, QSharedPointer<CasparDevice> > devices;
 };

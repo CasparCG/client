@@ -180,7 +180,7 @@ void AMCPDevice::parseHeader(const QString& line)
     if (tokens.count() > 3)
         this->command = translateCommand(QString("%1 %2").arg(tokens.at(1)).arg(tokens.at(2)));
 
-    AMCPDevice::response.append(line);
+    this->response.append(line);
 }
 
 void AMCPDevice::parseOneline(const QString& line)
@@ -210,7 +210,7 @@ void AMCPDevice::parseMultiline(const QString& line)
 void AMCPDevice::resetDevice()
 {
     this->code = 0;
-    AMCPDevice::response.clear();
+    this->response.clear();
     this->command = AMCPDevice::NONE;
     this->state = AMCPDevice::ExpectingHeader;
 }

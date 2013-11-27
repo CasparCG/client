@@ -145,6 +145,7 @@
         <file>Images/ChromaSmall.png</file>
         <file>Images/AutoPlayGroup.png</file>
         <file>Images/AutoPlayItem.png</file>
+        <file>Images/MixerSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

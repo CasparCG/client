@@ -27,6 +27,9 @@
 #include "RundownImageWidget.h"
 #include "RundownCustomCommandWidget.h"
 #include "RundownChromaWidget.h"
+#include "TriCaster/RundownProgramInputWidget.h"
+#include "TriCaster/RundownPreviewInputWidget.h"
+#include "TriCaster/RundownTakeWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -63,6 +66,9 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::CLEAROUTPUT) return new RundownClearOutputWidget(model, this);
     else if (model.getType() == Rundown::SOLIDCOLOR) return new RundownSolidColorWidget(model, this);
     else if (model.getType() == Rundown::CUSTOMCOMMAND) return new RundownCustomCommandWidget(model, this);
+    else if (model.getType() == Rundown::PROGRAMINPUT) return new RundownProgramInputWidget(model, this);
+    else if (model.getType() == Rundown::PREVIEWINPUT) return new RundownPreviewInputWidget(model, this);
+    else if (model.getType() == Rundown::TAKE) return new RundownTakeWidget(model, this);
 
     return NULL;
 }

@@ -52,9 +52,18 @@ namespace Event
             AddActionItem = QEvent::User + 41,
             AutoPlayRundownItem = QEvent::User + 42,
             AutoPlayChanged =  QEvent::User + 43,
-            AutoPlayNextRundownItem =  QEvent::User + 44
+            AutoPlayNextRundownItem =  QEvent::User + 44,
+            ProgramSourceChanged =  QEvent::User + 45
         };
     };
+}
+
+namespace TriCaster
+{
+    static const int DEFAULT_PORT = 5950;
+    static const QString DEFAULT_STEP = "background";
+    static const QString DEFAULT_PROGRAM_INPUT = "ddr";
+    static const QString DEFAULT_PREVIEW_INPUT = "ddr2";
 }
 
 namespace Osc
@@ -78,6 +87,13 @@ namespace Osc
     static const int DEFAULT_PAUSE_Y = 14;
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
+    static const QString DEFAULT_TIME = "00:00:00:00";
+    static const QString DEFAULT_TIME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time.*";
+    static const QString DEFAULT_FRAME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame.*";
+    static const QString DEFAULT_FPS_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
+    static const QString DEFAULT_PATH_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
+    static const QString DEFAULT_PAUSED_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
+    static const QString DEFAULT_LOOP_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
 }
 
 namespace GpiOutput
@@ -132,6 +148,7 @@ namespace Color
     static const QString DEFAULT_CLEAR_OUTPUT_COLOR = "Goldenrod";
     static const QString DEFAULT_COLOR_PRODUCER_COLOR = "Goldenrod";
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
+    static const QString DEFAULT_TRICASTER_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
@@ -307,6 +324,11 @@ namespace Rundown
     static const QString VIDEO = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const QString CHROMAKEY = "CHROMAKEY";
+    static const QString AUTO = "AUTO";
+    static const QString TAKE = "TAKE";
+    static const QString PROGRAMINPUT = "PROGRAMINPUT";
+    static const QString PREVIEWINPUT = "PREVIEWINPUT";
+    static const QString AUDIOMIXERPRESET = "AUDIOMIXERPRESET";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;
@@ -320,17 +342,6 @@ namespace Rundown
     static const int COMPACT_THUMBNAIL_WIDTH = 28;
     static const int COMPACT_THUMBNAIL_HEIGHT = 16;
     static const int GROUP_INDENTION = 65;
-}
-
-namespace Osc
-{
-    static const QString DEFAULT_TIME = "00:00:00:00";
-    static const QString DEFAULT_TIME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time.*";
-    static const QString DEFAULT_FRAME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame.*";
-    static const QString DEFAULT_FPS_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
-    static const QString DEFAULT_PATH_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
-    static const QString DEFAULT_PAUSED_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
-    static const QString DEFAULT_LOOP_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
 }
 
 namespace Xml

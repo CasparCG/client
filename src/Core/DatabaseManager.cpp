@@ -42,6 +42,8 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Preset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
 
@@ -85,6 +87,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterPort', '5950')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else
@@ -160,6 +163,33 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Transition (Value) VALUES('PUSH')");
     sql.exec("INSERT INTO Transition (Value) VALUES('SLIDE')");
     sql.exec("INSERT INTO Transition (Value) VALUES('WIPE')");
+
+    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('Background', 'background')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('DSK 1', 'overlay0')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('DSK 2', 'overlay1')");
+
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 1', 'ddr')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 2', 'ddr2')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Still', 'stills')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Title', 'titles')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Frame Buffer', 'frm bfr')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Black', 'black')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 1', 'input1')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 2', 'input2')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 3', 'input3')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 4', 'input4')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 5', 'input5')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 6', 'input6')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 7', 'input7')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 8', 'input8')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 1', 'v1')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 2', 'v2')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 3', 'v3')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 4', 'v4')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 5', 'v5')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 6', 'v6')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 7', 'v7')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 8', 'v8')");
 
     sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
@@ -444,6 +474,40 @@ QList<TweenModel> DatabaseManager::getTween()
     QList<TweenModel> models;
     while (sql.next())
         models.push_back(TweenModel(sql.value(0).toInt(), sql.value(1).toString()));
+
+    return models;
+}
+
+QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tci.Id, tci.Name, tci.Value FROM TriCasterInput tci");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterInputModel> models;
+    while (sql.next())
+        models.push_back(TriCasterInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcs.Id, tcs.Name, tcs.Value FROM TriCasterStep tcs");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterStepModel> models;
+    while (sql.next())
+        models.push_back(TriCasterStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }

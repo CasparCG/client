@@ -12,7 +12,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
     Q_OBJECT
 
     public:
-        explicit AMCPDevice(const QString& address, int port = 5250, QObject* parent = 0);
+        explicit AMCPDevice(const QString& address, int port, QObject* parent = 0);
         virtual ~AMCPDevice();
 
         void disconnectDevice();

@@ -63,6 +63,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Caspar/debug/ -lc
 else:macx:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 else:unix:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 
+DEPENDPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+INCLUDEPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -ltricaster
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
+else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+
 DEPENDPATH += $$PWD/../Osc $$OUT_PWD/../Osc
 INCLUDEPATH += $$PWD/../Osc $$OUT_PWD/../Osc
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Osc/release/ -losc

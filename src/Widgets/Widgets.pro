@@ -94,7 +94,13 @@ HEADERS += \
     Rundown/RundownChromaWidget.h \
     Inspector/InspectorChromaWidget.h \
     Inspector/TemplateDataTreeBaseWidget.h \
-    Inspector/TargetComboBaseWidget.h
+    Inspector/TargetComboBaseWidget.h \
+    Rundown/TriCaster/RundownPreviewInputWidget.h \
+    Rundown/TriCaster/RundownProgramInputWidget.h \
+    Inspector/TriCaster/InspectorPreviewInputWidget.h \
+    Inspector/TriCaster/InspectorProgramInputWidget.h \
+    Inspector/TriCaster/InspectorTakeWidget.h \
+    Rundown/TriCaster/RundownTakeWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -177,7 +183,13 @@ SOURCES += \
     Rundown/RundownChromaWidget.cpp \
     Inspector/InspectorChromaWidget.cpp \
     Inspector/TemplateDataTreeBaseWidget.cpp \
-    Inspector/TargetComboBaseWidget.cpp
+    Inspector/TargetComboBaseWidget.cpp \
+    Inspector/TriCaster/InspectorPreviewInputWidget.cpp \
+    Inspector/TriCaster/InspectorProgramInputWidget.cpp \
+    Rundown/TriCaster/RundownPreviewInputWidget.cpp \
+    Rundown/TriCaster/RundownProgramInputWidget.cpp \
+    Inspector/TriCaster/InspectorTakeWidget.cpp \
+    Rundown/TriCaster/RundownTakeWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -249,10 +261,16 @@ FORMS += \
     OscTimeWidget.ui \
     Action/ActionWidget.ui \
     Rundown/RundownChromaWidget.ui \
-    Inspector/InspectorChromaWidget.ui
+    Inspector/InspectorChromaWidget.ui \
+    Inspector/TriCaster/InspectorPreviewInputWidget.ui \
+    Inspector/TriCaster/InspectorProgramInputWidget.ui \
+    Rundown/TriCaster/RundownProgramInputWidget.ui \
+    Rundown/TriCaster/RundownPreviewInputWidget.ui \
+    Inspector/TriCaster/InspectorTakeWidget.ui \
+    Rundown/TriCaster/RundownTakeWidget.ui
 
 RESOURCES += \
-    Widgets.qrc
+    Widgets.qrc \
 
 OTHER_FILES += \
     Images/ArrowUpDisabled.png \
@@ -405,7 +423,8 @@ OTHER_FILES += \
     Images/ChromaSmall.png \
     Images/Chroma.png \
     Images/AutoPlayItem.png \
-    Images/AutoPlayGroup.png
+    Images/AutoPlayGroup.png \
+    Images/MixerSmall.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
@@ -430,6 +449,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Caspar/release/ -lca
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Caspar/debug/ -lcaspar
 else:macx:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 else:unix:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
+
+DEPENDPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+INCLUDEPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -ltricaster
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
+else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 
 DEPENDPATH += $$PWD/../Osc $$OUT_PWD/../Osc
 INCLUDEPATH += $$PWD/../Osc $$OUT_PWD/../Osc

@@ -102,7 +102,12 @@ HEADERS += \
     Models/ChromaModel.h \
     Events/Rundown/AutoPlayRundownItemEvent.h \
     Events/Inspector/AutoPlayChangedEvent.h \
-    Events/Rundown/AutoPlayNextRundownItemEvent.h
+    Events/Rundown/AutoPlayNextRundownItemEvent.h \
+    Commands/TriCaster/ProgramInputCommand.h \
+    Commands/TriCaster/PreviewInputCommand.h \
+    Models/TriCaster/TriCasterInputModel.h \
+    Models/TriCaster/TriCasterStepModel.h \
+    Commands/TriCaster/TakeCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -194,7 +199,12 @@ SOURCES += \
     Models/ChromaModel.cpp \
     Events/Rundown/AutoPlayRundownItemEvent.cpp \
     Events/Inspector/AutoPlayChangedEvent.cpp \
-    Events/Rundown/AutoPlayNextRundownItemEvent.cpp
+    Events/Rundown/AutoPlayNextRundownItemEvent.cpp \
+    Commands/TriCaster/PreviewInputCommand.cpp \
+    Commands/TriCaster/ProgramInputCommand.cpp \
+    Models/TriCaster/TriCasterInputModel.cpp \
+    Models/TriCaster/TriCasterStepModel.cpp \
+    Commands/TriCaster/TakeCommand.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
@@ -219,6 +229,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Caspar/release/ -lca
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Caspar/debug/ -lcaspar
 else:macx:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
 else:unix:LIBS += -L$$OUT_PWD/../Caspar/ -lcaspar
+
+DEPENDPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+INCLUDEPATH += $$PWD/../TriCaster $$OUT_PWD/../TriCaster
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -ltricaster
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
+else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 
 DEPENDPATH += $$PWD/../Osc $$OUT_PWD/../Osc
 INCLUDEPATH += $$PWD/../Osc $$OUT_PWD/../Osc

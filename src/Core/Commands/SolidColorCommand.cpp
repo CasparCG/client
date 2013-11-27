@@ -45,7 +45,7 @@ bool SolidColorCommand::getTriggerOnNext() const
     return this->triggerOnNext;
 }
 
-void SolidColorCommand:: setColor(const QString& color)
+void SolidColorCommand::setColor(const QString& color)
 {
     this->color = color;
     emit colorChanged(this->color);

@@ -1,0 +1,30 @@
+#include "PreviewSourceCommand.h"
+
+#include "Global.h"
+
+PreviewInputCommand::PreviewInputCommand(QObject* parent)
+    : AbstractCommand(parent),
+      source(TriCaster::DEFAULT_PREVIEW_SOURCE)
+{
+}
+
+void PreviewInputCommand::readProperties(boost::property_tree::wptree& pt)
+{
+    AbstractCommand::readProperties(pt);
+}
+
+void PreviewInputCommand::writeProperties(QXmlStreamWriter* writer)
+{
+    AbstractCommand::writeProperties(writer);
+}
+
+const QString& PreviewInputCommand::getSource() const
+{
+    return this->source;
+}
+
+void PreviewInputCommand::setSource(const QString& source)
+{
+    this->source = source;
+    emit sourceChanged(this->source);
+}
