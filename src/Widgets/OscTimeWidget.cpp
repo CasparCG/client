@@ -155,11 +155,8 @@ void OscTimeWidget::setCompactView(bool compactView)
     if (compactView)
     {
         this->labelOscTime->setVisible(!compactView);
-        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
-        {
-            this->labelOscInTime->setVisible(!compactView);
-            this->labelOscOutTime->setVisible(!compactView);
-        }
+        this->labelOscInTime->setVisible(!compactView);
+        this->labelOscOutTime->setVisible(!compactView);
 
         this->progressBarOscTime->setFixedHeight(Osc::COMPACT_PROGRESSBAR_HEIGHT);
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
@@ -167,7 +164,12 @@ void OscTimeWidget::setCompactView(bool compactView)
     else
     {
         this->labelOscTime->setVisible(!compactView);
-        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
+        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
+        {
+            this->labelOscInTime->setVisible(compactView);
+            this->labelOscOutTime->setVisible(compactView);
+        }
+        else
         {
             this->labelOscInTime->setVisible(!compactView);
             this->labelOscOutTime->setVisible(!compactView);
