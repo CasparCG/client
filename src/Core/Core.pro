@@ -107,7 +107,8 @@ HEADERS += \
     Commands/TriCaster/PreviewInputCommand.h \
     Models/TriCaster/TriCasterInputModel.h \
     Models/TriCaster/TriCasterStepModel.h \
-    Commands/TriCaster/TakeCommand.h
+    Commands/TriCaster/TakeCommand.h \
+    Commands/TriCaster/AutoCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -204,7 +205,8 @@ SOURCES += \
     Commands/TriCaster/ProgramInputCommand.cpp \
     Models/TriCaster/TriCasterInputModel.cpp \
     Models/TriCaster/TriCasterStepModel.cpp \
-    Commands/TriCaster/TakeCommand.cpp
+    Commands/TriCaster/TakeCommand.cpp \
+    Commands/TriCaster/AutoCommand.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
