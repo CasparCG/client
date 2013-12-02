@@ -17,13 +17,15 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     this->setVisible(false);
     this->progressBarOscTime->setVisible(false);
 
+#if defined(Q_OS_MAC)
+    this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 6, this->labelOscTime->geometry().y() + 3,
+                                    this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
+#endif
+
     if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
     {
         this->labelOscInTime->setVisible(false);
         this->labelOscOutTime->setVisible(false);
-        this->labelOscTime->setFixedWidth(this->labelOscTime->width() + 20);
-        this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() - 10, this->labelOscTime->geometry().y(),
-                                        this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
     }
 }
 
