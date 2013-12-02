@@ -23,14 +23,14 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     }
 
 #if defined(Q_OS_MAC)
-    this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 6, this->labelOscTime->geometry().y() + 3,
+    this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 2, this->labelOscTime->geometry().y() + 1,
                                     this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
     this->labelOscInTime->setGeometry(this->labelOscInTime->geometry().x() - 2, this->labelOscInTime->geometry().y(),
                                     this->labelOscInTime->geometry().width(), this->labelOscInTime->geometry().height());
     this->labelOscOutTime->setGeometry(this->labelOscOutTime->geometry().x() + 2, this->labelOscOutTime->geometry().y(),
                                     this->labelOscOutTime->geometry().width(), this->labelOscOutTime->geometry().height());
     this->progressBarOscTime->setGeometry(this->progressBarOscTime->geometry().x(), this->progressBarOscTime->geometry().y(),
-                                    this->progressBarOscTime->geometry().width() - 9, this->progressBarOscTime->geometry().height());
+                                    this->progressBarOscTime->geometry().width() - 7, this->progressBarOscTime->geometry().height());
 #endif
 }
 
@@ -169,7 +169,7 @@ void OscTimeWidget::setCompactView(bool compactView)
 #if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
 #elif defined(Q_OS_MAC)
-        this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X + 6, Osc::COMPACT_PROGRESSBAR_Y);
+        this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X + 5, Osc::COMPACT_PROGRESSBAR_Y);
 #endif
     }
     else
@@ -190,7 +190,7 @@ void OscTimeWidget::setCompactView(bool compactView)
 #if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X, Osc::DEFAULT_PROGRESSBAR_Y);
 #elif defined(Q_OS_MAC)
-        this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X + 6, Osc::DEFAULT_PROGRESSBAR_Y);
+        this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X + 5, Osc::DEFAULT_PROGRESSBAR_Y);
 #endif
     }
 }
