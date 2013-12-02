@@ -16,6 +16,11 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
 
     this->setVisible(false);
     this->progressBarOscTime->setVisible(false);
+    if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
+    {
+        this->labelOscInTime->setVisible(false);
+        this->labelOscOutTime->setVisible(false);
+    }
 
 #if defined(Q_OS_MAC)
     this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 6, this->labelOscTime->geometry().y() + 3,
@@ -27,12 +32,6 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
     this->progressBarOscTime->setGeometry(this->progressBarOscTime->geometry().x(), this->progressBarOscTime->geometry().y(),
                                     this->progressBarOscTime->geometry().width() - 9, this->progressBarOscTime->geometry().height());
 #endif
-
-    if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
-    {
-        this->labelOscInTime->setVisible(false);
-        this->labelOscOutTime->setVisible(false);
-    }
 }
 
 void OscTimeWidget::reset()
@@ -167,8 +166,9 @@ void OscTimeWidget::setCompactView(bool compactView)
         this->labelOscOutTime->setVisible(!compactView);
 
         this->progressBarOscTime->setFixedHeight(Osc::COMPACT_PROGRESSBAR_HEIGHT);
+#if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
-#if defined(Q_OS_MAC)
+#elif defined(Q_OS_MAC)
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X + 6, Osc::COMPACT_PROGRESSBAR_Y);
 #endif
     }
@@ -187,8 +187,9 @@ void OscTimeWidget::setCompactView(bool compactView)
         }
 
         this->progressBarOscTime->setFixedHeight(Osc::DEFAULT_PROGRESSBAR_HEIGHT);
+#if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X, Osc::DEFAULT_PROGRESSBAR_Y);
-#if defined(Q_OS_MAC)
+#elif defined(Q_OS_MAC)
         this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X + 6, Osc::DEFAULT_PROGRESSBAR_Y);
 #endif
     }
