@@ -16,15 +16,22 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
 
     this->setVisible(false);
     this->progressBarOscTime->setVisible(false);
-
     if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
     {
         this->labelOscInTime->setVisible(false);
         this->labelOscOutTime->setVisible(false);
-        this->labelOscTime->setFixedWidth(this->labelOscTime->width() + 20);
-        this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() - 10, this->labelOscTime->geometry().y(),
-                                        this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
     }
+
+#if defined(Q_OS_MAC)
+    this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 2, this->labelOscTime->geometry().y() + 1,
+                                    this->labelOscTime->geometry().width(), this->labelOscTime->geometry().height());
+    this->labelOscInTime->setGeometry(this->labelOscInTime->geometry().x() - 2, this->labelOscInTime->geometry().y(),
+                                    this->labelOscInTime->geometry().width(), this->labelOscInTime->geometry().height());
+    this->labelOscOutTime->setGeometry(this->labelOscOutTime->geometry().x() + 2, this->labelOscOutTime->geometry().y(),
+                                    this->labelOscOutTime->geometry().width(), this->labelOscOutTime->geometry().height());
+    this->progressBarOscTime->setGeometry(this->progressBarOscTime->geometry().x(), this->progressBarOscTime->geometry().y(),
+                                    this->progressBarOscTime->geometry().width() - 7, this->progressBarOscTime->geometry().height());
+#endif
 }
 
 void OscTimeWidget::reset()
@@ -155,25 +162,35 @@ void OscTimeWidget::setCompactView(bool compactView)
     if (compactView)
     {
         this->labelOscTime->setVisible(!compactView);
-        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
-        {
-            this->labelOscInTime->setVisible(!compactView);
-            this->labelOscOutTime->setVisible(!compactView);
-        }
+        this->labelOscInTime->setVisible(!compactView);
+        this->labelOscOutTime->setVisible(!compactView);
 
         this->progressBarOscTime->setFixedHeight(Osc::COMPACT_PROGRESSBAR_HEIGHT);
+#if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X, Osc::COMPACT_PROGRESSBAR_Y);
+#elif defined(Q_OS_MAC)
+        this->progressBarOscTime->move(Osc::COMPACT_PROGRESSBAR_X + 5, Osc::COMPACT_PROGRESSBAR_Y);
+#endif
     }
     else
     {
         this->labelOscTime->setVisible(!compactView);
-        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "false")
+        if (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true")
+        {
+            this->labelOscInTime->setVisible(compactView);
+            this->labelOscOutTime->setVisible(compactView);
+        }
+        else
         {
             this->labelOscInTime->setVisible(!compactView);
             this->labelOscOutTime->setVisible(!compactView);
         }
 
         this->progressBarOscTime->setFixedHeight(Osc::DEFAULT_PROGRESSBAR_HEIGHT);
+#if defined(Q_OS_WIN)
         this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X, Osc::DEFAULT_PROGRESSBAR_Y);
+#elif defined(Q_OS_MAC)
+        this->progressBarOscTime->move(Osc::DEFAULT_PROGRESSBAR_X + 5, Osc::DEFAULT_PROGRESSBAR_Y);
+#endif
     }
 }
