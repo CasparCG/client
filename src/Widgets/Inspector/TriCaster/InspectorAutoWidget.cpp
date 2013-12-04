@@ -6,6 +6,8 @@
 #include "EventManager.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
+#include "Models/TriCaster/TriCasterAutoSpeedModel.h"
+#include "Models/TriCaster/TriCasterAutoTransitionModel.h"
 
 #include <QtGui/QApplication>
 
@@ -16,6 +18,8 @@ InspectorAutoWidget::InspectorAutoWidget(QWidget* parent)
     setupUi(this);
 
     loadTriCasterStep();
+    loadTriCasterAutoSpeed();
+    loadTriCasterAutoTransition();
 
     qApp->installEventFilter(this);
 }
@@ -60,7 +64,43 @@ void InspectorAutoWidget::loadTriCasterStep()
     this->comboBoxStep->blockSignals(false);
 }
 
+void InspectorAutoWidget::loadTriCasterAutoSpeed()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxSpeed->blockSignals(true);
+
+    QList<TriCasterAutoSpeedModel> models = DatabaseManager::getInstance().getTriCasterAutoSpeed();
+    foreach (TriCasterAutoSpeedModel model, models)
+        this->comboBoxSpeed->addItem(model.getName(), model.getValue());
+
+    this->comboBoxSpeed->blockSignals(false);
+}
+
+void InspectorAutoWidget::loadTriCasterAutoTransition()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxTransition->blockSignals(true);
+
+    QList<TriCasterAutoTransitionModel> models = DatabaseManager::getInstance().getTriCasterAutoTransition();
+    foreach (TriCasterAutoTransitionModel model, models)
+        this->comboBoxTransition->addItem(model.getName(), model.getValue());
+
+    this->comboBoxTransition->blockSignals(false);
+}
+
 void InspectorAutoWidget::stepChanged(int index)
 {
     this->command->setStep(this->comboBoxStep->itemData(index).toString());
+}
+
+void InspectorAutoWidget::speedChanged(int index)
+{
+    this->command->setSpeed(this->comboBoxSpeed->itemData(index).toString());
+}
+
+void InspectorAutoWidget::transitionChanged(int index)
+{
+    this->command->setTransition(this->comboBoxTransition->itemData(index).toString());
 }

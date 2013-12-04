@@ -20,6 +20,8 @@
 #include "Models/PresetModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
+#include "Models/TriCaster/TriCasterAutoSpeedModel.h"
+#include "Models/TriCaster/TriCasterAutoTransitionModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -51,8 +53,11 @@ class CORE_EXPORT DatabaseManager
         QList<DirectionModel> getDirection();
         QList<TransitionModel> getTransition();
         QList<TweenModel> getTween();
+
         QList<TriCasterInputModel> getTriCasterInput();
         QList<TriCasterStepModel> getTriCasterStep();
+        QList<TriCasterAutoSpeedModel> getTriCasterAutoSpeed();
+        QList<TriCasterAutoTransitionModel> getTriCasterAutoTransition();
 
         QList<GpiPortModel> getGpiPorts();
         QList<GpoPortModel> getGpoPorts();

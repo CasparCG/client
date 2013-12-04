@@ -44,6 +44,8 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
 
@@ -190,6 +192,20 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 6', 'v6')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 7', 'v7')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 8', 'v8')");
+
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Default', '')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Slow', 'slow')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Medium', 'medium')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Fast', 'fast')");
+
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Default', '')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 1', '0')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 2', '1')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 3', '2')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 4', '3')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 5', '4')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 6', '5')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 7', '6')");
 
     sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
@@ -508,6 +524,40 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
     QList<TriCasterStepModel> models;
     while (sql.next())
         models.push_back(TriCasterStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcas.Id, tcas.Name, tcas.Value FROM TriCasterAutoSpeed tcas");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterAutoSpeedModel> models;
+    while (sql.next())
+        models.push_back(TriCasterAutoSpeedModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcat.Id, tcat.Name, tcat.Value FROM TriCasterAutoTransition tcat");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterAutoTransitionModel> models;
+    while (sql.next())
+        models.push_back(TriCasterAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }

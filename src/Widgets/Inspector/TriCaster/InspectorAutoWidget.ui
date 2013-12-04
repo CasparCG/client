@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>177</width>
-    <height>56</height>
+    <height>112</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>15</width>
+         <width>41</width>
          <height>20</height>
         </size>
        </property>
@@ -44,6 +44,80 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxStep">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSpeed">
+     <item>
+      <spacer name="horizontalSpacerSpeed">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>32</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSpeed">
+       <property name="text">
+        <string>Speed</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxSpeed">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTransition">
+     <item>
+      <spacer name="horizontalSpacerTransition">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>11</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTransition">
+       <property name="text">
+        <string>Transition</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTransition">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -85,13 +159,47 @@
      <y>19</y>
     </hint>
     <hint type="destinationlabel">
-     <x>180</x>
+     <x>176</x>
      <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxSpeed</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAutoWidget</receiver>
+   <slot>speedChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTransition</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAutoWidget</receiver>
+   <slot>transitionChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>83</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>stepChanged(int)</slot>
+  <slot>transitionChanged(int)</slot>
+  <slot>speedChanged(int)</slot>
  </slots>
 </ui>

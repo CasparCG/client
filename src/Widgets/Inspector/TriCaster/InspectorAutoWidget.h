@@ -26,7 +26,11 @@ class WIDGETS_EXPORT InspectorAutoWidget : public QWidget, Ui::InspectorAutoWidg
         AutoCommand* command;
 
         void loadTriCasterStep();
+        void loadTriCasterAutoSpeed();
+        void loadTriCasterAutoTransition();
         void blockAllSignals(bool block);
 
         Q_SLOT void stepChanged(int);
+        Q_SLOT void speedChanged(int);
+        Q_SLOT void transitionChanged(int);
 };

@@ -38,8 +38,6 @@ RundownTakeWidget::RundownTakeWidget(const LibraryModel& model, QWidget* parent,
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 

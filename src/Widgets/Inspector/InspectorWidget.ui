@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>575</height>
+    <height>592</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>514</height>
+        <height>531</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -85,7 +85,7 @@
             <x>0</x>
             <y>0</y>
             <width>287</width>
-            <height>512</height>
+            <height>529</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -790,6 +790,29 @@
              <item>
               <property name="text">
                <string>Take</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Auto</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

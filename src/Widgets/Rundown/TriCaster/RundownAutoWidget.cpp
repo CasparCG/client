@@ -38,8 +38,6 @@ RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent,
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
@@ -228,7 +226,7 @@ bool RundownAutoWidget::executeCommand(enum Playout::PlayoutType::Type type)
 
 void RundownAutoWidget::executePlay()
 {
-    DeviceManager::getInstance().getTriCasterDevice()->triggerAuto(this->command.getStep());
+    DeviceManager::getInstance().getTriCasterDevice()->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
 }
 
 void RundownAutoWidget::delayChanged(int delay)

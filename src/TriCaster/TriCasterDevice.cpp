@@ -10,8 +10,14 @@ TriCasterDevice::TriCasterDevice(const QString& address, int port, QObject* pare
 {
 }
 
-void TriCasterDevice::triggerAuto(const QString& target)
+void TriCasterDevice::triggerAuto(const QString& target, const QString& speed, const QString& transition)
 {
+    if (!speed.isEmpty())
+        writeMessage(QString("<shortcuts><shortcut name=\"%1_%2\" value=\"true\" /></shortcuts>").arg(target).arg(speed));
+
+    if (!transition.isEmpty())
+        writeMessage(QString("<shortcuts><shortcut name=\"%1_select_index\" value=\"%2\" /></shortcuts>").arg(target).arg(transition));
+
     writeMessage(QString("<shortcuts><shortcut name=\"%1_auto\" /></shortcuts>").arg(target));
 }
 
