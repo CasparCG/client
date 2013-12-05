@@ -380,14 +380,14 @@ void LibraryWidget::setupTools()
     widgetTriCasterPreviewInput->setText(4, Rundown::PREVIEWINPUT);
     widgetTriCasterPreviewInput->setText(5, "0");
 
-    QTreeWidgetItem* widgetTriCasterAudiomierPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterAudiomierPreset->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
-    widgetTriCasterAudiomierPreset->setText(0, "Select Audiomixer Preset");
-    widgetTriCasterAudiomierPreset->setText(1, "0");
-    widgetTriCasterAudiomierPreset->setText(2, "Select Audiomixer Preset");
-    widgetTriCasterAudiomierPreset->setText(3, "");
-    widgetTriCasterAudiomierPreset->setText(4, Rundown::AUDIOMIXERPRESET);
-    widgetTriCasterAudiomierPreset->setText(5, "0");
+    QTreeWidgetItem* widgetTriCasterPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterPreset->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterPreset->setText(0, "Select Preset");
+    widgetTriCasterPreset->setText(1, "0");
+    widgetTriCasterPreset->setText(2, "Select Preset");
+    widgetTriCasterPreset->setText(3, "");
+    widgetTriCasterPreset->setText(4, Rundown::PRESET);
+    widgetTriCasterPreset->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }

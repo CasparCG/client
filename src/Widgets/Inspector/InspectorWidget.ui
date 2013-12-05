@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>592</height>
+    <height>609</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>531</height>
+        <height>548</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -85,7 +85,7 @@
             <x>0</x>
             <y>0</y>
             <width>287</width>
-            <height>529</height>
+            <height>546</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -833,6 +833,29 @@
                </brush>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>Audiomixer Preset</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -928,12 +951,12 @@
    <slot>masterVolumeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>285</x>
-     <y>598</y>
+     <x>287</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>98</x>
-     <y>592</y>
+     <y>591</y>
     </hint>
    </hints>
   </connection>

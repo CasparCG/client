@@ -31,6 +31,7 @@
 #include "TriCaster/RundownPreviewInputWidget.h"
 #include "TriCaster/RundownTakeWidget.h"
 #include "TriCaster/RundownAutoWidget.h"
+#include "TriCaster/RundownPresetWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -71,6 +72,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::PREVIEWINPUT) return new RundownPreviewInputWidget(model, this);
     else if (model.getType() == Rundown::TAKE) return new RundownTakeWidget(model, this);
     else if (model.getType() == Rundown::AUTO) return new RundownAutoWidget(model, this);
+    else if (model.getType() == Rundown::PRESET) return new RundownPresetWidget(model, this);
 
     return NULL;
 }

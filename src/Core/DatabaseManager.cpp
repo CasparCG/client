@@ -46,6 +46,9 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterPreset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterPresetInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
 
@@ -206,6 +209,40 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 5', '4')");
     sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 6', '5')");
     sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 7', '6')");
+
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 1', '0')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 2', '1')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 3', '2')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 4', '3')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 5', '4')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 6', '5')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 7', '6')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 8', '7')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 9', '8')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 10', '9')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 11', '10')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 12', '11')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 13', '12')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 14', '13')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 15', '14')");
+
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('DDR 1', 'ddr')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('DDR 2', 'ddr2')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Still', 'stills')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Title', 'titles')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Sound', 'sound')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Audiomixer', 'audiomixer')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 1', 'v1')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 2', 'v2')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 3', 'v3')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 4', 'v4')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 5', 'v5')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 6', 'v6')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 7', 'v7')");
+    sql.exec("INSERT INTO TriCasterPresetInput (Name, Value) VALUES('Virtual Input 8', 'v8')");
+
+    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Program', 'pgm')");
+    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Preview', 'prev')");
 
     sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
@@ -558,6 +595,57 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
         models.push_back(TriCasterAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcp.Id, tcp.Name, tcp.Value FROM TriCasterPreset tcp");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterPresetModel> models;
+    while (sql.next())
+        models.push_back(TriCasterPresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterPresetInputModel> DatabaseManager::getTriCasterPresetInput()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcpi.Id, tcpi.Name, tcpi.Value FROM TriCasterPresetInput tcpi");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterPresetInputModel> models;
+    while (sql.next())
+        models.push_back(TriCasterPresetInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT tcpi.Id, tcpi.Name, tcpi.Value FROM TriCasterPresetInput tcpi");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterPresetInputModel> models;
+    while (sql.next())
+        models.push_back(TriCasterPresetInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }

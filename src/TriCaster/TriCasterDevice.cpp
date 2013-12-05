@@ -26,19 +26,15 @@ void TriCasterDevice::triggerTake(const QString& target)
     writeMessage(QString("<shortcuts><shortcut name=\"%1_take\" /></shortcuts>").arg(target));
 }
 
-void TriCasterDevice::switchProgramInput(const QString& target)
+void TriCasterDevice::selectInput(const QString& switcher, const QString& input)
 {
-    writeMessage(QString("<shortcuts><shortcut name=\"switcher_pgm_named_input\" value=\"%1\" /></shortcuts>").arg(target));
+    // pgm / prev
+    writeMessage(QString("<shortcuts><shortcut name=\"switcher_%1_named_input\" value=\"%2\" /></shortcuts>").arg(switcher).arg(input));
 }
 
-void TriCasterDevice::switchPreviewInput(const QString& target)
+void TriCasterDevice::selectPreset(const QString& input, const QString& preset)
 {
-    writeMessage(QString("<shortcuts><shortcut name=\"switcher_prev_named_input\" value=\"%1\" /></shortcuts>").arg(target));
-}
-
-void TriCasterDevice::selectAudiomixerPreset(const QString& preset)
-{
-    writeMessage(QString("<shortcuts><shortcut name=\"audiomixer_select_preset\" value=\"%1\" /></shortcuts>").arg(preset));
+    writeMessage(QString("<shortcuts><shortcut name=\"%1_select_preset\" value=\"%2\" /></shortcuts>").arg(input).arg(preset));
 }
 
 void TriCasterDevice::sendNotification()

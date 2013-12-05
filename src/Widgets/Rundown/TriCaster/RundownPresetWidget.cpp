@@ -1,4 +1,4 @@
-#include "RundownAutoWidget.h"
+#include "RundownPresetWidget.h"
 
 #include "Global.h"
 
@@ -14,8 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                     bool inGroup, bool compactView)
+RundownPresetWidget::RundownPresetWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                         bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
@@ -57,7 +57,7 @@ RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent,
     qApp->installEventFilter(this);
 }
 
-bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownPresetWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::Preview))
     {
@@ -115,22 +115,21 @@ bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownAutoWidget::clone()
+AbstractRundownWidget* RundownPresetWidget::clone()
 {
-    RundownAutoWidget* widget = new RundownAutoWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                      this->inGroup, this->compactView);
+    RundownPresetWidget* widget = new RundownPresetWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                          this->inGroup, this->compactView);
 
-    AutoCommand* command = dynamic_cast<AutoCommand*>(widget->getCommand());
+    PresetCommand* command = dynamic_cast<PresetCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
-    command->setStep(this->command.getStep());
-    command->setSpeed(this->command.getSpeed());
-    command->setTransition(this->command.getTransition());
+    command->setInput(this->command.getInput());
+    command->setPreset(this->command.getPreset());
 
     return widget;
 }
 
-void RundownAutoWidget::setCompactView(bool compactView)
+void RundownPresetWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -148,37 +147,37 @@ void RundownAutoWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownAutoWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownPresetWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAutoWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownPresetWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownAutoWidget::isGroup() const
+bool RundownPresetWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownAutoWidget::isInGroup() const
+bool RundownPresetWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownAutoWidget::getCommand()
+AbstractCommand* RundownPresetWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownAutoWidget::getLibraryModel()
+LibraryModel* RundownPresetWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownAutoWidget::setActive(bool active)
+void RundownPresetWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -190,19 +189,19 @@ void RundownAutoWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownAutoWidget::setInGroup(bool inGroup)
+void RundownPresetWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-void RundownAutoWidget::setColor(const QString& color)
+void RundownPresetWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-void RundownAutoWidget::checkEmptyDevice()
+void RundownPresetWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -210,7 +209,7 @@ void RundownAutoWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownAutoWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownPresetWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       
@@ -226,17 +225,17 @@ bool RundownAutoWidget::executeCommand(enum Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownAutoWidget::executePlay()
+void RundownPresetWidget::executePlay()
 {
-    DeviceManager::getInstance().getTriCasterDevice()->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
+    DeviceManager::getInstance().getTriCasterDevice()->selectPreset(this->command.getInput(), this->command.getPreset());
 }
 
-void RundownAutoWidget::delayChanged(int delay)
+void RundownPresetWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownAutoWidget::checkGpiConnection()
+void RundownPresetWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -246,7 +245,7 @@ void RundownAutoWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownAutoWidget::checkDeviceConnection()
+void RundownPresetWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -255,12 +254,12 @@ void RundownAutoWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownAutoWidget::allowGpiChanged(bool allowGpi)
+void RundownPresetWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownAutoWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownPresetWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }

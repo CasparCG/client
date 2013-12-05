@@ -103,14 +103,17 @@ HEADERS += \
     Events/Rundown/AutoPlayRundownItemEvent.h \
     Events/Inspector/AutoPlayChangedEvent.h \
     Events/Rundown/AutoPlayNextRundownItemEvent.h \
-    Commands/TriCaster/ProgramInputCommand.h \
-    Commands/TriCaster/PreviewInputCommand.h \
     Models/TriCaster/TriCasterInputModel.h \
     Models/TriCaster/TriCasterStepModel.h \
     Commands/TriCaster/TakeCommand.h \
     Commands/TriCaster/AutoCommand.h \
     Models/TriCaster/TriCasterAutoTransitionModel.h \
-    Models/TriCaster/TriCasterAutoSpeedModel.h
+    Models/TriCaster/TriCasterAutoSpeedModel.h \
+    Models/TriCaster/TriCasterPresetModel.h \
+    Models/TriCaster/TriCasterPresetInputModel.h \
+    Commands/TriCaster/PresetCommand.h \
+    Commands/TriCaster/InputCommand.h \
+    Models/TriCaster/TriCasterSwitcherModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -203,14 +206,17 @@ SOURCES += \
     Events/Rundown/AutoPlayRundownItemEvent.cpp \
     Events/Inspector/AutoPlayChangedEvent.cpp \
     Events/Rundown/AutoPlayNextRundownItemEvent.cpp \
-    Commands/TriCaster/PreviewInputCommand.cpp \
-    Commands/TriCaster/ProgramInputCommand.cpp \
     Models/TriCaster/TriCasterInputModel.cpp \
     Models/TriCaster/TriCasterStepModel.cpp \
     Commands/TriCaster/TakeCommand.cpp \
     Commands/TriCaster/AutoCommand.cpp \
     Models/TriCaster/TriCasterAutoTransitionModel.cpp \
-    Models/TriCaster/TriCasterAutoSpeedModel.cpp
+    Models/TriCaster/TriCasterAutoSpeedModel.cpp \
+    Models/TriCaster/TriCasterPresetModel.cpp \
+    Models/TriCaster/TriCasterPresetInputModel.cpp \
+    Commands/TriCaster/PresetCommand.cpp \
+    Commands/TriCaster/InputCommand.cpp \
+    Models/TriCaster/TriCasterSwitcherModel.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

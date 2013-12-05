@@ -8,16 +8,6 @@ AutoCommand::AutoCommand(QObject* parent)
 {
 }
 
-void AutoCommand::readProperties(boost::property_tree::wptree& pt)
-{
-    AbstractCommand::readProperties(pt);
-}
-
-void AutoCommand::writeProperties(QXmlStreamWriter* writer)
-{
-    AbstractCommand::writeProperties(writer);
-}
-
 const QString& AutoCommand::getStep() const
 {
     return this->step;
@@ -49,4 +39,20 @@ void AutoCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
+}
+
+void AutoCommand::readProperties(boost::property_tree::wptree& pt)
+{
+    AbstractCommand::readProperties(pt);
+
+    setSpeed(QString::fromStdWString(pt.get(L"speed", TriCaster::DEFAULT_SPEED.toStdWString())));
+    setTransition(QString::fromStdWString(pt.get(L"transition", TriCaster::DEFAULT_TRANSITION.toStdWString())));
+}
+
+void AutoCommand::writeProperties(QXmlStreamWriter* writer)
+{
+    AbstractCommand::writeProperties(writer);
+
+    writer->writeTextElement("speed", this->getSpeed());
+    writer->writeTextElement("transition", this->getTransition());
 }

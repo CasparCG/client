@@ -102,7 +102,9 @@ HEADERS += \
     Inspector/TriCaster/InspectorTakeWidget.h \
     Rundown/TriCaster/RundownTakeWidget.h \
     Inspector/TriCaster/InspectorAutoWidget.h \
-    Rundown/TriCaster/RundownAutoWidget.h
+    Rundown/TriCaster/RundownAutoWidget.h \
+    Inspector/TriCaster/InspectorPresetWidget.h \
+    Rundown/TriCaster/RundownPresetWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -193,7 +195,9 @@ SOURCES += \
     Inspector/TriCaster/InspectorTakeWidget.cpp \
     Rundown/TriCaster/RundownTakeWidget.cpp \
     Inspector/TriCaster/InspectorAutoWidget.cpp \
-    Rundown/TriCaster/RundownAutoWidget.cpp
+    Rundown/TriCaster/RundownAutoWidget.cpp \
+    Inspector/TriCaster/InspectorPresetWidget.cpp \
+    Rundown/TriCaster/RundownPresetWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -273,7 +277,9 @@ FORMS += \
     Inspector/TriCaster/InspectorTakeWidget.ui \
     Rundown/TriCaster/RundownTakeWidget.ui \
     Inspector/TriCaster/InspectorAutoWidget.ui \
-    Rundown/TriCaster/RundownAutoWidget.ui
+    Rundown/TriCaster/RundownAutoWidget.ui \
+    Inspector/TriCaster/InspectorPresetWidget.ui \
+    Rundown/TriCaster/RundownPresetWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

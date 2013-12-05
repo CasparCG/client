@@ -4,8 +4,8 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 0
-#define REVISION_VERSION 6
-#define DATABASE_VERSION "206DH"
+#define REVISION_VERSION 7
+#define DATABASE_VERSION "207"
 
 #include <stdexcept>
 
@@ -64,8 +64,10 @@ namespace TriCaster
     static const QString DEFAULT_STEP = "background";
     static const QString DEFAULT_SPEED = "";
     static const QString DEFAULT_TRANSITION = "";
-    static const QString DEFAULT_PROGRAM_INPUT = "ddr";
-    static const QString DEFAULT_PREVIEW_INPUT = "ddr2";
+    static const QString DEFAULT_PRESET = "0";
+    static const QString DEFAULT_PRESET_INPUT = "audiomixer";
+    static const QString DEFAULT_INPUT = "ddr";
+    static const QString DEFAULT_SWITCHER = "prev";
 }
 
 namespace Osc
@@ -330,7 +332,7 @@ namespace Rundown
     static const QString TAKE = "TAKE";
     static const QString PROGRAMINPUT = "PROGRAMINPUT";
     static const QString PREVIEWINPUT = "PREVIEWINPUT";
-    static const QString AUDIOMIXERPRESET = "AUDIOMIXERPRESET";
+    static const QString PRESET = "PRESET";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;
