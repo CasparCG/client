@@ -13,7 +13,7 @@
 
 #include <QtGui/QApplication>
 
-Q_GLOBAL_STATIC(TriCasterDeviceManager, tricasterDeviceManager)
+Q_GLOBAL_STATIC(TriCasterDeviceManager, deviceManager)
 
 TriCasterDeviceManager::TriCasterDeviceManager()
 {
@@ -21,7 +21,7 @@ TriCasterDeviceManager::TriCasterDeviceManager()
 
 TriCasterDeviceManager& TriCasterDeviceManager::getInstance()
 {
-    return *tricasterDeviceManager();
+    return *deviceManager();
 }
 
 void TriCasterDeviceManager::initialize()
@@ -34,7 +34,7 @@ void TriCasterDeviceManager::initialize()
         this->deviceModels.insert(model.getName(), model);
         this->devices.insert(model.getName(), device);
 
-        emit tricasterDeviceAdded(*device);
+        emit deviceAdded(*device);
 
         device->connectDevice();
     }
@@ -49,7 +49,54 @@ void TriCasterDeviceManager::uninitialize()
     }
 }
 
-QList<TriCasterDeviceModel> TriCasterDeviceManager::getTriCasterDeviceModels() const
+void TriCasterDeviceManager::refresh()
+{
+    QList<TriCasterDeviceModel> models = DatabaseManager::getInstance().getTriCasterDevice();
+
+    // Disconnect old devices.
+    foreach (const QString& key, this->devices.keys())
+    {
+        QSharedPointer<TriCasterDevice>& device = this->devices[key];
+
+        bool foundDevice = false;
+        foreach (TriCasterDeviceModel model, models)
+        {
+            if (model.getAddress() == device->getAddress())
+            {
+                foundDevice = true;
+                break;
+            }
+        }
+
+        if (!foundDevice)
+        {
+            device->disconnectDevice();
+
+            this->devices.remove(key);
+            this->deviceModels.remove(key);
+
+            emit deviceRemoved();
+        }
+    }
+
+    // Connect new devices.
+    foreach (TriCasterDeviceModel model, models)
+    {
+        if (!this->devices.contains(model.getName()))
+        {
+            QSharedPointer<TriCasterDevice> device(new TriCasterDevice(model.getAddress(), model.getPort()));
+
+            this->deviceModels.insert(model.getName(), model);
+            this->devices.insert(model.getName(), device);
+
+            emit deviceAdded(*device);
+
+            device->connectDevice();
+        }
+    }
+}
+
+QList<TriCasterDeviceModel> TriCasterDeviceManager::getDeviceModels() const
 {
     QList<TriCasterDeviceModel> models;
     foreach (const TriCasterDeviceModel& model, this->deviceModels)
@@ -58,7 +105,7 @@ QList<TriCasterDeviceModel> TriCasterDeviceManager::getTriCasterDeviceModels() c
     return models;
 }
 
-const TriCasterDeviceModel TriCasterDeviceManager::getTriCasterDeviceModelByName(const QString& name) const
+const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByName(const QString& name) const
 {
     foreach (const TriCasterDeviceModel& model, this->deviceModels)
     {
@@ -69,7 +116,7 @@ const TriCasterDeviceModel TriCasterDeviceManager::getTriCasterDeviceModelByName
     qCritical() << "No TriCasterDeviceModel found for specified name";
 }
 
-const TriCasterDeviceModel TriCasterDeviceManager::getTriCasterDeviceModelByAddress(const QString& address) const
+const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByAddress(const QString& address) const
 {
     foreach (const TriCasterDeviceModel& model, this->deviceModels)
     {
@@ -80,12 +127,12 @@ const TriCasterDeviceModel TriCasterDeviceManager::getTriCasterDeviceModelByAddr
     qCritical() << "No TriCasterDeviceModel found for specified address";
 }
 
-const int TriCasterDeviceManager::getTriCasterDeviceCount() const
+const int TriCasterDeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }
 
-const QSharedPointer<TriCasterDevice> TriCasterDeviceManager::getTriCasterDeviceByName(const QString& name) const
+const QSharedPointer<TriCasterDevice> TriCasterDeviceManager::getDeviceByName(const QString& name) const
 {
     return this->devices.value(name);
 }

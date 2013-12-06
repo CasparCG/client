@@ -1,6 +1,7 @@
 #include "LibraryManager.h"
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
+#include "TriCasterDeviceManager.h"
 #include "EventManager.h"
 #include "Models/DeviceModel.h"
 
@@ -70,6 +71,7 @@ void LibraryManager::refresh()
     this->thumbnailWorkers.clear();
 
     DeviceManager::getInstance().refresh();
+    TriCasterDeviceManager::getInstance().refresh();
 
     if (DeviceManager::getInstance().getDeviceCount() == 0)
         return;

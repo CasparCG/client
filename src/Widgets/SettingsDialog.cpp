@@ -209,6 +209,8 @@ void SettingsDialog::showAddTriCasterDeviceDialog()
                                                              dialog->getPort().toInt(), dialog->getDescription()));
 
         loadTriCasterDevice();
+
+        EventManager::getInstance().fireRefreshLibraryEvent();
     }
 }
 
@@ -234,6 +236,8 @@ void SettingsDialog::removeTriCasterDevice()
     delete this->treeWidgetTriCasterDevice->currentItem();
 
     loadTriCasterDevice();
+
+    EventManager::getInstance().fireRefreshLibraryEvent();
 }
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -268,6 +272,8 @@ void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, 
                                                                                   dialog->getPort().toInt(), dialog->getDescription()));
 
         loadTriCasterDevice();
+
+        EventManager::getInstance().fireRefreshLibraryEvent();
     }
 }
 

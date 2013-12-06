@@ -1,3 +1,9 @@
+CasparCG Client 2.0.7
+=====================
+- NEW: Added support for NewTek TriCaster.
+
+
+
 CasparCG Client 2.0.6
 =====================
 - NEW: Added support for change the default OSC port.

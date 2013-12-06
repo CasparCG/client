@@ -6,6 +6,8 @@
 
 #include "Global.h"
 
+#include "TriCasterDevice.h"
+
 #include "GpiDevice.h"
 
 #include "Animations/ActiveAnimation.h"
@@ -70,6 +72,6 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
-        //Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        //Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void deviceConnectionStateChanged(TriCasterDevice&);
+        Q_SLOT void deviceAdded(TriCasterDevice&);
 };

@@ -58,6 +58,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTriCasterDevice">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -386,8 +396,8 @@
    <slot>deviceNameChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>155</x>
-     <y>21</y>
+     <x>142</x>
+     <y>29</y>
     </hint>
     <hint type="destinationlabel">
      <x>217</x>
@@ -411,6 +421,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBoxTriCasterDevice</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>tricasterDeviceNameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>218</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>channelChanged(int)</slot>
@@ -419,5 +445,6 @@
   <slot>allowGpiChanged(int)</slot>
   <slot>deviceNameChanged(QString)</slot>
   <slot>targetChanged(QString)</slot>
+  <slot>tricasterDeviceNameChanged(QString)</slot>
  </slots>
 </ui>

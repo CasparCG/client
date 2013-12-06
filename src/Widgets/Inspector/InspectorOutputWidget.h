@@ -4,6 +4,7 @@
 #include "ui_InspectorOutputWidget.h"
 
 #include "CasparDevice.h"
+#include "TriCasterDevice.h"
 
 #include "Commands/AbstractCommand.h"
 #include "Models/LibraryModel.h"
@@ -29,8 +30,10 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         LibraryModel* model;
 
         void checkEmptyDevice();
+        void checkEmptyTriCasterDevice();
         void checkEmptyTarget();
         void blockAllSignals(bool block);
+
         void fillTargetCombo(const QString& type);
 
         Q_SLOT void targetChanged(QString);
@@ -41,4 +44,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void channelChanged(int);
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
+        Q_SLOT void tricasterDeviceAdded(TriCasterDevice&);
+        Q_SLOT void tricasterDeviceRemoved();
+        Q_SLOT void tricasterDeviceNameChanged(QString);
 };

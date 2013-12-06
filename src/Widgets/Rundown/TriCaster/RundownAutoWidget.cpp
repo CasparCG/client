@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "DeviceManager.h"
+#include "TriCasterDeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
@@ -41,12 +41,10 @@ RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent,
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
-    /*
-    QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(deviceAdded(TriCasterDevice&)));
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
-        QObject::connect(device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-    */
+        QObject::connect(device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
 
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
@@ -84,7 +82,6 @@ bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
     {
-        /*
         // This event is not for us.
         if (!this->active)
             return false;
@@ -94,22 +91,22 @@ bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
         if (!deviceChangedEvent->getDeviceName().isEmpty() && deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
         {
             // Disconnect connectionStateChanged() from the old device.
-            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            const QSharedPointer<TriCasterDevice> oldDevice = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
 
             // Update the model with the new device.
             this->model.setDeviceName(deviceChangedEvent->getDeviceName());
             this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
             // Connect connectionStateChanged() to the new device.
-            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+            const QSharedPointer<TriCasterDevice> newDevice = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
             if (newDevice != NULL)
-                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
         }
 
         checkEmptyDevice();
-        checkDeviceConnection();*/
+        checkDeviceConnection();
     }
 
     return QObject::eventFilter(target, event);
@@ -214,10 +211,8 @@ bool RundownAutoWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       
-        //if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
-        //{
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
             QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
-        //}
     }
 
     if (this->active)
@@ -228,7 +223,12 @@ bool RundownAutoWidget::executeCommand(enum Playout::PlayoutType::Type type)
 
 void RundownAutoWidget::executePlay()
 {
-    DeviceManager::getInstance().getTriCasterDevice()->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
+    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
+    {
+        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
+        if (device != NULL && device->isConnected())
+            device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
+    }
 }
 
 void RundownAutoWidget::delayChanged(int delay)
@@ -248,7 +248,7 @@ void RundownAutoWidget::checkGpiConnection()
 
 void RundownAutoWidget::checkDeviceConnection()
 {
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
         this->labelDisconnected->setVisible(true);
     else
@@ -264,17 +264,16 @@ void RundownAutoWidget::gpiConnectionStateChanged(bool connected, GpiDevice* dev
 {
     checkGpiConnection();
 }
-/*
-void RundownTriCasterWidget::deviceConnectionStateChanged(CasparDevice& device)
+
+void RundownAutoWidget::deviceConnectionStateChanged(TriCasterDevice& device)
 {
     checkDeviceConnection();
 }
 
-void RundownTriCasterWidget::deviceAdded(CasparDevice& device)
+void RundownAutoWidget::deviceAdded(TriCasterDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
-        QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+    if (TriCasterDeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+        QObject::connect(&device, SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
 
     checkDeviceConnection();
 }
-*/

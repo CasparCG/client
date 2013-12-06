@@ -20,18 +20,19 @@ class CORE_EXPORT TriCasterDeviceManager : public QObject
 
         void initialize();
         void uninitialize();
+        void refresh();
 
-        QList<TriCasterDeviceModel> getTriCasterDeviceModels() const;
-        const TriCasterDeviceModel getTriCasterDeviceModelByName(const QString& name) const;
-        const TriCasterDeviceModel getTriCasterDeviceModelByAddress(const QString& address) const;
+        QList<TriCasterDeviceModel> getDeviceModels() const;
+        const TriCasterDeviceModel getDeviceModelByName(const QString& name) const;
+        const TriCasterDeviceModel getDeviceModelByAddress(const QString& address) const;
 
-        const int getTriCasterDeviceCount() const;
-        const QSharedPointer<TriCasterDevice> getTriCasterDeviceByName(const QString& name) const;
+        const int getDeviceCount() const;
+        const QSharedPointer<TriCasterDevice> getDeviceByName(const QString& name) const;
 
-        const QSharedPointer<TriCasterDevice> getTriCasterDevice() const;
+        const QSharedPointer<TriCasterDevice> getDevice() const;
 
-        Q_SIGNAL void tricasterDeviceRemoved();
-        Q_SIGNAL void tricasterDeviceAdded(TriCasterDevice&);
+        Q_SIGNAL void deviceRemoved();
+        Q_SIGNAL void deviceAdded(TriCasterDevice&);
 
     private:
         QMap<QString, TriCasterDeviceModel> deviceModels;
