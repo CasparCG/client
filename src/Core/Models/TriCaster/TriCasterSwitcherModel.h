@@ -4,10 +4,10 @@
 
 #include <QtCore/QString>
 
-class CORE_EXPORT TriCasterInputModel
+class CORE_EXPORT TriCasterSwitcherModel
 {
     public:
-        explicit TriCasterInputModel(int id, const QString& name, const QString& value);
+        explicit TriCasterSwitcherModel(int id, const QString& name, const QString& value);
 
         int getId() const;
         const QString& getName() const;

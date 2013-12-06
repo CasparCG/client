@@ -110,10 +110,13 @@ HEADERS += \
     Models/TriCaster/TriCasterAutoTransitionModel.h \
     Models/TriCaster/TriCasterAutoSpeedModel.h \
     Models/TriCaster/TriCasterPresetModel.h \
-    Models/TriCaster/TriCasterPresetInputModel.h \
     Commands/TriCaster/PresetCommand.h \
     Commands/TriCaster/InputCommand.h \
-    Models/TriCaster/TriCasterSwitcherModel.h
+    Models/TriCaster/TriCasterSwitcherModel.h \
+    Models/TriCaster/TriCasterSourceModel.h \
+    Models/TriCaster/TriCasterDeviceModel.h \
+    OscDeviceManager.h \
+    TriCasterDeviceManager.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -213,10 +216,13 @@ SOURCES += \
     Models/TriCaster/TriCasterAutoTransitionModel.cpp \
     Models/TriCaster/TriCasterAutoSpeedModel.cpp \
     Models/TriCaster/TriCasterPresetModel.cpp \
-    Models/TriCaster/TriCasterPresetInputModel.cpp \
     Commands/TriCaster/PresetCommand.cpp \
     Commands/TriCaster/InputCommand.cpp \
-    Models/TriCaster/TriCasterSwitcherModel.cpp
+    Models/TriCaster/TriCasterSwitcherModel.cpp \
+    Models/TriCaster/TriCasterSourceModel.cpp \
+    Models/TriCaster/TriCasterDeviceModel.cpp \
+    OscDeviceManager.cpp \
+    TriCasterDeviceManager.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

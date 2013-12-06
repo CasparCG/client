@@ -362,23 +362,14 @@ void LibraryWidget::setupTools()
     widgetTriCasterTake->setText(4, Rundown::TAKE);
     widgetTriCasterTake->setText(5, "0");
 
-    QTreeWidgetItem* widgetTriCasterProgramInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterProgramInput->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
-    widgetTriCasterProgramInput->setText(0, "Switch Program Input");
-    widgetTriCasterProgramInput->setText(1, "0");
-    widgetTriCasterProgramInput->setText(2, "Switch Program Input");
-    widgetTriCasterProgramInput->setText(3, "");
-    widgetTriCasterProgramInput->setText(4, Rundown::PROGRAMINPUT);
-    widgetTriCasterProgramInput->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterPreviewInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterPreviewInput->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
-    widgetTriCasterPreviewInput->setText(0, "Switch Preview Input");
-    widgetTriCasterPreviewInput->setText(1, "0");
-    widgetTriCasterPreviewInput->setText(2, "Switch Preview Input");
-    widgetTriCasterPreviewInput->setText(3, "");
-    widgetTriCasterPreviewInput->setText(4, Rundown::PREVIEWINPUT);
-    widgetTriCasterPreviewInput->setText(5, "0");
+    QTreeWidgetItem* widgetTriCasterInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterInput->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterInput->setText(0, "Select Input");
+    widgetTriCasterInput->setText(1, "0");
+    widgetTriCasterInput->setText(2, "Select Input");
+    widgetTriCasterInput->setText(3, "");
+    widgetTriCasterInput->setText(4, Rundown::INPUT);
+    widgetTriCasterInput->setText(5, "0");
 
     QTreeWidgetItem* widgetTriCasterPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterPreset->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));

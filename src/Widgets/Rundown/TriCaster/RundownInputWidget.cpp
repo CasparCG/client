@@ -1,4 +1,4 @@
-#include "RundownProgramInputWidget.h"
+#include "RundownInputWidget.h"
 
 #include "Global.h"
 
@@ -14,8 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownProgramInputWidget::RundownProgramInputWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                                     bool inGroup, bool compactView)
+RundownInputWidget::RundownInputWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                       bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
@@ -38,8 +38,6 @@ RundownProgramInputWidget::RundownProgramInputWidget(const LibraryModel& model, 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
@@ -59,7 +57,7 @@ RundownProgramInputWidget::RundownProgramInputWidget(const LibraryModel& model, 
     qApp->installEventFilter(this);
 }
 
-bool RundownProgramInputWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownInputWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::Preview))
     {
@@ -117,20 +115,21 @@ bool RundownProgramInputWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownProgramInputWidget::clone()
+AbstractRundownWidget* RundownInputWidget::clone()
 {
-    RundownProgramInputWidget* widget = new RundownProgramInputWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                                      this->inGroup, this->compactView);
+    RundownInputWidget* widget = new RundownInputWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                        this->inGroup, this->compactView);
 
-    ProgramInputCommand* command = dynamic_cast<ProgramInputCommand*>(widget->getCommand());
+    InputCommand* command = dynamic_cast<InputCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setSwitcher(this->command.getSwitcher());
     command->setInput(this->command.getInput());
 
     return widget;
 }
 
-void RundownProgramInputWidget::setCompactView(bool compactView)
+void RundownInputWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -148,37 +147,37 @@ void RundownProgramInputWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownProgramInputWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownInputWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownProgramInputWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownInputWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownProgramInputWidget::isGroup() const
+bool RundownInputWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownProgramInputWidget::isInGroup() const
+bool RundownInputWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownProgramInputWidget::getCommand()
+AbstractCommand* RundownInputWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownProgramInputWidget::getLibraryModel()
+LibraryModel* RundownInputWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownProgramInputWidget::setActive(bool active)
+void RundownInputWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -190,19 +189,19 @@ void RundownProgramInputWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownProgramInputWidget::setInGroup(bool inGroup)
+void RundownInputWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-void RundownProgramInputWidget::setColor(const QString& color)
+void RundownInputWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-void RundownProgramInputWidget::checkEmptyDevice()
+void RundownInputWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -210,7 +209,7 @@ void RundownProgramInputWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownProgramInputWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownInputWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       
@@ -226,17 +225,17 @@ bool RundownProgramInputWidget::executeCommand(enum Playout::PlayoutType::Type t
     return true;
 }
 
-void RundownProgramInputWidget::executePlay()
+void RundownInputWidget::executePlay()
 {
-    DeviceManager::getInstance().getTriCasterDevice()->switchProgramInput(this->command.getInput());
+    DeviceManager::getInstance().getTriCasterDevice()->selectInput(this->command.getSwitcher(), this->command.getInput());
 }
 
-void RundownProgramInputWidget::delayChanged(int delay)
+void RundownInputWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownProgramInputWidget::checkGpiConnection()
+void RundownInputWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -246,7 +245,7 @@ void RundownProgramInputWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownProgramInputWidget::checkDeviceConnection()
+void RundownInputWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -255,12 +254,12 @@ void RundownProgramInputWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownProgramInputWidget::allowGpiChanged(bool allowGpi)
+void RundownInputWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownProgramInputWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownInputWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }

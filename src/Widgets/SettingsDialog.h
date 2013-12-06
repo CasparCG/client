@@ -19,14 +19,18 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         QString stylesheet;
 
         void loadGpi();
-        void loadDevices();
+        void loadDevice();
+        void loadTriCasterDevice();
         void checkEmptyDeviceList();
+        void checkEmptyTriCasterDeviceList();
         void updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action);
         void updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
         void updateGpiDevice();
 
         Q_SLOT void removeDevice();
+        Q_SLOT void removeTriCasterDevice();
         Q_SLOT void showAddDeviceDialog();
+        Q_SLOT void showAddTriCasterDeviceDialog();
         Q_SLOT void startFullscreenChanged(int);
         Q_SLOT void fontSizeChanged(int);
         Q_SLOT void autoSynchronizeChanged(int);
@@ -36,6 +40,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void disableInAndOutPointsChanged(int);
         Q_SLOT void reverseOscTimeChanged(int);
         Q_SLOT void deviceItemDoubleClicked(QTreeWidgetItem*, int);
+        Q_SLOT void tricasterDeviceItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void gpi1Changed();
         Q_SLOT void gpi2Changed();
         Q_SLOT void gpi3Changed();

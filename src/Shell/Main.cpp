@@ -7,6 +7,7 @@
 #include "GpiManager.h"
 #include "LibraryManager.h"
 #include "DeviceManager.h"
+#include "OscDeviceManager.h"
 
 #include "MainWindow.h"
 
@@ -149,12 +150,14 @@ int main(int argc, char* argv[])
 
     LibraryManager::getInstance().initialize();
     DeviceManager::getInstance().initialize();
+    OscDeviceManager::getInstance().initialize();
 
     int returnValue = application.exec();
 
     EventManager::getInstance().uninitialize();
     DatabaseManager::getInstance().uninitialize();
     GpiManager::getInstance().uninitialize();
+    OscDeviceManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
     LibraryManager::getInstance().uninitialize();
 

@@ -6,8 +6,6 @@
 #include "Events/Inspector/TemplateChangedEvent.h"
 #include "Models/DeviceModel.h"
 
-#include "CasparDevice.h"
-
 #include <stdexcept>
 
 #include <QtCore/QDebug>
@@ -22,14 +20,6 @@ Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
 DeviceManager::DeviceManager()
 {
-    QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
-    this->oscListener = QSharedPointer<OscListener>(new OscListener("0.0.0.0", (oscPort.isEmpty() == true) ? Osc::DEFAULT_PORT : oscPort.toInt()));
-    if (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "false")
-        this->oscListener->start();
-
-    QString triCasterPort = DatabaseManager::getInstance().getConfigurationByName("TriCasterPort").getValue();
-    this->triCasterDevice = QSharedPointer<TriCasterDevice>(new TriCasterDevice("10.21.81.172", (triCasterPort.isEmpty() == true) ? TriCaster::DEFAULT_PORT : triCasterPort.toInt()));
-    this->triCasterDevice->connectDevice();
 }
 
 DeviceManager& DeviceManager::getInstance()
@@ -148,14 +138,4 @@ const int DeviceManager::getDeviceCount() const
 const QSharedPointer<CasparDevice> DeviceManager::getDeviceByName(const QString& name) const
 {
     return this->devices.value(name);
-}
-
-const QSharedPointer<OscListener> DeviceManager::getOscListener() const
-{
-    return this->oscListener;
-}
-
-const QSharedPointer<TriCasterDevice> DeviceManager::getTriCasterDevice() const
-{
-    return this->triCasterDevice;
 }

@@ -26,23 +26,23 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineOsc, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineOsc, #lineCasparCG, #lineTriCaster, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
 {
     background-color: rgba(42, 42, 42, 255);
 }
-#toolButtonAddDevice, #toolButtonAddTemplateData
+#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddTemplateData
 {
     image: url(:/Graphics/Images/Add.png);
 }
-#toolButtonAddDevice:hover, #toolButtonAddTemplateData:hover
+#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
 }
-#toolButtonRemoveDevice, #toolButtonRemoveTemplateData
+#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveTemplateData
 {
     image: url(:/Graphics/Images/Remove.png);
 }
-#toolButtonRemoveDevice:hover, #toolButtonRemoveTemplateData:hover
+#toolButtonRemoveDevice:hover, toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveTemplateData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }

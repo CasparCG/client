@@ -95,16 +95,15 @@ HEADERS += \
     Inspector/InspectorChromaWidget.h \
     Inspector/TemplateDataTreeBaseWidget.h \
     Inspector/TargetComboBaseWidget.h \
-    Rundown/TriCaster/RundownPreviewInputWidget.h \
-    Rundown/TriCaster/RundownProgramInputWidget.h \
-    Inspector/TriCaster/InspectorPreviewInputWidget.h \
-    Inspector/TriCaster/InspectorProgramInputWidget.h \
     Inspector/TriCaster/InspectorTakeWidget.h \
     Rundown/TriCaster/RundownTakeWidget.h \
     Inspector/TriCaster/InspectorAutoWidget.h \
     Rundown/TriCaster/RundownAutoWidget.h \
     Inspector/TriCaster/InspectorPresetWidget.h \
-    Rundown/TriCaster/RundownPresetWidget.h
+    Rundown/TriCaster/RundownPresetWidget.h \
+    Inspector/TriCaster/InspectorInputWidget.h \
+    Rundown/TriCaster/RundownInputWidget.h \
+    TriCasterDeviceDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -188,16 +187,15 @@ SOURCES += \
     Inspector/InspectorChromaWidget.cpp \
     Inspector/TemplateDataTreeBaseWidget.cpp \
     Inspector/TargetComboBaseWidget.cpp \
-    Inspector/TriCaster/InspectorPreviewInputWidget.cpp \
-    Inspector/TriCaster/InspectorProgramInputWidget.cpp \
-    Rundown/TriCaster/RundownPreviewInputWidget.cpp \
-    Rundown/TriCaster/RundownProgramInputWidget.cpp \
     Inspector/TriCaster/InspectorTakeWidget.cpp \
     Rundown/TriCaster/RundownTakeWidget.cpp \
     Inspector/TriCaster/InspectorAutoWidget.cpp \
     Rundown/TriCaster/RundownAutoWidget.cpp \
     Inspector/TriCaster/InspectorPresetWidget.cpp \
-    Rundown/TriCaster/RundownPresetWidget.cpp
+    Rundown/TriCaster/RundownPresetWidget.cpp \
+    Inspector/TriCaster/InspectorInputWidget.cpp \
+    Rundown/TriCaster/RundownInputWidget.cpp \
+    TriCasterDeviceDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -270,16 +268,15 @@ FORMS += \
     Action/ActionWidget.ui \
     Rundown/RundownChromaWidget.ui \
     Inspector/InspectorChromaWidget.ui \
-    Inspector/TriCaster/InspectorPreviewInputWidget.ui \
-    Inspector/TriCaster/InspectorProgramInputWidget.ui \
-    Rundown/TriCaster/RundownProgramInputWidget.ui \
-    Rundown/TriCaster/RundownPreviewInputWidget.ui \
     Inspector/TriCaster/InspectorTakeWidget.ui \
     Rundown/TriCaster/RundownTakeWidget.ui \
     Inspector/TriCaster/InspectorAutoWidget.ui \
     Rundown/TriCaster/RundownAutoWidget.ui \
     Inspector/TriCaster/InspectorPresetWidget.ui \
-    Rundown/TriCaster/RundownPresetWidget.ui
+    Rundown/TriCaster/RundownPresetWidget.ui \
+    Inspector/TriCaster/InspectorInputWidget.ui \
+    Rundown/TriCaster/RundownInputWidget.ui \
+    TriCasterDeviceDialog.ui
 
 RESOURCES += \
     Widgets.qrc \

@@ -18,9 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutInput">
+    <layout class="QHBoxLayout" name="horizontalLayoutSource">
      <item>
-      <spacer name="horizontalSpacerInput">
+      <spacer name="horizontalSpacerSource">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -29,21 +29,21 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>36</width>
+         <width>29</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelInput">
+      <widget class="QLabel" name="labelSource">
        <property name="text">
-        <string>Input</string>
+        <string>Source</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxInput">
+      <widget class="QComboBox" name="comboBoxSource">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -128,10 +128,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxInput</sender>
+   <sender>comboBoxSource</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>InspectorPresetWidget</receiver>
-   <slot>inputChanged(int)</slot>
+   <slot>sourceChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>107</x>
@@ -146,6 +146,6 @@
  </connections>
  <slots>
   <slot>presetChanged(int)</slot>
-  <slot>inputChanged(int)</slot>
+  <slot>sourceChanged(int)</slot>
  </slots>
 </ui>

@@ -23,8 +23,9 @@
 #include "Models/TriCaster/TriCasterAutoSpeedModel.h"
 #include "Models/TriCaster/TriCasterAutoTransitionModel.h"
 #include "Models/TriCaster/TriCasterPresetModel.h"
-#include "Models/TriCaster/TriCasterPresetInputModel.h"
+#include "Models/TriCaster/TriCasterSourceModel.h"
 #include "Models/TriCaster/TriCasterSwitcherModel.h"
+#include "Models/TriCaster/TriCasterDeviceModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -62,8 +63,14 @@ class CORE_EXPORT DatabaseManager
         QList<TriCasterAutoSpeedModel> getTriCasterAutoSpeed();
         QList<TriCasterAutoTransitionModel> getTriCasterAutoTransition();
         QList<TriCasterPresetModel> getTriCasterPreset();
-        QList<TriCasterPresetInputModel> getTriCasterPresetInput();
+        QList<TriCasterSourceModel> getTriCasterSource();
         QList<TriCasterSwitcherModel> getTriCasterSwitcher();
+        QList<TriCasterDeviceModel> getTriCasterDevice();
+        TriCasterDeviceModel getTriCasterDeviceByName(const QString& name);
+        TriCasterDeviceModel getTriCasterDeviceByAddress(const QString& address);
+        void insertTriCasterDevice(const TriCasterDeviceModel& model);
+        void updateTriCasterDevice(const TriCasterDeviceModel& model);
+        void deleteTriCasterDevice(int id);
 
         QList<GpiPortModel> getGpiPorts();
         QList<GpoPortModel> getGpoPorts();

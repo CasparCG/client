@@ -1,48 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeviceDialog</class>
- <widget class="QDialog" name="DeviceDialog">
+ <class>TriCasterDeviceDialog</class>
+ <widget class="QDialog" name="TriCasterDeviceDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>194</height>
+    <height>145</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>450</width>
-    <height>194</height>
+    <height>145</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>450</width>
-    <height>194</height>
+    <height>145</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>New CasparCG Server</string>
+   <string>New TriCaster Server</string>
   </property>
-  <widget class="QLineEdit" name="lineEditUsername">
-   <property name="geometry">
-    <rect>
-     <x>138</x>
-     <y>60</y>
-     <width>302</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Optional</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="labelDescription">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>116</y>
+     <y>64</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -58,7 +45,7 @@
    <property name="geometry">
     <rect>
      <x>365</x>
-     <y>162</y>
+     <y>110</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -118,27 +105,11 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelUsername">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>64</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Username</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="lineEditDescription">
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>112</y>
+     <y>60</y>
      <width>302</width>
      <height>20</height>
     </rect>
@@ -160,52 +131,7 @@
     <enum>Qt::ClickFocus</enum>
    </property>
    <property name="placeholderText">
-    <string>5250</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelPassword">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>88</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Password</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEditPassword">
-   <property name="geometry">
-    <rect>
-     <x>138</x>
-     <y>86</y>
-     <width>302</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
-   </property>
-   <property name="placeholderText">
-    <string>Optional</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBoxShadow">
-   <property name="geometry">
-    <rect>
-     <x>138</x>
-     <y>136</y>
-     <width>248</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Shadow system</string>
+    <string>5950</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditDeviceName">
@@ -277,10 +203,7 @@
   <tabstop>lineEditDeviceName</tabstop>
   <tabstop>lineEditAddress</tabstop>
   <tabstop>lineEditPort</tabstop>
-  <tabstop>lineEditUsername</tabstop>
-  <tabstop>lineEditPassword</tabstop>
   <tabstop>lineEditDescription</tabstop>
-  <tabstop>checkBoxShadow</tabstop>
  </tabstops>
  <resources>
   <include location="Widgets.qrc"/>
@@ -289,23 +212,23 @@
   <connection>
    <sender>pushButtonOK</sender>
    <signal>clicked()</signal>
-   <receiver>DeviceDialog</receiver>
+   <receiver>TriCasterDeviceDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>365</x>
-     <y>174</y>
+     <y>122</y>
     </hint>
     <hint type="destinationlabel">
      <x>247</x>
-     <y>152</y>
+     <y>144</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>lineEditAddress</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>DeviceDialog</receiver>
+   <receiver>TriCasterDeviceDialog</receiver>
    <slot>addressChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -314,14 +237,14 @@
     </hint>
     <hint type="destinationlabel">
      <x>378</x>
-     <y>-3</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>lineEditDeviceName</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>DeviceDialog</receiver>
+   <receiver>TriCasterDeviceDialog</receiver>
    <slot>nameChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -337,7 +260,7 @@
   <connection>
    <sender>toolButtonTestConnection</sender>
    <signal>clicked()</signal>
-   <receiver>DeviceDialog</receiver>
+   <receiver>TriCasterDeviceDialog</receiver>
    <slot>testConnection()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -345,7 +268,7 @@
      <y>49</y>
     </hint>
     <hint type="destinationlabel">
-     <x>452</x>
+     <x>449</x>
      <y>44</y>
     </hint>
    </hints>

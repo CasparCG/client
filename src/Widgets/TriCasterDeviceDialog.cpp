@@ -1,4 +1,4 @@
-#include "DeviceDialog.h"
+#include "TriCasterDeviceDialog.h"
 
 #include "DatabaseManager.h"
 
@@ -8,7 +8,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMessageBox>
 
-DeviceDialog::DeviceDialog(QWidget* parent)
+TriCasterDeviceDialog::TriCasterDeviceDialog(QWidget* parent)
     : QDialog(parent),
       editMode(false)
 {
@@ -18,32 +18,29 @@ DeviceDialog::DeviceDialog(QWidget* parent)
     this->lineEditAddress->setStyleSheet("border-color: red;");
 }
 
-void DeviceDialog::setDeviceModel(const DeviceModel& model)
+void TriCasterDeviceDialog::setDeviceModel(const TriCasterDeviceModel& model)
 {
     this->editMode = true;
 
-    setWindowTitle("Edit CasparCG Server");
+    setWindowTitle("Edit TriCaster Server");
 
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());
     this->lineEditPort->setText(QString("%1").arg(model.getPort()));
-    this->lineEditUsername->setText(model.getUsername());
-    this->lineEditPassword->setText(model.getPassword());
     this->lineEditDescription->setText(model.getDescription());
-    this->checkBoxShadow->setChecked((model.getShadow() == "Yes") ? true : false);
 }
 
-const QString DeviceDialog::getName() const
+const QString TriCasterDeviceDialog::getName() const
 {
     return this->lineEditDeviceName->text();
 }
 
-const QString DeviceDialog::getAddress() const
+const QString TriCasterDeviceDialog::getAddress() const
 {
     return this->lineEditAddress->text();
 }
 
-const QString DeviceDialog::getPort() const
+const QString TriCasterDeviceDialog::getPort() const
 {
     if (!this->lineEditPort->text().isEmpty())
         return this->lineEditPort->text();
@@ -51,34 +48,19 @@ const QString DeviceDialog::getPort() const
         return this->lineEditPort->placeholderText();
 }
 
-const QString DeviceDialog::getUsername() const
-{
-    return this->lineEditUsername->text();
-}
-
-const QString DeviceDialog::getPassword() const
-{
-    return this->lineEditPassword->text();
-}
-
-const QString DeviceDialog::getDescription() const
+const QString TriCasterDeviceDialog::getDescription() const
 {
     return this->lineEditDescription->text();
 }
 
-const QString DeviceDialog::getShadow() const
-{
-    return this->checkBoxShadow->checkState() == Qt::Checked ? "Yes" : "No";
-}
-
-void DeviceDialog::accept()
+void TriCasterDeviceDialog::accept()
 {
     if (this->lineEditDeviceName->text().isEmpty() || this->lineEditAddress->text().isEmpty())
         return;
 
     if (!this->editMode)
     {
-        DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->lineEditDeviceName->text());
+        TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByName(this->lineEditDeviceName->text());
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
@@ -96,7 +78,7 @@ void DeviceDialog::accept()
             return;
         }
 
-        model = DatabaseManager::getInstance().getDeviceByAddress(this->lineEditAddress->text());
+        model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(this->lineEditAddress->text());
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
@@ -118,18 +100,18 @@ void DeviceDialog::accept()
     QDialog::accept();
 }
 
-void DeviceDialog::testConnection()
+void TriCasterDeviceDialog::testConnection()
 {
     if (this->lineEditPort->text().isEmpty())
-        this->device = QSharedPointer<CasparDevice>(new CasparDevice(this->lineEditAddress->text()));
+        this->device = QSharedPointer<TriCasterDevice>(new TriCasterDevice(this->lineEditAddress->text()));
     else
-        this->device = QSharedPointer<CasparDevice>(new CasparDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt()));
+        this->device = QSharedPointer<TriCasterDevice>(new TriCasterDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt()));
 
-    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(connectionStateChanged(TriCasterDevice&)));
     this->device->connectDevice();
 }
 
-void DeviceDialog::nameChanged(QString name)
+void TriCasterDeviceDialog::nameChanged(QString name)
 {
     if (this->lineEditDeviceName->text().isEmpty())
         this->lineEditDeviceName->setStyleSheet("border-color: red;");
@@ -137,7 +119,7 @@ void DeviceDialog::nameChanged(QString name)
         this->lineEditDeviceName->setStyleSheet("");
 }
 
-void DeviceDialog::addressChanged(QString name)
+void TriCasterDeviceDialog::addressChanged(QString name)
 {
     if (this->lineEditAddress->text().isEmpty())
         this->lineEditAddress->setStyleSheet("border-color: red;");
@@ -145,13 +127,13 @@ void DeviceDialog::addressChanged(QString name)
         this->lineEditAddress->setStyleSheet("");
 }
 
-void DeviceDialog::connectionStateChanged(CasparDevice& device)
+void TriCasterDeviceDialog::connectionStateChanged(TriCasterDevice& device)
 {
-    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(connectionStateChanged(CasparDevice&)));
+    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(connectionStateChanged(TriCasterDevice&)));
 
     QMessageBox box(this);
     box.setWindowTitle("Test Connection");
-    box.setText(QString("Successfully connected to CasparCG server: %1:%2").arg(device.getAddress()).arg(device.getPort()));
+    box.setText(QString("Successfully connected to TriCaster server: %1:%2").arg(device.getAddress()).arg(device.getPort()));
     box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
     box.setStandardButtons(QMessageBox::Ok);
     box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);

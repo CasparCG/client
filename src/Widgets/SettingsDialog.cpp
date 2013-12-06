@@ -1,11 +1,14 @@
 #include "SettingsDialog.h"
 #include "DeviceDialog.h"
+#include "TriCasterDeviceDialog.h"
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Models/ConfigurationModel.h"
+#include "Models/DeviceModel.h"
 #include "Models/GpiModel.h"
+#include "Models/TriCaster/TriCasterDeviceModel.h"
 
 #include <QtCore/QTimer>
 
@@ -49,11 +52,12 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     if (!oscPort.isEmpty())
         this->lineEditOscPort->setText(oscPort);
 
-    loadDevices();
+    loadDevice();
+    loadTriCasterDevice();
     loadGpi();
 }
 
-void SettingsDialog::loadDevices()
+void SettingsDialog::loadDevice()
 {
     this->treeWidgetDevice->clear();
     this->treeWidgetDevice->headerItem()->setText(1, "");
@@ -83,6 +87,29 @@ void SettingsDialog::loadDevices()
     }
 
     checkEmptyDeviceList();
+}
+
+void SettingsDialog::loadTriCasterDevice()
+{
+    this->treeWidgetTriCasterDevice->clear();
+    this->treeWidgetTriCasterDevice->headerItem()->setText(1, "");
+    this->treeWidgetTriCasterDevice->setColumnHidden(0, true);
+    this->treeWidgetTriCasterDevice->setColumnWidth(1, 25);
+    this->treeWidgetTriCasterDevice->setColumnWidth(4, 50);
+
+    QList<TriCasterDeviceModel> models = DatabaseManager::getInstance().getTriCasterDevice();
+    foreach (TriCasterDeviceModel model, models)
+    {
+        QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetTriCasterDevice);
+        treeItem->setText(0, QString("%1").arg(model.getId()));
+        treeItem->setIcon(1, QIcon(":/Graphics/Images/ServerSmall.png"));
+        treeItem->setText(2, model.getName());
+        treeItem->setText(3, model.getAddress());
+        treeItem->setText(4, QString("%1").arg(model.getPort()));
+        treeItem->setText(5, model.getDescription());
+    }
+
+    checkEmptyTriCasterDeviceList();
 }
 
 void SettingsDialog::loadGpi()
@@ -146,6 +173,17 @@ void SettingsDialog::checkEmptyDeviceList()
         this->treeWidgetDevice->setStyleSheet("");
 }
 
+void SettingsDialog::checkEmptyTriCasterDeviceList()
+{
+    if (this->treeWidgetTriCasterDevice->invisibleRootItem()->childCount() == 0)
+    {
+        this->tabWidget->setCurrentIndex(1);
+        this->treeWidgetTriCasterDevice->setStyleSheet("border-color: red;");
+    }
+    else
+        this->treeWidgetTriCasterDevice->setStyleSheet("");
+}
+
 void SettingsDialog::showAddDeviceDialog()
 {
     DeviceDialog* dialog = new DeviceDialog(this);
@@ -156,9 +194,21 @@ void SettingsDialog::showAddDeviceDialog()
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 "", dialog->getShadow(), 0, ""));
 
-        loadDevices();
+        loadDevice();
 
         EventManager::getInstance().fireRefreshLibraryEvent();
+    }
+}
+
+void SettingsDialog::showAddTriCasterDeviceDialog()
+{
+    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().insertTriCasterDevice(TriCasterDeviceModel(0, dialog->getName(), dialog->getAddress(),
+                                                             dialog->getPort().toInt(), dialog->getDescription()));
+
+        loadTriCasterDevice();
     }
 }
 
@@ -170,9 +220,20 @@ void SettingsDialog::removeDevice()
     DatabaseManager::getInstance().deleteDevice(this->treeWidgetDevice->currentItem()->text(0).toInt());
     delete this->treeWidgetDevice->currentItem();
 
-    loadDevices();
+    loadDevice();
 
     EventManager::getInstance().fireRefreshLibraryEvent();
+}
+
+void SettingsDialog::removeTriCasterDevice()
+{
+    if (this->treeWidgetTriCasterDevice->selectedItems().count() == 0)
+        return;
+
+    DatabaseManager::getInstance().deleteTriCasterDevice(this->treeWidgetTriCasterDevice->currentItem()->text(0).toInt());
+    delete this->treeWidgetTriCasterDevice->currentItem();
+
+    loadTriCasterDevice();
 }
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -189,9 +250,24 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
                                                                 model.getVersion(), dialog->getShadow(),
                                                                 model.getChannels(), model.getChannelFormats()));
 
-        loadDevices();
+        loadDevice();
 
         EventManager::getInstance().fireRefreshLibraryEvent();
+    }
+}
+
+void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, int index)
+{
+    TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(current->text(3));
+
+    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
+    dialog->setDeviceModel(model);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().updateTriCasterDevice(TriCasterDeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
+                                                                                  dialog->getPort().toInt(), dialog->getDescription()));
+
+        loadTriCasterDevice();
     }
 }
 

@@ -15,7 +15,7 @@ InspectorPresetWidget::InspectorPresetWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTriCasterPresetInput();
+    loadTriCasterSource();
     loadTriCasterPreset();
 
     qApp->installEventFilter(this);
@@ -34,7 +34,7 @@ bool InspectorPresetWidget::eventFilter(QObject* target, QEvent* event)
         {  
             this->command = dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand());
 
-            this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
+            this->comboBoxSource->setCurrentIndex(this->comboBoxSource->findData(this->command->getSource()));
             this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findData(this->command->getPreset()));
         }
 
@@ -46,21 +46,21 @@ bool InspectorPresetWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorPresetWidget::blockAllSignals(bool block)
 {
-    this->comboBoxInput->blockSignals(block);
+    this->comboBoxSource->blockSignals(block);
     this->comboBoxPreset->blockSignals(block);
 }
 
-void InspectorPresetWidget::loadTriCasterPresetInput()
+void InspectorPresetWidget::loadTriCasterSource()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
-    this->comboBoxInput->blockSignals(true);
+    this->comboBoxSource->blockSignals(true);
 
-    QList<TriCasterPresetInputModel> models = DatabaseManager::getInstance().getTriCasterPresetInput();
-    foreach (TriCasterPresetInputModel model, models)
-        this->comboBoxInput->addItem(model.getName(), model.getValue());
+    QList<TriCasterSourceModel> models = DatabaseManager::getInstance().getTriCasterSource();
+    foreach (TriCasterSourceModel model, models)
+        this->comboBoxSource->addItem(model.getName(), model.getValue());
 
-    this->comboBoxInput->blockSignals(false);
+    this->comboBoxSource->blockSignals(false);
 }
 
 void InspectorPresetWidget::loadTriCasterPreset()
@@ -76,9 +76,9 @@ void InspectorPresetWidget::loadTriCasterPreset()
     this->comboBoxPreset->blockSignals(false);
 }
 
-void InspectorPresetWidget::inputChanged(int index)
+void InspectorPresetWidget::sourceChanged(int index)
 {
-    this->command->setInput(this->comboBoxInput->itemData(index).toString());
+    this->command->setSource(this->comboBoxSource->itemData(index).toString());
 }
 
 void InspectorPresetWidget::presetChanged(int index)

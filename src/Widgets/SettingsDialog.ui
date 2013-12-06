@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -415,10 +415,10 @@
     <widget class="QTreeWidget" name="treeWidgetDevice">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>658</width>
-       <height>631</height>
+       <x>110</x>
+       <y>40</y>
+       <width>535</width>
+       <height>251</height>
       </rect>
      </property>
      <property name="focusPolicy">
@@ -503,8 +503,8 @@
     <widget class="QToolButton" name="toolButtonRemoveDevice">
      <property name="geometry">
       <rect>
-       <x>49</x>
-       <y>647</y>
+       <x>149</x>
+       <y>300</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -525,8 +525,168 @@
     <widget class="QToolButton" name="toolButtonAddDevice">
      <property name="geometry">
       <rect>
+       <x>110</x>
+       <y>300</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="Line" name="lineCasparCG">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelCasparCG">
+     <property name="geometry">
+      <rect>
        <x>10</x>
-       <y>647</y>
+       <y>12</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CasparCG</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonRemoveTriCasterDevice">
+     <property name="geometry">
+      <rect>
+       <x>149</x>
+       <y>633</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>373</y>
+       <width>535</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Icon</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="labelTriCaster">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>345</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TriCaster</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineTriCaster">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>353</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonAddTriCasterDevice">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>633</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -2396,8 +2556,8 @@
    <slot>showAddDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>700</y>
+     <x>146</x>
+     <y>353</y>
     </hint>
     <hint type="destinationlabel">
      <x>39</x>
@@ -2412,8 +2572,8 @@
    <slot>removeDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>86</x>
-     <y>700</y>
+     <x>188</x>
+     <y>353</y>
     </hint>
     <hint type="destinationlabel">
      <x>80</x>
@@ -3068,8 +3228,8 @@
    <slot>deviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>610</x>
-     <y>480</y>
+     <x>655</x>
+     <y>322</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -3141,6 +3301,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButtonAddTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddTriCasterDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>678</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>677</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeTriCasterDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>673</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>667</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetTriCasterDevice</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>543</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>447</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -3174,5 +3382,8 @@
   <slot>disableVideoProgressChanged(int)</slot>
   <slot>disableInAndOutPointsChanged(int)</slot>
   <slot>oscPortChanged()</slot>
+  <slot>showAddTriCasterDeviceDialog()</slot>
+  <slot>removeTriCasterDevice()</slot>
+  <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

@@ -25,10 +25,10 @@ class WIDGETS_EXPORT InspectorPresetWidget : public QWidget, Ui::InspectorPreset
         LibraryModel* model;
         PresetCommand* command;
 
-        void loadTriCasterPresetInput();
+        void loadTriCasterSource();
         void loadTriCasterPreset();
         void blockAllSignals(bool block);
 
-        Q_SLOT void inputChanged(int);
+        Q_SLOT void sourceChanged(int);
         Q_SLOT void presetChanged(int);
 };

@@ -24,7 +24,14 @@ class TRICASTER_EXPORT NTFCDevice : public QObject
         Q_SLOT void connectDevice();
 
     protected:
+        enum NTFCCommand
+        {
+            NONE,
+            CONNECTIONSTATE
+        };
+
         QTcpSocket* socket;
+        NTFCCommand command;
         QList<QString> response;
 
         virtual void sendNotification() = 0;
@@ -51,7 +58,6 @@ class TRICASTER_EXPORT NTFCDevice : public QObject
         int port;
         bool connected;
         QString address;
-        //QString response;
 
         //Q_SLOT void readMessage();
         Q_SLOT void setConnected();

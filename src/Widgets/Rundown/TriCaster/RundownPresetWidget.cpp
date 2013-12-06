@@ -123,7 +123,7 @@ AbstractRundownWidget* RundownPresetWidget::clone()
     PresetCommand* command = dynamic_cast<PresetCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
-    command->setInput(this->command.getInput());
+    command->setSource(this->command.getSource());
     command->setPreset(this->command.getPreset());
 
     return widget;
@@ -227,7 +227,7 @@ bool RundownPresetWidget::executeCommand(enum Playout::PlayoutType::Type type)
 
 void RundownPresetWidget::executePlay()
 {
-    DeviceManager::getInstance().getTriCasterDevice()->selectPreset(this->command.getInput(), this->command.getPreset());
+    DeviceManager::getInstance().getTriCasterDevice()->selectPreset(this->command.getSource(), this->command.getPreset());
 }
 
 void RundownPresetWidget::delayChanged(int delay)

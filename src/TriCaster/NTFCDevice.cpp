@@ -7,7 +7,7 @@
 
 NTFCDevice::NTFCDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      port(port), connected(false), address(address)
+      command(NTFCDevice::NONE), port(port), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
 
@@ -37,6 +37,7 @@ void NTFCDevice::disconnectDevice()
     this->socket->blockSignals(false);
 
     this->connected = false;
+    this->command = NTFCDevice::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -44,6 +45,7 @@ void NTFCDevice::disconnectDevice()
 void NTFCDevice::setConnected()
 {
     this->connected = true;
+    this->command = NTFCDevice::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -51,6 +53,7 @@ void NTFCDevice::setConnected()
 void NTFCDevice::setDisconnected()
 {
     this->connected = false;
+    this->command = NTFCDevice::CONNECTIONSTATE;
 
     sendNotification();
 
@@ -123,10 +126,10 @@ void NTFCDevice::parseMultiline(const QString& line)
 {
     sendNotification();
 }
+*/
 
 void NTFCDevice::resetDevice()
 {
     this->response.clear();
-    this->state = NTFCDevice::ExpectingHeader;
+    this->command = NTFCDevice::NONE;
 }
-*/

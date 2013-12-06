@@ -22,16 +22,16 @@ class CORE_EXPORT PresetCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getInput() const;
+        const QString& getSource() const;
         const QString& getPreset() const;
 
-        void setInput(const QString& input);
+        void setSource(const QString& source);
         void setPreset(const QString& preset);
 
     private:
-        QString input;
+        QString source;
         QString preset;
 
-        Q_SIGNAL void inputChanged(const QString&);
+        Q_SIGNAL void sourceChanged(const QString&);
         Q_SIGNAL void presetChanged(const QString&);
 };

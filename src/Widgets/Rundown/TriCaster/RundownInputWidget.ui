@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownPreviewInputWidget</class>
- <widget class="QWidget" name="RundownPreviewInputWidget">
+ <class>RundownInputWidget</class>
+ <widget class="QWidget" name="RundownInputWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -60,7 +60,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Switch Preview Input</string>
+       <string>Select Input</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelColor">

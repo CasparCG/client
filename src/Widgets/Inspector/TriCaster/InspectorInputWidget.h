@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../../Shared.h"
-#include "ui_InspectorPreviewInputWidget.h"
+#include "ui_InspectorInputWidget.h"
 
-#include "Commands/TriCaster/PreviewInputCommand.h"
+#include "Commands/TriCaster/InputCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -11,22 +11,24 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorPreviewInputWidget : public QWidget, Ui::InspectorPreviewInputWidget
+class WIDGETS_EXPORT InspectorInputWidget : public QWidget, Ui::InspectorInputWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorPreviewInputWidget(QWidget* parent = 0);
+        explicit InspectorInputWidget(QWidget* parent = 0);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
-        PreviewInputCommand* command;
+        InputCommand* command;
 
+        void loadTriCasterSwitcher();
         void loadTriCasterInput();
         void blockAllSignals(bool block);
 
+        Q_SLOT void switcherChanged(int);
         Q_SLOT void inputChanged(int);
 };

@@ -65,7 +65,7 @@ namespace TriCaster
     static const QString DEFAULT_SPEED = "";
     static const QString DEFAULT_TRANSITION = "";
     static const QString DEFAULT_PRESET = "0";
-    static const QString DEFAULT_PRESET_INPUT = "audiomixer";
+    static const QString DEFAULT_SOURCE = "audiomixer";
     static const QString DEFAULT_INPUT = "ddr";
     static const QString DEFAULT_SWITCHER = "prev";
 }
@@ -330,8 +330,7 @@ namespace Rundown
     static const QString CHROMAKEY = "CHROMAKEY";
     static const QString AUTO = "AUTO";
     static const QString TAKE = "TAKE";
-    static const QString PROGRAMINPUT = "PROGRAMINPUT";
-    static const QString PREVIEWINPUT = "PREVIEWINPUT";
+    static const QString INPUT = "INPUT";
     static const QString PRESET = "PRESET";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";

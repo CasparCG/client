@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InspectorPreviewInputWidget</class>
- <widget class="QWidget" name="InspectorPreviewInputWidget">
+ <class>InspectorInputWidget</class>
+ <widget class="QWidget" name="InspectorInputWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>177</width>
-    <height>56</height>
+    <width>178</width>
+    <height>84</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,6 +17,43 @@
    </sizepolicy>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSwitcher">
+     <item>
+      <spacer name="horizontalSpacerSwitcher">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>19</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSwitcher">
+       <property name="text">
+        <string>Switcher</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxSwitcher">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutInput">
      <item>
@@ -77,21 +114,38 @@
   <connection>
    <sender>comboBoxInput</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>InspectorPreviewInputWidget</receiver>
+   <receiver>InspectorInputWidget</receiver>
    <slot>inputChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>131</x>
-     <y>19</y>
+     <x>167</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
-     <x>180</x>
+     <x>177</x>
      <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxSwitcher</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorInputWidget</receiver>
+   <slot>switcherChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>142</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>22</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>inputChanged(int)</slot>
+  <slot>switcherChanged(int)</slot>
  </slots>
 </ui>

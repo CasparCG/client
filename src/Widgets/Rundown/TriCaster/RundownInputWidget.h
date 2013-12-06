@@ -2,7 +2,7 @@
 
 #include "../../Shared.h"
 #include "../AbstractRundownWidget.h"
-#include "ui_RundownProgramInputWidget.h"
+#include "ui_RundownInputWidget.h"
 
 #include "Global.h"
 
@@ -11,7 +11,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/TriCaster/ProgramInputCommand.h"
+#include "Commands/TriCaster/InputCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -19,13 +19,13 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownProgramInputWidget : public QWidget, Ui::RundownProgramInputWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownProgramInputWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                           bool active = false, bool inGroup = false, bool compactView = false);
+        explicit RundownInputWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                    bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -57,7 +57,7 @@ class WIDGETS_EXPORT RundownProgramInputWidget : public QWidget, Ui::RundownProg
         bool compactView;
         QString color;
         LibraryModel model;
-        ProgramInputCommand command;
+        InputCommand command;
         ActiveAnimation* animation;
 
         QTimer executeTimer;
