@@ -45,6 +45,7 @@ void AutoCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
+    setStep(QString::fromStdWString(pt.get(L"step", TriCaster::DEFAULT_STEP.toStdWString())));
     setSpeed(QString::fromStdWString(pt.get(L"speed", TriCaster::DEFAULT_SPEED.toStdWString())));
     setTransition(QString::fromStdWString(pt.get(L"transition", TriCaster::DEFAULT_TRANSITION.toStdWString())));
 }
@@ -53,6 +54,7 @@ void AutoCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
+    writer->writeTextElement("step", this->getStep());
     writer->writeTextElement("speed", this->getSpeed());
     writer->writeTextElement("transition", this->getTransition());
 }
