@@ -383,6 +383,14 @@ void RundownTreeWidget::setActive(bool active)
 {
     this->active = active;
 
+    if (!this->active)
+    {
+        // Deselect / Deactivate current selected item. We do not want to update wrong item.
+        this->treeWidgetRundown->setCurrentItem(NULL);
+
+        EventManager::getInstance().fireEmptyRundownEvent(); // Reset inspector panel.
+    }
+
     EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
