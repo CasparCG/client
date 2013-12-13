@@ -19,7 +19,9 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
                                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
                                                        bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model)
+      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color),
+      model(model), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -58,6 +60,8 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
     checkGpiConnection();
     checkDeviceConnection();
 
+    configureOscSubscriptions();
+
     qApp->installEventFilter(this);
 }
 
@@ -84,6 +88,8 @@ bool RundownDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        configureOscSubscriptions();
 
         return true;
     }
@@ -130,6 +136,7 @@ AbstractRundownWidget* RundownDeckLinkInputWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setDevice(this->command.getDevice());
     command->setFormat(this->command.getFormat());
     command->setTransition(this->command.getTransition());
@@ -445,6 +452,75 @@ void RundownDeckLinkInputWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
+void RundownDeckLinkInputWidget::configureOscSubscriptions()
+{
+    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+        return;
+
+    if (this->stopControlSubscription != NULL)
+        this->stopControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->loadControlSubscription != NULL)
+        this->loadControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->pauseControlSubscription != NULL)
+        this->pauseControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearControlSubscription != NULL)
+        this->clearControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearVideolayerControlSubscription != NULL)
+        this->clearVideolayerControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearChannelControlSubscription != NULL)
+        this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
+
+    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    stopControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
+    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
+    loadControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
+    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString pauseControlFilter = Osc::DEFAULT_PAUSE_CONTROL_FILTER;
+    pauseControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
+    QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    clearControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
+    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    clearVideolayerControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
+    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    clearChannelControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
+    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
 void RundownDeckLinkInputWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
@@ -466,4 +542,46 @@ void RundownDeckLinkInputWidget::deviceAdded(CasparDevice& device)
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
+}
+
+void RundownDeckLinkInputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Stop);
+}
+
+void RundownDeckLinkInputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownDeckLinkInputWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Load);
+}
+
+void RundownDeckLinkInputWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Pause);
+}
+
+void RundownDeckLinkInputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Clear);
+}
+
+void RundownDeckLinkInputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::ClearVideolayer);
+}
+
+void RundownDeckLinkInputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::ClearChannel);
 }

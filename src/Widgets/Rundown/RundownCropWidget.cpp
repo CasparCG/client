@@ -17,7 +17,9 @@
 RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
+      playControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
+      clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -56,6 +58,8 @@ RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent,
     checkGpiConnection();
     checkDeviceConnection();
 
+    configureOscSubscriptions();
+
     qApp->installEventFilter(this);
 }
 
@@ -81,6 +85,8 @@ bool RundownCropWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        configureOscSubscriptions();
 
         return true;
     }
@@ -126,6 +132,7 @@ AbstractRundownWidget* RundownCropWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setCropLeft(this->command.getCropLeft());
     command->setCropRight(this->command.getCropRight());
     command->setCropTop(this->command.getCropTop());
@@ -363,6 +370,66 @@ void RundownCropWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
+void RundownCropWidget::configureOscSubscriptions()
+{
+    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+        return;
+
+    if (this->stopControlSubscription != NULL)
+        this->stopControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearControlSubscription != NULL)
+        this->clearControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearVideolayerControlSubscription != NULL)
+        this->clearVideolayerControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearChannelControlSubscription != NULL)
+        this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
+
+    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    stopControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
+    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    clearControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
+    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    clearVideolayerControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
+    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    clearChannelControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
+    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
 void RundownCropWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
@@ -384,4 +451,40 @@ void RundownCropWidget::deviceAdded(CasparDevice& device)
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
+}
+
+void RundownCropWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Stop);
+}
+
+void RundownCropWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownCropWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Update);
+}
+
+void RundownCropWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Clear);
+}
+
+void RundownCropWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::ClearVideolayer);
+}
+
+void RundownCropWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::ClearChannel);
 }

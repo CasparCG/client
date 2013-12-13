@@ -4,9 +4,46 @@
 
 #include <QtCore/QRegExp>
 
+#include <QtGui/QApplication>
+#include <QtGui/QTreeWidgetItem>
+
 TemplateDataTreeBaseWidget::TemplateDataTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent)
 {
+}
+
+void TemplateDataTreeBaseWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+        dragStartPosition = event->pos();
+
+    QTreeWidget::mousePressEvent(event);
+}
+
+void TemplateDataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!(event->buttons() & Qt::LeftButton))
+             return;
+
+    if ((event->pos() - dragStartPosition).manhattanLength() < qApp->startDragDistance())
+         return;
+
+    QString data;
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+    {
+        data.append(QString("<%1>,%2,%3;").arg(this->objectName())
+                                          .arg(item->text(0))
+                                          .arg(item->text(1)));
+    }
+    data.remove(QRegExp(";$"));
+
+    QMimeData* mimeData = new QMimeData();
+    mimeData->setData("application/inspector-templatedataitem", data.toUtf8());
+
+    QDrag* drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+
+    drag->exec(Qt::CopyAction);
 }
 
 Qt::DropActions TemplateDataTreeBaseWidget::supportedDropActions () const
@@ -16,7 +53,11 @@ Qt::DropActions TemplateDataTreeBaseWidget::supportedDropActions () const
 
 QStringList TemplateDataTreeBaseWidget::mimeTypes () const
 {
-    return QStringList("application/library-dataitem");
+    QStringList list;
+    list.append("application/library-dataitem");
+    list.append("application/inspector-templatedataitem");
+
+    return list;
 }
 
 void TemplateDataTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -31,14 +72,38 @@ void TemplateDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
 
 bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
-    if (!mimeData->hasFormat("application/library-dataitem"))
+    if (!mimeData->hasFormat("application/library-dataitem") && !mimeData->hasFormat("application/inspector-templatedataitem"))
         return false;
 
-    QString dndData = QString::fromUtf8(mimeData->data("application/library-dataitem"));
-    if (dndData.startsWith("<treeWidgetData>"))
+    if (mimeData->hasFormat("application/library-dataitem"))
     {
-        QStringList dataSplit = dndData.split(",");
-        EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
+        QString dndData = QString::fromUtf8(mimeData->data("application/library-dataitem"));
+        if (dndData.startsWith("<treeWidgetData>"))
+        {
+            QStringList dataSplit = dndData.split(",");
+            EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
+        }
+    }
+    else if (mimeData->hasFormat("application/inspector-templatedataitem"))
+    {
+        QString dndData = QString::fromUtf8(mimeData->data("application/inspector-templatedataitem"));
+        if (dndData.startsWith("<treeWidgetTemplateData>"))
+        {
+            QStringList dataSplit = dndData.split(",");
+
+            QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+            treeItem->setText(0, dataSplit.at(1));
+            treeItem->setText(1, dataSplit.at(2));
+
+            if (parent == NULL) // Drop on the QTreeWidget.
+                QTreeWidget::invisibleRootItem()->addChild(treeItem);
+            else
+                QTreeWidget::invisibleRootItem()->insertChild(QTreeWidget::indexFromItem(parent).row() + 1, treeItem);
+
+            delete QTreeWidget::currentItem();
+
+            QTreeWidget::setCurrentItem(treeItem);
+        }
     }
 
     return true;

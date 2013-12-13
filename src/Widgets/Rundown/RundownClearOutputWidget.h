@@ -10,6 +10,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscSubscription.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -62,11 +63,20 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         ClearOutputCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* stopControlSubscription;
+        OscSubscription* playControlSubscription;
+        OscSubscription* nextControlSubscription;
+        OscSubscription* updateControlSubscription;
+        OscSubscription* clearControlSubscription;
+        OscSubscription* clearVideolayerControlSubscription;
+        OscSubscription* clearChannelControlSubscription;
+
         QTimer executeTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
+        void configureOscSubscriptions();
 
         Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
@@ -77,4 +87,11 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

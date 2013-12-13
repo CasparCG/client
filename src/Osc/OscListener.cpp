@@ -4,6 +4,7 @@
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 #include <QtCore/QPair>
+#include <QtCore/QDebug>
 
 OscListener::OscListener(const QString& address, int port, QObject* parent)
     : QObject(parent)
@@ -61,6 +62,9 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     }
 
     QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
+
+    if (eventPath.contains("control"))
+        qDebug() << eventPath;
 
     QMutexLocker locker(&eventsMutex);
     this->events[eventPath] = arguments;

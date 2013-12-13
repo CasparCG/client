@@ -8,6 +8,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscSubscription.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -60,11 +61,15 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         GroupCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* playControlSubscription;
+
         void checkGpiConnection();
+        void configureOscSubscriptions();
 
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void autoStepChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void autoPlayChanged(bool);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

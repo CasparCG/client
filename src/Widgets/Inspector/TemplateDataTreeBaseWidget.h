@@ -23,4 +23,11 @@ class WIDGETS_EXPORT TemplateDataTreeBaseWidget : public QTreeWidget
         void dragEnterEvent(QDragEnterEvent* event);
         void dragLeaveEvent(QDragLeaveEvent* event);
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
+
+    protected:
+        void mouseMoveEvent(QMouseEvent* event);
+        void mousePressEvent(QMouseEvent* event);
+
+    private:
+        QPoint dragStartPosition;
 };

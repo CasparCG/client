@@ -121,6 +121,10 @@
 {
     color: rgba(128, 128, 128, 255);
 }
+#checkBoxAllowGpi, #checkBoxAllowRemoteTriggering
+{
+    color: rgba(190, 190, 190, 255);
+}
 
 #toolButtonMasterVolume
 {

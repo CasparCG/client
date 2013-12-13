@@ -82,6 +82,7 @@ RundownTreeWidget::~RundownTreeWidget()
 void RundownTreeWidget::setupMenus()
 {
     this->contextMenuMixer = new QMenu(this);
+    this->contextMenuMixer->setObjectName("contextMenuMixer");
     this->contextMenuMixer->setTitle("Mixer");
     //this->contextMenuMixer->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
@@ -108,23 +109,37 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/TemplateSmall.png"), "Template", this, SLOT(addTemplateItem()));
     this->contextMenuLibrary->addAction(QIcon(":/Graphics/Images/MovieSmall.png"), "Video", this, SLOT(addVideoItem()));
 
+    this->contextMenuOther = new QMenu(this);
+    this->contextMenuOther->setObjectName("contextMenuOther");
+    this->contextMenuOther->setTitle("Other");
+    //this->contextMenuOther->setIcon(QIcon(":/Graphics/Images/Other.png"));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
+    this->contextMenuOther->addSeparator();
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
+
+    this->contextMenuTriCaster = new QMenu(this);
+    this->contextMenuTriCaster->setObjectName("contextMenuTriCaster");
+    this->contextMenuTriCaster->setTitle("TriCaster");
+    //this->contextMenuTriCaster->setIcon(QIcon(":/Graphics/Images/TriCaster.png"));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Input", this, SLOT(addSelectInputItem()));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"), "Select Preset", this, SLOT(addSelectPresetItem()));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addTriggerAutoItem()));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"), "Trigger Take", this, SLOT(addTriggerTakeItem()));
+
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
     //this->contextMenuTools->setIcon(QIcon(":/Graphics/Images/New.png"));
     this->contextMenuTools->addMenu(this->contextMenuLibrary);
     this->contextMenuTools->addMenu(this->contextMenuMixer);
-    this->contextMenuTools->addSeparator();
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/SnapshotSmall.png"), "Channel Snapshot", this, SLOT(addPrintItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
-    this->contextMenuTools->addSeparator();
-    this->contextMenuTools->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
-    //this->contextMenuTools->actions().at(3)->setEnabled(false);
+    this->contextMenuTools->addMenu(this->contextMenuOther);
+    this->contextMenuTools->addMenu(this->contextMenuTriCaster);
 
     this->contextMenuColor = new QMenu(this);
     this->contextMenuColor->setTitle("Colorize Item");
@@ -999,7 +1014,7 @@ bool RundownTreeWidget::groupItems()
 
     QTreeWidgetItem* parentItem = new QTreeWidgetItem();
 
-    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(0, "Group", "", "", "GROUP", 0, ""), this);
+    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(0, "Group", "", "", "GROUP", 0, ""), this->treeWidgetRundown);
     widget->setActive(true);
     widget->setExpanded(true);
     widget->setCompactView(this->treeWidgetRundown->getCompactView());
@@ -1179,6 +1194,26 @@ void RundownTreeWidget::addFileRecorderItem()
 void RundownTreeWidget::addSeparatorItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SEPARATOR);
+}
+
+void RundownTreeWidget::addTriggerAutoItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::AUTO);
+}
+
+void RundownTreeWidget::addTriggerTakeItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TAKE);
+}
+
+void RundownTreeWidget::addSelectInputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::INPUT);
+}
+
+void RundownTreeWidget::addSelectPresetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PRESET);
 }
 
 void RundownTreeWidget::addGridItem()

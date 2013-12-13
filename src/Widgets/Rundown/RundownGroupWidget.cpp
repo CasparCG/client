@@ -5,12 +5,15 @@
 
 #include "Events/Inspector/LabelChangedEvent.h"
 
-#include <QtGui/QApplication>
 #include <QtCore/QObject>
+
+#include <QtGui/QApplication>
+#include <QtGui/QTreeWidget>
+
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
-      active(active), compactView(compactView), color(color), model(model)
+      active(active), compactView(compactView), color(color), model(model), playControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -37,7 +40,27 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     checkGpiConnection();
 
+    configureOscSubscriptions();
+
     qApp->installEventFilter(this);
+}
+
+void RundownGroupWidget::configureOscSubscriptions()
+{
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+}
+
+void RundownGroupWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+        executeCommand(Playout::PlayoutType::Play);
 }
 
 bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
@@ -148,6 +171,22 @@ void RundownGroupWidget::setActive(bool active)
 
 bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
+    QWidget* w = this->parentWidget()->parentWidget();
+    QTreeWidget* tw = dynamic_cast<QTreeWidget*>(w);
+
+    for (int i = 0; i < tw->invisibleRootItem()->childCount(); i++)
+    {
+        QTreeWidgetItem* item = tw->invisibleRootItem()->child(i);
+        QWidget* widget = tw->itemWidget(item, 0);
+        if (widget == this)
+        {
+            for (int j = 0; j < item->childCount(); j++)
+            {
+                dynamic_cast<AbstractPlayoutCommand*>(tw->itemWidget(item->child(j), 0))->executeCommand(type);
+            }
+        }
+    }
+
     if (this->active)
         this->animation->start(1);
 

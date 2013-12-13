@@ -68,9 +68,9 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::SOLIDCOLOR) return new RundownSolidColorWidget(model, this);
     else if (model.getType() == Rundown::CUSTOMCOMMAND) return new RundownCustomCommandWidget(model, this);
     else if (model.getType() == Rundown::INPUT) return new RundownInputWidget(model, this);
+    else if (model.getType() == Rundown::PRESET) return new RundownPresetWidget(model, this);
     else if (model.getType() == Rundown::TAKE) return new RundownTakeWidget(model, this);
     else if (model.getType() == Rundown::AUTO) return new RundownAutoWidget(model, this);
-    else if (model.getType() == Rundown::PRESET) return new RundownPresetWidget(model, this);
 
     return NULL;
 }

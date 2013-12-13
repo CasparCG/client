@@ -344,24 +344,6 @@ void LibraryWidget::setupTools()
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");
 
-    QTreeWidgetItem* widgetTriCasterAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterAuto->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
-    widgetTriCasterAuto->setText(0, "Trigger Auto");
-    widgetTriCasterAuto->setText(1, "0");
-    widgetTriCasterAuto->setText(2, "Trigger Auto");
-    widgetTriCasterAuto->setText(3, "");
-    widgetTriCasterAuto->setText(4, Rundown::AUTO);
-    widgetTriCasterAuto->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterTake = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterTake->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
-    widgetTriCasterTake->setText(0, "Trigger Take");
-    widgetTriCasterTake->setText(1, "0");
-    widgetTriCasterTake->setText(2, "Trigger Take");
-    widgetTriCasterTake->setText(3, "");
-    widgetTriCasterTake->setText(4, Rundown::TAKE);
-    widgetTriCasterTake->setText(5, "0");
-
     QTreeWidgetItem* widgetTriCasterInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterInput->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
     widgetTriCasterInput->setText(0, "Select Input");
@@ -379,6 +361,24 @@ void LibraryWidget::setupTools()
     widgetTriCasterPreset->setText(3, "");
     widgetTriCasterPreset->setText(4, Rundown::PRESET);
     widgetTriCasterPreset->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterAuto->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterAuto->setText(0, "Trigger Auto");
+    widgetTriCasterAuto->setText(1, "0");
+    widgetTriCasterAuto->setText(2, "Trigger Auto");
+    widgetTriCasterAuto->setText(3, "");
+    widgetTriCasterAuto->setText(4, Rundown::AUTO);
+    widgetTriCasterAuto->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterTake = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterTake->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterTake->setText(0, "Trigger Take");
+    widgetTriCasterTake->setText(1, "0");
+    widgetTriCasterTake->setText(2, "Trigger Take");
+    widgetTriCasterTake->setText(3, "");
+    widgetTriCasterTake->setText(4, Rundown::TAKE);
+    widgetTriCasterTake->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }

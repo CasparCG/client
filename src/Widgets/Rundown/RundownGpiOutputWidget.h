@@ -10,6 +10,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscSubscription.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -62,9 +63,17 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         GpiOutputCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* stopControlSubscription;
+        OscSubscription* playControlSubscription;
+        OscSubscription* updateControlSubscription;
+        OscSubscription* clearControlSubscription;
+        OscSubscription* clearVideolayerControlSubscription;
+        OscSubscription* clearChannelControlSubscription;
+
         QTimer executeTimer;
 
         void checkGpiConnection();
+        void configureOscSubscriptions();
 
         Q_SLOT void executePlay();
         Q_SLOT void executeStop();
@@ -72,4 +81,10 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         Q_SLOT void gpiOutputPortChanged(int);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

@@ -219,6 +219,14 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
+    else if (type ==  Rundown::INPUT)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::INPUT, 0, "")));
+    else if (type ==  Rundown::PRESET)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::PRESET, 0, "")));
+    else if (type ==  Rundown::AUTO)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
+    else if (type ==  Rundown::TAKE)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)

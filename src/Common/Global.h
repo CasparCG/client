@@ -98,6 +98,16 @@ namespace Osc
     static const QString DEFAULT_PATH_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
     static const QString DEFAULT_PAUSED_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
     static const QString DEFAULT_LOOP_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
+    static const QString DEFAULT_STOP_CONTROL_FILTER = ".*/control/#LABEL#/stop";
+    static const QString DEFAULT_PLAY_CONTROL_FILTER = ".*/control/#LABEL#/play";
+    static const QString DEFAULT_LOAD_CONTROL_FILTER = ".*/control/#LABEL#/load";
+    static const QString DEFAULT_PAUSE_CONTROL_FILTER = ".*/control/#LABEL#/pause";
+    static const QString DEFAULT_NEXT_CONTROL_FILTER = ".*/control/#LABEL#/next";
+    static const QString DEFAULT_UPDATE_CONTROL_FILTER = ".*/control/#LABEL#/update";
+    static const QString DEFAULT_INVOKE_CONTROL_FILTER = ".*/control/#LABEL#/invoke";
+    static const QString DEFAULT_CLEAR_CONTROL_FILTER = ".*/control/#LABEL#/clear";
+    static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = ".*/control/#LABEL#/clearvideolayer";
+    static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = ".*/control/#LABEL#/clearchannel";
 }
 
 namespace GpiOutput
@@ -188,6 +198,7 @@ namespace Output
     static const int DEFAULT_FLASH_VIDEOLAYER = 20;
     static const int DEFAULT_DELAY = 0;
     static const bool DEFAULT_ALLOW_GPI = false;
+    static const bool DEFAULT_ALLOW_REMOTE_TRIGGERING = false;
 }
 
 namespace Audio

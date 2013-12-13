@@ -78,6 +78,16 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         OscSubscription* pausedSubscription;
         OscSubscription* loopSubscription;
 
+        OscSubscription* stopControlSubscription;
+        OscSubscription* playControlSubscription;
+        OscSubscription* loadControlSubscription;
+        OscSubscription* pauseControlSubscription;
+        OscSubscription* nextControlSubscription;
+        OscSubscription* updateControlSubscription;
+        OscSubscription* clearControlSubscription;
+        OscSubscription* clearVideolayerControlSubscription;
+        OscSubscription* clearChannelControlSubscription;
+
         QTimer executeTimer;
 
         void setThumbnail();
@@ -85,6 +95,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
+
         void setTimecode(const QString& timecode);
 
         Q_SLOT void channelChanged(int);
@@ -109,4 +120,13 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loopSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void autoPlayChanged(bool);
+        Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

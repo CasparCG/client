@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>218</width>
-    <height>196</height>
+    <width>244</width>
+    <height>224</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -257,34 +257,61 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>8</width>
+         <width>69</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelAllowGpi">
+      <widget class="QCheckBox" name="checkBoxAllowGpi">
        <property name="text">
         <string>Allow GPI</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxAllowGpi">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
      <item>
       <spacer name="horizontalSpacerAllowGpi2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutAllowRemoteTriggering">
+     <item>
+      <spacer name="horizontalSpacerAllowRemoteTriggering1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>69</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxAllowRemoteTriggering">
+       <property name="text">
+        <string>Allow Remote Triggering</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAllowRemoteTriggering2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -437,6 +464,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxAllowRemoteTriggering</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>allowRemoteTriggeringChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-4</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>channelChanged(int)</slot>
@@ -446,5 +489,6 @@
   <slot>deviceNameChanged(QString)</slot>
   <slot>targetChanged(QString)</slot>
   <slot>tricasterDeviceNameChanged(QString)</slot>
+  <slot>allowRemoteTriggeringChanged(int)</slot>
  </slots>
 </ui>

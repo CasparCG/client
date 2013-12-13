@@ -47,6 +47,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuTools;
         QMenu* contextMenuColor;
         QMenu* contextMenuMixer;
+        QMenu* contextMenuOther;
+        QMenu* contextMenuTriCaster;
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
 
@@ -106,6 +108,10 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addOpacityItem();
         Q_SLOT void addSaturationItem();
         Q_SLOT void addVolumeItem();
+        Q_SLOT void addTriggerAutoItem();
+        Q_SLOT void addTriggerTakeItem();
+        Q_SLOT void addSelectInputItem();
+        Q_SLOT void addSelectPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);

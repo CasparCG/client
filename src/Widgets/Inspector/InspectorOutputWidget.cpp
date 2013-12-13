@@ -75,9 +75,13 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxChannel->setEnabled(false);
         this->spinBoxVideolayer->setEnabled(false);
         this->spinBoxDelay->setEnabled(false);
+        this->checkBoxAllowGpi->setEnabled(false);
+        this->checkBoxAllowRemoteTriggering->setEnabled(false);
 
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
+        this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+        this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
 
         fillTargetCombo(this->model->getType());
 
@@ -95,9 +99,20 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->comboBoxTriCasterDevice->setVisible(false);
 
         this->comboBoxDevice->setEnabled(false);
-        this->comboBoxDevice->setCurrentIndex(-1);
         this->comboBoxTarget->setEnabled(false);
+        this->spinBoxChannel->setEnabled(false);
+        this->spinBoxVideolayer->setEnabled(false);
+        this->spinBoxDelay->setEnabled(false);
+        this->checkBoxAllowGpi->setEnabled(false);
+        this->checkBoxAllowRemoteTriggering->setEnabled(false);
+
+        this->comboBoxDevice->setCurrentIndex(-1);
         this->comboBoxTarget->clear();
+        this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+        this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+        this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+        this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+        this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
 
         checkEmptyDevice();
         checkEmptyTriCasterDevice();
@@ -120,15 +135,12 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxChannel->setEnabled(true);
         this->spinBoxVideolayer->setEnabled(true);
         this->spinBoxDelay->setEnabled(true);
+        this->checkBoxAllowGpi->setEnabled(true);
+        this->checkBoxAllowRemoteTriggering->setEnabled(true);
 
         if (rundownItemSelectedEvent->getCommand() != NULL && rundownItemSelectedEvent->getLibraryModel() != NULL)
         {
             this->command = rundownItemSelectedEvent->getCommand();
-
-            this->comboBoxDevice->setEnabled(true);
-            this->comboBoxTarget->setEnabled(true);
-            this->spinBoxChannel->setEnabled(true);
-            this->spinBoxVideolayer->setEnabled(true);
 
             int index = this->comboBoxDevice->findText(this->model->getDeviceName());
             if (index == -1)
@@ -145,6 +157,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxVideolayer->setValue(this->command->getVideolayer());
             this->spinBoxDelay->setValue(this->command->getDelay());
             this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
+            this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
 
             fillTargetCombo(this->model->getType());
 
@@ -173,6 +186,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
                 this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+                this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
             }
             else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
             {
@@ -180,6 +194,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
 
+                this->comboBoxTarget->clear();
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             }
@@ -208,10 +223,12 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->comboBoxDevice->setVisible(false);
                 this->comboBoxTriCasterDevice->setVisible(true);
 
+                this->comboBoxDevice->setCurrentIndex(-1);
                 this->comboBoxTarget->setEnabled(false);
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
 
+                this->comboBoxTarget->clear();
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             }
@@ -269,6 +286,7 @@ void InspectorOutputWidget::blockAllSignals(bool block)
     this->spinBoxVideolayer->blockSignals(block);
     this->spinBoxDelay->blockSignals(block);
     this->checkBoxAllowGpi->blockSignals(block);
+    this->checkBoxAllowRemoteTriggering->blockSignals(block);
 }
 
 void InspectorOutputWidget::fillTargetCombo(const QString& type)
@@ -392,6 +410,11 @@ void InspectorOutputWidget::delayChanged(int delay)
 void InspectorOutputWidget::allowGpiChanged(int state)
 {
     this->command->setAllowGpi((state == Qt::Checked) ? true : false);
+}
+
+void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
+{
+    this->command->setAllowRemoteTriggering((state == Qt::Checked) ? true : false);
 }
 
 void InspectorOutputWidget::tricasterDeviceRemoved()
