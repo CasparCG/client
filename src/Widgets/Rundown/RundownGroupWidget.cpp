@@ -171,19 +171,16 @@ void RundownGroupWidget::setActive(bool active)
 
 bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    QWidget* w = this->parentWidget()->parentWidget();
-    QTreeWidget* tw = dynamic_cast<QTreeWidget*>(w);
-
-    for (int i = 0; i < tw->invisibleRootItem()->childCount(); i++)
+    // Our parent is the rundown tree.
+    QTreeWidget* treeWidgetRundown = dynamic_cast<QTreeWidget*>(this->parentWidget()->parentWidget());
+    for (int i = 0; i < treeWidgetRundown->invisibleRootItem()->childCount(); i++)
     {
-        QTreeWidgetItem* item = tw->invisibleRootItem()->child(i);
-        QWidget* widget = tw->itemWidget(item, 0);
+        QTreeWidgetItem* child = treeWidgetRundown->invisibleRootItem()->child(i);
+        QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
         if (widget == this)
         {
-            for (int j = 0; j < item->childCount(); j++)
-            {
-                dynamic_cast<AbstractPlayoutCommand*>(tw->itemWidget(item->child(j), 0))->executeCommand(type);
-            }
+            for (int j = 0; j < child->childCount(); j++)
+                dynamic_cast<AbstractPlayoutCommand*>(treeWidgetRundown->itemWidget(child->child(j), 0))->executeCommand(type);
         }
     }
 
