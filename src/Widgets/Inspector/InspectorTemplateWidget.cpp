@@ -34,6 +34,8 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
         {
             if (keyEvent->key() == Qt::Key_Delete)
                 return removeRow();
+            else if (keyEvent->key() == Qt::Key_Enter)
+                return addRow();
             else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
                 return duplicateSelectedItem();
             else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
@@ -114,7 +116,7 @@ void InspectorTemplateWidget::updateDataTemplateModels()
     this->command->setTemplateDataModels(models);
 }
 
-void InspectorTemplateWidget::addRow()
+bool InspectorTemplateWidget::addRow()
 {
     TemplateDataDialog* dialog = new TemplateDataDialog(this);
     dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
@@ -130,6 +132,8 @@ void InspectorTemplateWidget::addRow()
 
         this->rowIndex++;
     }
+
+    return true;
 }
 
 bool InspectorTemplateWidget::removeRow()

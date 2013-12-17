@@ -30,7 +30,7 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         void updateDataTemplateModels();
         void blockAllSignals(bool block);
 
-        Q_SLOT void addRow();
+        Q_SLOT bool addRow();
         Q_SLOT bool removeRow();
         Q_SLOT bool duplicateSelectedItem();
         Q_SLOT bool copySelectedItem();
