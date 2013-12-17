@@ -27,6 +27,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         void updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
         void updateGpiDevice();
 
+        Q_SLOT void showImportDeviceDialog();
         Q_SLOT void removeDevice();
         Q_SLOT void removeTriCasterDevice();
         Q_SLOT void showAddDeviceDialog();

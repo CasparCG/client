@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -521,6 +521,9 @@
        <bold>true</bold>
       </font>
      </property>
+     <property name="toolTip">
+      <string>Remove CasparCG Server</string>
+     </property>
     </widget>
     <widget class="QToolButton" name="toolButtonAddDevice">
      <property name="geometry">
@@ -542,6 +545,9 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="toolTip">
+      <string>Add CasparCG Server</string>
      </property>
     </widget>
     <widget class="Line" name="lineCasparCG">
@@ -593,6 +599,9 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="toolTip">
+      <string>Remove TriCaster Server</string>
      </property>
     </widget>
     <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
@@ -702,6 +711,34 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="toolTip">
+      <string>Add TriCaster Server</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonImportDevice">
+     <property name="geometry">
+      <rect>
+       <x>612</x>
+       <y>300</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Import CasparCG Servers</string>
      </property>
     </widget>
    </widget>
@@ -3334,18 +3371,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetTriCasterDevice</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <sender>toolButtonImportDevice</sender>
+   <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <slot>showImportDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>543</x>
-     <y>481</y>
+     <x>670</x>
+     <y>696</y>
     </hint>
     <hint type="destinationlabel">
-     <x>697</x>
-     <y>447</y>
+     <x>691</x>
+     <y>689</y>
     </hint>
    </hints>
   </connection>
@@ -3385,5 +3422,6 @@
   <slot>showAddTriCasterDeviceDialog()</slot>
   <slot>removeTriCasterDevice()</slot>
   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>showImportDeviceDialog()</slot>
  </slots>
 </ui>

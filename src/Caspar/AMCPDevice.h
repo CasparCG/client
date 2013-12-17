@@ -17,6 +17,8 @@ class CASPAR_EXPORT AMCPDevice : public QObject
 
         void disconnectDevice();
 
+        void setDisableCommands(bool disable);
+
         bool isConnected() const;
         int getPort() const;
         const QString& getAddress() const;
@@ -80,6 +82,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         QString line;
         QString address;
         QString previousLine;
+        bool disableCommands;
 
         void parseLine(const QString& line);
         void parseHeader(const QString& line);

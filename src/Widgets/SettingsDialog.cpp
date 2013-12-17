@@ -1,6 +1,7 @@
 #include "SettingsDialog.h"
 #include "DeviceDialog.h"
 #include "TriCasterDeviceDialog.h"
+#include "ImportDeviceDialog.h"
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
@@ -9,10 +10,12 @@
 #include "Models/DeviceModel.h"
 #include "Models/GpiModel.h"
 #include "Models/TriCaster/TriCasterDeviceModel.h"
+#include "Models/DeviceModel.h"
 
 #include <QtCore/QTimer>
 
 #include <QtGui/QComboBox>
+#include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
 
 SettingsDialog::SettingsDialog(QWidget* parent)
@@ -182,6 +185,37 @@ void SettingsDialog::checkEmptyTriCasterDeviceList()
     }
     else
         this->treeWidgetTriCasterDevice->setStyleSheet("");
+}
+
+void SettingsDialog::showImportDeviceDialog()
+{
+    QString path("./servers.xml");
+
+    QString s = QDir::currentPath();
+    QFile servers(path);
+    if (!servers.exists())
+        path = QFileDialog::getOpenFileName(this, "Import Servers", "", "Servers (*.xml)");
+
+    if (!path.isEmpty())
+    {
+        ImportDeviceDialog* dialog = new ImportDeviceDialog(this);
+        dialog->setImportFile(path);
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            QList<DeviceModel> models = dialog->getDevice();
+            foreach (DeviceModel model, models)
+            {
+                DatabaseManager::getInstance().insertDevice(DeviceModel(0, model.getName(), model.getAddress(),
+                                                                        model.getPort(), model.getUsername(),
+                                                                        model.getPassword(), model.getDescription(),
+                                                                        "", model.getShadow(), 0, ""));
+            }
+
+            loadDevice();
+
+            EventManager::getInstance().fireRefreshLibraryEvent();
+        }
+    }
 }
 
 void SettingsDialog::showAddDeviceDialog()
