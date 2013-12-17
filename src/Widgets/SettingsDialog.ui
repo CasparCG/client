@@ -544,6 +544,28 @@
       </font>
      </property>
     </widget>
+    <widget class="QToolButton" name="toolButtonImportDevice">
+     <property name="geometry">
+      <rect>
+       <x>635</x>
+       <y>647</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabGpi">
     <attribute name="title">
@@ -3141,6 +3163,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButtonImportDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showImportDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>670</x>
+     <y>696</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>689</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -3174,5 +3212,6 @@
   <slot>disableVideoProgressChanged(int)</slot>
   <slot>disableInAndOutPointsChanged(int)</slot>
   <slot>oscPortChanged()</slot>
+  <slot>showImportDeviceDialog()</slot>
  </slots>
 </ui>

@@ -770,6 +770,31 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutMasterVolume">
      <item>
+      <widget class="QToolButton" name="toolButtonDisableCommand">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Disable Commands</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacerMasterVolume">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -836,8 +861,8 @@
    <slot>masterVolumeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>285</x>
-     <y>598</y>
+     <x>287</x>
+     <y>522</y>
     </hint>
     <hint type="destinationlabel">
      <x>98</x>
@@ -845,37 +870,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButtonDisableCommand</sender>
+   <signal>clicked()</signal>
+   <receiver>InspectorWidget</receiver>
+   <slot>disableCommandClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>507</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>502</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>scaleXChanged(int)</slot>
-  <slot>scaleYChanged(int)</slot>
-  <slot>positionXChanged(int)</slot>
-  <slot>positionYChanged(int)</slot>
-  <slot>resetPositionX(QString)</slot>
-  <slot>resetPositionY(QString)</slot>
-  <slot>resetScaleX(QString)</slot>
-  <slot>resetScaleY(QString)</slot>
-  <slot>opacityChanged(int)</slot>
-  <slot>resetOpacity(QString)</slot>
-  <slot>brightnessChanged(int)</slot>
-  <slot>resetBrightness(QString)</slot>
-  <slot>contrastChanged(int)</slot>
-  <slot>resetContrast(QString)</slot>
-  <slot>saturationChanged(int)</slot>
-  <slot>resetSaturation(QString)</slot>
-  <slot>resetMinIn(QString)</slot>
-  <slot>minInChanged(int)</slot>
-  <slot>resetPositionDuration(QString)</slot>
-  <slot>resetPositionEasing(QString)</slot>
-  <slot>resetScaleDuration(QString)</slot>
-  <slot>resetScaleEasing(QString)</slot>
-  <slot>resetVideoDuration(QString)</slot>
-  <slot>resetVideoEasing(QString)</slot>
-  <slot>volumeChanged(int)</slot>
-  <slot>resetVolume(QString)</slot>
-  <slot>resetVolumeEasing(QString)</slot>
-  <slot>resetVolumeDuration(QString)</slot>
-  <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>
   <slot>masterVolumeClicked()</slot>
+  <slot>disableCommandClicked()</slot>
  </slots>
 </ui>

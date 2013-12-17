@@ -145,6 +145,10 @@
         <file>Images/ChromaSmall.png</file>
         <file>Images/AutoPlayGroup.png</file>
         <file>Images/AutoPlayItem.png</file>
+        <file>Images/DisableCommandOff.png</file>
+        <file>Images/DisableCommandOn.png</file>
+        <file>Images/ImportHover.png</file>
+        <file>Images/Import.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

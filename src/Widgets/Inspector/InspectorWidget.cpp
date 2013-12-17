@@ -57,7 +57,7 @@
 
 InspectorWidget::InspectorWidget(QWidget* parent)
     : QWidget(parent),
-      masterVolumeMuted(false)
+      masterVolumeMuted(false), disableCommand(false)
 {
     setupUi(this);
 
@@ -346,5 +346,28 @@ void InspectorWidget::masterVolumeClicked()
     {
         this->toolButtonMasterVolume->setStyleSheet("");
         this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOn.png"));
+    }
+}
+
+void InspectorWidget::disableCommandClicked()
+{
+    this->disableCommand = !this->disableCommand;
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
+        if (device != NULL)
+            device->setDisableCommands(this->disableCommand);
+    }
+
+    if (this->disableCommand)
+    {
+        this->toolButtonDisableCommand->setStyleSheet("border-color: red;");
+        this->toolButtonDisableCommand->setIcon(QIcon(":/Graphics/Images/DisableCommandOff.png"));
+    }
+    else
+    {
+        this->toolButtonDisableCommand->setStyleSheet("");
+        this->toolButtonDisableCommand->setIcon(QIcon(":/Graphics/Images/DisableCommandOn.png"));
     }
 }
