@@ -179,10 +179,7 @@ void SettingsDialog::checkEmptyDeviceList()
 void SettingsDialog::checkEmptyTriCasterDeviceList()
 {
     if (this->treeWidgetTriCasterDevice->invisibleRootItem()->childCount() == 0)
-    {
-        this->tabWidget->setCurrentIndex(1);
         this->treeWidgetTriCasterDevice->setStyleSheet("border-color: red;");
-    }
     else
         this->treeWidgetTriCasterDevice->setStyleSheet("");
 }
