@@ -3,6 +3,8 @@ CasparCG Client 2.0.6
 - NEW: Added support for change the default OSC port.
 - NEW: Added support for chroma key, based on code contribution by cambell. Requires CasparCG Server 2.0.4 or later.
 - NEW: Added support for auto play, based on code contribution by DreamHack and Robert Nagy.
+- NEW: Added support for disable sending commands to the CasparCG server, based on code contribution by YLE and Robert Nagy.
+- NEW: Added support for import CasparCG servers from disk, based on code contribution by YLE and Robert Nagy.
 - FIX: OSC progress using localhost server.
 - FIX: Font rendering issue on Mac OS X Mavericks.
 - UPDATE: Reload targets when refreshing the library.
