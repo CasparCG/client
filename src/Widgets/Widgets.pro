@@ -94,7 +94,8 @@ HEADERS += \
     Rundown/RundownChromaWidget.h \
     Inspector/InspectorChromaWidget.h \
     Inspector/TemplateDataTreeBaseWidget.h \
-    Inspector/TargetComboBaseWidget.h
+    Inspector/TargetComboBaseWidget.h \
+    ImportDeviceDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -177,7 +178,8 @@ SOURCES += \
     Rundown/RundownChromaWidget.cpp \
     Inspector/InspectorChromaWidget.cpp \
     Inspector/TemplateDataTreeBaseWidget.cpp \
-    Inspector/TargetComboBaseWidget.cpp
+    Inspector/TargetComboBaseWidget.cpp \
+    ImportDeviceDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -249,7 +251,8 @@ FORMS += \
     OscTimeWidget.ui \
     Action/ActionWidget.ui \
     Rundown/RundownChromaWidget.ui \
-    Inspector/InspectorChromaWidget.ui
+    Inspector/InspectorChromaWidget.ui \
+    ImportDeviceDialog.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -405,7 +408,11 @@ OTHER_FILES += \
     Images/ChromaSmall.png \
     Images/Chroma.png \
     Images/AutoPlayItem.png \
-    Images/AutoPlayGroup.png
+    Images/AutoPlayGroup.png \
+    Images/DisableCommandOn.png \
+    Images/DisableCommandOff.png \
+    Images/Import.png \
+    Images/ImportHover.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

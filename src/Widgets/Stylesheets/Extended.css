@@ -20,7 +20,7 @@
 /*
  * SettingsDialog
  */
-#labelSettingsInformation
+#labelSettingsInformation, #labelImportInformation
 {
     color: rgba(190, 190, 190, 255);
     font-size: 10px;
@@ -45,6 +45,14 @@
 #toolButtonRemoveDevice:hover, #toolButtonRemoveTemplateData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
+}
+#toolButtonImportDevice
+{
+    image: url(:/Graphics/Images/Import.png);
+}
+#toolButtonImportDevice:hover
+{
+    image: url(:/Graphics/Images/ImportHover.png);
 }
 
 /*
@@ -121,11 +129,15 @@
 {
     color: rgba(128, 128, 128, 255);
 }
-
 #toolButtonMasterVolume
 {
     image: url(:/Graphics/Images/MasterVolumeOn.png);
     padding: 4px;
+}
+#toolButtonDisableCommand
+{
+    image: url(:/Graphics/Images/DisableCommandOn.png);
+    padding: 2px;
 }
 
 /*

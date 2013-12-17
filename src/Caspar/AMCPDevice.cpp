@@ -7,7 +7,7 @@
 
 AMCPDevice::AMCPDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), address(address)
+      command(AMCPDevice::NONE), port(port), state(AMCPDevice::ExpectingHeader), connected(false), address(address), disableCommands(false)
 {
     this->socket = new QTcpSocket(this);
 
@@ -60,6 +60,11 @@ void AMCPDevice::setDisconnected()
     QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
+void AMCPDevice::setDisableCommands(bool disable)
+{
+    this->disableCommands = disable;
+}
+
 bool AMCPDevice::isConnected() const
 {
     return this->connected;
@@ -77,7 +82,7 @@ const QString &AMCPDevice::getAddress() const
 
 void AMCPDevice::writeMessage(const QString& message)
 {
-    if (this->connected)
+    if (this->connected && !this->disableCommands)
         this->socket->write(QString("%1\r\n").arg(message.trimmed()).toUtf8());
 }
 
