@@ -61,15 +61,34 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         GroupCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* loadControlSubscription;
+        OscSubscription* pauseControlSubscription;
+        OscSubscription* nextControlSubscription;
+        OscSubscription* updateControlSubscription;
+        OscSubscription* invokeControlSubscription;
+        OscSubscription* clearControlSubscription;
+        OscSubscription* clearVideolayerControlSubscription;
+        OscSubscription* clearChannelControlSubscription;
 
         void checkGpiConnection();
         void configureOscSubscriptions();
+        bool executeOscCommand(enum Playout::PlayoutType::Type type);
 
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void autoStepChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void autoPlayChanged(bool);
+        Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

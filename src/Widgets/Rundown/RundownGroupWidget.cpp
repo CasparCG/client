@@ -13,7 +13,10 @@
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
-      active(active), compactView(compactView), color(color), model(model), playControlSubscription(NULL)
+      active(active), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
+      playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL),
+      updateControlSubscription(NULL), invokeControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
+      clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -45,24 +48,6 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     qApp->installEventFilter(this);
 }
 
-void RundownGroupWidget::configureOscSubscriptions()
-{
-    if (this->playControlSubscription != NULL)
-        this->playControlSubscription->disconnect(); // Disconnect all events.
-
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
-    playControlFilter.replace("#LABEL#", this->model.getLabel());
-    this->playControlSubscription = new OscSubscription(playControlFilter, this);
-    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-}
-
-void RundownGroupWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-        executeCommand(Playout::PlayoutType::Play);
-}
-
 bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
@@ -75,6 +60,8 @@ bool RundownGroupWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        configureOscSubscriptions();
 
         return true;
     }
@@ -92,6 +79,7 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setNotes(this->command.getNotes());
     command->setAutoStep(this->command.getAutoStep());
     command->setAutoPlay(this->command.getAutoPlay());
@@ -171,23 +159,31 @@ void RundownGroupWidget::setActive(bool active)
 
 bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
 {
-    // Our parent is the rundown tree.
-    QTreeWidget* treeWidgetRundown = dynamic_cast<QTreeWidget*>(this->parentWidget()->parentWidget());
-    for (int i = 0; i < treeWidgetRundown->invisibleRootItem()->childCount(); i++)
-    {
-        QTreeWidgetItem* child = treeWidgetRundown->invisibleRootItem()->child(i);
-        QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
-        if (widget == this)
-        {
-            for (int j = 0; j < child->childCount(); j++)
-                dynamic_cast<AbstractPlayoutCommand*>(treeWidgetRundown->itemWidget(child->child(j), 0))->executeCommand(type);
-        }
-    }
-
     if (this->active)
         this->animation->start(1);
 
-    return false;
+    return true;
+}
+
+bool RundownGroupWidget::executeOscCommand(enum Playout::PlayoutType::Type type)
+{
+    if (this->command.getAllowRemoteTriggering())
+    {
+        // Our parent is the rundown tree.
+        QTreeWidget* treeWidgetRundown = dynamic_cast<QTreeWidget*>(this->parentWidget()->parentWidget());
+        for (int i = 0; i < treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+        {
+            QTreeWidgetItem* child = treeWidgetRundown->invisibleRootItem()->child(i);
+            QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
+            if (widget == this)
+            {
+                for (int j = 0; j < child->childCount(); j++)
+                    dynamic_cast<AbstractPlayoutCommand*>(treeWidgetRundown->itemWidget(child->child(j), 0))->executeCommand(type);
+            }
+        }
+    }
+
+    return true;
 }
 
 void RundownGroupWidget::checkGpiConnection()
@@ -198,6 +194,99 @@ void RundownGroupWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
     else
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
+}
+
+void RundownGroupWidget::configureOscSubscriptions()
+{
+    if (this->stopControlSubscription != NULL)
+        this->stopControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->loadControlSubscription != NULL)
+        this->loadControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->pauseControlSubscription != NULL)
+        this->pauseControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->nextControlSubscription != NULL)
+        this->nextControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->invokeControlSubscription != NULL)
+        this->invokeControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearControlSubscription != NULL)
+        this->clearControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearVideolayerControlSubscription != NULL)
+        this->clearVideolayerControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearChannelControlSubscription != NULL)
+        this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
+
+    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    stopControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
+    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
+    loadControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
+    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString pauseControlFilter = Osc::DEFAULT_PAUSE_CONTROL_FILTER;
+    pauseControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
+    QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
+    nextControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
+    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString invokeControlFilter = Osc::DEFAULT_INVOKE_CONTROL_FILTER;
+    invokeControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
+    QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    clearControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
+    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    clearVideolayerControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
+    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    clearChannelControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
+    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)
@@ -223,4 +312,64 @@ void RundownGroupWidget::gpiConnectionStateChanged(bool connected, GpiDevice* de
 void RundownGroupWidget::autoPlayChanged(bool autoPlay)
 {
     this->labelAutoPlay->setVisible(autoPlay);
+}
+
+void RundownGroupWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Stop);
+}
+
+void RundownGroupWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Play);
+}
+
+void RundownGroupWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Load);
+}
+
+void RundownGroupWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Pause);
+}
+
+void RundownGroupWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Invoke);
+}
+
+void RundownGroupWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Next);
+}
+
+void RundownGroupWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Update);
+}
+
+void RundownGroupWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::Clear);
+}
+
+void RundownGroupWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::ClearVideolayer);
+}
+
+void RundownGroupWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeOscCommand(Playout::PlayoutType::ClearChannel);
 }
