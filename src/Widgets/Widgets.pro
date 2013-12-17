@@ -94,7 +94,7 @@ HEADERS += \
     Inspector/InspectorChromaWidget.h \
     Inspector/TemplateDataTreeBaseWidget.h \
     Inspector/TargetComboBaseWidget.h \
-    Inspector/TemplateDataDialog.h
+    Inspector/TemplateDataDialog.h \
     ImportDeviceDialog.h
 
 SOURCES += \
@@ -178,7 +178,7 @@ SOURCES += \
     Inspector/InspectorChromaWidget.cpp \
     Inspector/TemplateDataTreeBaseWidget.cpp \
     Inspector/TargetComboBaseWidget.cpp \
-    Inspector/TemplateDataDialog.cpp
+    Inspector/TemplateDataDialog.cpp \
     ImportDeviceDialog.cpp
 
 FORMS += \
@@ -251,7 +251,7 @@ FORMS += \
     Action/ActionWidget.ui \
     Rundown/RundownChromaWidget.ui \
     Inspector/InspectorChromaWidget.ui \
-    Inspector/TemplateDataDialog.ui
+    Inspector/TemplateDataDialog.ui \
     ImportDeviceDialog.ui
 
 RESOURCES += \
