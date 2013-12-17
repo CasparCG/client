@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shared.h"
+#include "../Shared.h"
 #include "ui_TemplateDataDialog.h"
 
 #include <QtGui/QDialog>

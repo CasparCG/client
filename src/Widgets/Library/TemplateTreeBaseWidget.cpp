@@ -27,6 +27,9 @@ void TemplateTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     if ((event->pos() - dragStartPosition).manhattanLength() < qApp->startDragDistance())
          return;
 
+    if (QTreeWidget::selectedItems().count() == 0)
+        return;
+
     QString data;
     foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
     {

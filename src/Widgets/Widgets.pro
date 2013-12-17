@@ -78,7 +78,6 @@ HEADERS += \
     PresetDialog.h \
     Rundown/RundownCustomCommandWidget.h \
     Inspector/InspectorCustomCommandWidget.h \
-    TemplateDataDialog.h \
     Library/DeviceFilterWidget.h \
     TimeWidget.h \
     OscTimeWidget.h \
@@ -103,7 +102,8 @@ HEADERS += \
     Rundown/TriCaster/RundownPresetWidget.h \
     Inspector/TriCaster/InspectorInputWidget.h \
     Rundown/TriCaster/RundownInputWidget.h \
-    TriCasterDeviceDialog.h
+    TriCasterDeviceDialog.h \
+    Inspector/TemplateDataDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -170,7 +170,6 @@ SOURCES += \
     PresetDialog.cpp \
     Rundown/RundownCustomCommandWidget.cpp \
     Inspector/InspectorCustomCommandWidget.cpp \
-    TemplateDataDialog.cpp \
     Library/DeviceFilterWidget.cpp \
     TimeWidget.cpp \
     OscTimeWidget.cpp \
@@ -195,7 +194,8 @@ SOURCES += \
     Rundown/TriCaster/RundownPresetWidget.cpp \
     Inspector/TriCaster/InspectorInputWidget.cpp \
     Rundown/TriCaster/RundownInputWidget.cpp \
-    TriCasterDeviceDialog.cpp
+    TriCasterDeviceDialog.cpp \
+    Inspector/TemplateDataDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -261,7 +261,6 @@ FORMS += \
     PresetDialog.ui \
     Rundown/RundownCustomCommandWidget.ui \
     Inspector/InspectorCustomCommandWidget.ui \
-    TemplateDataDialog.ui \
     Library/DeviceFilterWidget.ui \
     TimeWidget.ui \
     OscTimeWidget.ui \
@@ -276,7 +275,8 @@ FORMS += \
     Rundown/TriCaster/RundownPresetWidget.ui \
     Inspector/TriCaster/InspectorInputWidget.ui \
     Rundown/TriCaster/RundownInputWidget.ui \
-    TriCasterDeviceDialog.ui
+    TriCasterDeviceDialog.ui \
+    Inspector/TemplateDataDialog.ui
 
 RESOURCES += \
     Widgets.qrc \

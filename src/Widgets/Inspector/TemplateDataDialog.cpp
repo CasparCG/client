@@ -42,5 +42,7 @@ void TemplateDataDialog::setName(const QString& name)
 void TemplateDataDialog::setValue(const QString& value)
 {
     this->setWindowTitle("Edit Template Data");
+
     this->textEditValue->setPlainText(value);
+    this->textEditValue->selectAll();
 }

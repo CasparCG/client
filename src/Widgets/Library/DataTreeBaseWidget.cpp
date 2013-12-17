@@ -27,6 +27,9 @@ void DataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     if ((event->pos() - dragStartPosition).manhattanLength() < qApp->startDragDistance())
          return;
 
+    if (QTreeWidget::selectedItems().count() == 0)
+        return;
+
     QMimeData* mimeData = new QMimeData();
     mimeData->setData("application/library-dataitem", QString("<%1>,%2").arg(this->objectName())
                                                                 .arg(QTreeWidget::selectedItems().at(0)->text(2)).toUtf8());
