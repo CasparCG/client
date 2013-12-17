@@ -20,7 +20,9 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
 
     private:
         bool masterVolumeMuted;
+        bool disableCommand;
 
         Q_SLOT void masterVolumeClicked();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
+        Q_SLOT void disableCommandClicked();
 };
