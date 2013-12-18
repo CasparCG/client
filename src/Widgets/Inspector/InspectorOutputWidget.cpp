@@ -305,6 +305,9 @@ void InspectorOutputWidget::blockAllSignals(bool block)
 
 void InspectorOutputWidget::fillTargetCombo(const QString& type)
 {
+    if (this->model == NULL)
+        return false;
+
     this->comboBoxTarget->clear();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());

@@ -20,7 +20,7 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     setupUi(this);
 
     this->treeWidgetTemplateData->setColumnWidth(1, 87);
-    this->rowIndex = this->treeWidgetTemplateData->invisibleRootItem()->childCount();
+    this->fieldCounter = this->treeWidgetTemplateData->invisibleRootItem()->childCount();
 
     qApp->installEventFilter(this);
 }
@@ -34,7 +34,9 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
         {
             if (keyEvent->key() == Qt::Key_Delete)
                 return removeRow();
-            else if (keyEvent->key() == Qt::Key_Enter)
+            else if ((keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) && keyEvent->modifiers() == Qt::ShiftModifier)
+                return editRow();
+            else if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
                 return addRow();
             else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
                 return duplicateSelectedItem();
@@ -63,7 +65,7 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
             for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
                 delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
 
-            this->rowIndex = 0;
+            this->fieldCounter = 0;
             foreach (TemplateDataModel model, this->command->getTemplateDataModels())
             {
                 QTreeWidgetItem* treeItem = new QTreeWidgetItem();
@@ -72,7 +74,7 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
                 this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
 
-                this->rowIndex++;
+                this->fieldCounter++;
             }
         }
 
@@ -83,7 +85,7 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
         AddTemplateDataEvent* addTemplateDataEvent = dynamic_cast<AddTemplateDataEvent*>(event);
 
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-        treeItem->setText(0, QString("f%1").arg(this->rowIndex));
+        treeItem->setText(0, QString("f%1").arg(this->fieldCounter));
         treeItem->setText(1, addTemplateDataEvent->getValue());
 
         this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
@@ -91,7 +93,7 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
         this->checkBoxUseStoredData->setChecked(addTemplateDataEvent->getStoredData());
 
-        this->rowIndex++;
+        this->fieldCounter++;
     }
 
     return QObject::eventFilter(target, event);
@@ -120,7 +122,7 @@ bool InspectorTemplateWidget::addRow()
 {
     TemplateDataDialog* dialog = new TemplateDataDialog(this);
     dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
-    dialog->setName(QString("f%1").arg(this->rowIndex));
+    dialog->setName(QString("f%1").arg(this->fieldCounter));
     if (dialog->exec() == QDialog::Accepted)
     {
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
@@ -130,16 +132,40 @@ bool InspectorTemplateWidget::addRow()
         this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
         this->treeWidgetTemplateData->setCurrentItem(treeItem);
 
-        this->rowIndex++;
+        this->fieldCounter++;
     }
 
     return true;
 }
 
+bool InspectorTemplateWidget::editRow()
+{
+    if (this->treeWidgetTemplateData->currentItem() == NULL)
+        return true;
+
+    TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
+    dialog->setName(this->treeWidgetTemplateData->currentItem()->text(0));
+    dialog->setValue(this->treeWidgetTemplateData->currentItem()->text(1));
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        this->treeWidgetTemplateData->currentItem()->setText(0, dialog->getName());
+        this->treeWidgetTemplateData->currentItem()->setText(1, dialog->getValue());
+
+        updateDataTemplateModels();
+    }
+}
+
 bool InspectorTemplateWidget::removeRow()
 {
+    if (this->treeWidgetTemplateData->currentItem() == NULL)
+        return true;
+
     delete this->treeWidgetTemplateData->currentItem();
     updateDataTemplateModels();
+
+    if (this->treeWidgetTemplateData->invisibleRootItem()->childCount() == 0)
+        this->fieldCounter = 0;
 
     return true;
 }
@@ -189,20 +215,7 @@ bool InspectorTemplateWidget::pasteSelectedItem()
 
 void InspectorTemplateWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
-    if (current == NULL)
-        return;
-
-    TemplateDataDialog* dialog = new TemplateDataDialog(this);
-    dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
-    dialog->setName(current->text(0));
-    dialog->setValue(current->text(1));
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        current->setText(0, dialog->getName());
-        current->setText(1, dialog->getValue());
-
-        updateDataTemplateModels();
-    }
+    editRow();
 }
 
 void InspectorTemplateWidget::invokeChanged(QString invoke)

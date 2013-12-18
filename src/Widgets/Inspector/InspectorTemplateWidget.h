@@ -23,7 +23,7 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        int rowIndex;
+        int fieldCounter;
         LibraryModel* model;
         TemplateCommand* command;
 
@@ -31,6 +31,7 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         void blockAllSignals(bool block);
 
         Q_SLOT bool addRow();
+        Q_SLOT bool editRow();
         Q_SLOT bool removeRow();
         Q_SLOT bool duplicateSelectedItem();
         Q_SLOT bool copySelectedItem();

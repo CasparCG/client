@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
+    <enum>Qt::TabFocus</enum>
    </property>
    <property name="text">
     <string>&amp;OK</string>
@@ -82,6 +82,9 @@
      <width>168</width>
      <height>120</height>
     </rect>
+   </property>
+   <property name="tabChangesFocus">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
