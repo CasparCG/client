@@ -1,5 +1,7 @@
 CasparCG Client 2.0.6
 =====================
+- NEW: Enter/Return key open up the template data dialog in add mode.
+- NEW: Enter/Return + Shift key open up the template data dialog in edit mode.
 - NEW: Added support for trigger items remotely using OSC.
 - NEW: Added support for NewTek TriCaster.
 - NEW: Added support for drag and drop internally in template data.
