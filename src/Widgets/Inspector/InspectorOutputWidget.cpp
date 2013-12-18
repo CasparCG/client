@@ -306,7 +306,7 @@ void InspectorOutputWidget::blockAllSignals(bool block)
 void InspectorOutputWidget::fillTargetCombo(const QString& type)
 {
     if (this->model == NULL)
-        return false;
+        return;
 
     this->comboBoxTarget->clear();
 
