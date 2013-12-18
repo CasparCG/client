@@ -205,7 +205,7 @@ void RundownTakeWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownTakeWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownTakeWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       

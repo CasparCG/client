@@ -172,16 +172,30 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             }
             else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->comboBoxDevice->setEnabled(false);
                 this->comboBoxTarget->setEnabled(false);
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
-                this->spinBoxDelay->setEnabled(false);
 
                 this->comboBoxDevice->setCurrentIndex(-1);
+                this->comboBoxTarget->setCurrentIndex(-1);
+                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            }
+            else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
+            {
+                this->comboBoxDevice->setEnabled(false);
+                this->comboBoxTarget->setEnabled(false);
+                this->spinBoxChannel->setEnabled(false);
+                this->spinBoxVideolayer->setEnabled(false);
+                this->spinBoxDelay->setEnabled(false);
+                this->checkBoxAllowGpi->setEnabled(false);
+                this->checkBoxAllowRemoteTriggering->setEnabled(false);
+
+                this->comboBoxDevice->setCurrentIndex(-1);
+                this->comboBoxTarget->setCurrentIndex(-1);
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);

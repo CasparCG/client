@@ -116,7 +116,8 @@ HEADERS += \
     Models/TriCaster/TriCasterSourceModel.h \
     Models/TriCaster/TriCasterDeviceModel.h \
     OscDeviceManager.h \
-    TriCasterDeviceManager.h
+    TriCasterDeviceManager.h \
+    Events/Rundown/ExecuteRundownItemEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -222,7 +223,8 @@ SOURCES += \
     Models/TriCaster/TriCasterSourceModel.cpp \
     Models/TriCaster/TriCasterDeviceModel.cpp \
     OscDeviceManager.cpp \
-    TriCasterDeviceManager.cpp
+    TriCasterDeviceManager.cpp \
+    Events/Rundown/ExecuteRundownItemEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

@@ -28,12 +28,20 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
     Q_OBJECT
 
     public:
+        enum ActionSource
+        {
+            KeyPress,
+            GpiPulse
+        };
+
         explicit RundownTreeWidget(QWidget* parent = 0);
         ~RundownTreeWidget();
 
         void setActive(bool active);
         void openRundown(const QString& path);
         void saveRundown(bool saveAs);
+
+        bool executeCommand(Playout::PlayoutType::Type type, ActionSource source, QTreeWidgetItem* item = NULL);
 
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
 
@@ -62,12 +70,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         QTreeWidgetItem* copyItem;
 
-        enum ActionSource
-        {
-            KeyPress,
-            GpiPulse
-        };
-
         bool pasteSelectedItems();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
@@ -80,7 +82,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool moveItemUp();
         bool ungroupItems();
         void colorizeItems(const QString& color);
-        bool executeCommand(Playout::PlayoutType::Type type, ActionSource source);
 
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();

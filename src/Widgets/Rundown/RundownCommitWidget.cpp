@@ -205,7 +205,7 @@ void RundownCommitWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownCommitWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownCommitWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

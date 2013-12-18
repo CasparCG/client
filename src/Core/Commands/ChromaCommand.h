@@ -25,7 +25,7 @@ class CORE_EXPORT ChromaCommand : public AbstractCommand
         float getBlur() const;
         const QString& getKey() const;
         bool  getShowMask() const;
-        float getSoftness() const;
+        float getSpread() const;
         float getSpill() const;
         float getThreshold() const;
 

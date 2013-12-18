@@ -302,7 +302,7 @@ void RundownVideoWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownVideoWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

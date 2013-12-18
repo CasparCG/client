@@ -137,6 +137,13 @@ void EventManager::fireExecuteClearChannelEvent()
     qApp->sendEvent(qApp, &event);
 }
 
+void EventManager::fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item)
+{
+    // Use synchronous event through sendEvent().
+    ExecuteRundownItemEvent event(type, item);
+    qApp->sendEvent(qApp, &event);
+}
+
 void EventManager::fireToggleCompactViewEvent()
 {
     // Use synchronous event through sendEvent().
@@ -152,7 +159,8 @@ void EventManager::fireRefreshLibraryEvent(int delay)
 void EventManager::fireEmptyRundownEvent()
 {
     // Use synchronous event through sendEvent().
-    qApp->sendEvent(qApp, new EmptyRundownEvent());
+    EmptyRundownEvent event;
+    qApp->sendEvent(qApp, &event);
 }
 
 void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)

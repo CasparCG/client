@@ -160,7 +160,7 @@ void RundownGpiOutputWidget::setColor(const QString& color)
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-bool RundownGpiOutputWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

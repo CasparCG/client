@@ -230,7 +230,7 @@ void RundownTemplateWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownTemplateWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

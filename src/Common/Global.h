@@ -53,7 +53,8 @@ namespace Event
             AutoPlayRundownItem = QEvent::User + 42,
             AutoPlayChanged =  QEvent::User + 43,
             AutoPlayNextRundownItem =  QEvent::User + 44,
-            ProgramSourceChanged =  QEvent::User + 45
+            ProgramSourceChanged =  QEvent::User + 45,
+            ExecuteRundownItem = QEvent::User + 46
         };
     };
 }

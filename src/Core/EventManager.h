@@ -13,6 +13,7 @@
 #include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/AddRudnownItemEvent.h"
+#include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -43,6 +44,7 @@
 #include <QtCore/QObject>
 
 #include <QtGui/QWidget>
+#include <QtGui/QTreeWidgetItem>
 
 class CORE_EXPORT EventManager : public QObject
 {
@@ -75,6 +77,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireExecuteClearEvent();
         void fireExecuteClearVideolayerEvent();
         void fireExecuteClearChannelEvent();
+        void fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item);
         void fireToggleCompactViewEvent();
         void fireRefreshLibraryEvent(int delay = 0);
         void fireEmptyRundownEvent();

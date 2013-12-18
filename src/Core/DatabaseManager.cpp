@@ -176,6 +176,8 @@ void DatabaseManager::initialize()
 
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 1', 'ddr')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 2', 'ddr2')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Net 1', 'net')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Net 2', 'net2')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Still', 'stills')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Title', 'titles')");
     sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Frame Buffer', 'frm bfr')");

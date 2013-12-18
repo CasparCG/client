@@ -135,7 +135,7 @@ AbstractRundownWidget* RundownChromaWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setKey(this->command.getKey());
     command->setThreshold(this->command.getThreshold());
-    command->setSpread(this->command.getSoftness());
+    command->setSpread(this->command.getSpread());
     command->setBlur(this->command.getBlur());
     command->setSpill(this->command.getSpill());
     command->setShowMask(this->command.getShowMask());
@@ -223,7 +223,7 @@ void RundownChromaWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownChromaWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownChromaWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
@@ -275,7 +275,7 @@ void RundownChromaWidget::executePlay()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
-                          this->command.getSoftness(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
+                          this->command.getSpread(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -285,7 +285,7 @@ void RundownChromaWidget::executePlay()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
-                                    this->command.getSoftness(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
+                                    this->command.getSpread(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
     }
 }
 

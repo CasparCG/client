@@ -121,7 +121,7 @@ void RundownSeparatorWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-bool RundownSeparatorWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownSeparatorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (this->active)
         this->animation->start(1);

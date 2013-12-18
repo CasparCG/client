@@ -2,6 +2,7 @@
 
 #include "Global.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 
 #include "Events/Inspector/LabelChangedEvent.h"
 
@@ -157,7 +158,7 @@ void RundownGroupWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (this->active)
         this->animation->start(1);
@@ -165,21 +166,20 @@ bool RundownGroupWidget::executeCommand(enum Playout::PlayoutType::Type type)
     return true;
 }
 
-bool RundownGroupWidget::executeOscCommand(enum Playout::PlayoutType::Type type)
+bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->parentWidget()->parentWidget() == NULL)
+        return true;
+
+    QTreeWidget* treeWidgetRundown = dynamic_cast<QTreeWidget*>(this->parentWidget()->parentWidget());
+    for (int i = 0; i < treeWidgetRundown->invisibleRootItem()->childCount(); i++)
     {
-        // Our parent is the rundown tree.
-        QTreeWidget* treeWidgetRundown = dynamic_cast<QTreeWidget*>(this->parentWidget()->parentWidget());
-        for (int i = 0; i < treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+        QTreeWidgetItem* child = treeWidgetRundown->invisibleRootItem()->child(i);
+        QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
+        if (widget == this)
         {
-            QTreeWidgetItem* child = treeWidgetRundown->invisibleRootItem()->child(i);
-            QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
-            if (widget == this)
-            {
-                for (int j = 0; j < child->childCount(); j++)
-                    dynamic_cast<AbstractPlayoutCommand*>(treeWidgetRundown->itemWidget(child->child(j), 0))->executeCommand(type);
-            }
+            EventManager::getInstance().fireExecuteRundownItemEvent(type, child);
+            break;
         }
     }
 

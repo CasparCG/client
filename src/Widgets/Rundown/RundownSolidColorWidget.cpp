@@ -216,7 +216,7 @@ void RundownSolidColorWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownSolidColorWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

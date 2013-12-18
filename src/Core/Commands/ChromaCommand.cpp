@@ -24,7 +24,7 @@ bool ChromaCommand::getShowMask() const
     return this->showMask;
 }
 
-float ChromaCommand::getSoftness() const
+float ChromaCommand::getSpread() const
 {
     return this->spread;
 }
@@ -94,7 +94,7 @@ void ChromaCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("showmask", (getShowMask() == true) ? "true" : "false");
     writer->writeTextElement("blur",  QString::number(this->getBlur()));
     writer->writeTextElement("key", this->getKey());
-    writer->writeTextElement("softness",  QString::number(this->getSoftness()));
+    writer->writeTextElement("spread",  QString::number(this->getSpread()));
     writer->writeTextElement("spill", QString::number(this->getSpill()));
     writer->writeTextElement("threshold", QString::number(this->getThreshold()));
 }

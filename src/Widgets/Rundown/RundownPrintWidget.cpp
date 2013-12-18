@@ -204,7 +204,7 @@ void RundownPrintWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownPrintWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownPrintWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

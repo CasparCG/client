@@ -221,7 +221,7 @@ void RundownSaturationWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownSaturationWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownSaturationWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));

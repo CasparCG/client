@@ -206,7 +206,7 @@ void RundownPresetWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownPresetWidget::executeCommand(enum Playout::PlayoutType::Type type)
+bool RundownPresetWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       

@@ -36,6 +36,7 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
+#include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/AddPresetItemEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Models/RundownModel.h"
@@ -386,6 +387,13 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
                     dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(autoPlayChangedEvent->getAutoPlay());
             }
+
+            return true;
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
+        {
+            ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
+            executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
 
             return true;
         }
@@ -855,16 +863,42 @@ bool RundownTreeWidget::moveItemUp()
     return true;
 }
 
-bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource source)
+bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource source, QTreeWidgetItem* item)
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
         return true;
 
-    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
-    QWidget* selectedWidgetParent = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->parent(), 0);
+    //QModelIndex currentIndex;
+    QTreeWidgetItem* currentItem = NULL;
 
-    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
-    AbstractRundownWidget* rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
+    QWidget* selectedWidget = NULL;
+    QWidget* selectedWidgetParent = NULL;
+
+    AbstractRundownWidget* rundownWidget = NULL;
+    AbstractRundownWidget* rundownWidgetParent = NULL;
+
+    if (item == NULL)
+    {
+        currentItem = this->treeWidgetRundown->currentItem();
+        //currentIndex = this->treeWidgetRundown->currentIndex();
+
+        selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+        selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
+
+        rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+        rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
+    }
+    else // External execution through OSC.
+    {
+        currentItem = item;
+        //currentIndex = this->treeWidgetRundown->indexOfTopLevelItem(item);
+
+        selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+        selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
+
+        rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+        rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
+    }
 
     if (source == GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
         return true; // Gpi pulses cannot trigger this item.
@@ -888,9 +922,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
             bool isFirstChild = true;
 
             QList<AbstractRundownWidget*>* autoPlayQueue = new QList<AbstractRundownWidget*>();
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+            for (int i = 0; i < currentItem->childCount(); i++)
             {
-                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+                QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
                 if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
                 {
@@ -923,9 +957,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
         }
         else
         {
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+            for (int i = 0; i < currentItem->childCount(); i++)
             {
-                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+                QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
                 AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
 
                 if (dynamic_cast<VideoCommand*>(rundownWidget->getCommand()))
@@ -963,9 +997,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
         if (type == Playout::PlayoutType::Play && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
         {
             QList<AbstractRundownWidget*>* autoPlayQueue = new QList<AbstractRundownWidget*>();
-            for (int i = this->treeWidgetRundown->currentIndex().row(); i < this->treeWidgetRundown->currentItem()->parent()->childCount(); i++)
+            //for (int i = currentIndex.row(); i < currentItem->parent()->childCount(); i++)
+            for (int i = currentItem->parent()->indexOfChild(currentItem); i < currentItem->parent()->childCount(); i++)
             {
-                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->parent()->child(i), 0);
+                QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->parent()->child(i), 0);
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
                 if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
                 {

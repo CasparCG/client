@@ -44,7 +44,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
 
         virtual void setExpanded(bool expanded) {}
 
-        virtual bool executeCommand(enum Playout::PlayoutType::Type type);
+        virtual bool executeCommand(Playout::PlayoutType::Type type);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);

@@ -37,8 +37,8 @@ bool InspectorChromaWidget::eventFilter(QObject* target, QEvent* event)
             this->checkBoxShowMask->setChecked(this->command->getShowMask());
             this->spinBoxThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
             this->sliderThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
-            this->spinBoxSoftness->setValue(QString("%1").arg(this->command->getSoftness() * 100).toFloat());
-            this->sliderSoftness->setValue(QString("%1").arg(this->command->getSoftness() * 100).toFloat());
+            this->spinBoxSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
+            this->sliderSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
             this->spinBoxBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
             this->sliderBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
             this->spinBoxSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
