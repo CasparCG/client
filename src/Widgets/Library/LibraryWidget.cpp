@@ -173,6 +173,15 @@ void LibraryWidget::setupTools()
     widgetBrightness->setText(4, Rundown::BRIGHTNESS);
     widgetBrightness->setText(5, "0");
 
+    QTreeWidgetItem* widgetChroma = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetChroma->setIcon(0, QIcon(":/Graphics/Images/ChromaSmall.png"));
+    widgetChroma->setText(0, "Chroma Key");
+    widgetChroma->setText(1, "0");
+    widgetChroma->setText(2, "Chroma Key");
+    widgetChroma->setText(3, "");
+    widgetChroma->setText(4, Rundown::CHROMAKEY);
+    widgetChroma->setText(5, "0");
+
     QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetContrast->setIcon(0, QIcon(":/Graphics/Images/ContrastSmall.png"));
     widgetContrast->setText(0, "Contrast");
@@ -191,15 +200,6 @@ void LibraryWidget::setupTools()
     widgetCrop->setText(4, Rundown::CROP);
     widgetCrop->setText(5, "0");
 
-    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetGeometry->setIcon(0, QIcon(":/Graphics/Images/GeometrySmall.png"));
-    widgetGeometry->setText(0, "Transformation");
-    widgetGeometry->setText(1, "0");
-    widgetGeometry->setText(2, "Transformation");
-    widgetGeometry->setText(3, "");
-    widgetGeometry->setText(4, Rundown::GEOMETRY);
-    widgetGeometry->setText(5, "0");
-
     QTreeWidgetItem* widgetGrid = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetGrid->setIcon(0, QIcon(":/Graphics/Images/GridSmall.png"));
     widgetGrid->setText(0, "Grid");
@@ -209,15 +209,6 @@ void LibraryWidget::setupTools()
     widgetGrid->setText(4, Rundown::GRID);
     widgetGrid->setText(5, "0");
 
-    QTreeWidgetItem* widgetKeyer = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetKeyer->setIcon(0, QIcon(":/Graphics/Images/KeyerSmall.png"));
-    widgetKeyer->setText(0, "Mask");
-    widgetKeyer->setText(1, "0");
-    widgetKeyer->setText(2, "Mask");
-    widgetKeyer->setText(3, "");
-    widgetKeyer->setText(4, Rundown::KEYER);
-    widgetKeyer->setText(5, "0");
-
     QTreeWidgetItem* widgetLevels = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetLevels->setIcon(0, QIcon(":/Graphics/Images/LevelsSmall.png"));
     widgetLevels->setText(0, "Levels");
@@ -226,6 +217,15 @@ void LibraryWidget::setupTools()
     widgetLevels->setText(3, "");
     widgetLevels->setText(4, Rundown::LEVELS);
     widgetLevels->setText(5, "0");
+
+    QTreeWidgetItem* widgetKeyer = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetKeyer->setIcon(0, QIcon(":/Graphics/Images/KeyerSmall.png"));
+    widgetKeyer->setText(0, "Mask");
+    widgetKeyer->setText(1, "0");
+    widgetKeyer->setText(2, "Mask");
+    widgetKeyer->setText(3, "");
+    widgetKeyer->setText(4, Rundown::KEYER);
+    widgetKeyer->setText(5, "0");
 
     QTreeWidgetItem* widgetOpacity = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetOpacity->setIcon(0, QIcon(":/Graphics/Images/OpacitySmall.png"));
@@ -245,6 +245,15 @@ void LibraryWidget::setupTools()
     widgetSaturation->setText(4, Rundown::SATURATION);
     widgetSaturation->setText(5, "0");
 
+    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetGeometry->setIcon(0, QIcon(":/Graphics/Images/GeometrySmall.png"));
+    widgetGeometry->setText(0, "Transformation");
+    widgetGeometry->setText(1, "0");
+    widgetGeometry->setText(2, "Transformation");
+    widgetGeometry->setText(3, "");
+    widgetGeometry->setText(4, Rundown::GEOMETRY);
+    widgetGeometry->setText(5, "0");
+
     QTreeWidgetItem* widgetVolume = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetVolume->setIcon(0, QIcon(":/Graphics/Images/VolumeSmall.png"));
     widgetVolume->setText(0, "Volume");
@@ -262,42 +271,6 @@ void LibraryWidget::setupTools()
     widgetCommit->setText(3, "");
     widgetCommit->setText(4, Rundown::COMMIT);
     widgetCommit->setText(5, "0");
-
-    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
-    widgetSolidColor->setText(0, "Solid Color");
-    widgetSolidColor->setText(1, "0");
-    widgetSolidColor->setText(2, "Solid Color");
-    widgetSolidColor->setText(3, "");
-    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
-    widgetSolidColor->setText(5, "0");
-
-    QTreeWidgetItem* widgetGpiOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetGpiOutput->setIcon(0, QIcon(":/Graphics/Images/GpiOutputSmall.png"));
-    widgetGpiOutput->setText(0, "GPI Output");
-    widgetGpiOutput->setText(1, "0");
-    widgetGpiOutput->setText(2, "GPI Output");
-    widgetGpiOutput->setText(3, "");
-    widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
-    widgetGpiOutput->setText(5, "0");
-
-    QTreeWidgetItem* widgetFileRecorder = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetFileRecorder->setIcon(0, QIcon(":/Graphics/Images/FileRecorderSmall.png"));
-    widgetFileRecorder->setText(0, "File Recorder");
-    widgetFileRecorder->setText(1, "0");
-    widgetFileRecorder->setText(2, "File Recorder");
-    widgetFileRecorder->setText(3, "");
-    widgetFileRecorder->setText(4, Rundown::FILERECORDER);
-    widgetFileRecorder->setText(5, "0");
-
-    QTreeWidgetItem* widgetDeckLinkInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetDeckLinkInput->setIcon(0, QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"));
-    widgetDeckLinkInput->setText(0, "DeckLink Input");
-    widgetDeckLinkInput->setText(1, "0");
-    widgetDeckLinkInput->setText(2, "DeckLink Input");
-    widgetDeckLinkInput->setText(3, "");
-    widgetDeckLinkInput->setText(4, Rundown::DECKLINKINPUT);
-    widgetDeckLinkInput->setText(5, "0");
 
     QTreeWidgetItem* widgetChannelSnapshot = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetChannelSnapshot->setIcon(0, QIcon(":/Graphics/Images/SnapshotSmall.png"));
@@ -326,14 +299,41 @@ void LibraryWidget::setupTools()
     widgetCustomCommand->setText(4, Rundown::CUSTOMCOMMAND);
     widgetCustomCommand->setText(5, "0");
 
-    QTreeWidgetItem* widgetChroma = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetChroma->setIcon(0, QIcon(":/Graphics/Images/ChromaSmall.png"));
-    widgetChroma->setText(0, "Chroma Key");
-    widgetChroma->setText(1, "0");
-    widgetChroma->setText(2, "Chroma Key");
-    widgetChroma->setText(3, "");
-    widgetChroma->setText(4, Rundown::CHROMAKEY);
-    widgetChroma->setText(5, "0");
+    QTreeWidgetItem* widgetDeckLinkInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetDeckLinkInput->setIcon(0, QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"));
+    widgetDeckLinkInput->setText(0, "DeckLink Input");
+    widgetDeckLinkInput->setText(1, "0");
+    widgetDeckLinkInput->setText(2, "DeckLink Input");
+    widgetDeckLinkInput->setText(3, "");
+    widgetDeckLinkInput->setText(4, Rundown::DECKLINKINPUT);
+    widgetDeckLinkInput->setText(5, "0");
+
+    QTreeWidgetItem* widgetFileRecorder = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetFileRecorder->setIcon(0, QIcon(":/Graphics/Images/FileRecorderSmall.png"));
+    widgetFileRecorder->setText(0, "File Recorder");
+    widgetFileRecorder->setText(1, "0");
+    widgetFileRecorder->setText(2, "File Recorder");
+    widgetFileRecorder->setText(3, "");
+    widgetFileRecorder->setText(4, Rundown::FILERECORDER);
+    widgetFileRecorder->setText(5, "0");
+
+    QTreeWidgetItem* widgetGpiOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetGpiOutput->setIcon(0, QIcon(":/Graphics/Images/GpiOutputSmall.png"));
+    widgetGpiOutput->setText(0, "GPI Output");
+    widgetGpiOutput->setText(1, "0");
+    widgetGpiOutput->setText(2, "GPI Output");
+    widgetGpiOutput->setText(3, "");
+    widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
+    widgetGpiOutput->setText(5, "0");
+
+    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetSolidColor->setText(0, "Solid Color");
+    widgetSolidColor->setText(1, "0");
+    widgetSolidColor->setText(2, "Solid Color");
+    widgetSolidColor->setText(3, "");
+    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
+    widgetSolidColor->setText(5, "0");
 
     QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
