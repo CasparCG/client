@@ -140,7 +140,7 @@ void RundownTemplateWidget::dragEnterEvent(QDragEnterEvent* event)
         event->acceptProposedAction();
 }
 
-void RundownTemplateWidget::dropEvent(QDropEvent *event)
+void RundownTemplateWidget::dropEvent(QDropEvent* event)
 {
     if (event->mimeData()->hasFormat("application/library-dataitem"))
     {
