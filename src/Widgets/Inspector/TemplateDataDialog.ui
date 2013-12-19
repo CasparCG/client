@@ -22,9 +22,6 @@
      <height>22</height>
     </rect>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::TabFocus</enum>
-   </property>
    <property name="text">
     <string>&amp;OK</string>
    </property>
