@@ -77,12 +77,12 @@ void SettingsDialog::loadDevice()
         treeItem->setText(2, model.getName());
         treeItem->setText(3, model.getAddress());
         treeItem->setText(4, QString("%1").arg(model.getPort()));
-        treeItem->setText(5, model.getUsername());
+        treeItem->setText(5, model.getDescription());
+        treeItem->setText(6, model.getUsername());
 
         QString password = model.getPassword();
-        treeItem->setText(6, password.replace(QRegExp("."), "*"));
+        treeItem->setText(7, password.replace(QRegExp("."), "*"));
 
-        treeItem->setText(7, model.getDescription());
         treeItem->setText(8, model.getVersion());
         treeItem->setText(9, model.getShadow());
         treeItem->setText(10, QString("%1").arg(model.getChannels()));
@@ -186,12 +186,43 @@ void SettingsDialog::checkEmptyTriCasterDeviceList()
 
 void SettingsDialog::showImportDeviceDialog()
 {
-    QString path("./servers.xml");
+    QString path("./CasparCG.xml");
 
     QString s = QDir::currentPath();
     QFile servers(path);
     if (!servers.exists())
-        path = QFileDialog::getOpenFileName(this, "Import Servers", "", "Servers (*.xml)");
+        path = QFileDialog::getOpenFileName(this, "Import CasparCG Servers", "", "CasparCG (*.xml)");
+
+    if (!path.isEmpty())
+    {
+        ImportDeviceDialog* dialog = new ImportDeviceDialog(this);
+        dialog->setImportFile(path);
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            QList<DeviceModel> models = dialog->getDevice();
+            foreach (DeviceModel model, models)
+            {
+                DatabaseManager::getInstance().insertDevice(DeviceModel(0, model.getName(), model.getAddress(),
+                                                                        model.getPort(), model.getUsername(),
+                                                                        model.getPassword(), model.getDescription(),
+                                                                        "", model.getShadow(), 0, ""));
+            }
+
+            loadDevice();
+
+            EventManager::getInstance().fireRefreshLibraryEvent();
+        }
+    }
+}
+
+void SettingsDialog::showImportTriCasterDeviceDialog()
+{
+    QString path("./TriCaster.xml");
+
+    QString s = QDir::currentPath();
+    QFile servers(path);
+    if (!servers.exists())
+        path = QFileDialog::getOpenFileName(this, "Import TriCaster Servers", "", "TriCaster (*.xml)");
 
     if (!path.isEmpty())
     {

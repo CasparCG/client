@@ -466,17 +466,17 @@
      </column>
      <column>
       <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Username</string>
       </property>
      </column>
      <column>
       <property name="text">
        <string>Password</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Description</string>
       </property>
      </column>
      <column>
@@ -739,6 +739,31 @@
      </property>
      <property name="toolTip">
       <string>Import CasparCG Servers</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonImportTriCasterDevice">
+     <property name="geometry">
+      <rect>
+       <x>612</x>
+       <y>633</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Import TriCaster Servers</string>
      </property>
     </widget>
    </widget>
@@ -3377,12 +3402,28 @@
    <slot>showImportDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>670</x>
-     <y>696</y>
+     <x>655</x>
+     <y>353</y>
     </hint>
     <hint type="destinationlabel">
      <x>691</x>
      <y>689</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonImportTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showImportTriCasterDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>640</x>
+     <y>675</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>648</y>
     </hint>
    </hints>
   </connection>
@@ -3423,5 +3464,6 @@
   <slot>removeTriCasterDevice()</slot>
   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>showImportDeviceDialog()</slot>
+  <slot>showImportTriCasterDeviceDialog()</slot>
  </slots>
 </ui>

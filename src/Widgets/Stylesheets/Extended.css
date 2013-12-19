@@ -46,11 +46,11 @@
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }
-#toolButtonImportDevice
+#toolButtonImportDevice, #toolButtonImportTriCasterDevice
 {
     image: url(:/Graphics/Images/Import.png);
 }
-#toolButtonImportDevice:hover
+#toolButtonImportDevice:hover, #toolButtonImportTriCasterDevice:hover
 {
     image: url(:/Graphics/Images/ImportHover.png);
 }

@@ -29,7 +29,7 @@
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>60</y>
+     <y>86</y>
      <width>302</width>
      <height>20</height>
     </rect>
@@ -42,7 +42,7 @@
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>116</y>
+     <y>64</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -106,7 +106,7 @@
    <property name="geometry">
     <rect>
      <x>302</x>
-     <y>36</y>
+     <y>35</y>
      <width>31</width>
      <height>20</height>
     </rect>
@@ -122,7 +122,7 @@
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>64</y>
+     <y>90</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -138,7 +138,7 @@
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>112</y>
+     <y>60</y>
      <width>302</width>
      <height>20</height>
     </rect>
@@ -167,7 +167,7 @@
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>88</y>
+     <y>114</y>
      <width>71</width>
      <height>20</height>
     </rect>
@@ -183,7 +183,7 @@
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>86</y>
+     <y>112</y>
      <width>302</width>
      <height>20</height>
     </rect>
@@ -277,9 +277,9 @@
   <tabstop>lineEditDeviceName</tabstop>
   <tabstop>lineEditAddress</tabstop>
   <tabstop>lineEditPort</tabstop>
+  <tabstop>lineEditDescription</tabstop>
   <tabstop>lineEditUsername</tabstop>
   <tabstop>lineEditPassword</tabstop>
-  <tabstop>lineEditDescription</tabstop>
   <tabstop>checkBoxShadow</tabstop>
  </tabstops>
  <resources>

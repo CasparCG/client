@@ -104,7 +104,8 @@ HEADERS += \
     Rundown/TriCaster/RundownInputWidget.h \
     TriCasterDeviceDialog.h \
     Inspector/TemplateDataDialog.h \
-    ImportDeviceDialog.h
+    ImportDeviceDialog.h \
+    ImportTriCasterDeviceDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -197,7 +198,8 @@ SOURCES += \
     Rundown/TriCaster/RundownInputWidget.cpp \
     TriCasterDeviceDialog.cpp \
     Inspector/TemplateDataDialog.cpp \
-    ImportDeviceDialog.cpp
+    ImportDeviceDialog.cpp \
+    ImportTriCasterDeviceDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -279,7 +281,8 @@ FORMS += \
     Rundown/TriCaster/RundownInputWidget.ui \
     TriCasterDeviceDialog.ui \
     Inspector/TemplateDataDialog.ui \
-    ImportDeviceDialog.ui
+    ImportDeviceDialog.ui \
+    ImportTriCasterDeviceDialog.ui
 
 RESOURCES += \
     Widgets.qrc \
