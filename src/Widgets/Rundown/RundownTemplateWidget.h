@@ -21,6 +21,8 @@
 #include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
+#include <QtGui/QDragEnterEvent>
+#include <QtGui/QDropEvent>
 
 class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -53,6 +55,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
+        void dragEnterEvent(QDragEnterEvent* event);
+        void dropEvent(QDropEvent* event);
 
     private:
         bool active;

@@ -82,6 +82,11 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddTemplateData))
     {
+        blockAllSignals(true);
+
+        this->treeWidgetTemplateData->clear();
+        this->fieldCounter = 0;
+
         AddTemplateDataEvent* addTemplateDataEvent = dynamic_cast<AddTemplateDataEvent*>(event);
 
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
@@ -94,6 +99,10 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
         this->checkBoxUseStoredData->setChecked(addTemplateDataEvent->getStoredData());
 
         this->fieldCounter++;
+
+        blockAllSignals(false);
+
+        return true;
     }
 
     return QObject::eventFilter(target, event);

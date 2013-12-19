@@ -2,10 +2,11 @@
 
 #include "Global.h"
 
-#include "Animations/ActiveAnimation.h"
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
+#include "Animations/ActiveAnimation.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
@@ -24,6 +25,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
       invokeControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
+    setAcceptDrops(true);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
@@ -127,6 +129,28 @@ bool RundownTemplateWidget::eventFilter(QObject* target, QEvent* event)
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void RundownTemplateWidget::dragEnterEvent(QDragEnterEvent* event)
+{
+    if (!this->active)
+        return;
+
+    if (event->mimeData()->hasFormat("application/library-dataitem"))
+        event->acceptProposedAction();
+}
+
+void RundownTemplateWidget::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat("application/library-dataitem"))
+    {
+        QString dndData = QString::fromUtf8(event->mimeData()->data("application/library-dataitem"));
+        if (dndData.startsWith("<treeWidgetData>"))
+        {
+            QStringList dataSplit = dndData.split(",");
+            EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
+        }
+    }
 }
 
 AbstractRundownWidget* RundownTemplateWidget::clone()
