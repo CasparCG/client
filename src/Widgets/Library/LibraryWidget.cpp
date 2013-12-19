@@ -389,8 +389,7 @@ void LibraryWidget::setupUiMenu()
     this->contextMenu->addAction("Add item");
 
     this->contextMenuData = new QMenu(this);
-    this->contextMenuData->addAction("Add template data");
-    this->contextMenuData->addAction("Add template data as stored data");
+    this->contextMenuData->addAction("Add stored data");
 
     this->contextMenuImage = new QMenu(this);
     this->contextMenuImage->addAction("Add image");
@@ -738,12 +737,7 @@ void LibraryWidget::contextMenuImageTriggered(QAction* action)
 
 void LibraryWidget::contextMenuDataTriggered(QAction* action)
 {
-    if (action->text() == "Add template data")
-    {
-        foreach (QTreeWidgetItem* item, this->treeWidgetData->selectedItems())
-            EventManager::getInstance().fireAddTemplateDataEvent(item->text(0), false);
-    }
-    else if (action->text() == "Add template data as stored data")
+    if (action->text() == "Add stored data")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetData->selectedItems())
             EventManager::getInstance().fireAddTemplateDataEvent(item->text(0), true);
@@ -804,6 +798,8 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
         EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(current->text(1).toInt(), current->text(2), current->text(0),
                                                                          current->text(3), current->text(4), current->text(5).toInt(),
                                                                          current->text(6)));
+    else if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
+        EventManager::getInstance().fireAddTemplateDataEvent(current->text(0), true);
     else if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
         EventManager::getInstance().fireAddPresetItemEvent(current->text(2));
 }
