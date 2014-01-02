@@ -79,13 +79,12 @@ void NTFCDevice::writeMessage(const QString& message)
 {
     if (this->connected)
     {
+        QString destination = "UI|shortcuts:response";
 
-        QString destination = QString("UI|shortcuts:response");
         const ushort* destinationData = destination.utf16();
-
         const ushort* messageData = message.utf16();
 
-        const int destinationSize = (destination.length() + 1) * sizeof(ushort);
+        const int destinationDataSize = (destination.length() + 1) * sizeof(ushort);
         const int messageDataSize = (message.length() + 1) * sizeof(ushort);
 
         // Setup the transission header.
@@ -94,18 +93,10 @@ void NTFCDevice::writeMessage(const QString& message)
         // Setup the message header.
         const MessageHeader messageHeader = { 2, messageDataSize };
 
-        std::vector<char> data;
-        data.insert(data.end(), (char*)&tcpMessageHeader, (char*)&tcpMessageHeader + sizeof(tcpMessageHeader));
-        data.insert(data.end(), (char*)destinationData, (char*)destinationData + destinationSize);
-        data.insert(data.end(), (char*)&messageHeader, (char*)&messageHeader + sizeof(messageHeader));
-        data.insert(data.end(), (char*)messageData, (char*)messageData + messageDataSize);
-
-        char* ptr = data.data();
-
-        this->socket->write((char*)&tcpMessageHeader, sizeof(tcpMessageHeader)); // Send tcp header.
-        this->socket->write((char*)destinationData, destinationSize);        // Send destination.
-        this->socket->write((char*)&messageHeader, sizeof(messageHeader));       // Send message header.
-        this->socket->write((char*)messageData, messageDataSize);        // Send message.
+        this->socket->write((char*)&tcpMessageHeader, sizeof(tcpMessageHeader));    // Send tcp header.
+        this->socket->write((char*)destinationData, destinationDataSize);               // Send destination.
+        this->socket->write((char*)&messageHeader, sizeof(messageHeader));          // Send message header.
+        this->socket->write((char*)messageData, messageDataSize);                   // Send message.
         this->socket->flush();
     }
 }
