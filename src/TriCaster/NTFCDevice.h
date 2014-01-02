@@ -42,17 +42,17 @@ class TRICASTER_EXPORT NTFCDevice : public QObject
     private:
         struct TcpMessageHeader
         {
-            unsigned int versionNo          : 32;	// The current tcp ip transmission version. This must be 1.
-            unsigned int messageType        : 32;	// The message type, this must currently be 0 for send.
-            unsigned int destinationSize    : 32;	// The FC3 destination name in bytes.
-            unsigned int messageSize        : 32;	// The actual transmission size in bytes.
+            uint32_t versionNo;         // The current tcp ip transmission version. This must be 1.
+            uint32_t messageType;		// The message type, this must currently be 0 for send.
+            uint32_t destinationSize;	// The FC3 destination name in bytes.
+            uint32_t messageSize;		// The actual transmission size in bytes.
         };
 
         struct MessageHeader
         {
-            unsigned int type               : 32;	// For XML messages, this must be 2.
-            unsigned int size               : 32;	// The actual raw data size in bytes.
-            unsigned char reserved[40]      ;		// Internal data members.
+            uint32_t type;				// For XML messages, this must be 2.
+            uint32_t size;				// The actual raw data size in bytes.
+            uint32_t reserved[10];		// Internal data members.
         };
 
         int port;
