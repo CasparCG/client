@@ -88,13 +88,13 @@ void NTFCDevice::writeMessage(const QString& message)
         const int messageDataSize = (message.length() + 1) * sizeof(ushort);
 
         // Setup the transission header.
-        const TcpMessageHeader tcpMessageHeader = { 1, 0, destinationSize, sizeof(MessageHeader) + messageDataSize };
+        const TcpMessageHeader tcpMessageHeader = { 1, 0, destinationDataSize, sizeof(MessageHeader) + messageDataSize };
 
         // Setup the message header.
         const MessageHeader messageHeader = { 2, messageDataSize };
 
         this->socket->write((char*)&tcpMessageHeader, sizeof(tcpMessageHeader));    // Send tcp header.
-        this->socket->write((char*)destinationData, destinationDataSize);               // Send destination.
+        this->socket->write((char*)destinationData, destinationDataSize);           // Send destination.
         this->socket->write((char*)&messageHeader, sizeof(messageHeader));          // Send message header.
         this->socket->write((char*)messageData, messageDataSize);                   // Send message.
         this->socket->flush();
