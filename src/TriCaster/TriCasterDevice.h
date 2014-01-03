@@ -17,6 +17,8 @@ class TRICASTER_EXPORT TriCasterDevice : public NTFCDevice
         void selectInput(const QString& switcher, const QString& input);
         void selectPreset(const QString& source, const QString& preset);
 
+        void selectNetworkSource(const QString& target, const QString& source);
+
         Q_SIGNAL void connectionStateChanged(TriCasterDevice&);
         Q_SIGNAL void responseChanged(const QString&, TriCasterDevice&);
 

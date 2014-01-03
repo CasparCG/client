@@ -353,6 +353,15 @@ void LibraryWidget::setupTools()
     widgetTriCasterInput->setText(4, Rundown::INPUT);
     widgetTriCasterInput->setText(5, "0");
 
+    QTreeWidgetItem* widgetTriCasterSource = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterSource->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterSource->setText(0, "Select Network Source");
+    widgetTriCasterSource->setText(1, "0");
+    widgetTriCasterSource->setText(2, "Select Network Source");
+    widgetTriCasterSource->setText(3, "");
+    widgetTriCasterSource->setText(4, Rundown::NETSOURCE);
+    widgetTriCasterSource->setText(5, "0");
+
     QTreeWidgetItem* widgetTriCasterPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterPreset->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
     widgetTriCasterPreset->setText(0, "Select Preset");

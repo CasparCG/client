@@ -26,6 +26,7 @@
 #include "Models/TriCaster/TriCasterSourceModel.h"
 #include "Models/TriCaster/TriCasterSwitcherModel.h"
 #include "Models/TriCaster/TriCasterDeviceModel.h"
+#include "Models/TriCaster/TriCasterNetworkTargetModel.h"
 
 #include <QtCore/QMutex>
 #include <QtCore/QObject>
@@ -66,6 +67,7 @@ class CORE_EXPORT DatabaseManager
         QList<TriCasterSourceModel> getTriCasterSource();
         QList<TriCasterSwitcherModel> getTriCasterSwitcher();
         QList<TriCasterDeviceModel> getTriCasterDevice();
+        QList<TriCasterNetworkTargetModel> getTriCasterNetworkTarget();
         TriCasterDeviceModel getTriCasterDeviceByName(const QString& name);
         TriCasterDeviceModel getTriCasterDeviceByAddress(const QString& address);
         void insertTriCasterDevice(const TriCasterDeviceModel& model);

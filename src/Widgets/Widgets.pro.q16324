@@ -106,8 +106,7 @@ HEADERS += \
     Inspector/TemplateDataDialog.h \
     ImportDeviceDialog.h \
     ImportTriCasterDeviceDialog.h \
-    Rundown/TriCaster/RundownNetworkSourceWidget.h \
-    Inspector/TriCaster/InspectorNetworkSourceWidget.h
+    Rundown/TriCaster/RundownNetworkSourceWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -202,8 +201,7 @@ SOURCES += \
     Inspector/TemplateDataDialog.cpp \
     ImportDeviceDialog.cpp \
     ImportTriCasterDeviceDialog.cpp \
-    Rundown/TriCaster/RundownNetworkSourceWidget.cpp \
-    Inspector/TriCaster/InspectorNetworkSourceWidget.cpp
+    Rundown/TriCaster/RundownNetworkSourceWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -286,9 +284,7 @@ FORMS += \
     TriCasterDeviceDialog.ui \
     Inspector/TemplateDataDialog.ui \
     ImportDeviceDialog.ui \
-    ImportTriCasterDeviceDialog.ui \
-    Rundown/TriCaster/RundownNetworkSourceWidget.ui \
-    Inspector/TriCaster/InspectorNetworkSourceWidget.ui
+    ImportTriCasterDeviceDialog.ui
 
 RESOURCES += \
     Widgets.qrc \

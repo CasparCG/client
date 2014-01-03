@@ -235,6 +235,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
     else if (type ==  Rundown::TAKE)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
+    else if (type ==  Rundown::NETSOURCE)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)

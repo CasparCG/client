@@ -130,6 +130,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTriCaster->setTitle("TriCaster");
     //this->contextMenuTriCaster->setIcon(QIcon(":/Graphics/Images/TriCaster.png"));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Input", this, SLOT(addSelectInputItem()));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Network Source", this, SLOT(addSelectNetworkSourceItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"), "Select Preset", this, SLOT(addSelectPresetItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addTriggerAutoItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"), "Trigger Take", this, SLOT(addTriggerTakeItem()));
@@ -1249,6 +1250,11 @@ void RundownTreeWidget::addSelectInputItem()
 void RundownTreeWidget::addSelectPresetItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PRESET);
+}
+
+void RundownTreeWidget::addSelectNetworkSourceItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::NETSOURCE);
 }
 
 void RundownTreeWidget::addGridItem()

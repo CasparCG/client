@@ -31,6 +31,11 @@ void TriCasterDevice::selectInput(const QString& switcher, const QString& input)
     writeMessage(QString("<shortcuts><shortcut name=\"switcher_%1_named_input\" value=\"%2\" /></shortcuts>").arg(switcher).arg(input));
 }
 
+void TriCasterDevice::selectNetworkSource(const QString& target, const QString& source)
+{
+    writeMessage(QString("<shortcuts><shortcut name=\"%1_source\" value=\"%2\" /></shortcuts>").arg(target).arg(source));
+}
+
 void TriCasterDevice::selectPreset(const QString& source, const QString& preset)
 {
     writeMessage(QString("<shortcuts><shortcut name=\"%1_select_preset\" value=\"%2\" /></shortcuts>").arg(source).arg(preset));

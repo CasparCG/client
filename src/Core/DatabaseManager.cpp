@@ -52,6 +52,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE TriCasterPreset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterSource (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE TriCasterNetworkTarget (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
 
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Normal')");
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Lighten')");
@@ -246,6 +247,9 @@ void DatabaseManager::initialize()
 
     sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Program', 'pgm')");
     sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Preview', 'prev')");
+
+    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value) VALUES('Net 1', 'net')");
+    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value) VALUES('Net 2', 'net2')");
 
     sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
@@ -666,6 +670,23 @@ QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
     while (sql.next())
         models.push_back(TriCasterDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
                                               sql.value(3).toInt(), sql.value(4).toString()));
+
+    return models;
+}
+
+QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT nt.Id, nt.Name, nt.Value FROM TriCasterNetworkTarget nt");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterNetworkTargetModel> models;
+    while (sql.next())
+        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }
