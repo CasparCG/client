@@ -19,6 +19,8 @@ class TRICASTER_EXPORT TriCasterDevice : public NTFCDevice
 
         void selectNetworkSource(const QString& target, const QString& source);
 
+        void playMacro(const QString& name);
+
         Q_SIGNAL void connectionStateChanged(TriCasterDevice&);
         Q_SIGNAL void responseChanged(const QString&, TriCasterDevice&);
 

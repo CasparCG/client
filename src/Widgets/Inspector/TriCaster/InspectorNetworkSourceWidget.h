@@ -25,7 +25,7 @@ class WIDGETS_EXPORT InspectorNetworkSourceWidget : public QWidget, Ui::Inspecto
         LibraryModel* model;
         NetworkSourceCommand* command;
 
-        void loadTriCasterNetworkTarget();;
+        void loadTriCasterNetworkTarget();
         void blockAllSignals(bool block);
 
         Q_SLOT void targetChanged(int);

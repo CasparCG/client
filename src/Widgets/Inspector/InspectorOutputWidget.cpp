@@ -33,6 +33,7 @@
 #include "Commands/TriCaster/PresetCommand.h"
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/NetworkSourceCommand.h"
+#include "Commands/TriCaster/MacroCommand.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
@@ -234,7 +235,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                      dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand()))
+                     dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->comboBoxDevice->setVisible(false);
                 this->comboBoxTriCasterDevice->setVisible(true);

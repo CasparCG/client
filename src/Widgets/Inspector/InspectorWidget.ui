@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>609</height>
+    <height>626</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>548</height>
+        <height>565</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -85,7 +85,7 @@
             <x>0</x>
             <y>0</y>
             <width>287</width>
-            <height>546</height>
+            <height>563</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -856,6 +856,29 @@
                </brush>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>Macro</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>55</red>
+                 <green>55</green>
+                 <blue>55</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -992,11 +1015,11 @@
    <slot>disableCommandClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
-     <y>507</y>
+     <x>32</x>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-2</x>
+     <x>0</x>
      <y>502</y>
     </hint>
    </hints>

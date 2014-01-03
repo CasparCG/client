@@ -36,6 +36,11 @@ void TriCasterDevice::selectNetworkSource(const QString& target, const QString& 
     writeMessage(QString("<shortcuts><shortcut name=\"%1_source\" value=\"%2\" /></shortcuts>").arg(target).arg(source));
 }
 
+void TriCasterDevice::playMacro(const QString& name)
+{
+    writeMessage(QString("<shortcuts><shortcut name=\"play_macro_byname\" value=\"%1\" /></shortcuts>").arg(name));
+}
+
 void TriCasterDevice::selectPreset(const QString& source, const QString& preset)
 {
     writeMessage(QString("<shortcuts><shortcut name=\"%1_select_preset\" value=\"%2\" /></shortcuts>").arg(source).arg(preset));

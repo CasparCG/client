@@ -2,7 +2,7 @@
 
 #include "../../Shared.h"
 #include "../AbstractRundownWidget.h"
-#include "ui_RundownPresetWidget.h"
+#include "ui_RundownMacroWidget.h"
 
 #include "Global.h"
 
@@ -14,7 +14,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/TriCaster/PresetCommand.h"
+#include "Commands/TriCaster/MacroCommand.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -22,13 +22,13 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownMacroWidget : public QWidget, Ui::RundownMacroWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownPresetWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                     bool active = false, bool inGroup = false, bool compactView = false);
+        explicit RundownMacroWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                    bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -60,7 +60,7 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
         bool compactView;
         QString color;
         LibraryModel model;
-        PresetCommand command;
+        MacroCommand command;
         ActiveAnimation* animation;
 
         OscSubscription* playControlSubscription;

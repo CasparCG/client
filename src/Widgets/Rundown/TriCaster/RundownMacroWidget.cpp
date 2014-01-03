@@ -1,4 +1,4 @@
-#include "RundownAutoWidget.h"
+#include "RundownMacroWidget.h"
 
 #include "Global.h"
 
@@ -15,8 +15,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                     bool inGroup, bool compactView)
+RundownMacroWidget::RundownMacroWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                       bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
 {
@@ -58,7 +58,7 @@ RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent,
     qApp->installEventFilter(this);
 }
 
-bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownMacroWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::Preview))
     {
@@ -117,23 +117,21 @@ bool RundownAutoWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownAutoWidget::clone()
+AbstractRundownWidget* RundownMacroWidget::clone()
 {
-    RundownAutoWidget* widget = new RundownAutoWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                      this->inGroup, this->compactView);
+    RundownMacroWidget* widget = new RundownMacroWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                        this->inGroup, this->compactView);
 
-    AutoCommand* command = dynamic_cast<AutoCommand*>(widget->getCommand());
+    MacroCommand* command = dynamic_cast<MacroCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
-    command->setStep(this->command.getStep());
-    command->setSpeed(this->command.getSpeed());
-    command->setTransition(this->command.getTransition());
+    command->setName(this->command.getName());
 
     return widget;
 }
 
-void RundownAutoWidget::setCompactView(bool compactView)
+void RundownMacroWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -151,37 +149,37 @@ void RundownAutoWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownAutoWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownMacroWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAutoWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownMacroWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownAutoWidget::isGroup() const
+bool RundownMacroWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownAutoWidget::isInGroup() const
+bool RundownMacroWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownAutoWidget::getCommand()
+AbstractCommand* RundownMacroWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownAutoWidget::getLibraryModel()
+LibraryModel* RundownMacroWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownAutoWidget::setActive(bool active)
+void RundownMacroWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -193,19 +191,19 @@ void RundownAutoWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownAutoWidget::setInGroup(bool inGroup)
+void RundownMacroWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-void RundownAutoWidget::setColor(const QString& color)
+void RundownMacroWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-void RundownAutoWidget::checkEmptyDevice()
+void RundownMacroWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: black;");
@@ -213,7 +211,7 @@ void RundownAutoWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-bool RundownAutoWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownMacroWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {       
@@ -227,22 +225,22 @@ bool RundownAutoWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownAutoWidget::executePlay()
+void RundownMacroWidget::executePlay()
 {
     foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
     {
         const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
         if (device != NULL && device->isConnected())
-            device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
+            device->playMacro(this->command.getName());
     }
 }
 
-void RundownAutoWidget::delayChanged(int delay)
+void RundownMacroWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownAutoWidget::checkGpiConnection()
+void RundownMacroWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -252,7 +250,7 @@ void RundownAutoWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownAutoWidget::checkDeviceConnection()
+void RundownMacroWidget::checkDeviceConnection()
 {
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -261,7 +259,7 @@ void RundownAutoWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownAutoWidget::configureOscSubscriptions()
+void RundownMacroWidget::configureOscSubscriptions()
 {
     if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
         return;
@@ -285,22 +283,22 @@ void RundownAutoWidget::configureOscSubscriptions()
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownAutoWidget::allowGpiChanged(bool allowGpi)
+void RundownMacroWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownAutoWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownMacroWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }
 
-void RundownAutoWidget::deviceConnectionStateChanged(TriCasterDevice& device)
+void RundownMacroWidget::deviceConnectionStateChanged(TriCasterDevice& device)
 {
     checkDeviceConnection();
 }
 
-void RundownAutoWidget::deviceAdded(TriCasterDevice& device)
+void RundownMacroWidget::deviceAdded(TriCasterDevice& device)
 {
     if (TriCasterDeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
@@ -308,13 +306,13 @@ void RundownAutoWidget::deviceAdded(TriCasterDevice& device)
     checkDeviceConnection();
 }
 
-void RundownAutoWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownMacroWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownAutoWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownMacroWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Update);

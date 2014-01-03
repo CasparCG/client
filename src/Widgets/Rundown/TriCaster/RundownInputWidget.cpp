@@ -3,6 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "DeviceManager.h"
 #include "TriCasterDeviceManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -52,6 +53,8 @@ RundownInputWidget::RundownInputWidget(const LibraryModel& model, QWidget* paren
     checkGpiConnection();
     checkDeviceConnection();
 
+    configureOscSubscriptions();
+
     qApp->installEventFilter(this);
 }
 
@@ -77,6 +80,8 @@ bool RundownInputWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
+
+        configureOscSubscriptions();
 
         return true;
     }
@@ -120,6 +125,7 @@ AbstractRundownWidget* RundownInputWidget::clone()
     InputCommand* command = dynamic_cast<InputCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
+    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setSwitcher(this->command.getSwitcher());
     command->setInput(this->command.getInput());
 
@@ -254,6 +260,30 @@ void RundownInputWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
+void RundownInputWidget::configureOscSubscriptions()
+{
+    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+        return;
+
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
 void RundownInputWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
@@ -275,4 +305,16 @@ void RundownInputWidget::deviceAdded(TriCasterDevice& device)
         QObject::connect(&device, SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
 
     checkDeviceConnection();
+}
+
+void RundownInputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownInputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering())
+        executeCommand(Playout::PlayoutType::Update);
 }

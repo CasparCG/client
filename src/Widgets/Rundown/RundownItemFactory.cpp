@@ -32,6 +32,7 @@
 #include "TriCaster/RundownAutoWidget.h"
 #include "TriCaster/RundownPresetWidget.h"
 #include "TriCaster/RundownNetworkSourceWidget.h"
+#include "TriCaster/RundownMacroWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -73,6 +74,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::TAKE) return new RundownTakeWidget(model, this);
     else if (model.getType() == Rundown::AUTO) return new RundownAutoWidget(model, this);
     else if (model.getType() == Rundown::NETSOURCE) return new RundownNetworkSourceWidget(model, this);
+    else if (model.getType() == Rundown::MACRO) return new RundownMacroWidget(model, this);
 
     return NULL;
 }

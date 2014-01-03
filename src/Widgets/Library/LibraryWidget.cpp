@@ -344,6 +344,15 @@ void LibraryWidget::setupTools()
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");
 
+    QTreeWidgetItem* widgetTriCasterMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetTriCasterMacro->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
+    widgetTriCasterMacro->setText(0, "Play Macro");
+    widgetTriCasterMacro->setText(1, "0");
+    widgetTriCasterMacro->setText(2, "Play Macro");
+    widgetTriCasterMacro->setText(3, "");
+    widgetTriCasterMacro->setText(4, Rundown::MACRO);
+    widgetTriCasterMacro->setText(5, "0");
+
     QTreeWidgetItem* widgetTriCasterInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterInput->setIcon(0, QIcon(":/Graphics/Images/MixerSmall.png"));
     widgetTriCasterInput->setText(0, "Select Input");

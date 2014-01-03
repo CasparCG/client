@@ -10,6 +10,7 @@
 
 #include "GpiDevice.h"
 
+#include "OscSubscription.h"
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
@@ -62,11 +63,15 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         InputCommand command;
         ActiveAnimation* animation;
 
+        OscSubscription* playControlSubscription;
+        OscSubscription* updateControlSubscription;
+
         QTimer executeTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
+        void configureOscSubscriptions();
 
         Q_SLOT void executePlay();
         Q_SLOT void delayChanged(int);
@@ -74,4 +79,6 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(TriCasterDevice&);
         Q_SLOT void deviceAdded(TriCasterDevice&);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

@@ -71,6 +71,7 @@ namespace TriCaster
     static const QString DEFAULT_SWITCHER = "prev";
     static const QString DEFAULT_NETWORK_SOURCE = "";
     static const QString DEFAULT_NETWORK_TARGET = "net";
+    static const QString DEFAULT_MACRO = "";
 }
 
 namespace Osc
@@ -347,6 +348,7 @@ namespace Rundown
     static const QString INPUT = "INPUT";
     static const QString PRESET = "PRESET";
     static const QString NETSOURCE = "NETSOURCE";
+    static const QString MACRO = "MACRO";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

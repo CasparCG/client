@@ -31,6 +31,7 @@
 #include "Inspector/TriCaster/InspectorAutoWidget.h"
 #include "Inspector/TriCaster/InspectorPresetWidget.h"
 #include "Inspector/TriCaster/InspectorNetworkSourceWidget.h"
+#include "Inspector/TriCaster/InspectorMacroWidget.h"
 
 #include "Global.h"
 
@@ -62,6 +63,7 @@
 #include "Commands/TriCaster/AutoCommand.h"
 #include "Commands/TriCaster/PresetCommand.h"
 #include "Commands/TriCaster/NetworkSourceCommand.h"
+#include "Commands/TriCaster/MacroCommand.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 
@@ -103,6 +105,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(29)), 0, new InspectorAutoWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(30)), 0, new InspectorPresetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(31)), 0, new InspectorNetworkSourceWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(32)), 0, new InspectorMacroWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -137,6 +140,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
 
     qApp->installEventFilter(this);
 }
@@ -178,6 +182,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
@@ -212,6 +217,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
 
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
@@ -367,6 +373,11 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
             this->treeWidgetInspector->topLevelItem(31)->setHidden(false);
+        }
+        else if (dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+            this->treeWidgetInspector->topLevelItem(32)->setHidden(false);
         }
     }
 
