@@ -26,23 +26,23 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineOsc, #lineCasparCG, #lineTriCaster, #lineGpiDeviceSetup, #lineGpiInputsSetup, #lineGpiOutputsSetup
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineOsc, #lineCasparCG, #lineTriCaster, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
 {
     background-color: rgba(42, 42, 42, 255);
 }
-#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddTemplateData
+#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
 {
     image: url(:/Graphics/Images/Add.png);
 }
-#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddTemplateData:hover
+#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
 }
-#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveTemplateData
+#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
 {
     image: url(:/Graphics/Images/Remove.png);
 }
-#toolButtonRemoveDevice:hover, toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveTemplateData:hover
+#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }

@@ -120,7 +120,8 @@ HEADERS += \
     Events/Rundown/ExecuteRundownItemEvent.h \
     Commands/TriCaster/NetworkSourceCommand.h \
     Models/TriCaster/TriCasterNetworkTargetModel.h \
-    Commands/TriCaster/MacroCommand.h
+    Commands/TriCaster/MacroCommand.h \
+    Models/OscOutputModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -230,7 +231,8 @@ SOURCES += \
     Events/Rundown/ExecuteRundownItemEvent.cpp \
     Commands/TriCaster/NetworkSourceCommand.cpp \
     Models/TriCaster/TriCasterNetworkTargetModel.cpp \
-    Commands/TriCaster/MacroCommand.cpp
+    Commands/TriCaster/MacroCommand.cpp \
+    Models/OscOutputModel.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

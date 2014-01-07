@@ -53,6 +53,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE TriCasterSource (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterNetworkTarget (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE OscOutput (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
 
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Normal')");
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Lighten')");
@@ -534,6 +535,23 @@ QList<TweenModel> DatabaseManager::getTween()
     QList<TweenModel> models;
     while (sql.next())
         models.push_back(TweenModel(sql.value(0).toInt(), sql.value(1).toString()));
+
+    return models;
+}
+
+QList<OscOutputModel> DatabaseManager::getOscOutput()
+{
+    QString query("SELECT o.Id, o.Name, o.Address, o.Port, o.Description FROM OscOutput o "
+                  "ORDER BY o.Name");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<OscOutputModel> models;
+    while (sql.next())
+        models.push_back(OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
+                                        sql.value(3).toInt(), sql.value(4).toString()));
 
     return models;
 }

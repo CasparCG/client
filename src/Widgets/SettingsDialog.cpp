@@ -58,6 +58,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     loadDevice();
     loadTriCasterDevice();
     loadGpi();
+    loadOscOutput();
 }
 
 void SettingsDialog::loadDevice()
@@ -165,6 +166,29 @@ void SettingsDialog::loadGpi()
     this->comboBoxGpiBaudRate->setCurrentIndex(comboBoxGpiBaudRate->findText(QString("%1").arg(baudRate)));
 }
 
+void SettingsDialog::loadOscOutput()
+{
+    this->treeWidgetOscOutput->clear();
+    this->treeWidgetOscOutput->headerItem()->setText(1, "");
+    this->treeWidgetOscOutput->setColumnHidden(0, true);
+    this->treeWidgetOscOutput->setColumnWidth(1, 25);
+    this->treeWidgetOscOutput->setColumnWidth(4, 50);
+
+    QList<OscOutputModel> models = DatabaseManager::getInstance().getOscOutput();
+    foreach (OscOutputModel model, models)
+    {
+        QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetOscOutput);
+        treeItem->setText(0, QString("%1").arg(model.getId()));
+        treeItem->setIcon(1, QIcon(":/Graphics/Images/ServerSmall.png"));
+        treeItem->setText(2, model.getName());
+        treeItem->setText(3, model.getAddress());
+        treeItem->setText(4, QString("%1").arg(model.getPort()));
+        treeItem->setText(5, model.getDescription());
+    }
+
+    checkEmptyOscOutputList();
+}
+
 void SettingsDialog::checkEmptyDeviceList()
 {
     if (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0)
@@ -182,6 +206,14 @@ void SettingsDialog::checkEmptyTriCasterDeviceList()
         this->treeWidgetTriCasterDevice->setStyleSheet("border-color: red;");
     else
         this->treeWidgetTriCasterDevice->setStyleSheet("");
+}
+
+void SettingsDialog::checkEmptyOscOutputList()
+{
+    if (this->treeWidgetOscOutput->invisibleRootItem()->childCount() == 0)
+        this->treeWidgetOscOutput->setStyleSheet("border-color: red;");
+    else
+        this->treeWidgetOscOutput->setStyleSheet("");
 }
 
 void SettingsDialog::showImportDeviceDialog()
@@ -337,6 +369,23 @@ void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, 
 
         EventManager::getInstance().fireRefreshLibraryEvent();
     }
+}
+
+void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int index)
+{
+    /*TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(current->text(3));
+
+    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
+    dialog->setDeviceModel(model);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().updateTriCasterDevice(TriCasterDeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
+                                                                                  dialog->getPort().toInt(), dialog->getDescription()));
+
+        loadTriCasterDevice();
+
+        EventManager::getInstance().fireRefreshLibraryEvent();
+    }*/
 }
 
 void SettingsDialog::startFullscreenChanged(int state)

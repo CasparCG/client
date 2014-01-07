@@ -343,70 +343,6 @@
       <string>Disable in and out points in video progress</string>
      </property>
     </widget>
-    <widget class="Line" name="lineOsc">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>414</y>
-       <width>555</width>
-       <height>1</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelOsc">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>406</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>OSC</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelOscPort">
-     <property name="geometry">
-      <rect>
-       <x>84</x>
-       <y>438</y>
-       <width>51</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Port:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditOscPort">
-     <property name="geometry">
-      <rect>
-       <x>144</x>
-       <y>436</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="placeholderText">
-      <string>6250</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
@@ -771,7 +707,7 @@
     <attribute name="title">
      <string>GPI</string>
     </attribute>
-    <widget class="QLabel" name="labelGpiInputs">
+    <widget class="QLabel" name="labelGpiInput">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -781,13 +717,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>GPI Inputs</string>
+      <string>GPI Input</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="Line" name="lineGpiInputsSetup">
+    <widget class="Line" name="lineGpiInput">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -1477,7 +1413,7 @@
       </property>
      </item>
     </widget>
-    <widget class="Line" name="lineGpiOutputsSetup">
+    <widget class="Line" name="lineGpiOutput">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -1490,7 +1426,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="labelGpiOutputsSetup">
+    <widget class="QLabel" name="labelGpiOutput">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1500,7 +1436,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>GPI Outputs</string>
+      <string>GPI Output</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2050,7 +1986,7 @@
       </property>
      </item>
     </widget>
-    <widget class="QLabel" name="labelGpiDeviceSetup">
+    <widget class="QLabel" name="labelGpiDevice">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -2066,7 +2002,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="Line" name="lineGpiDeviceSetup">
+    <widget class="Line" name="lineGpiDevice">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -2535,6 +2471,212 @@
      </property>
      <property name="text">
       <string>COM1</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabOsc">
+    <attribute name="title">
+     <string>Osc</string>
+    </attribute>
+    <widget class="QLineEdit" name="lineEditOscPort">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>46</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>6250</string>
+     </property>
+    </widget>
+    <widget class="Line" name="lineOsc">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOsc">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>12</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OSC</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOscPort">
+     <property name="geometry">
+      <rect>
+       <x>72</x>
+       <y>48</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="lineOscOutput">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>98</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOscOutput">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OSC Output</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetOscOutput">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>123</y>
+       <width>535</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Icon</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QToolButton" name="toolButtonAddOscOutput">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>383</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Add OSC Output</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonRemoveOscOutput">
+     <property name="geometry">
+      <rect>
+       <x>149</x>
+       <y>383</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Remove OSC Output</string>
      </property>
     </widget>
    </widget>
@@ -3348,22 +3490,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditOscPort</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>oscPortChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>196</x>
-     <y>482</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>504</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>toolButtonAddTriCasterDevice</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -3443,6 +3569,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditOscPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>234</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>693</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetOscOutput</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -3481,5 +3639,6 @@
   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>showImportDeviceDialog()</slot>
   <slot>showImportTriCasterDeviceDialog()</slot>
+  <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

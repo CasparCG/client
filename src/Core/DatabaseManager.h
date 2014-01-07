@@ -18,6 +18,7 @@
 #include "Models/ThumbnailModel.h"
 #include "Models/FormatModel.h"
 #include "Models/PresetModel.h"
+#include "Models/OscOutputModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 #include "Models/TriCaster/TriCasterAutoSpeedModel.h"
@@ -58,6 +59,8 @@ class CORE_EXPORT DatabaseManager
         QList<DirectionModel> getDirection();
         QList<TransitionModel> getTransition();
         QList<TweenModel> getTween();
+
+        QList<OscOutputModel> getOscOutput();
 
         QList<TriCasterInputModel> getTriCasterInput();
         QList<TriCasterStepModel> getTriCasterStep();
