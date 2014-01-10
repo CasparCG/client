@@ -43,7 +43,6 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void reverseOscTimeChanged(int);
         Q_SLOT void deviceItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void tricasterDeviceItemDoubleClicked(QTreeWidgetItem*, int);
-        Q_SLOT void oscOutputItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void gpi1Changed();
         Q_SLOT void gpi2Changed();
         Q_SLOT void gpi3Changed();
@@ -65,6 +64,9 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void oscPortChanged();
         Q_SLOT void showImportDeviceDialog();
         Q_SLOT void showImportTriCasterDeviceDialog();
+        Q_SLOT void showAddOscOutputDialog();
+        Q_SLOT void removeOscOutput();
+        Q_SLOT void oscOutputItemDoubleClicked(QTreeWidgetItem*, int);
 
         Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType::Type);
 };

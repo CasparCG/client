@@ -2478,7 +2478,7 @@
     <attribute name="title">
      <string>Osc</string>
     </attribute>
-    <widget class="QLineEdit" name="lineEditOscPort">
+    <widget class="QLineEdit" name="lineEditOscInputPort">
      <property name="geometry">
       <rect>
        <x>132</x>
@@ -2497,7 +2497,7 @@
       <string>6250</string>
      </property>
     </widget>
-    <widget class="Line" name="lineOsc">
+    <widget class="Line" name="lineOscInput">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -2510,7 +2510,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="labelOsc">
+    <widget class="QLabel" name="labelOscInput">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -2520,7 +2520,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>OSC</string>
+      <string>OSC Input</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3570,7 +3570,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditOscPort</sender>
+   <sender>lineEditOscInputPort</sender>
    <signal>editingFinished()</signal>
    <receiver>SettingsDialog</receiver>
    <slot>oscPortChanged()</slot>
@@ -3598,6 +3598,38 @@
     <hint type="destinationlabel">
      <x>1</x>
      <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveOscOutput</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeOscOutput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonAddOscOutput</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddOscOutputDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>426</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>517</y>
     </hint>
    </hints>
   </connection>
@@ -3640,5 +3672,7 @@
   <slot>showImportDeviceDialog()</slot>
   <slot>showImportTriCasterDeviceDialog()</slot>
   <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>showAddOscOutputDialog()</slot>
+  <slot>removeOscOutput()</slot>
  </slots>
 </ui>

@@ -109,7 +109,10 @@ HEADERS += \
     Rundown/TriCaster/RundownNetworkSourceWidget.h \
     Inspector/TriCaster/InspectorNetworkSourceWidget.h \
     Rundown/TriCaster/RundownMacroWidget.h \
-    Inspector/TriCaster/InspectorMacroWidget.h
+    Inspector/TriCaster/InspectorMacroWidget.h \
+    OscOutputDialog.h \
+    Rundown/RundownOscOutputWidget.h \
+    Inspector/InspectorOscOutputWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -207,7 +210,10 @@ SOURCES += \
     Rundown/TriCaster/RundownNetworkSourceWidget.cpp \
     Inspector/TriCaster/InspectorNetworkSourceWidget.cpp \
     Rundown/TriCaster/RundownMacroWidget.cpp \
-    Inspector/TriCaster/InspectorMacroWidget.cpp
+    Inspector/TriCaster/InspectorMacroWidget.cpp \
+    OscOutputDialog.cpp \
+    Rundown/RundownOscOutputWidget.cpp \
+    Inspector/InspectorOscOutputWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -294,7 +300,10 @@ FORMS += \
     Rundown/TriCaster/RundownNetworkSourceWidget.ui \
     Inspector/TriCaster/InspectorNetworkSourceWidget.ui \
     Rundown/TriCaster/RundownMacroWidget.ui \
-    Inspector/TriCaster/InspectorMacroWidget.ui
+    Inspector/TriCaster/InspectorMacroWidget.ui \
+    OscOutputDialog.ui \
+    Rundown/RundownOscOutputWidget.ui \
+    Inspector/InspectorOscOutputWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

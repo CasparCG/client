@@ -61,6 +61,11 @@ class CORE_EXPORT DatabaseManager
         QList<TweenModel> getTween();
 
         QList<OscOutputModel> getOscOutput();
+        void insertOscOutput(const OscOutputModel& model);
+        OscOutputModel getOscOutputByName(const QString& name);
+        OscOutputModel getOscOutputByAddress(const QString& address);
+        void updateOscOutput(const OscOutputModel& model);
+        void deleteOscOutput(int id);
 
         QList<TriCasterInputModel> getTriCasterInput();
         QList<TriCasterStepModel> getTriCasterStep();

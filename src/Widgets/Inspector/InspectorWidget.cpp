@@ -26,6 +26,7 @@
 #include "Inspector/InspectorImageWidget.h"
 #include "Inspector/InspectorCustomCommandWidget.h"
 #include "Inspector/InspectorChromaWidget.h"
+#include "Inspector/InspectorOscOutputWidget.h"
 #include "Inspector/TriCaster/InspectorInputWidget.h"
 #include "Inspector/TriCaster/InspectorTakeWidget.h"
 #include "Inspector/TriCaster/InspectorAutoWidget.h"
@@ -58,6 +59,7 @@
 #include "Commands/ImageScrollerCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/CustomCommand.h"
+#include "Commands/OscOutputCommand.h"
 #include "Commands/TriCaster/InputCommand.h"
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/AutoCommand.h"
@@ -106,6 +108,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(30)), 0, new InspectorPresetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(31)), 0, new InspectorNetworkSourceWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(32)), 0, new InspectorMacroWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(33)), 0, new InspectorOscOutputWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -141,6 +144,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
 
     qApp->installEventFilter(this);
 }
@@ -183,6 +187,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
@@ -218,6 +223,7 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
         this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
 
         RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
         if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
@@ -378,6 +384,11 @@ bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
         {
             this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
             this->treeWidgetInspector->topLevelItem(32)->setHidden(false);
+        }
+        else if (dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
+        {
+            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+            this->treeWidgetInspector->topLevelItem(33)->setHidden(false);
         }
     }
 

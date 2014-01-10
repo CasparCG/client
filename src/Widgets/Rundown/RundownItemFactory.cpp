@@ -27,6 +27,7 @@
 #include "RundownImageWidget.h"
 #include "RundownCustomCommandWidget.h"
 #include "RundownChromaWidget.h"
+#include "RundownOscOutputWidget.h"
 #include "TriCaster/RundownInputWidget.h"
 #include "TriCaster/RundownTakeWidget.h"
 #include "TriCaster/RundownAutoWidget.h"
@@ -75,6 +76,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::AUTO) return new RundownAutoWidget(model, this);
     else if (model.getType() == Rundown::NETSOURCE) return new RundownNetworkSourceWidget(model, this);
     else if (model.getType() == Rundown::MACRO) return new RundownMacroWidget(model, this);
+    else if (model.getType() == Rundown::OSCOUTPUT) return new RundownOscOutputWidget(model, this);
 
     return NULL;
 }

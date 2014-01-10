@@ -239,6 +239,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
     else if (type ==  Rundown::MACRO)
         qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::MACRO, 0, "")));
+    else if (type ==  Rundown::OSCOUTPUT)
+        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)

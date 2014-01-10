@@ -121,7 +121,8 @@ HEADERS += \
     Commands/TriCaster/NetworkSourceCommand.h \
     Models/TriCaster/TriCasterNetworkTargetModel.h \
     Commands/TriCaster/MacroCommand.h \
-    Models/OscOutputModel.h
+    Models/OscOutputModel.h \
+    Commands/OscOutputCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -232,7 +233,8 @@ SOURCES += \
     Commands/TriCaster/NetworkSourceCommand.cpp \
     Models/TriCaster/TriCasterNetworkTargetModel.cpp \
     Commands/TriCaster/MacroCommand.cpp \
-    Models/OscOutputModel.cpp
+    Models/OscOutputModel.cpp \
+    Commands/OscOutputCommand.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

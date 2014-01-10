@@ -14,11 +14,13 @@ DEFINES += OSC_LIBRARY
 HEADERS += \
     Shared.h \
     OscThread.h \
-    OscListener.h
+    OscListener.h \
+    OscSender.h
 	
 SOURCES += \
     OscThread.cpp \
-    OscListener.cpp
+    OscListener.cpp \
+    OscSender.cpp
 
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32

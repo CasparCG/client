@@ -1,4 +1,4 @@
-#include "TriCasterDeviceDialog.h"
+#include "OscOutputDialog.h"
 
 #include "DatabaseManager.h"
 
@@ -8,7 +8,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMessageBox>
 
-TriCasterDeviceDialog::TriCasterDeviceDialog(QWidget* parent)
+OscOutputDialog::OscOutputDialog(QWidget* parent)
     : QDialog(parent),
       editMode(false)
 {
@@ -18,11 +18,11 @@ TriCasterDeviceDialog::TriCasterDeviceDialog(QWidget* parent)
     this->lineEditAddress->setStyleSheet("border-color: red;");
 }
 
-void TriCasterDeviceDialog::setDeviceModel(const TriCasterDeviceModel& model)
+void OscOutputDialog::setDeviceModel(const OscOutputModel& model)
 {
     this->editMode = true;
 
-    setWindowTitle("Edit TriCaster Server");
+    setWindowTitle("Edit OSC Output");
 
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());
@@ -30,17 +30,17 @@ void TriCasterDeviceDialog::setDeviceModel(const TriCasterDeviceModel& model)
     this->lineEditDescription->setText(model.getDescription());
 }
 
-const QString TriCasterDeviceDialog::getName() const
+const QString OscOutputDialog::getName() const
 {
     return this->lineEditDeviceName->text();
 }
 
-const QString TriCasterDeviceDialog::getAddress() const
+const QString OscOutputDialog::getAddress() const
 {
     return this->lineEditAddress->text();
 }
 
-const QString TriCasterDeviceDialog::getPort() const
+const QString OscOutputDialog::getPort() const
 {
     if (!this->lineEditPort->text().isEmpty())
         return this->lineEditPort->text();
@@ -48,23 +48,23 @@ const QString TriCasterDeviceDialog::getPort() const
         return this->lineEditPort->placeholderText();
 }
 
-const QString TriCasterDeviceDialog::getDescription() const
+const QString OscOutputDialog::getDescription() const
 {
     return this->lineEditDescription->text();
 }
 
-void TriCasterDeviceDialog::accept()
+void OscOutputDialog::accept()
 {
     if (this->lineEditDeviceName->text().isEmpty() || this->lineEditAddress->text().isEmpty())
         return;
 
     if (!this->editMode)
     {
-        TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByName(this->lineEditDeviceName->text());
+        OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(this->lineEditDeviceName->text());
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
-            box.setWindowTitle("Add TriCaster Device");
+            box.setWindowTitle("Add OSC Output");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The name already exists in the database. Please choose a unique name.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
@@ -78,11 +78,11 @@ void TriCasterDeviceDialog::accept()
             return;
         }
 
-        model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(this->lineEditAddress->text());
+        model = DatabaseManager::getInstance().getOscOutputByAddress(this->lineEditAddress->text());
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
-            box.setWindowTitle("Add TriCaster Device");
+            box.setWindowTitle("Add OSC Output");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The address already exists in the database. Please choose a unique address.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
@@ -100,18 +100,7 @@ void TriCasterDeviceDialog::accept()
     QDialog::accept();
 }
 
-void TriCasterDeviceDialog::testConnection()
-{
-    if (this->lineEditPort->text().isEmpty())
-        this->device = QSharedPointer<TriCasterDevice>(new TriCasterDevice(this->lineEditAddress->text()));
-    else
-        this->device = QSharedPointer<TriCasterDevice>(new TriCasterDevice(this->lineEditAddress->text(), this->lineEditPort->text().toInt()));
-
-    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(connectionStateChanged(TriCasterDevice&)));
-    this->device->connectDevice();
-}
-
-void TriCasterDeviceDialog::nameChanged(QString name)
+void OscOutputDialog::nameChanged(QString name)
 {
     if (this->lineEditDeviceName->text().isEmpty())
         this->lineEditDeviceName->setStyleSheet("border-color: red;");
@@ -119,25 +108,10 @@ void TriCasterDeviceDialog::nameChanged(QString name)
         this->lineEditDeviceName->setStyleSheet("");
 }
 
-void TriCasterDeviceDialog::addressChanged(QString name)
+void OscOutputDialog::addressChanged(QString name)
 {
     if (this->lineEditAddress->text().isEmpty())
         this->lineEditAddress->setStyleSheet("border-color: red;");
     else
         this->lineEditAddress->setStyleSheet("");
-}
-
-void TriCasterDeviceDialog::connectionStateChanged(TriCasterDevice& device)
-{
-    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(connectionStateChanged(TriCasterDevice&)));
-
-    QMessageBox box(this);
-    box.setWindowTitle("Test Connection");
-    box.setText(QString("Successfully connected to TriCaster server: %1:%2").arg(device.getAddress()).arg(device.getPort()));
-    box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
-    box.setStandardButtons(QMessageBox::Ok);
-    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
-    box.exec();
-
-    this->device->disconnectDevice();
 }

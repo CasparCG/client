@@ -28,6 +28,7 @@
 #include "Commands/SolidColorCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Commands/ChromaCommand.h"
+#include "Commands/OscOutputCommand.h"
 #include "Commands/TriCaster/AutoCommand.h"
 #include "Commands/TriCaster/InputCommand.h"
 #include "Commands/TriCaster/PresetCommand.h"
@@ -174,7 +175,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             }
             else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
+                     dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+                     dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->comboBoxDevice->setEnabled(false);
                 this->comboBoxTarget->setEnabled(false);

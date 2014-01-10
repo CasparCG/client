@@ -556,6 +556,88 @@ QList<OscOutputModel> DatabaseManager::getOscOutput()
     return models;
 }
 
+void DatabaseManager::insertOscOutput(const OscOutputModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("INSERT INTO OscOutput (Name, Address, Port, Description) "
+                            "VALUES('%1', '%2', %3, '%4')")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getDescription());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+OscOutputModel DatabaseManager::getOscOutputByName(const QString& name)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT o.Id, o.Name, o.Address, o.Port, o.Description FROM OscOutput o "
+                            "WHERE o.Name = '%1'").arg(name);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
+                          sql.value(3).toInt(), sql.value(4).toString());
+}
+
+OscOutputModel DatabaseManager::getOscOutputByAddress(const QString& address)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT o.Id, o.Name, o.Address, o.Port, o.Description FROM OscOutput o "
+                            "WHERE o.Address = '%1'").arg(address);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
+                          sql.value(3).toInt(), sql.value(4).toString());
+}
+
+void DatabaseManager::updateOscOutput(const OscOutputModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE OscOutput SET Name = '%1', Address = '%2', Port = %3, Description = '%4' WHERE Id = %5")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getDescription()).arg(model.getId());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deleteOscOutput(int id)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("DELETE FROM OscOutput WHERE Id = %1").arg(id);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
 QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
 {
     QMutexLocker locker(&mutex);

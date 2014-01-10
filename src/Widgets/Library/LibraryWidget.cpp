@@ -326,6 +326,15 @@ void LibraryWidget::setupTools()
     widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
     widgetGpiOutput->setText(5, "0");
 
+    QTreeWidgetItem* widgetOscOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetOscOutput->setIcon(0, QIcon(":/Graphics/Images/OscOutputSmall.png"));
+    widgetOscOutput->setText(0, "OSC Output");
+    widgetOscOutput->setText(1, "0");
+    widgetOscOutput->setText(2, "OSC Output");
+    widgetOscOutput->setText(3, "");
+    widgetOscOutput->setText(4, Rundown::OSCOUTPUT);
+    widgetOscOutput->setText(5, "0");
+
     QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
     widgetSolidColor->setText(0, "Solid Color");

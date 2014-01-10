@@ -1,6 +1,7 @@
 #include "SettingsDialog.h"
 #include "DeviceDialog.h"
 #include "TriCasterDeviceDialog.h"
+#include "OscOutputDialog.h"
 #include "ImportDeviceDialog.h"
 
 #include "DatabaseManager.h"
@@ -11,6 +12,7 @@
 #include "Models/GpiModel.h"
 #include "Models/TriCaster/TriCasterDeviceModel.h"
 #include "Models/DeviceModel.h"
+#include "Models/OscOutputModel.h"
 
 #include <QtCore/QTimer>
 
@@ -50,10 +52,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
 
-    this->lineEditOscPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
+    this->lineEditOscInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
     if (!oscPort.isEmpty())
-        this->lineEditOscPort->setText(oscPort);
+        this->lineEditOscInputPort->setText(oscPort);
 
     loadDevice();
     loadTriCasterDevice();
@@ -308,6 +310,20 @@ void SettingsDialog::showAddTriCasterDeviceDialog()
     }
 }
 
+void SettingsDialog::showAddOscOutputDialog()
+{
+    OscOutputDialog* dialog = new OscOutputDialog(this);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        DatabaseManager::getInstance().insertOscOutput(OscOutputModel(0, dialog->getName(), dialog->getAddress(),
+                                                       dialog->getPort().toInt(), dialog->getDescription()));
+
+        loadOscOutput();
+
+        EventManager::getInstance().fireRefreshLibraryEvent();
+    }
+}
+
 void SettingsDialog::removeDevice()
 {
     if (this->treeWidgetDevice->selectedItems().count() == 0)
@@ -330,6 +346,19 @@ void SettingsDialog::removeTriCasterDevice()
     delete this->treeWidgetTriCasterDevice->currentItem();
 
     loadTriCasterDevice();
+
+    EventManager::getInstance().fireRefreshLibraryEvent();
+}
+
+void SettingsDialog::removeOscOutput()
+{
+    if (this->treeWidgetOscOutput->selectedItems().count() == 0)
+        return;
+
+    DatabaseManager::getInstance().deleteOscOutput(this->treeWidgetOscOutput->currentItem()->text(0).toInt());
+    delete this->treeWidgetOscOutput->currentItem();
+
+    loadOscOutput();
 
     EventManager::getInstance().fireRefreshLibraryEvent();
 }
@@ -373,19 +402,19 @@ void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, 
 
 void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
-    /*TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(current->text(3));
+    OscOutputModel model = DatabaseManager::getInstance().getOscOutputByAddress(current->text(3));
 
-    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
+    OscOutputDialog* dialog = new OscOutputDialog(this);
     dialog->setDeviceModel(model);
     if (dialog->exec() == QDialog::Accepted)
     {
-        DatabaseManager::getInstance().updateTriCasterDevice(TriCasterDeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
-                                                                                  dialog->getPort().toInt(), dialog->getDescription()));
+        DatabaseManager::getInstance().updateOscOutput(OscOutputModel(model.getId(), dialog->getName(), dialog->getAddress(),
+                                                                      dialog->getPort().toInt(), dialog->getDescription()));
 
-        loadTriCasterDevice();
+        loadOscOutput();
 
         EventManager::getInstance().fireRefreshLibraryEvent();
-    }*/
+    }
 }
 
 void SettingsDialog::startFullscreenChanged(int state)
@@ -588,7 +617,7 @@ void SettingsDialog::baudRateChanged(QString baudRate)
 
 void SettingsDialog::oscPortChanged()
 {
-    QString oscPort = this->lineEditOscPort->text().trimmed();
+    QString oscPort = this->lineEditOscInputPort->text().trimmed();
     if (oscPort.isEmpty())
         oscPort = Osc::DEFAULT_PORT;
 

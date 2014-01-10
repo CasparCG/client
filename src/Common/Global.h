@@ -77,6 +77,8 @@ namespace TriCaster
 namespace Osc
 {
     static const int DEFAULT_PORT = 6250;
+    static const QString DEFAULT_OUTPUT = "";
+    static const int DEFAULT_OUTPUT_PORT = 7250;
     static const int DEFAULT_PROGRESSBAR_X = 64;
     static const int DEFAULT_PROGRESSBAR_Y = 3;
     static const int DEFAULT_PROGRESSBAR_HEIGHT = 24;
@@ -349,6 +351,7 @@ namespace Rundown
     static const QString PRESET = "PRESET";
     static const QString NETSOURCE = "NETSOURCE";
     static const QString MACRO = "MACRO";
+    static const QString OSCOUTPUT = "OSCOUTPUT";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

@@ -1,7 +1,8 @@
-#include "RundownGpiOutputWidget.h"
+#include "RundownOscOutputWidget.h"
 
 #include "Global.h"
 
+#include "OscDeviceManager.h"
 #include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -12,7 +13,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
+RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
@@ -39,10 +40,8 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
-    QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
 
-    gpiOutputPortChanged(this->command.getGpoPort());
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
@@ -52,7 +51,7 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     qApp->installEventFilter(this);
 }
 
-bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
+bool RundownOscOutputWidget::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
     {
@@ -73,21 +72,23 @@ bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-AbstractRundownWidget* RundownGpiOutputWidget::clone()
+AbstractRundownWidget* RundownOscOutputWidget::clone()
 {
-    RundownGpiOutputWidget* widget = new RundownGpiOutputWidget(this->model, this->parentWidget(), this->color,
+    RundownOscOutputWidget* widget = new RundownOscOutputWidget(this->model, this->parentWidget(), this->color,
                                                                 this->active, this->inGroup, this->compactView);
 
-    GpiOutputCommand* command = dynamic_cast<GpiOutputCommand*>(widget->getCommand());
+    OscOutputCommand* command = dynamic_cast<OscOutputCommand*>(widget->getCommand());
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
-    command->setGpoPort(this->command.getGpoPort());
+    command->setOutput(this->command.getOutput());
+    command->setPath(this->command.getPath());
+    command->setMessage(this->command.getMessage());
 
     return widget;
 }
 
-void RundownGpiOutputWidget::setCompactView(bool compactView)
+void RundownOscOutputWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -105,37 +106,37 @@ void RundownGpiOutputWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownGpiOutputWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownOscOutputWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownGpiOutputWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownOscOutputWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownGpiOutputWidget::isGroup() const
+bool RundownOscOutputWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownGpiOutputWidget::isInGroup() const
+bool RundownOscOutputWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownGpiOutputWidget::getCommand()
+AbstractCommand* RundownOscOutputWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownGpiOutputWidget::getLibraryModel()
+LibraryModel* RundownOscOutputWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownGpiOutputWidget::setActive(bool active)
+void RundownOscOutputWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -147,19 +148,19 @@ void RundownGpiOutputWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownGpiOutputWidget::setInGroup(bool inGroup)
+void RundownOscOutputWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-void RundownGpiOutputWidget::setColor(const QString& color)
+void RundownOscOutputWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
 }
 
-bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
@@ -167,10 +168,10 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
     {
         //if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         //{
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+            //const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            //double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-            this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+            //this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
             this->executeTimer.start();
         //}
     }
@@ -187,27 +188,23 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownGpiOutputWidget::executeStop()
+void RundownOscOutputWidget::executeStop()
 {
     this->executeTimer.stop();
 }
 
-void RundownGpiOutputWidget::executePlay()
+void RundownOscOutputWidget::executePlay()
 {
-    GpiManager::getInstance().getGpiDevice()->trigger(command.getGpoPort());
+    OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(this->command.getOutput());
+    OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
 }
 
-void RundownGpiOutputWidget::delayChanged(int delay)
+void RundownOscOutputWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownGpiOutputWidget::gpiOutputPortChanged(int port)
-{
-    this->labelGpiOutputPort->setText(QString("GPO Port: %1").arg(port + 1));
-}
-
-void RundownGpiOutputWidget::checkGpiConnection()
+void RundownOscOutputWidget::checkGpiConnection()
 {
     labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -217,7 +214,7 @@ void RundownGpiOutputWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownGpiOutputWidget::configureOscSubscriptions()
+void RundownOscOutputWidget::configureOscSubscriptions()
 {
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
@@ -274,48 +271,48 @@ void RundownGpiOutputWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownGpiOutputWidget::allowGpiChanged(bool allowGpi)
+void RundownOscOutputWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownGpiOutputWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownOscOutputWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     this->labelDisconnected->setVisible(!connected);
     checkGpiConnection();
 }
 
-void RundownGpiOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownGpiOutputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownGpiOutputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Update);
 }
 
-void RundownGpiOutputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownGpiOutputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::ClearVideolayer);
 }
 
-void RundownGpiOutputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownOscOutputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering())
         executeCommand(Playout::PlayoutType::ClearChannel);

@@ -121,6 +121,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/OscOutputSmall.png"), "OSC Output", this, SLOT(addOscOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
     this->contextMenuOther->addSeparator();
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
@@ -1220,6 +1221,11 @@ void RundownTreeWidget::addGeometryItem()
 void RundownTreeWidget::addGpiOutputItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GPIOUTPUT);
+}
+
+void RundownTreeWidget::addOscOutputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::OSCOUTPUT);
 }
 
 void RundownTreeWidget::addFileRecorderItem()

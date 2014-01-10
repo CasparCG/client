@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OscOutputDialog</class>
+ <widget class="QDialog" name="OscOutputDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>145</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>145</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>145</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>New OSC Output</string>
+  </property>
+  <widget class="QLabel" name="labelDescription">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>64</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Description</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>365</x>
+     <y>110</y>
+     <width>75</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>&amp;OK</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+O</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditAddress">
+   <property name="geometry">
+    <rect>
+     <x>138</x>
+     <y>34</y>
+     <width>161</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>IP address / Hostname</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelAddress">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>38</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Address</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelPort">
+   <property name="geometry">
+    <rect>
+     <x>302</x>
+     <y>36</y>
+     <width>31</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Port</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditDescription">
+   <property name="geometry">
+    <rect>
+     <x>138</x>
+     <y>60</y>
+     <width>302</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Optional</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditPort">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>34</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="placeholderText">
+    <string>7250</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditDeviceName">
+   <property name="geometry">
+    <rect>
+     <x>138</x>
+     <y>8</y>
+     <width>161</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelDeviceName">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>12</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Name</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelDeviceIcon">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>64</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Widgets.qrc">:/Graphics/Images/ServerBig.png</pixmap>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>lineEditDeviceName</tabstop>
+  <tabstop>lineEditAddress</tabstop>
+  <tabstop>lineEditPort</tabstop>
+  <tabstop>lineEditDescription</tabstop>
+ </tabstops>
+ <resources>
+  <include location="Widgets.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButtonOK</sender>
+   <signal>clicked()</signal>
+   <receiver>OscOutputDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>247</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditAddress</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>OscOutputDialog</receiver>
+   <slot>addressChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditDeviceName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>OscOutputDialog</receiver>
+   <slot>nameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>342</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addressFinished()</slot>
+  <slot>nameFinished()</slot>
+  <slot>testConnection()</slot>
+  <slot>okClicked()</slot>
+  <slot>nameChanged(QString)</slot>
+  <slot>addressChanged(QString)</slot>
+ </slots>
+</ui>

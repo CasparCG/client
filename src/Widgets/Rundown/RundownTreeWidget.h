@@ -125,4 +125,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void selectItemBelow();
         Q_SLOT bool removeSelectedItems();
         Q_SLOT void saveAsPreset();
+        Q_SLOT void addOscOutputItem();
 };
