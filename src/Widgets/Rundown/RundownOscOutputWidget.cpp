@@ -84,6 +84,7 @@ AbstractRundownWidget* RundownOscOutputWidget::clone()
     command->setOutput(this->command.getOutput());
     command->setPath(this->command.getPath());
     command->setMessage(this->command.getMessage());
+    command->setType(this->command.getType());
 
     return widget;
 }
@@ -196,7 +197,17 @@ void RundownOscOutputWidget::executeStop()
 void RundownOscOutputWidget::executePlay()
 {
     OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(this->command.getOutput());
-    OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
+
+    if (this->command.getType() == "Boolean")
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), (this->command.getMessage() == "true") ? true : false);
+    else if (this->command.getType() == "Double")
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toDouble());
+    else if (this->command.getType() == "Float")
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toFloat());
+    else if (this->command.getType() == "Integer")
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt());
+    else if (this->command.getType() == "String")
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
 }
 
 void RundownOscOutputWidget::delayChanged(int delay)

@@ -31,6 +31,7 @@ bool InspectorOscOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxOutput->setCurrentIndex(this->comboBoxOutput->findText(this->command->getOutput()));
             this->lineEditPath->setText(this->command->getPath());
             this->lineEditMessage->setText(this->command->getMessage());
+            this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
         }
 
         blockAllSignals(false);
@@ -57,6 +58,7 @@ void InspectorOscOutputWidget::blockAllSignals(bool block)
     this->comboBoxOutput->blockSignals(block);
     this->lineEditPath->blockSignals(block);
     this->lineEditMessage->blockSignals(block);
+    this->comboBoxType->blockSignals(block);
 }
 
 void InspectorOscOutputWidget::outputChanged(QString output)
@@ -72,4 +74,9 @@ void InspectorOscOutputWidget::pathChanged(QString path)
 void InspectorOscOutputWidget::messageChanged(QString message)
 {
     this->command->setMessage(message);
+}
+
+void InspectorOscOutputWidget::typeChanged(QString type)
+{
+    this->command->setType(type);
 }

@@ -25,4 +25,5 @@ class WIDGETS_EXPORT InspectorOscOutputWidget : public QWidget, Ui::InspectorOsc
         Q_SLOT void outputChanged(QString);
         Q_SLOT void pathChanged(QString);
         Q_SLOT void messageChanged(QString);
+        Q_SLOT void typeChanged(QString);
 };

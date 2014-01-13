@@ -43,9 +43,6 @@
       <property name="text">
        <string/>
       </property>
-      <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/GpiOutput.png</pixmap>
-      </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>

@@ -4,7 +4,7 @@
 
 OscOutputCommand::OscOutputCommand(QObject* parent)
     : AbstractCommand(parent),
-      output(Osc::DEFAULT_OUTPUT), path(""), message("")
+      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type("")
 {
 }
 
@@ -21,6 +21,11 @@ const QString& OscOutputCommand::getPath() const
 const QString& OscOutputCommand::getMessage() const
 {
     return this->message;
+}
+
+const QString& OscOutputCommand::getType() const
+{
+    return this->type;
 }
 
 void OscOutputCommand::setOutput(const QString& output)
@@ -41,6 +46,12 @@ void OscOutputCommand::setMessage(const QString& message)
     emit messageChanged(this->message);
 }
 
+void OscOutputCommand::setType(const QString& type)
+{
+    this->type = type;
+    emit typeChanged(this->type);
+}
+
 void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -48,6 +59,7 @@ void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setOutput(QString::fromStdWString(pt.get(L"output", Osc::DEFAULT_OUTPUT.toStdWString())));
     setPath(QString::fromStdWString(pt.get(L"path", L"")));
     setMessage(QString::fromStdWString(pt.get(L"message", L"")));
+    setType(QString::fromStdWString(pt.get(L"type", L"")));
 }
 
 void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
@@ -57,4 +69,5 @@ void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("output", this->getOutput());
     writer->writeTextElement("path", this->getPath());
     writer->writeTextElement("message", this->getMessage());
+    writer->writeTextElement("type", this->getType());
 }

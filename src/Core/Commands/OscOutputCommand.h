@@ -25,17 +25,21 @@ class CORE_EXPORT OscOutputCommand : public AbstractCommand
         const QString& getOutput() const;
         const QString& getPath() const;
         const QString& getMessage() const;
+        const QString& getType() const;
 
         void setOutput(const QString& output);
         void setPath(const QString& path);
         void setMessage(const QString& message);
+        void setType(const QString& type);
 
     private:
         QString output;
         QString path;
         QString message;
+        QString type;
 
         Q_SIGNAL void outputChanged(const QString&);
         Q_SIGNAL void pathChanged(const QString&);
         Q_SIGNAL void messageChanged(const QString&);
+        Q_SIGNAL void typeChanged(const QString&);
 };

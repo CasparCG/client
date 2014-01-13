@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>207</width>
-    <height>112</height>
+    <height>140</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>14</width>
+         <width>26</width>
          <height>20</height>
         </size>
        </property>
@@ -63,7 +63,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>24</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
@@ -96,7 +96,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>24</width>
+         <width>20</width>
          <height>20</height>
         </size>
        </property>
@@ -114,6 +114,68 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEditMessage"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutType">
+     <item>
+      <spacer name="horizontalSpacerType">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>39</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelType">
+       <property name="text">
+        <string>Type</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxType">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>Boolean</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Double</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Float</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Integer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>String</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
@@ -148,7 +210,7 @@
      <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>210</x>
+     <x>206</x>
      <y>45</y>
     </hint>
    </hints>
@@ -164,7 +226,7 @@
      <y>79</y>
     </hint>
     <hint type="destinationlabel">
-     <x>210</x>
+     <x>206</x>
      <y>78</y>
     </hint>
    </hints>
@@ -180,8 +242,24 @@
      <y>16</y>
     </hint>
     <hint type="destinationlabel">
-     <x>210</x>
+     <x>206</x>
      <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxType</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorOscOutputWidget</receiver>
+   <slot>typeChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>123</y>
     </hint>
    </hints>
   </connection>
@@ -190,5 +268,6 @@
   <slot>pathChanged(QString)</slot>
   <slot>messageChanged(QString)</slot>
   <slot>outputChanged(QString)</slot>
+  <slot>typeChanged(QString)</slot>
  </slots>
 </ui>
