@@ -150,6 +150,9 @@
         <file>Images/DisableCommandOn.png</file>
         <file>Images/ImportHover.png</file>
         <file>Images/Import.png</file>
+        <file>Images/OscOutput.png</file>
+        <file>Images/OscOutputSmall.png</file>
+        <file>Images/OscOutputSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

@@ -464,7 +464,10 @@ OTHER_FILES += \
     Images/DisableCommandOn.png \
     Images/DisableCommandOff.png \
     Images/Import.png \
-    Images/ImportHover.png
+    Images/ImportHover.png \
+    Images/OscOutputSmallHover.png \
+    Images/OscOutputSmall.png \
+    Images/OscOutput.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
