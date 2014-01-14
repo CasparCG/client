@@ -19,6 +19,8 @@ class WIDGETS_EXPORT InspectorOscOutputWidget : public QWidget, Ui::InspectorOsc
     private:
         OscOutputCommand* command;
 
+        void checkEmptyOutput();
+        void checkEmptyPath();
         void loadOscOutput();
         void blockAllSignals(bool block);
 

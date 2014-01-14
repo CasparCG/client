@@ -54,7 +54,8 @@ namespace Event
             AutoPlayChanged =  QEvent::User + 43,
             AutoPlayNextRundownItem =  QEvent::User + 44,
             ProgramSourceChanged =  QEvent::User + 45,
-            ExecuteRundownItem = QEvent::User + 46
+            ExecuteRundownItem = QEvent::User + 46,
+            OscOutputChanged =  QEvent::User + 47
         };
     };
 }
@@ -78,6 +79,7 @@ namespace Osc
 {
     static const int DEFAULT_PORT = 6250;
     static const QString DEFAULT_OUTPUT = "";
+    static const QString DEFAULT_TYPE = "String";
     static const int DEFAULT_OUTPUT_PORT = 7250;
     static const int DEFAULT_PROGRESSBAR_X = 64;
     static const int DEFAULT_PROGRESSBAR_Y = 3;

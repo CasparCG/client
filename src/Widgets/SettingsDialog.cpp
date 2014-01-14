@@ -320,7 +320,7 @@ void SettingsDialog::showAddOscOutputDialog()
 
         loadOscOutput();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireOscOutputChangedEvent();
     }
 }
 
@@ -360,7 +360,7 @@ void SettingsDialog::removeOscOutput()
 
     loadOscOutput();
 
-    EventManager::getInstance().fireRefreshLibraryEvent();
+    EventManager::getInstance().fireOscOutputChangedEvent();
 }
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)

@@ -167,14 +167,11 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {
-        //if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
-        //{
-            //const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            //double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-            //this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+        if (!this->command.getOutput().isEmpty() && !this->command.getPath().isEmpty())
+        {
+            this->executeTimer.setInterval(floor(this->command.getDelay() * 1000));
             this->executeTimer.start();
-        //}
+        }
     }
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeStop()));

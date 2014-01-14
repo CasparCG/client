@@ -4,7 +4,7 @@
 
 OscOutputCommand::OscOutputCommand(QObject* parent)
     : AbstractCommand(parent),
-      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type("")
+      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type(Osc::DEFAULT_TYPE)
 {
 }
 

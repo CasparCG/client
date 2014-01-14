@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "EventManager.h"
 #include "DatabaseManager.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 
@@ -34,6 +35,20 @@ bool InspectorOscOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
         }
 
+        checkEmptyOutput();
+        checkEmptyPath();
+
+        blockAllSignals(false);
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::OscOutputChanged))
+    {
+        blockAllSignals(true);
+
+        loadOscOutput();
+
+        checkEmptyOutput();
+        checkEmptyPath();
+
         blockAllSignals(false);
     }
 
@@ -46,6 +61,7 @@ void InspectorOscOutputWidget::loadOscOutput()
     // Events will not be triggered while we update the values.
     this->comboBoxOutput->blockSignals(true);
 
+    this->comboBoxOutput->clear();
     QList<OscOutputModel> models = DatabaseManager::getInstance().getOscOutput();
     foreach (OscOutputModel model, models)
         this->comboBoxOutput->addItem(model.getName());
@@ -61,14 +77,34 @@ void InspectorOscOutputWidget::blockAllSignals(bool block)
     this->comboBoxType->blockSignals(block);
 }
 
+void InspectorOscOutputWidget::checkEmptyOutput()
+{
+    if (this->comboBoxOutput->isEnabled() && this->comboBoxOutput->currentText() == "")
+        this->comboBoxOutput->setStyleSheet("border-color: red;");
+    else
+        this->comboBoxOutput->setStyleSheet("");
+}
+
+void InspectorOscOutputWidget::checkEmptyPath()
+{
+    if (this->lineEditPath->text().isEmpty())
+        this->lineEditPath->setStyleSheet("border-color: red;");
+    else
+        this->lineEditPath->setStyleSheet("");
+}
+
 void InspectorOscOutputWidget::outputChanged(QString output)
 {
     this->command->setOutput(output);
+
+    checkEmptyOutput();
 }
 
 void InspectorOscOutputWidget::pathChanged(QString path)
 {
     this->command->setPath(path);
+
+    checkEmptyPath();
 }
 
 void InspectorOscOutputWidget::messageChanged(QString message)

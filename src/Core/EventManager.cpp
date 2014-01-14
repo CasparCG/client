@@ -349,3 +349,8 @@ void EventManager::fireAutoPlayChangedEvent(bool autoPlay)
 {
     qApp->postEvent(qApp, new AutoPlayChangedEvent(autoPlay));
 }
+
+void EventManager::fireOscOutputChangedEvent()
+{
+    qApp->postEvent(qApp, new OscOutputChangedEvent());
+}

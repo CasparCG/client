@@ -33,6 +33,7 @@
 #include "Events/AddPresetItemEvent.h"
 #include "Events/ImportPresetEvent.h"
 #include "Events/ExportPresetEvent.h"
+#include "Events/OscOutputChangedEvent.h"
 #include "Events/Rundown/RundownIsChangedEvent.h"
 #include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
@@ -103,4 +104,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireAutoPlayRundownItemEvent(QWidget* widget);
         void fireAutoPlayNextRundownItemEvent(QWidget* widget);
         void fireAutoPlayChangedEvent(bool autoPlay);
+        void fireOscOutputChangedEvent();
 };
