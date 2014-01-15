@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownVolumeWidget : public QWidget, Ui::RundownVolumeWidg
         LibraryModel model;
         VolumeCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

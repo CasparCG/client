@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         LibraryModel model;
         BlendModeCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

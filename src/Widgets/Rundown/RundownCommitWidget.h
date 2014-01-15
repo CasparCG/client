@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownCommitWidget : public QWidget, Ui::RundownCommitWidg
         LibraryModel model;
         CommitCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

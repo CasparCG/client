@@ -69,6 +69,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         ActiveAnimation* animation;
         bool reverseOscTime;
         bool sendAutoPlay;
+        QString delayType;
 
         OscFileModel* fileModel;
         OscSubscription* timeSubscription;

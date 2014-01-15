@@ -44,11 +44,13 @@
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     : QWidget(parent),
-      command(NULL), model(NULL)
+      command(NULL), model(NULL), delayType("")
 {
     setupUi(this);
 
     this->comboBoxTriCasterDevice->setVisible(false);
+
+    this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
 
     this->comboBoxTarget->lineEdit()->setStyleSheet("background-color: transparent; border-width: 0px;");
 
@@ -81,6 +83,9 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->checkBoxAllowGpi->setEnabled(false);
         this->checkBoxAllowRemoteTriggering->setEnabled(false);
 
+        this->labelMillisecond->setText("");
+        this->labelMillisecond->setVisible(false);
+
         this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
         this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
@@ -108,6 +113,9 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setEnabled(false);
         this->checkBoxAllowGpi->setEnabled(false);
         this->checkBoxAllowRemoteTriggering->setEnabled(false);
+
+        this->labelMillisecond->setText("");
+        this->labelMillisecond->setVisible(false);
 
         this->comboBoxDevice->setCurrentIndex(-1);
         this->comboBoxTarget->clear();
@@ -140,6 +148,12 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setEnabled(true);
         this->checkBoxAllowGpi->setEnabled(true);
         this->checkBoxAllowRemoteTriggering->setEnabled(true);
+
+        this->labelMillisecond->setVisible(true);
+        if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+            this->labelMillisecond->setText("frm");
+        else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+            this->labelMillisecond->setText("ms");
 
         if (rundownItemSelectedEvent->getCommand() != NULL && rundownItemSelectedEvent->getLibraryModel() != NULL)
         {
@@ -182,6 +196,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->comboBoxTarget->setEnabled(false);
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
+
+                this->labelMillisecond->setText("ms");
 
                 this->comboBoxDevice->setCurrentIndex(-1);
                 this->comboBoxTarget->setCurrentIndex(-1);

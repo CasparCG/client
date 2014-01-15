@@ -27,6 +27,8 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);
@@ -235,10 +237,18 @@ bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType::Type type)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+            {
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-            this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+            }
+            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+            {
+                this->executeTimer.setInterval(this->command.getDelay());
+            }
+
             this->executeTimer.start();
         }
     }

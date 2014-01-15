@@ -1,5 +1,6 @@
 CasparCG Client 2.0.6
 =====================
+- NEW: Added support for specify the output delay in frames or milliseconds.
 - NEW: Enter/Return key open up the template data dialog in add mode.
 - NEW: Enter/Return + Shift key open up the template data dialog in edit mode.
 - NEW: Added support for trigger items remotely using OSC.

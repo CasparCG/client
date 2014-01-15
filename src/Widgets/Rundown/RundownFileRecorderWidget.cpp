@@ -25,6 +25,8 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);

@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         LibraryModel model;
         PrintCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

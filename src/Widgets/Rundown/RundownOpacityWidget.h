@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownOpacityWidget : public QWidget, Ui::RundownOpacityWi
         LibraryModel model;
         OpacityCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

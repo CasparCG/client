@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
         LibraryModel model;
         SaturationCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

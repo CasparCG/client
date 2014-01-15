@@ -165,7 +165,7 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {
-        this->executeTimer.setInterval(floor(this->command.getDelay() * 1000));
+        this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::Clear)

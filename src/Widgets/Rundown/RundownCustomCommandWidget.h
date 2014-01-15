@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
         LibraryModel model;
         CustomCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

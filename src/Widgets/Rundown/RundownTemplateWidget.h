@@ -67,6 +67,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         LibraryModel model;
         TemplateCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownLevelsWidget : public QWidget, Ui::RundownLevelsWidg
         LibraryModel model;
         LevelsCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

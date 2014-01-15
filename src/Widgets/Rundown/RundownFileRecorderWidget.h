@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         LibraryModel model;
         FileRecorderCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

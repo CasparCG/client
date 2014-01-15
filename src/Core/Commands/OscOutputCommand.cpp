@@ -59,7 +59,7 @@ void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setOutput(QString::fromStdWString(pt.get(L"output", Osc::DEFAULT_OUTPUT.toStdWString())));
     setPath(QString::fromStdWString(pt.get(L"path", L"")));
     setMessage(QString::fromStdWString(pt.get(L"message", L"")));
-    setType(QString::fromStdWString(pt.get(L"type", L"")));
+    setType(QString::fromStdWString(pt.get(L"osctype", Osc::DEFAULT_TYPE.toStdWString())));
 }
 
 void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
@@ -69,5 +69,5 @@ void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("output", this->getOutput());
     writer->writeTextElement("path", this->getPath());
     writer->writeTextElement("message", this->getMessage());
-    writer->writeTextElement("type", this->getType());
+    writer->writeTextElement("osctype", this->getType());
 }

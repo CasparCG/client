@@ -52,6 +52,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
 
+    this->comboBoxDelay->setCurrentIndex(this->comboBoxDelay->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
+
     this->lineEditOscInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
     if (!oscPort.isEmpty())
@@ -624,4 +626,9 @@ void SettingsDialog::oscPortChanged()
     qDebug() << "OSC port: " << oscPort;
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+}
+
+void SettingsDialog::delayTypeChanged(QString delayType)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelay->currentText()));
 }

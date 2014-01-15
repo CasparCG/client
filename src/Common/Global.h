@@ -207,6 +207,8 @@ namespace Output
     static const int DEFAULT_DELAY = 0;
     static const bool DEFAULT_ALLOW_GPI = false;
     static const bool DEFAULT_ALLOW_REMOTE_TRIGGERING = false;
+    static const QString DEFAULT_DELAY_IN_FRAMES = "Frames";
+    static const QString DEFAULT_DELAY_IN_MILLISECONDS = "Milliseconds";
 }
 
 namespace Audio

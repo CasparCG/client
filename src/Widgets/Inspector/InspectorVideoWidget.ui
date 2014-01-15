@@ -224,6 +224,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QLabel" name="labelFrm1">
+       <property name="text">
+        <string>frm</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -267,6 +277,16 @@
        </property>
        <property name="maximum">
         <number>999999999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFrm2">
+       <property name="text">
+        <string>frm</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>

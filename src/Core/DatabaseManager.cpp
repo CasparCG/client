@@ -96,6 +96,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterPort', '5950')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Frames')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else

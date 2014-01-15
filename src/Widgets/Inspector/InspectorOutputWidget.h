@@ -28,6 +28,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
     private:
         AbstractCommand* command;
         LibraryModel* model;
+        QString delayType;
 
         void checkEmptyDevice();
         void checkEmptyTriCasterDevice();

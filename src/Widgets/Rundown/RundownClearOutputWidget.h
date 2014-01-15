@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         LibraryModel model;
         ClearOutputCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

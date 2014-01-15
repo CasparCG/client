@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownContrastWidget : public QWidget, Ui::RundownContrast
         LibraryModel model;
         ContrastCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

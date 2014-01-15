@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownGridWidget : public QWidget, Ui::RundownGridWidget, 
         LibraryModel model;
         GridCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

@@ -62,6 +62,7 @@ class WIDGETS_EXPORT RundownKeyerWidget : public QWidget, Ui::RundownKeyerWidget
         LibraryModel model;
         KeyerCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

@@ -28,7 +28,8 @@ RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidge
     setActive(this->active);
     setCompactView(this->compactView);
 
-    this->labelDisconnected->setVisible(!GpiManager::getInstance().getGpiDevice()->isConnected());
+    this->labelDisconnected->setVisible(false);
+
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GPI_COLOR));
@@ -169,7 +170,7 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
     {
         if (!this->command.getOutput().isEmpty() && !this->command.getPath().isEmpty())
         {
-            this->executeTimer.setInterval(floor(this->command.getDelay() * 1000));
+            this->executeTimer.setInterval(this->command.getDelay());
             this->executeTimer.start();
         }
     }

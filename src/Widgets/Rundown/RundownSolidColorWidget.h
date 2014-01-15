@@ -66,6 +66,7 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
         LibraryModel model;
         SolidColorCommand command;
         ActiveAnimation* animation;
+        QString delayType;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
