@@ -63,7 +63,6 @@ namespace Event
 namespace TriCaster
 {
     static const int DEFAULT_PORT = 5950;
-    static const QString DEFAULT_STEP = "background";
     static const QString DEFAULT_SPEED = "";
     static const QString DEFAULT_TRANSITION = "";
     static const QString DEFAULT_PRESET = "0";

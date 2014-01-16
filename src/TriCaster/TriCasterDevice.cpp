@@ -26,9 +26,17 @@ void TriCasterDevice::triggerTake(const QString& target)
     writeMessage(QString("<shortcuts><shortcut name=\"%1_take\" /></shortcuts>").arg(target));
 }
 
-void TriCasterDevice::selectInput(const QString& switcher, const QString& input)
+void TriCasterDevice::selectInput(const QString& switcher, const QString& input, const QString& product)
 {
-    writeMessage(QString("<shortcuts><shortcut name=\"switcher_%1_named_input\" value=\"%2\" /></shortcuts>").arg(switcher).arg(input));
+    if (product == "TriCaster 850")
+        writeMessage(QString("<shortcuts><shortcut name=\"switcher_%1_named_input\" value=\"%2\" /></shortcuts>").arg(switcher).arg(input));
+    else if (product == "TriCaster 8000")
+    {
+        if (switcher == "pgm")
+            writeMessage(QString("<shortcuts><shortcut name=\"main_a_row_named_input\" value=\"%1\" /></shortcuts>").arg(input));
+        else if (switcher == "prev")
+            writeMessage(QString("<shortcuts><shortcut name=\"main_b_row_named_input\" value=\"%1\" /></shortcuts>").arg(input));
+    }
 }
 
 void TriCasterDevice::selectNetworkSource(const QString& target, const QString& source)

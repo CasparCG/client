@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorTakeWidget : public QWidget, Ui::InspectorTakeWidg
         LibraryModel* model;
         TakeCommand* command;
 
+        void checkEmptyStep();
         void loadTriCasterStep();
         void blockAllSignals(bool block);
 

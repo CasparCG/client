@@ -19,6 +19,7 @@
 #include "Models/FormatModel.h"
 #include "Models/PresetModel.h"
 #include "Models/OscOutputModel.h"
+#include "Models/TriCaster/TriCasterProductModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 #include "Models/TriCaster/TriCasterAutoSpeedModel.h"
@@ -67,6 +68,7 @@ class CORE_EXPORT DatabaseManager
         void updateOscOutput(const OscOutputModel& model);
         void deleteOscOutput(int id);
 
+        QList<TriCasterProductModel> getTriCasterProduct();
         QList<TriCasterInputModel> getTriCasterInput();
         QList<TriCasterStepModel> getTriCasterStep();
         QList<TriCasterAutoSpeedModel> getTriCasterAutoSpeed();

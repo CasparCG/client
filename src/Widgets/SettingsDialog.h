@@ -20,6 +20,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
 
         void loadGpi();
         void loadDevice();
+        void loadTriCasterProduct();
         void loadTriCasterDevice();
         void loadOscOutput();
         void checkEmptyDeviceList();
@@ -28,6 +29,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         void updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action);
         void updateGpo(int gpo, const QComboBox* voltage, const QSpinBox* pulseLength);
         void updateGpiDevice();
+        void blockAllSignals(bool block);
 
         Q_SLOT void removeDevice();
         Q_SLOT void removeTriCasterDevice();
@@ -68,6 +70,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void removeOscOutput();
         Q_SLOT void oscOutputItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void delayTypeChanged(QString);
+        Q_SLOT void tricasterProductChanged(QString);
 
         Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType::Type);
 };

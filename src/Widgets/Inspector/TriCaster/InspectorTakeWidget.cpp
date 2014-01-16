@@ -36,6 +36,8 @@ bool InspectorTakeWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         }
 
+        checkEmptyStep();
+
         blockAllSignals(false);
     }
 
@@ -60,7 +62,17 @@ void InspectorTakeWidget::loadTriCasterStep()
     this->comboBoxStep->blockSignals(false);
 }
 
+void InspectorTakeWidget::checkEmptyStep()
+{
+    if (this->comboBoxStep->isEnabled() && this->comboBoxStep->currentText() == "")
+        this->comboBoxStep->setStyleSheet("border-color: red;");
+    else
+        this->comboBoxStep->setStyleSheet("");
+}
+
 void InspectorTakeWidget::stepChanged(int index)
 {
     this->command->setStep(this->comboBoxStep->itemData(index).toString());
+
+    checkEmptyStep();
 }

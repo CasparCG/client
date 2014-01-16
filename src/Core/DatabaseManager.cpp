@@ -44,16 +44,17 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
-    sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterPreset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterSource (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterNetworkTarget (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE OscOutput (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
+    sql.exec("CREATE TABLE TriCasterProduct (Id INTEGER PRIMARY KEY, Name TEXT)");
+    sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterPreset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterSource (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterNetworkTarget (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
 
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Normal')");
     sql.exec("INSERT INTO BlendMode (Value) VALUES('Lighten')");
@@ -97,6 +98,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterPort', '5950')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Frames')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else
@@ -173,85 +175,102 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Transition (Value) VALUES('SLIDE')");
     sql.exec("INSERT INTO Transition (Value) VALUES('WIPE')");
 
-    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('Background', 'background')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('DSK 1', 'overlay0')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value) VALUES('DSK 2', 'overlay1')");
+    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 850')");
+    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 1', 'ddr')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('DDR 2', 'ddr2')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Net 1', 'net')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Net 2', 'net2')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Still', 'stills')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Title', 'titles')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Frame Buffer', 'frm bfr')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Black', 'black')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 1', 'input1')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 2', 'input2')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 3', 'input3')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 4', 'input4')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 5', 'input5')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 6', 'input6')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 7', 'input7')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Input 8', 'input8')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 1', 'v1')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 2', 'v2')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 3', 'v3')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 4', 'v4')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 5', 'v5')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 6', 'v6')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 7', 'v7')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value) VALUES('Virtual Input 8', 'v8')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('Background', 'background', 'TriCaster 850')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('Background', 'main_background', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 1', 'overlay0', 'TriCaster 850')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 2', 'overlay1', 'TriCaster 850')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 1', 'main_dsk1', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 2', 'main_dsk2', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 3', 'main_dsk3', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 4', 'main_dsk4', 'TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Default', '')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Slow', 'slow')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Medium', 'medium')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value) VALUES('Fast', 'fast')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('DDR 1', 'ddr', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('DDR 2', 'ddr2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Net 1', 'net', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Net 2', 'net2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Still', 'stills', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Title', 'titles', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Frame Buffer', 'frm bfr', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Black', 'black', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 1', 'input1', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 2', 'input2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 3', 'input3', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 4', 'input4', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 5', 'input5', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 6', 'input6', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 7', 'input7', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 8', 'input8', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 1', 'v1', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 2', 'v2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 3', 'v3', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 4', 'v4', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 5', 'v5', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 6', 'v6', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 7', 'v7', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 8', 'v8', 'TriCaster 850, TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Default', '')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 1', '0')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 2', '1')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 3', '2')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 4', '3')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 5', '4')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 6', '5')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value) VALUES('Preset 7', '6')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Default', '', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Slow', 'slow', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Medium', 'medium', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Fast', 'fast', 'TriCaster 850, TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 1', '0')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 2', '1')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 3', '2')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 4', '3')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 5', '4')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 6', '5')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 7', '6')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 8', '7')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 9', '8')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 10', '9')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 11', '10')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 12', '11')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 13', '12')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 14', '13')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value) VALUES('Preset 15', '14')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Default', '', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 1', '0', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 2', '1', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 3', '2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 4', '3', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 5', '4', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 6', '5', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 7', '6', 'TriCaster 850, TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('DDR 1', 'ddr')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('DDR 2', 'ddr2')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Still', 'stills')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Title', 'titles')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Sound', 'sound')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Audiomixer', 'audiomixer')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 1', 'v1')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 2', 'v2')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 3', 'v3')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 4', 'v4')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 5', 'v5')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 6', 'v6')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 7', 'v7')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value) VALUES('Virtual Input 8', 'v8')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 1', '0', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 2', '1', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 3', '2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 4', '3', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 5', '4', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 6', '5', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 7', '6', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 8', '7', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 9', '8', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 10', '9', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 11', '10', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 12', '11', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 13', '12', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 14', '13', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 15', '14', 'TriCaster 850, TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Program', 'pgm')");
-    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value) VALUES('Preview', 'prev')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Switcher', 'main', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('DDR 1', 'ddr', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('DDR 2', 'ddr2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Still', 'stills', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Title', 'titles', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Sound', 'sound', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Audiomixer', 'audiomixer', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 1', 'v1', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 2', 'v2', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 3', 'v3', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 4', 'v4', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 5', 'v5', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 6', 'v6', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 7', 'v7', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 8', 'v8', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 1', 'ptz_input1', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 2', 'ptz_input2', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 3', 'ptz_input3', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 4', 'ptz_input4', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 5', 'ptz_input5', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 6', 'ptz_input6', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 7', 'ptz_input7', 'TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 8', 'ptz_input8', 'TriCaster 8000')");
 
-    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value) VALUES('Net 1', 'net')");
-    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value) VALUES('Net 2', 'net2')");
+    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value, Products) VALUES('Program', 'pgm', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value, Products) VALUES('Preview', 'prev', 'TriCaster 850, TriCaster 8000')");
+
+    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value, Products) VALUES('Net 1', 'net', 'TriCaster 850, TriCaster 8000')");
+    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value, Products) VALUES('Net 2', 'net2', 'TriCaster 850, TriCaster 8000')");
 
     sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
     sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
@@ -639,11 +658,30 @@ void DatabaseManager::deleteOscOutput(int id)
     QSqlDatabase::database().commit();
 }
 
+QList<TriCasterProductModel> DatabaseManager::getTriCasterProduct()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query("SELECT p.Id, p.Name FROM TriCasterProduct p");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterProductModel> models;
+    while (sql.next())
+        models.push_back(TriCasterProductModel(sql.value(0).toInt(), sql.value(1).toString()));
+
+    return models;
+}
+
 QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterInput t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterInput t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -660,7 +698,9 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterStep t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterStep t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -677,7 +717,9 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterAutoSpeed t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterAutoSpeed t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -694,7 +736,9 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterAutoTransition t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterAutoTransition t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -711,7 +755,9 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterPreset t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterPreset t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -728,7 +774,9 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterSource t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterSource t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -745,7 +793,9 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
 {
     QMutexLocker locker(&mutex);
 
-    QString query("SELECT t.Id, t.Name, t.Value FROM TriCasterSwitcher t");
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterSwitcher t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -758,8 +808,29 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
     return models;
 }
 
+QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
+{
+    QMutexLocker locker(&mutex);
+
+    QString product = getConfigurationByName("TriCasterProduct").getValue();
+    QString query = QString("SELECT t.Id, t.Name, t.Value, t.Products FROM TriCasterNetworkTarget t "
+                            "WHERE t.Products LIKE '%%1%'").arg(product);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<TriCasterNetworkTargetModel> models;
+    while (sql.next())
+        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
 QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
 {
+    QMutexLocker locker(&mutex);
+
     QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Description FROM TriCasterDevice d "
                   "ORDER BY d.Name");
 
@@ -771,23 +842,6 @@ QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
     while (sql.next())
         models.push_back(TriCasterDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
                                               sql.value(3).toInt(), sql.value(4).toString()));
-
-    return models;
-}
-
-QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
-{
-    QMutexLocker locker(&mutex);
-
-    QString query("SELECT nt.Id, nt.Name, nt.Value FROM TriCasterNetworkTarget nt");
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    QList<TriCasterNetworkTargetModel> models;
-    while (sql.next())
-        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }
