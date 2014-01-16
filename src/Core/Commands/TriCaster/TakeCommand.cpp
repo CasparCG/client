@@ -4,7 +4,7 @@
 
 TakeCommand::TakeCommand(QObject* parent)
     : AbstractCommand(parent),
-      step(TriCaster::DEFAULT_STEP)
+      step("")
 {
 }
 
@@ -23,7 +23,7 @@ void TakeCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setStep(QString::fromStdWString(pt.get(L"step", TriCaster::DEFAULT_STEP.toStdWString())));
+    setStep(QString::fromStdWString(pt.get(L"step", L"")));
 }
 
 void TakeCommand::writeProperties(QXmlStreamWriter* writer)

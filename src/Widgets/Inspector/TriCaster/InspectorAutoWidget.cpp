@@ -40,6 +40,8 @@ bool InspectorAutoWidget::eventFilter(QObject* target, QEvent* event)
             this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         }
 
+        checkEmptyStep();
+
         blockAllSignals(false);
     }
 
@@ -88,6 +90,14 @@ void InspectorAutoWidget::loadTriCasterAutoTransition()
         this->comboBoxTransition->addItem(model.getName(), model.getValue());
 
     this->comboBoxTransition->blockSignals(false);
+}
+
+void InspectorAutoWidget::checkEmptyStep()
+{
+    if (this->comboBoxStep->isEnabled() && this->comboBoxStep->currentText() == "")
+        this->comboBoxStep->setStyleSheet("border-color: red;");
+    else
+        this->comboBoxStep->setStyleSheet("");
 }
 
 void InspectorAutoWidget::stepChanged(int index)

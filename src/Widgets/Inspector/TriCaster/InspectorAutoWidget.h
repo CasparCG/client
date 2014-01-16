@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorAutoWidget : public QWidget, Ui::InspectorAutoWidg
         LibraryModel* model;
         AutoCommand* command;
 
+        void checkEmptyStep();
         void loadTriCasterStep();
         void loadTriCasterAutoSpeed();
         void loadTriCasterAutoTransition();

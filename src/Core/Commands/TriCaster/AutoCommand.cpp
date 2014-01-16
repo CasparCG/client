@@ -4,7 +4,7 @@
 
 AutoCommand::AutoCommand(QObject* parent)
     : AbstractCommand(parent),
-      step(TriCaster::DEFAULT_STEP), speed(TriCaster::DEFAULT_SPEED), transition(TriCaster::DEFAULT_TRANSITION)
+      step(""), speed(TriCaster::DEFAULT_SPEED), transition(TriCaster::DEFAULT_TRANSITION)
 {
 }
 
@@ -45,7 +45,7 @@ void AutoCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setStep(QString::fromStdWString(pt.get(L"step", TriCaster::DEFAULT_STEP.toStdWString())));
+    setStep(QString::fromStdWString(pt.get(L"step", L"")));
     setSpeed(QString::fromStdWString(pt.get(L"speed", TriCaster::DEFAULT_SPEED.toStdWString())));
     setTransition(QString::fromStdWString(pt.get(L"transition", TriCaster::DEFAULT_TRANSITION.toStdWString())));
 }

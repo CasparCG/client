@@ -232,7 +232,7 @@ void RundownInputWidget::executePlay()
     {
         const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
         if (device != NULL && device->isConnected())
-            device->selectInput(this->command.getSwitcher(), this->command.getInput());
+            device->selectInput(this->command.getSwitcher(), this->command.getInput(), DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue());
     }
 }
 

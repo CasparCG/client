@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>757</height>
+    <height>817</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>700</width>
-    <height>757</height>
+    <height>817</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>700</width>
-    <height>757</height>
+    <height>817</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <x>9</x>
      <y>10</y>
      <width>680</width>
-     <height>707</height>
+     <height>767</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -372,7 +372,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBoxDelay">
+    <widget class="QComboBox" name="comboBoxDelayType">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -590,7 +590,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>637</y>
+       <y>689</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -615,7 +615,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>377</y>
+       <y>429</y>
        <width>535</width>
        <height>251</height>
       </rect>
@@ -702,7 +702,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>637</y>
+       <y>689</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -752,7 +752,7 @@
      <property name="geometry">
       <rect>
        <x>612</x>
-       <y>637</y>
+       <y>689</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -771,6 +771,38 @@
      </property>
      <property name="toolTip">
       <string>Import TriCaster Servers</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelModel">
+     <property name="geometry">
+      <rect>
+       <x>64</x>
+       <y>377</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Model:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxTriCasterProduct">
+     <property name="geometry">
+      <rect>
+       <x>154</x>
+       <y>376</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
     </widget>
    </widget>
@@ -810,7 +842,7 @@
     <widget class="QLabel" name="labelGpiInput1">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>148</y>
        <width>81</width>
        <height>20</height>
@@ -826,7 +858,7 @@
     <widget class="QLabel" name="labelGpiInput2">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>176</y>
        <width>81</width>
        <height>20</height>
@@ -842,7 +874,7 @@
     <widget class="QLabel" name="labelGpiInput3">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>204</y>
        <width>81</width>
        <height>20</height>
@@ -858,7 +890,7 @@
     <widget class="QLabel" name="labelGpiInput4">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>232</y>
        <width>81</width>
        <height>20</height>
@@ -874,7 +906,7 @@
     <widget class="QLabel" name="labelGpiInput5">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>260</y>
        <width>81</width>
        <height>20</height>
@@ -890,7 +922,7 @@
     <widget class="QLabel" name="labelGpiInput6">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>288</y>
        <width>81</width>
        <height>20</height>
@@ -906,7 +938,7 @@
     <widget class="QLabel" name="labelGpiInput7">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>316</y>
        <width>81</width>
        <height>20</height>
@@ -922,7 +954,7 @@
     <widget class="QLabel" name="labelGpiInput8">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>344</y>
        <width>81</width>
        <height>20</height>
@@ -938,7 +970,7 @@
     <widget class="QComboBox" name="comboBoxAction1">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>147</y>
        <width>131</width>
        <height>20</height>
@@ -1004,7 +1036,7 @@
     <widget class="QComboBox" name="comboBoxAction2">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>175</y>
        <width>131</width>
        <height>20</height>
@@ -1073,7 +1105,7 @@
     <widget class="QComboBox" name="comboBoxAction3">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>203</y>
        <width>131</width>
        <height>20</height>
@@ -1142,7 +1174,7 @@
     <widget class="QComboBox" name="comboBoxAction4">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>231</y>
        <width>131</width>
        <height>20</height>
@@ -1211,7 +1243,7 @@
     <widget class="QComboBox" name="comboBoxAction5">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>259</y>
        <width>131</width>
        <height>20</height>
@@ -1280,7 +1312,7 @@
     <widget class="QComboBox" name="comboBoxAction6">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>287</y>
        <width>131</width>
        <height>20</height>
@@ -1349,7 +1381,7 @@
     <widget class="QComboBox" name="comboBoxAction7">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>315</y>
        <width>131</width>
        <height>20</height>
@@ -1418,7 +1450,7 @@
     <widget class="QComboBox" name="comboBoxAction8">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>343</y>
        <width>131</width>
        <height>20</height>
@@ -1516,7 +1548,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange1">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>147</y>
        <width>131</width>
        <height>20</height>
@@ -1542,7 +1574,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange2">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>175</y>
        <width>131</width>
        <height>20</height>
@@ -1568,7 +1600,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange3">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>203</y>
        <width>131</width>
        <height>20</height>
@@ -1594,7 +1626,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange4">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>231</y>
        <width>131</width>
        <height>20</height>
@@ -1620,7 +1652,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange5">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>259</y>
        <width>131</width>
        <height>20</height>
@@ -1646,7 +1678,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange6">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>287</y>
        <width>131</width>
        <height>20</height>
@@ -1672,7 +1704,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange7">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>315</y>
        <width>131</width>
        <height>20</height>
@@ -1698,7 +1730,7 @@
     <widget class="QComboBox" name="comboBoxGpiVoltageChange8">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>358</x>
        <y>343</y>
        <width>131</width>
        <height>20</height>
@@ -1724,7 +1756,7 @@
     <widget class="QLabel" name="labelGpiOutput1">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>419</y>
        <width>81</width>
        <height>20</height>
@@ -1740,7 +1772,7 @@
     <widget class="QLabel" name="labelGpiOutput2">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>447</y>
        <width>81</width>
        <height>20</height>
@@ -1756,7 +1788,7 @@
     <widget class="QLabel" name="labelGpiOutput3">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>475</y>
        <width>81</width>
        <height>20</height>
@@ -1772,7 +1804,7 @@
     <widget class="QLabel" name="labelGpiOutput4">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>503</y>
        <width>81</width>
        <height>20</height>
@@ -1788,7 +1820,7 @@
     <widget class="QLabel" name="labelGpiOutput5">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>531</y>
        <width>81</width>
        <height>20</height>
@@ -1804,7 +1836,7 @@
     <widget class="QLabel" name="labelGpiOutput6">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>559</y>
        <width>81</width>
        <height>20</height>
@@ -1820,7 +1852,7 @@
     <widget class="QLabel" name="labelGpiOutput7">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>587</y>
        <width>81</width>
        <height>20</height>
@@ -1836,7 +1868,7 @@
     <widget class="QLabel" name="labelGpiOutput8">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>615</y>
        <width>81</width>
        <height>20</height>
@@ -1852,9 +1884,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange3">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>474</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1878,9 +1910,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange8">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>614</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1904,9 +1936,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange2">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>446</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1930,9 +1962,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange1">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>418</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1956,9 +1988,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange6">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>558</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -1982,9 +2014,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange7">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>586</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2008,9 +2040,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange5">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>530</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2034,9 +2066,9 @@
     <widget class="QComboBox" name="comboBoxGpoVoltageChange4">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>502</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2089,7 +2121,7 @@
     <widget class="QLabel" name="labelMilliseconds1">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>421</y>
        <width>81</width>
        <height>16</height>
@@ -2102,7 +2134,7 @@
     <widget class="QLabel" name="labelPulseLength1">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>419</y>
        <width>81</width>
        <height>20</height>
@@ -2118,7 +2150,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength1">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>417</y>
        <width>81</width>
        <height>22</height>
@@ -2137,7 +2169,7 @@
     <widget class="QLabel" name="labelMilliseconds2">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>449</y>
        <width>81</width>
        <height>16</height>
@@ -2150,7 +2182,7 @@
     <widget class="QLabel" name="labelPulseLength2">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>447</y>
        <width>81</width>
        <height>20</height>
@@ -2166,7 +2198,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength2">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>445</y>
        <width>81</width>
        <height>22</height>
@@ -2185,7 +2217,7 @@
     <widget class="QLabel" name="labelPulseLength3">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>475</y>
        <width>81</width>
        <height>20</height>
@@ -2201,7 +2233,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength3">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>473</y>
        <width>81</width>
        <height>22</height>
@@ -2220,7 +2252,7 @@
     <widget class="QLabel" name="labelMilliseconds3">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>477</y>
        <width>81</width>
        <height>16</height>
@@ -2233,7 +2265,7 @@
     <widget class="QLabel" name="labelPulseLength4">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>503</y>
        <width>81</width>
        <height>20</height>
@@ -2249,7 +2281,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength4">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>501</y>
        <width>81</width>
        <height>22</height>
@@ -2268,7 +2300,7 @@
     <widget class="QLabel" name="labelMilliseconds4">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>505</y>
        <width>81</width>
        <height>16</height>
@@ -2281,7 +2313,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength5">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>529</y>
        <width>81</width>
        <height>22</height>
@@ -2300,7 +2332,7 @@
     <widget class="QLabel" name="labelPulseLength5">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>531</y>
        <width>81</width>
        <height>20</height>
@@ -2316,7 +2348,7 @@
     <widget class="QLabel" name="labelMilliseconds5">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>533</y>
        <width>81</width>
        <height>16</height>
@@ -2329,7 +2361,7 @@
     <widget class="QLabel" name="labelMilliseconds6">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>561</y>
        <width>81</width>
        <height>16</height>
@@ -2342,7 +2374,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength6">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>557</y>
        <width>81</width>
        <height>22</height>
@@ -2361,7 +2393,7 @@
     <widget class="QLabel" name="labelPulseLength6">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>559</y>
        <width>81</width>
        <height>20</height>
@@ -2377,7 +2409,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength7">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>585</y>
        <width>81</width>
        <height>22</height>
@@ -2396,7 +2428,7 @@
     <widget class="QLabel" name="labelPulseLength7">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>587</y>
        <width>81</width>
        <height>20</height>
@@ -2412,7 +2444,7 @@
     <widget class="QLabel" name="labelMilliseconds7">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>589</y>
        <width>81</width>
        <height>16</height>
@@ -2425,7 +2457,7 @@
     <widget class="QSpinBox" name="spinBoxPulseLength8">
      <property name="geometry">
       <rect>
-       <x>345</x>
+       <x>432</x>
        <y>613</y>
        <width>81</width>
        <height>22</height>
@@ -2444,7 +2476,7 @@
     <widget class="QLabel" name="labelMilliseconds8">
      <property name="geometry">
       <rect>
-       <x>435</x>
+       <x>522</x>
        <y>617</y>
        <width>81</width>
        <height>16</height>
@@ -2457,7 +2489,7 @@
     <widget class="QLabel" name="labelPulseLength8">
      <property name="geometry">
       <rect>
-       <x>254</x>
+       <x>341</x>
        <y>615</y>
        <width>81</width>
        <height>20</height>
@@ -2473,7 +2505,7 @@
     <widget class="QLabel" name="labelGpiSerialPort">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>43</y>
        <width>81</width>
        <height>20</height>
@@ -2489,7 +2521,7 @@
     <widget class="QLabel" name="labelGpiBaudRate">
      <property name="geometry">
       <rect>
-       <x>32</x>
+       <x>100</x>
        <y>74</y>
        <width>81</width>
        <height>20</height>
@@ -2505,9 +2537,9 @@
     <widget class="QComboBox" name="comboBoxGpiBaudRate">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>72</y>
-       <width>112</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2531,9 +2563,9 @@
     <widget class="QLineEdit" name="lineEditSerialPort">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>200</x>
        <y>42</y>
-       <width>113</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
@@ -2552,7 +2584,7 @@
     <widget class="QLineEdit" name="lineEditOscInputPort">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>144</x>
        <y>42</y>
        <width>113</width>
        <height>20</height>
@@ -2600,7 +2632,7 @@
     <widget class="QLabel" name="labelOscPort">
      <property name="geometry">
       <rect>
-       <x>72</x>
+       <x>84</x>
        <y>44</y>
        <width>51</width>
        <height>20</height>
@@ -2756,7 +2788,7 @@
    <property name="geometry">
     <rect>
      <x>615</x>
-     <y>725</y>
+     <y>785</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -2772,7 +2804,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>720</y>
+     <y>780</y>
      <width>591</width>
      <height>16</height>
     </rect>
@@ -2880,7 +2912,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>658</x>
-     <y>735</y>
+     <y>778</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -3075,7 +3107,7 @@
      <y>90</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-2</x>
+     <x>0</x>
      <y>624</y>
     </hint>
    </hints>
@@ -3091,7 +3123,7 @@
      <y>196</y>
     </hint>
     <hint type="destinationlabel">
-     <x>717</x>
+     <x>699</x>
      <y>57</y>
     </hint>
    </hints>
@@ -3107,7 +3139,7 @@
      <y>224</y>
     </hint>
     <hint type="destinationlabel">
-     <x>712</x>
+     <x>699</x>
      <y>36</y>
     </hint>
    </hints>
@@ -3124,7 +3156,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
-     <y>-6</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -3140,7 +3172,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>634</x>
-     <y>-13</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -3188,7 +3220,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
-     <y>-3</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -3203,7 +3235,7 @@
      <y>394</y>
     </hint>
     <hint type="destinationlabel">
-     <x>705</x>
+     <x>699</x>
      <y>339</y>
     </hint>
    </hints>
@@ -3235,7 +3267,7 @@
      <y>470</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-18</x>
+     <x>0</x>
      <y>228</y>
     </hint>
    </hints>
@@ -3251,7 +3283,7 @@
      <y>497</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-12</x>
+     <x>0</x>
      <y>257</y>
     </hint>
    </hints>
@@ -3267,7 +3299,7 @@
      <y>498</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-42</x>
+     <x>0</x>
      <y>287</y>
     </hint>
    </hints>
@@ -3283,7 +3315,7 @@
      <y>525</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-28</x>
+     <x>0</x>
      <y>316</y>
     </hint>
    </hints>
@@ -3299,7 +3331,7 @@
      <y>526</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-30</x>
+     <x>0</x>
      <y>346</y>
     </hint>
    </hints>
@@ -3315,7 +3347,7 @@
      <y>553</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-61</x>
+     <x>0</x>
      <y>376</y>
     </hint>
    </hints>
@@ -3331,7 +3363,7 @@
      <y>554</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-68</x>
+     <x>0</x>
      <y>410</y>
     </hint>
    </hints>
@@ -3347,7 +3379,7 @@
      <y>581</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-48</x>
+     <x>0</x>
      <y>441</y>
     </hint>
    </hints>
@@ -3363,7 +3395,7 @@
      <y>582</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-67</x>
+     <x>0</x>
      <y>472</y>
     </hint>
    </hints>
@@ -3379,7 +3411,7 @@
      <y>609</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-69</x>
+     <x>0</x>
      <y>503</y>
     </hint>
    </hints>
@@ -3395,7 +3427,7 @@
      <y>610</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-49</x>
+     <x>0</x>
      <y>533</y>
     </hint>
    </hints>
@@ -3411,7 +3443,7 @@
      <y>637</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-20</x>
+     <x>0</x>
      <y>564</y>
     </hint>
    </hints>
@@ -3427,7 +3459,7 @@
      <y>638</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-44</x>
+     <x>0</x>
      <y>595</y>
     </hint>
    </hints>
@@ -3443,7 +3475,7 @@
      <y>665</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-48</x>
+     <x>0</x>
      <y>658</y>
     </hint>
    </hints>
@@ -3459,7 +3491,7 @@
      <y>666</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-53</x>
+     <x>0</x>
      <y>695</y>
     </hint>
    </hints>
@@ -3475,7 +3507,7 @@
      <y>114</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-10</x>
+     <x>0</x>
      <y>93</y>
     </hint>
    </hints>
@@ -3491,7 +3523,7 @@
      <y>338</y>
     </hint>
     <hint type="destinationlabel">
-     <x>701</x>
+     <x>699</x>
      <y>335</y>
     </hint>
    </hints>
@@ -3507,7 +3539,7 @@
      <y>322</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
+     <x>699</x>
      <y>476</y>
     </hint>
    </hints>
@@ -3555,7 +3587,7 @@
      <y>412</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-1</x>
+     <x>0</x>
      <y>428</y>
     </hint>
    </hints>
@@ -3568,10 +3600,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>140</x>
-     <y>678</y>
+     <y>730</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-5</x>
+     <x>0</x>
      <y>677</y>
     </hint>
    </hints>
@@ -3584,7 +3616,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>185</x>
-     <y>673</y>
+     <y>725</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3616,10 +3648,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>640</x>
-     <y>675</y>
+     <y>727</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
+     <x>699</x>
      <y>648</y>
     </hint>
    </hints>
@@ -3683,7 +3715,7 @@
      <y>421</y>
     </hint>
     <hint type="destinationlabel">
-     <x>700</x>
+     <x>699</x>
      <y>410</y>
     </hint>
    </hints>
@@ -3705,7 +3737,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxDelay</sender>
+   <sender>comboBoxDelayType</sender>
    <signal>currentIndexChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>delayTypeChanged(QString)</slot>
@@ -3717,6 +3749,22 @@
     <hint type="destinationlabel">
      <x>694</x>
      <y>512</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTriCasterProduct</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>tricasterProductChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>548</y>
     </hint>
    </hints>
   </connection>
@@ -3762,5 +3810,6 @@
   <slot>showAddOscOutputDialog()</slot>
   <slot>removeOscOutput()</slot>
   <slot>delayTypeChanged(QString)</slot>
+  <slot>tricasterProductChanged(QString)</slot>
  </slots>
 </ui>

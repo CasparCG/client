@@ -10,6 +10,7 @@
 #include "Models/ConfigurationModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/GpiModel.h"
+#include "Models/TriCaster/TriCasterProductModel.h"
 #include "Models/TriCaster/TriCasterDeviceModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/OscOutputModel.h"
@@ -52,7 +53,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
 
-    this->comboBoxDelay->setCurrentIndex(this->comboBoxDelay->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
+    this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     this->lineEditOscInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
@@ -63,6 +64,14 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     loadTriCasterDevice();
     loadGpi();
     loadOscOutput();
+    loadTriCasterProduct();
+
+    this->comboBoxTriCasterProduct->setCurrentIndex(this->comboBoxTriCasterProduct->findText(DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue()));
+}
+
+void SettingsDialog::blockAllSignals(bool block)
+{
+    this->comboBoxTriCasterProduct->blockSignals(block);
 }
 
 void SettingsDialog::loadDevice()
@@ -118,6 +127,19 @@ void SettingsDialog::loadTriCasterDevice()
     }
 
     checkEmptyTriCasterDeviceList();
+}
+
+void SettingsDialog::loadTriCasterProduct()
+{
+    blockAllSignals(true);
+
+    this->comboBoxTriCasterProduct->clear();
+
+    QList<TriCasterProductModel> models = DatabaseManager::getInstance().getTriCasterProduct();
+    foreach (TriCasterProductModel model, models)
+        this->comboBoxTriCasterProduct->addItem(model.getName());
+
+    blockAllSignals(false);
 }
 
 void SettingsDialog::loadGpi()
@@ -630,5 +652,10 @@ void SettingsDialog::oscPortChanged()
 
 void SettingsDialog::delayTypeChanged(QString delayType)
 {
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelay->currentText()));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelayType->currentText()));
+}
+
+void SettingsDialog::tricasterProductChanged(QString product)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "TriCasterProduct", this->comboBoxTriCasterProduct->currentText()));
 }

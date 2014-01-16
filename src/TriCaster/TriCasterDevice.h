@@ -14,7 +14,7 @@ class TRICASTER_EXPORT TriCasterDevice : public NTFCDevice
         void triggerAuto(const QString& target, const QString& speed, const QString& transition);
         void triggerTake(const QString& target);
 
-        void selectInput(const QString& switcher, const QString& input);
+        void selectInput(const QString& switcher, const QString& input, const QString& product);
         void selectPreset(const QString& source, const QString& preset);
 
         void selectNetworkSource(const QString& target, const QString& source);
