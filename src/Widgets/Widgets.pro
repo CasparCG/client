@@ -467,7 +467,25 @@ OTHER_FILES += \
     Images/ImportHover.png \
     Images/OscOutputSmallHover.png \
     Images/OscOutputSmall.png \
-    Images/OscOutput.png
+    Images/OscOutput.png \
+    Images/TriCaster/TriggerTakeSmallHover.png \
+    Images/TriCaster/TriggerTakeSmall.png \
+    Images/TriCaster/TriggerTake.png \
+    Images/TriCaster/TriggerAutoSmallHover.png \
+    Images/TriCaster/TriggerAutoSmall.png \
+    Images/TriCaster/TriggerAuto.png \
+    Images/TriCaster/SelectPresetSmallHover.png \
+    Images/TriCaster/SelectPresetSmall.png \
+    Images/TriCaster/SelectPreset.png \
+    Images/TriCaster/SelectNetworkSourceSmallHover.png \
+    Images/TriCaster/SelectNetworkSourceSmall.png \
+    Images/TriCaster/SelectNetworkSource.png \
+    Images/TriCaster/SelectInputSmallHover.png \
+    Images/TriCaster/SelectInputSmall.png \
+    Images/TriCaster/SelectInput.png \
+    Images/TriCaster/PlayMacroSmallHover.png \
+    Images/TriCaster/PlayMacroSmall.png \
+    Images/TriCaster/PlayMacro.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

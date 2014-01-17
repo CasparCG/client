@@ -6,6 +6,7 @@
 
 #include "Events/Inspector/LabelChangedEvent.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QObject>
 
 #include <QtGui/QApplication>

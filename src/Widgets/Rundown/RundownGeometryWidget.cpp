@@ -246,6 +246,8 @@ bool RundownGeometryWidget::executeCommand(Playout::PlayoutType::Type type)
             {
                 this->executeTimer.setInterval(this->command.getDelay());
             }
+
+            this->executeTimer.start();
         }
     }
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())

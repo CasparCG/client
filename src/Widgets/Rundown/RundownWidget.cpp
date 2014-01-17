@@ -5,6 +5,7 @@
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 
+#include <QtCore/QUuid>
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
@@ -28,6 +29,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
+    widget->setObjectName(QUuid::createUuid().toString());
     int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);
 

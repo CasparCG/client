@@ -153,6 +153,24 @@
         <file>Images/OscOutput.png</file>
         <file>Images/OscOutputSmall.png</file>
         <file>Images/OscOutputSmallHover.png</file>
+        <file>Images/TriCaster/PlayMacro.png</file>
+        <file>Images/TriCaster/PlayMacroSmall.png</file>
+        <file>Images/TriCaster/PlayMacroSmallHover.png</file>
+        <file>Images/TriCaster/SelectInput.png</file>
+        <file>Images/TriCaster/SelectInputSmall.png</file>
+        <file>Images/TriCaster/SelectInputSmallHover.png</file>
+        <file>Images/TriCaster/SelectNetworkSource.png</file>
+        <file>Images/TriCaster/SelectNetworkSourceSmall.png</file>
+        <file>Images/TriCaster/SelectNetworkSourceSmallHover.png</file>
+        <file>Images/TriCaster/SelectPreset.png</file>
+        <file>Images/TriCaster/SelectPresetSmall.png</file>
+        <file>Images/TriCaster/SelectPresetSmallHover.png</file>
+        <file>Images/TriCaster/TriggerAuto.png</file>
+        <file>Images/TriCaster/TriggerAutoSmall.png</file>
+        <file>Images/TriCaster/TriggerAutoSmallHover.png</file>
+        <file>Images/TriCaster/TriggerTake.png</file>
+        <file>Images/TriCaster/TriggerTakeSmall.png</file>
+        <file>Images/TriCaster/TriggerTakeSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

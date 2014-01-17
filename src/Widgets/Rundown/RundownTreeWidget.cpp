@@ -130,8 +130,9 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTriCaster->setObjectName("contextMenuTriCaster");
     this->contextMenuTriCaster->setTitle("TriCaster");
     //this->contextMenuTriCaster->setIcon(QIcon(":/Graphics/Images/TriCaster.png"));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"), "Play Macro", this, SLOT(addPlayMacroItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Input", this, SLOT(addSelectInputItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Network Source", this, SLOT(addSelectNetworkSourceItem()));
+    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectNetworkSourceSmall.png"), "Select Network Source", this, SLOT(addSelectNetworkSourceItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"), "Select Preset", this, SLOT(addSelectPresetItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addTriggerAutoItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"), "Trigger Take", this, SLOT(addTriggerTakeItem()));
@@ -395,9 +396,14 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
         {
             ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
-            executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
+            if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
+            {
+                executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
 
-            return true;
+                return true;
+            }
+            else
+                return false;
         }
     }
 
@@ -1246,6 +1252,11 @@ void RundownTreeWidget::addTriggerAutoItem()
 void RundownTreeWidget::addTriggerTakeItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TAKE);
+}
+
+void RundownTreeWidget::addPlayMacroItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::MACRO);
 }
 
 void RundownTreeWidget::addSelectInputItem()
