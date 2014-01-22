@@ -179,7 +179,7 @@
 {
     font-size: 13px;
 }
-#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelGpiOutputPort
+#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelRemoteTriggerId, #labelGpiOutputPort
 {
     color: rgba(190, 190, 190, 255);
 }
