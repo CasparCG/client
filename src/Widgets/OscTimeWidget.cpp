@@ -64,7 +64,10 @@ void OscTimeWidget::setTime(int currentFrame)
 
     double currentTime = currentFrame * (1.0 / this->fps);
 
-    this->labelOscTime->setText(convertToTimecode(currentTime));
+    QString t = convertToTimecode(currentTime);
+    qDebug() << t;
+
+    this->labelOscTime->setText(t);
 
     if (this->timestamp == 0) // First time.
         QTimer::singleShot(200, this, SLOT(checkState()));
