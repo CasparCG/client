@@ -2579,7 +2579,7 @@
    </widget>
    <widget class="QWidget" name="tabOsc">
     <attribute name="title">
-     <string>Osc</string>
+     <string>OSC</string>
     </attribute>
     <widget class="QLineEdit" name="lineEditOscInputPort">
      <property name="geometry">
