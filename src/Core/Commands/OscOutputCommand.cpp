@@ -4,7 +4,7 @@
 
 OscOutputCommand::OscOutputCommand(QObject* parent)
     : AbstractCommand(parent),
-      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type(Osc::DEFAULT_TYPE)
+      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type(Osc::DEFAULT_TYPE), triggerOnNext(Osc::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 
@@ -26,6 +26,11 @@ const QString& OscOutputCommand::getMessage() const
 const QString& OscOutputCommand::getType() const
 {
     return this->type;
+}
+
+bool OscOutputCommand::getTriggerOnNext() const
+{
+    return this->triggerOnNext;
 }
 
 void OscOutputCommand::setOutput(const QString& output)
@@ -52,6 +57,12 @@ void OscOutputCommand::setType(const QString& type)
     emit typeChanged(this->type);
 }
 
+void OscOutputCommand::setTriggerOnNext(bool triggerOnNext)
+{
+    this->triggerOnNext = triggerOnNext;
+    emit triggerOnNextChanged(this->triggerOnNext);
+}
+
 void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -60,6 +71,7 @@ void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setPath(QString::fromStdWString(pt.get(L"path", L"")));
     setMessage(QString::fromStdWString(pt.get(L"message", L"")));
     setType(QString::fromStdWString(pt.get(L"osctype", Osc::DEFAULT_TYPE.toStdWString())));
+    setTriggerOnNext(pt.get(L"triggeronnext", Osc::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
@@ -70,4 +82,5 @@ void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("path", this->getPath());
     writer->writeTextElement("message", this->getMessage());
     writer->writeTextElement("osctype", this->getType());
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

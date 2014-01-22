@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
+    <width>825</width>
     <height>36</height>
    </rect>
   </property>
@@ -139,6 +139,19 @@
       </property>
       <property name="text">
        <string>Delay:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRemoteTriggerId">
+      <property name="geometry">
+       <rect>
+        <x>629</x>
+        <y>19</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>UID:</string>
       </property>
      </widget>
     </widget>

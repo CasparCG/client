@@ -48,6 +48,7 @@ RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -77,8 +78,6 @@ bool RundownKeyerWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
-
-        configureOscSubscriptions();
 
         return true;
     }
@@ -125,6 +124,7 @@ AbstractRundownWidget* RundownKeyerWidget::clone()
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->setRemoteTriggerId(this->command.getRemoteTriggerId());
 
     return widget;
 }
@@ -383,37 +383,37 @@ void RundownKeyerWidget::configureOscSubscriptions()
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
     QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
-    stopControlFilter.replace("#LABEL#", this->model.getLabel());
+    stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
-    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
-    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
-    clearControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
-    clearVideolayerControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearVideolayerControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
-    clearChannelControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearChannelControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -427,6 +427,13 @@ void RundownKeyerWidget::allowGpiChanged(bool allowGpi)
 void RundownKeyerWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownKeyerWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+{
+    configureOscSubscriptions();
+
+    this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
 void RundownKeyerWidget::deviceConnectionStateChanged(CasparDevice& device)

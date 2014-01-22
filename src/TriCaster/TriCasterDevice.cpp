@@ -30,7 +30,7 @@ void TriCasterDevice::selectInput(const QString& switcher, const QString& input,
 {
     if (product == "TriCaster 850")
         writeMessage(QString("<shortcuts><shortcut name=\"switcher_%1_named_input\" value=\"%2\" /></shortcuts>").arg(switcher).arg(input));
-    else if (product == "TriCaster 8000")
+    else
     {
         if (switcher == "pgm")
             writeMessage(QString("<shortcuts><shortcut name=\"main_a_row_named_input\" value=\"%1\" /></shortcuts>").arg(input));

@@ -42,6 +42,7 @@ RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidge
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
 
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
@@ -65,8 +66,6 @@ bool RundownOscOutputWidget::eventFilter(QObject* target, QEvent* event)
 
         this->labelLabel->setText(this->model.getLabel());
 
-        configureOscSubscriptions();
-
         return true;
     }
 
@@ -82,10 +81,12 @@ AbstractRundownWidget* RundownOscOutputWidget::clone()
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setOutput(this->command.getOutput());
     command->setPath(this->command.getPath());
     command->setMessage(this->command.getMessage());
     command->setType(this->command.getType());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -166,7 +167,7 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         QTimer::singleShot(0, this, SLOT(executeStop()));
-    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
         if (!this->command.getOutput().isEmpty() && !this->command.getPath().isEmpty())
         {
@@ -174,6 +175,8 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        QTimer::singleShot(0, this, SLOT(executePlay()));
     else if (type == Playout::PlayoutType::Clear)
         QTimer::singleShot(0, this, SLOT(executeStop()));
     else if (type == Playout::PlayoutType::ClearVideolayer)
@@ -244,37 +247,37 @@ void RundownOscOutputWidget::configureOscSubscriptions()
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
     QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
-    stopControlFilter.replace("#LABEL#", this->model.getLabel());
+    stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
-    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
-    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
-    clearControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
-    clearVideolayerControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearVideolayerControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
-    clearChannelControlFilter.replace("#LABEL#", this->model.getLabel());
+    clearChannelControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -289,6 +292,13 @@ void RundownOscOutputWidget::gpiConnectionStateChanged(bool connected, GpiDevice
 {
     this->labelDisconnected->setVisible(!connected);
     checkGpiConnection();
+}
+
+void RundownOscOutputWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+{
+    configureOscSubscriptions();
+
+    this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
 void RundownOscOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

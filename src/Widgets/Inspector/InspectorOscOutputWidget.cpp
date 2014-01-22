@@ -33,6 +33,7 @@ bool InspectorOscOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->lineEditPath->setText(this->command->getPath());
             this->lineEditMessage->setText(this->command->getMessage());
             this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         checkEmptyOutput();
@@ -75,6 +76,7 @@ void InspectorOscOutputWidget::blockAllSignals(bool block)
     this->lineEditPath->blockSignals(block);
     this->lineEditMessage->blockSignals(block);
     this->comboBoxType->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorOscOutputWidget::checkEmptyOutput()
@@ -115,4 +117,9 @@ void InspectorOscOutputWidget::messageChanged(QString message)
 void InspectorOscOutputWidget::typeChanged(QString type)
 {
     this->command->setType(type);
+}
+
+void InspectorOscOutputWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

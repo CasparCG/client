@@ -21,12 +21,14 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         virtual int getVideolayer() const;
         virtual bool getAllowGpi() const;
         virtual bool getAllowRemoteTriggering() const;
+        virtual QString getRemoteTriggerId() const;
 
         virtual void setChannel(int channel);
         virtual void setVideolayer(int videolayer);
         virtual void setDelay(int delay);
         virtual void setAllowGpi(bool allowGpi);
         virtual void setAllowRemoteTriggering(bool allowRemoteTriggering);
+        virtual void setRemoteTriggerId(const QString& id);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
@@ -39,6 +41,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         int delay;
         bool allowGpi;
         bool allowRemoteTriggering;
+        QString remoteTriggerId;
 
     private:
         Q_SIGNAL void channelChanged(int);
@@ -46,4 +49,5 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         Q_SIGNAL void delayChanged(int);
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void allowRemoteTriggeringChanged(bool);
+        Q_SIGNAL void remoteTriggerIdChanged(const QString&);
 };

@@ -96,6 +96,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void loopChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);

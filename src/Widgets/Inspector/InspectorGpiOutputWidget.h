@@ -23,4 +23,5 @@ class WIDGETS_EXPORT InspectorGpiOutputWidget : public QWidget, Ui::InspectorGpi
 
         Q_SLOT void gpoPortChanged(int);
         Q_SLOT void resetGpoPort(QString);
+        Q_SLOT void triggerOnNextChanged(int);
 };

@@ -49,4 +49,5 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void tricasterDeviceAdded(TriCasterDevice&);
         Q_SLOT void tricasterDeviceRemoved();
         Q_SLOT void tricasterDeviceNameChanged(QString);
+        Q_SLOT void remoteTriggerIdChanged(QString);
 };

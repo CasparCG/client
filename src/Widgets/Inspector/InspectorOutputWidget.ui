@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>244</width>
-    <height>224</height>
+    <height>252</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -336,6 +336,39 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutStop">
+     <item>
+      <spacer name="horizontalSpacerStop">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>87</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelRemoteTriggerId">
+       <property name="text">
+        <string>UID</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditRemoteTriggerId"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerOutput">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -485,8 +518,24 @@
      <y>187</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-4</x>
+     <x>0</x>
      <y>186</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditRemoteTriggerId</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>remoteTriggerIdChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -500,5 +549,6 @@
   <slot>targetChanged(QString)</slot>
   <slot>tricasterDeviceNameChanged(QString)</slot>
   <slot>allowRemoteTriggeringChanged(int)</slot>
+  <slot>remoteTriggerIdChanged(QString)</slot>
  </slots>
 </ui>

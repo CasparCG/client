@@ -82,6 +82,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         Q_SLOT void autoStepChanged(bool);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void autoPlayChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);

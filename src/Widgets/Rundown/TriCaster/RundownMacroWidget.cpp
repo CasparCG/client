@@ -41,6 +41,7 @@ RundownMacroWidget::RundownMacroWidget(const LibraryModel& model, QWidget* paren
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
 
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(deviceAdded(TriCasterDevice&)));
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -80,8 +81,6 @@ bool RundownMacroWidget::eventFilter(QObject* target, QEvent* event)
         this->model.setLabel(labelChanged->getLabel());
 
         this->labelLabel->setText(this->model.getLabel());
-
-        configureOscSubscriptions();
 
         return true;
     }
@@ -126,6 +125,7 @@ AbstractRundownWidget* RundownMacroWidget::clone()
     command->setDelay(this->command.getDelay());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setName(this->command.getName());
 
     return widget;
@@ -271,13 +271,13 @@ void RundownMacroWidget::configureOscSubscriptions()
         this->updateControlSubscription->disconnect(); // Disconnect all events.
 
     QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
-    playControlFilter.replace("#LABEL#", this->model.getLabel());
+    playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
-    updateControlFilter.replace("#LABEL#", this->model.getLabel());
+    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -291,6 +291,13 @@ void RundownMacroWidget::allowGpiChanged(bool allowGpi)
 void RundownMacroWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
+}
+
+void RundownMacroWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+{
+    configureOscSubscriptions();
+
+    this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
 void RundownMacroWidget::deviceConnectionStateChanged(TriCasterDevice& device)

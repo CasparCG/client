@@ -93,6 +93,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);

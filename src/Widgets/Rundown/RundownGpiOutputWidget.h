@@ -81,6 +81,7 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         Q_SLOT void gpiOutputPortChanged(int);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);

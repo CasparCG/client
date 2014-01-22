@@ -82,6 +82,9 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setEnabled(false);
         this->checkBoxAllowGpi->setEnabled(false);
         this->checkBoxAllowRemoteTriggering->setEnabled(false);
+        this->labelRemoteTriggerId->setEnabled(false);
+        this->lineEditRemoteTriggerId->setEnabled(false);
+
 
         this->labelMillisecond->setText("");
         this->labelMillisecond->setVisible(false);
@@ -90,6 +93,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
         this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
         this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+        this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
 
         fillTargetCombo(this->model->getType());
 
@@ -113,6 +117,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setEnabled(false);
         this->checkBoxAllowGpi->setEnabled(false);
         this->checkBoxAllowRemoteTriggering->setEnabled(false);
+        this->labelRemoteTriggerId->setEnabled(false);
+        this->lineEditRemoteTriggerId->setEnabled(false);
 
         this->labelMillisecond->setText("");
         this->labelMillisecond->setVisible(false);
@@ -124,6 +130,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
         this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
         this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+        this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
 
         checkEmptyDevice();
         checkEmptyTriCasterDevice();
@@ -148,6 +155,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
         this->spinBoxDelay->setEnabled(true);
         this->checkBoxAllowGpi->setEnabled(true);
         this->checkBoxAllowRemoteTriggering->setEnabled(true);
+        this->labelRemoteTriggerId->setEnabled(true);
+        this->lineEditRemoteTriggerId->setEnabled(true);
 
         this->labelMillisecond->setVisible(true);
         if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
@@ -175,6 +184,13 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->spinBoxDelay->setValue(this->command->getDelay());
             this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
             this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
+            this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
+
+            if (!this->checkBoxAllowRemoteTriggering->isChecked())
+            {
+                this->labelRemoteTriggerId->setEnabled(false);
+                this->lineEditRemoteTriggerId->setEnabled(false);
+            }
 
             fillTargetCombo(this->model->getType());
 
@@ -213,6 +229,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxDelay->setEnabled(false);
                 this->checkBoxAllowGpi->setEnabled(false);
                 this->checkBoxAllowRemoteTriggering->setEnabled(false);
+                this->labelRemoteTriggerId->setEnabled(false);
+                this->lineEditRemoteTriggerId->setEnabled(false);
 
                 this->comboBoxDevice->setCurrentIndex(-1);
                 this->comboBoxTarget->setCurrentIndex(-1);
@@ -221,6 +239,7 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
                 this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
                 this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+                this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
             }
             else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
             {
@@ -323,6 +342,7 @@ void InspectorOutputWidget::blockAllSignals(bool block)
     this->spinBoxDelay->blockSignals(block);
     this->checkBoxAllowGpi->blockSignals(block);
     this->checkBoxAllowRemoteTriggering->blockSignals(block);
+    this->lineEditRemoteTriggerId->blockSignals(block);
 }
 
 void InspectorOutputWidget::fillTargetCombo(const QString& type)
@@ -454,6 +474,14 @@ void InspectorOutputWidget::allowGpiChanged(int state)
 void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 {
     this->command->setAllowRemoteTriggering((state == Qt::Checked) ? true : false);
+
+    this->labelRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
+    this->lineEditRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
+}
+
+void InspectorOutputWidget::remoteTriggerIdChanged(QString id)
+{
+    this->command->setRemoteTriggerId(id);
 }
 
 void InspectorOutputWidget::tricasterDeviceRemoved()

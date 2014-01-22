@@ -23,10 +23,15 @@ class CORE_EXPORT GpiOutputCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         int getGpoPort() const;
+        bool getTriggerOnNext() const;
+
         void setGpoPort(int gpoPort);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         int gpoPort;
+        bool triggerOnNext;
 
         Q_SIGNAL void gpoPortChanged(int);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };

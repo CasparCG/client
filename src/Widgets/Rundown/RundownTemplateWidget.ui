@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>858</width>
+    <width>925</width>
     <height>36</height>
    </rect>
   </property>
@@ -131,7 +131,7 @@
      <widget class="QLabel" name="labelDevice">
       <property name="geometry">
        <rect>
-        <x>463</x>
+        <x>461</x>
         <y>19</y>
         <width>260</width>
         <height>16</height>
@@ -152,6 +152,19 @@
       </property>
       <property name="text">
        <string>Flash layer:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRemoteTriggerId">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>19</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>UID:</string>
       </property>
      </widget>
     </widget>

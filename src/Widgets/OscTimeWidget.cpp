@@ -36,6 +36,10 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
 
 void OscTimeWidget::reset()
 {
+    if (this->paused)
+        return;
+
+    this->fps = 0;
     this->timestamp = 0;
     this->progressBarOscTime->reset();
 
@@ -117,8 +121,14 @@ void OscTimeWidget::setFramesPerSecond(int fps)
 }
 
 void OscTimeWidget::setPaused(bool paused)
-{
-    // Indicate paused state. Border change?
+{  
+    if (this->fps == 0)
+        return; // We are not playing.
+
+    this->paused = paused;
+
+    if (this->paused && !this->progressBarOscTime->isVisible())
+        this->progressBarOscTime->setVisible(true);
 }
 
 void OscTimeWidget::setLoop(bool loop)

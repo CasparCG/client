@@ -83,6 +83,7 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         Q_SLOT void executeStop();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);

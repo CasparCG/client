@@ -76,6 +76,7 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
         Q_SLOT void executePlay();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(TriCasterDevice&);
         Q_SLOT void deviceAdded(TriCasterDevice&);

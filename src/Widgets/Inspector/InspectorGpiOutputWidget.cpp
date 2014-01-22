@@ -26,6 +26,7 @@ bool InspectorGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->spinBoxGpoPort->setValue(this->command->getGpoPort() + 1);
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -37,6 +38,7 @@ bool InspectorGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorGpiOutputWidget::blockAllSignals(bool block)
 {
     this->spinBoxGpoPort->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorGpiOutputWidget::gpoPortChanged(int port)
@@ -48,4 +50,9 @@ void InspectorGpiOutputWidget::resetGpoPort(QString)
 {
     this->spinBoxGpoPort->setValue(GpiOutput::DEFAULT_PORT + 1);
     this->command->setGpoPort(this->spinBoxGpoPort->value() - 1);
+}
+
+void InspectorGpiOutputWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

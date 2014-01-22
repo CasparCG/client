@@ -180,6 +180,17 @@ void RundownTreeWidget::setupMenus()
 
 bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 {
+    if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
+    {
+        ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
+        if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
+        {
+            executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
+
+            return true;
+        }
+    }
+
     if (this->active)
     {
         if (event->type() == QEvent::KeyPress)
@@ -392,18 +403,6 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
             }
 
             return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
-        {
-            ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
-            if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
-            {
-                executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
-
-                return true;
-            }
-            else
-                return false;
         }
     }
 
@@ -873,9 +872,6 @@ bool RundownTreeWidget::moveItemUp()
 
 bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource source, QTreeWidgetItem* item)
 {
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return true;
-
     //QModelIndex currentIndex;
     QTreeWidgetItem* currentItem = NULL;
 
@@ -887,6 +883,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
 
     if (item == NULL)
     {
+        if (this->treeWidgetRundown->currentItem() == NULL)
+            return true;
+
         currentItem = this->treeWidgetRundown->currentItem();
         //currentIndex = this->treeWidgetRundown->currentIndex();
 
