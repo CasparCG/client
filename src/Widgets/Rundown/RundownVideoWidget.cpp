@@ -307,11 +307,11 @@ void RundownVideoWidget::checkEmptyDevice()
 bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::Play)
     {
         if (this->command.getAutoPlay())
-            QTimer::singleShot(0, this, SLOT(executePlay()));
+            executePlay();
         else if (!this->command.getTriggerOnNext() || type == Playout::PlayoutType::Update)
         {
             if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
@@ -333,22 +333,22 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Pause)
-        QTimer::singleShot(0, this, SLOT(executePause()));
+        executePause();
     else if (type == Playout::PlayoutType::Load)
-        QTimer::singleShot(0, this, SLOT(executeLoad()));
+        executeLoad();
     else if (type == Playout::PlayoutType::Next)
     {
         if (this->command.getAutoPlay())
-            QTimer::singleShot(0, this, SLOT(executeNext()));
+            executeNext();
         else if (this->command.getTriggerOnNext())
-            QTimer::singleShot(0, this, SLOT(executePlay()));
+            executePlay();
     }
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+        executeClearChannel();
 
     if (this->active)
         this->animation->start(1);
@@ -853,6 +853,8 @@ void RundownVideoWidget::deviceAdded(CasparDevice& device)
 
 void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    //qDebug() << predicate << " " << arguments;
+
     if (this->fileModel != NULL)
     {
         delete this->fileModel;
@@ -866,6 +868,8 @@ void RundownVideoWidget::timeSubscriptionReceived(const QString& predicate, cons
 
 void RundownVideoWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    //qDebug() << predicate << " " << arguments;
+
     if (this->fileModel == NULL)
         return;
 
@@ -875,6 +879,8 @@ void RundownVideoWidget::frameSubscriptionReceived(const QString& predicate, con
 
 void RundownVideoWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    //qDebug() << predicate << " " << arguments;
+
     if (this->fileModel == NULL)
         return;
 
@@ -883,6 +889,8 @@ void RundownVideoWidget::fpsSubscriptionReceived(const QString& predicate, const
 
 void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    //qDebug() << predicate << " " << arguments << "\n";
+
     QString name = arguments.at(0).toString();
     name.remove(name.lastIndexOf('.'), name.length()); // Remove extension.
 

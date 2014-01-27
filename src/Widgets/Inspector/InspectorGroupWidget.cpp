@@ -14,11 +14,11 @@
 
 InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL), disableVideoProgress(false)
+      model(NULL), command(NULL), enableOscInput(true)
 {
     setupUi(this);
 
-    this->disableVideoProgress = (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "true") ? true : false;
+    this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
 
     qApp->installEventFilter(this);
 }
@@ -39,7 +39,7 @@ bool InspectorGroupWidget::eventFilter(QObject* target, QEvent* event)
             this->plainTextEditNotes->setPlainText(this->command->getNotes());
             this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
 
-            if (!this->disableVideoProgress)
+            if (this->enableOscInput)
             {
                 this->labelAutoPlay->setVisible(true);
                 this->checkBoxAutoPlay->setVisible(true);

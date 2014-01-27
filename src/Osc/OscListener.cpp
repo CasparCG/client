@@ -18,7 +18,7 @@ OscListener::OscListener(const QString& address, int port, QObject* parent)
 
     this->thread = new OscThread(this->multiplexer, this);
 
-    QTimer::singleShot(100, this, SLOT(sendEventBatch()));
+    QTimer::singleShot(200, this, SLOT(sendEventBatch()));
 }
 
 OscListener::~OscListener()
@@ -81,5 +81,5 @@ void OscListener::sendEventBatch()
     foreach (const QString& eventPath, other.keys())
         emit messageReceived(eventPath, other[eventPath]);
 
-    QTimer::singleShot(100, this, SLOT(sendEventBatch()));
+    QTimer::singleShot(200, this, SLOT(sendEventBatch()));
 }

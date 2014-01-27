@@ -92,7 +92,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
 
     qApp->installEventFilter(this);
 
-    QTimer::singleShot(1, this, SLOT(loadLibrary()));
+    QTimer::singleShot(0, this, SLOT(loadLibrary()));
 }
 
 void LibraryWidget::loadLibrary()

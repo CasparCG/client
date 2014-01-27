@@ -22,7 +22,7 @@ void OscDeviceManager::initialize()
 
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
     this->oscListener = QSharedPointer<OscListener>(new OscListener("0.0.0.0", (oscPort.isEmpty() == true) ? Osc::DEFAULT_PORT : oscPort.toInt()));
-    if (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "false")
+    if (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true")
         this->oscListener->start();
 }
 

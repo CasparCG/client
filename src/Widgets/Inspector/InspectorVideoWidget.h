@@ -25,7 +25,7 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
     private:
         LibraryModel* model;
         VideoCommand* command;
-        bool disableVideoProgress;
+        bool enableOscInput;
 
         void loadDirection();
         void loadTransition();

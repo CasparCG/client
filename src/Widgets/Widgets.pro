@@ -79,7 +79,6 @@ HEADERS += \
     Rundown/RundownCustomCommandWidget.h \
     Inspector/InspectorCustomCommandWidget.h \
     Library/DeviceFilterWidget.h \
-    TimeWidget.h \
     OscTimeWidget.h \
     Action/ActionWidget.h \
     Rundown/RundownTreeBaseWidget.h \
@@ -180,7 +179,6 @@ SOURCES += \
     Rundown/RundownCustomCommandWidget.cpp \
     Inspector/InspectorCustomCommandWidget.cpp \
     Library/DeviceFilterWidget.cpp \
-    TimeWidget.cpp \
     OscTimeWidget.cpp \
     Action/ActionWidget.cpp \
     Rundown/RundownTreeBaseWidget.cpp \
@@ -280,7 +278,6 @@ FORMS += \
     Rundown/RundownCustomCommandWidget.ui \
     Inspector/InspectorCustomCommandWidget.ui \
     Library/DeviceFilterWidget.ui \
-    TimeWidget.ui \
     OscTimeWidget.ui \
     Action/ActionWidget.ui \
     Rundown/RundownChromaWidget.ui \

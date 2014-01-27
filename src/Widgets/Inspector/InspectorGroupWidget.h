@@ -24,7 +24,7 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
     private:
         LibraryModel* model;
         GroupCommand* command;
-        bool disableVideoProgress;
+        bool enableOscInput;
 
         void blockAllSignals(bool block);
 

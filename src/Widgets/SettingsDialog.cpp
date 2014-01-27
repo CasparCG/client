@@ -47,8 +47,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
     this->checkBoxReverseOscTime->setChecked(reverseOscTime);
 
-    bool disableVideoProgress = (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "true") ? true : false;
-    this->checkBoxDisableVideoProgress->setChecked(disableVideoProgress);
+    bool enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
+    this->checkBoxEnableOscInput->setChecked(enableOscInput);
+    this->labelOscPort->setEnabled(enableOscInput);
+    this->lineEditOscInputPort->setEnabled(enableOscInput);
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
@@ -477,10 +479,13 @@ void SettingsDialog::reverseOscTimeChanged(int state)
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ReverseOscTime", reverseOscTime));
 }
 
-void SettingsDialog::disableVideoProgressChanged(int state)
+void SettingsDialog::enableOscInputChanged(int state)
 {
-    QString disableVideoProgress = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DisableVideoProgress", disableVideoProgress));
+    QString enableOscInput = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInput", enableOscInput));
+
+    this->labelOscPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->lineEditOscInputPort->setEnabled((state == Qt::Checked) ? true : false);
 }
 
 void SettingsDialog::disableInAndOutPointsChanged(int state)

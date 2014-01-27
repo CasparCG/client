@@ -210,7 +210,7 @@ void RundownCommitWidget::checkEmptyDevice()
 bool RundownCommitWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
@@ -231,11 +231,11 @@ bool RundownCommitWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
 
     if (this->active)
         this->animation->start(1);

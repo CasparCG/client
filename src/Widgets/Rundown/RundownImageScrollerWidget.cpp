@@ -262,7 +262,7 @@ void RundownImageScrollerWidget::checkEmptyDevice()
 bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::Play)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
@@ -283,15 +283,15 @@ bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Pause)
-        QTimer::singleShot(0, this, SLOT(executePause()));
+        executePause();
     else if (type == Playout::PlayoutType::Load)
-        QTimer::singleShot(0, this, SLOT(executeLoad()));
+        executeLoad();
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+        executeClearChannel();
 
     if (this->active)
         this->animation->start(1);

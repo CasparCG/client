@@ -166,7 +166,7 @@ void RundownOscOutputWidget::setColor(const QString& color)
 bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
         if (!this->command.getOutput().isEmpty() && !this->command.getPath().isEmpty())
@@ -176,13 +176,13 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
-        QTimer::singleShot(0, this, SLOT(executePlay()));
+        executePlay();
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
 
     if (this->active)
         this->animation->start(1);

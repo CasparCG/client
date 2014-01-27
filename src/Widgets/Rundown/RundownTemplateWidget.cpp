@@ -257,7 +257,7 @@ void RundownTemplateWidget::checkEmptyDevice()
 bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::Play)
     {
         this->executeTimer.disconnect(); // Disconnect all events.
@@ -295,17 +295,17 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Load)
-        QTimer::singleShot(0, this, SLOT(executeLoad()));
+        executeLoad();
     else if (type == Playout::PlayoutType::Next)
-        QTimer::singleShot(0, this, SLOT(executeNext()));
+        executeNext();
     else if (type == Playout::PlayoutType::Invoke)
-        QTimer::singleShot(0, this, SLOT(executeInvoke()));
+        executeInvoke();
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeClear()));
+        executeClear();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+        executeClearChannel();
 
     if (this->active)
         this->animation->start(1);

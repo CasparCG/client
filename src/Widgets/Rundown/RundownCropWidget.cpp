@@ -229,7 +229,7 @@ void RundownCropWidget::checkEmptyDevice()
 bool RundownCropWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
@@ -250,11 +250,11 @@ bool RundownCropWidget::executeCommand(Playout::PlayoutType::Type type)
         }
     }
     else if (type == Playout::PlayoutType::Clear)
-        QTimer::singleShot(0, this, SLOT(executeStop()));
+        executeStop();
     else if (type == Playout::PlayoutType::ClearVideolayer)
-        QTimer::singleShot(0, this, SLOT(executeClearVideolayer()));
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
-        QTimer::singleShot(0, this, SLOT(executeClearChannel()));
+        executeClearChannel();
 
     if (this->active)
         this->animation->start(1);

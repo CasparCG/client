@@ -180,6 +180,8 @@ void RundownTreeWidget::setupMenus()
 
 bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 {
+    //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
+
     if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
     {
         ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
@@ -193,6 +195,8 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
     if (this->active)
     {
+        qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
+
         if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);

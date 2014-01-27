@@ -13,11 +13,11 @@
 
 InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL), disableVideoProgress(false)
+      model(NULL), command(NULL), enableOscInput(false)
 {
     setupUi(this);
 
-    this->disableVideoProgress = (DatabaseManager::getInstance().getConfigurationByName("DisableVideoProgress").getValue() == "true") ? true : false;
+    this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
 
     loadDirection();
     loadTransition();
@@ -53,7 +53,7 @@ bool InspectorVideoWidget::eventFilter(QObject* target, QEvent* event)
             AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(rundownItemSelectedEvent->getSource());
 
             // Only show auto play option if we are in a group. OSC needs to be enabled.
-            if (!this->disableVideoProgress && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
+            if (this->enableOscInput && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
             {
                 this->labelAutoPlay->setEnabled(true);
                 this->checkBoxAutoPlay->setEnabled(true);

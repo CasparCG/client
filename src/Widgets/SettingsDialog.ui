@@ -311,27 +311,11 @@
       <string>Count video progress down</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxDisableVideoProgress">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>342</y>
-       <width>171</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="text">
-      <string>Disable video progress</string>
-     </property>
-    </widget>
     <widget class="QCheckBox" name="checkBoxDisableInAndOutPoints">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>368</y>
+       <y>342</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -347,7 +331,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>412</y>
+       <y>386</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -363,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>420</y>
+       <y>394</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -376,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>442</y>
+       <y>416</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -402,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>443</y>
+       <y>417</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -2584,8 +2568,8 @@
     <widget class="QLineEdit" name="lineEditOscInputPort">
      <property name="geometry">
       <rect>
-       <x>144</x>
-       <y>42</y>
+       <x>164</x>
+       <y>76</y>
        <width>113</width>
        <height>20</height>
       </rect>
@@ -2632,8 +2616,8 @@
     <widget class="QLabel" name="labelOscPort">
      <property name="geometry">
       <rect>
-       <x>84</x>
-       <y>44</y>
+       <x>104</x>
+       <y>78</y>
        <width>51</width>
        <height>20</height>
       </rect>
@@ -2649,7 +2633,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>95</y>
+       <y>128</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -2662,7 +2646,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>87</y>
+       <y>120</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -2678,7 +2662,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>117</y>
+       <y>150</y>
        <width>535</width>
        <height>251</height>
       </rect>
@@ -2736,7 +2720,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>377</y>
+       <y>410</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -2761,7 +2745,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>377</y>
+       <y>410</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -2780,6 +2764,22 @@
      </property>
      <property name="toolTip">
       <string>Remove OSC Output</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxEnableOscInput">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>40</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Enable OSC input</string>
      </property>
     </widget>
    </widget>
@@ -3103,8 +3103,8 @@
    <slot>serialPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>90</y>
+     <x>211</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3135,8 +3135,8 @@
    <slot>gpi2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>353</x>
-     <y>224</y>
+     <x>369</x>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3151,8 +3151,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>368</x>
-     <y>253</y>
+     <x>370</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -3167,7 +3167,7 @@
    <slot>gpi4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
+     <x>369</x>
      <y>282</y>
     </hint>
     <hint type="destinationlabel">
@@ -3183,7 +3183,7 @@
    <slot>gpi5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
+     <x>369</x>
      <y>310</y>
     </hint>
     <hint type="destinationlabel">
@@ -3199,7 +3199,7 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>303</x>
+     <x>369</x>
      <y>338</y>
     </hint>
     <hint type="destinationlabel">
@@ -3215,7 +3215,7 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>303</x>
+     <x>369</x>
      <y>366</y>
     </hint>
     <hint type="destinationlabel">
@@ -3231,7 +3231,7 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
+     <x>369</x>
      <y>394</y>
     </hint>
     <hint type="destinationlabel">
@@ -3247,7 +3247,7 @@
    <slot>gpo1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>160</x>
+     <x>211</x>
      <y>469</y>
     </hint>
     <hint type="destinationlabel">
@@ -3263,7 +3263,7 @@
    <slot>gpo1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>383</x>
+     <x>443</x>
      <y>470</y>
     </hint>
     <hint type="destinationlabel">
@@ -3279,7 +3279,7 @@
    <slot>gpo2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
+     <x>211</x>
      <y>497</y>
     </hint>
     <hint type="destinationlabel">
@@ -3295,7 +3295,7 @@
    <slot>gpo2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
+     <x>443</x>
      <y>498</y>
     </hint>
     <hint type="destinationlabel">
@@ -3311,7 +3311,7 @@
    <slot>gpo3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>194</x>
+     <x>211</x>
      <y>525</y>
     </hint>
     <hint type="destinationlabel">
@@ -3327,7 +3327,7 @@
    <slot>gpo3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
+     <x>443</x>
      <y>526</y>
     </hint>
     <hint type="destinationlabel">
@@ -3359,7 +3359,7 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>389</x>
+     <x>443</x>
      <y>554</y>
     </hint>
     <hint type="destinationlabel">
@@ -3391,7 +3391,7 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>406</x>
+     <x>443</x>
      <y>582</y>
     </hint>
     <hint type="destinationlabel">
@@ -3407,7 +3407,7 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>175</x>
+     <x>211</x>
      <y>609</y>
     </hint>
     <hint type="destinationlabel">
@@ -3423,7 +3423,7 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>379</x>
+     <x>443</x>
      <y>610</y>
     </hint>
     <hint type="destinationlabel">
@@ -3439,7 +3439,7 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
+     <x>211</x>
      <y>637</y>
     </hint>
     <hint type="destinationlabel">
@@ -3455,7 +3455,7 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>392</x>
+     <x>443</x>
      <y>638</y>
     </hint>
     <hint type="destinationlabel">
@@ -3471,7 +3471,7 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
+     <x>211</x>
      <y>665</y>
     </hint>
     <hint type="destinationlabel">
@@ -3487,7 +3487,7 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>402</x>
+     <x>443</x>
      <y>666</y>
     </hint>
     <hint type="destinationlabel">
@@ -3503,8 +3503,8 @@
    <slot>baudRateChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>160</x>
-     <y>114</y>
+     <x>211</x>
+     <y>123</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3561,30 +3561,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxDisableVideoProgress</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>disableVideoProgressChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>385</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>387</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDisableInAndOutPoints</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>disableInAndOutPointsChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>412</y>
+     <x>136</x>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3679,8 +3663,8 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>234</x>
-     <y>83</y>
+     <x>252</x>
+     <y>131</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -3711,8 +3695,8 @@
    <slot>removeOscOutput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>421</y>
+     <x>190</x>
+     <y>463</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3727,8 +3711,8 @@
    <slot>showAddOscOutputDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>426</y>
+     <x>132</x>
+     <y>463</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -3743,8 +3727,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>257</x>
-     <y>490</y>
+     <x>259</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -3765,6 +3749,22 @@
     <hint type="destinationlabel">
      <x>696</x>
      <y>548</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxEnableOscInput</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>enableOscInputChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>174</y>
     </hint>
    </hints>
   </connection>
@@ -3798,7 +3798,6 @@
   <slot>autoStepChanged(int)</slot>
   <slot>showThumbnailTooltipChanged(int)</slot>
   <slot>reverseOscTimeChanged(int)</slot>
-  <slot>disableVideoProgressChanged(int)</slot>
   <slot>disableInAndOutPointsChanged(int)</slot>
   <slot>oscPortChanged()</slot>
   <slot>showAddTriCasterDeviceDialog()</slot>
@@ -3811,5 +3810,6 @@
   <slot>removeOscOutput()</slot>
   <slot>delayTypeChanged(QString)</slot>
   <slot>tricasterProductChanged(QString)</slot>
+  <slot>enableOscInputChanged(int)</slot>
  </slots>
 </ui>
