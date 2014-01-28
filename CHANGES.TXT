@@ -4,7 +4,8 @@ CasparCG Client 2.0.6
 - NEW: Enter/Return key open up the template data dialog in add mode.
 - NEW: Enter/Return + Shift key open up the template data dialog in edit mode.
 - NEW: Added support for trigger items remotely using OSC.
-- NEW: Added support for NewTek TriCaster.
+- NEW: Added OSC output item.
+- NEW: Added support for NewTek TriCaster 410, 460, 850, 860, 8000.
 - NEW: Added support for drag and drop internally in template data.
 - NEW: Added support for drop stored data on a template items.
 - NEW: Added support for change the default OSC port.
@@ -14,10 +15,12 @@ CasparCG Client 2.0.6
 - NEW: Added support for import CasparCG servers from disk, based on code contribution by YLE and Robert Nagy.
 - FIX: OSC progress using localhost server.
 - FIX: Font rendering issue on Mac OS X Mavericks.
+- UPDATE: OSC performance changes.
 - UPDATE: Reload targets when refreshing the library.
 - UPDATE: Drag and drop changes.
 - UPDATE: Devices marked as "Shadow system" will not show up in the device lists.
 - UPDATE: Changed target in the inspector changes the rundown item label if they have the same name. 
+- UPDATE: UI changes.
 
 
 

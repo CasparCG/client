@@ -16,6 +16,7 @@
 #include "Models/OscOutputModel.h"
 
 #include <QtCore/QTimer>
+#include <QtCore/QRegExp>
 
 #include <QtGui/QComboBox>
 #include <QtGui/QFileDialog>

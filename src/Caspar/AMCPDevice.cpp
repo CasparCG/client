@@ -1,6 +1,5 @@
 #include "AMCPDevice.h"
 
-#include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
@@ -94,9 +93,9 @@ void AMCPDevice::readMessage()
         if (this->line.endsWith("\r\n"))
         {
             if (this->line == "\r\n")
-                this->line.remove(QRegExp("\r\n"));
+                this->line.remove("\r\n");
 
-            QStringList lines = this->line.split(QRegExp("\r\n"));
+            QStringList lines = this->line.split("\r\n");
             foreach (QString line, lines)
                 parseLine(line);
 
@@ -164,7 +163,7 @@ void AMCPDevice::parseHeader(const QString& line)
     if (line.length() == 0)
         return;
 
-    QStringList tokens = line.split(QRegExp("\\s"));
+    QStringList tokens = line.split(" ");
 
     this->code = tokens.at(0).toInt();
     switch (this->code)

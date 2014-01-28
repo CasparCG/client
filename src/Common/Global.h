@@ -100,22 +100,22 @@ namespace Osc
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
     static const QString DEFAULT_TIME = "00:00:00:00";
-    static const QString DEFAULT_TIME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time.*";
-    static const QString DEFAULT_FRAME_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame.*";
-    static const QString DEFAULT_FPS_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps.*";
-    static const QString DEFAULT_PATH_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path.*";
-    static const QString DEFAULT_PAUSED_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused.*";
-    static const QString DEFAULT_LOOP_FILTER = "^#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop.*";
-    static const QString DEFAULT_STOP_CONTROL_FILTER = ".*/control/#UID#/stop";
-    static const QString DEFAULT_PLAY_CONTROL_FILTER = ".*/control/#UID#/play";
-    static const QString DEFAULT_LOAD_CONTROL_FILTER = ".*/control/#UID#/load";
-    static const QString DEFAULT_PAUSE_CONTROL_FILTER = ".*/control/#UID#/pause";
-    static const QString DEFAULT_NEXT_CONTROL_FILTER = ".*/control/#UID#/next";
-    static const QString DEFAULT_UPDATE_CONTROL_FILTER = ".*/control/#UID#/update";
-    static const QString DEFAULT_INVOKE_CONTROL_FILTER = ".*/control/#UID#/invoke";
-    static const QString DEFAULT_CLEAR_CONTROL_FILTER = ".*/control/#UID#/clear";
-    static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = ".*/control/#UID#/clearvideolayer";
-    static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = ".*/control/#UID#/clearchannel";
+    static const QString DEFAULT_TIME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time";
+    static const QString DEFAULT_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame";
+    static const QString DEFAULT_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps";
+    static const QString DEFAULT_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path";
+    static const QString DEFAULT_PAUSED_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused";
+    static const QString DEFAULT_LOOP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop";
+    static const QString DEFAULT_STOP_CONTROL_FILTER = "/control/#UID#/stop";
+    static const QString DEFAULT_PLAY_CONTROL_FILTER = "/control/#UID#/play";
+    static const QString DEFAULT_LOAD_CONTROL_FILTER = "/control/#UID#/load";
+    static const QString DEFAULT_PAUSE_CONTROL_FILTER = "/control/#UID#/pause";
+    static const QString DEFAULT_NEXT_CONTROL_FILTER = "/control/#UID#/next";
+    static const QString DEFAULT_UPDATE_CONTROL_FILTER = "/control/#UID#/update";
+    static const QString DEFAULT_INVOKE_CONTROL_FILTER = "/control/#UID#/invoke";
+    static const QString DEFAULT_CLEAR_CONTROL_FILTER = "/control/#UID#/clear";
+    static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = "/control/#UID#/clearvideolayer";
+    static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = "/control/#UID#/clearchannel";
 }
 
 namespace GpiOutput

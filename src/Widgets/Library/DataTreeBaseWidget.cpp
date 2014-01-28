@@ -1,7 +1,6 @@
 #include "DataTreeBaseWidget.h"
 
 #include <QtCore/QMimeData>
-#include <QtCore/QRegExp>
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>

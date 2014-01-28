@@ -1,6 +1,5 @@
 #include "CasparDevice.h"
 
-#include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 
 #include <QtNetwork/QHostInfo>
@@ -571,7 +570,12 @@ void CasparDevice::sendNotification()
             foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
-                name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
+                name.replace("\\", "/");
+                if (name.startsWith("\""))
+                    name.remove(0, 1);
+
+                if (name.endsWith("\""))
+                    name.remove(name.length() - 1, 1);
 
                 QString type = response.split("\" ").at(1).trimmed().split(" ").at(0);
 
@@ -610,7 +614,12 @@ void CasparDevice::sendNotification()
             foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
-                name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
+                name.replace("\\", "/");
+                if (name.startsWith("\""))
+                    name.remove(0, 1);
+
+                if (name.endsWith("\""))
+                    name.remove(name.length() - 1, 1);
 
                 items.push_back(CasparTemplate(name));
             }
@@ -644,7 +653,12 @@ void CasparDevice::sendNotification()
             foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
-                name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
+                name.replace("\\", "/");
+                if (name.startsWith("\""))
+                    name.remove(0, 1);
+
+                if (name.endsWith("\""))
+                    name.remove(name.length() - 1, 1);
 
                 items.push_back(CasparData(name));
             }
@@ -663,7 +677,12 @@ void CasparDevice::sendNotification()
             foreach (QString response, AMCPDevice::response)
             {
                 QString name = response.split("\" ").at(0);
-                name.replace("\\", "/").remove(QRegExp("^\"")).remove(QRegExp("\"$"));
+                name.replace("\\", "/");
+                if (name.startsWith("\""))
+                    name.remove(0, 1);
+
+                if (name.endsWith("\""))
+                    name.remove(name.length() - 1, 1);
 
                 QString timestamp = response.split("\" ").at(1).trimmed().split(" ").at(0);
                 QString size = response.split("\" ").at(1).trimmed().split(" ").at(1);

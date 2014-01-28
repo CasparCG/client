@@ -1,6 +1,5 @@
 #include "NTFCDevice.h"
 
-#include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
@@ -100,36 +99,6 @@ void NTFCDevice::writeMessage(const QString& message)
         this->socket->flush();
     }
 }
-
-/*
-void NTFCDevice::readMessage()
-{
-    while (this->socket->bytesAvailable() && this->socket->canReadLine())
-    {
-        this->line += QString::fromUtf8(this->socket->readLine());
-        if (this->line.endsWith("\r\n"))
-        {
-            if (this->line == "\r\n")
-                this->line.remove(QRegExp("\r\n"));
-
-            QStringList lines = this->line.split(QRegExp("\r\n"));
-            foreach (QString line, lines)
-                parseLine(line);
-
-            this->line.clear();
-        }
-    }
-}
-
-void NTFCDevice::parseHeader(const QString& line)
-{
-}
-
-void NTFCDevice::parseMultiline(const QString& line)
-{
-    sendNotification();
-}
-*/
 
 void NTFCDevice::resetDevice()
 {

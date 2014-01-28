@@ -9,7 +9,6 @@
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
-#include <QtCore/QRegExp>
 
 #include <QtGui/QApplication>
 

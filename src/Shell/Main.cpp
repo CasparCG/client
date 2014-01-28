@@ -12,6 +12,7 @@
 
 #include "MainWindow.h"
 
+#include <QtCore/QRegExp>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QString>

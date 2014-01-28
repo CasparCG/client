@@ -195,7 +195,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 
     if (this->active)
     {
-        qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
+        //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
 
         if (event->type() == QEvent::KeyPress)
         {

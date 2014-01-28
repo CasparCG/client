@@ -1,7 +1,6 @@
 #include "AudioTreeBaseWidget.h"
 
 #include <QtCore/QMimeData>
-#include <QtCore/QRegExp>
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
@@ -39,7 +38,7 @@ void AudioTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
                                                          .arg(item->text(5))
                                                          .arg(item->text(6)));
     }
-    data.remove(QRegExp(";$"));
+    data.remove(data.length() - 1, 1); // Remove last index of ;
 
     QMimeData* mimeData = new QMimeData();
     mimeData->setData("application/library-item", data.toUtf8());

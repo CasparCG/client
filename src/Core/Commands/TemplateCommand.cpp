@@ -2,8 +2,6 @@
 
 #include "Global.h"
 
-#include <QtCore/QRegExp>
-
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
       flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(Template::DEFAULT_USE_STORED_DATA),
@@ -53,11 +51,11 @@ const QString TemplateCommand::getTemplateData() const
         foreach (TemplateDataModel model, this->models)
         {
             QString componentData = TemplateData::DEFAULT_COMPONENT_DATA_XML;
-            componentData.replace(QRegExp("#KEY"), model.getKey());
+            componentData.replace("#KEY", model.getKey());
 
             QString value = model.getValue();
             value = Xml::encode(value).replace("\\", "\\\\");
-            componentData.replace(QRegExp("#VALUE"), (this->useUppercaseData == true) ? value.toUpper() : value);
+            componentData.replace("#VALUE", (this->useUppercaseData == true) ? value.toUpper() : value);
 
             templateData.append(componentData);
         }

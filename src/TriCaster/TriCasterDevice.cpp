@@ -1,6 +1,5 @@
 #include "TriCasterDevice.h"
 
-#include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 
 #include <QtNetwork/QHostInfo>
