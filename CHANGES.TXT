@@ -1,26 +1,31 @@
 CasparCG Client 2.0.6
 =====================
-- NEW: Added support for specify the output delay in frames or milliseconds.
-- NEW: Enter/Return key open up the template data dialog in add mode.
-- NEW: Enter/Return + Shift key open up the template data dialog in edit mode.
-- NEW: Added support for trigger items remotely using OSC.
+- NEW: Added support for specifying the output delay in frames or milliseconds.
+- NEW: The Enter/Return keys open up the template data dialog in add mode.
+- NEW: Enter/Return + Shift keys open up the template data dialog in edit mode.
+- NEW: Added support for triggering items remotely using OSC.
 - NEW: Added OSC output item.
 - NEW: Added support for NewTek TriCaster 410, 460, 850, 860, 8000.
-- NEW: Added support for drag and drop internally in template data.
-- NEW: Added support for drop stored data on a template items.
-- NEW: Added support for change the default OSC port.
-- NEW: Added support for chroma key, based on code contribution by cambell. Requires CasparCG Server 2.0.4 or later.
-- NEW: Added support for auto play, based on code contribution by DreamHack and Robert Nagy.
-- NEW: Added support for disable sending commands to the CasparCG server, based on code contribution by YLE and Robert Nagy.
-- NEW: Added support for import CasparCG servers from disk, based on code contribution by YLE and Robert Nagy.
-- FIX: OSC progress using localhost server.
+- NEW: Added support for drag-and-drop internally in the template data.
+- NEW: Added support for dropping stored data on a template items.
+- NEW: Added support for changing the default OSC port.
+- NEW: Added support for chroma key, based on code contribution by cambell. 
+       Requires CasparCG Server 2.0.4 or later.
+- NEW: Added support for auto play, based on code contribution by DreamHack 
+       and Robert Nagy.
+- NEW: Added support for disable sending commands to CasparCG Server(s) 
+       based on code contribution by YLE and Robert Nagy.
+- NEW: Added support for importing CasparCG Server configuration files from disk,
+       based on code contribution by YLE and Robert Nagy.
+- FIX: OSC progress now works correctly when using "localhost" as server address.
 - FIX: Font rendering issue on Mac OS X Mavericks.
-- UPDATE: OSC performance changes.
-- UPDATE: Reload targets when refreshing the library.
-- UPDATE: Drag and drop changes.
+- UPDATE: OSC performance improvements.
+- UPDATE: Targets are reloaded when the library is refreshed.
+- UPDATE: Drag-and-drop improvements.
 - UPDATE: Devices marked as "Shadow system" will not show up in the device lists.
-- UPDATE: Changed target in the inspector changes the rundown item label if they have the same name. 
-- UPDATE: UI changes.
+- UPDATE: Changing target in the Inspector now changes the rundown item label if 
+          they have the same name. 
+- UPDATE: UI improvements.
 
 
 
