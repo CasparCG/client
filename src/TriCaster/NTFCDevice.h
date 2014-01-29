@@ -2,6 +2,8 @@
 
 #include "Shared.h"
 
+#include <stdint.h>
+
 #include <QtCore/QObject>
 
 #include <QtNetwork/QTcpSocket>
