@@ -171,6 +171,7 @@
         <file>Images/TriCaster/TriggerTake.png</file>
         <file>Images/TriCaster/TriggerTakeSmall.png</file>
         <file>Images/TriCaster/TriggerTakeSmallHover.png</file>
+        <file>Images/Client.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default.css</file>

@@ -1,6 +1,6 @@
-================================================================================
-CasparCG Client 2.0.6
-================================================================================
+<p align="center"><img src="/src/Widgets/Images/Clients.png"></p>
+
+# CasparCG Client 2.0.6
 Thank you for your interest in the CasparCG Client, a Mac/Windows/Linux client 
 software used to control graphics, audio and video playout and recording
 by the CasparCG Server software.
@@ -11,10 +11,7 @@ professional production.
 IMPORTANT: Previously saved rundown files created with versions prior to 
 version 2.0.4 are not compatible with this version. Sorry about that!
 
-
-
-SYSTEM REQUIREMENTS
-===================
+## System Requirements
 The Windows version has been tested on Windows 7 x64. 
 No extra installations required.
 
@@ -24,35 +21,23 @@ No extra installations required.
 The Linux version has been tested on Ubuntu 13.10 64-bit.
 The Linux version requires that you pre-install Qt 4.8.* libraries.
 
-
-INSTALLATION WINDOWS
-====================
+## Installation Windows
 No installation required, just move the program to a suitable location and 
 start it.
 
-
-INSTALLATION OS X
-=================
+## Installation Mac OS X
 Open the DMG file and drag the 'CasparCG Client' app to your Applications folder.
 
-
-INSTALLATION LINUX
-==================
+## Installation Linux
 Unpack the tar file and run the run.sh.
 
-
-DOCUMENTATION
-=============
+## Documentation
 Please see the Help menu item inside the Client.
 
-
-CHANGES AND UPDATES
-===================
+## Changes and updates
 See CHANGES.TXT for details.
 
-
-LICENSING
-=========
+## License
 CasparCG Client is distributed under the GNU General Public License GPLv3 or
 higher, see LICENSE.TXT for details.
 
