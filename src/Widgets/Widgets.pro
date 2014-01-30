@@ -483,7 +483,7 @@ OTHER_FILES += \
     Images/TriCaster/PlayMacroSmallHover.png \
     Images/TriCaster/PlayMacroSmall.png \
     Images/TriCaster/PlayMacro.png \
-    Images/Client.png
+    Images/Clients.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
