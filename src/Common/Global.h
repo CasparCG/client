@@ -2,11 +2,6 @@
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-#define MAJOR_VERSION 2
-#define MINOR_VERSION 0
-#define REVISION_VERSION 6
-#define DATABASE_VERSION "206"
-
 #include <stdexcept>
 
 #include <QtCore/QEvent>

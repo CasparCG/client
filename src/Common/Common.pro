@@ -13,6 +13,7 @@ DEFINES += COMMON_LIBRARY
 
 HEADERS += \
     Global.h \
-    Shared.h
+    Shared.h \
+    Version.h
 	
 SOURCES +=

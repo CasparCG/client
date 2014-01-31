@@ -1,3 +1,4 @@
+#include "Version.h"
 #include "Global.h"
 
 #include "Application.h"
