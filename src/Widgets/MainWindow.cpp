@@ -47,14 +47,17 @@ void MainWindow::setupMenu()
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
+    this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
+    //this->fileMenu->actions().at(4)->setEnabled(false); // Export Preset...
+    this->fileMenu->actions().at(5)->setEnabled(false); // Save as Preset...
 
     this->editMenu = new QMenu(this);
-    this->editMenu->addAction("Settings", this, SLOT(showSettingsDialog()));
+    this->editMenu->addAction("Settings...", this, SLOT(showSettingsDialog()));
 
     this->viewMenu = new QMenu(this);
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
@@ -82,8 +85,8 @@ void MainWindow::setupMenu()
     this->helpMenu = new QMenu(this);
     this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
     this->helpMenu->addSeparator();
-    this->helpMenu->addAction("About CasparCG Client");//, this, SLOT(showAboutDialog()));
-    this->helpMenu->actions().at(2)->setEnabled(false);
+    this->helpMenu->addAction("About CasparCG Client"/*, this, SLOT(showAboutDialog())*/);
+    this->helpMenu->actions().at(2)->setEnabled(false); // About CasparCG Client
 
     this->menuBar = new QMenuBar(this);
     this->menuBar->addMenu(this->fileMenu)->setText("File");
@@ -120,6 +123,15 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
         this->fileMenu->actions().at(0)->setEnabled(newRundownMenuEvent->getEnabled());
     }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    {
+        this->fileMenu->actions().at(5)->setEnabled(true);
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
+    {
+        this->fileMenu->actions().at(5)->setEnabled(false);
+    }
+
 
     return QObject::eventFilter(target, event);
 }
@@ -151,6 +163,11 @@ void MainWindow::importPreset()
 void MainWindow::exportPreset()
 {
     EventManager::getInstance().fireExportPresetEvent();
+}
+
+void MainWindow::saveAsPreset()
+{
+    EventManager::getInstance().fireSaveAsPresetEvent();
 }
 
 void MainWindow::newRundown()

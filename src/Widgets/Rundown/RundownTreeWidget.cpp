@@ -37,6 +37,7 @@
 #include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
+#include "Events/SaveAsPresetEvent.h"
 #include "Events/AddPresetItemEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Models/RundownModel.h"
@@ -169,7 +170,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
-    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/PresetSmall.png"),*/ "Save as Preset", this, SLOT(saveAsPreset()));
+    this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/PresetSmall.png"),*/ "Save as Preset...", this, SLOT(saveAsPreset()));
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/Remove.png"),*/ "Remove", this, SLOT(removeSelectedItems()));
 
@@ -405,6 +406,13 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
                     dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(autoPlayChangedEvent->getAutoPlay());
             }
+
+            return true;
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::SaveAsPreset))
+        {
+            SaveAsPresetEvent* saveAsPresetEvent = dynamic_cast<SaveAsPresetEvent*>(event);
+            saveAsPreset();
 
             return true;
         }

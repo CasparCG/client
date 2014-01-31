@@ -37,6 +37,11 @@ void EventManager::fireExportPresetEvent()
     qApp->postEvent(qApp, new ExportPresetEvent());
 }
 
+void EventManager::fireSaveAsPresetEvent()
+{
+    qApp->postEvent(qApp, new SaveAsPresetEvent());
+}
+
 void EventManager::fireNewRundownEvent()
 {
     qApp->postEvent(qApp, new NewRundownEvent());

@@ -50,7 +50,8 @@ namespace Event
             AutoPlayNextRundownItem =  QEvent::User + 44,
             ProgramSourceChanged =  QEvent::User + 45,
             ExecuteRundownItem = QEvent::User + 46,
-            OscOutputChanged =  QEvent::User + 47
+            OscOutputChanged =  QEvent::User + 47,
+            SaveAsPreset =  QEvent::User + 48
         };
     };
 }

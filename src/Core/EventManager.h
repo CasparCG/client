@@ -39,6 +39,7 @@
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
+#include "Events/SaveAsPresetEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -63,6 +64,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireNewRundownEvent();
         void fireImportPresetEvent();
         void fireExportPresetEvent();
+        void fireSaveAsPresetEvent();
         void fireNewRundownMenuEvent(bool enabled);
         void fireRundownIsChangedEvent(bool changed);
         void fireDeleteRundownEvent(int index);
