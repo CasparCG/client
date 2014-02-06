@@ -29,7 +29,6 @@ RundownWidget::RundownWidget(QWidget* parent)
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
-    widget->setObjectName(QUuid::createUuid().toString());
     int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);
 
