@@ -82,7 +82,7 @@ void InspectorOscOutputWidget::blockAllSignals(bool block)
 void InspectorOscOutputWidget::checkEmptyOutput()
 {
     if (this->comboBoxOutput->isEnabled() && this->comboBoxOutput->currentText() == "")
-        this->comboBoxOutput->setStyleSheet("border-color: red;");
+        this->comboBoxOutput->setStyleSheet("border-color: firebrick;");
     else
         this->comboBoxOutput->setStyleSheet("");
 }
@@ -90,7 +90,7 @@ void InspectorOscOutputWidget::checkEmptyOutput()
 void InspectorOscOutputWidget::checkEmptyPath()
 {
     if (this->lineEditPath->text().isEmpty())
-        this->lineEditPath->setStyleSheet("border-color: red;");
+        this->lineEditPath->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditPath->setStyleSheet("");
 }

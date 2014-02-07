@@ -14,8 +14,8 @@ DeviceDialog::DeviceDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->lineEditDeviceName->setStyleSheet("border-color: red;");
-    this->lineEditAddress->setStyleSheet("border-color: red;");
+    this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
+    this->lineEditAddress->setStyleSheet("border-color: firebrick;");
 }
 
 void DeviceDialog::setDeviceModel(const DeviceModel& model)
@@ -132,7 +132,7 @@ void DeviceDialog::testConnection()
 void DeviceDialog::nameChanged(QString name)
 {
     if (this->lineEditDeviceName->text().isEmpty())
-        this->lineEditDeviceName->setStyleSheet("border-color: red;");
+        this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditDeviceName->setStyleSheet("");
 }
@@ -140,7 +140,7 @@ void DeviceDialog::nameChanged(QString name)
 void DeviceDialog::addressChanged(QString name)
 {
     if (this->lineEditAddress->text().isEmpty())
-        this->lineEditAddress->setStyleSheet("border-color: red;");
+        this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditAddress->setStyleSheet("");
 }

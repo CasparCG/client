@@ -222,8 +222,8 @@ void SettingsDialog::checkEmptyDeviceList()
 {
     if (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0)
     {
-        this->tabWidget->setCurrentIndex(1);
-        this->treeWidgetDevice->setStyleSheet("border-color: red;");
+        this->tabWidgetSettings->setCurrentIndex(1);
+        this->treeWidgetDevice->setStyleSheet("border-color: firebrick;");
     }
     else
         this->treeWidgetDevice->setStyleSheet("");
@@ -232,7 +232,7 @@ void SettingsDialog::checkEmptyDeviceList()
 void SettingsDialog::checkEmptyTriCasterDeviceList()
 {
     if (this->treeWidgetTriCasterDevice->invisibleRootItem()->childCount() == 0)
-        this->treeWidgetTriCasterDevice->setStyleSheet("border-color: red;");
+        this->treeWidgetTriCasterDevice->setStyleSheet("border-color: firebrick;");
     else
         this->treeWidgetTriCasterDevice->setStyleSheet("");
 }
@@ -240,7 +240,7 @@ void SettingsDialog::checkEmptyTriCasterDeviceList()
 void SettingsDialog::checkEmptyOscOutputList()
 {
     if (this->treeWidgetOscOutput->invisibleRootItem()->childCount() == 0)
-        this->treeWidgetOscOutput->setStyleSheet("border-color: red;");
+        this->treeWidgetOscOutput->setStyleSheet("border-color: firebrick;");
     else
         this->treeWidgetOscOutput->setStyleSheet("");
 }

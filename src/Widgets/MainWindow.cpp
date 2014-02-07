@@ -270,7 +270,7 @@ void MainWindow::showSettingsDialog()
 
 void MainWindow::toggleFullscreen()
 {
-    isFullScreen() ? showNormal() : showFullScreen();
+    isFullScreen() ? setWindowState(Qt::WindowNoState) : setWindowState(Qt::WindowFullScreen);
 }
 
 void MainWindow::refreshLibrary()

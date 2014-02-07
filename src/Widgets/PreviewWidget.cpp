@@ -71,7 +71,7 @@ void PreviewWidget::switchPreview()
     }
     else
     {
-        this->toolButtonPreviewAlpha->setStyleSheet("border-color: red;");
+        this->toolButtonPreviewAlpha->setStyleSheet("border-color: firebrick;");
         this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
     }
 

@@ -14,8 +14,8 @@ TriCasterDeviceDialog::TriCasterDeviceDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->lineEditDeviceName->setStyleSheet("border-color: red;");
-    this->lineEditAddress->setStyleSheet("border-color: red;");
+    this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
+    this->lineEditAddress->setStyleSheet("border-color: firebrick;");
 }
 
 void TriCasterDeviceDialog::setDeviceModel(const TriCasterDeviceModel& model)
@@ -114,7 +114,7 @@ void TriCasterDeviceDialog::testConnection()
 void TriCasterDeviceDialog::nameChanged(QString name)
 {
     if (this->lineEditDeviceName->text().isEmpty())
-        this->lineEditDeviceName->setStyleSheet("border-color: red;");
+        this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditDeviceName->setStyleSheet("");
 }
@@ -122,7 +122,7 @@ void TriCasterDeviceDialog::nameChanged(QString name)
 void TriCasterDeviceDialog::addressChanged(QString name)
 {
     if (this->lineEditAddress->text().isEmpty())
-        this->lineEditAddress->setStyleSheet("border-color: red;");
+        this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditAddress->setStyleSheet("");
 }

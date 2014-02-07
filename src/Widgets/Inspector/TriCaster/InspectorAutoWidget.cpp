@@ -95,7 +95,7 @@ void InspectorAutoWidget::loadTriCasterAutoTransition()
 void InspectorAutoWidget::checkEmptyStep()
 {
     if (this->comboBoxStep->isEnabled() && this->comboBoxStep->currentText() == "")
-        this->comboBoxStep->setStyleSheet("border-color: red;");
+        this->comboBoxStep->setStyleSheet("border-color: firebrick;");
     else
         this->comboBoxStep->setStyleSheet("");
 }

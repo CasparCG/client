@@ -218,7 +218,7 @@ void RundownSaturationWidget::setColor(const QString& color)
 void RundownSaturationWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
-        this->labelDevice->setStyleSheet("color: black;");
+        this->labelDevice->setStyleSheet("color: firebrick;");
     else
         this->labelDevice->setStyleSheet("");
 }

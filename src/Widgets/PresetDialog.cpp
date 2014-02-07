@@ -8,7 +8,7 @@ PresetDialog::PresetDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->lineEditName->setStyleSheet("border-color: red;");
+    this->lineEditName->setStyleSheet("border-color: firebrick;");
 }
 
 void PresetDialog::accept()
@@ -27,7 +27,7 @@ const QString PresetDialog::getName() const
 void PresetDialog::nameChanged(QString name)
 {
     if (this->lineEditName->text().isEmpty())
-        this->lineEditName->setStyleSheet("border-color: red;");
+        this->lineEditName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditName->setStyleSheet("");
 

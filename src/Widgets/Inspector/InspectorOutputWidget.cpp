@@ -380,7 +380,7 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type)
 void InspectorOutputWidget::checkEmptyDevice()
 {
     if (this->comboBoxDevice->isEnabled() && this->comboBoxDevice->currentText() == "")
-        this->comboBoxDevice->setStyleSheet("border-color: red;");
+        this->comboBoxDevice->setStyleSheet("border-color: firebrick;");
     else
         this->comboBoxDevice->setStyleSheet("");
 }
@@ -388,7 +388,7 @@ void InspectorOutputWidget::checkEmptyDevice()
 void InspectorOutputWidget::checkEmptyTriCasterDevice()
 {
     if (this->comboBoxTriCasterDevice->isEnabled() && this->comboBoxTriCasterDevice->currentText() == "")
-        this->comboBoxTriCasterDevice->setStyleSheet("border-color: red;");
+        this->comboBoxTriCasterDevice->setStyleSheet("border-color: firebrick;");
     else
         this->comboBoxTriCasterDevice->setStyleSheet("");
 }
@@ -396,7 +396,7 @@ void InspectorOutputWidget::checkEmptyTriCasterDevice()
 void InspectorOutputWidget::checkEmptyTarget()
 {
     if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
-        this->comboBoxTarget->setStyleSheet("border-color: red;");
+        this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
     else
         this->comboBoxTarget->setStyleSheet("");
 }

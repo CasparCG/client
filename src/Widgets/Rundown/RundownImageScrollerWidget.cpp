@@ -254,7 +254,7 @@ void RundownImageScrollerWidget::setColor(const QString& color)
 void RundownImageScrollerWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
-        this->labelDevice->setStyleSheet("color: black;");
+        this->labelDevice->setStyleSheet("color: firebrick;");
     else
         this->labelDevice->setStyleSheet("");
 }

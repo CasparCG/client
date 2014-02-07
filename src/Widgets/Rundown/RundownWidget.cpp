@@ -29,8 +29,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
-    widget->setObjectName(QUuid::createUuid().toString());
-    int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), Rundown::DEFAULT_NAME);
+    int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);
 
     qApp->installEventFilter(this);
@@ -61,7 +60,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     {
         RundownTreeWidget* widget = new RundownTreeWidget(this);
 
-        int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), Rundown::DEFAULT_NAME);
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
         this->tabWidgetRundown->setCurrentIndex(index);
 
         if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
@@ -93,7 +92,7 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             widget->openRundown(path);
 
             QFileInfo info(path);
-            int index = this->tabWidgetRundown->addTab(widget, QIcon(":/Graphics/Images/TabSplitter.png"), info.baseName());
+            int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, info.baseName());
             this->tabWidgetRundown->setCurrentIndex(index);
 
             if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)

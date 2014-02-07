@@ -14,8 +14,8 @@ OscOutputDialog::OscOutputDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->lineEditDeviceName->setStyleSheet("border-color: red;");
-    this->lineEditAddress->setStyleSheet("border-color: red;");
+    this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
+    this->lineEditAddress->setStyleSheet("border-color: firebrick;");
 }
 
 void OscOutputDialog::setDeviceModel(const OscOutputModel& model)
@@ -103,7 +103,7 @@ void OscOutputDialog::accept()
 void OscOutputDialog::nameChanged(QString name)
 {
     if (this->lineEditDeviceName->text().isEmpty())
-        this->lineEditDeviceName->setStyleSheet("border-color: red;");
+        this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditDeviceName->setStyleSheet("");
 }
@@ -111,7 +111,7 @@ void OscOutputDialog::nameChanged(QString name)
 void OscOutputDialog::addressChanged(QString name)
 {
     if (this->lineEditAddress->text().isEmpty())
-        this->lineEditAddress->setStyleSheet("border-color: red;");
+        this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditAddress->setStyleSheet("");
 }

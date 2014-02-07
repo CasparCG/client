@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <widget class="QTabWidget" name="tabWidget">
+  <widget class="QTabWidget" name="tabWidgetSettings">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -327,7 +327,7 @@
       <string>Disable in and out points in video progress</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labelRundown_2">
+    <widget class="QLabel" name="labelInspector">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -382,7 +382,7 @@
       </property>
      </item>
     </widget>
-    <widget class="QLabel" name="labelGpiBaudRate_2">
+    <widget class="QLabel" name="labelDelay">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -2784,7 +2784,7 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButtonOK">
+  <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
      <x>615</x>
@@ -2905,7 +2905,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButtonOK</sender>
+   <sender>pushButtonOk</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
    <slot>accept()</slot>

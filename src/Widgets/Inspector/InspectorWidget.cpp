@@ -416,7 +416,7 @@ void InspectorWidget::masterVolumeClicked()
 
     if (this->masterVolumeMuted)
     {
-        this->toolButtonMasterVolume->setStyleSheet("border-color: red;");
+        this->toolButtonMasterVolume->setStyleSheet("border-color: firebrick;");
         this->toolButtonMasterVolume->setIcon(QIcon(":/Graphics/Images/MasterVolumeOff.png"));
     }
     else
@@ -439,7 +439,7 @@ void InspectorWidget::disableCommandClicked()
 
     if (this->disableCommand)
     {
-        this->toolButtonDisableCommand->setStyleSheet("border-color: red;");
+        this->toolButtonDisableCommand->setStyleSheet("border-color: firebrick;");
         this->toolButtonDisableCommand->setIcon(QIcon(":/Graphics/Images/DisableCommandOff.png"));
     }
     else

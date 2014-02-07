@@ -3,10 +3,7 @@
  */
 #MainWindow > #centralWidget
 {
-    background-color: rgba(64, 64, 64, 255);
-    border-bottom-color: rgba(42, 42, 42, 255);
-    border-bottom-width: 1px;
-    border-radius: 0px;
+    background-color: rgba(45, 45, 45, 255);
 }
 
 /*
@@ -20,6 +17,28 @@
 /*
  * SettingsDialog
  */
+#SettingsDialog
+{
+    background-color: rgba(35, 35, 35, 255);
+    border-bottom-color: rgba(65, 65, 65, 255);
+    border-bottom-width: 1px;
+}
+
+#pushButtonOk
+{
+    background-color: rgba(28, 28, 28, 255);
+}
+
+#treeWidgetDevice, #treeWidgetTriCasterDevice, #treeWidgetOscOutput
+{
+    image: url(:/Graphics/Images/Add.png);
+}
+
+#tabGeneral, #tabDevices, #tabGpi, #tabOsc
+{
+    background-color: rgba(35, 35, 35, 255);
+}
+
 #labelSettingsInformation, #labelImportInformation
 {
     color: rgba(190, 190, 190, 255);
@@ -28,10 +47,11 @@
 
 #lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
 {
-    background-color: rgba(42, 42, 42, 255);
+    background-color: rgba(65, 65, 65, 255);
 }
 #toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
 {
+    background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Add.png);
 }
 #toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
@@ -40,6 +60,7 @@
 }
 #toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
 {
+    background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Remove.png);
 }
 #toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
@@ -48,6 +69,7 @@
 }
 #toolButtonImportDevice, #toolButtonImportTriCasterDevice
 {
+    background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Import.png);
 }
 #toolButtonImportDevice:hover, #toolButtonImportTriCasterDevice:hover
@@ -58,48 +80,56 @@
 /*
  * DeviceFilterWidget
  */
-#comboBoxDeviceFilter:hover
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-}
-#comboBoxDeviceFilter:!editable:on, #comboBoxDeviceFilter::drop-down:editable:on
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-}
 #lineEditDeviceFilter
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+    background-color: rgba(35, 35, 35, 255);
     border-width: 0px;
     min-height: 19px;
+}
+#lineEditDeviceFilter:disabled
+{
+    color: rgba(255, 255, 255, 255);
+}
+
+#comboBoxDeviceFilter
+{
+    background-color: rgba(35, 35, 35, 255);
+}
+#comboBoxDeviceFilter::drop-down
+{
+    background-color: rgba(35, 35, 35, 255);
+}
+#comboBoxDeviceFilter QAbstractItemView
+{
+    background-color: rgba(35, 35, 35, 255);
 }
 
 /*
  * LibraryWidget
  */
-#lineEditDeviceFilter:disabled
+#lineEditFilter
 {
-    color: rgba(255, 255, 255, 255);
+    background-color: rgba(35, 35, 35, 255);
 }
+
 #treeWidgetTool, #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
 {
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
+    background-color: rgba(35, 35, 35, 255);
 }
 #treeWidgetTool
 {
-    background-color: rgba(60, 60, 60, 255);
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
 }
-#treeWidgetTool::branch:closed:has-children:has-siblings, #treeWidgetTool::branch:has-children:!has-siblings:closed
+#treeWidgetTool::branch:closed:has-children
 {
-    background-color: rgba(55, 55, 55, 255);
-    image: url(:/Graphics/Images/ArrowRight.png);
+    background-color: rgba(45, 45, 45, 255);
 }
-#treeWidgetTool::branch:open:has-children:has-siblings, #treeWidgetTool::branch:open:has-children:!has-siblings
+#treeWidgetTool::branch:open:has-children
 {
-    background-color: rgba(55, 55, 55, 255);
-    image: url(:/Graphics/Images/ArrowDown.png);
+    background-color: rgba(45, 45, 45, 255);
 }
 
 /*
@@ -107,20 +137,19 @@
  */
 #treeWidgetInspector
 {
-    background-color: rgba(60, 60, 60, 255);
+    background-color: rgba(35, 35, 35, 255);
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
 }
-#treeWidgetInspector::branch:closed:has-children:has-siblings, #treeWidgetInspector::branch:has-children:!has-siblings:closed
+#treeWidgetInspector::branch:closed:has-children
 {
-    background-color: rgba(55, 55, 55, 255);
-    image: url(:/Graphics/Images/ArrowRight.png);
+    background-color: rgba(45, 45, 45, 255);
 }
-#treeWidgetInspector::branch:open:has-children:has-siblings, #treeWidgetInspector::branch:open:has-children:!has-siblings
+#treeWidgetInspector::branch:open:has-children
 {
-    background-color: rgba(55, 55, 55, 255);
-    image: url(:/Graphics/Images/ArrowDown.png);
+    background-color: rgba(45, 45, 45, 255);
 }
+
 #treeWidgetInspector QLabel
 {
     color: rgba(190, 190, 190, 255);
@@ -159,7 +188,7 @@
  */
 #treeWidgetTemplateData
 {
-    alternate-background-color: rgba(60, 60, 60, 255);
+    alternate-background-color: rgba(35, 35, 35, 255);
 }
 
 /*
@@ -216,16 +245,24 @@
 
 #treeWidgetRundown
 {
-    background-color: rgba(64, 64, 64, 255);
-    border-top-left-radius: 0px;
+    background-color: rgba(28, 28, 28, 255);
+    border-width: 0px;
+
+    border-top-color: rgba(70, 115, 195, 255);
+    border-top-width: 1px;
 }
-#treeWidgetRundown::item:hover:selected
-{
-    background-color: rgba(80, 80, 80, 255);
-}
+
 #treeWidgetRundown::branch
 {
     background-color: transparent;
+}
+#treeWidgetRundown::item:selected
+{
+    background-color: rgba(70, 115, 195, 64);
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(70, 115, 195, 255);
 }
 
 /*
@@ -249,23 +286,18 @@
 
 #listWidgetAction
 {
-    background-color: rgba(64, 64, 64, 255);
+    background-color: rgba(65, 65, 65, 255);
     border-top-left-radius: 0px;
 }
 #listWidgetAction::item
 {
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-    border-color: rgba(42, 42, 42, 255);
-    border-radius: 2px;
+    background-color: rgba(28, 28, 28, 255);
+    border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     border-width: 1px;
 
     min-width: 64px;
     min-height: 64px;
-}
-#listWidgetAction::item:hover
-{
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
 }
 
 /*
@@ -273,7 +305,7 @@
  */
 #pagePreview
 {
-    background-color: rgba(60, 60, 60, 255);
+    background-color: rgba(35, 35, 35, 255);
 }
 #labelPreview
 {
@@ -287,30 +319,6 @@
 #toolButtonPreviewAlpha:hover
 {
     image: url(:/Graphics/Images/PreviewAlphaHover.png);
-}
-
-/*
- * TimeWidget
- */
-#frameTime, #pageTime
-{
-    background-color: rgba(60, 60, 60, 255);
-}
-#lcdNumber
-{
-    color: rgba(255, 55, 55, 225);
-}
-#lcdNumberShadowHour
-{
-    color: rgba(55, 55, 55, 255);
-}
-#lcdNumberShadowMinute
-{
-    color: rgba(55, 55, 55, 255);
-}
-#lcdNumberShadowSecond
-{
-    color: rgba(55, 55, 55, 255);
 }
 
 /*
@@ -336,4 +344,12 @@
     /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
     border-radius: 2px;*/
+}
+
+/*
+ * Dialog backgrounds
+ */
+#TriCasterDeviceDialog, #ImportTriCasterDeviceDialog, #AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #OscOutputDialog, #TemplateDataDialog
+{
+    background-color: rgba(35, 35, 35, 255);
 }

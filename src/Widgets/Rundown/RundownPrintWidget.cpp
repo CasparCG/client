@@ -201,7 +201,7 @@ void RundownPrintWidget::setColor(const QString& color)
 void RundownPrintWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
-        this->labelDevice->setStyleSheet("color: black;");
+        this->labelDevice->setStyleSheet("color: firebrick;");
     else
         this->labelDevice->setStyleSheet("");
 }
