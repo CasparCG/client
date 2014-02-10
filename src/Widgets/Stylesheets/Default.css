@@ -941,7 +941,7 @@ QScrollBar::handle:horizontal
     background-color: rgba(80, 80, 80, 255);
     border-color: rgba(28, 28, 28, 255);
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     min-width: 42px;
 }
 QScrollBar::add-line:horizontal
@@ -983,7 +983,7 @@ QScrollBar::handle:vertical
     background-color: rgba(80, 80, 80, 255);
     border-color: rgba(28, 28, 28, 255);
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     min-height: 42px;
 }
 QScrollBar::add-line:vertical
