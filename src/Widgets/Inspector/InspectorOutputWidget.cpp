@@ -204,8 +204,23 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
 
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             }
-            else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
+            else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
+            {
+                this->comboBoxDevice->setEnabled(false);
+                this->comboBoxTarget->setEnabled(false);
+                this->spinBoxChannel->setEnabled(false);
+                this->spinBoxVideolayer->setEnabled(false);
+                this->spinBoxDelay->setEnabled(false);
+
+                this->labelMillisecond->setText("ms");
+
+                this->comboBoxDevice->setCurrentIndex(-1);
+                this->comboBoxTarget->setCurrentIndex(-1);
+                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+                this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+            }
+            else if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
                      dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
             {
                 this->comboBoxDevice->setEnabled(false);
