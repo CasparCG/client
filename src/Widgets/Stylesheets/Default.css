@@ -372,12 +372,10 @@ QTreeView::branch
 }
 QTreeView::branch:closed:has-children
 {
-    selection-background-color: transparent;
     image: url(:/Graphics/Images/ArrowRight.png);
 }
 QTreeView::branch:open:has-children
 {
-    selection-background-color: transparent;
     image: url(:/Graphics/Images/ArrowDown.png);
 }
 
