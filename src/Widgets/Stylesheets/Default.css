@@ -113,6 +113,10 @@ QCheckBox::indicator
     border-style: solid;
     border-width: 1px;
 }
+QCheckBox::indicator:hover
+{
+    border-color: rgba(70, 115, 195, 255);
+}
 QCheckBox::indicator:disabled
 {
     background-color: transparent;
@@ -163,6 +167,10 @@ QRadioButton::indicator
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     border-width: 1px;
+}
+QRadioButton::indicator:hover
+{
+    border-color: rgba(70, 115, 195, 255);
 }
 /*QRadioButton::indicator::unchecked
 {
@@ -355,7 +363,7 @@ QTreeView
 }
 QTreeView::item:selected
 {
-background-color: rgba(70, 115, 195, 64);
+    background-color: rgba(70, 115, 195, 64);
     color: rgba(255, 255, 255, 255);
 }
 QTreeView::branch
@@ -364,10 +372,12 @@ QTreeView::branch
 }
 QTreeView::branch:closed:has-children
 {
+    selection-background-color: transparent;
     image: url(:/Graphics/Images/ArrowRight.png);
 }
 QTreeView::branch:open:has-children
 {
+    selection-background-color: transparent;
     image: url(:/Graphics/Images/ArrowDown.png);
 }
 
