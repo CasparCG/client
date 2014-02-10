@@ -36,9 +36,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelName">
+      <widget class="QLabel" name="labelMacro">
        <property name="text">
-        <string>Name</string>
+        <string>Macro</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditName"/>
+      <widget class="QLineEdit" name="lineEditMacro"/>
      </item>
     </layout>
    </item>
@@ -71,10 +71,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>lineEditName</sender>
+   <sender>lineEditMacro</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorMacroWidget</receiver>
-   <slot>nameChanged(QString)</slot>
+   <slot>macroChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>178</x>
@@ -88,6 +88,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>nameChanged(QString)</slot>
+  <slot>macroChanged(QString)</slot>
  </slots>
 </ui>

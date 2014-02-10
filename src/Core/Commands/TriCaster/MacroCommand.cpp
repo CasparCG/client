@@ -4,32 +4,32 @@
 
 MacroCommand::MacroCommand(QObject* parent)
     : AbstractCommand(parent),
-      name(TriCaster::DEFAULT_MACRO)
+      macro(TriCaster::DEFAULT_MACRO)
 {
 }
 
-const QString& MacroCommand::getName() const
+const QString& MacroCommand::getMacro() const
 {
-    return this->name;
+    return this->macro;
 }
 
-void MacroCommand::setName(const QString& name)
+void MacroCommand::setMacro(const QString& macro)
 {
-    this->name = name;
-    emit nameChanged(this->name);
+    this->macro = macro;
+    emit macroChanged(this->macro);
 }
 
 void MacroCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setName(QString::fromStdWString(pt.get(L"name", TriCaster::DEFAULT_MACRO.toStdWString())));
+    setMacro(QString::fromStdWString(pt.get(L"macro", TriCaster::DEFAULT_MACRO.toStdWString())));
 }
 
 void MacroCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("name", this->getName());
+    writer->writeTextElement("macro", this->getMacro());
 }
 

@@ -22,12 +22,12 @@ class CORE_EXPORT MacroCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getName() const;
+        const QString& getMacro() const;
 
-        void setName(const QString& name);
+        void setMacro(const QString& macro);
 
     private:
-        QString name;
+        QString macro;
 
-        Q_SIGNAL void nameChanged(const QString&);
+        Q_SIGNAL void macroChanged(const QString&);
 };

@@ -30,7 +30,7 @@ bool InspectorMacroWidget::eventFilter(QObject* target, QEvent* event)
         {  
             this->command = dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand());
 
-            this->lineEditName->setText(this->command->getName());
+            this->lineEditMacro->setText(this->command->getMacro());
         }
 
         blockAllSignals(false);
@@ -41,10 +41,10 @@ bool InspectorMacroWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorMacroWidget::blockAllSignals(bool block)
 {
-    this->lineEditName->blockSignals(block);
+    this->lineEditMacro->blockSignals(block);
 }
 
-void InspectorMacroWidget::nameChanged(QString name)
+void InspectorMacroWidget::macroChanged(QString macro)
 {
-    this->command->setName(name);
+    this->command->setMacro(macro);
 }

@@ -298,6 +298,8 @@ bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
                 this->spinBoxChannel->setEnabled(false);
                 this->spinBoxVideolayer->setEnabled(false);
 
+                this->labelMillisecond->setText("ms");
+
                 this->comboBoxTarget->clear();
                 this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
                 this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);

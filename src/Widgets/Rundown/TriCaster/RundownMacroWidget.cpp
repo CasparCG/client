@@ -126,7 +126,7 @@ AbstractRundownWidget* RundownMacroWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setName(this->command.getName());
+    command->setMacro(this->command.getMacro());
 
     return widget;
 }
@@ -231,7 +231,7 @@ void RundownMacroWidget::executePlay()
     {
         const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
         if (device != NULL && device->isConnected())
-            device->playMacro(this->command.getName());
+            device->playMacro(this->command.getMacro());
     }
 }
 
