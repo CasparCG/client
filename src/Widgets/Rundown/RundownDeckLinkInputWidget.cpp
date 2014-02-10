@@ -563,42 +563,42 @@ void RundownDeckLinkInputWidget::deviceAdded(CasparDevice& device)
 
 void RundownDeckLinkInputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownDeckLinkInputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownDeckLinkInputWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Load);
 }
 
 void RundownDeckLinkInputWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Pause);
 }
 
 void RundownDeckLinkInputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownDeckLinkInputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideolayer);
 }
 
 void RundownDeckLinkInputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

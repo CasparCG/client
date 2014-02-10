@@ -291,36 +291,36 @@ void RundownGpiOutputWidget::remoteTriggerIdChanged(const QString& remoteTrigger
 
 void RundownGpiOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownGpiOutputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownGpiOutputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownGpiOutputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownGpiOutputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideolayer);
 }
 
 void RundownGpiOutputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

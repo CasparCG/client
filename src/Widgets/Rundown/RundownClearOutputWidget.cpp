@@ -431,42 +431,42 @@ void RundownClearOutputWidget::deviceAdded(CasparDevice& device)
 
 void RundownClearOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownClearOutputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownClearOutputWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Next);
 }
 
 void RundownClearOutputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownClearOutputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownClearOutputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideolayer);
 }
 
 void RundownClearOutputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering())
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }
