@@ -216,6 +216,11 @@
 /*
  * RundownWidget
  */
+#frameRundownSpacer
+{
+    min-height: 1px;
+}
+
 #toolButtonRundownDropdown
 {
     background-color: transparent;

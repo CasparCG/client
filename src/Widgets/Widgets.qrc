@@ -174,10 +174,15 @@
         <file>Images/Clients.png</file>
     </qresource>
     <qresource prefix="/Appearances">
-        <file>Stylesheets/Default.css</file>
-        <file>Stylesheets/Extended.css</file>
-        <file>Stylesheets/Windows.css</file>
-        <file>Stylesheets/Linux.css</file>
-        <file>Stylesheets/Mac.css</file>
+        <file>Stylesheets/Default/Default.css</file>
+        <file>Stylesheets/Default/Extended.css</file>
+        <file>Stylesheets/Default/Linux.css</file>
+        <file>Stylesheets/Default/Mac.css</file>
+        <file>Stylesheets/Default/Windows.css</file>
+        <file>Stylesheets/Flat/Default.css</file>
+        <file>Stylesheets/Flat/Extended.css</file>
+        <file>Stylesheets/Flat/Linux.css</file>
+        <file>Stylesheets/Flat/Mac.css</file>
+        <file>Stylesheets/Flat/Windows.css</file>
     </qresource>
 </RCC>

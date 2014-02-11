@@ -49,7 +49,7 @@ void loadStyleSheets(QApplication& application)
     QString stylesheet;
 
     // Load default stylesheet..
-    QFile defaultStylesheet(":/Appearances/Stylesheets/Default.css");
+    QFile defaultStylesheet(":/Appearances/Stylesheets/Flat/Default.css");
     if (defaultStylesheet.open(QFile::ReadOnly))
     {
         QTextStream stream(&defaultStylesheet);
@@ -62,7 +62,7 @@ void loadStyleSheets(QApplication& application)
     }
 
     // Load extended stylesheet.
-    QFile extendedStylesheet(":/Appearances/Stylesheets/Extended.css");
+    QFile extendedStylesheet(":/Appearances/Stylesheets/Flat/Extended.css");
     if (extendedStylesheet.open(QFile::ReadOnly))
     {
         QTextStream stream(&extendedStylesheet);
@@ -76,11 +76,11 @@ void loadStyleSheets(QApplication& application)
 
     // Load platform stylesheet.
 #if defined(Q_OS_WIN)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Windows.css");
+    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Windows.css");
 #elif defined(Q_OS_MAC)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Mac.css");
+    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Mac.css");
 #elif defined(Q_OS_LINUX)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Linux.css");
+    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Linux.css");
 #endif
     if (platformStylesheet.open(QFile::ReadOnly))
     {

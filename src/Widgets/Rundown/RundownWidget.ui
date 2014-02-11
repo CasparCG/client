@@ -10,9 +10,6 @@
     <height>500</height>
    </rect>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -21,20 +18,20 @@
     <number>0</number>
    </property>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+    <widget class="QFrame" name="frameRundownSpacer">
+     <property name="maximumSize">
       <size>
-       <width>20</width>
-       <height>1</height>
+       <width>16777215</width>
+       <height>0</height>
       </size>
      </property>
-    </spacer>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidgetRundown">

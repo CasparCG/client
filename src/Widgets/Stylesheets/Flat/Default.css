@@ -381,6 +381,10 @@ QTreeView::item:selected
     background-color: rgba(70, 115, 195, 64);
     color: rgba(255, 255, 255, 255);
 }
+QTreeView::item:has-children
+{
+    background-color: rgba(45, 45, 45, 255);
+}
 QTreeView::branch
 {
     background-color: transparent;
@@ -407,6 +411,10 @@ QTreeWidget::item:selected
 {
     background-color: rgba(70, 115, 195, 64);
     color: rgba(255, 255, 255, 255);
+}
+QTreeWidget::item:has-children
+{
+    background-color: rgba(45, 45, 45, 255);
 }
 QTreeWidget::branch
 {

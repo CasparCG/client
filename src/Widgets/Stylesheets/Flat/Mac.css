@@ -1,0 +1,31 @@
+/*
+ * QHeaderView
+ */
+QHeaderView::section
+{
+    padding: 4px;
+}
+
+/*
+ * QToolTip
+ */
+QToolTip
+{
+    font-size: 12px;
+}
+
+/*
+ * QTabBar
+ */
+QTabBar::tab
+{
+    min-height: 18px;
+}
+
+/*
+ * OscTimeWidget
+ */
+#labelOscTime
+{
+    font-size: 12px;
+}

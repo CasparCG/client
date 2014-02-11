@@ -312,7 +312,6 @@ OTHER_FILES += \
     Images/ArrowDown.png \
     Stylesheets/Default.css \
     Stylesheets/Extended.css \
-    Stylesheets/Windows.css \
     Images/RadiobuttonUncheckedPressed.png \
     Images/RadiobuttonUncheckedHover.png \
     Images/RadiobuttonUnchecked.png \
@@ -483,7 +482,17 @@ OTHER_FILES += \
     Images/TriCaster/PlayMacroSmallHover.png \
     Images/TriCaster/PlayMacroSmall.png \
     Images/TriCaster/PlayMacro.png \
-    Images/Clients.png
+    Images/Clients.png \
+    Stylesheets/Default/Windows.css \
+    Stylesheets/Default/Mac.css \
+    Stylesheets/Default/Linux.css \
+    Stylesheets/Default/Extended.css \
+    Stylesheets/Default/Default.css \
+    Stylesheets/Flat/Windows.css \
+    Stylesheets/Flat/Mac.css \
+    Stylesheets/Flat/Linux.css \
+    Stylesheets/Flat/Extended.css \
+    Stylesheets/Flat/Default.css
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
