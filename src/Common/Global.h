@@ -159,7 +159,7 @@ namespace Color
     static const QString DEFAULT_ACTIVE_COLOR = "Lime";
     static const QString DEFAULT_CONSUMER_COLOR = "DarkSlateGray";
     static const QString DEFAULT_GPI_COLOR = "Chocolate";
-    static const QString DEFAULT_GROUP_COLOR = "SteelBlue";
+    static const QString DEFAULT_GROUP_COLOR = "rgba(70, 115, 195, 255)";
     static const QString DEFAULT_AUDIO_COLOR = "SlateGray";
     static const QString DEFAULT_STILL_COLOR = "Goldenrod";
     static const QString DEFAULT_MOVIE_COLOR = "DarkKhaki";
@@ -173,16 +173,16 @@ namespace Color
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
     static const QString DEFAULT_STORED_DATA_COLOR = "Chocolate";
     static const QString DEFAULT_TRANSPARENT_COLOR = "Transparent";
-    static const QString SIENNA_RGBA_COLOR = "136, 45, 23, 128";
-    static const QString OLIVEDRAB_RGBA_COLOR = "107, 142, 35, 128";
-    static const QString SEAGREEN_RGBA_COLOR = "46, 139, 87, 128";
-    static const QString CHOCOLATE_RGBA_COLOR = "123, 63, 0, 128";
-    static const QString DARKSLATEGRAY_RGBA_COLOR = "47, 79, 79, 128";
-    static const QString STEELBLUE_RGBA_COLOR = "70, 130, 179, 128";
-    static const QString MAROON_RGBA_COLOR = "128, 0, 0, 255";
-    static const QString MAROONLIGHT_RGBA_COLOR = "128, 0, 0, 64";
-    static const QString DARKKHAKI_RGBA_COLOR = "189, 183, 107, 64";
-    static const QString ROYALBLUE_RGBA_COLOR = "65, 105, 225, 64";
+    static const QString SIENNA_COLOR = "rgba(136, 45, 23, 128)";
+    static const QString OLIVEDRAB_COLOR = "rgba(107, 142, 35, 128)";
+    static const QString SEAGREEN_COLOR = "rgba(46, 139, 87, 128)";
+    static const QString CHOCOLATE_COLOR = "rgba(123, 63, 0, 128)";
+    static const QString DARKSLATEGRAY_COLOR = "rgba(47, 79, 79, 128)";
+    static const QString STEELBLUE_COLOR = "rgba(70, 130, 179, 128)";
+    static const QString MAROON_COLOR = "rgba(128, 0, 0, 192)";
+    static const QString MAROONLIGHT_COLOR = "rgba(128, 0, 0, 64)";
+    static const QString DARKKHAKI_COLOR = "rgba(189, 183, 107, 64)";
+    static const QString ROYALBLUE_COLOR = "rgba(65, 105, 225, 64)";
 }
 
 namespace Stylesheet

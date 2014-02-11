@@ -605,25 +605,25 @@ void RundownTreeWidget::contextMenuNewTriggered(QAction* action)
 void RundownTreeWidget::contextMenuColorTriggered(QAction* action)
 {
     if (action->text() == "Sienna")
-        colorizeItems(Color::SIENNA_RGBA_COLOR);
+        colorizeItems(Color::SIENNA_COLOR);
     else if (action->text() == "OliveDrab")
-        colorizeItems(Color::OLIVEDRAB_RGBA_COLOR);
+        colorizeItems(Color::OLIVEDRAB_COLOR);
     else if (action->text() == "SeaGreen")
-        colorizeItems(Color::SEAGREEN_RGBA_COLOR);
+        colorizeItems(Color::SEAGREEN_COLOR);
     else if (action->text() == "Chocolate")
-        colorizeItems(Color::CHOCOLATE_RGBA_COLOR);
+        colorizeItems(Color::CHOCOLATE_COLOR);
     else if (action->text() == "DarkSlateGray")
-        colorizeItems(Color::DARKSLATEGRAY_RGBA_COLOR);
+        colorizeItems(Color::DARKSLATEGRAY_COLOR);
     else if (action->text() == "SteelBlue")
-        colorizeItems(Color::STEELBLUE_RGBA_COLOR);
+        colorizeItems(Color::STEELBLUE_COLOR);
     else if (action->text() == "Maroon")
-        colorizeItems(Color::MAROON_RGBA_COLOR);
+        colorizeItems(Color::MAROON_COLOR);
     else if (action->text() == "MaroonLight")
-        colorizeItems(Color::MAROONLIGHT_RGBA_COLOR);
+        colorizeItems(Color::MAROONLIGHT_COLOR);
     else if (action->text() == "DarkKhaki")
-        colorizeItems(Color::DARKKHAKI_RGBA_COLOR);
+        colorizeItems(Color::DARKKHAKI_COLOR);
     else if (action->text() == "RoyalBlue")
-        colorizeItems(Color::ROYALBLUE_RGBA_COLOR);
+        colorizeItems(Color::ROYALBLUE_COLOR);
     else
         colorizeItems(""); // Reset
 }

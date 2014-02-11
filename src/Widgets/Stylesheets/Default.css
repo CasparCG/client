@@ -65,7 +65,6 @@
     image: url(:/Graphics/Images/ArrowRightDisabled.png);
 }
 
-
 /*
  * QWidget
  */
@@ -113,15 +112,15 @@ QCheckBox::indicator
     border-style: solid;
     border-width: 1px;
 }
-QCheckBox::indicator:hover
-{
-    border-color: rgba(70, 115, 195, 255);
-}
 QCheckBox::indicator:disabled
 {
     background-color: transparent;
 }
-/*QCheckBox::indicator:unchecked
+/*QCheckBox::indicator:hover
+{
+    border-color: rgba(70, 115, 195, 255);
+}
+QCheckBox::indicator:unchecked
 {
     image: url(:/Graphics/Images/CheckboxUnchecked.png);
 }
@@ -168,11 +167,15 @@ QRadioButton::indicator
     border-style: solid;
     border-width: 1px;
 }
-QRadioButton::indicator:hover
+QRadioButton::indicator:disabled
+{
+    background-color: transparent;
+}
+/*QRadioButton::indicator:hover
 {
     border-color: rgba(70, 115, 195, 255);
 }
-/*QRadioButton::indicator::unchecked
+QRadioButton::indicator::unchecked
 {
     image: url(:/Graphics/Images/RadiobuttonUnchecked.png);
 }
@@ -249,6 +252,10 @@ QLineEdit:disabled
 {
     background-color: transparent;
 }
+/*QLineEdit:hover, QLineEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 
 /*
  * QTextEdit
@@ -264,6 +271,10 @@ QTextEdit:disabled
 {
     background-color: transparent;
 }
+/*QTextEdit:hover, QTextEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 
 /*
  * QPlainTextEdit
@@ -279,6 +290,10 @@ QPlainTextEdit:disabled
 {
     background-color: transparent;
 }
+/*QPlainTextEdit:hover, QPlainTextEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 
 /*
  * QToolBar
@@ -555,10 +570,10 @@ QPushButton:disabled
 {
     background-color: transparent;
 }
-QPushButton:hover
+/*QPushButton:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}
+}*/
 
 QMessageBox QPushButton
 {
@@ -583,10 +598,10 @@ QToolButton:disabled
 {
     background-color: transparent;
 }
-QToolButton:hover
+/*QToolButton:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}
+}*/
 QToolButton::menu-indicator
 {
     image: none;
@@ -611,10 +626,13 @@ QComboBox:disabled
 QComboBox::drop-down
 {
     border-color: rgba(65, 65, 65, 255);
-    border-left-width: 1px;
     border-left-style: solid;
-    border-top-width: 0px;
+    border-width: 0px;
 }
+/*QComboBox:hover, QComboBox:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QComboBox QAbstractItemView
 {
     selection-background-color: rgba(70, 115, 195, 64);
@@ -637,12 +655,15 @@ QSpinBox:disabled
 {
     background-color: transparent;
 }
+/*QSpinBox:hover, QSpinBox:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QSpinBox::up-button
 {
-    border-bottom-width: 1px;
-    border-left-width: 1px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
+    border-width: 0px;
     subcontrol-position: top right;
 }
 QSpinBox::up-button:disabled
@@ -651,11 +672,9 @@ QSpinBox::up-button:disabled
 }
 QSpinBox::down-button
 {
-    border-bottom-right-radius: 2px;
-    border-left-width: 1px;
-    border-top-width: 1px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
+    border-width: 0px;
     subcontrol-position: bottom right;
 }
 QSpinBox::down-button:disabled
@@ -679,10 +698,13 @@ QDoubleSpinBox:disabled
 {
     background-color: transparent;
 }
+/*QDoubleSpinBox:hover, QDoubleSpinBox:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QDoubleSpinBox::up-button
 {
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: top right;
@@ -693,8 +715,7 @@ QDoubleSpinBox::up-button:disabled
 }
 QDoubleSpinBox::down-button
 {
-    border-left-width: 1px;
-    border-top-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: bottom right;
@@ -720,10 +741,13 @@ QDateEdit:disabled
 {
     background-color: transparent;
 }
+/*QDateEdit:hover, QDateEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QDateEdit::up-button
 {
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: top right;
@@ -734,8 +758,7 @@ QDateEdit::up-button:disabled
 }
 QDateEdit::down-button
 {
-    border-left-width: 1px;
-    border-top-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: bottom right;
@@ -761,10 +784,13 @@ QTimeEdit:disabled
 {
     background-color: transparent;
 }
+/*QTimeEdit:hover, QTimeEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QTimeEdit::up-button
 {
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: top right;
@@ -775,8 +801,7 @@ QTimeEdit::up-button:disabled
 }
 QTimeEdit::down-button
 {
-    border-left-width: 1px;
-    border-top-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: bottom right;
@@ -802,10 +827,13 @@ QDateTimeEdit:disabled
 {
     background-color: transparent;
 }
+/*QDateTimeEdit:hover, QDateTimeEdit:focus
+{
+    border-color: rgba(70, 115, 195, 255);
+}*/
 QDateTimeEdit::up-button
 {
-    border-bottom-width: 1px;
-    border-left-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: top right;
@@ -816,8 +844,7 @@ QDateTimeEdit::up-button:disabled
 }
 QDateTimeEdit::down-button
 {
-    border-left-width: 1px;
-    border-top-width: 1px;
+    border-width: 0px;
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     subcontrol-position: bottom right;
@@ -934,14 +961,14 @@ QHeaderView::section:only-one
 QScrollBar:horizontal
 {
     background-color: rgba(28, 28, 28, 255);
-    height: 12px;
+    height: 16px;
 }
 QScrollBar::handle:horizontal
 {
-    background-color: rgba(80, 80, 80, 255);
+    background-color: rgba(65, 65, 65, 255);
     border-color: rgba(28, 28, 28, 255);
     border-style: solid;
-    border-width: 2px;
+    border-width: 4px;
     min-width: 42px;
 }
 QScrollBar::add-line:horizontal
@@ -980,10 +1007,10 @@ QScrollBar:vertical
 }
 QScrollBar::handle:vertical
 {
-    background-color: rgba(80, 80, 80, 255);
+    background-color: rgba(65, 65, 65, 255);
     border-color: rgba(28, 28, 28, 255);
     border-style: solid;
-    border-width: 2px;
+    border-width: 4px;
     min-height: 42px;
 }
 QScrollBar::add-line:vertical
@@ -1050,10 +1077,10 @@ QSlider::handle
     border-style: solid;
     border-width: 1px;
 }
-QSlider::handle:hover
+/*QSlider::handle:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}
+}*/
 QSlider::handle:disabled
 {
     background-color: transparent;

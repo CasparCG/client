@@ -244,7 +244,7 @@ void RundownImageWidget::setInGroup(bool inGroup)
 void RundownImageWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
 void RundownImageWidget::checkEmptyDevice()

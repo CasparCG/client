@@ -144,7 +144,7 @@ LibraryModel* RundownGroupWidget::getLibraryModel()
 void RundownGroupWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
 void RundownGroupWidget::setActive(bool active)

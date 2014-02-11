@@ -157,7 +157,7 @@ void RundownGpiOutputWidget::setInGroup(bool inGroup)
 void RundownGpiOutputWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: rgba(%1); }").arg(color));
+    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
 bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
