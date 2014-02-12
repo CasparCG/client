@@ -182,10 +182,10 @@
   <widget class="QToolButton" name="toolButtonTestConnection">
    <property name="geometry">
     <rect>
-     <x>419</x>
+     <x>418</x>
      <y>34</y>
-     <width>21</width>
-     <height>21</height>
+     <width>22</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="focusPolicy">
