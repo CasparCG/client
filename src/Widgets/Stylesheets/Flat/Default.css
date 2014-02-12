@@ -598,7 +598,7 @@ QFileDialog QPushButton
  */
 QToolButton
 {
-    background-color: transparent;
+    background-color: rgba(35, 35, 35, 255);
     border-color: rgba(65, 65, 65, 255);
     border-width: 1px;
 }
