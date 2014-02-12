@@ -48,7 +48,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>153</y>
+       <y>196</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -64,7 +64,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>161</y>
+       <y>204</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -77,7 +77,7 @@
      <property name="geometry">
       <rect>
        <x>111</x>
-       <y>219</y>
+       <y>262</y>
        <width>61</width>
        <height>20</height>
       </rect>
@@ -93,7 +93,7 @@
      <property name="geometry">
       <rect>
        <x>181</x>
-       <y>217</y>
+       <y>260</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -109,7 +109,7 @@
      <property name="geometry">
       <rect>
        <x>271</x>
-       <y>221</y>
+       <y>264</y>
        <width>62</width>
        <height>16</height>
       </rect>
@@ -122,8 +122,8 @@
      <property name="geometry">
       <rect>
        <x>167</x>
-       <y>108</y>
-       <width>81</width>
+       <y>151</y>
+       <width>112</width>
        <height>22</height>
       </rect>
      </property>
@@ -164,7 +164,7 @@
      <property name="geometry">
       <rect>
        <x>87</x>
-       <y>112</y>
+       <y>155</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -179,8 +179,8 @@
     <widget class="QLabel" name="labelPixels">
      <property name="geometry">
       <rect>
-       <x>257</x>
-       <y>112</y>
+       <x>287</x>
+       <y>155</y>
        <width>62</width>
        <height>16</height>
       </rect>
@@ -238,7 +238,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>181</y>
+       <y>224</y>
        <width>211</width>
        <height>17</height>
       </rect>
@@ -254,7 +254,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>262</y>
+       <y>305</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -270,7 +270,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>270</y>
+       <y>313</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -283,7 +283,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>290</y>
+       <y>333</y>
        <width>171</width>
        <height>17</height>
       </rect>
@@ -299,7 +299,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>316</y>
+       <y>359</y>
        <width>201</width>
        <height>17</height>
       </rect>
@@ -315,7 +315,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>342</y>
+       <y>385</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -331,7 +331,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>386</y>
+       <y>429</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -347,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>394</y>
+       <y>437</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -360,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>416</y>
+       <y>459</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -386,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>417</y>
+       <y>460</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -397,6 +397,48 @@
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
+    </widget>
+    <widget class="QLabel" name="labelTheme">
+     <property name="geometry">
+      <rect>
+       <x>77</x>
+       <y>109</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Theme:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxTheme">
+     <property name="geometry">
+      <rect>
+       <x>167</x>
+       <y>108</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>Default</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Flat</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
@@ -2895,8 +2937,8 @@
    <slot>fontSizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>161</y>
+     <x>180</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
      <x>437</x>
@@ -2927,8 +2969,8 @@
    <slot>synchronizeIntervalChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>270</y>
+     <x>199</x>
+     <y>313</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -2959,8 +3001,8 @@
    <slot>autoSynchronizeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>129</x>
-     <y>229</y>
+     <x>131</x>
+     <y>272</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3519,8 +3561,8 @@
    <slot>showThumbnailTooltipChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>268</x>
-     <y>338</y>
+     <x>270</x>
+     <y>381</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3551,8 +3593,8 @@
    <slot>reverseOscTimeChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>364</y>
+     <x>164</x>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3567,8 +3609,8 @@
    <slot>disableInAndOutPointsChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>136</x>
-     <y>390</y>
+     <x>138</x>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3663,8 +3705,8 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>131</y>
+     <x>254</x>
+     <y>127</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -3727,8 +3769,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>259</x>
-     <y>467</y>
+     <x>261</x>
+     <y>510</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -3765,6 +3807,22 @@
     <hint type="destinationlabel">
      <x>697</x>
      <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTheme</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>themeChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>149</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>714</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -3811,5 +3869,6 @@
   <slot>delayTypeChanged(QString)</slot>
   <slot>tricasterProductChanged(QString)</slot>
   <slot>enableOscInputChanged(int)</slot>
+  <slot>themeChanged(QString)</slot>
  </slots>
 </ui>

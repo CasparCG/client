@@ -151,13 +151,11 @@ void EventManager::fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, 
 
 void EventManager::fireToggleCompactViewEvent()
 {
-    // Use synchronous event through sendEvent().
     qApp->postEvent(qApp, new CompactViewEvent());
 }
 
 void EventManager::fireRefreshLibraryEvent(int delay)
 {
-    // Use synchronous event through sendEvent().
     qApp->postEvent(qApp, new RefreshLibraryEvent(delay));
 }
 

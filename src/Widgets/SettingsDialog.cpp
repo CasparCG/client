@@ -32,6 +32,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool startFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
     this->checkBoxFullscreen->setChecked(startFullscreen);
 
+    this->comboBoxTheme->setCurrentIndex(this->comboBoxTheme->findText(DatabaseManager::getInstance().getConfigurationByName("Theme").getValue()));
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
 
     bool autoRefreshLibrary = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
@@ -664,4 +665,9 @@ void SettingsDialog::delayTypeChanged(QString delayType)
 void SettingsDialog::tricasterProductChanged(QString product)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "TriCasterProduct", this->comboBoxTriCasterProduct->currentText()));
+}
+
+void SettingsDialog::themeChanged(QString theme)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "Theme", this->comboBoxTheme->currentText()));
 }

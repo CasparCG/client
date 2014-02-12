@@ -47,9 +47,10 @@ void loadDatabase(QApplication& application)
 void loadStyleSheets(QApplication& application)
 {
     QString stylesheet;
+    QString theme = DatabaseManager::getInstance().getConfigurationByName("Theme").getValue();
 
     // Load default stylesheet..
-    QFile defaultStylesheet(":/Appearances/Stylesheets/Flat/Default.css");
+    QFile defaultStylesheet(QString(":/Appearances/Stylesheets/%1/Default.css").arg(theme));
     if (defaultStylesheet.open(QFile::ReadOnly))
     {
         QTextStream stream(&defaultStylesheet);
@@ -62,7 +63,7 @@ void loadStyleSheets(QApplication& application)
     }
 
     // Load extended stylesheet.
-    QFile extendedStylesheet(":/Appearances/Stylesheets/Flat/Extended.css");
+    QFile extendedStylesheet(QString(":/Appearances/Stylesheets/%1/Extended.css").arg(theme));
     if (extendedStylesheet.open(QFile::ReadOnly))
     {
         QTextStream stream(&extendedStylesheet);
@@ -76,11 +77,11 @@ void loadStyleSheets(QApplication& application)
 
     // Load platform stylesheet.
 #if defined(Q_OS_WIN)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Windows.css");
+    QFile platformStylesheet(QString(":/Appearances/Stylesheets/%1/Windows.css").arg(theme));
 #elif defined(Q_OS_MAC)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Mac.css");
+    QFile platformStylesheet(QString(":/Appearances/Stylesheets/%1/Mac.css").arg(theme));
 #elif defined(Q_OS_LINUX)
-    QFile platformStylesheet(":/Appearances/Stylesheets/Flat/Linux.css");
+    QFile platformStylesheet(QString(":/Appearances/Stylesheets/%1/Linux.css").arg(theme));
 #endif
     if (platformStylesheet.open(QFile::ReadOnly))
     {

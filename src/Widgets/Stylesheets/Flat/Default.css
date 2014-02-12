@@ -116,11 +116,11 @@ QCheckBox::indicator:disabled
 {
     background-color: transparent;
 }
-/*QCheckBox::indicator:hover
+QCheckBox::indicator:hover
 {
     border-color: rgba(70, 115, 195, 255);
 }
-QCheckBox::indicator:unchecked
+/*QCheckBox::indicator:unchecked
 {
     image: url(:/Graphics/Images/CheckboxUnchecked.png);
 }
@@ -578,10 +578,10 @@ QPushButton:disabled
 {
     background-color: transparent;
 }
-/*QPushButton:hover
+QPushButton:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}*/
+}
 
 QMessageBox QPushButton
 {
@@ -606,10 +606,10 @@ QToolButton:disabled
 {
     background-color: transparent;
 }
-/*QToolButton:hover
+QToolButton:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}*/
+}
 QToolButton::menu-indicator
 {
     image: none;
@@ -1085,10 +1085,10 @@ QSlider::handle
     border-style: solid;
     border-width: 1px;
 }
-/*QSlider::handle:hover
+QSlider::handle:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}*/
+}
 QSlider::handle:disabled
 {
     background-color: transparent;

@@ -71,6 +71,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void oscOutputItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void delayTypeChanged(QString);
         Q_SLOT void tricasterProductChanged(QString);
+        Q_SLOT void themeChanged(QString);
 
         Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType::Type);
 };
