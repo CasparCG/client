@@ -41,7 +41,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButtonOK">
+  <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
      <x>365</x>
@@ -191,7 +191,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButtonOK</sender>
+   <sender>pushButtonOk</sender>
    <signal>clicked()</signal>
    <receiver>OscOutputDialog</receiver>
    <slot>accept()</slot>

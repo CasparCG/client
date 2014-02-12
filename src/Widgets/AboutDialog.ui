@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>About</string>
   </property>
-  <widget class="QPushButton" name="pushButtonOK">
+  <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
      <x>233</x>
@@ -88,7 +88,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButtonOK</sender>
+   <sender>pushButtonOk</sender>
    <signal>clicked()</signal>
    <receiver>AboutDialog</receiver>
    <slot>accept()</slot>
