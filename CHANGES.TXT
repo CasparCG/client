@@ -1,3 +1,10 @@
+CasparCG Client 2.0.7.0
+=======================
+- NEW: Added new flat theme.
+- UPDATE: Changed version scheme.
+
+
+
 CasparCG Client 2.0.6
 =====================
 - NEW: Added support for specifying the output delay in frames or milliseconds.
