@@ -139,10 +139,11 @@ int main(int argc, char* argv[])
     application.setStyle("plastique");
 
     loadDatabase(application);
+    DatabaseManager::getInstance().initialize();
+
     loadStyleSheets(application);
     loadFonts(application);
 
-    DatabaseManager::getInstance().initialize();
     EventManager::getInstance().initialize();
     GpiManager::getInstance().initialize();
 
