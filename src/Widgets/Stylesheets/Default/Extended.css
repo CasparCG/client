@@ -223,6 +223,14 @@
 {
     background-color: rgba(80, 80, 80, 255);
 }
+#treeWidgetRundown::item:has-children
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::item:has-children:selected
+{
+    background-color: rgba(80, 80, 80, 255);
+}
 #treeWidgetRundown::branch
 {
     background-color: transparent;

@@ -154,6 +154,11 @@ namespace Mixer
     static const QString DEFAULT_CHROMAKEY = "None";
 }
 
+namespace Appearance
+{
+    static const QString DEFAULT_THEME = "Default";
+}
+
 namespace Color
 {
     static const QString DEFAULT_ACTIVE_COLOR = "Lime";

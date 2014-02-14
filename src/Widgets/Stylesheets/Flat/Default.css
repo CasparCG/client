@@ -970,6 +970,9 @@ QScrollBar:horizontal
 {
     background-color: rgba(28, 28, 28, 255);
     height: 16px;
+    border-color: rgba(65, 65, 65, 255);
+    border-top-width: 1px;
+    border-style: solid;
 }
 QScrollBar::handle:horizontal
 {
@@ -995,23 +998,14 @@ QScrollBar::right-arrow:horizontal
 {
     image: none;
 }
-QScrollBar::add-page:horizontal
-{
-    border-color: rgba(65, 65, 65, 255);
-    border-style: solid;
-    border-top-width: 1px;
-}
-QScrollBar::sub-page:horizontal
-{
-    border-color: rgba(65, 65, 65, 255);
-    border-style: solid;
-    border-top-width: 1px;
-}
 
 QScrollBar:vertical
 {
     background-color: rgba(28, 28, 28, 255);
     width: 16px;
+    border-color: rgba(65, 65, 65, 255);
+    border-left-width: 1px;
+    border-style: solid;
 }
 QScrollBar::handle:vertical
 {
@@ -1036,18 +1030,6 @@ QScrollBar:up-arrow:vertical
 QScrollBar::down-arrow:vertical
 {
     image: none;
-}
-QScrollBar::add-page:vertical
-{
-    border-color: rgba(65, 65, 65, 255);
-    border-left-width: 1px;
-    border-style: solid;
-}
-QScrollBar::sub-page:vertical
-{
-    border-color: rgba(65, 65, 65, 255);
-    border-left-width: 1px;
-    border-style: solid;
 }
 
 /*

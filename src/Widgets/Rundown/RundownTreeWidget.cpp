@@ -535,7 +535,10 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
 void RundownTreeWidget::checkEmptyRundown()
 {
-    this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
+    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::DEFAULT_THEME)
+        this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
+    else
+        this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
 }
 
 void RundownTreeWidget::colorizeItems(const QString& color)
