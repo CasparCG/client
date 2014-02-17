@@ -66,7 +66,9 @@ void MainWindow::setupMenu()
     this->libraryMenu->addAction("Refresh Library", this, SLOT(refreshLibrary()), QKeySequence::fromString("Ctrl+R"));
 
     this->rundownMenu = new QMenu(this);
-    this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()), QKeySequence::fromString("Ctrl+W"));
+    this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->rundownMenu->addSeparator();
+    this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -243,6 +245,11 @@ void MainWindow::executeClearChannel()
 void MainWindow::toggleCompactView()
 {
     EventManager::getInstance().fireToggleCompactViewEvent();
+}
+
+void MainWindow::closeRundown()
+{
+    EventManager::getInstance().fireCloseRundownEvent();
 }
 
 void MainWindow::showAboutDialog()

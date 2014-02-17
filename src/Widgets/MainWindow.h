@@ -59,4 +59,5 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void importPreset();
         Q_SLOT void exportPreset();
         Q_SLOT void saveAsPreset();
+        Q_SLOT void closeRundown();
 };

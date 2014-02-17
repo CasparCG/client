@@ -46,6 +46,8 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeRundown()));
 }
 
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
@@ -65,6 +67,13 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
 
         if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
             EventManager::getInstance().fireNewRundownMenuEvent(false);
+
+        return true;
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::CloseRundown))
+    {
+        if (this->tabWidgetRundown->count() > 1)
+            EventManager::getInstance().fireDeleteRundownEvent(this->tabWidgetRundown->currentIndex());
 
         return true;
     }
@@ -162,6 +171,11 @@ void RundownWidget::saveAsRundown()
 void RundownWidget::toggleCompactView()
 {
     EventManager::getInstance().fireToggleCompactViewEvent();
+}
+
+void RundownWidget::closeRundown()
+{
+    EventManager::getInstance().fireCloseRundownEvent();
 }
 
 bool RundownWidget::selectTab(int index)

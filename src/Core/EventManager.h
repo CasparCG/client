@@ -37,6 +37,7 @@
 #include "Events/Rundown/RundownIsChangedEvent.h"
 #include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
+#include "Events/Rundown/CloseRundownEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/SaveAsPresetEvent.h"
@@ -107,4 +108,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireAutoPlayNextRundownItemEvent(QWidget* widget);
         void fireAutoPlayChangedEvent(bool autoPlay);
         void fireOscOutputChangedEvent();
+        void fireCloseRundownEvent();
 };

@@ -154,6 +154,11 @@ void EventManager::fireToggleCompactViewEvent()
     qApp->postEvent(qApp, new CompactViewEvent());
 }
 
+void EventManager::fireCloseRundownEvent()
+{
+    qApp->postEvent(qApp, new CloseRundownEvent());
+}
+
 void EventManager::fireRefreshLibraryEvent(int delay)
 {
     qApp->postEvent(qApp, new RefreshLibraryEvent(delay));

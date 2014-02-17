@@ -51,7 +51,8 @@ namespace Event
             ProgramSourceChanged =  QEvent::User + 45,
             ExecuteRundownItem = QEvent::User + 46,
             OscOutputChanged =  QEvent::User + 47,
-            SaveAsPreset =  QEvent::User + 48
+            SaveAsPreset =  QEvent::User + 48,
+            CloseRundown =  QEvent::User + 49
         };
     };
 }

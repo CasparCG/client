@@ -125,7 +125,8 @@ HEADERS += \
     Commands/OscOutputCommand.h \
     Events/OscOutputChangedEvent.h \
     Models/TriCaster/TriCasterProductModel.h \
-    Events/SaveAsPresetEvent.h
+    Events/SaveAsPresetEvent.h \
+    Events/Rundown/CloseRundownEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -240,7 +241,8 @@ SOURCES += \
     Commands/OscOutputCommand.cpp \
     Events/OscOutputChangedEvent.cpp \
     Models/TriCaster/TriCasterProductModel.cpp \
-    Events/SaveAsPresetEvent.cpp
+    Events/SaveAsPresetEvent.cpp \
+    Events/Rundown/CloseRundownEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

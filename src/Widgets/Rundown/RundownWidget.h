@@ -31,6 +31,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void saveRundown();
         Q_SLOT void saveAsRundown();
         Q_SLOT void toggleCompactView();
+        Q_SLOT void closeRundown();
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
