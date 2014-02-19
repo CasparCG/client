@@ -34,6 +34,11 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* helpMenu;
         QMenuBar* menuBar;
 
+        QAction* newRundownAction;
+        //QAction* exportPresetAction;
+        QAction* saveAsPresetAction;
+        QAction* allowRemoteTriggeringAction;
+
         void setupMenu();
 
         Q_SLOT void newRundown();
@@ -60,4 +65,5 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void exportPreset();
         Q_SLOT void saveAsPreset();
         Q_SLOT void closeRundown();
+        Q_SLOT void allowRemoteTriggering(bool);
 };

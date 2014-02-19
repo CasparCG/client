@@ -154,6 +154,16 @@ void EventManager::fireToggleCompactViewEvent()
     qApp->postEvent(qApp, new CompactViewEvent());
 }
 
+void EventManager::fireRemoteRundownTriggeringEvent(bool enabled)
+{
+    qApp->postEvent(qApp, new RemoteRundownTriggeringEvent(enabled));
+}
+
+void EventManager::fireAllowRemoteTriggeringMenuEvent(bool enabled)
+{
+    qApp->postEvent(qApp, new AllowRemoteTriggeringMenuEvent(enabled));
+}
+
 void EventManager::fireCloseRundownEvent()
 {
     qApp->postEvent(qApp, new CloseRundownEvent());

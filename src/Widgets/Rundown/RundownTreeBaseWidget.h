@@ -5,24 +5,24 @@
 
 #include "Global.h"
 
+#include "OscSubscription.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QRect>
 #include <QtCore/QModelIndexList>
-#include <QtGui/QStyleOptionViewItemV4>
-
 #include <QtCore/QMimeData>
+#include <QtCore/QRect>
 #include <QtCore/QXmlStreamWriter>
 
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
-#include <QtGui/QPixmap>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QWidget>
+#include <QtGui/QPixmap>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
+#include <QtGui/QWidget>
 
 typedef QPair<QRect, QModelIndex> QItemViewPaintPair;
 typedef QList<QItemViewPaintPair> QItemViewPaintPairs;
@@ -48,6 +48,8 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
         bool hasItemBelow() const;
+
+        void selectItemAbove();
         void selectItemBelow();
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
@@ -58,5 +60,6 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
 
     private:
         bool compactView;
+
         QPoint dragStartPosition;
 };

@@ -126,7 +126,9 @@ HEADERS += \
     Events/OscOutputChangedEvent.h \
     Models/TriCaster/TriCasterProductModel.h \
     Events/SaveAsPresetEvent.h \
-    Events/Rundown/CloseRundownEvent.h
+    Events/Rundown/CloseRundownEvent.h \
+    Events/Rundown/RemoteRundownTriggeringEvent.h \
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -242,7 +244,9 @@ SOURCES += \
     Events/OscOutputChangedEvent.cpp \
     Models/TriCaster/TriCasterProductModel.cpp \
     Events/SaveAsPresetEvent.cpp \
-    Events/Rundown/CloseRundownEvent.cpp
+    Events/Rundown/CloseRundownEvent.cpp \
+    Events/Rundown/RemoteRundownTriggeringEvent.cpp \
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

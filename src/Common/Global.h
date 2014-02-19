@@ -52,7 +52,9 @@ namespace Event
             ExecuteRundownItem = QEvent::User + 46,
             OscOutputChanged =  QEvent::User + 47,
             SaveAsPreset =  QEvent::User + 48,
-            CloseRundown =  QEvent::User + 49
+            CloseRundown =  QEvent::User + 49,
+            RemoteRundownTriggering =  QEvent::User + 50,
+            AllowRemoteTriggeringMenu =  QEvent::User + 51
         };
     };
 }
@@ -113,6 +115,8 @@ namespace Osc
     static const QString DEFAULT_CLEAR_CONTROL_FILTER = "/control/#UID#/clear";
     static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = "/control/#UID#/clearvideolayer";
     static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = "/control/#UID#/clearchannel";
+    static const QString DEFAULT_UP_CONTROL_FILTER = "/control/#UID#/up";
+    static const QString DEFAULT_DOWN_CONTROL_FILTER = "/control/#UID#/down";
 }
 
 namespace GpiOutput
@@ -422,6 +426,18 @@ namespace Xml
 
         return temp;
     }
+}
+
+namespace Action
+{
+    struct ActionType
+    {
+        enum Type
+        {
+            KeyPress,
+            GpiPulse
+        };
+    };
 }
 
 namespace Playout

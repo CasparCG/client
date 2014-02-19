@@ -511,6 +511,12 @@ QMenu::item:selected
 {
     background-color: rgba(70, 115, 195, 64);
 }
+QMenu::indicator
+{
+    background-color: transparent;
+    border-width: 0px;
+    padding-left: 7px;
+}
 
 /*
  * QToolBox

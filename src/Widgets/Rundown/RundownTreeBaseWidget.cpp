@@ -311,6 +311,24 @@ bool RundownTreeBaseWidget::hasItemBelow() const
     return (itemBelow == NULL) ? false : true;
 }
 
+void RundownTreeBaseWidget::selectItemAbove()
+{
+    if (QTreeWidget::currentItem() == NULL)
+    {
+        QTreeWidget::setCurrentItem(QTreeWidget::invisibleRootItem()->child(0));
+        return;
+    }
+
+    QTreeWidgetItem* itemAbove = NULL;
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0))->isGroup()) // Group.
+        itemAbove = QTreeWidget::invisibleRootItem()->child(QTreeWidget::currentIndex().row() - 1);
+    else
+        itemAbove = QTreeWidget::itemAbove(QTreeWidget::currentItem());
+
+    if (itemAbove != NULL)
+        QTreeWidget::setCurrentItem(itemAbove);
+}
+
 void RundownTreeBaseWidget::selectItemBelow()
 {
     if (QTreeWidget::currentItem() == NULL)

@@ -492,7 +492,8 @@ OTHER_FILES += \
     Stylesheets/Flat/Mac.css \
     Stylesheets/Flat/Linux.css \
     Stylesheets/Flat/Extended.css \
-    Stylesheets/Flat/Default.css
+    Stylesheets/Flat/Default.css \
+    Images/OscTriggerSmall.png
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

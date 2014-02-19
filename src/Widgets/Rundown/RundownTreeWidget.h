@@ -28,12 +28,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
     Q_OBJECT
 
     public:
-        enum ActionSource
-        {
-            KeyPress,
-            GpiPulse
-        };
-
         explicit RundownTreeWidget(QWidget* parent = 0);
         ~RundownTreeWidget();
 
@@ -41,7 +35,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void openRundown(const QString& path);
         void saveRundown(bool saveAs);
 
-        bool executeCommand(Playout::PlayoutType::Type type, ActionSource source, QTreeWidgetItem* item = NULL);
+        bool getAllowRemoteTriggering() const;
+        bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
 
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
 
@@ -49,6 +44,10 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
+        bool active;
+        bool enterPressed;
+        bool allowRemoteTriggering;
+
         QString page;
         QString activeRundown;
 
@@ -60,15 +59,26 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
 
-        bool active;
-        bool enterPressed;
-
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
         AbstractRundownWidget* currentAutoPlayWidget;
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
 
         QTreeWidgetItem* copyItem;
+        QTreeWidgetItem* activeItem;
+
+        OscSubscription* upControlSubscription;
+        OscSubscription* downControlSubscription;
+        OscSubscription* stopControlSubscription;
+        OscSubscription* playControlSubscription;
+        OscSubscription* loadControlSubscription;
+        OscSubscription* pauseControlSubscription;
+        OscSubscription* nextControlSubscription;
+        OscSubscription* updateControlSubscription;
+        OscSubscription* invokeControlSubscription;
+        OscSubscription* clearControlSubscription;
+        OscSubscription* clearVideolayerControlSubscription;
+        OscSubscription* clearChannelControlSubscription;
 
         bool pasteSelectedItems();
         bool duplicateSelectedItems();
@@ -82,6 +92,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool moveItemUp();
         bool ungroupItems();
         void colorizeItems(const QString& color);
+        void resetOscSubscriptions();
+        void configureOscSubscriptions();
 
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();
@@ -127,4 +139,15 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT bool removeSelectedItems();
         Q_SLOT void saveAsPreset();
         Q_SLOT void addOscOutputItem();
+        Q_SLOT void upControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
 };

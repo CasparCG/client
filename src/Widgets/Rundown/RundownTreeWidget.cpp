@@ -60,7 +60,11 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), currentAutoPlayWidget(NULL)
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), currentAutoPlayWidget(NULL),
+      copyItem(NULL), activeItem(NULL), allowRemoteTriggering(false), upControlSubscription(NULL), downControlSubscription(NULL),
+      stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
+      nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL), clearControlSubscription(NULL),
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
     setupMenus();
@@ -188,7 +192,7 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
         if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
         {
-            executeCommand(executeRundownItemEvent->getType(), KeyPress, executeRundownItemEvent->getItem());
+            executeCommand(executeRundownItemEvent->getType(), Action::ActionType::KeyPress, executeRundownItemEvent->getItem());
 
             return true;
         }
@@ -202,25 +206,25 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         {
             QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
             if (keyEvent->key() == Qt::Key_F1) // Stop.
-                return executeCommand(Playout::PlayoutType::Stop, KeyPress);
+                return executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F2) // Play.
-                return executeCommand(Playout::PlayoutType::Play, KeyPress);
+                return executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F3) // Load.
-                return executeCommand(Playout::PlayoutType::Load, KeyPress);
+                return executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F4) // Pause.
-                return executeCommand(Playout::PlayoutType::Pause, KeyPress);
+                return executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F5) // Next.
-                return executeCommand(Playout::PlayoutType::Next, KeyPress);
+                return executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F6) // Update.
-                return executeCommand(Playout::PlayoutType::Update, KeyPress);
+                return executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F7) // Invoke.
-                return executeCommand(Playout::PlayoutType::Invoke, KeyPress);
+                return executeCommand(Playout::PlayoutType::Invoke, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F10) // Clear.
-                return executeCommand(Playout::PlayoutType::Clear, KeyPress);
+                return executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F11) // Clear videolayer.
-                return executeCommand(Playout::PlayoutType::ClearVideolayer, KeyPress);
+                return executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
             else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
-                return executeCommand(Playout::PlayoutType::ClearChannel, KeyPress);
+                return executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
 
             if (target == this->treeWidgetRundown)
             {
@@ -252,6 +256,13 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
                     return moveItemIntoGroup();
             }
+        }
+        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RemoteRundownTriggering))
+        {
+            RemoteRundownTriggeringEvent* remoteRundownTriggeringEvent = dynamic_cast<RemoteRundownTriggeringEvent*>(event);
+            this->allowRemoteTriggering = remoteRundownTriggeringEvent->getEnabled();
+
+            (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
         }
         else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ToggleCompactView))
         {
@@ -425,12 +436,29 @@ void RundownTreeWidget::setActive(bool active)
 {
     this->active = active;
 
-    if (!this->active)
+    if (this->active)
     {
-        // Deselect / Deactivate current selected item. We do not want to update wrong item.
-        this->treeWidgetRundown->setCurrentItem(NULL);
+        this->treeWidgetRundown->setCurrentItem(this->activeItem);
 
-        EventManager::getInstance().fireEmptyRundownEvent(); // Reset inspector panel.
+        if (this->treeWidgetRundown->currentItem() != NULL)
+        {
+            QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+
+            dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+        }
+    }
+    else
+    {
+        if (this->treeWidgetRundown->currentItem() != NULL)
+        {
+            this->activeItem = this->treeWidgetRundown->currentItem();
+
+            QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+
+            dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+        }
     }
 
     EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
@@ -552,7 +580,7 @@ void RundownTreeWidget::colorizeItems(const QString& color)
 
 void RundownTreeWidget::gpiPortTriggered(int gpiPort, GpiDevice* device)
 {
-    executeCommand(gpiBindings[gpiPort], GpiPulse);
+    executeCommand(gpiBindings[gpiPort], Action::ActionType::GpiPulse);
 }
 
 void RundownTreeWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)
@@ -885,7 +913,7 @@ bool RundownTreeWidget::moveItemUp()
     return true;
 }
 
-bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSource source, QTreeWidgetItem* item)
+bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item)
 {
     //QModelIndex currentIndex;
     QTreeWidgetItem* currentItem = NULL;
@@ -922,7 +950,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, ActionSo
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
     }
 
-    if (source == GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
+    if (source == Action::ActionType::GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
         return true; // Gpi pulses cannot trigger this item.
 
     if (type == Playout::PlayoutType::Next && rundownWidgetParent != NULL && rundownWidgetParent->isGroup() && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
@@ -1466,4 +1494,182 @@ bool RundownTreeWidget::removeSelectedItems()
     checkEmptyRundown();
 
     return true;
+}
+
+bool RundownTreeWidget::getAllowRemoteTriggering() const
+{
+    return this->allowRemoteTriggering;
+}
+
+void RundownTreeWidget::configureOscSubscriptions()
+{
+    resetOscSubscriptions();
+
+    QString upControlFilter = Osc::DEFAULT_UP_CONTROL_FILTER;
+    upControlFilter.replace("#UID#", this->activeRundown);
+    this->upControlSubscription = new OscSubscription(upControlFilter, this);
+    QObject::connect(this->upControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(upControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString downControlFilter = Osc::DEFAULT_DOWN_CONTROL_FILTER;
+    downControlFilter.replace("#UID#", this->activeRundown);
+    this->downControlSubscription = new OscSubscription(downControlFilter, this);
+    QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    stopControlFilter.replace("#UID#", this->activeRundown);
+    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
+    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    playControlFilter.replace("#UID#", this->activeRundown);
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
+    loadControlFilter.replace("#UID#", this->activeRundown);
+    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
+    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
+    nextControlFilter.replace("#UID#", this->activeRundown);
+    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
+    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#UID#", this->activeRundown);
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString invokeControlFilter = Osc::DEFAULT_INVOKE_CONTROL_FILTER;
+    invokeControlFilter.replace("#UID#", this->activeRundown);
+    this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
+    QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    clearControlFilter.replace("#UID#", this->activeRundown);
+    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
+    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    clearVideolayerControlFilter.replace("#UID#", this->activeRundown);
+    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
+    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    clearChannelControlFilter.replace("#UID#", this->activeRundown);
+    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
+    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
+void RundownTreeWidget::resetOscSubscriptions()
+{
+    if (this->upControlSubscription != NULL)
+        this->upControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->downControlSubscription != NULL)
+        this->downControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->stopControlSubscription != NULL)
+        this->stopControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playControlSubscription != NULL)
+        this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->loadControlSubscription != NULL)
+        this->loadControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->pauseControlSubscription != NULL)
+        this->pauseControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->nextControlSubscription != NULL)
+        this->nextControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearControlSubscription != NULL)
+        this->clearControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearVideolayerControlSubscription != NULL)
+        this->clearVideolayerControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clearChannelControlSubscription != NULL)
+        this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
+}
+
+void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        this->treeWidgetRundown->selectItemAbove();
+}
+
+void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        this->treeWidgetRundown->selectItemBelow();
+}
+
+void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
 }

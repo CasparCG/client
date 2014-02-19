@@ -4,6 +4,8 @@
 #include "EventManager.h"
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QDebug>
@@ -39,15 +41,18 @@ void RundownWidget::setupMenus()
 {
     this->contextMenuRundownDropdown = new QMenu(this);
     this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(newRundown()));
+    this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(newRundown()));
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundown()));
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeRundown()));
+    this->allowRemoteTriggeringAction->setCheckable(true);
+    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
 
 bool RundownWidget::eventFilter(QObject* target, QEvent* event)
@@ -69,6 +74,25 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
             EventManager::getInstance().fireNewRundownMenuEvent(false);
 
         return true;
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::NewRundownMenu))
+    {
+        NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
+        this->newRundownAction->setEnabled(newRundownMenuEvent->getEnabled());
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AllowRemoteTriggeringMenu))
+    {
+        AllowRemoteTriggeringMenuEvent* allowRemoteTriggeringMenuEvent = dynamic_cast<AllowRemoteTriggeringMenuEvent*>(event);
+
+        blockAllSignals(true);
+
+        this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggeringMenuEvent->getEnabled());
+        if (!allowRemoteTriggeringMenuEvent->getEnabled())
+            this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon());
+        else
+            this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
+
+        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::CloseRundown))
     {
@@ -148,6 +172,11 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
+void RundownWidget::blockAllSignals(bool block)
+{
+    this->allowRemoteTriggeringAction->blockSignals(block);
+}
+
 void RundownWidget::newRundown()
 {
     EventManager::getInstance().fireNewRundownEvent();
@@ -178,6 +207,12 @@ void RundownWidget::closeRundown()
     EventManager::getInstance().fireCloseRundownEvent();
 }
 
+void RundownWidget::allowRemoteTriggering(bool enabled)
+{
+    EventManager::getInstance().fireRemoteRundownTriggeringEvent(enabled);
+    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(enabled);
+}
+
 bool RundownWidget::selectTab(int index)
 {
     if (index <= this->tabWidgetRundown->count())
@@ -198,6 +233,13 @@ void RundownWidget::currentChanged(int index)
         dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->setActive(false);
 
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->setActive(true);
+
+    blockAllSignals(true);
+
+    bool allowRemoteTriggering = dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->getAllowRemoteTriggering();
+    this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggering);
+
+    blockAllSignals(false);
 }
 
 void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)

@@ -11,6 +11,8 @@
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
@@ -42,19 +44,19 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupMenu()
 {
     this->fileMenu = new QMenu(this);
-    this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
+    this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
     this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
-    this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
+    this->saveAsPresetAction = this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
-    //this->fileMenu->actions().at(4)->setEnabled(false); // Export Preset...
-    this->fileMenu->actions().at(5)->setEnabled(false); // Save as Preset...
+    //this->exportPresetAction = this->fileMenu->actions().at(4)->setEnabled(false);
+    this->saveAsPresetAction->setEnabled(false);
 
     this->editMenu = new QMenu(this);
     this->editMenu->addAction("Settings...", this, SLOT(showSettingsDialog()));
@@ -67,8 +69,11 @@ void MainWindow::setupMenu()
 
     this->rundownMenu = new QMenu(this);
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
+    this->allowRemoteTriggeringAction->setCheckable(true);
+    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -85,10 +90,10 @@ void MainWindow::setupMenu()
     this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
 
     this->helpMenu = new QMenu(this);
-    this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
+    QAction* action = this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
     this->helpMenu->addSeparator();
     this->helpMenu->addAction("About CasparCG Client"/*, this, SLOT(showAboutDialog())*/);
-    this->helpMenu->actions().at(2)->setEnabled(false); // About CasparCG Client
+    action->setEnabled(false);
 
     this->menuBar = new QMenuBar(this);
     this->menuBar->addMenu(this->fileMenu)->setText("File");
@@ -123,17 +128,21 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::NewRundownMenu))
     {
         NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
-        this->fileMenu->actions().at(0)->setEnabled(newRundownMenuEvent->getEnabled());
+        this->newRundownAction->setEnabled(newRundownMenuEvent->getEnabled());
+    }
+    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AllowRemoteTriggeringMenu))
+    {
+        AllowRemoteTriggeringMenuEvent* allowRemoteTriggeringMenuEvent = dynamic_cast<AllowRemoteTriggeringMenuEvent*>(event);
+        this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggeringMenuEvent->getEnabled());
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {
-        this->fileMenu->actions().at(5)->setEnabled(true);
+        this->saveAsPresetAction->setEnabled(true);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
     {
-        this->fileMenu->actions().at(5)->setEnabled(false);
+        this->saveAsPresetAction->setEnabled(false);
     }
-
 
     return QObject::eventFilter(target, event);
 }
@@ -245,6 +254,12 @@ void MainWindow::executeClearChannel()
 void MainWindow::toggleCompactView()
 {
     EventManager::getInstance().fireToggleCompactViewEvent();
+}
+
+void MainWindow::allowRemoteTriggering(bool enabled)
+{
+    EventManager::getInstance().fireRemoteRundownTriggeringEvent(enabled);
+    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(enabled);
 }
 
 void MainWindow::closeRundown()
