@@ -326,7 +326,19 @@ void RundownTreeBaseWidget::selectItemAbove()
         itemAbove = QTreeWidget::itemAbove(QTreeWidget::currentItem());
 
     if (itemAbove != NULL)
+    {
+        // Inactivate the current item.
+        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
+        if (itemWidget != NULL)
+            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+
         QTreeWidget::setCurrentItem(itemAbove);
+
+        // Activate item above.
+        QWidget* itemAboveWidget = QTreeWidget::itemWidget(itemAbove, 0);
+        if (itemAboveWidget != NULL)
+            dynamic_cast<AbstractRundownWidget*>(itemAboveWidget)->setActive(true);
+    }
 }
 
 void RundownTreeBaseWidget::selectItemBelow()
@@ -344,5 +356,17 @@ void RundownTreeBaseWidget::selectItemBelow()
         itemBelow = QTreeWidget::itemBelow(QTreeWidget::currentItem());
 
     if (itemBelow != NULL)
+    {
+        // Inactivate the current item.
+        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
+        if (itemWidget != NULL)
+            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+
         QTreeWidget::setCurrentItem(itemBelow);
+
+        // Activate item below.
+        QWidget* itemBelowWidget = QTreeWidget::itemWidget(itemBelow, 0);
+        if (itemBelowWidget != NULL)
+            dynamic_cast<AbstractRundownWidget*>(itemBelowWidget)->setActive(true);
+    }
 }

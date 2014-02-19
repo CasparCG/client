@@ -256,11 +256,6 @@
     border-top-color: rgba(70, 115, 195, 255);
     border-top-width: 1px;
 }
-
-#treeWidgetRundown::branch
-{
-    background-color: transparent;
-}
 #treeWidgetRundown::item:selected
 {
     background-color: rgba(70, 115, 195, 64);
@@ -268,6 +263,18 @@
     border-style: solid;
     border-width: 1px;
     border-color: rgba(70, 115, 195, 255);
+}
+#treeWidgetRundown::item:has-children
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::item:has-children:selected
+{
+    background-color: rgba(70, 115, 195, 64);
+}
+#treeWidgetRundown::branch
+{
+    background-color: rgba(28, 28, 28, 255);
 }
 
 /*

@@ -194,6 +194,11 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         {
             executeCommand(executeRundownItemEvent->getType(), Action::ActionType::KeyPress, executeRundownItemEvent->getItem());
 
+            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(executeRundownItemEvent->getItem(), 0);
+            LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
+
+            //OscDeviceManager::getInstance().getOscSender()->send(executeRundownItemEvent.getAddress(), 7250, executeRundownItemEvent.getPath(), model->getLabel());
+
             return true;
         }
     }
@@ -1611,65 +1616,74 @@ void RundownTreeWidget::resetOscSubscriptions()
 void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    {
+        this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemAbove();
+        this->treeWidgetRundown->blockSignals(false);
+    }
 }
 
 void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    {
+        qDebug() << predicate;
+        this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemBelow();
+        this->treeWidgetRundown->blockSignals(false);
+    }
 }
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem());
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
+        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem());
 }
