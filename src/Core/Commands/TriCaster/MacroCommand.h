@@ -23,11 +23,15 @@ class CORE_EXPORT MacroCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getMacro() const;
+        bool getTriggerOnNext() const;
 
         void setMacro(const QString& macro);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString macro;
+        bool triggerOnNext;
 
         Q_SIGNAL void macroChanged(const QString&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };

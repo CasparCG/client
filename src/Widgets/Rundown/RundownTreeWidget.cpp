@@ -194,11 +194,6 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
         {
             executeCommand(executeRundownItemEvent->getType(), Action::ActionType::KeyPress, executeRundownItemEvent->getItem());
 
-            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(executeRundownItemEvent->getItem(), 0);
-            LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
-
-            //OscDeviceManager::getInstance().getOscSender()->send(executeRundownItemEvent.getAddress(), 7250, executeRundownItemEvent.getPath(), model->getLabel());
-
             return true;
         }
     }

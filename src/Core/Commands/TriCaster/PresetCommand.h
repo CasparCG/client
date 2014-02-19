@@ -24,14 +24,18 @@ class CORE_EXPORT PresetCommand : public AbstractCommand
 
         const QString& getSource() const;
         const QString& getPreset() const;
+        bool getTriggerOnNext() const;
 
         void setSource(const QString& source);
         void setPreset(const QString& preset);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString source;
         QString preset;
+        bool triggerOnNext;
 
         Q_SIGNAL void sourceChanged(const QString&);
         Q_SIGNAL void presetChanged(const QString&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };

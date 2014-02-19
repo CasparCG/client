@@ -71,6 +71,7 @@ namespace TriCaster
     static const QString DEFAULT_NETWORK_SOURCE = "";
     static const QString DEFAULT_NETWORK_TARGET = "net";
     static const QString DEFAULT_MACRO = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Osc

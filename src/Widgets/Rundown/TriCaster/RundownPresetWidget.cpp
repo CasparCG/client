@@ -128,6 +128,7 @@ AbstractRundownWidget* RundownPresetWidget::clone()
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setSource(this->command.getSource());
     command->setPreset(this->command.getPreset());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -214,11 +215,13 @@ void RundownPresetWidget::checkEmptyDevice()
 
 bool RundownPresetWidget::executeCommand(Playout::PlayoutType::Type type)
 {
-    if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {       
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
             QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
     }
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        executePlay();
 
     if (this->active)
         this->animation->start(1);

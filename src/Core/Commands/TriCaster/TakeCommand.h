@@ -23,11 +23,15 @@ class CORE_EXPORT TakeCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getStep() const;
+        bool getTriggerOnNext() const;
 
         void setStep(const QString& step);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString step;
+        bool triggerOnNext;
 
         Q_SIGNAL void stepChanged(const QString&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };

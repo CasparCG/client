@@ -24,14 +24,18 @@ class CORE_EXPORT NetworkSourceCommand : public AbstractCommand
 
         const QString& getSource() const;
         const QString& getTarget() const;
+        bool getTriggerOnNext() const;
 
         void setSource(const QString& source);
         void setTarget(const QString& target);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString source;
         QString target;
+        bool triggerOnNext;
 
         Q_SIGNAL void sourceChanged(const QString&);
         Q_SIGNAL void targetChanged(const QString&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };
