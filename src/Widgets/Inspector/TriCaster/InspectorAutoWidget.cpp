@@ -38,6 +38,7 @@ bool InspectorAutoWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         checkEmptyStep();
@@ -51,6 +52,7 @@ bool InspectorAutoWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorAutoWidget::blockAllSignals(bool block)
 {
     this->comboBoxStep->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorAutoWidget::loadTriCasterStep()
@@ -113,4 +115,9 @@ void InspectorAutoWidget::speedChanged(int index)
 void InspectorAutoWidget::transitionChanged(int index)
 {
     this->command->setTransition(this->comboBoxTransition->itemData(index).toString());
+}
+
+void InspectorAutoWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

@@ -84,15 +84,15 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     {
         AllowRemoteTriggeringMenuEvent* allowRemoteTriggeringMenuEvent = dynamic_cast<AllowRemoteTriggeringMenuEvent*>(event);
 
-        blockAllSignals(true);
-
+        // We do not want to trigger check changed event.
+        this->allowRemoteTriggeringAction->blockSignals(true);
         this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggeringMenuEvent->getEnabled());
+        this->allowRemoteTriggeringAction->blockSignals(false);
+
         if (!allowRemoteTriggeringMenuEvent->getEnabled())
             this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon());
         else
             this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
-
-        blockAllSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::CloseRundown))
     {
@@ -172,11 +172,6 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void RundownWidget::blockAllSignals(bool block)
-{
-    this->allowRemoteTriggeringAction->blockSignals(block);
-}
-
 void RundownWidget::newRundown()
 {
     EventManager::getInstance().fireNewRundownEvent();
@@ -234,12 +229,12 @@ void RundownWidget::currentChanged(int index)
 
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->setActive(true);
 
-    blockAllSignals(true);
-
     bool allowRemoteTriggering = dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(index))->getAllowRemoteTriggering();
-    this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggering);
 
-    blockAllSignals(false);
+    // We do not want to trigger check changed event.
+    this->allowRemoteTriggeringAction->blockSignals(true);
+    this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggering);
+    this->allowRemoteTriggeringAction->blockSignals(false);
 }
 
 void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)

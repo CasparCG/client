@@ -34,6 +34,7 @@ bool InspectorTakeWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         checkEmptyStep();
@@ -47,6 +48,7 @@ bool InspectorTakeWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorTakeWidget::blockAllSignals(bool block)
 {
     this->comboBoxStep->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorTakeWidget::loadTriCasterStep()
@@ -75,4 +77,9 @@ void InspectorTakeWidget::stepChanged(int index)
     this->command->setStep(this->comboBoxStep->itemData(index).toString());
 
     checkEmptyStep();
+}
+
+void InspectorTakeWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

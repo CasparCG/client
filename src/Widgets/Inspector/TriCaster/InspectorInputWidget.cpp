@@ -37,6 +37,7 @@ bool InspectorInputWidget::eventFilter(QObject* target, QEvent* event)
 
             this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
             this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -49,6 +50,7 @@ void InspectorInputWidget::blockAllSignals(bool block)
 {
     this->comboBoxSwitcher->blockSignals(block);
     this->comboBoxInput->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorInputWidget::loadTriCasterSwitcher()
@@ -85,4 +87,9 @@ void InspectorInputWidget::switcherChanged(int index)
 void InspectorInputWidget::inputChanged(int index)
 {
     this->command->setInput(this->comboBoxInput->itemData(index).toString());
+}
+
+void InspectorInputWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

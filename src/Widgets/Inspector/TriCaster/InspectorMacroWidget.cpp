@@ -31,6 +31,7 @@ bool InspectorMacroWidget::eventFilter(QObject* target, QEvent* event)
             this->command = dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand());
 
             this->lineEditMacro->setText(this->command->getMacro());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -42,9 +43,15 @@ bool InspectorMacroWidget::eventFilter(QObject* target, QEvent* event)
 void InspectorMacroWidget::blockAllSignals(bool block)
 {
     this->lineEditMacro->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorMacroWidget::macroChanged(QString macro)
 {
     this->command->setMacro(macro);
+}
+
+void InspectorMacroWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

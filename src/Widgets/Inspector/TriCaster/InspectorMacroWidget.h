@@ -28,4 +28,5 @@ class WIDGETS_EXPORT InspectorMacroWidget : public QWidget, Ui::InspectorMacroWi
         void blockAllSignals(bool block);
 
         Q_SLOT void macroChanged(QString);
+        Q_SLOT void triggerOnNextChanged(int);
 };

@@ -30,4 +30,5 @@ class WIDGETS_EXPORT InspectorTakeWidget : public QWidget, Ui::InspectorTakeWidg
         void blockAllSignals(bool block);
 
         Q_SLOT void stepChanged(int);
+        Q_SLOT void triggerOnNextChanged(int);
 };

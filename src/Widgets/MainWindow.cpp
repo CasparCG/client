@@ -133,7 +133,11 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AllowRemoteTriggeringMenu))
     {
         AllowRemoteTriggeringMenuEvent* allowRemoteTriggeringMenuEvent = dynamic_cast<AllowRemoteTriggeringMenuEvent*>(event);
+
+        // We do not want to trigger check changed event.
+        this->allowRemoteTriggeringAction->blockSignals(true);
         this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggeringMenuEvent->getEnabled());
+        this->allowRemoteTriggeringAction->blockSignals(false);
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
     {

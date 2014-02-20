@@ -30,4 +30,5 @@ class WIDGETS_EXPORT InspectorNetworkSourceWidget : public QWidget, Ui::Inspecto
 
         Q_SLOT void targetChanged(int);
         Q_SLOT void sourceChanged(QString);
+        Q_SLOT void triggerOnNextChanged(int);
 };

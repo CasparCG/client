@@ -36,6 +36,7 @@ bool InspectorPresetWidget::eventFilter(QObject* target, QEvent* event)
 
             this->comboBoxSource->setCurrentIndex(this->comboBoxSource->findData(this->command->getSource()));
             this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findData(this->command->getPreset()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -48,6 +49,7 @@ void InspectorPresetWidget::blockAllSignals(bool block)
 {
     this->comboBoxSource->blockSignals(block);
     this->comboBoxPreset->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorPresetWidget::loadTriCasterSource()
@@ -84,4 +86,9 @@ void InspectorPresetWidget::sourceChanged(int index)
 void InspectorPresetWidget::presetChanged(int index)
 {
     this->command->setPreset(this->comboBoxPreset->itemData(index).toString());
+}
+
+void InspectorPresetWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }

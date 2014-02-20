@@ -31,4 +31,5 @@ class WIDGETS_EXPORT InspectorInputWidget : public QWidget, Ui::InspectorInputWi
 
         Q_SLOT void switcherChanged(int);
         Q_SLOT void inputChanged(int);
+        Q_SLOT void triggerOnNextChanged(int);
 };

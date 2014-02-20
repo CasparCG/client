@@ -28,7 +28,6 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QAction* allowRemoteTriggeringAction;
 
         void setupMenus();
-        void blockAllSignals(bool block);
 
         Q_SLOT void newRundown();
         Q_SLOT void openRundown();

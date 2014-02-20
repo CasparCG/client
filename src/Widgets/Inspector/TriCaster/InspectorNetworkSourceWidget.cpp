@@ -35,6 +35,7 @@ bool InspectorNetworkSourceWidget::eventFilter(QObject* target, QEvent* event)
 
             this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findData(this->command->getTarget()));
             this->lineEditSource->setText(this->command->getSource());
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         }
 
         blockAllSignals(false);
@@ -47,6 +48,7 @@ void InspectorNetworkSourceWidget::blockAllSignals(bool block)
 {
     this->comboBoxTarget->blockSignals(block);
     this->lineEditSource->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
 void InspectorNetworkSourceWidget::loadTriCasterNetworkTarget()
@@ -70,4 +72,9 @@ void InspectorNetworkSourceWidget::targetChanged(int index)
 void InspectorNetworkSourceWidget::sourceChanged(QString source)
 {
     this->command->setSource(source);
+}
+
+void InspectorNetworkSourceWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
