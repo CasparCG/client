@@ -229,7 +229,7 @@ bool RundownChromaWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
+    else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update || type == Playout::PlayoutType::Load)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {

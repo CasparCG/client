@@ -221,7 +221,7 @@ bool RundownCustomCommandWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Load)
     {
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
