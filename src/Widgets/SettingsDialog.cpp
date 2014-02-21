@@ -441,7 +441,7 @@ void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int in
 
         loadOscOutput();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireOscOutputChangedEvent();
     }
 }
 
