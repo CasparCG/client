@@ -18,7 +18,8 @@
 RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), playControlSubscription(NULL),
+      updateControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -266,7 +267,7 @@ void RundownAutoWidget::checkDeviceConnection()
 
 void RundownAutoWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
         return;
 
     if (this->playControlSubscription != NULL)
