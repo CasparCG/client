@@ -61,12 +61,20 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
             arguments.push_back(argument.AsString());
     }
 
+    QString eventMessage = QString("%1").arg(message.AddressPattern());
     QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
 
     //qDebug() << "OSC message received: " << eventPath;
 
     QMutexLocker locker(&eventsMutex);
-    this->events[eventPath] = arguments;
+    if (eventMessage.startsWith("/control"))
+    {
+        // Do not overwrite control commands already in queue.
+        if (!this->events.contains(eventPath))
+            this->events[eventPath] = arguments;
+    }
+    else
+        this->events[eventPath] = arguments;
 }
 
 void OscListener::sendEventBatch()
