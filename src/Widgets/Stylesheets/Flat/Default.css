@@ -217,6 +217,7 @@ QSplitter::handle:horizontal
  */
 QStatusBar
 {
+    color: rgba(190, 190, 190, 255);
     min-height: 22px;
 }
 
@@ -474,10 +475,12 @@ QMenuBar
 }
 QMenuBar::item
 {
+    color: rgba(190, 190, 190, 255);
     background-color: transparent;
 }
 QMenuBar::item:selected
 {
+    color: rgba(255, 255, 255, 255);
     background-color: rgba(35, 35, 35, 255);
     border-color: rgba(70, 115, 195, 255);
     border-style: solid;
@@ -502,6 +505,7 @@ QMenu::icon
 }
 QMenu::item
 {
+    color: rgba(190, 190, 190, 255);
     padding-bottom: 4px;
     padding-left: 25px;
     padding-right: 19px;
@@ -509,6 +513,7 @@ QMenu::item
 }
 QMenu::item:selected
 {
+    color: rgba(255, 255, 255, 255);
     background-color: rgba(70, 115, 195, 64);
 }
 QMenu::indicator
