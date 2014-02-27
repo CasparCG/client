@@ -41,33 +41,11 @@
     <string>&amp;OK</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelCredit">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>30</y>
-     <width>311</width>
-     <height>128</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::AutoText</enum>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QLabel" name="labelLogo">
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>30</y>
+     <y>18</y>
      <width>128</width>
      <height>128</height>
     </rect>
@@ -80,6 +58,103 @@
    </property>
    <property name="scaledContents">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelApplicationVersion">
+   <property name="geometry">
+    <rect>
+     <x>233</x>
+     <y>19</y>
+     <width>261</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelQtVersion">
+   <property name="geometry">
+    <rect>
+     <x>233</x>
+     <y>39</y>
+     <width>261</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBuildTime">
+   <property name="geometry">
+    <rect>
+     <x>233</x>
+     <y>54</y>
+     <width>261</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBuildVersion">
+   <property name="geometry">
+    <rect>
+     <x>233</x>
+     <y>69</y>
+     <width>261</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelLicense">
+   <property name="geometry">
+    <rect>
+     <x>233</x>
+     <y>99</y>
+     <width>251</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
+CasparCG Client is distributed under the GNU General Public License GPLv3 or higher, see &lt;a href=&quot;https://raw.github.com/CasparCG/Client/master/LICENSE.TXT&quot;&gt;&lt;span style=&quot;text-decoration: none; color:#4673c3;&quot;&gt;LICENSE&lt;/span&gt;&lt;/a&gt; for details.
+&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
+The included software is provided as-is by &lt;a href=&quot;http://www.svt.se/aboutsvt/&quot;&gt;&lt;span style=&quot;text-decoration: none; color:#4673c3;&quot;&gt;Sveriges Televison&lt;/span&gt;&lt;/a&gt;. More information is available at &lt;a href=&quot;http://casparcg.com/&quot;&gt;&lt;span style=&quot;text-decoration: none; color:#4673c3;&quot;&gt;casparcg.com&lt;/span&gt;&lt;/a&gt;
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::TextBrowserInteraction</set>
    </property>
   </widget>
  </widget>

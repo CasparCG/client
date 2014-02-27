@@ -1,11 +1,11 @@
 #include <winver.h>
 
-#include "../Common/Version.h"
+#include "../../build/Common/Version.h"
 
 IDI_ICON    ICON    "Images/CasparCG.ico"
 
 VS_VERSION_INFO VERSIONINFO
-        FILEVERSION MAJOR_VERSION,MINOR_VERSION,REVISION_VERSION,BUILD_VERSION
+        FILEVERSION MAJOR_VERSION,MINOR_VERSION,REVISION_VERSION,0
         BEGIN
                 BLOCK "StringFileInfo"
                 BEGIN

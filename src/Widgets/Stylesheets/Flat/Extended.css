@@ -365,3 +365,11 @@
 {
     background-color: rgba(35, 35, 35, 255);
 }
+
+/*
+ * AboutWidget
+ */
+#labelApplicationVersion
+{
+    font-size: 13px;
+}

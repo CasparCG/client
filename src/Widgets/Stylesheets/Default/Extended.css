@@ -345,3 +345,11 @@
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
     border-radius: 2px;*/
 }
+
+/*
+ * AboutWidget
+ */
+#labelApplicationVersion
+{
+    font-size: 13px;
+}
