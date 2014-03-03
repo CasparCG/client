@@ -2,6 +2,7 @@
 #include "RundownTreeWidget.h"
 
 #include "EventManager.h"
+#include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
@@ -194,7 +195,7 @@ void RundownWidget::saveAsRundown()
 
 void RundownWidget::toggleCompactView()
 {
-    EventManager::getInstance().fireToggleCompactViewEvent();
+    EventManager::getInstance().fireToggleCompactViewEvent(CompactViewEvent());
 }
 
 void RundownWidget::closeRundown()
@@ -204,7 +205,7 @@ void RundownWidget::closeRundown()
 
 void RundownWidget::allowRemoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(enabled);
+    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
     EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(enabled);
 }
 

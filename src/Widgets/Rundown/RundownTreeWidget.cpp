@@ -30,7 +30,6 @@
 #include "GpiManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/AddRudnownItemEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -69,9 +68,19 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     setupUi(this);
     setupMenus();
 
+    QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+
     // TODO: Specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
-    QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(addRudnownItem(const AddRudnownItemEvent&)), this, SLOT(addRudnownItem(const AddRudnownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(toggleCompactView(const CompactViewEvent&)), this, SLOT(toggleCompactView(const CompactViewEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(executeRundownItem(const ExecuteRundownItemEvent&)), this, SLOT(executeRundownItem(const ExecuteRundownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)), this, SLOT(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)));
+
+
+
+
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -80,6 +89,99 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 
     qApp->installEventFilter(this);
 }
+
+
+
+
+
+
+
+void RundownTreeWidget::toggleCompactView(const CompactViewEvent& event)
+{
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+        return;
+
+    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+    {
+        QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
+        QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+        dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
+        if (this->treeWidgetRundown->getCompactView())
+            widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+        else
+            widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+
+        for (int j = 0; j < item->childCount(); j++)
+        {
+            QTreeWidgetItem* child = item->child(j);
+            QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
+
+            dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
+            if (this->treeWidgetRundown->getCompactView())
+                widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+            else
+                widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+        }
+    }
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh
+
+    this->treeWidgetRundown->setCompactView(!this->treeWidgetRundown->getCompactView());
+}
+
+void RundownTreeWidget::executeRundownItem(const ExecuteRundownItemEvent& event)
+{
+    if (event.getItem()->treeWidget() == this->treeWidgetRundown)
+        executeCommand(event.getType(), Action::ActionType::KeyPress, event.getItem());
+}
+
+void RundownTreeWidget::remoteRundownTriggering(const RemoteRundownTriggeringEvent& event)
+{
+    this->allowRemoteTriggering = event.getEnabled();
+
+    (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
+}
+
+void RundownTreeWidget::addRudnownItem(const AddRudnownItemEvent& event)
+{
+    AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(event.getLibraryModel());
+    if (widget == NULL)
+        return;
+
+    widget->setCompactView(this->treeWidgetRundown->getCompactView());
+
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
+        this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
+    else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+        this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+    else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
+    {
+        this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+        widget->setInGroup(true);
+    }
+
+    this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
+    this->treeWidgetRundown->setCurrentItem(item);
+    this->treeWidgetRundown->setFocus();
+
+    if (this->treeWidgetRundown->getCompactView())
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+    checkEmptyRundown();
+}
+
+
+
+
+
+
+
 
 RundownTreeWidget::~RundownTreeWidget()
 {
@@ -187,17 +289,6 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
 {
     //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
 
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
-    {
-        ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
-        if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
-        {
-            executeCommand(executeRundownItemEvent->getType(), Action::ActionType::KeyPress, executeRundownItemEvent->getItem());
-
-            return true;
-        }
-    }
-
     if (this->active)
     {
         //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
@@ -256,84 +347,6 @@ bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
                 else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
                     return moveItemIntoGroup();
             }
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RemoteRundownTriggering))
-        {
-            RemoteRundownTriggeringEvent* remoteRundownTriggeringEvent = dynamic_cast<RemoteRundownTriggeringEvent*>(event);
-            this->allowRemoteTriggering = remoteRundownTriggeringEvent->getEnabled();
-
-            (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ToggleCompactView))
-        {
-            if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-                return true;
-
-            for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
-            {
-                QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
-                QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-                dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
-                if (this->treeWidgetRundown->getCompactView())
-                    widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-                else
-                    widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-
-                for (int j = 0; j < item->childCount(); j++)
-                {
-                    QTreeWidgetItem* child = item->child(j);
-                    QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
-
-                    dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
-                    if (this->treeWidgetRundown->getCompactView())
-                        widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-                    else
-                        widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-                }
-            }
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-
-            this->treeWidgetRundown->setCompactView(!this->treeWidgetRundown->getCompactView());
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddRudnownItem))
-        {
-            AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
-
-            AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(addRudnownItemEvent->getLibraryModel());
-            if (widget == NULL)
-                return true;
-
-            widget->setCompactView(this->treeWidgetRundown->getCompactView());
-
-            QTreeWidgetItem* item = new QTreeWidgetItem();
-            if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
-                this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
-            else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-                this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-            else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
-            {
-                this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-                widget->setInGroup(true);
-            }
-
-            this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
-            this->treeWidgetRundown->setCurrentItem(item);
-            this->treeWidgetRundown->setFocus();
-
-            if (this->treeWidgetRundown->getCompactView())
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-            else
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-            checkEmptyRundown();
-
-            return true;
         }
         else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddPresetItem))
         {
@@ -1635,59 +1648,59 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem()));
 }

@@ -11,7 +11,7 @@ class CORE_EXPORT AddRudnownItemEvent : public QEvent
     public:
         explicit AddRudnownItemEvent(const LibraryModel& model);
 
-        LibraryModel getLibraryModel();
+        LibraryModel getLibraryModel() const;
 
     private:
         LibraryModel model;

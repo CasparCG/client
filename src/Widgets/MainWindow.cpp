@@ -9,6 +9,7 @@
 #include "EventManager.h"
 #include "DatabaseManager.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
@@ -257,12 +258,12 @@ void MainWindow::executeClearChannel()
 
 void MainWindow::toggleCompactView()
 {
-    EventManager::getInstance().fireToggleCompactViewEvent();
+    EventManager::getInstance().fireToggleCompactViewEvent(CompactViewEvent());
 }
 
 void MainWindow::allowRemoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(enabled);
+    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
     EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(enabled);
 }
 

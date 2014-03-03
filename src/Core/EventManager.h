@@ -83,13 +83,9 @@ class CORE_EXPORT EventManager : public QObject
         void fireExecuteClearEvent();
         void fireExecuteClearVideolayerEvent();
         void fireExecuteClearChannelEvent();
-        void fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item);
-        void fireToggleCompactViewEvent();
         void fireRefreshLibraryEvent(int delay = 0);
         void fireEmptyRundownEvent();
-        void fireAddRudnownItemEvent(const LibraryModel& model);
         void fireAddTemplateDataEvent(const QString& value, bool storedData);
-        void fireAddRudnownItemEvent(const QString& type);
         void fireAddPresetItemEvent(const QString& preset);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);
         void fireActiveRundownChangedEvent(const QString& path);
@@ -111,6 +107,17 @@ class CORE_EXPORT EventManager : public QObject
         void fireAutoPlayChangedEvent(bool autoPlay);
         void fireOscOutputChangedEvent();
         void fireCloseRundownEvent();
-        void fireRemoteRundownTriggeringEvent(bool enabled);
         void fireAllowRemoteTriggeringMenuEvent(bool enabled);
+
+
+        Q_SIGNAL void addRudnownItem(const AddRudnownItemEvent&);
+        Q_SIGNAL void toggleCompactView(const CompactViewEvent&);
+        Q_SIGNAL void executeRundownItem(const ExecuteRundownItemEvent&);
+        Q_SIGNAL void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
+
+        void fireAddRudnownItemEvent(const QString& type);
+        void fireAddRudnownItemEvent(const LibraryModel& model);
+        void fireToggleCompactViewEvent(const CompactViewEvent& event);
+        void fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event);
+        void fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event);
 };

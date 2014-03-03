@@ -142,23 +142,6 @@ void EventManager::fireExecuteClearChannelEvent()
     qApp->sendEvent(qApp, &event);
 }
 
-void EventManager::fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item)
-{
-    // Use synchronous event through sendEvent().
-    ExecuteRundownItemEvent event(type, item);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireToggleCompactViewEvent()
-{
-    qApp->postEvent(qApp, new CompactViewEvent());
-}
-
-void EventManager::fireRemoteRundownTriggeringEvent(bool enabled)
-{
-    qApp->postEvent(qApp, new RemoteRundownTriggeringEvent(enabled));
-}
-
 void EventManager::fireAllowRemoteTriggeringMenuEvent(bool enabled)
 {
     qApp->postEvent(qApp, new AllowRemoteTriggeringMenuEvent(enabled));
@@ -181,84 +164,9 @@ void EventManager::fireEmptyRundownEvent()
     qApp->sendEvent(qApp, &event);
 }
 
-void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
-{
-    qApp->postEvent(qApp, new AddRudnownItemEvent(model));
-}
-
 void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedData)
 {
     qApp->postEvent(qApp, new AddTemplateDataEvent(value, storedData));
-}
-
-void EventManager::fireAddRudnownItemEvent(const QString& type)
-{
-    if (type == Rundown::BLENDMODE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0, "")));
-    else if (type == Rundown::BRIGHTNESS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
-    else if (type == Rundown::CONTRAST)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
-    else if (type == Rundown::CROP)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
-    else if (type == Rundown::CHROMAKEY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
-    else if (type == Rundown::IMAGESCROLLER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0, "")));
-    else if (type == Rundown::DECKLINKINPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0, "")));
-    else if (type == Rundown::PRINT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
-    else if (type == Rundown::CLEAROUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
-    else if (type == Rundown::GEOMETRY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
-    else if (type == Rundown::GPIOUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
-    else if (type == Rundown::FILERECORDER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
-    else if (type == Rundown::SEPARATOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
-    else if (type == Rundown::GRID)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
-    else if (type == Rundown::SOLIDCOLOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0, "")));
-    else if (type == Rundown::KEYER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0, "")));
-    else if (type == Rundown::LEVELS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0, "")));
-    else if (type == Rundown::OPACITY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0, "")));
-    else if (type == Rundown::SATURATION)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0, "")));
-    else if (type == Rundown::VOLUME)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0, "")));
-    else if (type == Rundown::COMMIT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
-    else if (type == Rundown::AUDIO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
-    else if (type == Rundown::IMAGE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
-    else if (type == Rundown::TEMPLATE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
-    else if (type == Rundown::VIDEO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
-    else if (type == Rundown::CUSTOMCOMMAND)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
-    else if (type ==  Rundown::INPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::INPUT, 0, "")));
-    else if (type ==  Rundown::PRESET)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::PRESET, 0, "")));
-    else if (type ==  Rundown::AUTO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
-    else if (type ==  Rundown::TAKE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
-    else if (type ==  Rundown::NETSOURCE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
-    else if (type ==  Rundown::MACRO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::MACRO, 0, "")));
-    else if (type ==  Rundown::OSCOUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
 }
 
 void EventManager::fireAddPresetItemEvent(const QString& preset)
@@ -371,4 +279,99 @@ void EventManager::fireAutoPlayChangedEvent(bool autoPlay)
 void EventManager::fireOscOutputChangedEvent()
 {
     qApp->postEvent(qApp, new OscOutputChangedEvent());
+}
+
+
+
+
+
+
+void EventManager::fireToggleCompactViewEvent(const CompactViewEvent& event)
+{
+    emit toggleCompactView(event);
+}
+
+void EventManager::fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event)
+{
+    emit executeRundownItem(event);
+}
+
+void EventManager::fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event)
+{
+    emit remoteRundownTriggering(event);
+}
+
+void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
+{
+    emit addRudnownItem(AddRudnownItemEvent(model));
+}
+
+void EventManager::fireAddRudnownItemEvent(const QString& type)
+{
+    if (type == Rundown::BLENDMODE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0, "")));
+    else if (type == Rundown::BRIGHTNESS)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
+    else if (type == Rundown::CONTRAST)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
+    else if (type == Rundown::CROP)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+    else if (type == Rundown::CHROMAKEY)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
+    else if (type == Rundown::IMAGESCROLLER)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0, "")));
+    else if (type == Rundown::DECKLINKINPUT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0, "")));
+    else if (type == Rundown::PRINT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
+    else if (type == Rundown::CLEAROUTPUT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
+    else if (type == Rundown::GEOMETRY)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
+    else if (type == Rundown::GPIOUTPUT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
+    else if (type == Rundown::FILERECORDER)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
+    else if (type == Rundown::SEPARATOR)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
+    else if (type == Rundown::GRID)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
+    else if (type == Rundown::SOLIDCOLOR)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0, "")));
+    else if (type == Rundown::KEYER)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0, "")));
+    else if (type == Rundown::LEVELS)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0, "")));
+    else if (type == Rundown::OPACITY)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0, "")));
+    else if (type == Rundown::SATURATION)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0, "")));
+    else if (type == Rundown::VOLUME)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0, "")));
+    else if (type == Rundown::COMMIT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
+    else if (type == Rundown::AUDIO)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
+    else if (type == Rundown::IMAGE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
+    else if (type == Rundown::TEMPLATE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
+    else if (type == Rundown::VIDEO)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
+    else if (type == Rundown::CUSTOMCOMMAND)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
+    else if (type ==  Rundown::INPUT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::INPUT, 0, "")));
+    else if (type ==  Rundown::PRESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::PRESET, 0, "")));
+    else if (type ==  Rundown::AUTO)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
+    else if (type ==  Rundown::TAKE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
+    else if (type ==  Rundown::NETSOURCE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
+    else if (type ==  Rundown::MACRO)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::MACRO, 0, "")));
+    else if (type ==  Rundown::OSCOUTPUT)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
 }

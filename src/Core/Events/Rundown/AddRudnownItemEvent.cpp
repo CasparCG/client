@@ -7,7 +7,7 @@ AddRudnownItemEvent::AddRudnownItemEvent(const LibraryModel& model)
 {
 }
 
-LibraryModel AddRudnownItemEvent::getLibraryModel()
+LibraryModel AddRudnownItemEvent::getLibraryModel() const
 {
     return this->model;
 }

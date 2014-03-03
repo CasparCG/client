@@ -9,6 +9,11 @@
 
 #include "GpiDevice.h"
 
+#include "Events/Rundown/AddRudnownItemEvent.h"
+#include "Events/Rundown/CompactViewEvent.h"
+#include "Events/Rundown/ExecuteRundownItemEvent.h"
+#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -151,4 +156,12 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+
+
+
+
+        Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
+        Q_SLOT void toggleCompactView(const CompactViewEvent&);
+        Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
+        Q_SLOT void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
 };

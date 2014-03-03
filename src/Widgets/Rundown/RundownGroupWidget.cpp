@@ -179,7 +179,7 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
         QWidget* widget = treeWidgetRundown->itemWidget(child, 0);
         if (widget == this)
         {
-            EventManager::getInstance().fireExecuteRundownItemEvent(type, child);
+            EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(type, child));
             break;
         }
     }
