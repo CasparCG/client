@@ -6,6 +6,7 @@
 #include "Global.h"
 
 #include "OscSubscription.h"
+#include "Events/AddPresetItemEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>

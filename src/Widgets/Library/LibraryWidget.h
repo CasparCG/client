@@ -5,6 +5,7 @@
 
 #include "CasparDevice.h"
 
+#include "Events/AddPresetItemEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>

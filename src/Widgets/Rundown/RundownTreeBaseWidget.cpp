@@ -280,7 +280,7 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
             QTreeWidget::setCurrentItem(parent);
 
             QStringList dataSplit = dndData.split(",");
-            EventManager::getInstance().fireAddPresetItemEvent(dataSplit.at(3));
+            EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(dataSplit.at(3)));
         }
     }
     else if (mimeData->hasFormat("application/rundown-item"))

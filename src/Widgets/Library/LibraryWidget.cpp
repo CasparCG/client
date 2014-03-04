@@ -776,7 +776,7 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
     if (action->text() == "Add item")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
-            EventManager::getInstance().fireAddPresetItemEvent(item->text(2));
+            EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(item->text(2)));
     }
     else if (action->text() == "Delete")
         removeSelectedPresets();
@@ -828,7 +828,7 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
     else if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
         EventManager::getInstance().fireAddTemplateDataEvent(current->text(0), true);
     else if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
-        EventManager::getInstance().fireAddPresetItemEvent(current->text(2));
+        EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(current->text(2)));
 }
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)

@@ -37,11 +37,6 @@ void EventManager::fireExportPresetEvent()
     qApp->postEvent(qApp, new ExportPresetEvent());
 }
 
-void EventManager::fireSaveAsPresetEvent()
-{
-    qApp->postEvent(qApp, new SaveAsPresetEvent());
-}
-
 void EventManager::fireNewRundownEvent()
 {
     qApp->postEvent(qApp, new NewRundownEvent());
@@ -169,13 +164,6 @@ void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedDat
     qApp->postEvent(qApp, new AddTemplateDataEvent(value, storedData));
 }
 
-void EventManager::fireAddPresetItemEvent(const QString& preset)
-{
-    // Use synchronous event through sendEvent().
-    AddPresetItemEvent event(preset);
-    qApp->sendEvent(qApp, &event);
-}
-
 void EventManager::fireStatusbarEvent(const QString& message, int timeout)
 {
     // Use synchronous event through sendEvent().
@@ -257,25 +245,6 @@ void EventManager::fireVideolayerChangedEvent(int videolayer)
     qApp->postEvent(qApp, new VideolayerChangedEvent(videolayer));
 }
 
-void EventManager::fireAutoPlayRundownItemEvent(QWidget* widget)
-{
-    // Use synchronous event through sendEvent().
-    AutoPlayRundownItemEvent event(widget);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireAutoPlayNextRundownItemEvent(QWidget* widget)
-{
-    // Use synchronous event through sendEvent().
-    AutoPlayNextRundownItemEvent event(widget);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireAutoPlayChangedEvent(bool autoPlay)
-{
-    qApp->postEvent(qApp, new AutoPlayChangedEvent(autoPlay));
-}
-
 void EventManager::fireOscOutputChangedEvent()
 {
     qApp->postEvent(qApp, new OscOutputChangedEvent());
@@ -285,6 +254,30 @@ void EventManager::fireOscOutputChangedEvent()
 
 
 
+void EventManager::fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent& event)
+{
+    emit autoPlayNextRundownItem(event);
+}
+
+void EventManager::fireAutoPlayChangedEvent(const AutoPlayChangedEvent& event)
+{
+    emit autoPlayChanged(event);
+}
+
+void EventManager::fireSaveAsPresetEvent(const SaveAsPresetEvent& event)
+{
+    emit saveAsPreset(event);
+}
+
+void EventManager::fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent& event)
+{
+    emit autoPlayRundownItem(event);
+}
+
+void EventManager::fireAddPresetItemEvent(const AddPresetItemEvent& event)
+{
+    emit addPresetItem(event);
+}
 
 void EventManager::fireToggleCompactViewEvent(const CompactViewEvent& event)
 {

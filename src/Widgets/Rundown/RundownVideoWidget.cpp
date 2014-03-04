@@ -10,6 +10,7 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Rundown/AutoPlayRundownItemEvent.h"
 
 #include <math.h>
 
@@ -918,7 +919,7 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
 
     if (this->sendAutoPlay && !this->hasSentAutoPlay)
     {
-        EventManager::getInstance().fireAutoPlayRundownItemEvent(this);
+        EventManager::getInstance().fireAutoPlayRundownItemEvent(AutoPlayRundownItemEvent(this));
 
         this->sendAutoPlay = false;
         this->hasSentAutoPlay = true;

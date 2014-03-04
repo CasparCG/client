@@ -9,6 +9,7 @@
 #include "EventManager.h"
 #include "DatabaseManager.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/SaveAsPresetEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
@@ -183,7 +184,7 @@ void MainWindow::exportPreset()
 
 void MainWindow::saveAsPreset()
 {
-    EventManager::getInstance().fireSaveAsPresetEvent();
+    EventManager::getInstance().fireSaveAsPresetEvent(SaveAsPresetEvent());
 }
 
 void MainWindow::newRundown()

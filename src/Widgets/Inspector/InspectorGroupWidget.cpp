@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
+#include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -92,5 +93,5 @@ void InspectorGroupWidget::autoPlayChanged(int state)
 {
     this->command->setAutoPlay((state == Qt::Checked) ? true : false);
 
-    EventManager::getInstance().fireAutoPlayChangedEvent(this->checkBoxAutoPlay->isChecked());
+    EventManager::getInstance().fireAutoPlayChangedEvent(AutoPlayChangedEvent(this->checkBoxAutoPlay->isChecked()));
 }

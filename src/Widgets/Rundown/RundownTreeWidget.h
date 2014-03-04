@@ -9,10 +9,16 @@
 
 #include "GpiDevice.h"
 
+#include "Events/AddPresetItemEvent.h"
+#include "Events/SaveAsPresetEvent.h"
+#include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/Rundown/AddRudnownItemEvent.h"
+#include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
+#include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/SaveRundownEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -160,8 +166,13 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
 
 
+        Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
+        Q_SLOT void addPresetItem(const AddPresetItemEvent&);
         Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
         Q_SLOT void toggleCompactView(const CompactViewEvent&);
         Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
         Q_SLOT void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
+        Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
+        Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
+        Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 };
