@@ -204,6 +204,21 @@ void RundownTreeWidget::addRudnownItem(const AddRudnownItemEvent& event)
     checkEmptyRundown();
 }
 
+void RundownTreeWidget::autoPlayChanged(const AutoPlayChangedEvent& event)
+{
+    if (!this->active)
+        return;
+
+    for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+    {
+        QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+        AbstractRundownWidget* childRundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
+
+        if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
+            dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(event.getAutoPlay());
+    }
+}
+
 void RundownTreeWidget::autoPlayRundownItem(const AutoPlayRundownItemEvent& event)
 {
     if (!this->active)
@@ -221,7 +236,7 @@ void RundownTreeWidget::autoPlayRundownItem(const AutoPlayRundownItemEvent& even
             if (!autoPlayQueue->isEmpty())
             {
                 AbstractRundownWidget* rundownQueueWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayQueue->at(0));
-                dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Next);
+                dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Play);
 
                 this->currentAutoPlayWidget = rundownQueueWidget;
             }
@@ -230,21 +245,6 @@ void RundownTreeWidget::autoPlayRundownItem(const AutoPlayRundownItemEvent& even
 
             break;
         }
-    }
-}
-
-void RundownTreeWidget::autoPlayChanged(const AutoPlayChangedEvent& event)
-{
-    if (!this->active)
-        return;
-
-    for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-    {
-        QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
-        AbstractRundownWidget* childRundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
-
-        if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
-            dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(event.getAutoPlay());
     }
 }
 
@@ -259,9 +259,6 @@ void RundownTreeWidget::autoPlayNextRundownItem(const AutoPlayNextRundownItemEve
     {
         if (autoPlayQueue->contains(rundownWidget))
         {
-            // Remove currently playing item.
-            autoPlayQueue->removeAt(0);
-
             // Have more in queue, play them...
             if (!autoPlayQueue->isEmpty())
             {
@@ -270,8 +267,6 @@ void RundownTreeWidget::autoPlayNextRundownItem(const AutoPlayNextRundownItemEve
 
                 this->currentAutoPlayWidget = rundownQueueWidget;
             }
-            else
-                this->autoPlayQueues.removeOne(autoPlayQueue);
 
             break;
         }
@@ -1499,20 +1494,7 @@ bool RundownTreeWidget::removeSelectedItems()
         // Remove our items from the auto play queue if they exists.
         AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
         if (dynamic_cast<VideoCommand*>(rundownWidget->getCommand()))
-        {
-            foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
-            {
-                if (autoPlayQueue->contains(rundownWidget))
-                {
-                    autoPlayQueue->removeOne(rundownWidget);
-
-                    if (autoPlayQueue->isEmpty())
-                        this->autoPlayQueues.removeOne(autoPlayQueue);
-
-                    break;
-                }
-            }
-        }
+            removeItemFromAutoPlayQueue(rundownWidget);
 
         delete rundownWidget;
         delete item;
@@ -1521,6 +1503,22 @@ bool RundownTreeWidget::removeSelectedItems()
     checkEmptyRundown();
 
     return true;
+}
+
+void RundownTreeWidget::removeItemFromAutoPlayQueue(AbstractRundownWidget* widget)
+{
+    foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
+    {
+        if (autoPlayQueue->contains(widget))
+        {
+            autoPlayQueue->removeOne(widget);
+
+            if (autoPlayQueue->isEmpty())
+                this->autoPlayQueues.removeOne(autoPlayQueue);
+
+            break;
+        }
+    }
 }
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const

@@ -105,6 +105,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void colorizeItems(const QString& color);
         void resetOscSubscriptions();
         void configureOscSubscriptions();
+        void removeItemFromAutoPlayQueue(AbstractRundownWidget* widget);
 
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();
