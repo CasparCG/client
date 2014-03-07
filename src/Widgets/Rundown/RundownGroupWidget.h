@@ -13,6 +13,7 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/GroupCommand.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <stdexcept>
@@ -49,9 +50,6 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         virtual void setCompactView(bool compactView);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
@@ -93,4 +91,8 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+
+
+
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
 };

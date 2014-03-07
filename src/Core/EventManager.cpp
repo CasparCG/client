@@ -215,36 +215,6 @@ void EventManager::firePresetChangedEvent()
     qApp->postEvent(qApp, new PresetChangedEvent());
 }
 
-void EventManager::firePreviewEvent()
-{
-    qApp->postEvent(qApp, new PreviewEvent());
-}
-
-void EventManager::fireLabelChangedEvent(const QString& label)
-{
-    qApp->postEvent(qApp, new LabelChangedEvent(label));
-}
-
-void EventManager::fireTargetChangedEvent(const QString& target)
-{
-    qApp->postEvent(qApp, new TargetChangedEvent(target));
-}
-
-void EventManager::fireDeviceChangedEvent(const QString& deviceName)
-{
-    qApp->postEvent(qApp, new DeviceChangedEvent(deviceName));
-}
-
-void EventManager::fireChannelChangedEvent(int channel)
-{
-    qApp->postEvent(qApp, new ChannelChangedEvent(channel));
-}
-
-void EventManager::fireVideolayerChangedEvent(int videolayer)
-{
-    qApp->postEvent(qApp, new VideolayerChangedEvent(videolayer));
-}
-
 void EventManager::fireOscOutputChangedEvent()
 {
     qApp->postEvent(qApp, new OscOutputChangedEvent());
@@ -253,6 +223,38 @@ void EventManager::fireOscOutputChangedEvent()
 
 
 
+
+
+
+void EventManager::firePreviewEvent(const PreviewEvent& event)
+{
+    emit preview(event);
+}
+
+void EventManager::fireChannelChangedEvent(const ChannelChangedEvent& event)
+{
+    emit channelChanged(event);
+}
+
+void EventManager::fireVideolayerChangedEvent(const VideolayerChangedEvent& event)
+{
+    emit videolayerChanged(event);
+}
+
+void EventManager::fireLabelChangedEvent(const LabelChangedEvent& event)
+{
+    emit labelChanged(event);
+}
+
+void EventManager::fireTargetChangedEvent(const TargetChangedEvent& event)
+{
+    emit targetChanged(event);
+}
+
+void EventManager::fireDeviceChangedEvent(const DeviceChangedEvent& event)
+{
+    emit deviceChanged(event);
+}
 
 void EventManager::fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent& event)
 {

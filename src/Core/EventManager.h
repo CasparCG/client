@@ -5,26 +5,25 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
-#include "Events/StatusbarEvent.h"
-#include "Events/DataChangedEvent.h"
-#include "Events/MediaChangedEvent.h"
-#include "Events/PreviewEvent.h"
-#include "Events/PresetChangedEvent.h"
+
 #include "Events/AddPresetItemEvent.h"
-#include "Events/ImportPresetEvent.h"
+#include "Events/DataChangedEvent.h"
 #include "Events/ExportPresetEvent.h"
+#include "Events/ImportPresetEvent.h"
+#include "Events/MediaChangedEvent.h"
 #include "Events/OscOutputChangedEvent.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
-#include "Models/BlendModeModel.h"
-#include "Models/LibraryModel.h"
-#include "Events/Inspector/TemplateChangedEvent.h"
-#include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Inspector/TargetChangedEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
-#include "Events/Inspector/ChannelChangedEvent.h"
-#include "Events/Inspector/VideolayerChangedEvent.h"
+#include "Events/StatusbarEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
+#include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
@@ -45,6 +44,8 @@
 #include "Events/Rundown/RundownIsChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Models/BlendModeModel.h"
+#include "Models/LibraryModel.h"
 
 #include <QtCore/QObject>
 
@@ -93,12 +94,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireTemplateChangedEvent();
         void fireDataChangedEvent();
         void firePresetChangedEvent();
-        void firePreviewEvent();
-        void fireLabelChangedEvent(const QString& label);
-        void fireTargetChangedEvent(const QString& target);
-        void fireDeviceChangedEvent(const QString& deviceName);
-        void fireChannelChangedEvent(int channel);
-        void fireVideolayerChangedEvent(int videolayer);
         void fireSaveRundownEvent(bool saveAs);
         void fireOscOutputChangedEvent();
         void fireCloseRundownEvent();
@@ -108,6 +103,15 @@ class CORE_EXPORT EventManager : public QObject
 
 
 
+
+
+
+        Q_SIGNAL void preview(const PreviewEvent&);
+        Q_SIGNAL void channelChanged(const ChannelChangedEvent&);
+        Q_SIGNAL void videolayerChanged(const VideolayerChangedEvent&);
+        Q_SIGNAL void labelChanged(const LabelChangedEvent&);
+        Q_SIGNAL void targetChanged(const TargetChangedEvent&);
+        Q_SIGNAL void deviceChanged(const DeviceChangedEvent&);
         Q_SIGNAL void saveAsPreset(const SaveAsPresetEvent&);
         Q_SIGNAL void addPresetItem(const AddPresetItemEvent&);
         Q_SIGNAL void addRudnownItem(const AddRudnownItemEvent&);
@@ -118,7 +122,12 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
-
+        void firePreviewEvent(const PreviewEvent&);
+        void fireChannelChangedEvent(const ChannelChangedEvent&);
+        void fireVideolayerChangedEvent(const VideolayerChangedEvent&);
+        void fireLabelChangedEvent(const LabelChangedEvent&);
+        void fireTargetChangedEvent(const TargetChangedEvent&);
+        void fireDeviceChangedEvent(const DeviceChangedEvent&);
         void fireAutoPlayChangedEvent(const AutoPlayChangedEvent&);
         void fireSaveAsPresetEvent(const SaveAsPresetEvent&);
         void fireAddPresetItemEvent(const AddPresetItemEvent& event);

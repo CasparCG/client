@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -85,7 +86,7 @@ void InspectorContrastWidget::sliderContrastChanged(int contrast)
 
     this->spinBoxContrast->setValue(contrast);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorContrastWidget::spinBoxContrastChanged(int contrast)
@@ -98,7 +99,7 @@ void InspectorContrastWidget::resetContrast(QString contrast)
     this->sliderContrast->setValue(Mixer::DEFAULT_CONTRAST * 100);
     this->command->setContrast(static_cast<float>(this->sliderContrast->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorContrastWidget::resetDuration(QString duration)

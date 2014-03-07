@@ -4,8 +4,8 @@
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/Inspector/LabelChangedEvent.h"
 
 #include <math.h>
 
@@ -42,6 +42,12 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
+
+
+
+
+
 
     gpiOutputPortChanged(this->command.getGpoPort());
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
@@ -49,28 +55,28 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     checkGpiConnection();
 
     configureOscSubscriptions();
-
-    qApp->installEventFilter(this);
 }
 
-bool RundownGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+void RundownGpiOutputWidget::labelChanged(const LabelChangedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
+    // This event is not for us.
+    if (!this->active)
+        return;
 
-        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
-        this->model.setLabel(labelChanged->getLabel());
+    this->model.setLabel(event.getLabel());
 
-        this->labelLabel->setText(this->model.getLabel());
-
-        return true;
-    }
-
-    return QObject::eventFilter(target, event);
+    this->labelLabel->setText(this->model.getLabel());
 }
+
+
+
+
+
 
 AbstractRundownWidget* RundownGpiOutputWidget::clone()
 {

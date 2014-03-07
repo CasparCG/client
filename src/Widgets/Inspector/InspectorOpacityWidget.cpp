@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -86,7 +87,7 @@ void InspectorOpacityWidget::sliderOpacityChanged(int opacity)
 
     this->spinBoxOpacity->setValue(opacity);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorOpacityWidget::spinBoxOpacityChanged(int opacity)

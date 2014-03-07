@@ -8,6 +8,7 @@
 #include "DeviceManager.h"
 #include "DatabaseManager.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 
@@ -77,5 +78,5 @@ void InspectorMetadataWidget::blockAllSignals(bool block)
 
 void InspectorMetadataWidget::labelChanged(QString name)
 {
-    EventManager::getInstance().fireLabelChangedEvent(this->lineEditLabel->text());
+    EventManager::getInstance().fireLabelChangedEvent(LabelChangedEvent(this->lineEditLabel->text()));
 }

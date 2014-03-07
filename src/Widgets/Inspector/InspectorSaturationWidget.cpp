@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -84,7 +85,7 @@ void InspectorSaturationWidget::sliderSaturationChanged(int saturation)
 
     this->spinBoxSaturation->setValue(saturation);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorSaturationWidget::spinBoxSaturationChanged(int saturation)
@@ -97,7 +98,7 @@ void InspectorSaturationWidget::resetSaturation(QString saturation)
     this->sliderSaturation->setValue(Mixer::DEFAULT_SATURATION * 100);
     this->command->setSaturation(static_cast<float>(this->sliderSaturation->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorSaturationWidget::resetDuration(QString duration)

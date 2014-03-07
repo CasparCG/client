@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/TweenModel.h"
@@ -162,7 +163,7 @@ void InspectorGeometryWidget::sliderPositionXChanged(int positionX)
 
     this->spinBoxPositionX->setValue(positionX);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionXChanged(int positionX)
@@ -176,7 +177,7 @@ void InspectorGeometryWidget::sliderPositionYChanged(int positionY)
 
     this->spinBoxPositionY->setValue(positionY);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionYChanged(int positionY)
@@ -190,7 +191,7 @@ void InspectorGeometryWidget::sliderScaleXChanged(int scaleX)
 
     this->spinBoxScaleX->setValue(scaleX);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleXChanged(int scaleX)
@@ -204,7 +205,7 @@ void InspectorGeometryWidget::sliderScaleYChanged(int scaleY)
 
     this->spinBoxScaleY->setValue(scaleY);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)

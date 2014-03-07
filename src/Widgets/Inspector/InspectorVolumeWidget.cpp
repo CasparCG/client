@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -86,7 +87,7 @@ void InspectorVolumeWidget::sliderVolumeChanged(int volume)
 
     this->spinBoxVolume->setValue(volume);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorVolumeWidget::spinBoxVolumeChanged(int volume)
@@ -99,7 +100,7 @@ void InspectorVolumeWidget::resetVolume(QString volume)
     this->sliderVolume->setValue(Mixer::DEFAULT_VOLUME * 100);
     this->command->setVolume(static_cast<float>(this->sliderVolume->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorVolumeWidget::resetDuration(QString duration)

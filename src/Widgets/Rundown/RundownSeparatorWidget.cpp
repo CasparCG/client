@@ -3,7 +3,7 @@
 #include "Global.h"
 #include "GpiManager.h"
 
-#include "Events/Inspector/LabelChangedEvent.h"
+#include "EventManager.h"
 
 #include <QtGui/QApplication>
 #include <QtCore/QObject>
@@ -27,27 +27,29 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 
     this->labelLabel->setText(this->model.getLabel());
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 }
 
-bool RundownSeparatorWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+void RundownSeparatorWidget::labelChanged(const LabelChangedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
+    // This event is not for us.
+    if (!this->active)
+        return;
 
-        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
-        this->model.setLabel(labelChanged->getLabel());
+    this->model.setLabel(event.getLabel());
 
-        this->labelLabel->setText(this->model.getLabel());
-
-        return true;
-    }
-
-    return QObject::eventFilter(target, event);
+    this->labelLabel->setText(this->model.getLabel());
 }
+
+
+
+
+
 
 AbstractRundownWidget* RundownSeparatorWidget::clone()
 {

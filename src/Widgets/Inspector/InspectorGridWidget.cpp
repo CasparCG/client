@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
@@ -79,7 +80,7 @@ void InspectorGridWidget::gridChanged(int grid)
 {
     this->command->setGrid(grid);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGridWidget::resetGrid(QString grid)
@@ -87,7 +88,7 @@ void InspectorGridWidget::resetGrid(QString grid)
     this->spinBoxGrid->setValue(1);
     this->command->setGrid(this->spinBoxGrid->value());
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGridWidget::resetDuration(QString duration)

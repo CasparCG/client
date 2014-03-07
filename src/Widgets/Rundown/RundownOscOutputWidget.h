@@ -13,6 +13,7 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/OscOutputCommand.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -49,9 +50,6 @@ class WIDGETS_EXPORT RundownOscOutputWidget : public QWidget, Ui::RundownOscOutp
 
         virtual void setCompactView(bool compactView);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         bool active;
         bool inGroup;
@@ -85,4 +83,9 @@ class WIDGETS_EXPORT RundownOscOutputWidget : public QWidget, Ui::RundownOscOutp
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+
+
+
+
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
 };

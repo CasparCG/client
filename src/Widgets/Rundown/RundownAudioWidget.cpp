@@ -6,10 +6,8 @@
 #include "DeviceManager.h"
 #include "EventManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/Inspector/TargetChangedEvent.h"
-#include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
 
 #include <math.h>
 
@@ -58,6 +56,14 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
+
+
+
+
+
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -71,70 +77,66 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 
     configureOscSubscriptions();
-
-    EventManager::getInstance().fireRundownIsChangedEvent(false);
-
-    qApp->installEventFilter(this);
 }
 
-bool RundownAudioWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::TargetChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
+    // This event is not for us.
+    if (!this->active)
+        return;
 
-        TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(targetChangedEvent->getTarget());
-        this->command.setAudioName(targetChangedEvent->getTarget());
+    this->model.setLabel(event.getLabel());
 
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
-        this->model.setLabel(labelChanged->getLabel());
-
-        this->labelLabel->setText(this->model.getLabel());
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        // Should we update the device name?
-        DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-        if (!deviceChangedEvent->getDeviceName().isEmpty() && deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
-        {
-            // Disconnect connectionStateChanged() from the old device.
-            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-
-            // Update the model with the new device.
-            this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
-
-            // Connect connectionStateChanged() to the new device.
-            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (newDevice != NULL)
-                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-        }
-
-        checkEmptyDevice();
-        checkDeviceConnection();
-    }
-
-    return QObject::eventFilter(target, event);
+    this->labelLabel->setText(this->model.getLabel());
 }
+
+void RundownAudioWidget::targetChanged(const TargetChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    this->model.setName(event.getTarget());
+    this->command.setAudioName(event.getTarget());
+}
+
+void RundownAudioWidget::deviceChanged(const DeviceChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    // Should we update the device name?
+    if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model.getDeviceName())
+    {
+        // Disconnect connectionStateChanged() from the old device.
+        const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (oldDevice != NULL)
+            QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+        // Update the model with the new device.
+        this->model.setDeviceName(event.getDeviceName());
+        this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
+
+        // Connect connectionStateChanged() to the new device.
+        const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (newDevice != NULL)
+            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+    }
+
+    checkEmptyDevice();
+    checkDeviceConnection();
+}
+
+
+
+
+
 
 AbstractRundownWidget* RundownAudioWidget::clone()
 {

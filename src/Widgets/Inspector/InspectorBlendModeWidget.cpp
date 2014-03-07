@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/BlendModeModel.h"
 
@@ -64,7 +65,7 @@ void InspectorBlendModeWidget::blendModeChanged(QString blendMode)
 {
     this->command->setBlendMode(blendMode);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
@@ -72,5 +73,5 @@ void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
     this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText("Normal"));
     this->command->setBlendMode(this->comboBoxBlendMode->currentText());
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }

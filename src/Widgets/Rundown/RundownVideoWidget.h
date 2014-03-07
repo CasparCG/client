@@ -15,6 +15,11 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/VideoCommand.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Models/LibraryModel.h"
 #include "Models/OscFileModel.h"
 
@@ -52,9 +57,6 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         virtual void setCompactView(bool compactView);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
@@ -97,7 +99,6 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
-
         void setTimecode(const QString& timecode);
 
         Q_SLOT void channelChanged(int);
@@ -132,4 +133,14 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+
+
+
+
+
+        Q_SLOT void videolayerChanged(const VideolayerChangedEvent&);
+        Q_SLOT void channelChanged(const ChannelChangedEvent&);
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
+        Q_SLOT void targetChanged(const TargetChangedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

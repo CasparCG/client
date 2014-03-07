@@ -5,9 +5,8 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "GpiManager.h"
+#include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
 
 #include <math.h>
 
@@ -49,6 +48,15 @@ RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
+
+
+
+
+
+
+
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -62,56 +70,60 @@ RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 
     configureOscSubscriptions();
-
-    qApp->installEventFilter(this);
 }
 
-bool RundownKeyerWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+
+
+void RundownKeyerWidget::labelChanged(const LabelChangedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
+    // This event is not for us.
+    if (!this->active)
+        return;
 
-        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
-        this->model.setLabel(labelChanged->getLabel());
+    this->model.setLabel(event.getLabel());
 
-        this->labelLabel->setText(this->model.getLabel());
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        // Should we update the device name?
-        DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-        if (!deviceChangedEvent->getDeviceName().isEmpty() && deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
-        {
-            // Disconnect connectionStateChanged() from the old device.
-            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-
-            // Update the model with the new device.
-            this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
-
-            // Connect connectionStateChanged() to the new device.
-            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (newDevice != NULL)
-                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-        }
-
-        checkEmptyDevice();
-        checkDeviceConnection();
-    }
-
-    return QObject::eventFilter(target, event);
+    this->labelLabel->setText(this->model.getLabel());
 }
+
+void RundownKeyerWidget::deviceChanged(const DeviceChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    // Should we update the device name?
+    if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model.getDeviceName())
+    {
+        // Disconnect connectionStateChanged() from the old device.
+        const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (oldDevice != NULL)
+            QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+
+        // Update the model with the new device.
+        this->model.setDeviceName(event.getDeviceName());
+        this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
+
+        // Connect connectionStateChanged() to the new device.
+        const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (newDevice != NULL)
+            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+    }
+
+    checkEmptyDevice();
+    checkDeviceConnection();
+}
+
+
+
+
+
+
 
 AbstractRundownWidget* RundownKeyerWidget::clone()
 {

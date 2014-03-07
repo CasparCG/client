@@ -35,9 +35,15 @@
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/NetworkSourceCommand.h"
 #include "Commands/TriCaster/MacroCommand.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+
 
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
@@ -452,30 +458,30 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
-    EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxDevice->currentText());
+    EventManager::getInstance().fireDeviceChangedEvent(DeviceChangedEvent(this->comboBoxDevice->currentText()));
 }
 
 void InspectorOutputWidget::targetChanged(QString name)
 {
     checkEmptyTarget();
 
-    EventManager::getInstance().fireTargetChangedEvent(this->comboBoxTarget->currentText());
+    EventManager::getInstance().fireTargetChangedEvent(TargetChangedEvent(this->comboBoxTarget->currentText()));
     if (this->model->getLabel() == this->comboBoxTarget->getPreviousText())
-        EventManager::getInstance().fireLabelChangedEvent(this->comboBoxTarget->currentText());
+        EventManager::getInstance().fireLabelChangedEvent(LabelChangedEvent(this->comboBoxTarget->currentText()));
 }
 
 void InspectorOutputWidget::channelChanged(int channel)
 {
     this->command->setChannel(channel);
 
-    EventManager::getInstance().fireChannelChangedEvent(channel);
+    EventManager::getInstance().fireChannelChangedEvent(ChannelChangedEvent(channel));
 }
 
 void InspectorOutputWidget::videolayerChanged(int videolayer)
 {
     this->command->setVideolayer(videolayer);
 
-    EventManager::getInstance().fireVideolayerChangedEvent(videolayer);
+    EventManager::getInstance().fireVideolayerChangedEvent(VideolayerChangedEvent(videolayer));
 }
 
 void InspectorOutputWidget::delayChanged(int delay)
@@ -530,5 +536,5 @@ void InspectorOutputWidget::tricasterDeviceNameChanged(QString deviceName)
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
-    EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxTriCasterDevice->currentText());
+    EventManager::getInstance().fireDeviceChangedEvent(DeviceChangedEvent(this->comboBoxTriCasterDevice->currentText()));
 }

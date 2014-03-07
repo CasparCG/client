@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PreviewEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/ChromaModel.h"
 
@@ -80,7 +81,7 @@ void InspectorChromaWidget::blurChanged(int blur)
 
     this->spinBoxBlur->setValue(blur);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::keyChanged(QString key)
@@ -89,7 +90,7 @@ void InspectorChromaWidget::keyChanged(QString key)
 
     this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(key));
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::showMaskChanged(bool show)
@@ -98,7 +99,7 @@ void InspectorChromaWidget::showMaskChanged(bool show)
 
     this->checkBoxShowMask->setChecked(show);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::softnessChanged(int softness)
@@ -107,7 +108,7 @@ void InspectorChromaWidget::softnessChanged(int softness)
 
     this->spinBoxSoftness->setValue(softness);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::spillChanged(int spill)
@@ -116,7 +117,7 @@ void InspectorChromaWidget::spillChanged(int spill)
 
     this->spinBoxSpill->setValue(spill);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::thresholdChanged(int threshold)
@@ -125,5 +126,5 @@ void InspectorChromaWidget::thresholdChanged(int threshold)
 
     this->spinBoxThreshold->setValue(threshold);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }

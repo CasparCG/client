@@ -93,6 +93,9 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 
 
 
+
+
+
 void RundownTreeWidget::saveAsPreset(const SaveAsPresetEvent& event)
 {
     if (!this->active)
@@ -272,6 +275,9 @@ void RundownTreeWidget::autoPlayNextRundownItem(const AutoPlayNextRundownItemEve
         }
     }
 }
+
+
+
 
 
 
