@@ -31,7 +31,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     this->labelAutoStep->setVisible(false);
     this->labelAutoPlay->setVisible(false);
 
-    this->labelGroupColor->setStyleSheet(QString("background-color: RoyalBlue;").arg(Color::DEFAULT_GROUP_COLOR));
+    this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
