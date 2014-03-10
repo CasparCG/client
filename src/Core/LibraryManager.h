@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Shared.h"
-#include "ThumbnailWorker.h"
 
 #include "Global.h"
 
 #include "CasparDevice.h"
 
+#include "ThumbnailWorker.h"
+#include "Events/Library/RefreshLibraryEvent.h"
+#include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Models/CasparData.h"
-#include "CasparDevice.h"
 #include "Models/CasparMedia.h"
 #include "Models/CasparTemplate.h"
 #include "Models/CasparThumbnail.h"
@@ -29,9 +30,6 @@ class CORE_EXPORT LibraryManager : public QObject
         void initialize();
         void uninitialize();
 
-    protected:
-        bool eventFilter(QObject* target, QEvent* event);
-
     private:
         QTimer refreshTimer;
         QList<QSharedPointer<ThumbnailWorker> > thumbnailWorkers;
@@ -46,4 +44,11 @@ class CORE_EXPORT LibraryManager : public QObject
         Q_SLOT void templateChanged(const QList<CasparTemplate>&, CasparDevice&);
         Q_SLOT void dataChanged(const QList<CasparData>&, CasparDevice&);
         Q_SLOT void thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
+
+
+
+
+
+        Q_SLOT void refreshLibrary(const RefreshLibraryEvent&);
+        Q_SLOT void autoRefreshLibrary(const AutoRefreshLibraryEvent&);
 };

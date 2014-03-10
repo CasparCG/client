@@ -147,11 +147,6 @@ void EventManager::fireCloseRundownEvent()
     qApp->postEvent(qApp, new CloseRundownEvent());
 }
 
-void EventManager::fireRefreshLibraryEvent(int delay)
-{
-    qApp->postEvent(qApp, new RefreshLibraryEvent(delay));
-}
-
 void EventManager::fireEmptyRundownEvent()
 {
     // Use synchronous event through sendEvent().
@@ -190,11 +185,6 @@ void EventManager::fireLibraryItemSelectedEvent(AbstractCommand* command, Librar
     qApp->sendEvent(qApp, &event);
 }
 
-void EventManager::fireAutoRefreshLibraryEvent(bool autoRefresh, int interval)
-{
-    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(autoRefresh, interval));
-}
-
 void EventManager::fireMediaChangedEvent()
 {
     qApp->postEvent(qApp, new MediaChangedEvent());
@@ -225,6 +215,16 @@ void EventManager::fireOscOutputChangedEvent()
 
 
 
+
+void EventManager::fireRefreshLibraryEvent(const RefreshLibraryEvent& event)
+{
+    emit refreshLibrary(event);
+}
+
+void EventManager::fireAutoRefreshLibraryEvent(const AutoRefreshLibraryEvent& event)
+{
+    emit autoRefreshLibrary(event);
+}
 
 void EventManager::firePreviewEvent(const PreviewEvent& event)
 {

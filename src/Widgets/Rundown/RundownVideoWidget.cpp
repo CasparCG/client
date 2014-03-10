@@ -87,8 +87,6 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     configureOscSubscriptions();
 
     this->widgetOscTime->setStartTime(this->model.getTimecode(), this->reverseOscTime);
-
-    qApp->installEventFilter(this);
 }
 
 

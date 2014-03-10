@@ -20,8 +20,8 @@ LibraryManager::LibraryManager(QObject* parent)
     QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
-
-    qApp->installEventFilter(this);
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(autoRefreshLibrary(AutoRefreshLibraryEvent&)), this, SLOT(autoRefreshLibrary(AutoRefreshLibraryEvent&)));
+    QObject::connect(&DeviceManager::getInstance(), SIGNAL(refreshLibrary(RefreshLibraryEvent&)), this, SLOT(refreshLibrary(RefreshLibraryEvent&)));
 }
 
 LibraryManager& LibraryManager::getInstance()
@@ -40,30 +40,39 @@ void LibraryManager::uninitialize()
 {
 }
 
-bool LibraryManager::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+
+
+void LibraryManager::refreshLibrary(const RefreshLibraryEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RefreshLibrary))
-    {
-        RefreshLibraryEvent* refreshLibraryEvent = dynamic_cast<RefreshLibraryEvent*>(event);
-        QTimer::singleShot(refreshLibraryEvent->getDelay(), this, SLOT(refresh()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoRefreshLibrary))
-    {
-        AutoRefreshLibraryEvent* autoRefreshLibraryEvent = dynamic_cast<AutoRefreshLibraryEvent*>(event);
-        if (this->refreshTimer.interval() != autoRefreshLibraryEvent->getInterval())
-            this->refreshTimer.setInterval(autoRefreshLibraryEvent->getInterval());
-
-        if (this->refreshTimer.isActive() != autoRefreshLibraryEvent->getAutoRefresh())
-        {
-            if (autoRefreshLibraryEvent->getAutoRefresh())
-                this->refreshTimer.start();
-            else
-                this->refreshTimer.stop();
-        }
-    }
-
-    return QObject::eventFilter(target, event);
+    QTimer::singleShot(event.getDelay(), this, SLOT(refresh()));
 }
+
+void LibraryManager::autoRefreshLibrary(const AutoRefreshLibraryEvent& event)
+{
+    if (this->refreshTimer.interval() != event.getInterval())
+        this->refreshTimer.setInterval(event.getInterval());
+
+    if (this->refreshTimer.isActive() != event.getAutoRefresh())
+    {
+        if (event.getAutoRefresh())
+            this->refreshTimer.start();
+        else
+            this->refreshTimer.stop();
+    }
+}
+
+
+
+
+
+
+
 
 void LibraryManager::refresh()
 {

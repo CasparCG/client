@@ -2,12 +2,6 @@
 
 #include "Global.h"
 
-#include "DatabaseManager.h"
-#include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Events/Action/AddActionItemEvent.h"
-#include "Models/BlendModeModel.h"
-
 #include <QtGui/QApplication>
 #include <QtGui/QListWidgetItem>
 #include <QtGui/QPushButton>
@@ -71,19 +65,4 @@ ActionWidget::ActionWidget(QWidget* parent)
     this->listWidgetAction->addItem(item12);
     this->listWidgetAction->addItem(item13);
     */
-
-    qApp->installEventFilter(this);
-}
-
-bool ActionWidget::eventFilter(QObject* target, QEvent* event)
-{
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddActionItem))
-    {
-        AddActionItemEvent* addActionItemEvent = dynamic_cast<AddActionItemEvent*>(event);
-        QString action = addActionItemEvent->getAction();
-
-        return true;
-    }
-
-    return QObject::eventFilter(target, event);
 }

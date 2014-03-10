@@ -14,7 +14,4 @@ class WIDGETS_EXPORT ActionWidget : public QWidget, Ui::ActionWidget
 
     public:
         explicit ActionWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 };

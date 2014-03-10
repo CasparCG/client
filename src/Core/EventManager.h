@@ -82,14 +82,12 @@ class CORE_EXPORT EventManager : public QObject
         void fireExecuteClearEvent();
         void fireExecuteClearVideolayerEvent();
         void fireExecuteClearChannelEvent();
-        void fireRefreshLibraryEvent(int delay = 0);
         void fireEmptyRundownEvent();
         void fireAddTemplateDataEvent(const QString& value, bool storedData);
         void fireStatusbarEvent(const QString& message, int timeout = 3000);
         void fireActiveRundownChangedEvent(const QString& path);
         void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source = NULL, QWidget* parent = NULL);
         void fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
-        void fireAutoRefreshLibraryEvent(bool autoRefresh, int interval);
         void fireMediaChangedEvent();
         void fireTemplateChangedEvent();
         void fireDataChangedEvent();
@@ -104,8 +102,8 @@ class CORE_EXPORT EventManager : public QObject
 
 
 
-
-
+        Q_SIGNAL void refreshLibrary(const RefreshLibraryEvent&);
+        Q_SIGNAL void autoRefreshLibrary(const AutoRefreshLibraryEvent&);
         Q_SIGNAL void preview(const PreviewEvent&);
         Q_SIGNAL void channelChanged(const ChannelChangedEvent&);
         Q_SIGNAL void videolayerChanged(const VideolayerChangedEvent&);
@@ -122,6 +120,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
+        void fireRefreshLibraryEvent(const RefreshLibraryEvent&);
+        void fireAutoRefreshLibraryEvent(const AutoRefreshLibraryEvent&);
         void firePreviewEvent(const PreviewEvent&);
         void fireChannelChangedEvent(const ChannelChangedEvent&);
         void fireVideolayerChangedEvent(const VideolayerChangedEvent&);
