@@ -527,7 +527,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         file.close();
 
-        qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
+        std::cout << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed()).toStdString();
 
         if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
             this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
@@ -537,7 +537,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
     checkEmptyRundown();
 
-    qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+    std::cout << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount()).toStdString();
 
     this->activeRundown = path;
 }
