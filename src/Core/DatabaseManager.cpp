@@ -154,12 +154,12 @@ void DatabaseManager::initialize()
 
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(2, 1, 'Load')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(3, 1, 'Next')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(4, 1, 'Update')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(5, 1, 'Clear')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(6, 1, 'ClearVideolayer')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(7, 1, 'ClearChannel')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(2, 1, 'Pause')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(3, 1, 'Load')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(4, 1, 'Next')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(5, 1, 'Update')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(6, 1, 'Invoke')");
+    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(7, 1, 'Clear')");
 
     sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(0, 1, 100)");
     sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(1, 1, 100)");
@@ -956,7 +956,7 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
     QSqlDatabase::database().transaction();
 
     QString query = QString("UPDATE GpiPort SET Action = '%1', RisingEdge = %2 "
-                            "WHERE Id = %3").arg(model.getAction()).arg(model.isRisingEdge() ? "1" : "0").arg(model.getPort());
+                            "WHERE Id = %3").arg(Playout::toString(model.getAction())).arg(model.isRisingEdge() ? "1" : "0").arg(model.getPort());
 
     QSqlQuery sql;
     if (!sql.exec(query))
