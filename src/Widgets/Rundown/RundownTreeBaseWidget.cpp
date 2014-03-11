@@ -3,6 +3,7 @@
 #include "RundownGroupWidget.h"
 
 #include "EventManager.h"
+#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -138,7 +139,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
 
         bool allowRemoteTriggering = parentValue.second.get(L"allowremotetriggering", false);
         EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(allowRemoteTriggering));
-        EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(allowRemoteTriggering);
+        EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(allowRemoteTriggering));
 
         AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
 

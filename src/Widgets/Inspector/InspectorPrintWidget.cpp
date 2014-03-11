@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 #include "Models/FormatModel.h"
 
 InspectorPrintWidget::InspectorPrintWidget(QWidget* parent)
@@ -12,30 +12,35 @@ InspectorPrintWidget::InspectorPrintWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorPrintWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+void InspectorPrintWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<PrintCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<PrintCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()))
-        {       
-            this->command = dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->lineEditOutput->setText(this->command->getOutput());
-        }
-
-        blockAllSignals(false);
+        this->lineEditOutput->setText(this->command->getOutput());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
+
+
 
 void InspectorPrintWidget::blockAllSignals(bool block)
 {

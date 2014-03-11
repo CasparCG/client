@@ -3,6 +3,9 @@
 #include "Shared.h"
 #include "ui_PreviewWidget.h"
 
+#include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+
 #include <QtGui/QImage>
 #include <QtGui/QWidget>
 
@@ -13,12 +16,16 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
     public:
         explicit PreviewWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         QImage image;
         bool previewAlpha;
 
         Q_SLOT void switchPreview();
+
+
+
+
+
+        Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

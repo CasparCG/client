@@ -1,6 +1,7 @@
 #include "TemplateDataTreeBaseWidget.h"
 
 #include "EventManager.h"
+#include "Events/Inspector/AddTemplateDataEvent.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
@@ -79,7 +80,7 @@ bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index
         if (dndData.startsWith("<treeWidgetData>"))
         {
             QStringList dataSplit = dndData.split(",");
-            EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
+            EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(dataSplit.at(1), true));
         }
     }
     else if (mimeData->hasFormat("application/inspector-templatedataitem"))

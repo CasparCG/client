@@ -6,7 +6,6 @@
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>
@@ -21,44 +20,47 @@ InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
 
     this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorGroupWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+void InspectorGroupWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<GroupCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<GroupCommand*>(event.getCommand());
 
-        blockAllSignals(true);
+        this->plainTextEditNotes->setPlainText(this->command->getNotes());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
 
-        if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
+        if (this->enableOscInput)
         {
-            this->command = dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->plainTextEditNotes->setPlainText(this->command->getNotes());
-            this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
-
-            if (this->enableOscInput)
-            {
-                this->labelAutoPlay->setVisible(true);
-                this->checkBoxAutoPlay->setVisible(true);
-                this->checkBoxAutoPlay->setChecked(this->command->getAutoPlay());
-            }
-            else
-            {
-                this->labelAutoPlay->setVisible(false);
-                this->checkBoxAutoPlay->setVisible(false);
-                this->checkBoxAutoPlay->setChecked(false);
-            }
+            this->labelAutoPlay->setVisible(true);
+            this->checkBoxAutoPlay->setVisible(true);
+            this->checkBoxAutoPlay->setChecked(this->command->getAutoPlay());
         }
-
-        blockAllSignals(false);
+        else
+        {
+            this->labelAutoPlay->setVisible(false);
+            this->checkBoxAutoPlay->setVisible(false);
+            this->checkBoxAutoPlay->setChecked(false);
+        }
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
+
+
 
 void InspectorGroupWidget::blockAllSignals(bool block)
 {

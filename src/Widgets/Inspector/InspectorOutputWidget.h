@@ -7,6 +7,12 @@
 #include "TriCasterDevice.h"
 
 #include "Commands/AbstractCommand.h"
+#include "Events/MediaChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -21,9 +27,6 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
 
     public:
         explicit InspectorOutputWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         AbstractCommand* command;
@@ -50,4 +53,15 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void tricasterDeviceRemoved();
         Q_SLOT void tricasterDeviceNameChanged(QString);
         Q_SLOT void remoteTriggerIdChanged(QString);
+
+
+
+
+
+        Q_SLOT void mediaChanged(const MediaChangedEvent&);
+        Q_SLOT void templateChanged(const TemplateChangedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
+        Q_SLOT void emptyRundown(const EmptyRundownEvent&);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
 };

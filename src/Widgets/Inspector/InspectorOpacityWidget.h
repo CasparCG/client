@@ -4,6 +4,7 @@
 #include "ui_InspectorOpacityWidget.h"
 
 #include "Commands/OpacityCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorOpacityWidget : public QWidget, Ui::InspectorOpaci
     public:
         explicit InspectorOpacityWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         OpacityCommand* command;
@@ -34,4 +32,11 @@ class WIDGETS_EXPORT InspectorOpacityWidget : public QWidget, Ui::InspectorOpaci
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);
+
+
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

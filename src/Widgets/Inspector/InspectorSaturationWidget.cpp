@@ -5,7 +5,6 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>
@@ -16,36 +15,40 @@ InspectorSaturationWidget::InspectorSaturationWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTween();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTween();
 }
 
-bool InspectorSaturationWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+void InspectorSaturationWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<SaturationCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<SaturationCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->sliderSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
-            this->spinBoxSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->sliderSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
+        this->spinBoxSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
 
 void InspectorSaturationWidget::blockAllSignals(bool block)
 {

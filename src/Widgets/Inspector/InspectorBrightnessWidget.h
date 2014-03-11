@@ -4,6 +4,7 @@
 #include "ui_InspectorBrightnessWidget.h"
 
 #include "Commands/BrightnessCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +18,6 @@ class WIDGETS_EXPORT InspectorBrightnessWidget : public QWidget, Ui::InspectorBr
 
     public:
         explicit InspectorBrightnessWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -37,4 +35,9 @@ class WIDGETS_EXPORT InspectorBrightnessWidget : public QWidget, Ui::InspectorBr
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

@@ -4,6 +4,7 @@
 #include "ui_InspectorTakeWidget.h"
 
 #include "Commands/TriCaster/TakeCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorTakeWidget : public QWidget, Ui::InspectorTakeWidg
     public:
         explicit InspectorTakeWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         TakeCommand* command;
@@ -31,4 +29,9 @@ class WIDGETS_EXPORT InspectorTakeWidget : public QWidget, Ui::InspectorTakeWidg
 
         Q_SLOT void stepChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

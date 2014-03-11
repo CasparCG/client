@@ -4,6 +4,7 @@
 #include "ui_InspectorAudioWidget.h"
 
 #include "Commands/AudioCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorAudioWidget : public QWidget, Ui::InspectorAudioWi
 
     public:
         explicit InspectorAudioWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -45,4 +43,9 @@ class WIDGETS_EXPORT InspectorAudioWidget : public QWidget, Ui::InspectorAudioWi
         Q_SLOT void resetLoop(QString);
         Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void resetUseAuto(QString);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

@@ -4,6 +4,7 @@
 #include "ui_InspectorGroupWidget.h"
 
 #include "Commands/GroupCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
     public:
         explicit InspectorGroupWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         GroupCommand* command;
@@ -33,4 +31,8 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
         Q_SLOT void autoStepChanged(int);
         Q_SLOT void resetAutoStep(QString);
         Q_SLOT void autoPlayChanged(int);
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

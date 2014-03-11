@@ -30,6 +30,10 @@
 #include "GpiManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/StatusbarEvent.h"
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/RundownModel.h"
@@ -487,7 +491,7 @@ void RundownTreeWidget::setActive(bool active)
         }
     }
 
-    EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+    EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
     QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
@@ -507,7 +511,7 @@ void RundownTreeWidget::setActive(bool active)
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
 }
 
@@ -555,7 +559,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Saving rundown..."));
         EventManager::getInstance().fireProcessEvent();
 
         QFile file(path);
@@ -583,8 +587,8 @@ void RundownTreeWidget::saveRundown(bool saveAs)
         checkEmptyRundown();
 
         this->activeRundown = path;
-        EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
-        EventManager::getInstance().fireStatusbarEvent("");
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
         EventManager::getInstance().fireProcessEvent();
     }
 }
@@ -718,7 +722,7 @@ void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
 }
 
@@ -751,13 +755,13 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
     else if (currentItem == NULL && previous != NULL && this->treeWidgetRundown->invisibleRootItem()->childCount() == 1) // Last item was removed form the rundown.
     {
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireEmptyRundownEvent();
+        EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
     }
 }
 
@@ -1489,7 +1493,7 @@ void RundownTreeWidget::saveAsPreset()
     if (dialog->exec() == QDialog::Accepted)
     {
         DatabaseManager::getInstance().insertPreset(PresetModel(0, dialog->getName(), qApp->clipboard()->text()));
-        EventManager::getInstance().firePresetChangedEvent();
+        EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
     }
 }
 

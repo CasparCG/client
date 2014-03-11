@@ -2,7 +2,7 @@
 
 #include "Global.h"
 
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 
 InspectorImageScrollerWidget::InspectorImageScrollerWidget(QWidget* parent)
     : QWidget(parent),
@@ -10,32 +10,26 @@ InspectorImageScrollerWidget::InspectorImageScrollerWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorImageScrollerWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorImageScrollerWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<ImageScrollerCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<ImageScrollerCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->spinBoxBlur->setValue(this->command->getBlur());
-            this->spinBoxSpeed->setValue(this->command->getSpeed());
-            this->checkBoxPremultiply->setChecked(this->command->getPremultiply());
-            this->checkBoxProgressive->setChecked(this->command->getProgressive());
-        }
-
-        blockAllSignals(false);
+        this->spinBoxBlur->setValue(this->command->getBlur());
+        this->spinBoxSpeed->setValue(this->command->getSpeed());
+        this->checkBoxPremultiply->setChecked(this->command->getPremultiply());
+        this->checkBoxProgressive->setChecked(this->command->getProgressive());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorImageScrollerWidget::blockAllSignals(bool block)

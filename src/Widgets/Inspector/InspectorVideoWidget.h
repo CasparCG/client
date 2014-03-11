@@ -4,6 +4,7 @@
 #include "ui_InspectorVideoWidget.h"
 
 #include "Commands/VideoCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
 
     public:
         explicit InspectorVideoWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -51,4 +49,8 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         Q_SLOT void resetFreezeOnLoad(QString);
         Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void autoPlayChanged(int);
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

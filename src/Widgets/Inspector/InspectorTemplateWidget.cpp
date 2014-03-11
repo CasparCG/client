@@ -3,8 +3,7 @@
 
 #include "Global.h"
 
-#include "Events/Inspector/AddTemplateDataEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 
 #include <QtCore/QDebug>
 
@@ -21,6 +20,9 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
 
     this->treeWidgetTemplateData->setColumnWidth(1, 87);
     this->fieldCounter = this->treeWidgetTemplateData->invisibleRootItem()->childCount();
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(addTemplateData(const AddTemplateDataEvent&)), this, SLOT(addTemplateData(const AddTemplateDataEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
     qApp->installEventFilter(this);
 }
@@ -46,63 +48,68 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
                 return pasteSelectedItem();
         }
     }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
-    {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
-
-        blockAllSignals(true);
-
-        if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->spinBoxFlashlayer->setValue(this->command->getFlashlayer());
-            this->lineEditInvoke->setText(this->command->getInvoke());
-            this->checkBoxUseStoredData->setChecked(this->command->getUseStoredData());
-            this->checkBoxUseUppercaseData->setChecked(this->command->getUseUppercaseData());
-
-            for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
-                delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
-
-            this->fieldCounter = 0;
-            foreach (TemplateDataModel model, this->command->getTemplateDataModels())
-            {
-                QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-                treeItem->setText(0, model.getKey());
-                treeItem->setText(1, model.getValue());
-
-                this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
-
-                this->fieldCounter++;
-            }
-        }
-
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddTemplateData))
-    {
-        this->treeWidgetTemplateData->clear();
-        this->fieldCounter = 0;
-
-        AddTemplateDataEvent* addTemplateDataEvent = dynamic_cast<AddTemplateDataEvent*>(event);
-
-        QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-        treeItem->setText(0, QString("f%1").arg(this->fieldCounter));
-        treeItem->setText(1, addTemplateDataEvent->getValue());
-
-        this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
-        this->treeWidgetTemplateData->setCurrentItem(treeItem);
-
-        this->checkBoxUseStoredData->setChecked(addTemplateDataEvent->getStoredData());
-
-        this->fieldCounter++;
-
-        return true;
-    }
 
     return QObject::eventFilter(target, event);
 }
+
+void InspectorTemplateWidget::addTemplateData(const AddTemplateDataEvent& event)
+{
+    this->treeWidgetTemplateData->clear();
+    this->fieldCounter = 0;
+
+    QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+    treeItem->setText(0, QString("f%1").arg(this->fieldCounter));
+    treeItem->setText(1, event.getValue());
+
+    this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
+    this->treeWidgetTemplateData->setCurrentItem(treeItem);
+
+    this->checkBoxUseStoredData->setChecked(event.getStoredData());
+
+    this->fieldCounter++;
+}
+
+void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+{
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<TemplateCommand*>(event.getCommand()))
+    {
+        this->command = dynamic_cast<TemplateCommand*>(event.getCommand());
+
+        this->spinBoxFlashlayer->setValue(this->command->getFlashlayer());
+        this->lineEditInvoke->setText(this->command->getInvoke());
+        this->checkBoxUseStoredData->setChecked(this->command->getUseStoredData());
+        this->checkBoxUseUppercaseData->setChecked(this->command->getUseUppercaseData());
+
+        for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
+            delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
+
+        this->fieldCounter = 0;
+        foreach (TemplateDataModel model, this->command->getTemplateDataModels())
+        {
+            QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+            treeItem->setText(0, model.getKey());
+            treeItem->setText(1, model.getValue());
+
+            this->treeWidgetTemplateData->invisibleRootItem()->addChild(treeItem);
+
+            this->fieldCounter++;
+        }
+    }
+
+    blockAllSignals(false);
+}
+
+
+
+
+
+
+
+
 
 void InspectorTemplateWidget::blockAllSignals(bool block)
 {

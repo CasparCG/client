@@ -57,64 +57,48 @@ void AudioCommand::setAudioName(const QString& audioName)
 {
     this->audioName = audioName;
     emit audioNameChanged(this->audioName);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setDuration(int duration)
 {
     this->duration = duration;
     emit durationChanged(this->duration);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setLoop(bool loop)
 {
     this->loop = loop;
     emit loopChanged(this->loop);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
-
-    EventManager::getInstance().fireRundownIsChangedEvent(true);
 }
 
 void AudioCommand::readProperties(boost::property_tree::wptree& pt)

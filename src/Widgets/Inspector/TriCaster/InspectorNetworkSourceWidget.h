@@ -4,6 +4,7 @@
 #include "ui_InspectorNetworkSourceWidget.h"
 
 #include "Commands/TriCaster/NetworkSourceCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorNetworkSourceWidget : public QWidget, Ui::Inspecto
     public:
         explicit InspectorNetworkSourceWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         NetworkSourceCommand* command;
@@ -31,4 +29,9 @@ class WIDGETS_EXPORT InspectorNetworkSourceWidget : public QWidget, Ui::Inspecto
         Q_SLOT void targetChanged(int);
         Q_SLOT void sourceChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

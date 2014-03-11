@@ -7,10 +7,7 @@
 #include "EventManager.h"
 #include "DeviceManager.h"
 #include "DatabaseManager.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Library/LibraryItemSelectedEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include <QtGui/QApplication>
 
@@ -20,55 +17,64 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
 }
 
-bool InspectorMetadataWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+void InspectorMetadataWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected))
-    {
-        LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
-        this->model = libraryItemSelectedEvent->getLibraryModel();
+    this->model = event.getLibraryModel();
 
-        blockAllSignals(true);
+    blockAllSignals(true);
 
-        this->lineEditLabel->setEnabled(false);
+    this->lineEditLabel->setEnabled(false);
 
-        this->lineEditType->setText(this->model->getType());
-        this->lineEditLabel->clear();
+    this->lineEditType->setText(this->model->getType());
+    this->lineEditLabel->clear();
 
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
-    {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
-
-        blockAllSignals(true);
-
-        this->lineEditLabel->setEnabled(true);
-
-        this->lineEditLabel->setReadOnly(false);
-
-        this->lineEditType->setText(this->model->getType());
-        this->lineEditLabel->setText(this->model->getLabel());
-
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
-    {
-        blockAllSignals(true);
-
-        this->lineEditLabel->setEnabled(false);
-
-        this->lineEditType->clear();
-        this->lineEditLabel->clear();
-
-        blockAllSignals(false);
-    }
-
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+void InspectorMetadataWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
+{
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    this->lineEditLabel->setEnabled(true);
+
+    this->lineEditLabel->setReadOnly(false);
+
+    this->lineEditType->setText(this->model->getType());
+    this->lineEditLabel->setText(this->model->getLabel());
+
+    blockAllSignals(false);
+}
+
+void InspectorMetadataWidget::emptyRundown(const EmptyRundownEvent& event)
+{
+    blockAllSignals(true);
+
+    this->lineEditLabel->setEnabled(false);
+
+    this->lineEditType->clear();
+    this->lineEditLabel->clear();
+
+    blockAllSignals(false);
+}
+
+
+
+
+
+
+
 
 void InspectorMetadataWidget::blockAllSignals(bool block)
 {

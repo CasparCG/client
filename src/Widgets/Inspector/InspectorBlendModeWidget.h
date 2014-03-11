@@ -4,6 +4,7 @@
 #include "ui_InspectorBlendModeWidget.h"
 
 #include "Commands/BlendModeCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorBlendModeWidget : public QWidget, Ui::InspectorBle
     public:
         explicit InspectorBlendModeWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         BlendModeCommand* command;
@@ -30,4 +28,11 @@ class WIDGETS_EXPORT InspectorBlendModeWidget : public QWidget, Ui::InspectorBle
 
         Q_SLOT void blendModeChanged(QString);
         Q_SLOT void resetBlendMode(QString);
+
+
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

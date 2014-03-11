@@ -7,7 +7,7 @@
 class CORE_EXPORT RefreshLibraryEvent : public QEvent
 {
     public:
-        explicit RefreshLibraryEvent(int delay);
+        explicit RefreshLibraryEvent(int delay = 0);
 
         int getDelay() const;
 

@@ -3,8 +3,8 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>
@@ -17,30 +17,33 @@ InspectorKeyerWidget::InspectorKeyerWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorKeyerWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+void InspectorKeyerWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<KeyerCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<KeyerCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<KeyerCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<KeyerCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
+
 
 void InspectorKeyerWidget::blockAllSignals(bool block)
 {

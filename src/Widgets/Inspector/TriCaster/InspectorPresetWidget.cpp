@@ -4,7 +4,6 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterPresetModel.h"
 
 #include <QtGui/QApplication>
@@ -15,34 +14,28 @@ InspectorPresetWidget::InspectorPresetWidget(QWidget* parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+
     loadTriCasterSource();
     loadTriCasterPreset();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorPresetWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorPresetWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<PresetCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<PresetCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxSource->setCurrentIndex(this->comboBoxSource->findData(this->command->getSource()));
-            this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findData(this->command->getPreset()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->comboBoxSource->setCurrentIndex(this->comboBoxSource->findData(this->command->getSource()));
+        this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findData(this->command->getPreset()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorPresetWidget::blockAllSignals(bool block)

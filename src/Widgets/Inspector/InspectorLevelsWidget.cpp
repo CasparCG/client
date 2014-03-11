@@ -5,7 +5,6 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>
@@ -16,44 +15,53 @@ InspectorLevelsWidget::InspectorLevelsWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTween();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTween();
 }
 
-bool InspectorLevelsWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+
+void InspectorLevelsWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<LevelsCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<LevelsCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()))
-        { 
-            this->command = dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->sliderMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
-            this->sliderMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
-            this->sliderMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
-            this->sliderMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
-            this->spinBoxMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
-            this->spinBoxMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
-            this->spinBoxMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
-            this->spinBoxMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
-            this->sliderGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
-            this->spinBoxGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->sliderMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
+        this->sliderMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
+        this->sliderMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
+        this->sliderMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
+        this->spinBoxMinIn->setValue(QString("%1").arg(this->command->getMinIn() * 100).toFloat());
+        this->spinBoxMaxIn->setValue(QString("%1").arg(this->command->getMaxIn() * 100).toFloat());
+        this->spinBoxMinOut->setValue(QString("%1").arg(this->command->getMinOut() * 100).toFloat());
+        this->spinBoxMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
+        this->sliderGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
+        this->spinBoxGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
+
+
+
+
 
 void InspectorLevelsWidget::blockAllSignals(bool block)
 {

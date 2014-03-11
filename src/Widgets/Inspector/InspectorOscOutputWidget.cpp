@@ -4,7 +4,6 @@
 
 #include "EventManager.h"
 #include "DatabaseManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 InspectorOscOutputWidget::InspectorOscOutputWidget(QWidget *parent)
     : QWidget(parent),
@@ -12,49 +11,58 @@ InspectorOscOutputWidget::InspectorOscOutputWidget(QWidget *parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(oscOutputChanged(const OscOutputChangedEvent&)), this, SLOT(oscOutputChanged(const OscOutputChangedEvent&)));
+
+    loadOscOutput();
+}
+
+
+
+
+
+
+
+
+void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+{
+    blockAllSignals(true);
+
+    if (dynamic_cast<OscOutputCommand*>(event.getCommand()))
+    {
+        this->command = dynamic_cast<OscOutputCommand*>(event.getCommand());
+
+        this->comboBoxOutput->setCurrentIndex(this->comboBoxOutput->findText(this->command->getOutput()));
+        this->lineEditPath->setText(this->command->getPath());
+        this->lineEditMessage->setText(this->command->getMessage());
+        this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+    }
+
+    checkEmptyOutput();
+    checkEmptyPath();
+
+    blockAllSignals(false);
+}
+
+void InspectorOscOutputWidget::oscOutputChanged(const OscOutputChangedEvent& event)
+{
+
+    blockAllSignals(true);
+
     loadOscOutput();
 
-    qApp->installEventFilter(this);
+    checkEmptyOutput();
+    checkEmptyPath();
+
+    blockAllSignals(false);
 }
 
-bool InspectorOscOutputWidget::eventFilter(QObject* target, QEvent* event)
-{
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
-    {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
 
-        blockAllSignals(true);
 
-        if (dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand());
 
-            this->comboBoxOutput->setCurrentIndex(this->comboBoxOutput->findText(this->command->getOutput()));
-            this->lineEditPath->setText(this->command->getPath());
-            this->lineEditMessage->setText(this->command->getMessage());
-            this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
 
-        checkEmptyOutput();
-        checkEmptyPath();
 
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::OscOutputChanged))
-    {
-        blockAllSignals(true);
-
-        loadOscOutput();
-
-        checkEmptyOutput();
-        checkEmptyPath();
-
-        blockAllSignals(false);
-    }
-
-    return QObject::eventFilter(target, event);
-}
 
 void InspectorOscOutputWidget::loadOscOutput()
 {

@@ -4,6 +4,7 @@
 #include "ui_InspectorChromaWidget.h"
 
 #include "Commands/ChromaCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorChromaWidget : public QWidget, Ui::InspectorChroma
     public:
         explicit InspectorChromaWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         ChromaCommand* command;
@@ -34,4 +32,9 @@ class WIDGETS_EXPORT InspectorChromaWidget : public QWidget, Ui::InspectorChroma
         Q_SLOT void softnessChanged(int);
         Q_SLOT void spillChanged(int);
         Q_SLOT void thresholdChanged(int);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

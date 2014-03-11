@@ -4,6 +4,7 @@
 #include "ui_InspectorClearOutputWidget.h"
 
 #include "Commands/ClearOutputCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorClearOutputWidget : public QWidget, Ui::InspectorC
     public:
         explicit InspectorClearOutputWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         ClearOutputCommand* command;
@@ -31,4 +29,9 @@ class WIDGETS_EXPORT InspectorClearOutputWidget : public QWidget, Ui::InspectorC
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void resetClearChannel(QString);
         Q_SLOT void resetTriggerOnNext(QString);
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

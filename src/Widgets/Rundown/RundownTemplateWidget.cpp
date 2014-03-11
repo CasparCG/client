@@ -8,6 +8,7 @@
 #include "EventManager.h"
 #include "Animations/ActiveAnimation.h"
 #include "Events/ConnectionStateChangedEvent.h"
+#include "Events/Inspector/AddTemplateDataEvent.h"
 
 #include <math.h>
 
@@ -156,7 +157,7 @@ void RundownTemplateWidget::dropEvent(QDropEvent* event)
         if (dndData.startsWith("<treeWidgetData>"))
         {
             QStringList dataSplit = dndData.split(",");
-            EventManager::getInstance().fireAddTemplateDataEvent(dataSplit.at(1), true);
+            EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(dataSplit.at(1), true));
         }
     }
 }

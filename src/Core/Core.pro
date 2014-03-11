@@ -96,7 +96,6 @@ HEADERS += \
     Events/Inspector/VideolayerChangedEvent.h \
     Models/OscFileModel.h \
     Events/Inspector/AddTemplateDataEvent.h \
-    Events/Rundown/RundownIsChangedEvent.h \
     Events/Action/AddActionItemEvent.h \
     Commands/ChromaCommand.h \
     Models/ChromaModel.h \
@@ -214,7 +213,6 @@ SOURCES += \
     Events/Inspector/VideolayerChangedEvent.cpp \
     Models/OscFileModel.cpp \
     Events/Inspector/AddTemplateDataEvent.cpp \
-    Events/Rundown/RundownIsChangedEvent.cpp \
     Events/Action/AddActionItemEvent.cpp \
     Commands/ChromaCommand.cpp \
     Models/ChromaModel.cpp \

@@ -4,7 +4,6 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 
 #include <QtGui/QApplication>
@@ -15,34 +14,28 @@ InspectorTakeWidget::InspectorTakeWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTriCasterStep();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTriCasterStep();
 }
 
-bool InspectorTakeWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorTakeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<TakeCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<TakeCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        checkEmptyStep();
-
-        blockAllSignals(false);
+        this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    checkEmptyStep();
+
+    blockAllSignals(false);
 }
 
 void InspectorTakeWidget::blockAllSignals(bool block)

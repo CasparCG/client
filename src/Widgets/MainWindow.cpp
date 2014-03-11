@@ -8,12 +8,17 @@
 
 #include "EventManager.h"
 #include "DatabaseManager.h"
-#include "Events/StatusbarEvent.h"
+#include "Events/ExportPresetEvent.h"
+#include "Events/ImportPresetEvent.h"
 #include "Events/SaveAsPresetEvent.h"
-#include "Events/Rundown/CompactViewEvent.h"
-#include "Events/Rundown/ActiveRundownChangedEvent.h"
-#include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/CloseRundownEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/NewRundownEvent.h"
+#include "Events/Rundown/OpenRundownEvent.h"
+#include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
 #include <QtCore/QDebug>
@@ -40,7 +45,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterHorizontal->setSizes(QList<int>() << 1 << 0);
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(statusbarMessage(const StatusbarEvent&)), this, SLOT(statusbarMessage(const StatusbarEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -109,49 +119,55 @@ void MainWindow::setupMenu()
     setMenuBar(this->menuBar);
 }
 
-bool MainWindow::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+void MainWindow::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::StatusbarMessage))
-    {
-        StatusbarEvent* statusbarEvent = dynamic_cast<StatusbarEvent*>(event);
-        this->statusBar()->showMessage(statusbarEvent->getMessage(), statusbarEvent->getTimeout());
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ActiveRundownChanged))
-    {
-        ActiveRundownChangedEvent* activeRundownChangedEvent = dynamic_cast<ActiveRundownChangedEvent*>(event);
-
-        QFileInfo info(activeRundownChangedEvent->getPath());
-        if (info.baseName() == Rundown::DEFAULT_NAME)
-            this->setWindowTitle(QString("%1").arg(this->applicationTitle));
-        else
-            this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(activeRundownChangedEvent->getPath()));
-
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::NewRundownMenu))
-    {
-        NewRundownMenuEvent* newRundownMenuEvent = dynamic_cast<NewRundownMenuEvent*>(event);
-        this->newRundownAction->setEnabled(newRundownMenuEvent->getEnabled());
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AllowRemoteTriggeringMenu))
-    {
-        AllowRemoteTriggeringMenuEvent* allowRemoteTriggeringMenuEvent = dynamic_cast<AllowRemoteTriggeringMenuEvent*>(event);
-
-        // We do not want to trigger check changed event.
-        this->allowRemoteTriggeringAction->blockSignals(true);
-        this->allowRemoteTriggeringAction->setChecked(allowRemoteTriggeringMenuEvent->getEnabled());
-        this->allowRemoteTriggeringAction->blockSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
-    {
-        this->saveAsPresetAction->setEnabled(true);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
-    {
-        this->saveAsPresetAction->setEnabled(false);
-    }
-
-    return QObject::eventFilter(target, event);
+    this->saveAsPresetAction->setEnabled(true);
 }
+
+void MainWindow::emptyRundown(const EmptyRundownEvent& event)
+{
+    this->saveAsPresetAction->setEnabled(false);
+}
+
+void MainWindow::statusbarMessage(const StatusbarEvent& event)
+{
+    this->statusBar()->showMessage(event.getMessage(), event.getTimeout());
+}
+
+void MainWindow::activeRundownChanged(const ActiveRundownChangedEvent& event)
+{
+    QFileInfo info(event.getPath());
+    if (info.baseName() == Rundown::DEFAULT_NAME)
+        this->setWindowTitle(QString("%1").arg(this->applicationTitle));
+    else
+        this->setWindowTitle(QString("%1 - %2").arg(this->applicationTitle).arg(event.getPath()));
+}
+
+void MainWindow::newRundownMenu(const NewRundownMenuEvent& event)
+{
+    this->newRundownAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+{
+    // We do not want to trigger check changed event.
+    this->allowRemoteTriggeringAction->blockSignals(true);
+    this->allowRemoteTriggeringAction->setChecked(event.getEnabled());
+    this->allowRemoteTriggeringAction->blockSignals(false);
+}
+
+
+
+
+
+
+
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
@@ -174,12 +190,12 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::importPreset()
 {
-    EventManager::getInstance().fireImportPresetEvent();
+    EventManager::getInstance().fireImportPresetEvent(ImportPresetEvent());
 }
 
 void MainWindow::exportPreset()
 {
-    EventManager::getInstance().fireExportPresetEvent();
+    EventManager::getInstance().fireExportPresetEvent(ExportPresetEvent());
 }
 
 void MainWindow::saveAsPreset()
@@ -189,22 +205,22 @@ void MainWindow::saveAsPreset()
 
 void MainWindow::newRundown()
 {
-    EventManager::getInstance().fireNewRundownEvent();
+    EventManager::getInstance().fireNewRundownEvent(NewRundownEvent());
 }
 
 void MainWindow::openRundown()
 {
-    EventManager::getInstance().fireOpenRundownEvent();
+    EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent());
 }
 
 void MainWindow::saveRundown()
 {
-    EventManager::getInstance().fireSaveRundownEvent(false);
+    EventManager::getInstance().fireSaveRundownEvent(SaveRundownEvent(false));
 }
 
 void MainWindow::saveAsRundown()
 {
-    EventManager::getInstance().fireSaveRundownEvent(true);
+    EventManager::getInstance().fireSaveRundownEvent(SaveRundownEvent(true));
 }
 
 void MainWindow::executeStop()
@@ -265,12 +281,12 @@ void MainWindow::toggleCompactView()
 void MainWindow::allowRemoteTriggering(bool enabled)
 {
     EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(enabled);
+    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(enabled));
 }
 
 void MainWindow::closeRundown()
 {
-    EventManager::getInstance().fireCloseRundownEvent();
+    EventManager::getInstance().fireCloseRundownEvent(CloseRundownEvent());
 }
 
 void MainWindow::showAboutDialog()
@@ -288,7 +304,7 @@ void MainWindow::showHelpDialog()
 void MainWindow::showSettingsDialog()
 {
     // Reset inspector panel.
-    EventManager::getInstance().fireEmptyRundownEvent();
+    EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
 
     SettingsDialog* dialog = new SettingsDialog(this);
     QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
@@ -303,5 +319,5 @@ void MainWindow::toggleFullscreen()
 
 void MainWindow::refreshLibrary()
 {
-    EventManager::getInstance().fireRefreshLibraryEvent();
+    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
 }

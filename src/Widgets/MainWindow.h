@@ -3,6 +3,13 @@
 #include "Shared.h"
 #include "ui_MainWindow.h"
 
+#include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/StatusbarEvent.h"
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
+
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
@@ -20,7 +27,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
     protected:
         virtual void closeEvent(QCloseEvent* event);
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         QString applicationTitle;
@@ -66,4 +72,15 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void saveAsPreset();
         Q_SLOT void closeRundown();
         Q_SLOT void allowRemoteTriggering(bool);
+
+
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void emptyRundown(const EmptyRundownEvent&);
+        Q_SLOT void statusbarMessage(const StatusbarEvent&);
+        Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
+        Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
+        Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
 };

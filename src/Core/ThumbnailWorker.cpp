@@ -2,6 +2,8 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "EventManager.h"
+#include "Events/MediaChangedEvent.h"
+#include "Events/StatusbarEvent.h"
 
 #include "Global.h"
 
@@ -29,7 +31,7 @@ void ThumbnailWorker::process()
     if (this->thumbnailModels.count() == 0)
     {
         this->thumbnailTimer.stop();
-        EventManager::getInstance().fireMediaChangedEvent();
+        EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
 
         return;
     }
@@ -47,12 +49,12 @@ void ThumbnailWorker::process()
     if (!device->isConnected())
     {
         this->thumbnailTimer.stop();
-        EventManager::getInstance().fireMediaChangedEvent();
+        EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
 
         return;
     }
 
-    EventManager::getInstance().fireStatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName));
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
     qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
 
     QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));

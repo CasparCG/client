@@ -4,7 +4,6 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterSwitcherModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 
@@ -16,35 +15,37 @@ InspectorInputWidget::InspectorInputWidget(QWidget* parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+
     loadTriCasterSwitcher();
     loadTriCasterInput();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorInputWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+void InspectorInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<InputCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<InputCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<InputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<InputCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
-            this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
+        this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+
+
+
+
 
 void InspectorInputWidget::blockAllSignals(bool block)
 {

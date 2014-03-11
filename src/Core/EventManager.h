@@ -41,7 +41,6 @@
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
-#include "Events/Rundown/RundownIsChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Models/BlendModeModel.h"
@@ -63,15 +62,7 @@ class CORE_EXPORT EventManager : public QObject
 
         void initialize();
         void uninitialize();
-
-        void fireProcessEvent();
-        void fireNewRundownEvent();
-        void fireImportPresetEvent();
-        void fireExportPresetEvent();       
-        void fireNewRundownMenuEvent(bool enabled);
-        void fireRundownIsChangedEvent(bool changed);
-        void fireDeleteRundownEvent(int index);
-        void fireOpenRundownEvent();
+        void fireProcessEvent(); 
         void fireExecuteStopEvent();
         void fireExecutePlayEvent();
         void fireExecutePauseEvent();
@@ -82,26 +73,33 @@ class CORE_EXPORT EventManager : public QObject
         void fireExecuteClearEvent();
         void fireExecuteClearVideolayerEvent();
         void fireExecuteClearChannelEvent();
-        void fireEmptyRundownEvent();
-        void fireAddTemplateDataEvent(const QString& value, bool storedData);
-        void fireStatusbarEvent(const QString& message, int timeout = 3000);
-        void fireActiveRundownChangedEvent(const QString& path);
-        void fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source = NULL, QWidget* parent = NULL);
-        void fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model);
-        void fireMediaChangedEvent();
-        void fireTemplateChangedEvent();
-        void fireDataChangedEvent();
-        void firePresetChangedEvent();
-        void fireSaveRundownEvent(bool saveAs);
-        void fireOscOutputChangedEvent();
-        void fireCloseRundownEvent();
-        void fireAllowRemoteTriggeringMenuEvent(bool enabled);
 
 
 
 
 
 
+
+        Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
+        Q_SIGNAL void openRundown(const OpenRundownEvent&);
+        Q_SIGNAL void addTemplateData(const AddTemplateDataEvent&);
+        Q_SIGNAL void saveRundown(const SaveRundownEvent&);
+        Q_SIGNAL void oscOutputChanged(const OscOutputChangedEvent&);
+        Q_SIGNAL void closeRundown(const CloseRundownEvent&);
+        Q_SIGNAL void activeRundownChanged(const ActiveRundownChangedEvent&);
+        Q_SIGNAL void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SIGNAL void libraryItemSelected(const LibraryItemSelectedEvent&);
+        Q_SIGNAL void statusbar(const StatusbarEvent&);
+        Q_SIGNAL void newRundown(const NewRundownEvent&);
+        Q_SIGNAL void newRundownMenu(const NewRundownMenuEvent&);
+        Q_SIGNAL void dataChanged(const DataChangedEvent&);
+        Q_SIGNAL void mediaChanged(const MediaChangedEvent&);
+        Q_SIGNAL void templateChanged(const TemplateChangedEvent&);
+        Q_SIGNAL void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
+        Q_SIGNAL void importPreset(const ImportPresetEvent&);
+        Q_SIGNAL void exportPreset(const ExportPresetEvent&);
+        Q_SIGNAL void emptyRundown(const EmptyRundownEvent&);
+        Q_SIGNAL void presetChanged(const PresetChangedEvent&);
         Q_SIGNAL void refreshLibrary(const RefreshLibraryEvent&);
         Q_SIGNAL void autoRefreshLibrary(const AutoRefreshLibraryEvent&);
         Q_SIGNAL void preview(const PreviewEvent&);
@@ -120,6 +118,26 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
+        void fireOpenRundownEvent(const OpenRundownEvent&);
+        void fireAddTemplateDataEvent(const AddTemplateDataEvent&);
+        void fireSaveRundownEvent(const SaveRundownEvent&);
+        void fireOscOutputChangedEvent(const OscOutputChangedEvent&);
+        void fireCloseRundownEvent(const CloseRundownEvent&);
+        void fireActiveRundownChangedEvent(const ActiveRundownChangedEvent&);
+        void fireRundownItemSelectedEvent(const RundownItemSelectedEvent&);
+        void fireLibraryItemSelectedEvent(const LibraryItemSelectedEvent&);
+        void fireDeleteRundownEvent(const DeleteRundownEvent&);
+        void fireStatusbarEvent(const StatusbarEvent& event);
+        void fireNewRundownEvent(const NewRundownEvent&);
+        void fireNewRundownMenuEvent(const NewRundownMenuEvent&);
+        void fireDataChangedEvent(const DataChangedEvent&);
+        void fireMediaChangedEvent(const MediaChangedEvent&);
+        void fireTemplateChangedEvent(const TemplateChangedEvent&);
+        void fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggeringMenuEvent&);
+        void fireImportPresetEvent(const ImportPresetEvent&);
+        void fireExportPresetEvent(const ExportPresetEvent&);
+        void fireEmptyRundownEvent(const EmptyRundownEvent&);
+        void firePresetChangedEvent(const PresetChangedEvent&);
         void fireRefreshLibraryEvent(const RefreshLibraryEvent&);
         void fireAutoRefreshLibraryEvent(const AutoRefreshLibraryEvent&);
         void firePreviewEvent(const PreviewEvent&);

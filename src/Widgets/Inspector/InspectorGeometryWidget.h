@@ -4,6 +4,9 @@
 #include "ui_InspectorGeometryWidget.h"
 
 #include "Commands/GeometryCommand.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +20,6 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
 
     public:
         explicit InspectorGeometryWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -43,4 +43,10 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);
+
+
+
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
+        Q_SLOT void channelChanged(const ChannelChangedEvent&);
 };

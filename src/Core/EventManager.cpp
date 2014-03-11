@@ -27,46 +27,6 @@ void EventManager::fireProcessEvent()
     qApp->processEvents();
 }
 
-void EventManager::fireImportPresetEvent()
-{
-    qApp->postEvent(qApp, new ImportPresetEvent());
-}
-
-void EventManager::fireExportPresetEvent()
-{
-    qApp->postEvent(qApp, new ExportPresetEvent());
-}
-
-void EventManager::fireNewRundownEvent()
-{
-    qApp->postEvent(qApp, new NewRundownEvent());
-}
-
-void EventManager::fireNewRundownMenuEvent(bool enabled)
-{
-    qApp->postEvent(qApp, new NewRundownMenuEvent(enabled));
-}
-
-void EventManager::fireDeleteRundownEvent(int index)
-{
-    qApp->postEvent(qApp, new DeleteRundownEvent(index));
-}
-
-void EventManager::fireRundownIsChangedEvent(bool changed)
-{
-    qApp->postEvent(qApp, new RundownIsChangedEvent(changed));
-}
-
-void EventManager::fireOpenRundownEvent()
-{
-    qApp->postEvent(qApp, new OpenRundownEvent());
-}
-
-void EventManager::fireSaveRundownEvent(bool saveAs)
-{
-    qApp->postEvent(qApp, new SaveRundownEvent(saveAs));
-}
-
 void EventManager::fireExecuteStopEvent()
 {
     // Use synchronous event through sendEvent().
@@ -137,84 +97,115 @@ void EventManager::fireExecuteClearChannelEvent()
     qApp->sendEvent(qApp, &event);
 }
 
-void EventManager::fireAllowRemoteTriggeringMenuEvent(bool enabled)
+
+
+
+
+
+
+
+
+
+
+void EventManager::fireOpenRundownEvent(const OpenRundownEvent& event)
 {
-    qApp->postEvent(qApp, new AllowRemoteTriggeringMenuEvent(enabled));
+    emit openRundown(event);
 }
 
-void EventManager::fireCloseRundownEvent()
+void EventManager::fireSaveRundownEvent(const SaveRundownEvent& event)
 {
-    qApp->postEvent(qApp, new CloseRundownEvent());
+    emit saveRundown(event);
 }
 
-void EventManager::fireEmptyRundownEvent()
+void EventManager::fireCloseRundownEvent(const CloseRundownEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    EmptyRundownEvent event;
-    qApp->sendEvent(qApp, &event);
+    emit closeRundown(event);
 }
 
-void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedData)
+void EventManager::fireAddTemplateDataEvent(const AddTemplateDataEvent& event)
 {
-    qApp->postEvent(qApp, new AddTemplateDataEvent(value, storedData));
+    emit addTemplateData(event);
 }
 
-void EventManager::fireStatusbarEvent(const QString& message, int timeout)
+void EventManager::fireOscOutputChangedEvent(const OscOutputChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    StatusbarEvent event(message, timeout);
-    qApp->sendEvent(qApp, &event);
+    emit oscOutputChanged(event);
 }
 
-void EventManager::fireActiveRundownChangedEvent(const QString& path)
+void EventManager::fireRundownItemSelectedEvent(const RundownItemSelectedEvent& event)
 {
-    qApp->postEvent(qApp, new ActiveRundownChangedEvent(path));
+    emit rundownItemSelected(event);
 }
 
-void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source, QWidget* parent)
+void EventManager::fireLibraryItemSelectedEvent(const LibraryItemSelectedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    RundownItemSelectedEvent event(command, model, source, parent);
-    qApp->sendEvent(qApp, &event);
+    emit libraryItemSelected(event);
 }
 
-void EventManager::fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
+void EventManager::fireDeleteRundownEvent(const DeleteRundownEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    LibraryItemSelectedEvent event(command, model);
-    qApp->sendEvent(qApp, &event);
+    emit deleteRundown(event);
 }
 
-void EventManager::fireMediaChangedEvent()
+void EventManager::fireStatusbarEvent(const StatusbarEvent& event)
 {
-    qApp->postEvent(qApp, new MediaChangedEvent());
+    emit statusbar(event);
 }
 
-void EventManager::fireTemplateChangedEvent()
+void EventManager::fireActiveRundownChangedEvent(const ActiveRundownChangedEvent& event)
 {
-    qApp->postEvent(qApp, new TemplateChangedEvent());
+    emit activeRundownChanged(event);
 }
 
-void EventManager::fireDataChangedEvent()
+void EventManager::fireNewRundownEvent(const NewRundownEvent& event)
 {
-    qApp->postEvent(qApp, new DataChangedEvent());
+    emit newRundown(event);
 }
 
-void EventManager::firePresetChangedEvent()
+void EventManager::fireNewRundownMenuEvent(const NewRundownMenuEvent& event)
 {
-    qApp->postEvent(qApp, new PresetChangedEvent());
+    emit newRundownMenu(event);
 }
 
-void EventManager::fireOscOutputChangedEvent()
+void EventManager::fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggeringMenuEvent& event)
 {
-    qApp->postEvent(qApp, new OscOutputChangedEvent());
+    emit allowRemoteTriggeringMenu(event);
 }
 
+void EventManager::fireMediaChangedEvent(const MediaChangedEvent& event)
+{
+    emit mediaChanged(event);
+}
 
+void EventManager::fireTemplateChangedEvent(const TemplateChangedEvent& event)
+{
+    emit templateChanged(event);
+}
 
+void EventManager::fireDataChangedEvent(const DataChangedEvent& event)
+{
+    emit dataChanged(event);
+}
 
+void EventManager::fireImportPresetEvent(const ImportPresetEvent& event)
+{
+    emit importPreset(event);
+}
 
+void EventManager::fireExportPresetEvent(const ExportPresetEvent& event)
+{
+    emit exportPreset(event);
+}
 
+void EventManager::fireEmptyRundownEvent(const EmptyRundownEvent& event)
+{
+    emit emptyRundown(event);
+}
+
+void EventManager::firePresetChangedEvent(const PresetChangedEvent& event)
+{
+    emit presetChanged(event);
+}
 
 void EventManager::fireRefreshLibraryEvent(const RefreshLibraryEvent& event)
 {

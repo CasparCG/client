@@ -7,12 +7,12 @@ AddTemplateDataEvent::AddTemplateDataEvent(const QString& value, bool storedData
 {
 }
 
-const QString& AddTemplateDataEvent::getValue()
+const QString& AddTemplateDataEvent::getValue() const
 {
     return this->value;
 }
 
-bool AddTemplateDataEvent::getStoredData()
+bool AddTemplateDataEvent::getStoredData() const
 {
     return this->storedData;
 }

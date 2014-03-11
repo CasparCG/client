@@ -5,7 +5,12 @@
 
 #include "CasparDevice.h"
 
-#include "Events/AddPresetItemEvent.h"
+#include "Events/DataChangedEvent.h"
+#include "Events/MediaChangedEvent.h"
+#include "Events/ExportPresetEvent.h"
+#include "Events/ImportPresetEvent.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>
@@ -48,4 +53,11 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         Q_SLOT void customContextMenuDataRequested(const QPoint&);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
+
+        Q_SLOT void mediaChanged(const MediaChangedEvent&);
+        Q_SLOT void templateChanged(const TemplateChangedEvent&);
+        Q_SLOT void dataChanged(const DataChangedEvent&);
+        Q_SLOT void presetChanged(const PresetChangedEvent&);
+        Q_SLOT void importPreset(const ImportPresetEvent&);
+        Q_SLOT void exportPreset(const ExportPresetEvent&);
 };

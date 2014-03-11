@@ -5,8 +5,6 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>
@@ -19,84 +17,90 @@ InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(channelChanged(const ChannelChangedEvent&)), this, SLOT(channelChanged(const ChannelChangedEvent&)));
+
     loadTween();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorGeometryWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<GeometryCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<GeometryCommand*>(event.getCommand());
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+        const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
-        blockAllSignals(true);
+        this->resolutionWidth = formatModel.getWidth();
+        this->resolutionHeight = formatModel.getHeight();
 
-        if (dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand());
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+        setScaleAndPositionValues();
 
-            this->resolutionWidth = formatModel.getWidth();
-            this->resolutionHeight = formatModel.getHeight();
-
-            setScaleAndPositionValues();
-
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-        else
-            this->command = NULL;
-
-        blockAllSignals(false);
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
-    {
-        blockAllSignals(true);
+    else
+        this->command = NULL;
 
-        if (this->command != NULL)
-        {
-            DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceChangedEvent->getDeviceName()).getChannelFormats().split(",");
-            const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
-
-            this->resolutionWidth = formatModel.getWidth();
-            this->resolutionHeight = formatModel.getHeight();
-
-            setScaleAndPositionValues();
-        }
-
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ChannelChanged))
-    {
-        blockAllSignals(true);
-
-        if (this->model != NULL && this->command != NULL)
-        {
-            ChannelChangedEvent* channelChangedEvent = dynamic_cast<ChannelChangedEvent*>(event);
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-
-            if (channelChangedEvent->getChannel() <= channelFormats.count())
-            {
-                const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(channelChangedEvent->getChannel() - 1));
-
-                this->resolutionWidth = formatModel.getWidth();
-                this->resolutionHeight = formatModel.getHeight();
-
-                setScaleAndPositionValues();
-            }
-        }
-
-        blockAllSignals(false);
-    }
-
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
+
+void InspectorGeometryWidget::deviceChanged(const DeviceChangedEvent& event)
+{
+    blockAllSignals(true);
+
+    if (this->command != NULL)
+    {
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(event.getDeviceName()).getChannelFormats().split(",");
+        const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+
+        this->resolutionWidth = formatModel.getWidth();
+        this->resolutionHeight = formatModel.getHeight();
+
+        setScaleAndPositionValues();
+    }
+
+    blockAllSignals(false);
+}
+
+void InspectorGeometryWidget::channelChanged(const ChannelChangedEvent& event)
+{
+    blockAllSignals(true);
+
+    if (this->model != NULL && this->command != NULL)
+    {
+        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+        if (event.getChannel() <= channelFormats.count())
+        {
+            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(event.getChannel() - 1));
+
+            this->resolutionWidth = formatModel.getWidth();
+            this->resolutionHeight = formatModel.getHeight();
+
+            setScaleAndPositionValues();
+        }
+    }
+
+    blockAllSignals(false);
+}
+
+
+
+
+
+
+
 
 void InspectorGeometryWidget::blockAllSignals(bool block)
 {

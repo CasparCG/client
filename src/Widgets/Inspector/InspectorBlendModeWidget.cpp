@@ -5,7 +5,6 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/BlendModeModel.h"
 
 #include <QtGui/QApplication>
@@ -16,31 +15,25 @@ InspectorBlendModeWidget::InspectorBlendModeWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadBlendMode();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadBlendMode();
 }
 
-bool InspectorBlendModeWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorBlendModeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<BlendModeCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<BlendModeCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText(this->command->getBlendMode()));
-        }
-
-        blockAllSignals(false);
+        this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText(this->command->getBlendMode()));
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorBlendModeWidget::blockAllSignals(bool block)

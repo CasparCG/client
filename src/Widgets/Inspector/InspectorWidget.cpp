@@ -37,6 +37,7 @@
 #include "Global.h"
 
 #include "DeviceManager.h"
+#include "EventManager.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/BrightnessCommand.h"
@@ -66,8 +67,6 @@
 #include "Commands/TriCaster/PresetCommand.h"
 #include "Commands/TriCaster/NetworkSourceCommand.h"
 #include "Commands/TriCaster/MacroCommand.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Events/Rundown/EmptyRundownEvent.h"
 
 InspectorWidget::InspectorWidget(QWidget* parent)
     : QWidget(parent),
@@ -146,254 +145,303 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
 }
 
-bool InspectorWidget::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+
+void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected) ||
-        event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
+    this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(21)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(27)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(28)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
+
+    if (dynamic_cast<TemplateCommand*>(event.getCommand()))
     {
-        this->treeWidgetInspector->topLevelItem(0)->setHidden(false);
         this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-        this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(21)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(27)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(28)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
+        this->treeWidgetInspector->topLevelItem(2)->setHidden(false);
     }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    else if (dynamic_cast<AudioCommand*>(event.getCommand()))
     {
-        this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(21)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(27)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(28)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
-        this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
-
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        if (dynamic_cast<TemplateCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(2)->setHidden(false);
-        }
-        else if (dynamic_cast<AudioCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(23)->setHidden(false);
-        }
-        else if (dynamic_cast<ImageCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(24)->setHidden(false);
-        }
-        else if (dynamic_cast<VideoCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(3)->setHidden(false);
-        }
-        else if (dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(4)->setHidden(false);
-        }
-        else if (dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);   
-            this->treeWidgetInspector->topLevelItem(5)->setHidden(false);
-        }
-        else if (dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(6)->setHidden(false);
-        }
-        else if (dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(7)->setHidden(false);
-        }
-        else if (dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(8)->setHidden(false);
-        }
-        else if (dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(9)->setHidden(false);
-        }
-        else if (dynamic_cast<KeyerCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(18)->setHidden(false);
-        }
-        else if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-        }
-        else if (dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(10)->setHidden(false);
-        }
-        else if (dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(11)->setHidden(false);
-        }
-        else if (dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(12)->setHidden(false);
-        }
-        else if (dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(13)->setHidden(false);
-        }
-        else if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(15)->setHidden(false);
-        }
-        else if (dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(14)->setHidden(false);
-        }
-        else if (dynamic_cast<ImageScrollerCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(16)->setHidden(false);
-        }
-        else if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(17)->setHidden(false);
-        }
-        else if (dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(19)->setHidden(false);
-        }
-        else if (dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(20)->setHidden(false);
-        }
-        else if (dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(22)->setHidden(false);
-        }
-        else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(21)->setHidden(false);
-        }
-        else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(25)->setHidden(false);
-        }
-        else if (dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(26)->setHidden(false);
-        }
-        else if (dynamic_cast<InputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(27)->setHidden(false);
-        }
-        else if (dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(28)->setHidden(false);
-        }
-        else if (dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(29)->setHidden(false);
-        }
-        else if (dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(30)->setHidden(false);
-        }
-        else if (dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(31)->setHidden(false);
-        }
-        else if (dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(32)->setHidden(false);
-        }
-        else if (dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
-            this->treeWidgetInspector->topLevelItem(33)->setHidden(false);
-        }
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(23)->setHidden(false);
     }
-
-    return QObject::eventFilter(target, event);
+    else if (dynamic_cast<ImageCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(24)->setHidden(false);
+    }
+    else if (dynamic_cast<VideoCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(3)->setHidden(false);
+    }
+    else if (dynamic_cast<BlendModeCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(4)->setHidden(false);
+    }
+    else if (dynamic_cast<BrightnessCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(5)->setHidden(false);
+    }
+    else if (dynamic_cast<ContrastCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(6)->setHidden(false);
+    }
+    else if (dynamic_cast<CropCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(7)->setHidden(false);
+    }
+    else if (dynamic_cast<GeometryCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(8)->setHidden(false);
+    }
+    else if (dynamic_cast<GridCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(9)->setHidden(false);
+    }
+    else if (dynamic_cast<KeyerCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(18)->setHidden(false);
+    }
+    else if (dynamic_cast<CommitCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+    }
+    else if (dynamic_cast<LevelsCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(10)->setHidden(false);
+    }
+    else if (dynamic_cast<OpacityCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(11)->setHidden(false);
+    }
+    else if (dynamic_cast<SaturationCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(12)->setHidden(false);
+    }
+    else if (dynamic_cast<VolumeCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(13)->setHidden(false);
+    }
+    else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(15)->setHidden(false);
+    }
+    else if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(14)->setHidden(false);
+    }
+    else if (dynamic_cast<ImageScrollerCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(16)->setHidden(false);
+    }
+    else if (dynamic_cast<FileRecorderCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(17)->setHidden(false);
+    }
+    else if (dynamic_cast<PrintCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(19)->setHidden(false);
+    }
+    else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(20)->setHidden(false);
+    }
+    else if (dynamic_cast<SolidColorCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(22)->setHidden(false);
+    }
+    else if (dynamic_cast<GroupCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(21)->setHidden(false);
+    }
+    else if (dynamic_cast<CustomCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(25)->setHidden(false);
+    }
+    else if (dynamic_cast<ChromaCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(26)->setHidden(false);
+    }
+    else if (dynamic_cast<InputCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(27)->setHidden(false);
+    }
+    else if (dynamic_cast<TakeCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(28)->setHidden(false);
+    }
+    else if (dynamic_cast<AutoCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(29)->setHidden(false);
+    }
+    else if (dynamic_cast<PresetCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(30)->setHidden(false);
+    }
+    else if (dynamic_cast<NetworkSourceCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(31)->setHidden(false);
+    }
+    else if (dynamic_cast<MacroCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(32)->setHidden(false);
+    }
+    else if (dynamic_cast<OscOutputCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(33)->setHidden(false);
+    }
 }
+
+void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
+{
+    this->treeWidgetInspector->topLevelItem(0)->setHidden(false);
+    this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+    this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(21)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(27)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(28)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
+}
+
+void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
+{
+    this->treeWidgetInspector->topLevelItem(0)->setHidden(false);
+    this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+    this->treeWidgetInspector->topLevelItem(2)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(3)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(4)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(5)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(6)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(7)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(8)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(9)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(10)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(11)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(12)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(13)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(14)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(15)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(16)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(17)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(18)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(19)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(20)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(21)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(22)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(23)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(24)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(25)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(26)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(27)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(28)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(29)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(30)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(31)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
+}
+
+
+
+
+
+
+
+
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
