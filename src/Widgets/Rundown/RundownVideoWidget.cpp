@@ -128,6 +128,8 @@ void RundownVideoWidget::targetChanged(const TargetChangedEvent& event)
 
     this->model.setName(event.getTarget());
     this->command.setVideoName(event.getTarget());
+
+    setThumbnail();
 }
 
 void RundownVideoWidget::deviceChanged(const DeviceChangedEvent& event)
@@ -258,9 +260,13 @@ void RundownVideoWidget::setThumbnail()
         return;
     }
 
+    QString data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+
+    /*
     QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
     if (data.isEmpty())
         data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+    */
 
     QImage image;
     image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
