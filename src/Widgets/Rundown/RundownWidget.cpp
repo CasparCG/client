@@ -115,7 +115,14 @@ bool RundownWidget::eventFilter(QObject* target, QEvent* event)
     }
     else if (event->type() == static_cast<QEvent::Type>(Event::EventType::OpenRundown))
     {
-        QString path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+        QString path = "";
+
+        OpenRundownEvent* openRundownEvent = dynamic_cast<OpenRundownEvent*>(event);
+        if (openRundownEvent->getPath().isEmpty())
+            path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+        else
+            path =  openRundownEvent->getPath();
+
         if (!path.isEmpty())
         {
             EventManager::getInstance().fireStatusbarEvent("Opening rundown...");

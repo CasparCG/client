@@ -123,6 +123,17 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
     // Check command line arguments followed by the configuration.
     if (application.arguments().contains("-fullscreen") || DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true")
          window.showFullScreen();
+
+    if (application.arguments().contains("-rundown"))
+    {
+        int i = application.arguments().indexOf("-rundown");
+        if (application.arguments().count() > i + 1)
+        {
+            QString path = application.arguments().at(i + 1);
+            EventManager::getInstance().fireOpenRundownEvent(path);
+        }
+
+    }
 }
 
 int main(int argc, char* argv[])

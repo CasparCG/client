@@ -67,6 +67,11 @@ void EventManager::fireOpenRundownEvent()
     qApp->postEvent(qApp, new OpenRundownEvent());
 }
 
+void EventManager::fireOpenRundownEvent(const QString& path)
+{
+    qApp->postEvent(qApp, new OpenRundownEvent(path));
+}
+
 void EventManager::fireSaveRundownEvent(bool saveAs)
 {
     qApp->postEvent(qApp, new SaveRundownEvent(saveAs));

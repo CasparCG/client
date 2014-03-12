@@ -72,6 +72,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireRundownIsChangedEvent(bool changed);
         void fireDeleteRundownEvent(int index);
         void fireOpenRundownEvent();
+        void fireOpenRundownEvent(const QString& path);
         void fireSaveRundownEvent(bool saveAs);
         void fireExecuteStopEvent();
         void fireExecutePlayEvent();
