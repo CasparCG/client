@@ -468,6 +468,9 @@ void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 
 void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 {
+    if (deviceName.isEmpty())
+        return;
+
     const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceName).getChannelFormats().split(",");
     this->spinBoxChannel->setMaximum(channelFormats.count());
 

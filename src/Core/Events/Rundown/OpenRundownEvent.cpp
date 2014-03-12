@@ -2,7 +2,12 @@
 
 #include "Global.h"
 
-OpenRundownEvent::OpenRundownEvent()
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::OpenRundown))
+OpenRundownEvent::OpenRundownEvent(const QString& path)
+    : QEvent(static_cast<QEvent::Type>(Event::EventType::OpenRundown)), path(path)
 {
+}
+
+const QString& OpenRundownEvent::getPath() const
+{
+    return this->path;
 }

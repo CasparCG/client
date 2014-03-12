@@ -79,7 +79,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
-        Q_SLOT void statusbarMessage(const StatusbarEvent&);
+        Q_SLOT void statusbar(const StatusbarEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);

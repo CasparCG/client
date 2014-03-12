@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(statusbarMessage(const StatusbarEvent&)), this, SLOT(statusbarMessage(const StatusbarEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
@@ -135,7 +135,7 @@ void MainWindow::emptyRundown(const EmptyRundownEvent& event)
     this->saveAsPresetAction->setEnabled(false);
 }
 
-void MainWindow::statusbarMessage(const StatusbarEvent& event)
+void MainWindow::statusbar(const StatusbarEvent& event)
 {
     this->statusBar()->showMessage(event.getMessage(), event.getTimeout());
 }

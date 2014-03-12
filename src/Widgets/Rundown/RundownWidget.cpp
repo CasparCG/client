@@ -130,7 +130,13 @@ void RundownWidget::deleteRundown(const DeleteRundownEvent& event)
 
 void RundownWidget::openRundown(const OpenRundownEvent& event)
 {
-    QString path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+    QString path = "";
+
+    if (event.getPath().isEmpty())
+        path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+    else
+        path =  event.getPath();
+
     if (!path.isEmpty())
     {
         EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));

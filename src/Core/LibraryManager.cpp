@@ -24,8 +24,8 @@ LibraryManager::LibraryManager(QObject* parent)
     QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
-    QObject::connect(&DeviceManager::getInstance(), SIGNAL(autoRefreshLibrary(AutoRefreshLibraryEvent&)), this, SLOT(autoRefreshLibrary(AutoRefreshLibraryEvent&)));
-    QObject::connect(&DeviceManager::getInstance(), SIGNAL(refreshLibrary(RefreshLibraryEvent&)), this, SLOT(refreshLibrary(RefreshLibraryEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(autoRefreshLibrary(const AutoRefreshLibraryEvent&)), this, SLOT(autoRefreshLibrary(const AutoRefreshLibraryEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(refreshLibrary(const RefreshLibraryEvent&)), this, SLOT(refreshLibrary(const RefreshLibraryEvent&)));
 }
 
 LibraryManager& LibraryManager::getInstance()
