@@ -1,7 +1,6 @@
 #include "EventManager.h"
 
 #include <QtGui/QApplication>
-#include <QtGui/QKeyEvent>
 
 Q_GLOBAL_STATIC(EventManager, eventManager)
 
@@ -106,6 +105,10 @@ void EventManager::fireExecuteClearChannelEvent()
 
 
 
+void EventManager::fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent& event)
+{
+    emit executePlayoutCommand(event);
+}
 
 void EventManager::fireOpenRundownEvent(const OpenRundownEvent& event)
 {

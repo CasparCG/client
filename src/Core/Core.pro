@@ -127,7 +127,8 @@ HEADERS += \
     Events/SaveAsPresetEvent.h \
     Events/Rundown/CloseRundownEvent.h \
     Events/Rundown/RemoteRundownTriggeringEvent.h \
-    Events/Rundown/AllowRemoteTriggeringMenuEvent.h
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.h \
+    Events/Rundown/ExecutePlayoutCommandEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -244,7 +245,8 @@ SOURCES += \
     Events/SaveAsPresetEvent.cpp \
     Events/Rundown/CloseRundownEvent.cpp \
     Events/Rundown/RemoteRundownTriggeringEvent.cpp \
-    Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp \
+    Events/Rundown/ExecutePlayoutCommandEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

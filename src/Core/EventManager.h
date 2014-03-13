@@ -36,6 +36,7 @@
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/NewRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
@@ -79,7 +80,7 @@ class CORE_EXPORT EventManager : public QObject
 
 
 
-
+        Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
         Q_SIGNAL void openRundown(const OpenRundownEvent&);
         Q_SIGNAL void addTemplateData(const AddTemplateDataEvent&);
@@ -118,6 +119,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
+        void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);
         void fireAddTemplateDataEvent(const AddTemplateDataEvent&);
         void fireSaveRundownEvent(const SaveRundownEvent&);
