@@ -3,7 +3,7 @@
 #include "Global.h"
 
 VideolayerChangedEvent::VideolayerChangedEvent(int videolayer)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::VideolayerChanged)), videolayer(videolayer)
+    : videolayer(videolayer)
 {
 }
 

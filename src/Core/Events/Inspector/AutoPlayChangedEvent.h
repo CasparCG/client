@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT AutoPlayChangedEvent : public QEvent
+class CORE_EXPORT AutoPlayChangedEvent
 {
     public:
         explicit AutoPlayChangedEvent(bool autoPlay);

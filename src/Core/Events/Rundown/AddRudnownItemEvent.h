@@ -3,10 +3,9 @@
 #include "../../Shared.h"
 #include "../../Models/LibraryModel.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QSharedPointer>
 
-class CORE_EXPORT AddRudnownItemEvent : public QEvent
+class CORE_EXPORT AddRudnownItemEvent
 {
     public:
         explicit AddRudnownItemEvent(const LibraryModel& model);

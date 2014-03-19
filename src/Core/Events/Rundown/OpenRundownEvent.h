@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT OpenRundownEvent : public QEvent
+class CORE_EXPORT OpenRundownEvent
 {
     public:
         explicit OpenRundownEvent(const QString& path = "");

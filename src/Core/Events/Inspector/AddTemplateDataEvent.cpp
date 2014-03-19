@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AddTemplateDataEvent::AddTemplateDataEvent(const QString& value, bool storedData)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::AddTemplateData)), value(value), storedData(storedData)
+    : value(value), storedData(storedData)
 {
 }
 

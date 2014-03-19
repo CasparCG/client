@@ -3,7 +3,7 @@
 #include "Global.h"
 
 OpenRundownEvent::OpenRundownEvent(const QString& path)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::OpenRundown)), path(path)
+    : path(path)
 {
 }
 

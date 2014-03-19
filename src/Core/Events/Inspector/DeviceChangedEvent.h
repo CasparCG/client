@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT DeviceChangedEvent : public QEvent
+class CORE_EXPORT DeviceChangedEvent
 {
     public:
         explicit DeviceChangedEvent(const QString& deviceName);

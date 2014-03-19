@@ -3,7 +3,7 @@
 #include "Global.h"
 
 ChannelChangedEvent::ChannelChangedEvent(int channel)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::ChannelChanged)), channel(channel)
+    : channel(channel)
 {
 }
 

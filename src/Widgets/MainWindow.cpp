@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
 }
 
@@ -57,7 +58,7 @@ void MainWindow::setupMenu()
 {
     this->fileMenu = new QMenu(this);
     this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
-    this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
+    this->openRundownAction = this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
@@ -152,6 +153,11 @@ void MainWindow::activeRundownChanged(const ActiveRundownChangedEvent& event)
 void MainWindow::newRundownMenu(const NewRundownMenuEvent& event)
 {
     this->newRundownAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::openRundownMenu(const OpenRundownMenuEvent& event)
+{
+    this->openRundownAction->setEnabled(event.getEnabled());
 }
 
 void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)

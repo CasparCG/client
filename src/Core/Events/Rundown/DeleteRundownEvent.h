@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT DeleteRundownEvent : public QEvent
+class CORE_EXPORT DeleteRundownEvent
 {
     public:
         explicit DeleteRundownEvent(int index);

@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT TemplateChangedEvent : public QEvent
+class CORE_EXPORT TemplateChangedEvent
 {
     public:
         explicit TemplateChangedEvent(int deviceId = 0);

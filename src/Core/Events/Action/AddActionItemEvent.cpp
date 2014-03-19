@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AddActionItemEvent::AddActionItemEvent(const QString& action)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::AddActionItem)), action(action)
+    : action(action)
 {
 }
 

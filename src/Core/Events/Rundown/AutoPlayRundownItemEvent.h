@@ -2,12 +2,11 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QSharedPointer>
 
 #include <QtGui/QWidget>
 
-class CORE_EXPORT AutoPlayRundownItemEvent : public QEvent
+class CORE_EXPORT AutoPlayRundownItemEvent
 {
     public:
         explicit AutoPlayRundownItemEvent(QWidget* widget);

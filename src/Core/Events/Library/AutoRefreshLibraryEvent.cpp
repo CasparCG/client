@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AutoRefreshLibraryEvent::AutoRefreshLibraryEvent(bool autoRefresh, int interval)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::AutoRefreshLibrary)), interval(interval), autoRefresh(autoRefresh)
+    : interval(interval), autoRefresh(autoRefresh)
 {
 }
 

@@ -4,8 +4,6 @@
 
 #include "Global.h"
 
-#include <QtCore/QEvent>
-
 #include <QtGui/QKeyEvent>
 
 class CORE_EXPORT ExecutePlayoutCommandEvent

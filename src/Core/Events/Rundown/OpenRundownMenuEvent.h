@@ -2,10 +2,10 @@
 
 #include "../../Shared.h"
 
-class CORE_EXPORT RemoteRundownTriggeringEvent
+class CORE_EXPORT OpenRundownMenuEvent
 {
     public:
-        explicit RemoteRundownTriggeringEvent(bool enabled);
+        explicit OpenRundownMenuEvent(bool enabled);
 
         bool getEnabled() const;
 

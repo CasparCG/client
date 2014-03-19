@@ -2,10 +2,9 @@
 
 #include "../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT ConnectionStateChangedEvent : public QEvent
+class CORE_EXPORT ConnectionStateChangedEvent
 {
     public:
         explicit ConnectionStateChangedEvent(const QString& deviceName, bool connected);

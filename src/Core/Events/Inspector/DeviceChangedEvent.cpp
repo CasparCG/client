@@ -3,7 +3,7 @@
 #include "Global.h"
 
 DeviceChangedEvent::DeviceChangedEvent(const QString& deviceName)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::DeviceChanged)), deviceName(deviceName)
+    : deviceName(deviceName)
 {
 }
 

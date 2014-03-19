@@ -8,6 +8,7 @@
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include <QtCore/QEvent>
@@ -41,6 +42,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenuBar* menuBar;
 
         QAction* newRundownAction;
+        QAction* openRundownAction;
         //QAction* exportPresetAction;
         QAction* saveAsPresetAction;
         QAction* allowRemoteTriggeringAction;
@@ -82,5 +84,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void statusbar(const StatusbarEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
+        Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
 };

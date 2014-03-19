@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT AllowRemoteTriggeringMenuEvent : public QEvent
+class CORE_EXPORT AllowRemoteTriggeringMenuEvent
 {
     public:
         explicit AllowRemoteTriggeringMenuEvent(bool enabled);

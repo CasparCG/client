@@ -4,12 +4,11 @@
 #include "../../Commands/AbstractCommand.h"
 #include "../../Models/LibraryModel.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QSharedPointer>
 
 #include <QtGui/QWidget>
 
-class CORE_EXPORT RundownItemSelectedEvent : public QEvent
+class CORE_EXPORT RundownItemSelectedEvent
 {
     public:
         explicit RundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source = NULL, QWidget* parent = NULL);

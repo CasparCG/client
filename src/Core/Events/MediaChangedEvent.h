@@ -2,9 +2,7 @@
 
 #include "../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT MediaChangedEvent : public QEvent
+class CORE_EXPORT MediaChangedEvent
 {
     public:
         explicit MediaChangedEvent(int deviceId = 0);

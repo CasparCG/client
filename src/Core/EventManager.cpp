@@ -170,6 +170,11 @@ void EventManager::fireNewRundownMenuEvent(const NewRundownMenuEvent& event)
     emit newRundownMenu(event);
 }
 
+void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
+{
+    emit openRundownMenu(event);
+}
+
 void EventManager::fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggeringMenuEvent& event)
 {
     emit allowRemoteTriggeringMenu(event);

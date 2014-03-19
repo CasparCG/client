@@ -132,14 +132,14 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
+    bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
+    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(allowRemoteTriggering));
+    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(allowRemoteTriggering));
+
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
         if (parentValue.first != L"item")
             continue;
-
-        bool allowRemoteTriggering = parentValue.second.get(L"allowremotetriggering", false);
-        EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(allowRemoteTriggering));
-        EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(allowRemoteTriggering));
 
         AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
 

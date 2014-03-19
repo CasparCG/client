@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AutoPlayChangedEvent::AutoPlayChangedEvent(bool autoPlay)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::AutoPlayChanged)), autoPlay(autoPlay)
+    : autoPlay(autoPlay)
 {
 }
 

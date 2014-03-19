@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT NewRundownMenuEvent : public QEvent
+class CORE_EXPORT NewRundownMenuEvent
 {
     public:
         explicit NewRundownMenuEvent(bool enabled);

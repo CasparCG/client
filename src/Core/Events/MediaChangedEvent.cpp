@@ -3,7 +3,7 @@
 #include "Global.h"
 
 MediaChangedEvent::MediaChangedEvent(int deviceId)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::MediaChanged)), deviceId(deviceId)
+    : deviceId(deviceId)
 {
 }
 

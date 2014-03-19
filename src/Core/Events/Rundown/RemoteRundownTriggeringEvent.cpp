@@ -3,7 +3,7 @@
 #include "Global.h"
 
 RemoteRundownTriggeringEvent::RemoteRundownTriggeringEvent(bool enabled)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::RemoteRundownTriggering)), enabled(enabled)
+    : enabled(enabled)
 {
 }
 

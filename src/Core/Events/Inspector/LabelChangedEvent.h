@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT LabelChangedEvent : public QEvent
+class CORE_EXPORT LabelChangedEvent
 {
     public:
         explicit LabelChangedEvent(const QString& label);
