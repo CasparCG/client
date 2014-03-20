@@ -45,10 +45,6 @@ class CORE_EXPORT LibraryManager : public QObject
         Q_SLOT void dataChanged(const QList<CasparData>&, CasparDevice&);
         Q_SLOT void thumbnailChanged(const QList<CasparThumbnail>&, CasparDevice&);
 
-
-
-
-
         Q_SLOT void refreshLibrary(const RefreshLibraryEvent&);
         Q_SLOT void autoRefreshLibrary(const AutoRefreshLibraryEvent&);
 };

@@ -16,8 +16,10 @@
 #include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
 #include "Events/Rundown/AutoPlayRundownItemEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
+#include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 
 #include <boost/foreach.hpp>
@@ -50,9 +52,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
 
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
@@ -95,17 +94,9 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
         void setupMenus();
-        void checkEmptyRundown();
-        bool groupItems();
-        bool moveItemDown();
-        bool moveItemIntoGroup();
-        bool moveItemOutOfGroup();
-        bool moveItemUp();
-        bool ungroupItems();
         void colorizeItems(const QString& color);
         void resetOscSubscriptions();
         void configureOscSubscriptions();
-        void removeItemFromAutoPlayQueue(AbstractRundownWidget* widget);
 
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();
@@ -151,6 +142,17 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT bool removeSelectedItems();
         Q_SLOT void saveAsPreset();
         Q_SLOT void addOscOutputItem();
+        Q_SLOT void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
+        Q_SLOT void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
+        Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
+        Q_SLOT void addPresetItem(const AddPresetItemEvent&);
+        Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
+        Q_SLOT void toggleCompactView(const CompactViewEvent&);
+        Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
+        Q_SLOT void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
+        Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
+        Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
+        Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
         Q_SLOT void upControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
@@ -163,17 +165,4 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-
-
-
-
-        Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
-        Q_SLOT void addPresetItem(const AddPresetItemEvent&);
-        Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
-        Q_SLOT void toggleCompactView(const CompactViewEvent&);
-        Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
-        Q_SLOT void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
-        Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
-        Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
-        Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 };

@@ -43,6 +43,7 @@
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Models/BlendModeModel.h"
@@ -64,23 +65,8 @@ class CORE_EXPORT EventManager : public QObject
 
         void initialize();
         void uninitialize();
-        void fireProcessEvent(); 
-        void fireExecuteStopEvent();
-        void fireExecutePlayEvent();
-        void fireExecutePauseEvent();
-        void fireExecuteLoadEvent();
-        void fireExecuteNextEvent();
-        void fireExecuteUpdateEvent();
-        void fireExecuteInvokeEvent();
-        void fireExecuteClearEvent();
-        void fireExecuteClearVideolayerEvent();
-        void fireExecuteClearChannelEvent();
 
-
-
-
-
-
+        Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
         Q_SIGNAL void openRundown(const OpenRundownEvent&);
@@ -121,6 +107,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
+        void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);
         void fireAddTemplateDataEvent(const AddTemplateDataEvent&);

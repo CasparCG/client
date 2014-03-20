@@ -2,9 +2,12 @@
 #include "RundownItemFactory.h"
 #include "RundownGroupWidget.h"
 
+#include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Commands/VideoCommand.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <iostream>
@@ -202,6 +205,427 @@ bool RundownTreeBaseWidget::duplicateSelectedItems()
         return true;
 
     return true;
+}
+
+void RundownTreeBaseWidget::checkEmptyRundown()
+{
+    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::DEFAULT_THEME)
+        QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
+    else
+        QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
+}
+
+void RundownTreeBaseWidget::removeSelectedItems()
+{
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+    {
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->isGroup())
+        {
+            for (int i = item->childCount() - 1; i >= 0; i--)
+            {
+                QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+
+                // Remove our items from the auto play queue if they exists.
+                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                delete childWidget;
+                delete item->child(i);
+            }
+        }
+
+        // Remove our items from the auto play queue if they exists.
+        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        delete widget;
+        delete item;
+    }
+
+    checkEmptyRundown();
+}
+
+void RundownTreeBaseWidget::groupItems()
+{
+    if (QTreeWidget::currentItem() == NULL)
+        return;
+
+    bool isGroup = false;
+    bool isTopItem = false;
+    bool isGroupItem = false;
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+    {
+        QWidget* widget = QTreeWidget::itemWidget(item, 0);
+
+        if (item->parent() != NULL) // Group item.
+            isGroupItem = true;
+        else if (dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Group
+            isGroup = true;
+        else if (item->parent() == NULL && !dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Top level item.
+            isTopItem = true;
+    }
+
+    if (isGroup || isGroupItem)
+        return; // We don't support group in groups.
+
+    QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+
+    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(0, "Group", "", "", "GROUP", 0, ""), this);
+    widget->setActive(true);
+    widget->setExpanded(true);
+    widget->setCompactView(getCompactView());
+
+    int row = QTreeWidget::indexOfTopLevelItem(QTreeWidget::selectedItems().at(0));
+    QTreeWidget::invisibleRootItem()->insertChild(row, parentItem);
+    QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(widget));
+    QTreeWidget::expandItem(parentItem);
+
+    if (getCompactView())
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+    {
+        QTreeWidgetItem* childItem = new QTreeWidgetItem();
+        parentItem->addChild(childItem);
+
+        AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0))->clone();
+        childWidget->setInGroup(true);
+        childWidget->setActive(false);
+
+        QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+    }
+
+    removeSelectedItems();
+
+    QTreeWidget::doItemsLayout(); // Refresh
+    QTreeWidget::setCurrentItem(parentItem);
+}
+
+void RundownTreeBaseWidget::ungroupItems()
+{
+    if (QTreeWidget::currentItem() == NULL)
+        return;
+
+    bool isGroup = false;
+    bool isTopItem = false;
+    bool isGroupItem = false;
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+    {
+        QWidget* widget = QTreeWidget::itemWidget(item, 0);
+
+        if (item->parent() != NULL) // Group item.
+            isGroupItem = true;
+        else if (dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Group
+            isGroup = true;
+        else if (item->parent() == NULL && !dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Top level item.
+            isTopItem = true;
+    }
+
+    if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
+        return; // We don't have any group to ungroup.
+
+    QTreeWidgetItem* rootItem = QTreeWidget::invisibleRootItem();
+
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0))->isGroup()) // Group.
+    {
+        QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+        QTreeWidgetItem* currentItemAbove = QTreeWidget::itemAbove(QTreeWidget::currentItem());
+
+        int row = QTreeWidget::indexOfTopLevelItem(QTreeWidget::selectedItems().at(0));
+
+        QTreeWidgetItem* newItem = NULL;
+        for (int i = 0; i < QTreeWidget::currentItem()->childCount(); i++)
+        {
+            QTreeWidgetItem* item = QTreeWidget::currentItem()->child(i);
+
+            newItem = new QTreeWidgetItem();
+            rootItem->insertChild(row + 1, newItem);
+
+            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0))->clone();
+            newWidget->setInGroup(false);
+            newWidget->setActive(false);
+
+            QTreeWidget::setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
+
+            row++;
+        }
+
+        QTreeWidget::setCurrentItem(currentItemAbove);
+
+        delete currentItem;
+    }
+    else // Group item.
+    {
+        QTreeWidgetItem* parentItem = QTreeWidget::currentItem()->parent();
+
+        int parentRow = QTreeWidget::indexOfTopLevelItem(QTreeWidget::currentItem()->parent());
+
+        QTreeWidgetItem* newItem = NULL;
+        foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+        {
+            newItem = new QTreeWidgetItem();
+            rootItem->insertChild(parentRow + 1, newItem);
+
+            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0))->clone();
+            newWidget->setInGroup(false);
+            newWidget->setActive(false);
+
+            QTreeWidget::setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
+
+            delete item;
+
+            parentRow++;
+        }
+
+        QTreeWidget::setCurrentItem(newItem);
+
+        if (parentItem->childCount() == 0)
+            delete parentItem;
+    }
+
+    QTreeWidget::doItemsLayout(); // Refresh
+}
+
+void RundownTreeBaseWidget::moveItemUp()
+{
+    if (QTreeWidget::currentItem() == NULL)
+        return;
+
+    int row  = QTreeWidget::currentIndex().row();
+    QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+    QTreeWidgetItem* parentItem = QTreeWidget::currentItem()->parent();
+
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->isGroup())
+    {
+        int rowCount = 0;
+        if (currentItem != NULL && row > rowCount)
+        {
+            AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+            parentWidget->setInGroup(true);
+            parentWidget->setExpanded(true);
+
+            QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+            QTreeWidget::invisibleRootItem()->insertChild(row - 1, parentItem);
+            QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+            if (QTreeWidget::currentItem()->isExpanded())
+                QTreeWidget::expandItem(parentItem);
+
+            for (int i = 0; i < QTreeWidget::currentItem()->childCount(); i++)
+            {
+                QTreeWidgetItem* item = QTreeWidget::currentItem()->child(i);
+
+                AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0))->clone();
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+                QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+
+            delete currentItem;
+
+            QTreeWidget::setCurrentItem(parentItem);
+            QTreeWidget::doItemsLayout(); // Refresh
+        }
+    }
+    else
+    {
+        int rowCount = 0;
+        if (currentItem != NULL && row > rowCount)
+        {
+            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+
+            if (parentItem == NULL) // Top level item.
+            {
+                QTreeWidget::invisibleRootItem()->takeChild(row);
+                QTreeWidget::invisibleRootItem()->insertChild(row - 1, currentItem);
+            }
+            else // Group item.
+            {
+                newWidget->setInGroup(true);
+
+                QTreeWidget::currentItem()->parent()->takeChild(row);
+                QTreeWidget::currentItem()->parent()->insertChild(row - 1, currentItem);
+            }
+
+            QTreeWidget::setItemWidget(currentItem, 0, dynamic_cast<QWidget*>(newWidget));
+            QTreeWidget::setCurrentItem(currentItem);
+            QTreeWidget::doItemsLayout(); // Refresh
+        }
+    }
+}
+
+void RundownTreeBaseWidget::moveItemDown()
+{
+    if (QTreeWidget::currentItem() == NULL)
+        return;
+
+    int row  = QTreeWidget::currentIndex().row();
+    QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+    QTreeWidgetItem* parentItem = QTreeWidget::currentItem()->parent();
+
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->isGroup())
+    {
+        int rowCount = 0;
+        if (parentItem == NULL) // Top level item.
+            rowCount = QTreeWidget::invisibleRootItem()->childCount() - 1;
+
+        if (currentItem != NULL && row < rowCount)
+        {
+            AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+            parentWidget->setInGroup(true);
+            parentWidget->setExpanded(true);
+
+            QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+            QTreeWidget::invisibleRootItem()->insertChild(row + 2, parentItem);
+            QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+            if (QTreeWidget::currentItem()->isExpanded())
+                QTreeWidget::expandItem(parentItem);
+
+            for (int i = 0; i < QTreeWidget::currentItem()->childCount(); i++)
+            {
+                QTreeWidgetItem* item = QTreeWidget::currentItem()->child(i);
+
+                AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0))->clone();
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+                QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+
+            delete currentItem;
+
+            QTreeWidget::setCurrentItem(parentItem);
+            QTreeWidget::doItemsLayout(); // Refresh
+        }
+    }
+    else
+    {
+        int rowCount = 0;
+        if (parentItem == NULL) // Top level item.
+            rowCount = QTreeWidget::invisibleRootItem()->childCount() - 1;
+        else
+            rowCount = QTreeWidget::currentItem()->parent()->childCount() - 1;
+
+        if (currentItem != NULL && row < rowCount)
+        {
+            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+
+            if (parentItem == NULL) // Top level item.
+            {
+                QTreeWidget::invisibleRootItem()->takeChild(row);
+                QTreeWidget::invisibleRootItem()->insertChild(row + 1, currentItem);
+            }
+            else // Group item.
+            {
+                newWidget->setInGroup(true);
+
+                QTreeWidget::currentItem()->parent()->takeChild(row);
+                QTreeWidget::currentItem()->parent()->insertChild(row + 1, currentItem);
+            }
+
+            QTreeWidget::setItemWidget(currentItem, 0, dynamic_cast<QWidget*>(newWidget));
+            QTreeWidget::setCurrentItem(currentItem);
+            QTreeWidget::doItemsLayout(); // Refresh
+        }
+    }
+}
+
+void RundownTreeBaseWidget::moveItemOutOfGroup()
+{
+    if (QTreeWidget::currentItem() == NULL || QTreeWidget::currentItem()->parent() == NULL) // Top level item.
+        return;
+
+    QTreeWidgetItem* newItem = new QTreeWidgetItem();
+    QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+    QTreeWidgetItem* parentItem = QTreeWidget::currentItem()->parent(); // Group.
+    QTreeWidgetItem* currentItemAbove = QTreeWidget::itemAbove(QTreeWidget::currentItem());
+    QTreeWidgetItem* parentItemAbove = QTreeWidget::itemAbove(QTreeWidget::currentItem()->parent());
+
+    int currentRow  = QTreeWidget::currentIndex().row();
+    int parentRow  = QTreeWidget::indexOfTopLevelItem(QTreeWidget::currentItem()->parent());
+
+    AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+    newWidget->setInGroup(false);
+
+    QTreeWidget::currentItem()->parent()->takeChild(currentRow);
+    QTreeWidget::invisibleRootItem()->insertChild(parentRow + 1, newItem);
+    QTreeWidget::setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
+    QTreeWidget::setCurrentItem(newItem);
+    QTreeWidget::doItemsLayout(); // Refresh
+
+    delete currentItem;
+
+    if (parentItem->childCount() == 0)
+    {
+        QTreeWidget::setCurrentItem(parentItemAbove);
+        delete parentItem;
+    }
+}
+
+void RundownTreeBaseWidget::moveItemIntoGroup()
+{
+    if (QTreeWidget::currentItem() == NULL || QTreeWidget::currentItem()->parent() != NULL) // Group item.
+        return;
+
+    if (dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0))->isGroup())
+        return;
+
+    QTreeWidgetItem* currentItemAbove = QTreeWidget::invisibleRootItem()->child(QTreeWidget::currentIndex().row() - 1);
+    if (currentItemAbove != NULL && dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItemAbove, 0))->isGroup()) // Group.
+    {
+        QTreeWidgetItem* newItem = new QTreeWidgetItem();
+        QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+
+        int currentRow  = QTreeWidget::currentIndex().row();
+
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0))->clone();
+        widget->setInGroup(true);
+
+        currentItemAbove->addChild(newItem);
+
+        QTreeWidget::invisibleRootItem()->takeChild(currentRow);
+        QTreeWidget::setItemWidget(newItem, 0, dynamic_cast<QWidget*>(widget));
+        QTreeWidget::doItemsLayout(); // Ref resh
+        QTreeWidget::setCurrentItem(newItem);
+
+        delete currentItem;
+    }
+}
+
+void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Delete)
+        removeSelectedItems();
+    else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
+        duplicateSelectedItems();
+    else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
+        copySelectedItems();
+    else if (event->key() == Qt::Key_V && event->modifiers() == Qt::ControlModifier)
+        pasteSelectedItems();
+    else if (event->key() == Qt::Key_G && event->modifiers() == Qt::ControlModifier)
+        groupItems();
+    else if (event->key() == Qt::Key_U && event->modifiers() == Qt::ControlModifier)
+        ungroupItems();
+    else if (event->key() == Qt::Key_X && event->modifiers() == Qt::ControlModifier)
+    {
+        copySelectedItems();
+        removeSelectedItems();
+    }
+    else if (event->key() == Qt::Key_Up && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+        moveItemUp();
+    else if (event->key() == Qt::Key_Down && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+        moveItemDown();
+    else if (event->key() == Qt::Key_Left && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+        moveItemOutOfGroup();
+    else if (event->key() == Qt::Key_Right && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+        moveItemIntoGroup();
+    else
+        QTreeWidget::keyPressEvent(event);
 }
 
 void RundownTreeBaseWidget::mousePressEvent(QMouseEvent* event)

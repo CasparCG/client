@@ -21,89 +21,10 @@ void EventManager::uninitialize()
 {
 }
 
-void EventManager::fireProcessEvent()
+void EventManager::fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent& event)
 {
-    qApp->processEvents();
+    emit removeItemFromAutoPlayQueue(event);
 }
-
-void EventManager::fireExecuteStopEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecutePlayEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteLoadEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecutePauseEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteNextEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteUpdateEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteInvokeEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteClearEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteClearVideolayerEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireExecuteClearChannelEvent()
-{
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
-}
-
-
-
-
-
-
-
-
-
 
 void EventManager::fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent& event)
 {

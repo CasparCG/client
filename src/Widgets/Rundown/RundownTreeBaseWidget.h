@@ -19,6 +19,7 @@
 
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPixmap>
 #include <QtGui/QTreeWidget>
@@ -50,12 +51,21 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool copySelectedItems() const;
         bool hasItemBelow() const;
 
+        void moveItemUp();
+        void moveItemDown();
+        void moveItemIntoGroup();
+        void moveItemOutOfGroup();
+        void groupItems();
+        void ungroupItems();
+        void removeSelectedItems();
         void selectItemAbove();
         void selectItemBelow();
+        void checkEmptyRundown();
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 
     protected:
+        void keyPressEvent(QKeyEvent* event);
         void mouseMoveEvent(QMouseEvent* event);
         void mousePressEvent(QMouseEvent* event);
 

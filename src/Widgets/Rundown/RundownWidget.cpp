@@ -152,7 +152,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
     if (!path.isEmpty())
     {
         EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
-        EventManager::getInstance().fireProcessEvent();
 
         QFileInfo info(path);
         RundownTreeWidget* widget = new RundownTreeWidget(this);       
@@ -170,7 +169,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
 
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
         EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
-        EventManager::getInstance().fireProcessEvent();
     }
 }
 

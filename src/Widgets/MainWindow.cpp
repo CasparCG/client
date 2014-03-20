@@ -19,6 +19,7 @@
 #include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
+#include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
 #include <QtCore/QDebug>
@@ -231,52 +232,52 @@ void MainWindow::saveAsRundown()
 
 void MainWindow::executeStop()
 {
-    EventManager::getInstance().fireExecuteStopEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier));
 }
 
 void MainWindow::executePlay()
 {
-    EventManager::getInstance().fireExecutePlayEvent();
-}
-
-void MainWindow::executePause()
-{
-    EventManager::getInstance().fireExecutePauseEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier));
 }
 
 void MainWindow::executeLoad()
 {
-    EventManager::getInstance().fireExecuteLoadEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
+}
+
+void MainWindow::executePause()
+{
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier));
 }
 
 void MainWindow::executeNext()
 {
-    EventManager::getInstance().fireExecuteNextEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier));
 }
 
 void MainWindow::executeUpdate()
 {
-    EventManager::getInstance().fireExecuteUpdateEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier));
 }
 
 void MainWindow::executeInvoke()
 {
-    EventManager::getInstance().fireExecuteInvokeEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier));
 }
 
 void MainWindow::executeClear()
 {
-    EventManager::getInstance().fireExecuteClearEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
 }
 
 void MainWindow::executeClearVideolayer()
 {
-    EventManager::getInstance().fireExecuteClearVideolayerEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
 }
 
 void MainWindow::executeClearChannel()
 {
-    EventManager::getInstance().fireExecuteClearChannelEvent();
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
 }
 
 void MainWindow::toggleCompactView()
