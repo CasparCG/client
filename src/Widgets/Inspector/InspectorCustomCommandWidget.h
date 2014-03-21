@@ -4,6 +4,7 @@
 #include "ui_InspectorCustomCommandWidget.h"
 
 #include "Commands/CustomCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorCustomCommandWidget : public QWidget, Ui::Inspecto
 
     public:
         explicit InspectorCustomCommandWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -39,4 +37,5 @@ class WIDGETS_EXPORT InspectorCustomCommandWidget : public QWidget, Ui::Inspecto
         Q_SLOT void clearVideolayerCommandChanged(QString);
         Q_SLOT void clearChannelCommandChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

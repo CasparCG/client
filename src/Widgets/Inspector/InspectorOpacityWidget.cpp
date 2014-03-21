@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>
@@ -15,36 +15,30 @@ InspectorOpacityWidget::InspectorOpacityWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTween();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTween();
 }
 
-bool InspectorOpacityWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorOpacityWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<OpacityCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<OpacityCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->sliderOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
-            this->spinBoxOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->sliderOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
+        this->spinBoxOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorOpacityWidget::blockAllSignals(bool block)
@@ -86,7 +80,7 @@ void InspectorOpacityWidget::sliderOpacityChanged(int opacity)
 
     this->spinBoxOpacity->setValue(opacity);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorOpacityWidget::spinBoxOpacityChanged(int opacity)

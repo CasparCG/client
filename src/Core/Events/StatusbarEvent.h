@@ -2,10 +2,9 @@
 
 #include "../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT StatusbarEvent : public QEvent
+class CORE_EXPORT StatusbarEvent
 {
     public:
         explicit StatusbarEvent(const QString& message, int timeout = 3000);

@@ -30,16 +30,12 @@
 #include "GpiManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/AddRudnownItemEvent.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/StatusbarEvent.h"
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
-#include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Events/Rundown/AutoPlayRundownItemEvent.h"
-#include "Events/Rundown/AutoPlayNextRundownItemEvent.h"
-#include "Events/Rundown/ExecuteRundownItemEvent.h"
-#include "Events/SaveAsPresetEvent.h"
-#include "Events/AddPresetItemEvent.h"
-#include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Models/RundownModel.h"
 
 #include <iostream>
@@ -69,16 +65,27 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     setupUi(this);
     setupMenus();
 
+    QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+
     // TODO: Specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
-    QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPreset(const SaveAsPresetEvent&)), this, SLOT(saveAsPreset(const SaveAsPresetEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(addPresetItem(const AddPresetItemEvent&)), this, SLOT(addPresetItem(const AddPresetItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(addRudnownItem(const AddRudnownItemEvent&)), this, SLOT(addRudnownItem(const AddRudnownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(toggleCompactView(const CompactViewEvent&)), this, SLOT(toggleCompactView(const CompactViewEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(executeRundownItem(const ExecuteRundownItemEvent&)), this, SLOT(executeRundownItem(const ExecuteRundownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)), this, SLOT(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayRundownItem(const AutoPlayRundownItemEvent&)), this, SLOT(autoPlayRundownItem(const AutoPlayRundownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayChanged(const AutoPlayChangedEvent&)), this, SLOT(autoPlayChanged(const AutoPlayChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)), this, SLOT(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(executePlayoutCommand(const ExecutePlayoutCommandEvent&)), this, SLOT(executePlayoutCommand(const ExecutePlayoutCommandEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)), this, SLOT(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
 
-    checkEmptyRundown();
-
-    qApp->installEventFilter(this);
+    this->treeWidgetRundown->checkEmptyRundown();
 }
 
 RundownTreeWidget::~RundownTreeWidget()
@@ -183,253 +190,219 @@ void RundownTreeWidget::setupMenus()
     QObject::connect(this->contextMenuRundown, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuRundownTriggered(QAction*)));
 }
 
-bool RundownTreeWidget::eventFilter(QObject* target, QEvent* event)
+void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& event)
 {
-    //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
+    if (!this->active)
+        return;
 
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExecuteRundownItem))
+    if (event.getKey() == Qt::Key_F1) // Stop.
+        executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F2) // Play.
+        executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F3) // Load.
+        executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F4) // Pause.
+        executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F5) // Next.
+        executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F6) // Update.
+        executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F7) // Invoke.
+        executeCommand(Playout::PlayoutType::Invoke, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F10) // Clear.
+        executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F11) // Clear videolayer.
+        executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F12) // Clear channel.
+        executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
+}
+
+void RundownTreeWidget::saveAsPreset(const SaveAsPresetEvent& event)
+{
+    if (!this->active)
+        return;
+
+    saveAsPreset();
+}
+
+bool RundownTreeWidget::removeSelectedItems()
+{
+    this->treeWidgetRundown->removeSelectedItems();
+    this->treeWidgetRundown->checkEmptyRundown();
+
+    return true;
+}
+
+void RundownTreeWidget::addPresetItem(const AddPresetItemEvent& event)
+{
+    if (!this->active)
+        return;
+
+    qApp->clipboard()->setText(event.getPreset());
+    pasteSelectedItems();
+    selectItemBelow();
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+    this->treeWidgetRundown->checkEmptyRundown();
+}
+
+void RundownTreeWidget::toggleCompactView(const CompactViewEvent& event)
+{
+    if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+        return;
+
+    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
     {
-        ExecuteRundownItemEvent* executeRundownItemEvent = dynamic_cast<ExecuteRundownItemEvent*>(event);
-        if (executeRundownItemEvent->getItem()->treeWidget() == this->treeWidgetRundown)
+        QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
+        QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
+
+        dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
+        if (this->treeWidgetRundown->getCompactView())
+            widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+        else
+            widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+
+        for (int j = 0; j < item->childCount(); j++)
         {
-            executeCommand(executeRundownItemEvent->getType(), Action::ActionType::KeyPress, executeRundownItemEvent->getItem());
+            QTreeWidgetItem* child = item->child(j);
+            QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
 
-            return true;
-        }
-    }
-
-    if (this->active)
-    {
-        //qDebug() << "Target: " << target << ", Parent: " << target->parent() << ", Event: " << event;
-
-        if (event->type() == QEvent::KeyPress)
-        {
-            QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-            if (keyEvent->key() == Qt::Key_F1) // Stop.
-                return executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F2) // Play.
-                return executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F3) // Load.
-                return executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F4) // Pause.
-                return executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F5) // Next.
-                return executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F6) // Update.
-                return executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F7) // Invoke.
-                return executeCommand(Playout::PlayoutType::Invoke, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F10) // Clear.
-                return executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F11) // Clear videolayer.
-                return executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
-            else if (keyEvent->key() == Qt::Key_F12) // Clear channel.
-                return executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
-
-            if (target == this->treeWidgetRundown)
-            {
-                if (keyEvent->key() == Qt::Key_Delete)
-                    return removeSelectedItems();
-                else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
-                    return duplicateSelectedItems();
-                else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
-                    return copySelectedItems();
-                else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
-                    return pasteSelectedItems();
-                else if (keyEvent->key() == Qt::Key_G && keyEvent->modifiers() == Qt::ControlModifier)
-                    return groupItems();
-                else if (keyEvent->key() == Qt::Key_U && keyEvent->modifiers() == Qt::ControlModifier)
-                    return ungroupItems();
-                else if (keyEvent->key() == Qt::Key_X && keyEvent->modifiers() == Qt::ControlModifier)
-                {
-                    copySelectedItems();
-                    removeSelectedItems();
-
-                    return true;
-                }
-                else if (keyEvent->key() == Qt::Key_Up && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                    return moveItemUp();
-                else if (keyEvent->key() == Qt::Key_Down && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                    return moveItemDown();
-                else if (keyEvent->key() == Qt::Key_Left && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                    return moveItemOutOfGroup();
-                else if (keyEvent->key() == Qt::Key_Right && (keyEvent->modifiers() == Qt::ControlModifier || (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->modifiers() & Qt::KeypadModifier)))
-                    return moveItemIntoGroup();
-            }
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RemoteRundownTriggering))
-        {
-            RemoteRundownTriggeringEvent* remoteRundownTriggeringEvent = dynamic_cast<RemoteRundownTriggeringEvent*>(event);
-            this->allowRemoteTriggering = remoteRundownTriggeringEvent->getEnabled();
-
-            (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ToggleCompactView))
-        {
-            if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
-                return true;
-
-            for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
-            {
-                QTreeWidgetItem* item = this->treeWidgetRundown->invisibleRootItem()->child(i);
-                QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-
-                dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
-                if (this->treeWidgetRundown->getCompactView())
-                    widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-                else
-                    widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-
-                for (int j = 0; j < item->childCount(); j++)
-                {
-                    QTreeWidgetItem* child = item->child(j);
-                    QWidget* widget = dynamic_cast<QWidget*>(this->treeWidgetRundown->itemWidget(child, 0));
-
-                    dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
-                    if (this->treeWidgetRundown->getCompactView())
-                        widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-                    else
-                        widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-                }
-            }
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-
-            this->treeWidgetRundown->setCompactView(!this->treeWidgetRundown->getCompactView());
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddRudnownItem))
-        {
-            AddRudnownItemEvent* addRudnownItemEvent = dynamic_cast<AddRudnownItemEvent*>(event);
-
-            AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(addRudnownItemEvent->getLibraryModel());
-            if (widget == NULL)
-                return true;
-
-            widget->setCompactView(this->treeWidgetRundown->getCompactView());
-
-            QTreeWidgetItem* item = new QTreeWidgetItem();
-            if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
-                this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
-            else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-                this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-            else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
-            {
-                this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
-                widget->setInGroup(true);
-            }
-
-            this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
-            this->treeWidgetRundown->setCurrentItem(item);
-            this->treeWidgetRundown->setFocus();
-
+            dynamic_cast<AbstractRundownWidget*>(widget)->setCompactView(!this->treeWidgetRundown->getCompactView());
             if (this->treeWidgetRundown->getCompactView())
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+                widget->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
             else
-                dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-            checkEmptyRundown();
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AddPresetItem))
-        {
-            AddPresetItemEvent* addPresetItemEvent = dynamic_cast<AddPresetItemEvent*>(event);
-
-            qApp->clipboard()->setText(addPresetItemEvent->getPreset());
-            pasteSelectedItems();
-            selectItemBelow();
-
-            this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-            checkEmptyRundown();
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoPlayRundownItem))
-        {
-            AutoPlayRundownItemEvent* autoPlayRundownItemEvent = dynamic_cast<AutoPlayRundownItemEvent*>(event);
-            AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayRundownItemEvent->getSource());
-            foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
-            {
-                if (autoPlayQueue->contains(rundownWidget))
-                {
-                    // Remove currently playing item.
-                    autoPlayQueue->removeAt(0);
-
-                    // Have more in queue, play them...
-                    if (!autoPlayQueue->isEmpty())
-                    {
-                        AbstractRundownWidget* rundownQueueWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayQueue->at(0));
-                        dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Play);
-
-                        this->currentAutoPlayWidget = rundownQueueWidget;
-                    }
-                    else
-                        this->autoPlayQueues.removeOne(autoPlayQueue);
-
-                    break;
-                }
-            }
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoPlayNextRundownItem))
-        {
-            AutoPlayNextRundownItemEvent* autoPlayNextRundownItemEvent = dynamic_cast<AutoPlayNextRundownItemEvent*>(event);
-            AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayNextRundownItemEvent->getSource());
-
-            foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
-            {
-                if (autoPlayQueue->contains(rundownWidget))
-                {
-                    // Remove currently playing item.
-                    autoPlayQueue->removeAt(0);
-
-                    // Have more in queue, play them...
-                    if (!autoPlayQueue->isEmpty())
-                    {
-                        AbstractRundownWidget* rundownQueueWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayQueue->at(0));
-                        dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Next);
-
-                        this->currentAutoPlayWidget = rundownQueueWidget;
-                    }
-                    else
-                        this->autoPlayQueues.removeOne(autoPlayQueue);
-
-                    break;
-                }
-            }
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoPlayChanged))
-        {
-            AutoPlayChangedEvent* autoPlayChangedEvent = dynamic_cast<AutoPlayChangedEvent*>(event);
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-            {
-                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
-                AbstractRundownWidget* childRundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
-
-                if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
-                    dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(autoPlayChangedEvent->getAutoPlay());
-            }
-
-            return true;
-        }
-        else if (event->type() == static_cast<QEvent::Type>(Event::EventType::SaveAsPreset))
-        {
-            SaveAsPresetEvent* saveAsPresetEvent = dynamic_cast<SaveAsPresetEvent*>(event);
-            saveAsPreset();
-
-            return true;
+                widget->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
         }
     }
 
-    return QObject::eventFilter(target, event);
+    this->treeWidgetRundown->doItemsLayout(); // Refresh
+
+    this->treeWidgetRundown->setCompactView(!this->treeWidgetRundown->getCompactView());
+}
+
+void RundownTreeWidget::executeRundownItem(const ExecuteRundownItemEvent& event)
+{
+    if (event.getItem()->treeWidget() == this->treeWidgetRundown)
+        executeCommand(event.getType(), Action::ActionType::KeyPress, event.getItem());
+}
+
+void RundownTreeWidget::remoteRundownTriggering(const RemoteRundownTriggeringEvent& event)
+{
+    if (!this->active)
+        return;
+
+    this->allowRemoteTriggering = event.getEnabled();
+
+    (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
+}
+
+void RundownTreeWidget::addRudnownItem(const AddRudnownItemEvent& event)
+{
+    if (!this->active)
+        return;
+
+    AbstractRundownWidget* widget = RundownItemFactory::getInstance().createWidget(event.getLibraryModel());
+    if (widget == NULL)
+        return;
+
+    widget->setCompactView(this->treeWidgetRundown->getCompactView());
+
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    if (this->treeWidgetRundown->currentItem() == NULL) // There is no item selected.
+        this->treeWidgetRundown->invisibleRootItem()->addChild(item); // Add item to the bottom of the rundown.
+    else if (this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
+        this->treeWidgetRundown->invisibleRootItem()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+    else if (this->treeWidgetRundown->currentItem()->parent() != NULL) // Goup item.
+    {
+        this->treeWidgetRundown->currentItem()->parent()->insertChild(this->treeWidgetRundown->currentIndex().row() + 1, item); // Insert item below.
+        widget->setInGroup(true);
+    }
+
+    this->treeWidgetRundown->setItemWidget(item, 0, dynamic_cast<QWidget*>(widget));
+    this->treeWidgetRundown->setCurrentItem(item);
+    this->treeWidgetRundown->setFocus();
+
+    if (this->treeWidgetRundown->getCompactView())
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
+    else
+        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
+
+    this->treeWidgetRundown->doItemsLayout(); // Refresh.
+
+    this->treeWidgetRundown->checkEmptyRundown();
+}
+
+void RundownTreeWidget::autoPlayChanged(const AutoPlayChangedEvent& event)
+{
+    if (!this->active)
+        return;
+
+    for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+    {
+        QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+        AbstractRundownWidget* childRundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
+
+        if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
+            dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(event.getAutoPlay());
+    }
+}
+
+void RundownTreeWidget::autoPlayRundownItem(const AutoPlayRundownItemEvent& event)
+{
+    if (!this->active)
+        return;
+
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(event.getSource());
+    foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
+    {
+        if (autoPlayQueue->contains(rundownWidget))
+        {
+            // Remove currently playing item.
+            autoPlayQueue->removeAt(0);
+
+            // Have more in queue, play them...
+            if (!autoPlayQueue->isEmpty())
+            {
+                AbstractRundownWidget* rundownQueueWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayQueue->at(0));
+                dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Play);
+
+                this->currentAutoPlayWidget = rundownQueueWidget;
+            }
+            else
+                this->autoPlayQueues.removeOne(autoPlayQueue);
+
+            break;
+        }
+    }
+}
+
+void RundownTreeWidget::autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent& event)
+{
+    if (!this->active)
+        return;
+
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(event.getSource());
+
+    foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
+    {
+        if (autoPlayQueue->contains(rundownWidget))
+        {
+            // Have more in queue, play them...
+            if (!autoPlayQueue->isEmpty())
+            {
+                AbstractRundownWidget* rundownQueueWidget = dynamic_cast<AbstractRundownWidget*>(autoPlayQueue->at(0));
+                dynamic_cast<AbstractPlayoutCommand*>(rundownQueueWidget)->executeCommand(Playout::PlayoutType::Next);
+
+                this->currentAutoPlayWidget = rundownQueueWidget;
+            }
+
+            break;
+        }
+    }
 }
 
 void RundownTreeWidget::setActive(bool active)
@@ -461,7 +434,7 @@ void RundownTreeWidget::setActive(bool active)
         }
     }
 
-    EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
+    EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
     QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
@@ -481,7 +454,7 @@ void RundownTreeWidget::setActive(bool active)
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
 }
 
@@ -509,7 +482,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         this->treeWidgetRundown->setFocus();
     }
 
-    checkEmptyRundown();
+    this->treeWidgetRundown->checkEmptyRundown();
 
     std::cout << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount()).toStdString();
 
@@ -529,8 +502,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent("Saving rundown...");
-        EventManager::getInstance().fireProcessEvent();
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Saving rundown..."));
 
         QFile file(path);
         if (file.exists())
@@ -554,21 +526,12 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             file.close();
         }
 
-        checkEmptyRundown();
+        this->treeWidgetRundown->checkEmptyRundown();
 
         this->activeRundown = path;
-        EventManager::getInstance().fireActiveRundownChangedEvent(this->activeRundown);
-        EventManager::getInstance().fireStatusbarEvent("");
-        EventManager::getInstance().fireProcessEvent();
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
     }
-}
-
-void RundownTreeWidget::checkEmptyRundown()
-{
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::DEFAULT_THEME)
-        this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
-    else
-        this->treeWidgetRundown->setStyleSheet((this->treeWidgetRundown->invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
 }
 
 void RundownTreeWidget::colorizeItems(const QString& color)
@@ -664,9 +627,9 @@ void RundownTreeWidget::contextMenuColorTriggered(QAction* action)
 void RundownTreeWidget::contextMenuRundownTriggered(QAction* action)
 {
     if (action->text() == "Group")
-        groupItems();
+        this->treeWidgetRundown->groupItems();
     else if (action->text() == "Ungroup")
-        ungroupItems();
+        this->treeWidgetRundown->ungroupItems();
 }
 
 void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
@@ -692,7 +655,7 @@ void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
 }
 
@@ -725,13 +688,13 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
 
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireRundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent);
+        EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
     }
     else if (currentItem == NULL && previous != NULL && this->treeWidgetRundown->invisibleRootItem()->childCount() == 1) // Last item was removed form the rundown.
     {
         // Use synchronous event through sendEvent(). Make sure we update the right item in the
         // inspector which will not be the case with postEvent() if we trigger keys really fast.
-        EventManager::getInstance().fireEmptyRundownEvent();
+        EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
     }
 }
 
@@ -753,7 +716,7 @@ bool RundownTreeWidget::pasteSelectedItems()
 {
     bool result = this->treeWidgetRundown->pasteSelectedItems();
 
-    checkEmptyRundown();
+    this->treeWidgetRundown->checkEmptyRundown();
 
     return result;
 }
@@ -761,158 +724,6 @@ bool RundownTreeWidget::pasteSelectedItems()
 bool RundownTreeWidget::copySelectedItems() const
 {
     return this->treeWidgetRundown->copySelectedItems();
-}
-
-bool RundownTreeWidget::moveItemDown()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return true;
-
-    int row  = this->treeWidgetRundown->currentIndex().row();
-    QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-    QTreeWidgetItem* parentItem = this->treeWidgetRundown->currentItem()->parent();
-
-    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->isGroup())
-    {
-        int rowCount = 0;
-        if (parentItem == NULL) // Top level item.
-            rowCount = this->treeWidgetRundown->invisibleRootItem()->childCount() - 1;
-
-        if (currentItem != NULL && row < rowCount)
-        {
-            AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-            parentWidget->setInGroup(true);
-            parentWidget->setExpanded(true);
-
-            QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-            this->treeWidgetRundown->invisibleRootItem()->insertChild(row + 2, parentItem);
-            this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
-
-            if (this->treeWidgetRundown->currentItem()->isExpanded())
-                this->treeWidgetRundown->expandItem(parentItem);
-
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-            {
-                QTreeWidgetItem* item = this->treeWidgetRundown->currentItem()->child(i);
-
-                AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
-                childWidget->setInGroup(true);
-
-                QTreeWidgetItem* childItem = new QTreeWidgetItem();
-                parentItem->addChild(childItem);
-                this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
-            }
-
-            delete currentItem;
-
-            this->treeWidgetRundown->setCurrentItem(parentItem);
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-        }
-    }
-    else
-    {
-        int rowCount = 0;
-        if (parentItem == NULL) // Top level item.
-            rowCount = this->treeWidgetRundown->invisibleRootItem()->childCount() - 1;
-        else
-            rowCount = this->treeWidgetRundown->currentItem()->parent()->childCount() - 1;
-
-        if (currentItem != NULL && row < rowCount)
-        {
-            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-
-            if (parentItem == NULL) // Top level item.
-            {
-                this->treeWidgetRundown->invisibleRootItem()->takeChild(row);
-                this->treeWidgetRundown->invisibleRootItem()->insertChild(row + 1, currentItem);
-            }
-            else // Group item.
-            {
-                newWidget->setInGroup(true);
-
-                this->treeWidgetRundown->currentItem()->parent()->takeChild(row);
-                this->treeWidgetRundown->currentItem()->parent()->insertChild(row + 1, currentItem);
-            }
-
-            this->treeWidgetRundown->setItemWidget(currentItem, 0, dynamic_cast<QWidget*>(newWidget));
-            this->treeWidgetRundown->setCurrentItem(currentItem);
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-        }
-    }
-
-    return true;
-}
-
-bool RundownTreeWidget::moveItemUp()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return true;
-
-    int row  = this->treeWidgetRundown->currentIndex().row();
-    QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-    QTreeWidgetItem* parentItem = this->treeWidgetRundown->currentItem()->parent();
-
-    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->isGroup())
-    {
-        int rowCount = 0;
-        if (currentItem != NULL && row > rowCount)
-        {
-            AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-            parentWidget->setInGroup(true);
-            parentWidget->setExpanded(true);
-
-            QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-            this->treeWidgetRundown->invisibleRootItem()->insertChild(row - 1, parentItem);
-            this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
-
-            if (this->treeWidgetRundown->currentItem()->isExpanded())
-                this->treeWidgetRundown->expandItem(parentItem);
-
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-            {
-                QTreeWidgetItem* item = this->treeWidgetRundown->currentItem()->child(i);
-
-                AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
-                childWidget->setInGroup(true);
-
-                QTreeWidgetItem* childItem = new QTreeWidgetItem();
-                parentItem->addChild(childItem);
-                this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
-            }
-
-            delete currentItem;
-
-            this->treeWidgetRundown->setCurrentItem(parentItem);
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-        }
-    }
-    else
-    {
-        int rowCount = 0;
-        if (currentItem != NULL && row > rowCount)
-        {
-            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-
-            if (parentItem == NULL) // Top level item.
-            {
-                this->treeWidgetRundown->invisibleRootItem()->takeChild(row);
-                this->treeWidgetRundown->invisibleRootItem()->insertChild(row - 1, currentItem);
-            }
-            else // Group item.
-            {
-                newWidget->setInGroup(true);
-
-                this->treeWidgetRundown->currentItem()->parent()->takeChild(row);
-                this->treeWidgetRundown->currentItem()->parent()->insertChild(row - 1, currentItem);
-            }
-
-            this->treeWidgetRundown->setItemWidget(currentItem, 0, dynamic_cast<QWidget*>(newWidget));
-            this->treeWidgetRundown->setCurrentItem(currentItem);
-            this->treeWidgetRundown->doItemsLayout(); // Refresh
-        }
-    }
-
-    return true;
 }
 
 bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item)
@@ -957,7 +768,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
 
     if (type == Playout::PlayoutType::Next && rundownWidgetParent != NULL && rundownWidgetParent->isGroup() && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
     {
-        EventManager::getInstance().fireAutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget));
+        EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
 
         return true;
     }
@@ -967,7 +778,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
     if (rundownWidget != NULL && rundownWidget->isGroup())
     {
         if (type == Playout::PlayoutType::Next && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
-            EventManager::getInstance().fireAutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget));
+            EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
         else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
             // The group have auto play enabled, then we want to play the items within the group.
@@ -1012,24 +823,8 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             for (int i = 0; i < currentItem->childCount(); i++)
             {
                 QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
-                AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
 
-                if (dynamic_cast<VideoCommand*>(rundownWidget->getCommand()))
-                {
-                    // Remove item from auto play queue if it exists.
-                    foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
-                    {
-                        if (autoPlayQueue->contains(rundownWidget))
-                        {
-                            autoPlayQueue->removeOne(rundownWidget);
-
-                            if (autoPlayQueue->isEmpty())
-                                this->autoPlayQueues.removeOne(autoPlayQueue);
-
-                            break;
-                        }
-                    }
-                }
+                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem->child(i)));
 
                 dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);
             }
@@ -1074,153 +869,6 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
 void RundownTreeWidget::selectItemBelow()
 {
     this->treeWidgetRundown->selectItemBelow();
-}
-
-bool RundownTreeWidget::groupItems()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return true;
-
-    bool isGroup = false;
-    bool isTopItem = false;
-    bool isGroupItem = false;
-    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
-    {
-        QWidget* widget = this->treeWidgetRundown->itemWidget(item, 0);
-
-        if (item->parent() != NULL) // Group item.
-            isGroupItem = true;
-        else if (dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Group
-            isGroup = true;
-        else if (item->parent() == NULL && !dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Top level item.
-            isTopItem = true;
-    }
-
-    if (isGroup || isGroupItem)
-        return true; // We don't support group in groups.
-
-    QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-
-    RundownGroupWidget* widget = new RundownGroupWidget(LibraryModel(0, "Group", "", "", "GROUP", 0, ""), this->treeWidgetRundown);
-    widget->setActive(true);
-    widget->setExpanded(true);
-    widget->setCompactView(this->treeWidgetRundown->getCompactView());
-
-    int row = this->treeWidgetRundown->indexOfTopLevelItem(this->treeWidgetRundown->selectedItems().at(0));
-    this->treeWidgetRundown->invisibleRootItem()->insertChild(row, parentItem);
-    this->treeWidgetRundown->setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(widget));
-    this->treeWidgetRundown->expandItem(parentItem);
-
-    if (this->treeWidgetRundown->getCompactView())
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::COMPACT_ITEM_HEIGHT);
-    else
-        dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
-
-    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
-    {
-        QTreeWidgetItem* childItem = new QTreeWidgetItem();
-        parentItem->addChild(childItem);
-
-        AbstractRundownWidget* childWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
-        childWidget->setInGroup(true);
-        childWidget->setActive(false);
-
-        this->treeWidgetRundown->setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
-    }
-
-    removeSelectedItems();
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh
-    this->treeWidgetRundown->setCurrentItem(parentItem);
-
-    return true;
-}
-
-bool RundownTreeWidget::ungroupItems()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL)
-        return true;
-
-    bool isGroup = false;
-    bool isTopItem = false;
-    bool isGroupItem = false;
-    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
-    {
-        QWidget* widget = this->treeWidgetRundown->itemWidget(item, 0);
-
-        if (item->parent() != NULL) // Group item.
-            isGroupItem = true;
-        else if (dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Group
-            isGroup = true;
-        else if (item->parent() == NULL && !dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Top level item.
-            isTopItem = true;
-    }
-
-    if (isTopItem || (isGroup && isGroupItem) || (isTopItem && isGroupItem))
-        return true; // We don't have any group to ungroup.
-
-    QTreeWidgetItem* rootItem = this->treeWidgetRundown->invisibleRootItem();
-
-    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup()) // Group.
-    {
-        QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-        QTreeWidgetItem* currentItemAbove = this->treeWidgetRundown->itemAbove(this->treeWidgetRundown->currentItem());
-
-        int row = this->treeWidgetRundown->indexOfTopLevelItem(this->treeWidgetRundown->selectedItems().at(0));
-
-        QTreeWidgetItem* newItem = NULL;
-        for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-        {
-            QTreeWidgetItem* item = this->treeWidgetRundown->currentItem()->child(i);
-
-            newItem = new QTreeWidgetItem();
-            rootItem->insertChild(row + 1, newItem);
-
-            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
-            newWidget->setInGroup(false);
-            newWidget->setActive(false);
-
-            this->treeWidgetRundown->setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
-
-            row++;
-        }
-
-        this->treeWidgetRundown->setCurrentItem(currentItemAbove);
-
-        delete currentItem;
-    }
-    else // Group item.
-    {
-        QTreeWidgetItem* parentItem = this->treeWidgetRundown->currentItem()->parent();
-
-        int parentRow = this->treeWidgetRundown->indexOfTopLevelItem(this->treeWidgetRundown->currentItem()->parent());
-
-        QTreeWidgetItem* newItem = NULL;
-        foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
-        {
-            newItem = new QTreeWidgetItem();
-            rootItem->insertChild(parentRow + 1, newItem);
-
-            AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0))->clone();
-            newWidget->setInGroup(false);
-            newWidget->setActive(false);
-
-            this->treeWidgetRundown->setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
-
-            delete item;
-
-            parentRow++;
-        }
-
-        this->treeWidgetRundown->setCurrentItem(newItem);
-
-        if (parentItem->childCount() == 0)
-            delete parentItem;
-    }
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh
-
-    return true;
 }
 
 void RundownTreeWidget::addBlendModeItem()
@@ -1388,72 +1036,6 @@ void RundownTreeWidget::addVideoItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::VIDEO);
 }
 
-bool RundownTreeWidget::moveItemOutOfGroup()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() == NULL) // Top level item.
-        return true;
-
-    QTreeWidgetItem* newItem = new QTreeWidgetItem();
-    QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-    QTreeWidgetItem* parentItem = this->treeWidgetRundown->currentItem()->parent(); // Group.
-    QTreeWidgetItem* currentItemAbove = this->treeWidgetRundown->itemAbove(this->treeWidgetRundown->currentItem());
-    QTreeWidgetItem* parentItemAbove = this->treeWidgetRundown->itemAbove(this->treeWidgetRundown->currentItem()->parent());
-
-    int currentRow  = this->treeWidgetRundown->currentIndex().row();
-    int parentRow  = this->treeWidgetRundown->indexOfTopLevelItem(this->treeWidgetRundown->currentItem()->parent());
-
-    AbstractRundownWidget* newWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-    newWidget->setInGroup(false);
-
-    this->treeWidgetRundown->currentItem()->parent()->takeChild(currentRow);
-    this->treeWidgetRundown->invisibleRootItem()->insertChild(parentRow + 1, newItem);
-    this->treeWidgetRundown->setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
-    this->treeWidgetRundown->setCurrentItem(newItem);
-    this->treeWidgetRundown->doItemsLayout(); // Refresh
-
-    delete currentItem;
-
-    if (parentItem->childCount() == 0)
-    {
-        this->treeWidgetRundown->setCurrentItem(parentItemAbove);
-        delete parentItem;
-    }
-
-    return true;
-}
-
-bool RundownTreeWidget::moveItemIntoGroup()
-{
-    if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->currentItem()->parent() != NULL) // Group item.
-        return true;
-
-    if (dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0))->isGroup())
-        return true;
-
-    QTreeWidgetItem* currentItemAbove = this->treeWidgetRundown->invisibleRootItem()->child(this->treeWidgetRundown->currentIndex().row() - 1);
-    if (currentItemAbove != NULL && dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItemAbove, 0))->isGroup()) // Group.
-    {
-        QTreeWidgetItem* newItem = new QTreeWidgetItem();
-        QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-
-        int currentRow  = this->treeWidgetRundown->currentIndex().row();
-
-        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0))->clone();
-        widget->setInGroup(true);
-
-        currentItemAbove->addChild(newItem);
-
-        this->treeWidgetRundown->invisibleRootItem()->takeChild(currentRow);
-        this->treeWidgetRundown->setItemWidget(newItem, 0, dynamic_cast<QWidget*>(widget));
-        this->treeWidgetRundown->doItemsLayout(); // Ref resh
-        this->treeWidgetRundown->setCurrentItem(newItem);
-
-        delete currentItem;
-    }
-
-    return true;
-}
-
 void RundownTreeWidget::saveAsPreset()
 {
     if (!copySelectedItems())
@@ -1463,39 +1045,25 @@ void RundownTreeWidget::saveAsPreset()
     if (dialog->exec() == QDialog::Accepted)
     {
         DatabaseManager::getInstance().insertPreset(PresetModel(0, dialog->getName(), qApp->clipboard()->text()));
-        EventManager::getInstance().firePresetChangedEvent();
+        EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
     }
 }
 
-bool RundownTreeWidget::removeSelectedItems()
+void RundownTreeWidget::removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent& event)
 {
-    foreach (QTreeWidgetItem* item, this->treeWidgetRundown->selectedItems())
+    AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(event.getItem(), 0));
+    foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
     {
-        // Remove our items from the auto play queue if they exists.
-        AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(item, 0));
-        if (dynamic_cast<VideoCommand*>(rundownWidget->getCommand()))
+        if (autoPlayQueue->contains(widget))
         {
-            foreach (QList<AbstractRundownWidget*>* autoPlayQueue, this->autoPlayQueues)
-            {
-                if (autoPlayQueue->contains(rundownWidget))
-                {
-                    autoPlayQueue->removeOne(rundownWidget);
+            autoPlayQueue->removeOne(widget);
 
-                    if (autoPlayQueue->isEmpty())
-                        this->autoPlayQueues.removeOne(autoPlayQueue);
+            if (autoPlayQueue->isEmpty())
+                this->autoPlayQueues.removeOne(autoPlayQueue);
 
-                    break;
-                }
-            }
+            break;
         }
-
-        delete rundownWidget;
-        delete item;
     }
-
-    checkEmptyRundown();
-
-    return true;
 }
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const
@@ -1635,59 +1203,59 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem());
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem()));
 }

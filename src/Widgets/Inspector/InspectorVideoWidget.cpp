@@ -5,8 +5,8 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "EventManager.h"
 #include "Commands/GroupCommand.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/DirectionModel.h"
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
@@ -19,58 +19,52 @@ InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
 
     this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+
     loadDirection();
     loadTransition();
     loadTween();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorVideoWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<VideoCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<VideoCommand*>(event.getCommand());
 
-        blockAllSignals(true);
+        this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
+        this->spinBoxSeek->setValue(this->command->getSeek());
+        this->spinBoxLength->setValue(this->command->getLength());
+        this->checkBoxLoop->setChecked(this->command->getLoop());
+        this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
 
-        if (dynamic_cast<VideoCommand*>(rundownItemSelectedEvent->getCommand()))
+        RundownGroupWidget* parent = dynamic_cast<RundownGroupWidget*>(event.getParent());
+        AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(event.getSource());
+
+        // Only show auto play option if we are in a group. OSC needs to be enabled.
+        if (this->enableOscInput && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
         {
-            this->command = dynamic_cast<VideoCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
-            this->spinBoxSeek->setValue(this->command->getSeek());
-            this->spinBoxLength->setValue(this->command->getLength());
-            this->checkBoxLoop->setChecked(this->command->getLoop());
-            this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-
-            RundownGroupWidget* parent = dynamic_cast<RundownGroupWidget*>(rundownItemSelectedEvent->getParent());
-            AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(rundownItemSelectedEvent->getSource());
-
-            // Only show auto play option if we are in a group. OSC needs to be enabled.
-            if (this->enableOscInput && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
-            {
-                this->labelAutoPlay->setEnabled(true);
-                this->checkBoxAutoPlay->setEnabled(true);
-                this->checkBoxAutoPlay->setChecked(this->command->getAutoPlay());
-            }
-            else
-            {
-                this->labelAutoPlay->setEnabled(false);
-                this->checkBoxAutoPlay->setEnabled(false);
-                this->checkBoxAutoPlay->setChecked(false);
-            }
+            this->labelAutoPlay->setEnabled(true);
+            this->checkBoxAutoPlay->setEnabled(true);
+            this->checkBoxAutoPlay->setChecked(this->command->getAutoPlay());
         }
-
-        blockAllSignals(false);
+        else
+        {
+            this->labelAutoPlay->setEnabled(false);
+            this->checkBoxAutoPlay->setEnabled(false);
+            this->checkBoxAutoPlay->setChecked(false);
+        }
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorVideoWidget::blockAllSignals(bool block)

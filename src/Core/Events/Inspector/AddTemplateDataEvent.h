@@ -2,16 +2,15 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QSharedPointer>
 
-class CORE_EXPORT AddTemplateDataEvent : public QEvent
+class CORE_EXPORT AddTemplateDataEvent
 {
     public:
         explicit AddTemplateDataEvent(const QString& value, bool storedData);
 
-        bool getStoredData();
-        const QString& getValue();
+        bool getStoredData() const;
+        const QString& getValue() const;
 
 
     private:

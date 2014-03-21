@@ -10,6 +10,7 @@
 #include "DeviceManager.h"
 #include "TriCasterDeviceManager.h"
 #include "OscDeviceManager.h"
+#include "Events/Rundown/OpenRundownEvent.h"
 
 #include "MainWindow.h"
 
@@ -130,9 +131,9 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
         if (application.arguments().count() > i + 1)
         {
             QString path = application.arguments().at(i + 1);
-            EventManager::getInstance().fireOpenRundownEvent(path);
-        }
 
+            EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(path));
+        }
     }
 }
 

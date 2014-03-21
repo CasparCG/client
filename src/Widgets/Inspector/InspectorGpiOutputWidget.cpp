@@ -1,8 +1,8 @@
 #include "InspectorGpiOutputWidget.h"
 
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-
 #include "Global.h"
+
+#include "EventManager.h"
 
 InspectorGpiOutputWidget::InspectorGpiOutputWidget(QWidget *parent)
     : QWidget(parent),
@@ -10,29 +10,22 @@ InspectorGpiOutputWidget::InspectorGpiOutputWidget(QWidget *parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorGpiOutputWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorGpiOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    blockAllSignals(true);
+
+    if (dynamic_cast<GpiOutputCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
+        this->command = dynamic_cast<GpiOutputCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->spinBoxGpoPort->setValue(this->command->getGpoPort() + 1);
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->spinBoxGpoPort->setValue(this->command->getGpoPort() + 1);
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorGpiOutputWidget::blockAllSignals(bool block)

@@ -4,6 +4,9 @@
 #include "ui_InspectorMetadataWidget.h"
 
 #include "Commands/AbstractCommand.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -19,13 +22,13 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
     public:
         explicit InspectorMetadataWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
 
         void blockAllSignals(bool block);
 
         Q_SLOT void labelChanged(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
+        Q_SLOT void emptyRundown(const EmptyRundownEvent&);
 };

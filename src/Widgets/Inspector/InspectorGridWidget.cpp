@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>
@@ -14,34 +14,28 @@ InspectorGridWidget::InspectorGridWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTween();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTween();
 }
 
-bool InspectorGridWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorGridWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<GridCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<GridCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand()))
-        {     
-            this->command = dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->spinBoxGrid->setValue(this->command->getGrid());
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->spinBoxGrid->setValue(this->command->getGrid());
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorGridWidget::blockAllSignals(bool block)
@@ -79,7 +73,7 @@ void InspectorGridWidget::gridChanged(int grid)
 {
     this->command->setGrid(grid);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGridWidget::resetGrid(QString grid)
@@ -87,7 +81,7 @@ void InspectorGridWidget::resetGrid(QString grid)
     this->spinBoxGrid->setValue(1);
     this->command->setGrid(this->spinBoxGrid->value());
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGridWidget::resetDuration(QString duration)

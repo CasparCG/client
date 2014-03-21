@@ -78,6 +78,7 @@ void OscOutputDialog::accept()
             return;
         }
 
+        /*
         model = DatabaseManager::getInstance().getOscOutputByAddress(this->lineEditAddress->text());
         if (!model.getName().isEmpty())
         {
@@ -95,6 +96,7 @@ void OscOutputDialog::accept()
 
             return;
         }
+        */
     }
 
     QDialog::accept();

@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT AddActionItemEvent : public QEvent
+class CORE_EXPORT AddActionItemEvent
 {
     public:
         explicit AddActionItemEvent(const QString& action);

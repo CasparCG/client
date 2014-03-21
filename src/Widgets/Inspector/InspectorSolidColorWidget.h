@@ -4,6 +4,7 @@
 #include "ui_InspectorSolidColorWidget.h"
 
 #include "Commands/SolidColorCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorSolidColorWidget : public QWidget, Ui::InspectorSo
 
     public:
         explicit InspectorSolidColorWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -39,4 +37,5 @@ class WIDGETS_EXPORT InspectorSolidColorWidget : public QWidget, Ui::InspectorSo
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void useAutoChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

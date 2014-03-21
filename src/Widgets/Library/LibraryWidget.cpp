@@ -6,9 +6,11 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "DeviceFilterWidget.h"
-#include "Events/Library/LibraryItemSelectedEvent.h"
-#include "Events/ImportPresetEvent.h"
+#include "Events/AddPresetItemEvent.h"
 #include "Events/ExportPresetEvent.h"
+#include "Events/ImportPresetEvent.h"
+#include "Events/Inspector/AddTemplateDataEvent.h"
+#include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 #include "Models/PresetModel.h"
 
@@ -89,18 +91,14 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     QObject::connect(this->treeWidgetTemplate, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetVideo, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetData, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuDataRequested(const QPoint &)));
-
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(mediaChanged(const MediaChangedEvent&)), this, SLOT(mediaChanged(const MediaChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(templateChanged(const TemplateChangedEvent&)), this, SLOT(templateChanged(const TemplateChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(dataChanged(const DataChangedEvent&)), this, SLOT(dataChanged(const DataChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(presetChanged(const PresetChangedEvent&)), this, SLOT(presetChanged(const PresetChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(importPreset(const ImportPresetEvent&)), this, SLOT(importPreset(const ImportPresetEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(exportPreset(const ExportPresetEvent&)), this, SLOT(exportPreset(const ExportPresetEvent&)));
 
     QTimer::singleShot(0, this, SLOT(loadLibrary()));
-}
-
-void LibraryWidget::loadLibrary()
-{
-    EventManager::getInstance().fireMediaChangedEvent();
-    EventManager::getInstance().fireTemplateChangedEvent();
-    EventManager::getInstance().fireDataChangedEvent();
-    EventManager::getInstance().firePresetChangedEvent();
 }
 
 void LibraryWidget::setupTools()
@@ -433,98 +431,54 @@ void LibraryWidget::setupUiMenu()
     QObject::connect(this->contextMenuData, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuDataTriggered(QAction*)));
 }
 
-bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
+void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 {
-    if (event->type() == QEvent::KeyPress)
-    {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (target == this->treeWidgetPreset)
-        {
-            if (keyEvent->key() == Qt::Key_Delete)
-                return removeSelectedPresets();
-        }
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged))
-    {
-        // TODO: Only add / remove necessary items.
-        this->treeWidgetAudio->clear();
-        this->treeWidgetImage->clear();
-        this->treeWidgetVideo->clear();
-        this->treeWidgetAudio->clearSelection();
-        this->treeWidgetImage->clearSelection();
-        this->treeWidgetVideo->clearSelection();
+    // TODO: Only add / remove necessary items.
+    this->treeWidgetAudio->clear();
+    this->treeWidgetImage->clear();
+    this->treeWidgetVideo->clear();
+    this->treeWidgetAudio->clearSelection();
+    this->treeWidgetImage->clearSelection();
+    this->treeWidgetVideo->clearSelection();
 
-        QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
-            models = DatabaseManager::getInstance().getLibraryMedia();
-        else
-            models = DatabaseManager::getInstance().getLibraryMediaByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
+    QList<LibraryModel> models;
+    if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
+        models = DatabaseManager::getInstance().getLibraryMedia();
+    else
+        models = DatabaseManager::getInstance().getLibraryMediaByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
 
-        if (models.count() > 0)
+    if (models.count() > 0)
+    {
+        foreach (LibraryModel model, models)
         {
-            foreach (LibraryModel model, models)
+            if (model.getType() == "AUDIO")
             {
-                if (model.getType() == "AUDIO")
-                {
-                    QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetAudio);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/AudioSmall.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, QString("%1").arg(model.getId()));
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
-                    widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                    widget->setText(6, model.getTimecode());
-                }    
-                else if (model.getType() == "STILL")
-                {
-                    QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetImage);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, QString("%1").arg(model.getId()));
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
-                    widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                    widget->setText(6, model.getTimecode());
-                }
-                else if (model.getType() == "MOVIE")
-                {
-                    QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetVideo);
-                    widget->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
-                    widget->setText(0, model.getName());
-                    widget->setText(1, QString("%1").arg(model.getId()));
-                    widget->setText(2, model.getLabel());
-                    widget->setText(3, model.getDeviceName());
-                    widget->setText(4, model.getType());
-                    widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                    widget->setText(6, model.getTimecode());
-                }
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetAudio);
+                widget->setIcon(0, QIcon(":/Graphics/Images/AudioSmall.png"));
+                widget->setText(0, model.getName());
+                widget->setText(1, QString("%1").arg(model.getId()));
+                widget->setText(2, model.getLabel());
+                widget->setText(3, model.getDeviceName());
+                widget->setText(4, model.getType());
+                widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                widget->setText(6, model.getTimecode());
             }
-        }
-
-        this->toolBoxLibrary->setItemText(Library::AUDIO_PAGE_INDEX, QString("Audio (%1)").arg(this->treeWidgetAudio->topLevelItemCount()));
-        this->toolBoxLibrary->setItemText(Library::STILL_PAGE_INDEX, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
-        this->toolBoxLibrary->setItemText(Library::MOVIE_PAGE_INDEX, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
-    {
-        // TODO: Only add / remove necessary items.
-        this->treeWidgetTemplate->clear();
-        this->treeWidgetTemplate->clearSelection();
-
-        QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
-            models = DatabaseManager::getInstance().getLibraryTemplate();
-        else
-            models = DatabaseManager::getInstance().getLibraryTemplateByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
-
-        if (models.count() > 0)
-        {
-            foreach (LibraryModel model, models)
+            else if (model.getType() == "STILL")
             {
-                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetTemplate);
-                widget->setIcon(0, QIcon(":/Graphics/Images/TemplateSmall.png"));
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetImage);
+                widget->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
+                widget->setText(0, model.getName());
+                widget->setText(1, QString("%1").arg(model.getId()));
+                widget->setText(2, model.getLabel());
+                widget->setText(3, model.getDeviceName());
+                widget->setText(4, model.getType());
+                widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+                widget->setText(6, model.getTimecode());
+            }
+            else if (model.getType() == "MOVIE")
+            {
+                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetVideo);
+                widget->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
                 widget->setText(0, model.getName());
                 widget->setText(1, QString("%1").arg(model.getId()));
                 widget->setText(2, model.getLabel());
@@ -534,114 +488,158 @@ bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
                 widget->setText(6, model.getTimecode());
             }
         }
-
-        this->toolBoxLibrary->setItemText(Library::TEMPLATE_PAGE_INDEX, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DataChanged))
-    {
-        // TODO: Only add / remove necessary items.
-        this->treeWidgetData->clear();
-        this->treeWidgetData->clearSelection();
-
-        QList<LibraryModel> models;
-        if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
-            models = DatabaseManager::getInstance().getLibraryData();
-        else
-            models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
-
-        if (models.count() > 0)
-        {
-            foreach (LibraryModel model, models)
-            {
-                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetData);
-                widget->setIcon(0, QIcon(":/Graphics/Images/DataSmall.png"));
-                widget->setText(0, model.getName());
-                widget->setText(1, QString("%1").arg(model.getId()));
-                widget->setText(2, model.getLabel());
-                widget->setText(3, model.getDeviceName());
-                widget->setText(4, model.getType());
-                widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                widget->setText(6, model.getTimecode());
-            }
-        }
-
-        this->toolBoxLibrary->setItemText(Library::DATA_PAGE_INDEX, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::PresetChanged))
-    {
-        // TODO: Only add / remove necessary items.
-        this->treeWidgetPreset->clear();
-        this->treeWidgetPreset->clearSelection();
-
-        QList<PresetModel> models;
-        if (this->lineEditFilter->text().isEmpty())
-            models = DatabaseManager::getInstance().getPreset();
-        else
-            models = DatabaseManager::getInstance().getPresetByFilter(this->lineEditFilter->text());
-
-        if (models.count() > 0)
-        {
-            foreach (PresetModel model, models)
-            {
-                QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetPreset);
-                widget->setIcon(0, QIcon(":/Graphics/Images/PresetSmall.png"));
-                widget->setText(0, model.getName());
-                widget->setText(1, QString("%1").arg(model.getId()));
-                widget->setText(2, model.getValue());
-            }
-        }
-
-        this->toolBoxLibrary->setItemText(Library::PRESET_PAGE_INDEX, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ImportPreset))
-    {
-        QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
-        if (!path.isEmpty())
-        {
-            QFile file(path);
-            if (file.open(QFile::ReadOnly | QIODevice::Text))
-            {
-                const QString& data = file.readAll();
-                if (!data.isEmpty())
-                {
-                    QFileInfo info(path);
-                    DatabaseManager::getInstance().insertPreset(PresetModel(0, info.baseName(), data));
-
-                    EventManager::getInstance().firePresetChangedEvent();
-                }
-
-                file.close();
-            }
-        }
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::ExportPreset))
-    {
-        if (this->treeWidgetPreset->selectedItems().count() == 0)
-            return true;
-
-        const QString path = QFileDialog::getSaveFileName(this, "Export Preset", this->treeWidgetPreset->currentItem()->text(0), "Preset (*.xml)");
-        if (!path.isEmpty())
-        {
-            QFile file(path);
-            if (file.exists())
-                file.remove();
-
-            if (file.open(QFile::WriteOnly))
-            {
-                const QString& data = this->treeWidgetPreset->currentItem()->text(2);
-                if (!data.isEmpty())
-                {
-                    QTextStream stream(&file);
-                    stream << data;
-                }
-
-                file.close();
-            }
-        }
     }
 
-    return QObject::eventFilter(target, event);
+    this->toolBoxLibrary->setItemText(Library::AUDIO_PAGE_INDEX, QString("Audio (%1)").arg(this->treeWidgetAudio->topLevelItemCount()));
+    this->toolBoxLibrary->setItemText(Library::STILL_PAGE_INDEX, QString("Images (%1)").arg(this->treeWidgetImage->topLevelItemCount()));
+    this->toolBoxLibrary->setItemText(Library::MOVIE_PAGE_INDEX, QString("Videos (%1)").arg(this->treeWidgetVideo->topLevelItemCount()));
 }
+
+void LibraryWidget::templateChanged(const TemplateChangedEvent& event)
+{
+    // TODO: Only add / remove necessary items.
+    this->treeWidgetTemplate->clear();
+    this->treeWidgetTemplate->clearSelection();
+
+    QList<LibraryModel> models;
+    if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
+        models = DatabaseManager::getInstance().getLibraryTemplate();
+    else
+        models = DatabaseManager::getInstance().getLibraryTemplateByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
+
+    if (models.count() > 0)
+    {
+        foreach (LibraryModel model, models)
+        {
+            QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetTemplate);
+            widget->setIcon(0, QIcon(":/Graphics/Images/TemplateSmall.png"));
+            widget->setText(0, model.getName());
+            widget->setText(1, QString("%1").arg(model.getId()));
+            widget->setText(2, model.getLabel());
+            widget->setText(3, model.getDeviceName());
+            widget->setText(4, model.getType());
+            widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+            widget->setText(6, model.getTimecode());
+        }
+    }
+
+    this->toolBoxLibrary->setItemText(Library::TEMPLATE_PAGE_INDEX, QString("Templates (%1)").arg(this->treeWidgetTemplate->topLevelItemCount()));
+}
+
+void LibraryWidget::dataChanged(const DataChangedEvent& event)
+{
+    // TODO: Only add / remove necessary items.
+    this->treeWidgetData->clear();
+    this->treeWidgetData->clearSelection();
+
+    QList<LibraryModel> models;
+    if (this->lineEditFilter->text().isEmpty() &&  dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter().count() == 0)
+        models = DatabaseManager::getInstance().getLibraryData();
+    else
+        models = DatabaseManager::getInstance().getLibraryDataByFilter(this->lineEditFilter->text(), dynamic_cast<DeviceFilterWidget*>(this->widgetDeviceFilter)->getDeviceFilter());
+
+    if (models.count() > 0)
+    {
+        foreach (LibraryModel model, models)
+        {
+            QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetData);
+            widget->setIcon(0, QIcon(":/Graphics/Images/DataSmall.png"));
+            widget->setText(0, model.getName());
+            widget->setText(1, QString("%1").arg(model.getId()));
+            widget->setText(2, model.getLabel());
+            widget->setText(3, model.getDeviceName());
+            widget->setText(4, model.getType());
+            widget->setText(5, QString("%1").arg(model.getThumbnailId()));
+            widget->setText(6, model.getTimecode());
+        }
+    }
+
+    this->toolBoxLibrary->setItemText(Library::DATA_PAGE_INDEX, QString("Stored Data (%1)").arg(this->treeWidgetData->topLevelItemCount()));
+}
+
+void LibraryWidget::presetChanged(const PresetChangedEvent& event)
+{
+    // TODO: Only add / remove necessary items.
+    this->treeWidgetPreset->clear();
+    this->treeWidgetPreset->clearSelection();
+
+    QList<PresetModel> models;
+    if (this->lineEditFilter->text().isEmpty())
+        models = DatabaseManager::getInstance().getPreset();
+    else
+        models = DatabaseManager::getInstance().getPresetByFilter(this->lineEditFilter->text());
+
+    if (models.count() > 0)
+    {
+        foreach (PresetModel model, models)
+        {
+            QTreeWidgetItem* widget = new QTreeWidgetItem(this->treeWidgetPreset);
+            widget->setIcon(0, QIcon(":/Graphics/Images/PresetSmall.png"));
+            widget->setText(0, model.getName());
+            widget->setText(1, QString("%1").arg(model.getId()));
+            widget->setText(2, model.getValue());
+        }
+    }
+
+    this->toolBoxLibrary->setItemText(Library::PRESET_PAGE_INDEX, QString("Presets (%1)").arg(this->treeWidgetPreset->topLevelItemCount()));
+}
+
+void LibraryWidget::importPreset(const ImportPresetEvent& event)
+{
+    QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
+    if (!path.isEmpty())
+    {
+        QFile file(path);
+        if (file.open(QFile::ReadOnly | QIODevice::Text))
+        {
+            const QString& data = file.readAll();
+            if (!data.isEmpty())
+            {
+                QFileInfo info(path);
+                DatabaseManager::getInstance().insertPreset(PresetModel(0, info.baseName(), data));
+
+                EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
+            }
+
+            file.close();
+        }
+    }
+}
+
+void LibraryWidget::exportPreset(const ExportPresetEvent& event)
+{
+    if (this->treeWidgetPreset->selectedItems().count() == 0)
+        return;
+
+    const QString path = QFileDialog::getSaveFileName(this, "Export Preset", this->treeWidgetPreset->currentItem()->text(0), "Preset (*.xml)");
+    if (!path.isEmpty())
+    {
+        QFile file(path);
+        if (file.exists())
+            file.remove();
+
+        if (file.open(QFile::WriteOnly))
+        {
+            const QString& data = this->treeWidgetPreset->currentItem()->text(2);
+            if (!data.isEmpty())
+            {
+                QTextStream stream(&file);
+                stream << data;
+            }
+
+            file.close();
+        }
+    }
+}
+
+void LibraryWidget::loadLibrary()
+{
+    EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
+    EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
+    EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
+    EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
+}
+
 
 void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
@@ -767,7 +765,7 @@ void LibraryWidget::contextMenuDataTriggered(QAction* action)
     if (action->text() == "Add stored data")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetData->selectedItems())
-            EventManager::getInstance().fireAddTemplateDataEvent(item->text(0), true);
+            EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(item->text(0), true));
     }
 }
 
@@ -776,28 +774,18 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
     if (action->text() == "Add item")
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
-            EventManager::getInstance().fireAddPresetItemEvent(item->text(2));
+            EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(item->text(2)));
     }
     else if (action->text() == "Delete")
-        removeSelectedPresets();
-}
-
-bool LibraryWidget::removeSelectedPresets()
-{
-    foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
-        DatabaseManager::getInstance().deletePreset(item->text(1).toInt());
-
-    EventManager::getInstance().firePresetChangedEvent();
-
-    return true;
+        this->treeWidgetPreset->removeSelectedPresets();
 }
 
 void LibraryWidget::filterLibrary()
 {
-    EventManager::getInstance().fireMediaChangedEvent();
-    EventManager::getInstance().fireTemplateChangedEvent();
-    EventManager::getInstance().fireDataChangedEvent();
-    EventManager::getInstance().firePresetChangedEvent();
+    EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
+    EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
+    EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
+    EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
 }
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -826,9 +814,9 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
                                                                          current->text(3), current->text(4), current->text(5).toInt(),
                                                                          current->text(6)));
     else if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
-        EventManager::getInstance().fireAddTemplateDataEvent(current->text(0), true);
+        EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(current->text(0), true));
     else if (this->toolBoxLibrary->currentIndex() == Library::PRESET_PAGE_INDEX)
-        EventManager::getInstance().fireAddPresetItemEvent(current->text(2));
+        EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(current->text(2)));
 }
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
@@ -846,7 +834,7 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
     if (this->toolBoxLibrary->currentIndex() == Library::DATA_PAGE_INDEX)
         return;
 
-    EventManager::getInstance().fireLibraryItemSelectedEvent(NULL, this->model.data());
+    EventManager::getInstance().fireLibraryItemSelectedEvent(LibraryItemSelectedEvent(NULL, this->model.data()));
 }
 
 void LibraryWidget::toggleExpandItem(QTreeWidgetItem* item, int index)

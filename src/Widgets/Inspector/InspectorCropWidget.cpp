@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtGui/QApplication>
@@ -15,41 +15,35 @@ InspectorCropWidget::InspectorCropWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTween();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTween();
 }
 
-bool InspectorCropWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorCropWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<CropCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<CropCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->sliderCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
-            this->sliderCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
-            this->sliderCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
-            this->sliderCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
-            this->spinBoxCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
-            this->spinBoxCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
-            this->spinBoxCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
-            this->spinBoxCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-        }
-
-        blockAllSignals(false);
+        this->sliderCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
+        this->sliderCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
+        this->sliderCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
+        this->sliderCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
+        this->spinBoxCropLeft->setValue(QString("%1").arg(this->command->getCropLeft() * 100).toFloat());
+        this->spinBoxCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
+        this->spinBoxCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
+        this->spinBoxCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxDefer->setChecked(this->command->getDefer());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorCropWidget::blockAllSignals(bool block)
@@ -86,7 +80,7 @@ void InspectorCropWidget::sliderCropLeftChanged(int cropLeft)
 
     this->spinBoxCropLeft->setValue(cropLeft);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropLeftChanged(int cropLeft)
@@ -100,7 +94,7 @@ void InspectorCropWidget::sliderCropRightChanged(int cropRight)
 
     this->spinBoxCropRight->setValue(cropRight);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropRightChanged(int cropRight)
@@ -114,7 +108,7 @@ void InspectorCropWidget::sliderCropTopChanged(int cropTop)
 
     this->spinBoxCropTop->setValue(cropTop);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropTopChanged(int cropTop)
@@ -128,7 +122,7 @@ void InspectorCropWidget::sliderCropBottomChanged(int cropBottom)
 
     this->spinBoxCropBottom->setValue(cropBottom);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropBottomChanged(int cropBottom)
@@ -151,7 +145,7 @@ void InspectorCropWidget::resetCropLeft(QString value)
     this->sliderCropLeft->setValue(Mixer::DEFAULT_CROP_LEFT);
     this->command->setCropLeft(static_cast<float>(this->sliderCropLeft->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::resetCropRight(QString value)
@@ -159,7 +153,7 @@ void InspectorCropWidget::resetCropRight(QString value)
     this->sliderCropRight->setValue(Mixer::DEFAULT_CROP_RIGHT);
     this->command->setCropRight(static_cast<float>(this->sliderCropRight->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::resetCropTop(QString value)
@@ -167,7 +161,7 @@ void InspectorCropWidget::resetCropTop(QString value)
     this->sliderCropTop->setValue(Mixer::DEFAULT_CROP_TOP * 100);
     this->command->setCropTop(static_cast<float>(this->sliderCropTop->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::resetCropBottom(QString value)
@@ -175,7 +169,7 @@ void InspectorCropWidget::resetCropBottom(QString value)
     this->sliderCropBottom->setValue(Mixer::DEFAULT_CROP_BOTTOM * 100);
     this->command->setCropBottom(static_cast<float>(this->sliderCropBottom->value()) / 100);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::resetDuration(QString value)

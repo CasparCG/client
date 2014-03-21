@@ -4,7 +4,6 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterNetworkTargetModel.h"
 
 #include <QtGui/QApplication>
@@ -15,33 +14,27 @@ InspectorNetworkSourceWidget::InspectorNetworkSourceWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadTriCasterNetworkTarget();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadTriCasterNetworkTarget();
 }
 
-bool InspectorNetworkSourceWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorNetworkSourceWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<NetworkSourceCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<NetworkSourceCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findData(this->command->getTarget()));
-            this->lineEditSource->setText(this->command->getSource());
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findData(this->command->getTarget()));
+        this->lineEditSource->setText(this->command->getSource());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorNetworkSourceWidget::blockAllSignals(bool block)

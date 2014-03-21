@@ -15,6 +15,9 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/TemplateCommand.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -54,7 +57,6 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         virtual void setCompactView(bool compactView);
 
     protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
         void dragEnterEvent(QDragEnterEvent* event);
         void dropEvent(QDropEvent* event);
 
@@ -113,4 +115,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
+        Q_SLOT void targetChanged(const TargetChangedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

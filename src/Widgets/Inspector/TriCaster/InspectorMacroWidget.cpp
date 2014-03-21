@@ -14,30 +14,24 @@ InspectorMacroWidget::InspectorMacroWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorMacroWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorMacroWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<MacroCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<MacroCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->lineEditMacro->setText(this->command->getMacro());
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->lineEditMacro->setText(this->command->getMacro());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorMacroWidget::blockAllSignals(bool block)

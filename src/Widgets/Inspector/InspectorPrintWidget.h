@@ -4,6 +4,7 @@
 #include "ui_InspectorPrintWidget.h"
 
 #include "Commands/PrintCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -19,9 +20,6 @@ class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWi
     public:
         explicit InspectorPrintWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         PrintCommand* command;
@@ -30,4 +28,5 @@ class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWi
 
         Q_SLOT void outputChanged(QString);
         Q_SLOT void resetOutput(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

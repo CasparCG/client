@@ -4,6 +4,7 @@
 #include "ui_InspectorFileRecorderWidget.h"
 
 #include "Commands/FileRecorderCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorFileRecorderWidget : public QWidget, Ui::Inspector
 
     public:
         explicit InspectorFileRecorderWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -38,4 +36,5 @@ class WIDGETS_EXPORT InspectorFileRecorderWidget : public QWidget, Ui::Inspector
         Q_SLOT void resetPreset(QString);
         Q_SLOT void resetTune(QString);
         Q_SLOT void resetWithAlpha(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

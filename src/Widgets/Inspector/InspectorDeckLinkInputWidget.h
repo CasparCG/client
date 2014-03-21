@@ -4,6 +4,7 @@
 #include "ui_InspectorDeckLinkInputWidget.h"
 
 #include "Commands/DeckLinkInputCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorDeckLinkInputWidget : public QWidget, Ui::Inspecto
 
     public:
         explicit InspectorDeckLinkInputWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -44,4 +42,5 @@ class WIDGETS_EXPORT InspectorDeckLinkInputWidget : public QWidget, Ui::Inspecto
         Q_SLOT void resetDuration(QString);
         Q_SLOT void resetDirection(QString);
         Q_SLOT void resetTween(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

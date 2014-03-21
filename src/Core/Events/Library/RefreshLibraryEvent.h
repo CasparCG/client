@@ -2,12 +2,10 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT RefreshLibraryEvent : public QEvent
+class CORE_EXPORT RefreshLibraryEvent
 {
     public:
-        explicit RefreshLibraryEvent(int delay);
+        explicit RefreshLibraryEvent(int delay = 0);
 
         int getDelay() const;
 

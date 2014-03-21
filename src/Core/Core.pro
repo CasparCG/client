@@ -96,7 +96,6 @@ HEADERS += \
     Events/Inspector/VideolayerChangedEvent.h \
     Models/OscFileModel.h \
     Events/Inspector/AddTemplateDataEvent.h \
-    Events/Rundown/RundownIsChangedEvent.h \
     Events/Action/AddActionItemEvent.h \
     Commands/ChromaCommand.h \
     Models/ChromaModel.h \
@@ -128,7 +127,10 @@ HEADERS += \
     Events/SaveAsPresetEvent.h \
     Events/Rundown/CloseRundownEvent.h \
     Events/Rundown/RemoteRundownTriggeringEvent.h \
-    Events/Rundown/AllowRemoteTriggeringMenuEvent.h
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.h \
+    Events/Rundown/ExecutePlayoutCommandEvent.h \
+    Events/Rundown/OpenRundownMenuEvent.h \
+    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -214,7 +216,6 @@ SOURCES += \
     Events/Inspector/VideolayerChangedEvent.cpp \
     Models/OscFileModel.cpp \
     Events/Inspector/AddTemplateDataEvent.cpp \
-    Events/Rundown/RundownIsChangedEvent.cpp \
     Events/Action/AddActionItemEvent.cpp \
     Commands/ChromaCommand.cpp \
     Models/ChromaModel.cpp \
@@ -246,7 +247,10 @@ SOURCES += \
     Events/SaveAsPresetEvent.cpp \
     Events/Rundown/CloseRundownEvent.cpp \
     Events/Rundown/RemoteRundownTriggeringEvent.cpp \
-    Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp
+    Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp \
+    Events/Rundown/ExecutePlayoutCommandEvent.cpp \
+    Events/Rundown/OpenRundownMenuEvent.cpp \
+    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack

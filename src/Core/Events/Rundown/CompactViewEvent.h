@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT CompactViewEvent : public QEvent
+class CORE_EXPORT CompactViewEvent
 {
     public:
         explicit CompactViewEvent();

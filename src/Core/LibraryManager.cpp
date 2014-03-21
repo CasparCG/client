@@ -3,6 +3,10 @@
 #include "DeviceManager.h"
 #include "TriCasterDeviceManager.h"
 #include "EventManager.h"
+#include "Events/StatusbarEvent.h"
+#include "Events/MediaChangedEvent.h"
+#include "Events/DataChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
 #include "Models/DeviceModel.h"
 
 #include <QtCore/QSharedPointer>
@@ -20,8 +24,8 @@ LibraryManager::LibraryManager(QObject* parent)
     QObject::connect(&this->refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
-
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(autoRefreshLibrary(const AutoRefreshLibraryEvent&)), this, SLOT(autoRefreshLibrary(const AutoRefreshLibraryEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(refreshLibrary(const RefreshLibraryEvent&)), this, SLOT(refreshLibrary(const RefreshLibraryEvent&)));
 }
 
 LibraryManager& LibraryManager::getInstance()
@@ -31,39 +35,48 @@ LibraryManager& LibraryManager::getInstance()
 
 void LibraryManager::initialize()
 {
-    EventManager::getInstance().fireRefreshLibraryEvent();
-    EventManager::getInstance().fireAutoRefreshLibraryEvent((DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false,
-                                                            DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt() * 1000);
+    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
+    EventManager::getInstance().fireAutoRefreshLibraryEvent(AutoRefreshLibraryEvent((DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false,
+                                                                                    DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt() * 1000));
 }
 
 void LibraryManager::uninitialize()
 {
 }
 
-bool LibraryManager::eventFilter(QObject* target, QEvent* event)
+
+
+
+
+
+
+
+
+void LibraryManager::refreshLibrary(const RefreshLibraryEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RefreshLibrary))
-    {
-        RefreshLibraryEvent* refreshLibraryEvent = dynamic_cast<RefreshLibraryEvent*>(event);
-        QTimer::singleShot(refreshLibraryEvent->getDelay(), this, SLOT(refresh()));
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::AutoRefreshLibrary))
-    {
-        AutoRefreshLibraryEvent* autoRefreshLibraryEvent = dynamic_cast<AutoRefreshLibraryEvent*>(event);
-        if (this->refreshTimer.interval() != autoRefreshLibraryEvent->getInterval())
-            this->refreshTimer.setInterval(autoRefreshLibraryEvent->getInterval());
-
-        if (this->refreshTimer.isActive() != autoRefreshLibraryEvent->getAutoRefresh())
-        {
-            if (autoRefreshLibraryEvent->getAutoRefresh())
-                this->refreshTimer.start();
-            else
-                this->refreshTimer.stop();
-        }
-    }
-
-    return QObject::eventFilter(target, event);
+    QTimer::singleShot(event.getDelay(), this, SLOT(refresh()));
 }
+
+void LibraryManager::autoRefreshLibrary(const AutoRefreshLibraryEvent& event)
+{
+    if (this->refreshTimer.interval() != event.getInterval())
+        this->refreshTimer.setInterval(event.getInterval());
+
+    if (this->refreshTimer.isActive() != event.getAutoRefresh())
+    {
+        if (event.getAutoRefresh())
+            this->refreshTimer.start();
+        else
+            this->refreshTimer.stop();
+    }
+}
+
+
+
+
+
+
+
 
 void LibraryManager::refresh()
 {
@@ -76,7 +89,7 @@ void LibraryManager::refresh()
     if (DeviceManager::getInstance().getDeviceCount() == 0)
         return;
 
-    EventManager::getInstance().fireStatusbarEvent("Refreshing library...");
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Refreshing library..."));
     qDebug() << QString("LibraryManager::refresh: Refreshing library...");
 
     // Only refresh library for all devices.
@@ -102,9 +115,9 @@ void LibraryManager::refresh()
 
 void LibraryManager::deviceRemoved()
 {
-    EventManager::getInstance().fireMediaChangedEvent();
-    EventManager::getInstance().fireTemplateChangedEvent();
-    EventManager::getInstance().fireDataChangedEvent();
+    EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
+    EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
+    EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
 }
 
 void LibraryManager::deviceAdded(CasparDevice& device)
@@ -191,7 +204,7 @@ void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDe
     if (deleteModels.count() > 0 || insertModels.count() > 0)
     {
         DatabaseManager::getInstance().updateLibraryMedia(device.getAddress(), deleteModels, insertModels);
-        EventManager::getInstance().fireMediaChangedEvent();
+        EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     }
 
     qDebug() << QString("LibraryManager::deviceMediaChanged: %1 msec").arg(time.elapsed());
@@ -237,7 +250,7 @@ void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems,
     if (deleteModels.count() > 0 || insertModels.count() > 0)
     {
         DatabaseManager::getInstance().updateLibraryTemplate(device.getAddress(), deleteModels, insertModels);
-        EventManager::getInstance().fireTemplateChangedEvent();
+        EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     }
 
     qDebug() << QString("LibraryManager::deviceTemplateChanged: %1 msec").arg(time.elapsed());
@@ -283,7 +296,7 @@ void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevic
     if (deleteModels.count() > 0 || insertModels.count() > 0)
     {
         DatabaseManager::getInstance().updateLibraryData(device.getAddress(), deleteModels, insertModels);
-        EventManager::getInstance().fireDataChangedEvent();
+        EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     }
 
     qDebug() << QString("LibraryManager::deviceDataChanged: %1 msec").arg(time.elapsed());

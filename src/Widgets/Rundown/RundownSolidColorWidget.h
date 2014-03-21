@@ -15,6 +15,8 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/SolidColorCommand.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -51,9 +53,6 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         virtual void setCompactView(bool compactView);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool active;
@@ -106,4 +105,6 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 #include "Models/FormatModel.h"
 
 InspectorFileRecorderWidget::InspectorFileRecorderWidget(QWidget* parent)
@@ -12,33 +12,27 @@ InspectorFileRecorderWidget::InspectorFileRecorderWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorFileRecorderWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorFileRecorderWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<FileRecorderCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<FileRecorderCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->lineEditOutput->setText(this->command->getOutput());
-            this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
-            this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
-            this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
-            this->checkBoxWithAlpha->setChecked(this->command->getWithAlpha());
-        }
-
-        blockAllSignals(false);
+        this->lineEditOutput->setText(this->command->getOutput());
+        this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
+        this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
+        this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
+        this->checkBoxWithAlpha->setChecked(this->command->getWithAlpha());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorFileRecorderWidget::blockAllSignals(bool block)

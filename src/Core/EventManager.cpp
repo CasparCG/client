@@ -1,7 +1,6 @@
 #include "EventManager.h"
 
 #include <QtGui/QApplication>
-#include <QtGui/QKeyEvent>
 
 Q_GLOBAL_STATIC(EventManager, eventManager)
 
@@ -22,358 +21,272 @@ void EventManager::uninitialize()
 {
 }
 
-void EventManager::fireProcessEvent()
+void EventManager::fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent& event)
 {
-    qApp->processEvents();
+    emit removeItemFromAutoPlayQueue(event);
 }
 
-void EventManager::fireImportPresetEvent()
+void EventManager::fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent& event)
 {
-    qApp->postEvent(qApp, new ImportPresetEvent());
+    emit executePlayoutCommand(event);
 }
 
-void EventManager::fireExportPresetEvent()
+void EventManager::fireOpenRundownEvent(const OpenRundownEvent& event)
 {
-    qApp->postEvent(qApp, new ExportPresetEvent());
+    emit openRundown(event);
 }
 
-void EventManager::fireSaveAsPresetEvent()
+void EventManager::fireSaveRundownEvent(const SaveRundownEvent& event)
 {
-    qApp->postEvent(qApp, new SaveAsPresetEvent());
+    emit saveRundown(event);
 }
 
-void EventManager::fireNewRundownEvent()
+void EventManager::fireCloseRundownEvent(const CloseRundownEvent& event)
 {
-    qApp->postEvent(qApp, new NewRundownEvent());
+    emit closeRundown(event);
 }
 
-void EventManager::fireNewRundownMenuEvent(bool enabled)
+void EventManager::fireAddTemplateDataEvent(const AddTemplateDataEvent& event)
 {
-    qApp->postEvent(qApp, new NewRundownMenuEvent(enabled));
+    emit addTemplateData(event);
 }
 
-void EventManager::fireDeleteRundownEvent(int index)
+void EventManager::fireOscOutputChangedEvent(const OscOutputChangedEvent& event)
 {
-    qApp->postEvent(qApp, new DeleteRundownEvent(index));
+    emit oscOutputChanged(event);
 }
 
-void EventManager::fireRundownIsChangedEvent(bool changed)
+void EventManager::fireRundownItemSelectedEvent(const RundownItemSelectedEvent& event)
 {
-    qApp->postEvent(qApp, new RundownIsChangedEvent(changed));
+    emit rundownItemSelected(event);
 }
 
-void EventManager::fireOpenRundownEvent()
+void EventManager::fireLibraryItemSelectedEvent(const LibraryItemSelectedEvent& event)
 {
-    qApp->postEvent(qApp, new OpenRundownEvent());
+    emit libraryItemSelected(event);
 }
 
-void EventManager::fireOpenRundownEvent(const QString& path)
+void EventManager::fireDeleteRundownEvent(const DeleteRundownEvent& event)
 {
-    qApp->postEvent(qApp, new OpenRundownEvent(path));
+    emit deleteRundown(event);
 }
 
-void EventManager::fireSaveRundownEvent(bool saveAs)
+void EventManager::fireStatusbarEvent(const StatusbarEvent& event)
 {
-    qApp->postEvent(qApp, new SaveRundownEvent(saveAs));
+    emit statusbar(event);
 }
 
-void EventManager::fireExecuteStopEvent()
+void EventManager::fireActiveRundownChangedEvent(const ActiveRundownChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F1, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit activeRundownChanged(event);
 }
 
-void EventManager::fireExecutePlayEvent()
+void EventManager::fireNewRundownEvent(const NewRundownEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F2, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit newRundown(event);
 }
 
-void EventManager::fireExecuteLoadEvent()
+void EventManager::fireNewRundownMenuEvent(const NewRundownMenuEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit newRundownMenu(event);
 }
 
-void EventManager::fireExecutePauseEvent()
+void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit openRundownMenu(event);
 }
 
-void EventManager::fireExecuteNextEvent()
+void EventManager::fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggeringMenuEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit allowRemoteTriggeringMenu(event);
 }
 
-void EventManager::fireExecuteUpdateEvent()
+void EventManager::fireMediaChangedEvent(const MediaChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F6, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit mediaChanged(event);
 }
 
-void EventManager::fireExecuteInvokeEvent()
+void EventManager::fireTemplateChangedEvent(const TemplateChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit templateChanged(event);
 }
 
-void EventManager::fireExecuteClearEvent()
+void EventManager::fireDataChangedEvent(const DataChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit dataChanged(event);
 }
 
-void EventManager::fireExecuteClearVideolayerEvent()
+void EventManager::fireImportPresetEvent(const ImportPresetEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit importPreset(event);
 }
 
-void EventManager::fireExecuteClearChannelEvent()
+void EventManager::fireExportPresetEvent(const ExportPresetEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    QKeyEvent event(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier);
-    qApp->sendEvent(qApp, &event);
+    emit exportPreset(event);
 }
 
-void EventManager::fireExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item)
+void EventManager::fireEmptyRundownEvent(const EmptyRundownEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    ExecuteRundownItemEvent event(type, item);
-    qApp->sendEvent(qApp, &event);
+    emit emptyRundown(event);
 }
 
-void EventManager::fireToggleCompactViewEvent()
+void EventManager::firePresetChangedEvent(const PresetChangedEvent& event)
 {
-    qApp->postEvent(qApp, new CompactViewEvent());
+    emit presetChanged(event);
 }
 
-void EventManager::fireRemoteRundownTriggeringEvent(bool enabled)
+void EventManager::fireRefreshLibraryEvent(const RefreshLibraryEvent& event)
 {
-    qApp->postEvent(qApp, new RemoteRundownTriggeringEvent(enabled));
+    emit refreshLibrary(event);
 }
 
-void EventManager::fireAllowRemoteTriggeringMenuEvent(bool enabled)
+void EventManager::fireAutoRefreshLibraryEvent(const AutoRefreshLibraryEvent& event)
 {
-    qApp->postEvent(qApp, new AllowRemoteTriggeringMenuEvent(enabled));
+    emit autoRefreshLibrary(event);
 }
 
-void EventManager::fireCloseRundownEvent()
+void EventManager::firePreviewEvent(const PreviewEvent& event)
 {
-    qApp->postEvent(qApp, new CloseRundownEvent());
+    emit preview(event);
 }
 
-void EventManager::fireRefreshLibraryEvent(int delay)
+void EventManager::fireChannelChangedEvent(const ChannelChangedEvent& event)
 {
-    qApp->postEvent(qApp, new RefreshLibraryEvent(delay));
+    emit channelChanged(event);
 }
 
-void EventManager::fireEmptyRundownEvent()
+void EventManager::fireVideolayerChangedEvent(const VideolayerChangedEvent& event)
 {
-    // Use synchronous event through sendEvent().
-    EmptyRundownEvent event;
-    qApp->sendEvent(qApp, &event);
+    emit videolayerChanged(event);
+}
+
+void EventManager::fireLabelChangedEvent(const LabelChangedEvent& event)
+{
+    emit labelChanged(event);
+}
+
+void EventManager::fireTargetChangedEvent(const TargetChangedEvent& event)
+{
+    emit targetChanged(event);
+}
+
+void EventManager::fireDeviceChangedEvent(const DeviceChangedEvent& event)
+{
+    emit deviceChanged(event);
+}
+
+void EventManager::fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent& event)
+{
+    emit autoPlayNextRundownItem(event);
+}
+
+void EventManager::fireAutoPlayChangedEvent(const AutoPlayChangedEvent& event)
+{
+    emit autoPlayChanged(event);
+}
+
+void EventManager::fireSaveAsPresetEvent(const SaveAsPresetEvent& event)
+{
+    emit saveAsPreset(event);
+}
+
+void EventManager::fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent& event)
+{
+    emit autoPlayRundownItem(event);
+}
+
+void EventManager::fireAddPresetItemEvent(const AddPresetItemEvent& event)
+{
+    emit addPresetItem(event);
+}
+
+void EventManager::fireToggleCompactViewEvent(const CompactViewEvent& event)
+{
+    emit toggleCompactView(event);
+}
+
+void EventManager::fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event)
+{
+    emit executeRundownItem(event);
+}
+
+void EventManager::fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event)
+{
+    emit remoteRundownTriggering(event);
 }
 
 void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
 {
-    qApp->postEvent(qApp, new AddRudnownItemEvent(model));
-}
-
-void EventManager::fireAddTemplateDataEvent(const QString& value, bool storedData)
-{
-    qApp->postEvent(qApp, new AddTemplateDataEvent(value, storedData));
+    emit addRudnownItem(AddRudnownItemEvent(model));
 }
 
 void EventManager::fireAddRudnownItemEvent(const QString& type)
 {
     if (type == Rundown::BLENDMODE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Blend Mode", "", "", Rundown::BLENDMODE, 0, "")));
     else if (type == Rundown::BRIGHTNESS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
     else if (type == Rundown::CONTRAST)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
     else if (type == Rundown::CROP)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
     else if (type == Rundown::CHROMAKEY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
     else if (type == Rundown::IMAGESCROLLER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image Scroller", "", "", Rundown::IMAGESCROLLER, 0, "")));
     else if (type == Rundown::DECKLINKINPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "DeckLink Input", "", "", Rundown::DECKLINKINPUT, 0, "")));
     else if (type == Rundown::PRINT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
     else if (type == Rundown::CLEAROUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
     else if (type == Rundown::GEOMETRY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
     else if (type == Rundown::GPIOUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
     else if (type == Rundown::FILERECORDER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
     else if (type == Rundown::SEPARATOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
     else if (type == Rundown::GRID)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
     else if (type == Rundown::SOLIDCOLOR)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Solid Color", "", "", Rundown::SOLIDCOLOR, 0, "")));
     else if (type == Rundown::KEYER)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Mask", "", "", Rundown::KEYER, 0, "")));
     else if (type == Rundown::LEVELS)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Levels", "", "", Rundown::LEVELS, 0, "")));
     else if (type == Rundown::OPACITY)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Opacity", "", "", Rundown::OPACITY, 0, "")));
     else if (type == Rundown::SATURATION)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Saturation", "", "", Rundown::SATURATION, 0, "")));
     else if (type == Rundown::VOLUME)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Volume", "", "", Rundown::VOLUME, 0, "")));
     else if (type == Rundown::COMMIT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
     else if (type == Rundown::AUDIO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
     else if (type == Rundown::IMAGE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
     else if (type == Rundown::TEMPLATE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
     else if (type == Rundown::VIDEO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
     else if (type ==  Rundown::INPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::INPUT, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::INPUT, 0, "")));
     else if (type ==  Rundown::PRESET)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::PRESET, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::PRESET, 0, "")));
     else if (type ==  Rundown::AUTO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::AUTO, 0, "")));
     else if (type ==  Rundown::TAKE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TAKE, 0, "")));
     else if (type ==  Rundown::NETSOURCE)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::NETSOURCE, 0, "")));
     else if (type ==  Rundown::MACRO)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::MACRO, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::MACRO, 0, "")));
     else if (type ==  Rundown::OSCOUTPUT)
-        qApp->postEvent(qApp, new AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
-}
-
-void EventManager::fireAddPresetItemEvent(const QString& preset)
-{
-    // Use synchronous event through sendEvent().
-    AddPresetItemEvent event(preset);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireStatusbarEvent(const QString& message, int timeout)
-{
-    // Use synchronous event through sendEvent().
-    StatusbarEvent event(message, timeout);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireActiveRundownChangedEvent(const QString& path)
-{
-    qApp->postEvent(qApp, new ActiveRundownChangedEvent(path));
-}
-
-void EventManager::fireRundownItemSelectedEvent(AbstractCommand* command, LibraryModel* model, QWidget* source, QWidget* parent)
-{
-    // Use synchronous event through sendEvent().
-    RundownItemSelectedEvent event(command, model, source, parent);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireLibraryItemSelectedEvent(AbstractCommand* command, LibraryModel* model)
-{
-    // Use synchronous event through sendEvent().
-    LibraryItemSelectedEvent event(command, model);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireAutoRefreshLibraryEvent(bool autoRefresh, int interval)
-{
-    qApp->postEvent(qApp, new AutoRefreshLibraryEvent(autoRefresh, interval));
-}
-
-void EventManager::fireMediaChangedEvent()
-{
-    qApp->postEvent(qApp, new MediaChangedEvent());
-}
-
-void EventManager::fireTemplateChangedEvent()
-{
-    qApp->postEvent(qApp, new TemplateChangedEvent());
-}
-
-void EventManager::fireDataChangedEvent()
-{
-    qApp->postEvent(qApp, new DataChangedEvent());
-}
-
-void EventManager::firePresetChangedEvent()
-{
-    qApp->postEvent(qApp, new PresetChangedEvent());
-}
-
-void EventManager::firePreviewEvent()
-{
-    qApp->postEvent(qApp, new PreviewEvent());
-}
-
-void EventManager::fireLabelChangedEvent(const QString& label)
-{
-    qApp->postEvent(qApp, new LabelChangedEvent(label));
-}
-
-void EventManager::fireTargetChangedEvent(const QString& target)
-{
-    qApp->postEvent(qApp, new TargetChangedEvent(target));
-}
-
-void EventManager::fireDeviceChangedEvent(const QString& deviceName)
-{
-    qApp->postEvent(qApp, new DeviceChangedEvent(deviceName));
-}
-
-void EventManager::fireChannelChangedEvent(int channel)
-{
-    qApp->postEvent(qApp, new ChannelChangedEvent(channel));
-}
-
-void EventManager::fireVideolayerChangedEvent(int videolayer)
-{
-    qApp->postEvent(qApp, new VideolayerChangedEvent(videolayer));
-}
-
-void EventManager::fireAutoPlayRundownItemEvent(QWidget* widget)
-{
-    // Use synchronous event through sendEvent().
-    AutoPlayRundownItemEvent event(widget);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireAutoPlayNextRundownItemEvent(QWidget* widget)
-{
-    // Use synchronous event through sendEvent().
-    AutoPlayNextRundownItemEvent event(widget);
-    qApp->sendEvent(qApp, &event);
-}
-
-void EventManager::fireAutoPlayChangedEvent(bool autoPlay)
-{
-    qApp->postEvent(qApp, new AutoPlayChangedEvent(autoPlay));
-}
-
-void EventManager::fireOscOutputChangedEvent()
-{
-    qApp->postEvent(qApp, new OscOutputChangedEvent());
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
 }

@@ -7,6 +7,9 @@
 #include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
+#include "Events/OscOutputChangedEvent.h"
+#include "Events/Library/RefreshLibraryEvent.h"
+#include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Models/ConfigurationModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/GpiModel.h"
@@ -272,7 +275,7 @@ void SettingsDialog::showImportDeviceDialog()
 
             loadDevice();
 
-            EventManager::getInstance().fireRefreshLibraryEvent();
+            EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
         }
     }
 }
@@ -303,7 +306,7 @@ void SettingsDialog::showImportTriCasterDeviceDialog()
 
             loadDevice();
 
-            EventManager::getInstance().fireRefreshLibraryEvent();
+            EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
         }
     }
 }
@@ -320,7 +323,7 @@ void SettingsDialog::showAddDeviceDialog()
 
         loadDevice();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
     }
 }
 
@@ -334,7 +337,7 @@ void SettingsDialog::showAddTriCasterDeviceDialog()
 
         loadTriCasterDevice();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
     }
 }
 
@@ -348,7 +351,7 @@ void SettingsDialog::showAddOscOutputDialog()
 
         loadOscOutput();
 
-        EventManager::getInstance().fireOscOutputChangedEvent();
+        EventManager::getInstance().fireOscOutputChangedEvent(OscOutputChangedEvent());
     }
 }
 
@@ -362,7 +365,7 @@ void SettingsDialog::removeDevice()
 
     loadDevice();
 
-    EventManager::getInstance().fireRefreshLibraryEvent();
+    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
 }
 
 void SettingsDialog::removeTriCasterDevice()
@@ -375,7 +378,7 @@ void SettingsDialog::removeTriCasterDevice()
 
     loadTriCasterDevice();
 
-    EventManager::getInstance().fireRefreshLibraryEvent();
+    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
 }
 
 void SettingsDialog::removeOscOutput()
@@ -388,7 +391,7 @@ void SettingsDialog::removeOscOutput()
 
     loadOscOutput();
 
-    EventManager::getInstance().fireOscOutputChangedEvent();
+    EventManager::getInstance().fireOscOutputChangedEvent(OscOutputChangedEvent());
 }
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
@@ -407,7 +410,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 
         loadDevice();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
     }
 }
 
@@ -424,7 +427,7 @@ void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, 
 
         loadTriCasterDevice();
 
-        EventManager::getInstance().fireRefreshLibraryEvent();
+        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
     }
 }
 
@@ -441,7 +444,7 @@ void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int in
 
         loadOscOutput();
 
-        EventManager::getInstance().fireOscOutputChangedEvent();
+        EventManager::getInstance().fireOscOutputChangedEvent(OscOutputChangedEvent());
     }
 }
 
@@ -466,7 +469,8 @@ void SettingsDialog::autoSynchronizeChanged(int state)
     this->spinBoxRefreshInterval->setEnabled((isAutoSynchronize == "true") ? true : false);
     this->labelSeconds->setEnabled((isAutoSynchronize == "true") ? true : false);
 
-    EventManager::getInstance().fireAutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false, this->spinBoxRefreshInterval->value() * 1000);
+    EventManager::getInstance().fireAutoRefreshLibraryEvent(AutoRefreshLibraryEvent((isAutoSynchronize == "true") ? true : false,
+                                                                                    this->spinBoxRefreshInterval->value() * 1000));
 }
 
 void SettingsDialog::showThumbnailTooltipChanged(int state)
@@ -500,7 +504,7 @@ void SettingsDialog::synchronizeIntervalChanged(int interval)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RefreshLibraryInterval", QString("%1").arg(interval)));
 
-    EventManager::getInstance().fireAutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000);
+    EventManager::getInstance().fireAutoRefreshLibraryEvent(AutoRefreshLibraryEvent(this->checkBoxAutoRefresh->checkState(), interval * 1000));
 }
 
 void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBox* action)

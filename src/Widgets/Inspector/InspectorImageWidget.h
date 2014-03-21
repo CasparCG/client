@@ -4,6 +4,7 @@
 #include "ui_InspectorImageWidget.h"
 
 #include "Commands/ImageCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorImageWidget : public QWidget, Ui::InspectorImageWi
 
     public:
         explicit InspectorImageWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -43,4 +41,5 @@ class WIDGETS_EXPORT InspectorImageWidget : public QWidget, Ui::InspectorImageWi
         Q_SLOT void resetTween(QString);
         Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void resetUseAuto(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

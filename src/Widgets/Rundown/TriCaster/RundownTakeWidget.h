@@ -15,6 +15,9 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/TriCaster/TakeCommand.h"
+#include "Events/PreviewEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -51,9 +54,6 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
 
         virtual void setCompactView(bool compactView);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         bool active;
         bool inGroup;
@@ -82,4 +82,7 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
         Q_SLOT void deviceAdded(TriCasterDevice&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void preview(const PreviewEvent&);
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
+        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

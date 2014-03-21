@@ -4,6 +4,7 @@
 #include "ui_InspectorContrastWidget.h"
 
 #include "Commands/ContrastCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +18,6 @@ class WIDGETS_EXPORT InspectorContrastWidget : public QWidget, Ui::InspectorCont
 
     public:
         explicit InspectorContrastWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -37,4 +35,5 @@ class WIDGETS_EXPORT InspectorContrastWidget : public QWidget, Ui::InspectorCont
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

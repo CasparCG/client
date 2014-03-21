@@ -4,6 +4,8 @@
 #include "ui_InspectorTemplateWidget.h"
 
 #include "Commands/TemplateCommand.h"
+#include "Events/Inspector/AddTemplateDataEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -42,4 +44,6 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void useUppercaseDataChanged(int);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
 };

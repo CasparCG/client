@@ -10,6 +10,7 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/SeparatorCommand.h"
+#include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <stdexcept>
@@ -48,9 +49,6 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
 
         virtual void setCompactView(bool compactView);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         bool active;
         bool inGroup;
@@ -59,4 +57,6 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
         LibraryModel model;
         SeparatorCommand command;
         ActiveAnimation* animation;
+
+        Q_SLOT void labelChanged(const LabelChangedEvent&);
 };

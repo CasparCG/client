@@ -35,9 +35,10 @@
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/NetworkSourceCommand.h"
 #include "Commands/TriCaster/MacroCommand.h"
-#include "Events/Library/LibraryItemSelectedEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
+#include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/TargetChangedEvent.h"
+#include "Events/Inspector/VideolayerChangedEvent.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
@@ -60,293 +61,305 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(tricasterDeviceRemoved()));
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(tricasterDeviceAdded(TriCasterDevice&)));
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(mediaChanged(const MediaChangedEvent&)), this, SLOT(mediaChanged(const MediaChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(templateChanged(const TemplateChangedEvent&)), this, SLOT(templateChanged(const TemplateChangedEvent&)));
 }
 
-bool InspectorOutputWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::LibraryItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    this->comboBoxDevice->setVisible(true);
+    this->comboBoxTriCasterDevice->setVisible(false);
+
+    this->comboBoxDevice->setEnabled(true);
+    this->comboBoxTarget->setEnabled(true);
+    this->spinBoxChannel->setEnabled(true);
+    this->spinBoxVideolayer->setEnabled(true);
+    this->spinBoxDelay->setEnabled(true);
+    this->checkBoxAllowGpi->setEnabled(true);
+    this->checkBoxAllowRemoteTriggering->setEnabled(true);
+    this->labelRemoteTriggerId->setEnabled(true);
+    this->lineEditRemoteTriggerId->setEnabled(true);
+
+    this->labelMillisecond->setVisible(true);
+    if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+        this->labelMillisecond->setText("frm");
+    else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+        this->labelMillisecond->setText("ms");
+
+    if (event.getCommand() != NULL && event.getLibraryModel() != NULL)
     {
-        LibraryItemSelectedEvent* libraryItemSelectedEvent = dynamic_cast<LibraryItemSelectedEvent*>(event);
-        this->model = libraryItemSelectedEvent->getLibraryModel();
+        this->command = event.getCommand();
 
-        blockAllSignals(true);
+        int index = this->comboBoxDevice->findText(this->model->getDeviceName());
+        if (index == -1)
+            this->spinBoxChannel->setMaximum(1);
+        else
+        {
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
+            this->spinBoxChannel->setMaximum(channelFormats.count());
+        }
 
-        this->comboBoxDevice->setVisible(true);
-        this->comboBoxTriCasterDevice->setVisible(false);
-
-        this->comboBoxDevice->setEnabled(false);
-        this->comboBoxTarget->setEnabled(false);
-        this->spinBoxChannel->setEnabled(false);
-        this->spinBoxVideolayer->setEnabled(false);
-        this->spinBoxDelay->setEnabled(false);
-        this->checkBoxAllowGpi->setEnabled(false);
-        this->checkBoxAllowRemoteTriggering->setEnabled(false);
-        this->labelRemoteTriggerId->setEnabled(false);
-        this->lineEditRemoteTriggerId->setEnabled(false);
-
-
-        this->labelMillisecond->setText("");
-        this->labelMillisecond->setVisible(false);
-
-        this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
+        this->comboBoxDevice->setCurrentIndex(index);
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
-        this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
-        this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
-        this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
+        this->spinBoxChannel->setValue(this->command->getChannel());
+        this->spinBoxVideolayer->setValue(this->command->getVideolayer());
+        this->spinBoxDelay->setValue(this->command->getDelay());
+        this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
+        this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
+        this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
+
+        if (!this->checkBoxAllowRemoteTriggering->isChecked())
+        {
+            this->labelRemoteTriggerId->setEnabled(false);
+            this->lineEditRemoteTriggerId->setEnabled(false);
+        }
 
         fillTargetCombo(this->model->getType());
 
-        checkEmptyDevice();
-        checkEmptyTriCasterDevice();
-        checkEmptyTarget();
+        if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
+            dynamic_cast<PrintCommand*>(event.getCommand()) ||
+            dynamic_cast<FileRecorderCommand*>(event.getCommand()) ||
+            dynamic_cast<GridCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
 
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::EmptyRundown))
-    {
-        blockAllSignals(true);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+        }
+        else if (dynamic_cast<GroupCommand*>(event.getCommand()))
+        {
+            this->comboBoxDevice->setEnabled(false);
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxChannel->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDelay->setEnabled(false);
 
-        this->comboBoxDevice->setVisible(true);
-        this->comboBoxTriCasterDevice->setVisible(false);
-
-        this->comboBoxDevice->setEnabled(false);
-        this->comboBoxTarget->setEnabled(false);
-        this->spinBoxChannel->setEnabled(false);
-        this->spinBoxVideolayer->setEnabled(false);
-        this->spinBoxDelay->setEnabled(false);
-        this->checkBoxAllowGpi->setEnabled(false);
-        this->checkBoxAllowRemoteTriggering->setEnabled(false);
-        this->labelRemoteTriggerId->setEnabled(false);
-        this->lineEditRemoteTriggerId->setEnabled(false);
-
-        this->labelMillisecond->setText("");
-        this->labelMillisecond->setVisible(false);
-
-        this->comboBoxDevice->setCurrentIndex(-1);
-        this->comboBoxTarget->clear();
-        this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-        this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-        this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-        this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
-        this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
-        this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
-
-        checkEmptyDevice();
-        checkEmptyTriCasterDevice();
-        checkEmptyTarget();
-
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
-    {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
-
-        blockAllSignals(true);
-
-        this->comboBoxDevice->setVisible(true);
-        this->comboBoxTriCasterDevice->setVisible(false);
-
-        this->comboBoxDevice->setEnabled(true);
-        this->comboBoxTarget->setEnabled(true);
-        this->spinBoxChannel->setEnabled(true);
-        this->spinBoxVideolayer->setEnabled(true);
-        this->spinBoxDelay->setEnabled(true);
-        this->checkBoxAllowGpi->setEnabled(true);
-        this->checkBoxAllowRemoteTriggering->setEnabled(true);
-        this->labelRemoteTriggerId->setEnabled(true);
-        this->lineEditRemoteTriggerId->setEnabled(true);
-
-        this->labelMillisecond->setVisible(true);
-        if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            this->labelMillisecond->setText("frm");
-        else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             this->labelMillisecond->setText("ms");
 
-        if (rundownItemSelectedEvent->getCommand() != NULL && rundownItemSelectedEvent->getLibraryModel() != NULL)
-        {
-            this->command = rundownItemSelectedEvent->getCommand();
-
-            int index = this->comboBoxDevice->findText(this->model->getDeviceName());
-            if (index == -1)
-                this->spinBoxChannel->setMaximum(1);
-            else
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-                this->spinBoxChannel->setMaximum(channelFormats.count());
-            }
-
-            this->comboBoxDevice->setCurrentIndex(index);
-            this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
-            this->spinBoxChannel->setValue(this->command->getChannel());
-            this->spinBoxVideolayer->setValue(this->command->getVideolayer());
-            this->spinBoxDelay->setValue(this->command->getDelay());
-            this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
-            this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
-            this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
-
-            if (!this->checkBoxAllowRemoteTriggering->isChecked())
-            {
-                this->labelRemoteTriggerId->setEnabled(false);
-                this->lineEditRemoteTriggerId->setEnabled(false);
-            }
-
-            fillTargetCombo(this->model->getType());
-
-            if (dynamic_cast<CommitCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                dynamic_cast<PrintCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                dynamic_cast<FileRecorderCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                dynamic_cast<GridCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            }
-            else if (dynamic_cast<GroupCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxDevice->setEnabled(false);
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-                this->spinBoxDelay->setEnabled(false);
-
-                this->labelMillisecond->setText("ms");
-
-                this->comboBoxDevice->setCurrentIndex(-1);
-                this->comboBoxTarget->setCurrentIndex(-1);
-                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-                this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-            }
-            else if (dynamic_cast<GpiOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<OscOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxDevice->setEnabled(false);
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-
-                this->labelMillisecond->setText("ms");
-
-                this->comboBoxDevice->setCurrentIndex(-1);
-                this->comboBoxTarget->setCurrentIndex(-1);
-                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            }
-            else if (dynamic_cast<SeparatorCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxDevice->setEnabled(false);
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-                this->spinBoxDelay->setEnabled(false);
-                this->checkBoxAllowGpi->setEnabled(false);
-                this->checkBoxAllowRemoteTriggering->setEnabled(false);
-                this->labelRemoteTriggerId->setEnabled(false);
-                this->lineEditRemoteTriggerId->setEnabled(false);
-
-                this->comboBoxDevice->setCurrentIndex(-1);
-                this->comboBoxTarget->setCurrentIndex(-1);
-                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-                this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-                this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
-                this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
-                this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
-            }
-            else if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-
-                this->comboBoxTarget->clear();
-                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            }
-            else if (dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<BlendModeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<BrightnessCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<ContrastCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<CropCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<GeometryCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<KeyerCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<LevelsCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<OpacityCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<SaturationCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<VolumeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<SolidColorCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxTarget->setEnabled(false);
-            }
-            else if (dynamic_cast<InputCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<PresetCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<TakeCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<NetworkSourceCommand*>(rundownItemSelectedEvent->getCommand()) ||
-                     dynamic_cast<MacroCommand*>(rundownItemSelectedEvent->getCommand()))
-            {
-                this->comboBoxDevice->setVisible(false);
-                this->comboBoxTriCasterDevice->setVisible(true);
-
-                this->comboBoxDevice->setCurrentIndex(-1);
-                this->comboBoxTarget->setEnabled(false);
-                this->spinBoxChannel->setEnabled(false);
-                this->spinBoxVideolayer->setEnabled(false);
-
-                this->labelMillisecond->setText("ms");
-
-                this->comboBoxTarget->clear();
-                this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-                this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            }
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
         }
-
-        checkEmptyDevice();
-        checkEmptyTriCasterDevice();
-        checkEmptyTarget();
-
-        blockAllSignals(false);
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
-    {
-        if (this->model == NULL)
-            return false;
-
-        blockAllSignals(true);
-
-        DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-        if (!deviceChangedEvent->getDeviceName().isEmpty())
+        else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<OscOutputCommand*>(event.getCommand()))
         {
-            this->model->setDeviceName(deviceChangedEvent->getDeviceName());
+            this->comboBoxDevice->setEnabled(false);
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxChannel->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
 
-            fillTargetCombo(this->model->getType());
+            this->labelMillisecond->setText("ms");
+
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
         }
+        else if (dynamic_cast<SeparatorCommand*>(event.getCommand()))
+        {
+            this->comboBoxDevice->setEnabled(false);
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxChannel->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDelay->setEnabled(false);
+            this->checkBoxAllowGpi->setEnabled(false);
+            this->checkBoxAllowRemoteTriggering->setEnabled(false);
+            this->labelRemoteTriggerId->setEnabled(false);
+            this->lineEditRemoteTriggerId->setEnabled(false);
 
-        checkEmptyDevice();
-        checkEmptyTriCasterDevice();
-        checkEmptyTarget();
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+            this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+            this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+            this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
+        }
+        else if (dynamic_cast<CustomCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxChannel->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
 
-        blockAllSignals(false);
+            this->comboBoxTarget->clear();
+            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+        }
+        else if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()) ||
+                 dynamic_cast<BlendModeCommand*>(event.getCommand()) ||
+                 dynamic_cast<BrightnessCommand*>(event.getCommand()) ||
+                 dynamic_cast<ContrastCommand*>(event.getCommand()) ||
+                 dynamic_cast<CropCommand*>(event.getCommand()) ||
+                 dynamic_cast<GeometryCommand*>(event.getCommand()) ||
+                 dynamic_cast<KeyerCommand*>(event.getCommand()) ||
+                 dynamic_cast<LevelsCommand*>(event.getCommand()) ||
+                 dynamic_cast<OpacityCommand*>(event.getCommand()) ||
+                 dynamic_cast<SaturationCommand*>(event.getCommand()) ||
+                 dynamic_cast<VolumeCommand*>(event.getCommand()) ||
+                 dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
+                 dynamic_cast<ClearOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<ChromaCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+        }
+        else if (dynamic_cast<InputCommand*>(event.getCommand()) ||
+                 dynamic_cast<PresetCommand*>(event.getCommand()) ||
+                 dynamic_cast<AutoCommand*>(event.getCommand()) ||
+                 dynamic_cast<TakeCommand*>(event.getCommand()) ||
+                 dynamic_cast<NetworkSourceCommand*>(event.getCommand()) ||
+                 dynamic_cast<MacroCommand*>(event.getCommand()))
+        {
+            this->comboBoxDevice->setVisible(false);
+            this->comboBoxTriCasterDevice->setVisible(true);
+
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxChannel->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
+
+            this->labelMillisecond->setText("ms");
+
+            this->comboBoxTarget->clear();
+            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+        }
     }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::MediaChanged) ||
-             event->type() == static_cast<QEvent::Type>(Event::EventType::TemplateChanged))
-    {
-        if (this->model == NULL)
-            return false;
 
-        blockAllSignals(true);
+    checkEmptyDevice();
+    checkEmptyTriCasterDevice();
+    checkEmptyTarget();
+
+    blockAllSignals(false);
+}
+
+void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
+{
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    this->comboBoxDevice->setVisible(true);
+    this->comboBoxTriCasterDevice->setVisible(false);
+
+    this->comboBoxDevice->setEnabled(false);
+    this->comboBoxTarget->setEnabled(false);
+    this->spinBoxChannel->setEnabled(false);
+    this->spinBoxVideolayer->setEnabled(false);
+    this->spinBoxDelay->setEnabled(false);
+    this->checkBoxAllowGpi->setEnabled(false);
+    this->checkBoxAllowRemoteTriggering->setEnabled(false);
+    this->labelRemoteTriggerId->setEnabled(false);
+    this->lineEditRemoteTriggerId->setEnabled(false);
+
+
+    this->labelMillisecond->setText("");
+    this->labelMillisecond->setVisible(false);
+
+    this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
+    this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
+    this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+    this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+    this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
+
+    fillTargetCombo(this->model->getType());
+
+    checkEmptyDevice();
+    checkEmptyTriCasterDevice();
+    checkEmptyTarget();
+
+    blockAllSignals(false);
+}
+
+void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
+{
+    blockAllSignals(true);
+
+    this->comboBoxDevice->setVisible(true);
+    this->comboBoxTriCasterDevice->setVisible(false);
+
+    this->comboBoxDevice->setEnabled(false);
+    this->comboBoxTarget->setEnabled(false);
+    this->spinBoxChannel->setEnabled(false);
+    this->spinBoxVideolayer->setEnabled(false);
+    this->spinBoxDelay->setEnabled(false);
+    this->checkBoxAllowGpi->setEnabled(false);
+    this->checkBoxAllowRemoteTriggering->setEnabled(false);
+    this->labelRemoteTriggerId->setEnabled(false);
+    this->lineEditRemoteTriggerId->setEnabled(false);
+
+    this->labelMillisecond->setText("");
+    this->labelMillisecond->setVisible(false);
+
+    this->comboBoxDevice->setCurrentIndex(-1);
+    this->comboBoxTarget->clear();
+    this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+    this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+    this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+    this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
+    this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
+    this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
+
+    checkEmptyDevice();
+    checkEmptyTriCasterDevice();
+    checkEmptyTarget();
+
+    blockAllSignals(false);
+}
+
+void InspectorOutputWidget::deviceChanged(const DeviceChangedEvent& event)
+{
+    if (this->model == NULL)
+        return;
+
+    blockAllSignals(true);
+
+    if (!event.getDeviceName().isEmpty())
+    {
+        this->model->setDeviceName(event.getDeviceName());
 
         fillTargetCombo(this->model->getType());
-
-        blockAllSignals(false);
     }
 
-    return QObject::eventFilter(target, event);
+    checkEmptyDevice();
+    checkEmptyTriCasterDevice();
+    checkEmptyTarget();
+
+    blockAllSignals(false);
+}
+
+void InspectorOutputWidget::mediaChanged(const MediaChangedEvent& event)
+{
+    if (this->model == NULL)
+        return;
+
+    blockAllSignals(true);
+
+    fillTargetCombo(this->model->getType());
+
+    blockAllSignals(false);
+}
+
+void InspectorOutputWidget::templateChanged(const TemplateChangedEvent& event)
+{
+    if (this->model == NULL)
+        return;
+
+    blockAllSignals(true);
+
+    fillTargetCombo(this->model->getType());
+
+    blockAllSignals(false);
 }
 
 void InspectorOutputWidget::blockAllSignals(bool block)
@@ -445,6 +458,9 @@ void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 
 void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 {
+    if (deviceName.isEmpty())
+        return;
+
     const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceName).getChannelFormats().split(",");
     this->spinBoxChannel->setMaximum(channelFormats.count());
 
@@ -452,30 +468,30 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
-    EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxDevice->currentText());
+    EventManager::getInstance().fireDeviceChangedEvent(DeviceChangedEvent(this->comboBoxDevice->currentText()));
 }
 
 void InspectorOutputWidget::targetChanged(QString name)
 {
     checkEmptyTarget();
 
-    EventManager::getInstance().fireTargetChangedEvent(this->comboBoxTarget->currentText());
+    EventManager::getInstance().fireTargetChangedEvent(TargetChangedEvent(this->comboBoxTarget->currentText()));
     if (this->model->getLabel() == this->comboBoxTarget->getPreviousText())
-        EventManager::getInstance().fireLabelChangedEvent(this->comboBoxTarget->currentText());
+        EventManager::getInstance().fireLabelChangedEvent(LabelChangedEvent(this->comboBoxTarget->currentText()));
 }
 
 void InspectorOutputWidget::channelChanged(int channel)
 {
     this->command->setChannel(channel);
 
-    EventManager::getInstance().fireChannelChangedEvent(channel);
+    EventManager::getInstance().fireChannelChangedEvent(ChannelChangedEvent(channel));
 }
 
 void InspectorOutputWidget::videolayerChanged(int videolayer)
 {
     this->command->setVideolayer(videolayer);
 
-    EventManager::getInstance().fireVideolayerChangedEvent(videolayer);
+    EventManager::getInstance().fireVideolayerChangedEvent(VideolayerChangedEvent(videolayer));
 }
 
 void InspectorOutputWidget::delayChanged(int delay)
@@ -530,5 +546,5 @@ void InspectorOutputWidget::tricasterDeviceNameChanged(QString deviceName)
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
-    EventManager::getInstance().fireDeviceChangedEvent(this->comboBoxTriCasterDevice->currentText());
+    EventManager::getInstance().fireDeviceChangedEvent(DeviceChangedEvent(this->comboBoxTriCasterDevice->currentText()));
 }

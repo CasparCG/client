@@ -3,7 +3,7 @@
 #include "Global.h"
 
 AutoPlayRundownItemEvent::AutoPlayRundownItemEvent(QWidget* widget)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::AutoPlayRundownItem)), widget(widget)
+    : widget(widget)
 {
 }
 

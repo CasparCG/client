@@ -3,7 +3,7 @@
 #include "Global.h"
 
 ConnectionStateChangedEvent::ConnectionStateChangedEvent(const QString& deviceName, bool connected)
-    : QEvent(static_cast<QEvent::Type>(Event::EventType::ConnectionStateChanged)), connected(connected), deviceName(deviceName)
+    : connected(connected), deviceName(deviceName)
 {
 }
 

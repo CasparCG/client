@@ -4,7 +4,6 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 #include "Models/TriCaster/TriCasterAutoSpeedModel.h"
 #include "Models/TriCaster/TriCasterAutoTransitionModel.h"
@@ -17,36 +16,30 @@ InspectorAutoWidget::InspectorAutoWidget(QWidget* parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+
     loadTriCasterStep();
     loadTriCasterAutoSpeed();
     loadTriCasterAutoTransition();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorAutoWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorAutoWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<AutoCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<AutoCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand()))
-        {  
-            this->command = dynamic_cast<AutoCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        checkEmptyStep();
-
-        blockAllSignals(false);
+        this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    checkEmptyStep();
+
+    blockAllSignals(false);
 }
 
 void InspectorAutoWidget::blockAllSignals(bool block)

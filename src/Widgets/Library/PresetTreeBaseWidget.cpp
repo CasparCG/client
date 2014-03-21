@@ -1,5 +1,9 @@
 #include "PresetTreeBaseWidget.h"
 
+#include "DatabaseManager.h"
+#include "EventManager.h"
+#include "Events/PresetChangedEvent.h"
+
 #include <QtCore/QMimeData>
 
 #include <QtGui/QApplication>
@@ -37,4 +41,20 @@ void PresetTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     drag->setMimeData(mimeData);
 
     drag->exec(Qt::CopyAction);
+}
+
+void PresetTreeBaseWidget::removeSelectedPresets()
+{
+    foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+        DatabaseManager::getInstance().deletePreset(item->text(1).toInt());
+
+    EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
+}
+
+void PresetTreeBaseWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Delete)
+        removeSelectedPresets();
+    else
+        QTreeWidget::keyPressEvent(event);
 }

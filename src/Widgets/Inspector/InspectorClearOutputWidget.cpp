@@ -3,8 +3,8 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "EventManager.h"
 #include "Events/PreviewEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/TweenModel.h"
 
 #include <QtCore/QDebug>
@@ -17,30 +17,24 @@ InspectorClearOutputWidget::InspectorClearOutputWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorClearOutputWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorClearOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<ClearOutputCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<ClearOutputCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<ClearOutputCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->checkBoxClearChannel->setChecked(this->command->getClearChannel());
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->checkBoxClearChannel->setChecked(this->command->getClearChannel());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorClearOutputWidget::blockAllSignals(bool block)

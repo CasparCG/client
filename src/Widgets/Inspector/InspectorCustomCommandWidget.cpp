@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 #include "Models/FormatModel.h"
 
 InspectorCustomCommandWidget::InspectorCustomCommandWidget(QWidget* parent)
@@ -12,39 +12,33 @@ InspectorCustomCommandWidget::InspectorCustomCommandWidget(QWidget* parent)
 {
     setupUi(this);
 
-    qApp->installEventFilter(this);
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-bool InspectorCustomCommandWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorCustomCommandWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<CustomCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<CustomCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand()))
-        {       
-            this->command = dynamic_cast<CustomCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->lineEditStop->setText(this->command->getStopCommand());
-            this->lineEditPlay->setText(this->command->getPlayCommand());
-            this->lineEditLoad->setText(this->command->getLoadCommand());
-            this->lineEditPause->setText(this->command->getPauseCommand());
-            this->lineEditNext->setText(this->command->getNextCommand());
-            this->lineEditUpdate->setText(this->command->getUpdateCommand());
-            this->lineEditInvoke->setText(this->command->getInvokeCommand());
-            this->lineEditClear->setText(this->command->getClearCommand());
-            this->lineEditClearVideolayer->setText(this->command->getClearVideolayerCommand());
-            this->lineEditClearChannel->setText(this->command->getClearChannelCommand());
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        }
-
-        blockAllSignals(false);
+        this->lineEditStop->setText(this->command->getStopCommand());
+        this->lineEditPlay->setText(this->command->getPlayCommand());
+        this->lineEditLoad->setText(this->command->getLoadCommand());
+        this->lineEditPause->setText(this->command->getPauseCommand());
+        this->lineEditNext->setText(this->command->getNextCommand());
+        this->lineEditUpdate->setText(this->command->getUpdateCommand());
+        this->lineEditInvoke->setText(this->command->getInvokeCommand());
+        this->lineEditClear->setText(this->command->getClearCommand());
+        this->lineEditClearVideolayer->setText(this->command->getClearVideolayerCommand());
+        this->lineEditClearChannel->setText(this->command->getClearChannelCommand());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorCustomCommandWidget::blockAllSignals(bool block)

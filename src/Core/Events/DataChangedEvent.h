@@ -2,9 +2,7 @@
 
 #include "../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT DataChangedEvent : public QEvent
+class CORE_EXPORT DataChangedEvent
 {
     public:
         explicit DataChangedEvent(int deviceId = 0);

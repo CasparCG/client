@@ -4,6 +4,7 @@
 #include "ui_InspectorImageScrollerWidget.h"
 
 #include "Commands/ImageScrollerCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -19,9 +20,6 @@ class WIDGETS_EXPORT InspectorImageScrollerWidget : public QWidget, Ui::Inspecto
     public:
         explicit InspectorImageScrollerWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         ImageScrollerCommand* command;
@@ -36,4 +34,5 @@ class WIDGETS_EXPORT InspectorImageScrollerWidget : public QWidget, Ui::Inspecto
         Q_SLOT void resetBlur(QString);
         Q_SLOT void resetPremultiply(QString);
         Q_SLOT void resetProgressive(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

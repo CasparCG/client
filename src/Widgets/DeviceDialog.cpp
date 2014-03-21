@@ -96,6 +96,7 @@ void DeviceDialog::accept()
             return;
         }
 
+        /*
         model = DatabaseManager::getInstance().getDeviceByAddress(this->lineEditAddress->text());
         if (!model.getName().isEmpty())
         {
@@ -113,6 +114,7 @@ void DeviceDialog::accept()
 
             return;
         }
+        */
     }
 
     QDialog::accept();

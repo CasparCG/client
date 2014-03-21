@@ -2,10 +2,9 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
-class CORE_EXPORT TargetChangedEvent : public QEvent
+class CORE_EXPORT TargetChangedEvent
 {
     public:
         explicit TargetChangedEvent(const QString& target);

@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/PreviewEvent.h"
 #include "Models/ChromaModel.h"
 
 #include <QtGui/QApplication>
@@ -15,40 +15,34 @@ InspectorChromaWidget::InspectorChromaWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadChroma();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    loadChroma();
 }
 
-bool InspectorChromaWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorChromaWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<ChromaCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<ChromaCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<ChromaCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(this->command->getKey()));
-            this->checkBoxShowMask->setChecked(this->command->getShowMask());
-            this->spinBoxThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
-            this->sliderThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
-            this->spinBoxSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
-            this->sliderSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
-            this->spinBoxBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
-            this->sliderBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
-            this->spinBoxSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
-            this->sliderSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
-        }
-
-        blockAllSignals(false);
+        this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(this->command->getKey()));
+        this->checkBoxShowMask->setChecked(this->command->getShowMask());
+        this->spinBoxThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
+        this->sliderThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
+        this->spinBoxSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
+        this->sliderSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
+        this->spinBoxBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
+        this->sliderBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
+        this->spinBoxSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
+        this->sliderSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorChromaWidget::blockAllSignals(bool block)
@@ -80,7 +74,7 @@ void InspectorChromaWidget::blurChanged(int blur)
 
     this->spinBoxBlur->setValue(blur);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::keyChanged(QString key)
@@ -89,7 +83,7 @@ void InspectorChromaWidget::keyChanged(QString key)
 
     this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(key));
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::showMaskChanged(bool show)
@@ -98,7 +92,7 @@ void InspectorChromaWidget::showMaskChanged(bool show)
 
     this->checkBoxShowMask->setChecked(show);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::softnessChanged(int softness)
@@ -107,7 +101,7 @@ void InspectorChromaWidget::softnessChanged(int softness)
 
     this->spinBoxSoftness->setValue(softness);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::spillChanged(int spill)
@@ -116,7 +110,7 @@ void InspectorChromaWidget::spillChanged(int spill)
 
     this->spinBoxSpill->setValue(spill);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorChromaWidget::thresholdChanged(int threshold)
@@ -125,5 +119,5 @@ void InspectorChromaWidget::thresholdChanged(int threshold)
 
     this->spinBoxThreshold->setValue(threshold);
 
-    EventManager::getInstance().firePreviewEvent();
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }

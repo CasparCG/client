@@ -3,6 +3,8 @@
 #include "../Shared.h"
 #include "ui_InspectorOscOutputWidget.h"
 #include "Commands/OscOutputCommand.h"
+#include "Events/OscOutputChangedEvent.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 
 #include <QWidget>
 
@@ -12,9 +14,6 @@ class WIDGETS_EXPORT InspectorOscOutputWidget : public QWidget, Ui::InspectorOsc
     
     public:
         explicit InspectorOscOutputWidget(QWidget *parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         OscOutputCommand* command;
@@ -29,4 +28,6 @@ class WIDGETS_EXPORT InspectorOscOutputWidget : public QWidget, Ui::InspectorOsc
         Q_SLOT void messageChanged(QString);
         Q_SLOT void typeChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void oscOutputChanged(const OscOutputChangedEvent&);
 };

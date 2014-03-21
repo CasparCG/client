@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT AutoRefreshLibraryEvent : public QEvent
+class CORE_EXPORT AutoRefreshLibraryEvent
 {
     public:
         explicit AutoRefreshLibraryEvent(bool autoRefresh, int interval);

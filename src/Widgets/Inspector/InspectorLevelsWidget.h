@@ -4,6 +4,7 @@
 #include "ui_InspectorLevelsWidget.h"
 
 #include "Commands/LevelsCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +18,6 @@ class WIDGETS_EXPORT InspectorLevelsWidget : public QWidget, Ui::InspectorLevels
 
     public:
         explicit InspectorLevelsWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -49,4 +47,5 @@ class WIDGETS_EXPORT InspectorLevelsWidget : public QWidget, Ui::InspectorLevels
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

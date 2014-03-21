@@ -4,12 +4,11 @@
 
 #include "Global.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 
 #include <QtGui/QTreeWidgetItem>
 
-class CORE_EXPORT ExecuteRundownItemEvent : public QEvent
+class CORE_EXPORT ExecuteRundownItemEvent
 {
     public:
         explicit ExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item, const QString& address = "");

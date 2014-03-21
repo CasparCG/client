@@ -7,9 +7,7 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-#include "Events/Inspector/TargetChangedEvent.h"
-#include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Events/Rundown/AutoPlayRundownItemEvent.h"
 
 #include <math.h>
 
@@ -63,6 +61,11 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoPlayChanged(bool)), this, SLOT(autoPlayChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(videolayerChanged(const VideolayerChangedEvent&)), this, SLOT(videolayerChanged(const VideolayerChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(channelChanged(const ChannelChangedEvent&)), this, SLOT(channelChanged(const ChannelChangedEvent&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -80,78 +83,75 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     configureOscSubscriptions();
 
     this->widgetOscTime->setStartTime(this->model.getTimecode(), this->reverseOscTime);
-
-    qApp->installEventFilter(this);
 }
 
-bool RundownVideoWidget::eventFilter(QObject* target, QEvent* event)
+void RundownVideoWidget::videolayerChanged(const VideolayerChangedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::ChannelChanged) || event->type() == static_cast<QEvent::Type>(Event::EventType::VideolayerChanged))
+    if (!this->active)
+        return;
+
+    configureOscSubscriptions();
+}
+
+void RundownVideoWidget::channelChanged(const ChannelChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    configureOscSubscriptions();
+}
+
+void RundownVideoWidget::labelChanged(const LabelChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    this->model.setLabel(event.getLabel());
+
+    this->labelLabel->setText(this->model.getLabel());
+}
+
+void RundownVideoWidget::targetChanged(const TargetChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    this->model.setName(event.getTarget());
+    this->command.setVideoName(event.getTarget());
+
+    setThumbnail();
+}
+
+void RundownVideoWidget::deviceChanged(const DeviceChangedEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    // Should we update the device name?
+    if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model.getDeviceName())
     {
-        // This event is not for us.
-        if (!this->active)
-            return false;
+        // Disconnect connectionStateChanged() from the old device.
+        const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (oldDevice != NULL)
+            QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
-        configureOscSubscriptions();
+        // Update the model with the new device.
+        this->model.setDeviceName(event.getDeviceName());
+        this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-        return true;
-    }
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::TargetChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        TargetChangedEvent* targetChangedEvent = dynamic_cast<TargetChangedEvent*>(event);
-        this->model.setName(targetChangedEvent->getTarget());
-        this->command.setVideoName(targetChangedEvent->getTarget());
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::LabelChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        LabelChangedEvent* labelChanged = dynamic_cast<LabelChangedEvent*>(event);
-        this->model.setLabel(labelChanged->getLabel());
-
-        this->labelLabel->setText(this->model.getLabel());
-
-        return true;
-    }
-    else if (event->type() == static_cast<QEvent::Type>(Event::EventType::DeviceChanged))
-    {
-        // This event is not for us.
-        if (!this->active)
-            return false;
-
-        // Should we update the device name?
-        DeviceChangedEvent* deviceChangedEvent = dynamic_cast<DeviceChangedEvent*>(event);
-        if (!deviceChangedEvent->getDeviceName().isEmpty() && deviceChangedEvent->getDeviceName() != this->model.getDeviceName())
-        {
-            // Disconnect connectionStateChanged() from the old device.
-            const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (oldDevice != NULL)
-                QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-
-            // Update the model with the new device.
-            this->model.setDeviceName(deviceChangedEvent->getDeviceName());
-            this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
-
-            // Connect connectionStateChanged() to the new device.
-            const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-            if (newDevice != NULL)
-                QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
-        }
-
-        checkEmptyDevice();
-        checkDeviceConnection();
-        configureOscSubscriptions();
+        // Connect connectionStateChanged() to the new device.
+        const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (newDevice != NULL)
+            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
     }
 
-    return QObject::eventFilter(target, event);
+    checkEmptyDevice();
+    checkDeviceConnection();
+    configureOscSubscriptions();
 }
 
 AbstractRundownWidget* RundownVideoWidget::clone()
@@ -247,9 +247,13 @@ void RundownVideoWidget::setThumbnail()
         return;
     }
 
+    QString data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+
+    /*
     QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
     if (data.isEmpty())
         data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+    */
 
     QImage image;
     image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
@@ -918,7 +922,7 @@ void RundownVideoWidget::pathSubscriptionReceived(const QString& predicate, cons
 
     if (this->sendAutoPlay && !this->hasSentAutoPlay)
     {
-        EventManager::getInstance().fireAutoPlayRundownItemEvent(this);
+        EventManager::getInstance().fireAutoPlayRundownItemEvent(AutoPlayRundownItemEvent(this));
 
         this->sendAutoPlay = false;
         this->hasSentAutoPlay = true;

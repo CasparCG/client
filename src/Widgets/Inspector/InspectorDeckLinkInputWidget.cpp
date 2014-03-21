@@ -3,7 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "EventManager.h"
 #include "Models/FormatModel.h"
 
 InspectorDeckLinkInputWidget::InspectorDeckLinkInputWidget(QWidget* parent)
@@ -12,39 +12,33 @@ InspectorDeckLinkInputWidget::InspectorDeckLinkInputWidget(QWidget* parent)
 {
     setupUi(this);
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+
     loadDirection();
     loadFormat();
     loadTransition();
     loadTween();
-
-    qApp->installEventFilter(this);
 }
 
-bool InspectorDeckLinkInputWidget::eventFilter(QObject* target, QEvent* event)
+void InspectorDeckLinkInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
-    if (event->type() == static_cast<QEvent::Type>(Event::EventType::RundownItemSelected))
+    this->model = event.getLibraryModel();
+
+    blockAllSignals(true);
+
+    if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()))
     {
-        RundownItemSelectedEvent* rundownItemSelectedEvent = dynamic_cast<RundownItemSelectedEvent*>(event);
-        this->model = rundownItemSelectedEvent->getLibraryModel();
+        this->command = dynamic_cast<DeckLinkInputCommand*>(event.getCommand());
 
-        blockAllSignals(true);
-
-        if (dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand()))
-        {
-            this->command = dynamic_cast<DeckLinkInputCommand*>(rundownItemSelectedEvent->getCommand());
-
-            this->spinBoxDevice->setValue(this->command->getDevice());
-            this->comboBoxFormat->setCurrentIndex(this->comboBoxFormat->findText(this->command->getFormat()));
-            this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-            this->spinBoxDuration->setValue(this->command->getDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
-        }
-
-        blockAllSignals(false);
+        this->spinBoxDevice->setValue(this->command->getDevice());
+        this->comboBoxFormat->setCurrentIndex(this->comboBoxFormat->findText(this->command->getFormat()));
+        this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
+        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
     }
 
-    return QObject::eventFilter(target, event);
+    blockAllSignals(false);
 }
 
 void InspectorDeckLinkInputWidget::blockAllSignals(bool block)

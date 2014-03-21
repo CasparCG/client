@@ -4,6 +4,7 @@
 #include "ui_InspectorKeyerWidget.h"
 
 #include "Commands/KeyerCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -18,9 +19,6 @@ class WIDGETS_EXPORT InspectorKeyerWidget : public QWidget, Ui::InspectorKeyerWi
     public:
         explicit InspectorKeyerWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         LibraryModel* model;
         KeyerCommand* command;
@@ -29,4 +27,5 @@ class WIDGETS_EXPORT InspectorKeyerWidget : public QWidget, Ui::InspectorKeyerWi
 
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

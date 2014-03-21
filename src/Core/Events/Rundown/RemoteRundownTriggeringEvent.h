@@ -2,9 +2,7 @@
 
 #include "../../Shared.h"
 
-#include <QtCore/QEvent>
-
-class CORE_EXPORT RemoteRundownTriggeringEvent : public QEvent
+class CORE_EXPORT RemoteRundownTriggeringEvent
 {
     public:
         explicit RemoteRundownTriggeringEvent(bool enabled);

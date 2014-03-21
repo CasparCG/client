@@ -8,57 +8,6 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 
-namespace Event
-{
-    struct EventType
-    {
-        enum Type
-        {
-            StatusbarMessage = QEvent::User + 11,
-            LibraryItemSelected = QEvent::User + 12,
-            RundownItemSelected = QEvent::User + 13,
-            MediaChanged = QEvent::User + 14,
-            TemplateChanged = QEvent::User + 15,
-            DataChanged = QEvent::User + 16,
-            RefreshLibrary = QEvent::User + 17,
-            AutoRefreshLibrary = QEvent::User + 18,
-            AddRudnownItem = QEvent::User + 19,
-            Preview = QEvent::User + 20,
-            ConnectionStateChanged = QEvent::User + 21,
-            EmptyRundown = QEvent::User + 22,
-            OpenRundown = QEvent::User + 23,
-            SaveRundown = QEvent::User + 24,
-            ToggleCompactView = QEvent::User + 25,
-            ActiveRundownChanged = QEvent::User + 26,
-            TargetChanged = QEvent::User + 27,
-            DeviceChanged = QEvent::User + 28,
-            LabelChanged = QEvent::User + 29,
-            NewRundown = QEvent::User + 30,
-            DeleteRundown = QEvent::User + 31,
-            NewRundownMenu = QEvent::User + 32,
-            ChannelChanged = QEvent::User + 33,
-            PresetChanged = QEvent::User + 34,
-            AddPresetItem = QEvent::User + 35,
-            ExportPreset = QEvent::User + 36,
-            ImportPreset = QEvent::User + 37,
-            VideolayerChanged = QEvent::User + 38,
-            AddTemplateData = QEvent::User + 39,
-            RundownIsChanged = QEvent::User + 40,
-            AddActionItem = QEvent::User + 41,
-            AutoPlayRundownItem = QEvent::User + 42,
-            AutoPlayChanged =  QEvent::User + 43,
-            AutoPlayNextRundownItem =  QEvent::User + 44,
-            ProgramSourceChanged =  QEvent::User + 45,
-            ExecuteRundownItem = QEvent::User + 46,
-            OscOutputChanged =  QEvent::User + 47,
-            SaveAsPreset =  QEvent::User + 48,
-            CloseRundown =  QEvent::User + 49,
-            RemoteRundownTriggering =  QEvent::User + 50,
-            AllowRemoteTriggeringMenu =  QEvent::User + 51
-        };
-    };
-}
-
 namespace TriCaster
 {
     static const int DEFAULT_PORT = 5950;

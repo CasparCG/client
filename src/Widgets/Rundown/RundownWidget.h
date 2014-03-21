@@ -5,6 +5,16 @@
 
 #include "Global.h"
 
+#include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/CloseRundownEvent.h"
+#include "Events/Rundown/DeleteRundownEvent.h"
+#include "Events/Rundown/NewRundownEvent.h"
+#include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/OpenRundownEvent.h"
+#include "Events/Rundown/OpenRundownMenuEvent.h"
+#include "Events/Rundown/SaveRundownEvent.h"
+
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
@@ -18,26 +28,33 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
     public:
         explicit RundownWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         QMenu* contextMenuRundownDropdown;
 
         QAction* newRundownAction;
+        QAction* openRundownAction;
         QAction* allowRemoteTriggeringAction;
 
         void setupMenus();
 
-        Q_SLOT void newRundown();
-        Q_SLOT void openRundown();
-        Q_SLOT void saveRundown();
-        Q_SLOT void saveAsRundown();
+        Q_SLOT void closeCurrentRundown();
+        Q_SLOT void createNewRundown();
+        Q_SLOT void openRundownFromDisk();
+        Q_SLOT void saveRundownToDisk();
+        Q_SLOT void saveAsRundownToDisk();
         Q_SLOT void toggleCompactView();
-        Q_SLOT void closeRundown();
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
         Q_SLOT void allowRemoteTriggering(bool enabled);
+        Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
+        Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
+        Q_SLOT void newRundown(const NewRundownEvent&);
+        Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
+        Q_SLOT void closeRundown(const CloseRundownEvent&);
+        Q_SLOT void deleteRundown(const DeleteRundownEvent&);
+        Q_SLOT void openRundown(const OpenRundownEvent&);
+        Q_SLOT void saveRundown(const SaveRundownEvent&);
+        Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
 };

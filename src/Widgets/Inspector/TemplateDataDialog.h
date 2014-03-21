@@ -21,6 +21,4 @@ class WIDGETS_EXPORT TemplateDataDialog : public QDialog, Ui::TemplateDataDialog
 
     protected:
         void accept();
-
-    private:
 };

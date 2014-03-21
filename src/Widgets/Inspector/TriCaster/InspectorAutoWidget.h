@@ -4,6 +4,7 @@
 #include "ui_InspectorAutoWidget.h"
 
 #include "Commands/TriCaster/AutoCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +18,6 @@ class WIDGETS_EXPORT InspectorAutoWidget : public QWidget, Ui::InspectorAutoWidg
 
     public:
         explicit InspectorAutoWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -35,4 +33,5 @@ class WIDGETS_EXPORT InspectorAutoWidget : public QWidget, Ui::InspectorAutoWidg
         Q_SLOT void speedChanged(int);
         Q_SLOT void transitionChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

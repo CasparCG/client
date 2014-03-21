@@ -4,6 +4,7 @@
 #include "ui_InspectorGridWidget.h"
 
 #include "Commands/GridCommand.h"
+#include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -17,9 +18,6 @@ class WIDGETS_EXPORT InspectorGridWidget : public QWidget, Ui::InspectorGridWidg
 
     public:
         explicit InspectorGridWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         LibraryModel* model;
@@ -36,4 +34,5 @@ class WIDGETS_EXPORT InspectorGridWidget : public QWidget, Ui::InspectorGridWidg
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
+        Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

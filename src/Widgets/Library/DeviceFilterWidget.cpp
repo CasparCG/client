@@ -5,6 +5,10 @@
 #include "DeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "Events/DataChangedEvent.h"
+#include "Events/MediaChangedEvent.h"
+#include "Events/PresetChangedEvent.h"
+#include "Events/Inspector/TemplateChangedEvent.h"
 
 #include <QtCore/QEvent>
 
@@ -155,10 +159,10 @@ void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelInd
 
     if (this->sendEvents)
     {
-        EventManager::getInstance().fireMediaChangedEvent();
-        EventManager::getInstance().fireTemplateChangedEvent();
-        EventManager::getInstance().fireDataChangedEvent();
-        EventManager::getInstance().firePresetChangedEvent();
+        EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
+        EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
+        EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
+        EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
     }
 
     blockAllSignals(false);
