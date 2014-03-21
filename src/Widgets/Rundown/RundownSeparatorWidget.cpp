@@ -30,11 +30,6 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 }
 
-
-
-
-
-
 void RundownSeparatorWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
@@ -45,11 +40,6 @@ void RundownSeparatorWidget::labelChanged(const LabelChangedEvent& event)
 
     this->labelLabel->setText(this->model.getLabel());
 }
-
-
-
-
-
 
 AbstractRundownWidget* RundownSeparatorWidget::clone()
 {

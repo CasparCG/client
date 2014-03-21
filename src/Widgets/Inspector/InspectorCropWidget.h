@@ -44,10 +44,5 @@ class WIDGETS_EXPORT InspectorCropWidget : public QWidget, Ui::InspectorCropWidg
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
-
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

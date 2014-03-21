@@ -54,11 +54,6 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -72,11 +67,6 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
 
     configureOscSubscriptions();
 }
-
-
-
-
-
 
 void RundownGridWidget::preview(const PreviewEvent& event)
 {
@@ -125,12 +115,6 @@ void RundownGridWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownGridWidget::clone()
 {

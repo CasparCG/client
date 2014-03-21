@@ -29,9 +29,5 @@ class WIDGETS_EXPORT InspectorClearOutputWidget : public QWidget, Ui::InspectorC
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void resetClearChannel(QString);
         Q_SLOT void resetTriggerOnNext(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

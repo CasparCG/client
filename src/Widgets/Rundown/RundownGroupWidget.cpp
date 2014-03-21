@@ -43,25 +43,12 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
-
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
 
     configureOscSubscriptions();
 }
-
-
-
-
-
-
 
 void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -73,12 +60,6 @@ void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
 
     this->labelLabel->setText(this->model.getLabel());
 }
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownGroupWidget::clone()
 {

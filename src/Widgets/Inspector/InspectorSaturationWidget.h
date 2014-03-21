@@ -35,9 +35,5 @@ class WIDGETS_EXPORT InspectorSaturationWidget : public QWidget, Ui::InspectorSa
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

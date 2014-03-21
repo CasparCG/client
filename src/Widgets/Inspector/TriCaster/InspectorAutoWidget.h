@@ -33,9 +33,5 @@ class WIDGETS_EXPORT InspectorAutoWidget : public QWidget, Ui::InspectorAutoWidg
         Q_SLOT void speedChanged(int);
         Q_SLOT void transitionChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

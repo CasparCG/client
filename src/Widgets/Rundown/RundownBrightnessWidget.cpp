@@ -52,11 +52,6 @@ RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWid
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -70,12 +65,6 @@ RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWid
 
     configureOscSubscriptions();
 }
-
-
-
-
-
-
 
 void RundownBrightnessWidget::preview(const PreviewEvent& event)
 {
@@ -124,13 +113,6 @@ void RundownBrightnessWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownBrightnessWidget::clone()
 {

@@ -28,8 +28,5 @@ class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWi
 
         Q_SLOT void outputChanged(QString);
         Q_SLOT void resetOutput(QString);
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

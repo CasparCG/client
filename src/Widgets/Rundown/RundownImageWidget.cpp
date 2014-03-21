@@ -57,12 +57,6 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -76,14 +70,6 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
 
     configureOscSubscriptions();
 }
-
-
-
-
-
-
-
-
 
 void RundownImageWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -133,15 +119,6 @@ void RundownImageWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownImageWidget::clone()
 {

@@ -4,6 +4,7 @@
 
 #include "Global.h"
 
+#include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWidget>
 #include <QtGui/QTreeWidget>
@@ -15,7 +16,10 @@ class WIDGETS_EXPORT PresetTreeBaseWidget : public QTreeWidget
     public:
         explicit PresetTreeBaseWidget(QWidget* parent = 0);
 
+        void removeSelectedPresets();
+
     protected:
+        void keyPressEvent(QKeyEvent* event);
         void mouseMoveEvent(QMouseEvent* event);
         void mousePressEvent(QMouseEvent* event);
 

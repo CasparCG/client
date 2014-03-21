@@ -69,9 +69,6 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(templateChanged(const TemplateChangedEvent&)), this, SLOT(templateChanged(const TemplateChangedEvent&)));
 }
 
-
-
-
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -364,13 +361,6 @@ void InspectorOutputWidget::templateChanged(const TemplateChangedEvent& event)
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
 
 void InspectorOutputWidget::blockAllSignals(bool block)
 {

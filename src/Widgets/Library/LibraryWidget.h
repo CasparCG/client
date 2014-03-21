@@ -17,6 +17,7 @@
 
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
@@ -25,9 +26,6 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
 
     public:
         explicit LibraryWidget(QWidget* parent = 0);
-
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
         QMenu* contextMenu;
@@ -41,7 +39,6 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
 
         Q_SLOT void loadLibrary();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
-        Q_SLOT bool removeSelectedPresets();
         Q_SLOT void filterLibrary();
         Q_SLOT void contextMenuTriggered(QAction*);
         Q_SLOT void contextMenuImageTriggered(QAction*);
@@ -53,7 +50,6 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         Q_SLOT void customContextMenuDataRequested(const QPoint&);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
-
         Q_SLOT void mediaChanged(const MediaChangedEvent&);
         Q_SLOT void templateChanged(const TemplateChangedEvent&);
         Q_SLOT void dataChanged(const DataChangedEvent&);

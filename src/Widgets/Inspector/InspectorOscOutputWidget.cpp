@@ -17,13 +17,6 @@ InspectorOscOutputWidget::InspectorOscOutputWidget(QWidget *parent)
     loadOscOutput();
 }
 
-
-
-
-
-
-
-
 void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     blockAllSignals(true);
@@ -57,12 +50,6 @@ void InspectorOscOutputWidget::oscOutputChanged(const OscOutputChangedEvent& eve
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
 
 void InspectorOscOutputWidget::loadOscOutput()
 {

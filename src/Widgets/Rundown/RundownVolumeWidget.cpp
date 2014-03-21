@@ -66,11 +66,6 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
     configureOscSubscriptions();
 }
 
-
-
-
-
-
 void RundownVolumeWidget::preview(const PreviewEvent& event)
 {
     // This event is not for us.
@@ -118,14 +113,6 @@ void RundownVolumeWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownVolumeWidget::clone()
 {

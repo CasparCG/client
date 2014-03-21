@@ -46,11 +46,6 @@ RundownPresetWidget::RundownPresetWidget(const LibraryModel& model, QWidget* par
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(deviceAdded(TriCasterDevice&)));
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -64,10 +59,6 @@ RundownPresetWidget::RundownPresetWidget(const LibraryModel& model, QWidget* par
 
     configureOscSubscriptions();
 }
-
-
-
-
 
 void RundownPresetWidget::preview(const PreviewEvent& event)
 {
@@ -116,10 +107,6 @@ void RundownPresetWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
 
 AbstractRundownWidget* RundownPresetWidget::clone()
 {

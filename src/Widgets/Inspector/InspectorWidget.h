@@ -26,9 +26,6 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
         Q_SLOT void masterVolumeClicked();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
         Q_SLOT void disableCommandClicked();
-
-
-
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);

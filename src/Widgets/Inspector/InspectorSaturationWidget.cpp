@@ -20,12 +20,6 @@ InspectorSaturationWidget::InspectorSaturationWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
-
 void InspectorSaturationWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -45,10 +39,6 @@ void InspectorSaturationWidget::rundownItemSelected(const RundownItemSelectedEve
 
     blockAllSignals(false);
 }
-
-
-
-
 
 void InspectorSaturationWidget::blockAllSignals(bool block)
 {

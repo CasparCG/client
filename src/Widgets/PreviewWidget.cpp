@@ -18,10 +18,6 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
 }
 
-
-
-
-
 void PreviewWidget::targetChanged(const TargetChangedEvent& event)
 {
     this->model->setName(event.getTarget());

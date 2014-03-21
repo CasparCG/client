@@ -26,11 +26,6 @@ InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
 void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -71,10 +66,6 @@ void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 
     blockAllSignals(false);
 }
-
-
-
-
 
 void InspectorVideoWidget::blockAllSignals(bool block)
 {

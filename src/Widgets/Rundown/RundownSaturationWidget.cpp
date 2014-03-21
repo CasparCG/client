@@ -66,11 +66,6 @@ RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWid
     configureOscSubscriptions();
 }
 
-
-
-
-
-
 void RundownSaturationWidget::preview(const PreviewEvent& event)
 {
     // This event is not for us.
@@ -118,13 +113,6 @@ void RundownSaturationWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownSaturationWidget::clone()
 {

@@ -29,9 +29,5 @@ class WIDGETS_EXPORT InspectorTakeWidget : public QWidget, Ui::InspectorTakeWidg
 
         Q_SLOT void stepChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

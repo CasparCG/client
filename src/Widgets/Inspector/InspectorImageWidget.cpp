@@ -21,12 +21,6 @@ InspectorImageWidget::InspectorImageWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
-
 void InspectorImageWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -47,13 +41,6 @@ void InspectorImageWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
 
 void InspectorImageWidget::blockAllSignals(bool block)
 {

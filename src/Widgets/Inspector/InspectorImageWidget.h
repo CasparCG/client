@@ -41,9 +41,5 @@ class WIDGETS_EXPORT InspectorImageWidget : public QWidget, Ui::InspectorImageWi
         Q_SLOT void resetTween(QString);
         Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void resetUseAuto(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

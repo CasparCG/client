@@ -67,10 +67,6 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&EventManager::getInstance(), SIGNAL(videolayerChanged(const VideolayerChangedEvent&)), this, SLOT(videolayerChanged(const VideolayerChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(channelChanged(const ChannelChangedEvent&)), this, SLOT(channelChanged(const ChannelChangedEvent&)));
 
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -88,9 +84,6 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
 
     this->widgetOscTime->setStartTime(this->model.getTimecode(), this->reverseOscTime);
 }
-
-
-
 
 void RundownVideoWidget::videolayerChanged(const VideolayerChangedEvent& event)
 {
@@ -160,12 +153,6 @@ void RundownVideoWidget::deviceChanged(const DeviceChangedEvent& event)
     checkDeviceConnection();
     configureOscSubscriptions();
 }
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownVideoWidget::clone()
 {

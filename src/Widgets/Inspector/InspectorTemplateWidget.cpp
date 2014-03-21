@@ -103,14 +103,6 @@ void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent
     blockAllSignals(false);
 }
 
-
-
-
-
-
-
-
-
 void InspectorTemplateWidget::blockAllSignals(bool block)
 {
     this->spinBoxFlashlayer->blockSignals(block);

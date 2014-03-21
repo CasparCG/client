@@ -32,9 +32,5 @@ class WIDGETS_EXPORT InspectorChromaWidget : public QWidget, Ui::InspectorChroma
         Q_SLOT void softnessChanged(int);
         Q_SLOT void spillChanged(int);
         Q_SLOT void thresholdChanged(int);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

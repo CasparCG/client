@@ -28,9 +28,6 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
     public:
         explicit RundownWidget(QWidget* parent = 0);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-
     private:
         QMenu* contextMenuRundownDropdown;
 
@@ -51,11 +48,6 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void tabCloseRequested(int);
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
         Q_SLOT void allowRemoteTriggering(bool enabled);
-
-
-
-
-
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void newRundown(const NewRundownEvent&);

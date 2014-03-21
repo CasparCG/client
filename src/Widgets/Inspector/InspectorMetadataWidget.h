@@ -28,9 +28,6 @@ class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMeta
         void blockAllSignals(bool block);
 
         Q_SLOT void labelChanged(QString);
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);

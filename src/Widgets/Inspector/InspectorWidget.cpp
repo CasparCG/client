@@ -150,13 +150,6 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
 }
 
-
-
-
-
-
-
-
 void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->treeWidgetInspector->topLevelItem(1)->setHidden(true);
@@ -434,14 +427,6 @@ void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
     this->treeWidgetInspector->topLevelItem(32)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(33)->setHidden(true);
 }
-
-
-
-
-
-
-
-
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {

@@ -52,12 +52,6 @@ RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidge
     configureOscSubscriptions();
 }
 
-
-
-
-
-
-
 void RundownOscOutputWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
@@ -68,14 +62,6 @@ void RundownOscOutputWidget::labelChanged(const LabelChangedEvent& event)
 
     this->labelLabel->setText(this->model.getLabel());
 }
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownOscOutputWidget::clone()
 {

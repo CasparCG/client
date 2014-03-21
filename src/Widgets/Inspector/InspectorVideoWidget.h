@@ -49,8 +49,5 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         Q_SLOT void resetFreezeOnLoad(QString);
         Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void autoPlayChanged(int);
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

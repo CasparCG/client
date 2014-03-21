@@ -42,9 +42,5 @@ class WIDGETS_EXPORT InspectorDeckLinkInputWidget : public QWidget, Ui::Inspecto
         Q_SLOT void resetDuration(QString);
         Q_SLOT void resetDirection(QString);
         Q_SLOT void resetTween(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

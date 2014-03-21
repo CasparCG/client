@@ -27,9 +27,5 @@ class WIDGETS_EXPORT InspectorMacroWidget : public QWidget, Ui::InspectorMacroWi
 
         Q_SLOT void macroChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

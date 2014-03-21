@@ -44,11 +44,6 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void useUppercaseDataChanged(int);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
-
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
 };

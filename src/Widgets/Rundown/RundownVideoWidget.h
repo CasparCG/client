@@ -133,11 +133,6 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-
-
-
-
-
         Q_SLOT void videolayerChanged(const VideolayerChangedEvent&);
         Q_SLOT void channelChanged(const ChannelChangedEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);

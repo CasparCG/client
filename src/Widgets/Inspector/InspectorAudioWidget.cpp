@@ -21,11 +21,6 @@ InspectorAudioWidget::InspectorAudioWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
 void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -47,11 +42,6 @@ void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 
     blockAllSignals(false);
 }
-
-
-
-
-
 
 void InspectorAudioWidget::blockAllSignals(bool block)
 {

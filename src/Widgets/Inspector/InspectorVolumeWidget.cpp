@@ -22,12 +22,6 @@ InspectorVolumeWidget::InspectorVolumeWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
-
 void InspectorVolumeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -47,11 +41,6 @@ void InspectorVolumeWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
     blockAllSignals(false);
 }
-
-
-
-
-
 
 void InspectorVolumeWidget::blockAllSignals(bool block)
 {

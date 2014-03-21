@@ -32,11 +32,5 @@ class WIDGETS_EXPORT InspectorOpacityWidget : public QWidget, Ui::InspectorOpaci
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);
-
-
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

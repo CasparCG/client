@@ -46,12 +46,6 @@ RundownNetworkSourceWidget::RundownNetworkSourceWidget(const LibraryModel& model
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(deviceAdded(TriCasterDevice&)));
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -65,10 +59,6 @@ RundownNetworkSourceWidget::RundownNetworkSourceWidget(const LibraryModel& model
 
     configureOscSubscriptions();
 }
-
-
-
-
 
 void RundownNetworkSourceWidget::preview(const PreviewEvent& event)
 {
@@ -117,13 +107,6 @@ void RundownNetworkSourceWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownNetworkSourceWidget::clone()
 {

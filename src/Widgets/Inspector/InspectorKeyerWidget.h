@@ -27,10 +27,5 @@ class WIDGETS_EXPORT InspectorKeyerWidget : public QWidget, Ui::InspectorKeyerWi
 
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
-
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

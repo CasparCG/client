@@ -28,11 +28,5 @@ class WIDGETS_EXPORT InspectorBlendModeWidget : public QWidget, Ui::InspectorBle
 
         Q_SLOT void blendModeChanged(QString);
         Q_SLOT void resetBlendMode(QString);
-
-
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

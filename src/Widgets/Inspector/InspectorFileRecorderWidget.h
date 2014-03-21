@@ -36,9 +36,5 @@ class WIDGETS_EXPORT InspectorFileRecorderWidget : public QWidget, Ui::Inspector
         Q_SLOT void resetPreset(QString);
         Q_SLOT void resetTune(QString);
         Q_SLOT void resetWithAlpha(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

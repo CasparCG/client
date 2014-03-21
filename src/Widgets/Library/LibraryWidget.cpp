@@ -431,31 +431,6 @@ void LibraryWidget::setupUiMenu()
     QObject::connect(this->contextMenuData, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuDataTriggered(QAction*)));
 }
 
-bool LibraryWidget::eventFilter(QObject* target, QEvent* event)
-{
-    if (event->type() == QEvent::KeyPress)
-    {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (target == this->treeWidgetPreset)
-        {
-            if (keyEvent->key() == Qt::Key_Delete)
-                return removeSelectedPresets();
-        }
-    }
-
-    return QObject::eventFilter(target, event);
-}
-
-
-
-
-
-
-
-
-
-
-
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 {
     // TODO: Only add / remove necessary items.
@@ -657,21 +632,6 @@ void LibraryWidget::exportPreset(const ExportPresetEvent& event)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void LibraryWidget::loadLibrary()
 {
     EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
@@ -817,17 +777,7 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
             EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(item->text(2)));
     }
     else if (action->text() == "Delete")
-        removeSelectedPresets();
-}
-
-bool LibraryWidget::removeSelectedPresets()
-{
-    foreach (QTreeWidgetItem* item, this->treeWidgetPreset->selectedItems())
-        DatabaseManager::getInstance().deletePreset(item->text(1).toInt());
-
-    EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
-
-    return true;
+        this->treeWidgetPreset->removeSelectedPresets();
 }
 
 void LibraryWidget::filterLibrary()

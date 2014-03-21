@@ -53,13 +53,6 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
     QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -73,10 +66,6 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
 
     configureOscSubscriptions();
 }
-
-
-
-
 
 void RundownDeckLinkInputWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -125,13 +114,6 @@ void RundownDeckLinkInputWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownDeckLinkInputWidget::clone()
 {

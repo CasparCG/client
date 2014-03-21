@@ -48,12 +48,6 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -67,11 +61,6 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
 
     configureOscSubscriptions();
 }
-
-
-
-
-
 
 void RundownClearOutputWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -111,13 +100,6 @@ void RundownClearOutputWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownClearOutputWidget::clone()
 {

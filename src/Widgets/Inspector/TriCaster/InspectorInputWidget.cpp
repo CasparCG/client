@@ -21,9 +21,6 @@ InspectorInputWidget::InspectorInputWidget(QWidget* parent)
     loadTriCasterInput();
 }
 
-
-
-
 void InspectorInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -41,11 +38,6 @@ void InspectorInputWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 
     blockAllSignals(false);
 }
-
-
-
-
-
 
 void InspectorInputWidget::blockAllSignals(bool block)
 {

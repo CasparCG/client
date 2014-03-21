@@ -25,11 +25,6 @@ InspectorSolidColorWidget::InspectorSolidColorWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
 void InspectorSolidColorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -50,12 +45,6 @@ void InspectorSolidColorWidget::rundownItemSelected(const RundownItemSelectedEve
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
 
 void InspectorSolidColorWidget::blockAllSignals(bool block)
 {

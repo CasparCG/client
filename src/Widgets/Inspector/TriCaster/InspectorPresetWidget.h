@@ -30,9 +30,5 @@ class WIDGETS_EXPORT InspectorPresetWidget : public QWidget, Ui::InspectorPreset
         Q_SLOT void sourceChanged(int);
         Q_SLOT void presetChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

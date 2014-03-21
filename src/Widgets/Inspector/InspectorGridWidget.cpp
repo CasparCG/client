@@ -19,12 +19,6 @@ InspectorGridWidget::InspectorGridWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
-
 void InspectorGridWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -43,11 +37,6 @@ void InspectorGridWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
 
     blockAllSignals(false);
 }
-
-
-
-
-
 
 void InspectorGridWidget::blockAllSignals(bool block)
 {

@@ -58,8 +58,5 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
         SeparatorCommand command;
         ActiveAnimation* animation;
 
-
-
-
         Q_SLOT void labelChanged(const LabelChangedEvent&);
 };

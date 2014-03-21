@@ -23,11 +23,6 @@ InspectorAutoWidget::InspectorAutoWidget(QWidget* parent)
     loadTriCasterAutoTransition();
 }
 
-
-
-
-
-
 void InspectorAutoWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();

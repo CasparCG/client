@@ -22,11 +22,6 @@ InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
 }
 
-
-
-
-
-
 void InspectorMetadataWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -68,13 +63,6 @@ void InspectorMetadataWidget::emptyRundown(const EmptyRundownEvent& event)
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
 
 void InspectorMetadataWidget::blockAllSignals(bool block)
 {

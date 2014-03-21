@@ -34,9 +34,5 @@ class WIDGETS_EXPORT InspectorImageScrollerWidget : public QWidget, Ui::Inspecto
         Q_SLOT void resetBlur(QString);
         Q_SLOT void resetPremultiply(QString);
         Q_SLOT void resetProgressive(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

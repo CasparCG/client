@@ -52,11 +52,6 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -70,11 +65,6 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
 
     configureOscSubscriptions();
 }
-
-
-
-
-
 
 void RundownContrastWidget::preview(const PreviewEvent& event)
 {
@@ -123,14 +113,6 @@ void RundownContrastWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownContrastWidget::clone()
 {

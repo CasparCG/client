@@ -52,14 +52,6 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -73,14 +65,6 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
 
     configureOscSubscriptions();
 }
-
-
-
-
-
-
-
-
 
 void RundownOpacityWidget::preview(const PreviewEvent& event)
 {
@@ -129,15 +113,6 @@ void RundownOpacityWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownOpacityWidget::clone()
 {

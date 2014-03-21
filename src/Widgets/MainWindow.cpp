@@ -121,12 +121,6 @@ void MainWindow::setupMenu()
     setMenuBar(this->menuBar);
 }
 
-
-
-
-
-
-
 void MainWindow::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->saveAsPresetAction->setEnabled(true);
@@ -168,13 +162,6 @@ void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&
     this->allowRemoteTriggeringAction->setChecked(event.getEnabled());
     this->allowRemoteTriggeringAction->blockSignals(false);
 }
-
-
-
-
-
-
-
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {

@@ -48,10 +48,6 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL)
@@ -65,12 +61,6 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
 
     configureOscSubscriptions();
 }
-
-
-
-
-
-
 
 void RundownPrintWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -110,22 +100,6 @@ void RundownPrintWidget::deviceChanged(const DeviceChangedEvent& event)
     checkEmptyDevice();
     checkDeviceConnection();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 AbstractRundownWidget* RundownPrintWidget::clone()
 {

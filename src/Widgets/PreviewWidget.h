@@ -26,10 +26,6 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
         void setThumbnail();
 
         Q_SLOT void switchPreview();
-
-
-
-
         Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);

@@ -41,11 +41,6 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundown(const OpenRundownEvent&)), this, SLOT(openRundown(const OpenRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveRundown(const SaveRundownEvent&)), this, SLOT(saveRundown(const SaveRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
-
-
-
-
-    qApp->installEventFilter(this);
 }
 
 void RundownWidget::setupMenus()
@@ -65,25 +60,6 @@ void RundownWidget::setupMenus()
     this->allowRemoteTriggeringAction->setCheckable(true);
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
-
-bool RundownWidget::eventFilter(QObject* target, QEvent* event)
-{
-    if (event->type() == QEvent::KeyPress)
-    {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (keyEvent->key() >= 49 && keyEvent->key() <= 57 && keyEvent->modifiers() == Qt::AltModifier) // [1-9]
-            return selectTab(QString(QChar(keyEvent->key())).toInt());
-    }
-
-    return QObject::eventFilter(target, event);
-}
-
-
-
-
-
-
-
 
 
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)

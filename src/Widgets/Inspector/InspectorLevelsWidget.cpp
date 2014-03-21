@@ -20,13 +20,6 @@ InspectorLevelsWidget::InspectorLevelsWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
-
-
-
 void InspectorLevelsWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -54,14 +47,6 @@ void InspectorLevelsWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
-
 
 void InspectorLevelsWidget::blockAllSignals(bool block)
 {

@@ -13,11 +13,6 @@ InspectorGpiOutputWidget::InspectorGpiOutputWidget(QWidget *parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-
-
-
-
-
 void InspectorGpiOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     blockAllSignals(true);
@@ -32,16 +27,6 @@ void InspectorGpiOutputWidget::rundownItemSelected(const RundownItemSelectedEven
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
-
-
-
 
 void InspectorGpiOutputWidget::blockAllSignals(bool block)
 {

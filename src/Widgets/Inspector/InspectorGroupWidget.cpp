@@ -23,9 +23,6 @@ InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
 
-
-
-
 void InspectorGroupWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -55,12 +52,6 @@ void InspectorGroupWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
 
 void InspectorGroupWidget::blockAllSignals(bool block)
 {

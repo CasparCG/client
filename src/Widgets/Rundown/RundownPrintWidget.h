@@ -92,11 +92,6 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-
-
-
-
-
         Q_SLOT void labelChanged(const LabelChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

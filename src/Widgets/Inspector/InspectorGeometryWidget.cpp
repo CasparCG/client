@@ -24,10 +24,6 @@ InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
     loadTween();
 }
 
-
-
-
-
 void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
@@ -94,13 +90,6 @@ void InspectorGeometryWidget::channelChanged(const ChannelChangedEvent& event)
 
     blockAllSignals(false);
 }
-
-
-
-
-
-
-
 
 void InspectorGeometryWidget::blockAllSignals(bool block)
 {

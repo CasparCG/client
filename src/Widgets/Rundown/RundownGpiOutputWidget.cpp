@@ -44,11 +44,6 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
-
-
-
-
-
     gpiOutputPortChanged(this->command.getGpoPort());
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
@@ -56,11 +51,6 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
 
     configureOscSubscriptions();
 }
-
-
-
-
-
 
 void RundownGpiOutputWidget::labelChanged(const LabelChangedEvent& event)
 {
@@ -72,11 +62,6 @@ void RundownGpiOutputWidget::labelChanged(const LabelChangedEvent& event)
 
     this->labelLabel->setText(this->model.getLabel());
 }
-
-
-
-
-
 
 AbstractRundownWidget* RundownGpiOutputWidget::clone()
 {

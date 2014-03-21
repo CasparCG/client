@@ -35,9 +35,5 @@ class WIDGETS_EXPORT InspectorContrastWidget : public QWidget, Ui::InspectorCont
         Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
         Q_SLOT void resetDefer(QString);
-
-
-
-
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

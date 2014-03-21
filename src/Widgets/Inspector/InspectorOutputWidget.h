@@ -53,11 +53,6 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void tricasterDeviceRemoved();
         Q_SLOT void tricasterDeviceNameChanged(QString);
         Q_SLOT void remoteTriggerIdChanged(QString);
-
-
-
-
-
         Q_SLOT void mediaChanged(const MediaChangedEvent&);
         Q_SLOT void templateChanged(const TemplateChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
