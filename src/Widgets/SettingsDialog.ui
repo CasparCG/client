@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -451,7 +451,7 @@
        <x>110</x>
        <y>42</y>
        <width>535</width>
-       <height>251</height>
+       <height>638</height>
       </rect>
      </property>
      <property name="focusPolicy">
@@ -537,7 +537,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>302</y>
+       <y>689</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -562,7 +562,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>302</y>
+       <y>689</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -612,10 +612,10 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QToolButton" name="toolButtonRemoveTriCasterDevice">
+    <widget class="QToolButton" name="toolButtonImportDevice">
      <property name="geometry">
       <rect>
-       <x>149</x>
+       <x>612</x>
        <y>689</y>
        <width>33</width>
        <height>22</height>
@@ -634,14 +634,44 @@
       </font>
      </property>
      <property name="toolTip">
-      <string>Remove TriCaster Server</string>
+      <string>Import CasparCG Servers</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabMixers">
+    <attribute name="title">
+     <string>Mixers</string>
+    </attribute>
+    <widget class="QToolButton" name="toolButtonAddTriCasterDevice">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>354</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Add TriCaster Server</string>
      </property>
     </widget>
     <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>429</y>
+       <y>94</y>
        <width>535</width>
        <height>251</height>
       </rect>
@@ -695,90 +725,43 @@
       </property>
      </column>
     </widget>
-    <widget class="QLabel" name="labelTriCaster">
+    <widget class="QComboBox" name="comboBoxTriCasterProduct">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>347</y>
+       <x>154</x>
+       <y>41</y>
+       <width>112</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelModel">
+     <property name="geometry">
+      <rect>
+       <x>64</x>
+       <y>42</y>
        <width>81</width>
-       <height>16</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>TriCaster</string>
+      <string>Model:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="Line" name="lineTriCaster">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>355</y>
-       <width>555</width>
-       <height>1</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonAddTriCasterDevice">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>689</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Add TriCaster Server</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonImportDevice">
-     <property name="geometry">
-      <rect>
-       <x>612</x>
-       <y>302</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Import CasparCG Servers</string>
      </property>
     </widget>
     <widget class="QToolButton" name="toolButtonImportTriCasterDevice">
      <property name="geometry">
       <rect>
        <x>612</x>
-       <y>689</y>
+       <y>354</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -799,36 +782,58 @@
       <string>Import TriCaster Servers</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labelModel">
+    <widget class="Line" name="lineTriCaster">
      <property name="geometry">
       <rect>
-       <x>64</x>
-       <y>377</y>
+       <x>100</x>
+       <y>20</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTriCaster">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>12</y>
        <width>81</width>
-       <height>20</height>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Model:</string>
+      <string>TriCaster</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBoxTriCasterProduct">
+    <widget class="QToolButton" name="toolButtonRemoveTriCasterDevice">
      <property name="geometry">
       <rect>
-       <x>154</x>
-       <y>376</y>
-       <width>112</width>
-       <height>20</height>
+       <x>149</x>
+       <y>354</y>
+       <width>33</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Remove TriCaster Server</string>
      </property>
     </widget>
    </widget>
@@ -3619,38 +3624,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolButtonAddTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAddTriCasterDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>140</x>
-     <y>730</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>677</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRemoveTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>removeTriCasterDevice()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>185</x>
-     <y>725</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>667</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>toolButtonImportDevice</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -3663,38 +3636,6 @@
     <hint type="destinationlabel">
      <x>691</x>
      <y>689</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonImportTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showImportTriCasterDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>640</x>
-     <y>727</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>648</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetTriCasterDevice</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>422</x>
-     <y>484</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>450</y>
     </hint>
    </hints>
   </connection>
@@ -3775,22 +3716,6 @@
     <hint type="destinationlabel">
      <x>694</x>
      <y>512</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTriCasterProduct</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>tricasterProductChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>247</x>
-     <y>412</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>696</x>
-     <y>548</y>
     </hint>
    </hints>
   </connection>
