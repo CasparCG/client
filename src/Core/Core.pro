@@ -264,8 +264,7 @@ else:unix:LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesy
 
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include
-win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/release/ -lgpio-client
-else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/debug/ -lgpio-client
+win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
 else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
 else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
 
