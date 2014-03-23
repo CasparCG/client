@@ -9,11 +9,16 @@ CasparDevice::CasparDevice(const QString& address, int port, QObject* parent)
 {
 }
 
-const QString CasparDevice::getIpAddress() const
+const QString CasparDevice::resolveIpAddress() const
 {
-    if (getAddress() == "localhost")
+    if (AMCPDevice::getAddress() == "localhost")
         return "127.0.0.1";
 
+    QHostAddress address(AMCPDevice::getAddress());
+    if (!address.isNull())
+        return getAddress(); // The ip address is valid.
+
+    // We don't have a valid ip address. Try to resolve using dns lookup.
     QHostInfo hostInfo = QHostInfo::fromName(getAddress());
     if (hostInfo.error() != QHostInfo::NoError)
         return "";

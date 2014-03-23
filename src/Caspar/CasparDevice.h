@@ -15,7 +15,7 @@ class CASPAR_EXPORT CasparDevice : public AMCPDevice
     public:
         explicit CasparDevice(const QString& address, int port = 5250, QObject* parent = 0);
 
-        const QString getIpAddress() const;
+        const QString resolveIpAddress() const;
 
         void refreshData();
         void refreshMedia();

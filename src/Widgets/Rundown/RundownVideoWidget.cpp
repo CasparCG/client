@@ -698,7 +698,7 @@ void RundownVideoWidget::configureOscSubscriptions()
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
     QString timeFilter = Osc::DEFAULT_TIME_FILTER;
-    timeFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    timeFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->timeSubscription = new OscSubscription(timeFilter, this);
@@ -706,7 +706,7 @@ void RundownVideoWidget::configureOscSubscriptions()
                      this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString frameFilter = Osc::DEFAULT_FRAME_FILTER;
-    frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
                .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->frameSubscription = new OscSubscription(frameFilter, this);
@@ -714,7 +714,7 @@ void RundownVideoWidget::configureOscSubscriptions()
                      this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString fpsFilter = Osc::DEFAULT_FPS_FILTER;
-    fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
@@ -722,7 +722,7 @@ void RundownVideoWidget::configureOscSubscriptions()
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pathFilter = Osc::DEFAULT_PATH_FILTER;
-    pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->pathSubscription = new OscSubscription(pathFilter, this);
@@ -730,7 +730,7 @@ void RundownVideoWidget::configureOscSubscriptions()
                      this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pausedFilter = Osc::DEFAULT_PAUSED_FILTER;
-    pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                 .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
                 .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->pausedSubscription = new OscSubscription(pausedFilter, this);
@@ -738,7 +738,7 @@ void RundownVideoWidget::configureOscSubscriptions()
                      this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString loopFilter = Osc::DEFAULT_LOOP_FILTER;
-    loopFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->getIpAddress()))
+    loopFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
     this->loopSubscription = new OscSubscription(loopFilter, this);
