@@ -3,13 +3,14 @@
 
 #include "Application.h"
 
-#include "EventManager.h"
 #include "DatabaseManager.h"
+#include "EventManager.h"
 #include "GpiManager.h"
 #include "LibraryManager.h"
 #include "DeviceManager.h"
-#include "TriCasterDeviceManager.h"
 #include "OscDeviceManager.h"
+#include "AtemDeviceManager.h"
+#include "TriCasterDeviceManager.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 
 #include "MainWindow.h"
@@ -167,6 +168,7 @@ int main(int argc, char* argv[])
 
     LibraryManager::getInstance().initialize();
     DeviceManager::getInstance().initialize();
+    AtemDeviceManager::getInstance().initialize();
     TriCasterDeviceManager::getInstance().initialize();
     OscDeviceManager::getInstance().initialize();
 
@@ -177,6 +179,7 @@ int main(int argc, char* argv[])
     GpiManager::getInstance().uninitialize();
     OscDeviceManager::getInstance().uninitialize();
     TriCasterDeviceManager::getInstance().uninitialize();
+    AtemDeviceManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
     LibraryManager::getInstance().uninitialize();
 

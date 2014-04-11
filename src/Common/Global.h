@@ -8,6 +8,18 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 
+namespace Atem
+{
+    static const int DEFAULT_SPEED = 12;
+    static const QString DEFAULT_TRANSITION = "0";
+    static const QString DEFAULT_INPUT = "1";
+    static const QString DEFAULT_SWITCHER = "prev";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const QString DEFAULT_KEYER = "0";
+    static const bool DEFAULT_KEYER_STATE = false;
+    static const QString DEFAULT_VIDEO_FORMAT = "4";
+}
+
 namespace TriCaster
 {
     static const int DEFAULT_PORT = 5950;
@@ -128,6 +140,7 @@ namespace Color
     static const QString DEFAULT_COLOR_PRODUCER_COLOR = "Goldenrod";
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_TRICASTER_COLOR = "DarkOliveGreen";
+    static const QString DEFAULT_ATEM_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
@@ -307,12 +320,17 @@ namespace Rundown
     static const QString VIDEO = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const QString CHROMAKEY = "CHROMAKEY";
-    static const QString AUTO = "AUTO";
-    static const QString TAKE = "TAKE";
-    static const QString INPUT = "INPUT";
-    static const QString PRESET = "PRESET";
-    static const QString NETSOURCE = "NETSOURCE";
-    static const QString MACRO = "MACRO";
+    static const QString TRICASTERAUTO = "TRICASTERAUTO";
+    static const QString TRICASTERTAKE = "TRICASTERTAKE";
+    static const QString TRICASTERINPUT = "TRICASTERINPUT";
+    static const QString TRICASTERPRESET = "TRICASTERPRESET";
+    static const QString TRICASTERNETSOURCE = "TRICASTERNETSOURCE";
+    static const QString TRICASTERMACRO = "TRICASTERMACRO";
+    static const QString ATEMAUTO = "ATEMAUTO";
+    static const QString ATEMINPUT = "ATEMINPUT";
+    static const QString ATEMKEYERSTATE = "ATEMKEYERSTATE";
+    static const QString ATEMCUT = "ATEMCUT";
+    static const QString ATEMVIDEOFORMAT = "ATEMVIDEOFORMAT";
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";

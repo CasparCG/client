@@ -68,6 +68,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxAtemDevice">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -466,7 +476,7 @@
    <slot>deviceNameChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>142</x>
+     <x>129</x>
      <y>29</y>
     </hint>
     <hint type="destinationlabel">
@@ -539,6 +549,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBoxAtemDevice</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>atemDeviceNameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>channelChanged(int)</slot>
@@ -550,5 +576,6 @@
   <slot>tricasterDeviceNameChanged(QString)</slot>
   <slot>allowRemoteTriggeringChanged(int)</slot>
   <slot>remoteTriggerIdChanged(QString)</slot>
+  <slot>atemDeviceNameChanged(QString)</slot>
  </slots>
 </ui>

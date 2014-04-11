@@ -14,8 +14,8 @@ DEFINES += TRICASTER_LIBRARY
 HEADERS += \
     TriCasterDevice.h \
     Shared.h \
-    NTFCDevice.h
+    NtfcDevice.h
 	
 SOURCES += \
     TriCasterDevice.cpp \
-    NTFCDevice.cpp
+    NtfcDevice.cpp

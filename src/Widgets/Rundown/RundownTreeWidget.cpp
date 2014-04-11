@@ -149,6 +149,16 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addTriggerAutoItem()));
     this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"), "Trigger Take", this, SLOT(addTriggerTakeItem()));
 
+    this->contextMenuAtem = new QMenu(this);
+    this->contextMenuAtem->setObjectName("contextMenuAtem");
+    this->contextMenuAtem->setTitle("ATEM");
+    //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/KeyerStateSmall.png"), "Set Keyer State", this, SLOT(addAtemSetKeyerStateItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/VideoFormatSmall.png"), "Set Video Format", this, SLOT(addAtemSetVideoFormatItem()));
+
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
     //this->contextMenuTools->setIcon(QIcon(":/Graphics/Images/New.png"));
@@ -156,6 +166,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTools->addMenu(this->contextMenuMixer);
     this->contextMenuTools->addMenu(this->contextMenuOther);
     this->contextMenuTools->addMenu(this->contextMenuTriCaster);
+    this->contextMenuTools->addMenu(this->contextMenuAtem);
 
     this->contextMenuColor = new QMenu(this);
     this->contextMenuColor->setTitle("Colorize Item");
@@ -938,32 +949,32 @@ void RundownTreeWidget::addSeparatorItem()
 
 void RundownTreeWidget::addTriggerAutoItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::AUTO);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERAUTO);
 }
 
 void RundownTreeWidget::addTriggerTakeItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TAKE);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERTAKE);
 }
 
 void RundownTreeWidget::addPlayMacroItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::MACRO);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERMACRO);
 }
 
 void RundownTreeWidget::addSelectInputItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::INPUT);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERINPUT);
 }
 
 void RundownTreeWidget::addSelectPresetItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PRESET);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERPRESET);
 }
 
 void RundownTreeWidget::addSelectNetworkSourceItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::NETSOURCE);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERNETSOURCE);
 }
 
 void RundownTreeWidget::addGridItem()
@@ -1034,6 +1045,31 @@ void RundownTreeWidget::addTemplateItem()
 void RundownTreeWidget::addVideoItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::VIDEO);
+}
+
+void RundownTreeWidget::addAtemSetKeyerStateItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMKEYERSTATE);
+}
+
+void RundownTreeWidget::addAtemSelectInputItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMINPUT);
+}
+
+void RundownTreeWidget::addAtemTriggerAutoItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUTO);
+}
+
+void RundownTreeWidget::addAtemTriggerCutItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMCUT);
+}
+
+void RundownTreeWidget::addAtemSetVideoFormatItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMVIDEOFORMAT);
 }
 
 void RundownTreeWidget::saveAsPreset()

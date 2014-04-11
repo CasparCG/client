@@ -43,7 +43,7 @@ RundownAutoWidget::RundownAutoWidget(const LibraryModel& model, QWidget* parent,
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(preview(const PreviewEvent&)), this, SLOT(preview(const PreviewEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(tricasterDeviceChanged(const TriCasterDeviceChangedEvent&)), this, SLOT(tricasterDeviceChanged(const TriCasterDeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
     QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(deviceAdded(TriCasterDevice&)));
@@ -80,7 +80,7 @@ void RundownAutoWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-void RundownAutoWidget::deviceChanged(const DeviceChangedEvent& event)
+void RundownAutoWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -90,18 +90,18 @@ void RundownAutoWidget::deviceChanged(const DeviceChangedEvent& event)
     if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model.getDeviceName())
     {
         // Disconnect connectionStateChanged() from the old device.
-        const QSharedPointer<CasparDevice> oldDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        const QSharedPointer<TriCasterDevice> oldDevice = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (oldDevice != NULL)
-            QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+            QObject::disconnect(oldDevice.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
 
         // Update the model with the new device.
         this->model.setDeviceName(event.getDeviceName());
         this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
         // Connect connectionStateChanged() to the new device.
-        const QSharedPointer<CasparDevice> newDevice = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        const QSharedPointer<TriCasterDevice> newDevice = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (newDevice != NULL)
-            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
+            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
     }
 
     checkEmptyDevice();

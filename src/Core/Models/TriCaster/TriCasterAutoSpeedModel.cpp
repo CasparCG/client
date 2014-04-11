@@ -1,7 +1,7 @@
 #include "TriCasterAutoSpeedModel.h"
 
-TriCasterAutoSpeedModel::TriCasterAutoSpeedModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterAutoSpeedModel::TriCasterAutoSpeedModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterAutoSpeedModel::getName() const
 const QString& TriCasterAutoSpeedModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterAutoSpeedModel::getProduct() const
+{
+    return this->product;
 }

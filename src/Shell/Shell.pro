@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui sql
+QT += core gui sql network
 
 TARGET = shell
 TEMPLATE = app
@@ -39,6 +39,14 @@ OTHER_FILES += \
 win32:RC_FILE = Windows.rc
 else:macx:ICON = Images/CasparCG.icns
 
+INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
+win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
+else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/release/ -lqatemcontrol
+else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
+else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
+else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
+
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
 else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
@@ -54,6 +62,13 @@ INCLUDEPATH += $$PWD/../../lib/gpio-client/include
 win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
 else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
 else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
+
+DEPENDPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+INCLUDEPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Atem/release/ -latem
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Atem/debug/ -latem
+else:macx:LIBS += -L$$OUT_PWD/../Atem/ -latem
+else:unix:LIBS += -L$$OUT_PWD/../Atem/ -latem
 
 DEPENDPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar
 INCLUDEPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar

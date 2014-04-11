@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Import CasparCG Servers</string>
+   <string>Import TriCaster Mixers</string>
   </property>
   <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
@@ -88,7 +88,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>* Select servers from the list that you want to import</string>
+    <string>* Select mixers from the list that you want to import</string>
    </property>
   </widget>
  </widget>

@@ -7,13 +7,13 @@
 #include <QtNetwork/QTcpSocket>
 #include <QtNetwork/QAbstractSocket>
 
-class CASPAR_EXPORT AMCPDevice : public QObject
+class CASPAR_EXPORT AmcpDevice : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit AMCPDevice(const QString& address, int port, QObject* parent = 0);
-        virtual ~AMCPDevice();
+        explicit AmcpDevice(const QString& address, int port, QObject* parent = 0);
+        virtual ~AmcpDevice();
 
         void disconnectDevice();
 
@@ -26,7 +26,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         Q_SLOT void connectDevice();
 
     protected:
-        enum AMCPCommand
+        enum AmcpDeviceCommand
         {
             NONE,
             CONNECTIONSTATE,
@@ -57,7 +57,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         };
 
         QTcpSocket* socket;
-        AMCPCommand command;
+        AmcpDeviceCommand command;
 
         QList<QString> response;
 
@@ -67,7 +67,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         void writeMessage(const QString& message);
 
     private:
-        enum AMCPParserState
+        enum AmcpDeviceParserState
         {
             ExpectingHeader,
             ExpectingOneline,
@@ -90,7 +90,7 @@ class CASPAR_EXPORT AMCPDevice : public QObject
         void parseTwoline(const QString& line);
         void parseMultiline(const QString& line);
 
-        AMCPCommand translateCommand(const QString& command);
+        AmcpDeviceCommand translateCommand(const QString& command);
 
         Q_SLOT void readMessage();
         Q_SLOT void setConnected();

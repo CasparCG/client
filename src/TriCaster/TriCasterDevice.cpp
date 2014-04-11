@@ -5,7 +5,7 @@
 #include <QtNetwork/QHostInfo>
 
 TriCasterDevice::TriCasterDevice(const QString& address, int port, QObject* parent)
-    : NTFCDevice(address, port, parent)
+    : NtfcDevice(address, port, parent)
 {
 }
 
@@ -55,9 +55,9 @@ void TriCasterDevice::selectPreset(const QString& source, const QString& preset)
 
 void TriCasterDevice::sendNotification()
 {
-    switch (this->command)
+    switch (NtfcDevice::command)
     {
-        case NTFCDevice::CONNECTIONSTATE:
+        case NtfcDevice::CONNECTIONSTATE:
         {
             emit connectionStateChanged(*this);
 
@@ -65,8 +65,6 @@ void TriCasterDevice::sendNotification()
         }
         default:
         {
-            emit responseChanged(NTFCDevice::response.at(0), *this);
-
             break;
         }
     }

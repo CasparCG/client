@@ -34,7 +34,7 @@
     image: url(:/Graphics/Images/Add.png);
 }
 
-#tabGeneral, #tabDevices, #tabGpi, #tabOsc
+#tabGeneral, #tabDevices, #tabMixers, #tabGpi, #tabOsc
 {
     background-color: rgba(35, 35, 35, 255);
 }
@@ -45,34 +45,34 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
 {
     background-color: rgba(65, 65, 65, 255);
 }
-#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
+#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddAtemDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
 {
     background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Add.png);
 }
-#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
+#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddAtemDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
 }
-#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
+#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveAtemDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
 {
     background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Remove.png);
 }
-#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
+#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveAtemDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }
-#toolButtonImportDevice, #toolButtonImportTriCasterDevice
+#toolButtonImportDevice, #toolButtonImportTriCasterDevice, #toolButtonImportAtemDevice
 {
     background-color: rgba(28, 28, 28, 255);
     image: url(:/Graphics/Images/Import.png);
 }
-#toolButtonImportDevice:hover, #toolButtonImportTriCasterDevice:hover
+#toolButtonImportDevice:hover, #toolButtonImportTriCasterDevice:hover, #toolButtonImportAtemDevice:hover
 {
     image: url(:/Graphics/Images/ImportHover.png);
 }
@@ -361,7 +361,7 @@
 /*
  * Dialog backgrounds
  */
-#TriCasterDeviceDialog, #ImportTriCasterDeviceDialog, #AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #OscOutputDialog, #TemplateDataDialog
+#AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #TriCasterDeviceDialog, #ImportTriCasterDeviceDialog, #AtemDeviceDialog, #ImportAtemDeviceDialog, #OscOutputDialog, #TemplateDataDialog
 {
     background-color: rgba(35, 35, 35, 255);
 }

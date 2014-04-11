@@ -1,7 +1,7 @@
 #include "TriCasterStepModel.h"
 
-TriCasterStepModel::TriCasterStepModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterStepModel::TriCasterStepModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterStepModel::getName() const
 const QString& TriCasterStepModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterStepModel::getProduct() const
+{
+    return this->product;
 }

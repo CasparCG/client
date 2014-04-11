@@ -45,8 +45,15 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE OscOutput (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
+    sql.exec("CREATE TABLE AtemDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Description TEXT)");
+    sql.exec("CREATE TABLE AtemInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemKeyerState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemVideoFormat (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterProduct (Id INTEGER PRIMARY KEY, Name TEXT)");
-    sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT, Products TEXT)");
+    sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
     sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
     sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
     sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
@@ -175,6 +182,57 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Transition (Value) VALUES('PUSH')");
     sql.exec("INSERT INTO Transition (Value) VALUES('SLIDE')");
     sql.exec("INSERT INTO Transition (Value) VALUES('WIPE')");
+
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('BLACK', '0')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 1', '1')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 2', '2')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 3', '3')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 4', '4')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 5', '5')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 6', '6')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 7', '7')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 8', '8')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 9', '9')");
+    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 10', '10')");
+
+    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('Background', 'background')");
+    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('DSK 1', '0')");
+    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('DSK 2', '1')");
+
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 1', '0')");
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 2', '1')");
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 1', '2')");
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 2', '3')");
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 3', '4')");
+    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 4', '5')");
+
+    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('MIX', '0')");
+    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('DIP', '1')");
+    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('WIPE', '2')");
+    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('STING', '3')");
+    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('DVE', '4')");
+
+    sql.exec("INSERT INTO AtemSwitcher (Name, Value) VALUES('Program', 'pgm')");
+    sql.exec("INSERT INTO AtemSwitcher (Name, Value) VALUES('Preview', 'prev')");
+
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('525 59.94i NTSC', '0')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('625 50i PAL', '1')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('525 59.94i 16:9', '2')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('625 50i 16:9', '3')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('720 50p', '4')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('720 59.94p', '5')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 50i', '6')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 59.94i', '7')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 23.98p', '8')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 24p', '9')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 25p', '10')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 29.97p', '11')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 50p', '12')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 59.94p', '13')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 23.98p', '14')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 24p', '15')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 25p', '16')");
+    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 29.97p', '17')");
 
     sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 410')");
     sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 460')");
@@ -662,6 +720,204 @@ void DatabaseManager::deleteOscOutput(int id)
     QSqlDatabase::database().commit();
 }
 
+QList<AtemStepModel> DatabaseManager::getAtemStep()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemStep t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemStepModel> models;
+    while (sql.next())
+        models.push_back(AtemStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemInputModel> DatabaseManager::getAtemInput()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemInput t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemInputModel> models;
+    while (sql.next())
+        models.push_back(AtemInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemKeyerStateModel> DatabaseManager::getAtemKeyerState()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemKeyerState t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemKeyerStateModel> models;
+    while (sql.next())
+        models.push_back(AtemKeyerStateModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemSwitcherModel> DatabaseManager::getAtemSwitcher()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemSwitcher t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemSwitcherModel> models;
+    while (sql.next())
+        models.push_back(AtemSwitcherModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemVideoFormatModel> DatabaseManager::getAtemVideoFormat()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemVideoFormat t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemVideoFormatModel> models;
+    while (sql.next())
+        models.push_back(AtemVideoFormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemAutoTransitionModel> DatabaseManager::getAtemAutoTransition()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemAutoTransition t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemAutoTransitionModel> models;
+    while (sql.next())
+        models.push_back(AtemAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemDeviceModel> DatabaseManager::getAtemDevice()
+{
+    QString query("SELECT o.Id, o.Name, o.Address, o.Description FROM AtemDevice o "
+                  "ORDER BY o.Name");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemDeviceModel> models;
+    while (sql.next())
+        models.push_back(AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+
+    return models;
+}
+
+AtemDeviceModel DatabaseManager::getAtemDeviceByName(const QString& name)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Description FROM AtemDevice d "
+                            "WHERE d.Name = '%1'").arg(name);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString());
+}
+
+AtemDeviceModel DatabaseManager::getAtemDeviceByAddress(const QString& address)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Description FROM AtemDevice d "
+                            "WHERE d.Address = '%1'").arg(address);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    sql.first();
+
+    return AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString());
+}
+
+void DatabaseManager::insertAtemDevice(const AtemDeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("INSERT INTO AtemDevice (Name, Address, Description) "
+                            "VALUES('%1', '%2', '%3')")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getDescription());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateAtemDevice(const AtemDeviceModel& model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("UPDATE AtemDevice SET Name = '%1', Address = '%2', Description = '%3' WHERE Id = %4")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getDescription()).arg(model.getId());
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deleteAtemDevice(int id)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("DELETE FROM AtemDevice WHERE Id = %1").arg(id);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
 QList<TriCasterProductModel> DatabaseManager::getTriCasterProduct()
 {
     QMutexLocker locker(&mutex);
@@ -712,7 +968,7 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
 
     QList<TriCasterStepModel> models;
     while (sql.next())
-        models.push_back(TriCasterStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -731,7 +987,7 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
 
     QList<TriCasterAutoSpeedModel> models;
     while (sql.next())
-        models.push_back(TriCasterAutoSpeedModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterAutoSpeedModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -750,7 +1006,7 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
 
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
-        models.push_back(TriCasterAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -769,7 +1025,7 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
 
     QList<TriCasterPresetModel> models;
     while (sql.next())
-        models.push_back(TriCasterPresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterPresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -788,7 +1044,7 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
 
     QList<TriCasterSourceModel> models;
     while (sql.next())
-        models.push_back(TriCasterSourceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterSourceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -807,7 +1063,7 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
 
     QList<TriCasterSwitcherModel> models;
     while (sql.next())
-        models.push_back(TriCasterSwitcherModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterSwitcherModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }
@@ -826,7 +1082,7 @@ QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
 
     QList<TriCasterNetworkTargetModel> models;
     while (sql.next())
-        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
 
     return models;
 }

@@ -1,8 +1,9 @@
 #include "LibraryManager.h"
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
-#include "TriCasterDeviceManager.h"
 #include "EventManager.h"
+#include "AtemDeviceManager.h"
+#include "TriCasterDeviceManager.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/MediaChangedEvent.h"
 #include "Events/DataChangedEvent.h"
@@ -44,14 +45,6 @@ void LibraryManager::uninitialize()
 {
 }
 
-
-
-
-
-
-
-
-
 void LibraryManager::refreshLibrary(const RefreshLibraryEvent& event)
 {
     QTimer::singleShot(event.getDelay(), this, SLOT(refresh()));
@@ -71,19 +64,13 @@ void LibraryManager::autoRefreshLibrary(const AutoRefreshLibraryEvent& event)
     }
 }
 
-
-
-
-
-
-
-
 void LibraryManager::refresh()
 {
     // Clear out all thumbnail workers.
     this->thumbnailWorkers.clear();
 
     DeviceManager::getInstance().refresh();
+    AtemDeviceManager::getInstance().refresh();
     TriCasterDeviceManager::getInstance().refresh();
 
     if (DeviceManager::getInstance().getDeviceCount() == 0)

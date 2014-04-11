@@ -1,7 +1,7 @@
 #include "TriCasterPresetModel.h"
 
-TriCasterPresetModel::TriCasterPresetModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterPresetModel::TriCasterPresetModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterPresetModel::getName() const
 const QString& TriCasterPresetModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterPresetModel::getProduct() const
+{
+    return this->product;
 }

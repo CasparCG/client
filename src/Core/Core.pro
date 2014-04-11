@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core sql
+QT += core sql network
 
 TARGET = core
 TEMPLATE = lib
@@ -130,7 +130,23 @@ HEADERS += \
     Events/Rundown/AllowRemoteTriggeringMenuEvent.h \
     Events/Rundown/ExecutePlayoutCommandEvent.h \
     Events/Rundown/OpenRundownMenuEvent.h \
-    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h
+    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h \
+    Models/Atem/AtemDeviceModel.h \
+    Events/Atem/AtemDeviceChangedEvent.h \
+    Events/TriCaster/TriCasterDeviceChangedEvent.h \
+    AtemDeviceManager.h \
+    Commands/Atem/AtemInputCommand.h \
+    Commands/Atem/AtemAutoCommand.h \
+    Models/Atem/AtemSwitcherModel.h \
+    Models/Atem/AtemInputModel.h \
+    Models/Atem/AtemStepModel.h \
+    Commands/Atem/AtemCutCommand.h \
+    Models/Atem/AtemAutoTransitionModel.h \
+    Models/Atem/AtemAutoSpeedModel.h \
+    Commands/Atem/AtemKeyerStateCommand.h \
+    Models/Atem/AtemKeyerStateModel.h \
+    Models/Atem/AtemVideoFormatModel.h \
+    Commands/Atem/AtemVideoFormatCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -250,7 +266,31 @@ SOURCES += \
     Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp \
     Events/Rundown/ExecutePlayoutCommandEvent.cpp \
     Events/Rundown/OpenRundownMenuEvent.cpp \
-    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.cpp
+    Events/Rundown/RemoveItemFromAutoPlayQueueEvent.cpp \
+    Models/Atem/AtemDeviceModel.cpp \
+    Events/Atem/AtemDeviceChangedEvent.cpp \
+    Events/TriCaster/TriCasterDeviceChangedEvent.cpp \
+    AtemDeviceManager.cpp \
+    Commands/Atem/AtemInputCommand.cpp \
+    Commands/Atem/AtemAutoCommand.cpp \
+    Models/Atem/AtemSwitcherModel.cpp \
+    Models/Atem/AtemInputModel.cpp \
+    Models/Atem/AtemStepModel.cpp \
+    Commands/Atem/AtemCutCommand.cpp \
+    Models/Atem/AtemAutoTransitionModel.cpp \
+    Models/Atem/AtemAutoSpeedModel.cpp \
+    Commands/Atem/AtemKeyerStateCommand.cpp \
+    Models/Atem/AtemKeyerStateModel.cpp \
+    Models/Atem/AtemVideoFormatModel.cpp \
+    Commands/Atem/AtemVideoFormatCommand.cpp
+
+INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
+win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
+else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/release/ -lqatemcontrol
+else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
+else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
+else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
@@ -267,6 +307,13 @@ INCLUDEPATH += $$PWD/../../lib/gpio-client/include
 win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
 else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
 else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
+
+DEPENDPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+INCLUDEPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Atem/release/ -latem
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Atem/debug/ -latem
+else:macx:LIBS += -L$$OUT_PWD/../Atem/ -latem
+else:unix:LIBS += -L$$OUT_PWD/../Atem/ -latem
 
 DEPENDPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar
 INCLUDEPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar

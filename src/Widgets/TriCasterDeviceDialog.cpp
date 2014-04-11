@@ -22,7 +22,7 @@ void TriCasterDeviceDialog::setDeviceModel(const TriCasterDeviceModel& model)
 {
     this->editMode = true;
 
-    setWindowTitle("Edit TriCaster Server");
+    setWindowTitle("Edit TriCaster Mixer");
 
     this->lineEditDeviceName->setText(model.getName());
     this->lineEditAddress->setText(model.getAddress());
@@ -64,7 +64,7 @@ void TriCasterDeviceDialog::accept()
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
-            box.setWindowTitle("Add TriCaster Device");
+            box.setWindowTitle("Add TriCaster Mixer");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The name already exists in the database. Please choose a unique name.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
@@ -82,7 +82,7 @@ void TriCasterDeviceDialog::accept()
         if (!model.getName().isEmpty())
         {
             QMessageBox box(this);
-            box.setWindowTitle("Add TriCaster Device");
+            box.setWindowTitle("Add TriCaster Mixer");
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText("The address already exists in the database. Please choose a unique address.");
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
@@ -133,7 +133,7 @@ void TriCasterDeviceDialog::connectionStateChanged(TriCasterDevice& device)
 
     QMessageBox box(this);
     box.setWindowTitle("Test Connection");
-    box.setText(QString("Successfully connected to TriCaster server: %1:%2").arg(device.getAddress()).arg(device.getPort()));
+    box.setText(QString("Successfully connected to TriCaster mixer: %1:%2").arg(device.getAddress()).arg(device.getPort()));
     box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
     box.setStandardButtons(QMessageBox::Ok);
     box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);

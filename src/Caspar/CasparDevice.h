@@ -2,13 +2,13 @@
 
 #include "Shared.h"
 
-#include "AMCPDevice.h"
+#include "AmcpDevice.h"
 #include "Models/CasparData.h"
 #include "Models/CasparMedia.h"
 #include "Models/CasparTemplate.h"
 #include "Models/CasparThumbnail.h"
 
-class CASPAR_EXPORT CasparDevice : public AMCPDevice
+class CASPAR_EXPORT CasparDevice : public AmcpDevice
 {
     Q_OBJECT
 

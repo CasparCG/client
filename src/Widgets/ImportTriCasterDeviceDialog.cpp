@@ -32,7 +32,7 @@ void ImportTriCasterDeviceDialog::setImportFile(const QString& path)
         boost::property_tree::wptree pt;
         boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"tricasters"))
+        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"mixers"))
         {
             this->models.push_back(parseData(parentValue.second));
         }

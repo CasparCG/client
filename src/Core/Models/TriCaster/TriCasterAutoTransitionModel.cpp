@@ -1,7 +1,7 @@
 #include "TriCasterAutoTransitionModel.h"
 
-TriCasterAutoTransitionModel::TriCasterAutoTransitionModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterAutoTransitionModel::TriCasterAutoTransitionModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterAutoTransitionModel::getName() const
 const QString& TriCasterAutoTransitionModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterAutoTransitionModel::getProduct() const
+{
+    return this->product;
 }

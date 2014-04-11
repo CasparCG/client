@@ -9,13 +9,13 @@
 #include <QtNetwork/QTcpSocket>
 #include <QtNetwork/QAbstractSocket>
 
-class TRICASTER_EXPORT NTFCDevice : public QObject
+class TRICASTER_EXPORT NtfcDevice : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit NTFCDevice(const QString& address, int port, QObject* parent = 0);
-        virtual ~NTFCDevice();
+        explicit NtfcDevice(const QString& address, int port, QObject* parent = 0);
+        virtual ~NtfcDevice();
 
         void disconnectDevice();
 
@@ -26,15 +26,14 @@ class TRICASTER_EXPORT NTFCDevice : public QObject
         Q_SLOT void connectDevice();
 
     protected:
-        enum NTFCCommand
+        enum NtfcDeviceCommand
         {
             NONE,
             CONNECTIONSTATE
         };
 
         QTcpSocket* socket;
-        NTFCCommand command;
-        QList<QString> response;
+        NtfcDeviceCommand command;
 
         virtual void sendNotification() = 0;
 

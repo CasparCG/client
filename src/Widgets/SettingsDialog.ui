@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -664,7 +664,7 @@
       </font>
      </property>
      <property name="toolTip">
-      <string>Add TriCaster Server</string>
+      <string>Add TriCaster Mixer</string>
      </property>
     </widget>
     <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
@@ -779,7 +779,7 @@
       </font>
      </property>
      <property name="toolTip">
-      <string>Import TriCaster Servers</string>
+      <string>Import TriCaster Mixers</string>
      </property>
     </widget>
     <widget class="Line" name="lineTriCaster">
@@ -833,7 +833,169 @@
       </font>
      </property>
      <property name="toolTip">
-      <string>Remove TriCaster Server</string>
+      <string>Remove TriCaster Mixer</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelAtem">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>399</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ATEM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetAtemDevice">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>429</y>
+       <width>535</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Icon</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Port</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="Line" name="lineAtem">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>407</y>
+       <width>555</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonRemoveAtemDevice">
+     <property name="geometry">
+      <rect>
+       <x>149</x>
+       <y>689</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Remove ATEM Mixer</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonAddAtemDevice">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>689</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Add ATEM Mixer</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonImportAtemDevice">
+     <property name="geometry">
+      <rect>
+       <x>612</x>
+       <y>689</y>
+       <width>33</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>33</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Import ATEM Mixers</string>
      </property>
     </widget>
    </widget>
@@ -2910,8 +3072,8 @@
    <slot>showAddDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>353</y>
+     <x>148</x>
+     <y>721</y>
     </hint>
     <hint type="destinationlabel">
      <x>39</x>
@@ -2926,8 +3088,8 @@
    <slot>removeDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>353</y>
+     <x>190</x>
+     <y>721</y>
     </hint>
     <hint type="destinationlabel">
      <x>80</x>
@@ -3631,7 +3793,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>655</x>
-     <y>353</y>
+     <y>721</y>
     </hint>
     <hint type="destinationlabel">
      <x>691</x>
@@ -3751,6 +3913,134 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButtonAddAtemDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddAtemDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>734</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>735</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveAtemDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeAtemDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>732</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonImportAtemDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showImportAtemDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>642</x>
+     <y>728</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>723</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetAtemDevice</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>527</x>
+     <y>533</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetTriCasterDevice</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonAddTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddTriCasterDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>399</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeTriCasterDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>399</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonImportTriCasterDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showImportTriCasterDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>638</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>702</x>
+     <y>380</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -3795,5 +4085,9 @@
   <slot>tricasterProductChanged(QString)</slot>
   <slot>enableOscInputChanged(int)</slot>
   <slot>themeChanged(QString)</slot>
+  <slot>showAddAtemDeviceDialog()</slot>
+  <slot>removeAtemDevice()</slot>
+  <slot>showImportAtemDeviceDialog()</slot>
+  <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

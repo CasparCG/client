@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuTriCaster;
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
+        QMenu* contextMenuAtem;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
@@ -130,6 +131,11 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addSelectPresetItem();
         Q_SLOT void addSelectNetworkSourceItem();
         Q_SLOT void addPlayMacroItem();
+        Q_SLOT void addAtemTriggerAutoItem();
+        Q_SLOT void addAtemTriggerCutItem();
+        Q_SLOT void addAtemSelectInputItem();
+        Q_SLOT void addAtemSetKeyerStateItem();
+        Q_SLOT void addAtemSetVideoFormatItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);

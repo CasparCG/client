@@ -18,6 +18,7 @@
 #include "Events/PreviewEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -84,5 +85,5 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void preview(const PreviewEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
-        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
+        Q_SLOT void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
 };

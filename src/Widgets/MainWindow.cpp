@@ -22,6 +22,7 @@
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
+#include <QtCore/QTimer>
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 

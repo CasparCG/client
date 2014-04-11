@@ -1,25 +1,23 @@
-#include "NTFCDevice.h"
+#include "NtfcDevice.h"
 
 #include <QtCore/QStringList>
-#include <QtCore/QThread>
 #include <QtCore/QTimer>
 
-NTFCDevice::NTFCDevice(const QString& address, int port, QObject* parent)
+NtfcDevice::NtfcDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(NTFCDevice::NONE), port(port), connected(false), address(address)
+      command(NtfcDevice::NONE), port(port), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
 
-    //QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
     QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
-NTFCDevice::~NTFCDevice()
+NtfcDevice::~NtfcDevice()
 {
 }
 
-void NTFCDevice::connectDevice()
+void NtfcDevice::connectDevice()
 {
     if (this->connected)
         return;
@@ -29,52 +27,52 @@ void NTFCDevice::connectDevice()
     QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
-void NTFCDevice::disconnectDevice()
+void NtfcDevice::disconnectDevice()
 {
     this->socket->blockSignals(true);
     this->socket->disconnectFromHost();
     this->socket->blockSignals(false);
 
     this->connected = false;
-    this->command = NTFCDevice::CONNECTIONSTATE;
+    this->command = NtfcDevice::CONNECTIONSTATE;
 
     sendNotification();
 }
 
-void NTFCDevice::setConnected()
+void NtfcDevice::setConnected()
 {
     this->connected = true;
-    this->command = NTFCDevice::CONNECTIONSTATE;
+    this->command = NtfcDevice::CONNECTIONSTATE;
 
     sendNotification();
 }
 
-void NTFCDevice::setDisconnected()
+void NtfcDevice::setDisconnected()
 {
     this->connected = false;
-    this->command = NTFCDevice::CONNECTIONSTATE;
+    this->command = NtfcDevice::CONNECTIONSTATE;
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
+    QTimer::singleShot(5000, this, SLOT(connectNtfcDevice()));
 }
 
-bool NTFCDevice::isConnected() const
+bool NtfcDevice::isConnected() const
 {
     return this->connected;
 }
 
-int NTFCDevice::getPort() const
+int NtfcDevice::getPort() const
 {
     return this->port;
 }
 
-const QString &NTFCDevice::getAddress() const
+const QString &NtfcDevice::getAddress() const
 {
     return this->address;
 }
 
-void NTFCDevice::writeMessage(const QString& message)
+void NtfcDevice::writeMessage(const QString& message)
 {
     if (this->connected)
     {
@@ -100,8 +98,7 @@ void NTFCDevice::writeMessage(const QString& message)
     }
 }
 
-void NTFCDevice::resetDevice()
+void NtfcDevice::resetDevice()
 {
-    this->response.clear();
-    this->command = NTFCDevice::NONE;
+    this->command = NtfcDevice::NONE;
 }

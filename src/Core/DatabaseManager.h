@@ -19,6 +19,13 @@
 #include "Models/FormatModel.h"
 #include "Models/PresetModel.h"
 #include "Models/OscOutputModel.h"
+#include "Models/Atem/AtemDeviceModel.h"
+#include "Models/Atem/AtemInputModel.h"
+#include "Models/Atem/AtemSwitcherModel.h"
+#include "Models/Atem/AtemStepModel.h"
+#include "Models/Atem/AtemAutoTransitionModel.h"
+#include "Models/Atem/AtemKeyerStateModel.h"
+#include "Models/Atem/AtemVideoFormatModel.h"
 #include "Models/TriCaster/TriCasterProductModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
@@ -67,6 +74,19 @@ class CORE_EXPORT DatabaseManager
         OscOutputModel getOscOutputByAddress(const QString& address);
         void updateOscOutput(const OscOutputModel& model);
         void deleteOscOutput(int id);
+
+        QList<AtemStepModel> getAtemStep();
+        QList<AtemInputModel> getAtemInput();
+        QList<AtemKeyerStateModel> getAtemKeyerState();
+        QList<AtemSwitcherModel> getAtemSwitcher();
+        QList<AtemVideoFormatModel> getAtemVideoFormat();
+        QList<AtemAutoTransitionModel> getAtemAutoTransition();
+        QList<AtemDeviceModel> getAtemDevice();
+        AtemDeviceModel getAtemDeviceByName(const QString& name);
+        AtemDeviceModel getAtemDeviceByAddress(const QString& address);
+        void insertAtemDevice(const AtemDeviceModel& model);
+        void updateAtemDevice(const AtemDeviceModel& model);
+        void deleteAtemDevice(int id);
 
         QList<TriCasterProductModel> getTriCasterProduct();
         QList<TriCasterInputModel> getTriCasterInput();

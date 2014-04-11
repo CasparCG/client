@@ -12,7 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QMutex>
 
-class OSC_EXPORT    OscListener : public QObject, public osc::OscPacketListener
+class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
 {
     Q_OBJECT
 

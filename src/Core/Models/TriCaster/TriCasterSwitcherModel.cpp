@@ -1,7 +1,7 @@
 #include "TriCasterSwitcherModel.h"
 
-TriCasterSwitcherModel::TriCasterSwitcherModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterSwitcherModel::TriCasterSwitcherModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterSwitcherModel::getName() const
 const QString& TriCasterSwitcherModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterSwitcherModel::getProduct() const
+{
+    return this->product;
 }

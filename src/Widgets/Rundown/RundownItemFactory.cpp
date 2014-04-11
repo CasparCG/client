@@ -28,6 +28,11 @@
 #include "RundownCustomCommandWidget.h"
 #include "RundownChromaWidget.h"
 #include "RundownOscOutputWidget.h"
+#include "Atem/RundownAtemAutoWidget.h"
+#include "Atem/RundownAtemInputWidget.h"
+#include "Atem/RundownAtemCutWidget.h"
+#include "Atem/RundownAtemKeyerStateWidget.h"
+#include "Atem/RundownAtemVideoFormatWidget.h"
 #include "TriCaster/RundownInputWidget.h"
 #include "TriCaster/RundownTakeWidget.h"
 #include "TriCaster/RundownAutoWidget.h"
@@ -70,13 +75,18 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::CLEAROUTPUT) return new RundownClearOutputWidget(model, this);
     else if (model.getType() == Rundown::SOLIDCOLOR) return new RundownSolidColorWidget(model, this);
     else if (model.getType() == Rundown::CUSTOMCOMMAND) return new RundownCustomCommandWidget(model, this);
-    else if (model.getType() == Rundown::INPUT) return new RundownInputWidget(model, this);
-    else if (model.getType() == Rundown::PRESET) return new RundownPresetWidget(model, this);
-    else if (model.getType() == Rundown::TAKE) return new RundownTakeWidget(model, this);
-    else if (model.getType() == Rundown::AUTO) return new RundownAutoWidget(model, this);
-    else if (model.getType() == Rundown::NETSOURCE) return new RundownNetworkSourceWidget(model, this);
-    else if (model.getType() == Rundown::MACRO) return new RundownMacroWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERINPUT) return new RundownInputWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERPRESET) return new RundownPresetWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERTAKE) return new RundownTakeWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERAUTO) return new RundownAutoWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERNETSOURCE) return new RundownNetworkSourceWidget(model, this);
+    else if (model.getType() == Rundown::TRICASTERMACRO) return new RundownMacroWidget(model, this);
     else if (model.getType() == Rundown::OSCOUTPUT) return new RundownOscOutputWidget(model, this);
+    else if (model.getType() == Rundown::ATEMINPUT) return new RundownAtemInputWidget(model, this);
+    else if (model.getType() == Rundown::ATEMAUTO) return new RundownAtemAutoWidget(model, this);
+    else if (model.getType() == Rundown::ATEMCUT) return new RundownAtemCutWidget(model, this);
+    else if (model.getType() == Rundown::ATEMKEYERSTATE) return new RundownAtemKeyerStateWidget(model, this);
+    else if (model.getType() == Rundown::ATEMVIDEOFORMAT) return new RundownAtemVideoFormatWidget(model, this);
 
     return NULL;
 }

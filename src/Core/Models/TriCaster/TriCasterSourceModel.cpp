@@ -1,7 +1,7 @@
 #include "TriCasterSourceModel.h"
 
-TriCasterSourceModel::TriCasterSourceModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterSourceModel::TriCasterSourceModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterSourceModel::getName() const
 const QString& TriCasterSourceModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterSourceModel::getProduct() const
+{
+    return this->product;
 }

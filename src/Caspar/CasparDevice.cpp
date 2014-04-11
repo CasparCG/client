@@ -5,21 +5,21 @@
 #include <QtNetwork/QHostInfo>
 
 CasparDevice::CasparDevice(const QString& address, int port, QObject* parent)
-    : AMCPDevice(address, port, parent)
+    : AmcpDevice(address, port, parent)
 {
 }
 
 const QString CasparDevice::resolveIpAddress() const
 {
-    if (AMCPDevice::getAddress() == "localhost")
+    if (AmcpDevice::getAddress() == "localhost")
         return "127.0.0.1";
 
-    QHostAddress address(AMCPDevice::getAddress());
+    QHostAddress address(AmcpDevice::getAddress());
     if (!address.isNull())
         return getAddress(); // The ip address is valid.
 
     // We don't have a valid ip address. Try to resolve using dns lookup.
-    QHostInfo hostInfo = QHostInfo::fromName(getAddress());
+    QHostInfo hostInfo = QHostInfo::fromName(AmcpDevice::getAddress());
     if (hostInfo.error() != QHostInfo::NoError)
         return "";
 
@@ -404,8 +404,8 @@ void CasparDevice::setCommit(int channel)
 
 void CasparDevice::setChroma(int channel, int videolayer, const QString& key, float threshold, float spread, float spill, float blur, bool mask)
 {
-    AMCPDevice::writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6 %7 %8")
-                             .arg(channel).arg(videolayer).arg(key).arg(threshold).arg(spread).arg(spill).arg(blur).arg(mask));
+    writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6 %7 %8")
+                 .arg(channel).arg(videolayer).arg(key).arg(threshold).arg(spread).arg(spill).arg(blur).arg(mask));
 }
 
 void CasparDevice::setBlendMode(int channel, int videolayer, const QString& blendMode)
@@ -563,16 +563,16 @@ QString CasparDevice::convertToTimecode(double time, int fps)
 
 void CasparDevice::sendNotification()
 {
-    switch (this->command)
+    switch (AmcpDevice::command)
     {
-        case AMCPDevice::CLS:
+        case AmcpDevice::CLS:
         {
-            emit responseChanged(AMCPDevice::response.at(0), *this);
+            emit responseChanged(AmcpDevice::response.at(0), *this);
 
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 CLS OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 CLS OK.
 
             QList<CasparMedia> items;
-            foreach (QString response, AMCPDevice::response)
+            foreach (QString response, AmcpDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/");
@@ -609,14 +609,14 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AMCPDevice::TLS:
+        case AmcpDevice::TLS:
         {
-            emit responseChanged(AMCPDevice::response.at(0), *this);
+            emit responseChanged(AmcpDevice::response.at(0), *this);
 
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 TLS OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 TLS OK.
 
             QList<CasparTemplate> items;
-            foreach (QString response, AMCPDevice::response)
+            foreach (QString response, AmcpDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/");
@@ -633,29 +633,29 @@ void CasparDevice::sendNotification()
 
             break;
         }       
-        case AMCPDevice::INFO:
+        case AmcpDevice::INFO:
         {
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 INFO OK.
-            emit infoChanged(AMCPDevice::response, *this);
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 INFO OK.
+            emit infoChanged(AmcpDevice::response, *this);
 
             break;
         }
-        case AMCPDevice::INFOSYSTEM:
+        case AmcpDevice::INFOSYSTEM:
         {
-            AMCPDevice::response.removeFirst(); // First post is the header, 201 INFO SYSTEM OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 201 INFO SYSTEM OK.
 
-            emit infoSystemChanged(AMCPDevice::response, *this);
+            emit infoSystemChanged(AmcpDevice::response, *this);
 
             break;
         }
-        case AMCPDevice::DATALIST:
+        case AmcpDevice::DATALIST:
         {
-            emit responseChanged(AMCPDevice::response.at(0), *this);
+            emit responseChanged(AmcpDevice::response.at(0), *this);
 
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 DATA LIST OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 DATA LIST OK.
 
             QList<CasparData> items;
-            foreach (QString response, AMCPDevice::response)
+            foreach (QString response, AmcpDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/");
@@ -672,14 +672,14 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AMCPDevice::THUMBNAILLIST:
+        case AmcpDevice::THUMBNAILLIST:
         {
-            emit responseChanged(AMCPDevice::response.at(0), *this);
+            emit responseChanged(AmcpDevice::response.at(0), *this);
 
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL LIST OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL LIST OK.
 
             QList<CasparThumbnail> items;
-            foreach (QString response, AMCPDevice::response)
+            foreach (QString response, AmcpDevice::response)
             {
                 QString name = response.split("\" ").at(0);
                 name.replace("\\", "/");
@@ -699,23 +699,23 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AMCPDevice::THUMBNAILRETRIEVE:
+        case AmcpDevice::THUMBNAILRETRIEVE:
         {
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
 
-            emit thumbnailRetrieveChanged(AMCPDevice::response.at(0), *this);
+            emit thumbnailRetrieveChanged(AmcpDevice::response.at(0), *this);
 
             break;
         }
-        case AMCPDevice::VERSION:
+        case AmcpDevice::VERSION:
         {
-            AMCPDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
+            AmcpDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
 
-            emit versionChanged(AMCPDevice::response.at(0), *this);
+            emit versionChanged(AmcpDevice::response.at(0), *this);
 
             break;
         }
-        case AMCPDevice::CONNECTIONSTATE:
+        case AmcpDevice::CONNECTIONSTATE:
         {
             emit connectionStateChanged(*this);
 
@@ -723,7 +723,7 @@ void CasparDevice::sendNotification()
         }
         default:
         {
-            emit responseChanged(AMCPDevice::response.at(0), *this);
+            emit responseChanged(AmcpDevice::response.at(0), *this);
 
             break;
         }

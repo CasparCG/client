@@ -5,7 +5,6 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
-
 #include "Events/AddPresetItemEvent.h"
 #include "Events/DataChangedEvent.h"
 #include "Events/ExportPresetEvent.h"
@@ -16,6 +15,7 @@
 #include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
@@ -46,6 +46,7 @@
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -66,6 +67,8 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
+        Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
@@ -107,6 +110,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
 
+        void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
+        void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);

@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>New TriCaster Server</string>
+   <string>New TriCaster Mixer</string>
   </property>
   <widget class="QLabel" name="labelDescription">
    <property name="geometry">

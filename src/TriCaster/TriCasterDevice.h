@@ -2,9 +2,9 @@
 
 #include "Shared.h"
 
-#include "NTFCDevice.h"
+#include "NtfcDevice.h"
 
-class TRICASTER_EXPORT TriCasterDevice : public NTFCDevice
+class TRICASTER_EXPORT TriCasterDevice : public NtfcDevice
 {
     Q_OBJECT
 
@@ -22,7 +22,6 @@ class TRICASTER_EXPORT TriCasterDevice : public NTFCDevice
         void playMacro(const QString& name);
 
         Q_SIGNAL void connectionStateChanged(TriCasterDevice&);
-        Q_SIGNAL void responseChanged(const QString&, TriCasterDevice&);
 
     protected:
         void sendNotification();

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui sql
+QT += core gui sql network
 
 TARGET = widgets
 TEMPLATE = lib
@@ -111,7 +111,19 @@ HEADERS += \
     Inspector/TriCaster/InspectorMacroWidget.h \
     OscOutputDialog.h \
     Rundown/RundownOscOutputWidget.h \
-    Inspector/InspectorOscOutputWidget.h
+    Inspector/InspectorOscOutputWidget.h \
+    ImportAtemDeviceDialog.h \
+    AtemDeviceDialog.h \
+    Rundown/Atem/RundownAtemInputWidget.h \
+    Rundown/Atem/RundownAtemAutoWidget.h \
+    Inspector/Atem/InspectorAtemInputWidget.h \
+    Rundown/Atem/RundownAtemCutWidget.h \
+    Inspector/Atem/InspectorAtemCutWidget.h \
+    Inspector/Atem/InspectorAtemAutoWidget.h \
+    Rundown/Atem/RundownAtemKeyerStateWidget.h \
+    Inspector/Atem/InspectorAtemKeyerStateWidget.h \
+    Rundown/Atem/RundownAtemVideoFormatWidget.h \
+    Inspector/Atem/InspectorAtemVideoFormatWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -211,7 +223,19 @@ SOURCES += \
     Inspector/TriCaster/InspectorMacroWidget.cpp \
     OscOutputDialog.cpp \
     Rundown/RundownOscOutputWidget.cpp \
-    Inspector/InspectorOscOutputWidget.cpp
+    Inspector/InspectorOscOutputWidget.cpp \
+    ImportAtemDeviceDialog.cpp \
+    AtemDeviceDialog.cpp \
+    Rundown/Atem/RundownAtemInputWidget.cpp \
+    Rundown/Atem/RundownAtemAutoWidget.cpp \
+    Inspector/Atem/InspectorAtemInputWidget.cpp \
+    Rundown/Atem/RundownAtemCutWidget.cpp \
+    Inspector/Atem/InspectorAtemCutWidget.cpp \
+    Inspector/Atem/InspectorAtemAutoWidget.cpp \
+    Rundown/Atem/RundownAtemKeyerStateWidget.cpp \
+    Inspector/Atem/InspectorAtemKeyerStateWidget.cpp \
+    Rundown/Atem/RundownAtemVideoFormatWidget.cpp \
+    Inspector/Atem/InspectorAtemVideoFormatWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -300,7 +324,19 @@ FORMS += \
     Inspector/TriCaster/InspectorMacroWidget.ui \
     OscOutputDialog.ui \
     Rundown/RundownOscOutputWidget.ui \
-    Inspector/InspectorOscOutputWidget.ui
+    Inspector/InspectorOscOutputWidget.ui \
+    ImportAtemDeviceDialog.ui \
+    AtemDeviceDialog.ui \
+    Rundown/Atem/RundownAtemInputWidget.ui \
+    Rundown/Atem/RundownAtemAutoWidget.ui \
+    Inspector/Atem/InspectorAtemInputWidget.ui \
+    Rundown/Atem/RundownAtemCutWidget.ui \
+    Inspector/Atem/InspectorAtemCutWidget.ui \
+    Inspector/Atem/InspectorAtemAutoWidget.ui \
+    Rundown/Atem/RundownAtemKeyerStateWidget.ui \
+    Inspector/Atem/InspectorAtemKeyerStateWidget.ui \
+    Rundown/Atem/RundownAtemVideoFormatWidget.ui \
+    Inspector/Atem/InspectorAtemVideoFormatWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -493,7 +529,24 @@ OTHER_FILES += \
     Stylesheets/Flat/Linux.css \
     Stylesheets/Flat/Extended.css \
     Stylesheets/Flat/Default.css \
-    Images/OscTriggerSmall.png
+    Images/OscTriggerSmall.png \
+    Images/Atem/SelectInputSmallHover.png \
+    Images/Atem/SelectInputSmall.png \
+    Images/Atem/SelectInput.png \
+    Images/Atem/TriggerCutSmallHover.png \
+    Images/Atem/TriggerCutSmall.png \
+    Images/Atem/TriggerCut.png \
+    Images/Atem/TriggerAutoSmallHover.png \
+    Images/Atem/TriggerAutoSmall.png \
+    Images/Atem/TriggerAuto.png
+
+INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
+win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
+else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/release/ -lqatemcontrol
+else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
+else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
+else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
 
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
@@ -510,6 +563,13 @@ INCLUDEPATH += $$PWD/../../lib/gpio-client/include
 win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
 else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
 else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
+
+DEPENDPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+INCLUDEPATH += $$OUT_PWD/../Atem $$PWD/../Atem
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Atem/release/ -latem
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Atem/debug/ -latem
+else:macx:LIBS += -L$$OUT_PWD/../Atem/ -latem
+else:unix:LIBS += -L$$OUT_PWD/../Atem/ -latem
 
 DEPENDPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar
 INCLUDEPATH += $$OUT_PWD/../Caspar $$PWD/../Caspar

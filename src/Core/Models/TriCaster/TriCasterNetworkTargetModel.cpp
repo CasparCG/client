@@ -1,7 +1,7 @@
 #include "TriCasterNetworkTargetModel.h"
 
-TriCasterNetworkTargetModel::TriCasterNetworkTargetModel(int id, const QString& name, const QString& value)
-    : id(id), name(name), value(value)
+TriCasterNetworkTargetModel::TriCasterNetworkTargetModel(int id, const QString& name, const QString& value, const QString& product)
+    : id(id), name(name), value(value), product(product)
 {    
 }
 
@@ -18,4 +18,9 @@ const QString& TriCasterNetworkTargetModel::getName() const
 const QString& TriCasterNetworkTargetModel::getValue() const
 {
     return this->value;
+}
+
+const QString& TriCasterNetworkTargetModel::getProduct() const
+{
+    return this->product;
 }

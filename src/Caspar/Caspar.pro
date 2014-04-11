@@ -13,17 +13,17 @@ DEFINES += CASPAR_LIBRARY
 
 HEADERS += \
     CasparDevice.h \
-    AMCPDevice.h \
     Shared.h \
     Models/CasparThumbnail.h \
     Models/CasparTemplate.h \
     Models/CasparMedia.h \
-    Models/CasparData.h
+    Models/CasparData.h \
+    AmcpDevice.h
 	
 SOURCES += \
     CasparDevice.cpp \
-    AMCPDevice.cpp \
     Models/CasparThumbnail.cpp \
     Models/CasparTemplate.cpp \
     Models/CasparMedia.cpp \
-    Models/CasparData.cpp
+    Models/CasparData.cpp \
+    AmcpDevic.cpp
