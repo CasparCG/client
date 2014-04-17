@@ -146,7 +146,12 @@ HEADERS += \
     Commands/Atem/AtemKeyerStateCommand.h \
     Models/Atem/AtemKeyerStateModel.h \
     Models/Atem/AtemVideoFormatModel.h \
-    Commands/Atem/AtemVideoFormatCommand.h
+    Commands/Atem/AtemVideoFormatCommand.h \
+    Models/Atem/AtemAudioInputModel.h \
+    Models/Atem/AtemAudioInputStateModel.h \
+    Commands/Atem/AtemAudioInputStateCommand.h \
+    Commands/Atem/AtemAudioInputBalanceCommand.h \
+    Commands/Atem/AtemAudioGainCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -282,7 +287,12 @@ SOURCES += \
     Commands/Atem/AtemKeyerStateCommand.cpp \
     Models/Atem/AtemKeyerStateModel.cpp \
     Models/Atem/AtemVideoFormatModel.cpp \
-    Commands/Atem/AtemVideoFormatCommand.cpp
+    Commands/Atem/AtemVideoFormatCommand.cpp \
+    Models/Atem/AtemAudioInputModel.cpp \
+    Models/Atem/AtemAudioInputStateModel.cpp \
+    Commands/Atem/AtemAudioInputStateCommand.cpp \
+    Commands/Atem/AtemAudioInputBalanceCommand.cpp \
+    Commands/Atem/AtemAudioGainCommand.cpp
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

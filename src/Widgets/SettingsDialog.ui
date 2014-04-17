@@ -457,9 +457,6 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
@@ -679,9 +676,6 @@
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
@@ -863,9 +857,6 @@
      </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
@@ -2878,9 +2869,6 @@
      </property>
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>

@@ -33,6 +33,9 @@
 #include "Atem/RundownAtemCutWidget.h"
 #include "Atem/RundownAtemKeyerStateWidget.h"
 #include "Atem/RundownAtemVideoFormatWidget.h"
+#include "Atem/RundownAtemAudioInputStateWidget.h"
+#include "Atem/RundownAtemAudioGainWidget.h"
+#include "Atem/RundownAtemAudioInputBalanceWidget.h"
 #include "TriCaster/RundownInputWidget.h"
 #include "TriCaster/RundownTakeWidget.h"
 #include "TriCaster/RundownAutoWidget.h"
@@ -87,6 +90,9 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ATEMCUT) return new RundownAtemCutWidget(model, this);
     else if (model.getType() == Rundown::ATEMKEYERSTATE) return new RundownAtemKeyerStateWidget(model, this);
     else if (model.getType() == Rundown::ATEMVIDEOFORMAT) return new RundownAtemVideoFormatWidget(model, this);
+    else if (model.getType() == Rundown::ATEMAUDIOINPUTSTATE) return new RundownAtemAudioInputStateWidget(model, this);
+    else if (model.getType() == Rundown::ATEMAUDIOGAIN) return new RundownAtemAudioGainWidget(model, this);
+    else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
 
     return NULL;
 }

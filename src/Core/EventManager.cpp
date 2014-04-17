@@ -309,4 +309,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Keyer State", "", "", Rundown::ATEMKEYERSTATE, 0, "")));
     else if (type ==  Rundown::ATEMVIDEOFORMAT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Video Format", "", "", Rundown::ATEMVIDEOFORMAT, 0, "")));
+    else if (type ==  Rundown::ATEMAUDIOINPUTSTATE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Input State", "", "", Rundown::ATEMAUDIOINPUTSTATE, 0, "")));
 }

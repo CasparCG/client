@@ -1,5 +1,6 @@
 #include "AtemDevice.h"
 
+#include <math.h>
 #include <QtCore/QStringList>
 
 #include <QtNetwork/QHostInfo>
@@ -52,17 +53,34 @@ void AtemDevice::selectInput(const QString& switcher, const QString& input)
 
 void AtemDevice::setKeyerState(const QString& keyer, bool state)
 {
-    if (keyer == "0" || keyer == "1") // Downstream keyer
+    if (keyer == "0" || keyer == "1") // Downstream keyer.
         SwitcherDevice::atemConnection->setDownstreamKeyOn(keyer.toInt(), state);
     else
         SwitcherDevice::atemConnection->setUpstreamKeyOn(keyer.toInt() - 2, state);
+}
+
+void AtemDevice::setAudioInputState(const QString& input, const QString& state)
+{
+    SwitcherDevice::atemConnection->setAudioInputState(input.toInt(), state.toInt());
+}
+
+void AtemDevice::setAudioInputBalance(const QString& input, float balance)
+{
+    SwitcherDevice::atemConnection->setAudioInputBalance(input.toInt(), balance);
+}
+
+void AtemDevice::setAudioGain(const QString& source, float gain)
+{
+    if (source == "0") // Master output.
+        SwitcherDevice::atemConnection->setAudioMasterOutputGain(gain);
+    else
+        SwitcherDevice::atemConnection->setAudioInputGain(source.toInt(), gain);
 }
 
 void AtemDevice::setVideoFormat(const QString& format)
 {
     SwitcherDevice::atemConnection->setVideoFormat(format.toInt());
 }
-
 
 void AtemDevice::sendNotification()
 {

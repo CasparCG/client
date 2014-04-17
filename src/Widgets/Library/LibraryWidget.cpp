@@ -414,6 +414,33 @@ void LibraryWidget::setupTools()
     widgetAtemInput->setText(4, Rundown::ATEMINPUT);
     widgetAtemInput->setText(5, "0");
 
+    QTreeWidgetItem* widgetAtemAudioGain = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    widgetAtemAudioGain->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemAudioGain->setText(0, "Set Audio Gain");
+    widgetAtemAudioGain->setText(1, "0");
+    widgetAtemAudioGain->setText(2, "Set Audio Gain");
+    widgetAtemAudioGain->setText(3, "");
+    widgetAtemAudioGain->setText(4, Rundown::ATEMAUDIOGAIN);
+    widgetAtemAudioGain->setText(5, "0");
+
+    QTreeWidgetItem* widgetAtemAudioInputState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    widgetAtemAudioInputState->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemAudioInputState->setText(0, "Set Audio Input State");
+    widgetAtemAudioInputState->setText(1, "0");
+    widgetAtemAudioInputState->setText(2, "Set Audio Input State");
+    widgetAtemAudioInputState->setText(3, "");
+    widgetAtemAudioInputState->setText(4, Rundown::ATEMAUDIOINPUTSTATE);
+    widgetAtemAudioInputState->setText(5, "0");
+
+    QTreeWidgetItem* widgetAtemAudioInputBalance = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    widgetAtemAudioInputBalance->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemAudioInputBalance->setText(0, "Set Audio Input Balance");
+    widgetAtemAudioInputBalance->setText(1, "0");
+    widgetAtemAudioInputBalance->setText(2, "Set Audio Input Balance");
+    widgetAtemAudioInputBalance->setText(3, "");
+    widgetAtemAudioInputBalance->setText(4, Rundown::ATEMAUDIOINPUTBALANCE);
+    widgetAtemAudioInputBalance->setText(5, "0");
+
     QTreeWidgetItem* widgetAtemKeyerState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
     widgetAtemKeyerState->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
     widgetAtemKeyerState->setText(0, "Set Keyer State");
@@ -422,6 +449,15 @@ void LibraryWidget::setupTools()
     widgetAtemKeyerState->setText(3, "");
     widgetAtemKeyerState->setText(4, Rundown::ATEMKEYERSTATE);
     widgetAtemKeyerState->setText(5, "0");
+
+    QTreeWidgetItem* widgetAtemVideoFormat = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    widgetAtemVideoFormat->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemVideoFormat->setText(0, "Set Video Format");
+    widgetAtemVideoFormat->setText(1, "0");
+    widgetAtemVideoFormat->setText(2, "Set Video Format");
+    widgetAtemVideoFormat->setText(3, "");
+    widgetAtemVideoFormat->setText(4, Rundown::ATEMVIDEOFORMAT);
+    widgetAtemVideoFormat->setText(5, "0");
 
     QTreeWidgetItem* widgetAtemAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
     widgetAtemAuto->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
@@ -440,15 +476,6 @@ void LibraryWidget::setupTools()
     widgetAtemCut->setText(3, "");
     widgetAtemCut->setText(4, Rundown::ATEMCUT);
     widgetAtemCut->setText(5, "0");
-
-    QTreeWidgetItem* widgetAtemVideoFormat = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
-    widgetAtemVideoFormat->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
-    widgetAtemVideoFormat->setText(0, "Set Video Format");
-    widgetAtemVideoFormat->setText(1, "0");
-    widgetAtemVideoFormat->setText(2, "Set Video Format");
-    widgetAtemVideoFormat->setText(3, "");
-    widgetAtemVideoFormat->setText(4, Rundown::ATEMVIDEOFORMAT);
-    widgetAtemVideoFormat->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }

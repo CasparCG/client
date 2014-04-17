@@ -21,6 +21,8 @@
 #include "Models/OscOutputModel.h"
 #include "Models/Atem/AtemDeviceModel.h"
 #include "Models/Atem/AtemInputModel.h"
+#include "Models/Atem/AtemAudioInputModel.h"
+#include "Models/Atem/AtemAudioInputStateModel.h"
 #include "Models/Atem/AtemSwitcherModel.h"
 #include "Models/Atem/AtemStepModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
@@ -77,6 +79,8 @@ class CORE_EXPORT DatabaseManager
 
         QList<AtemStepModel> getAtemStep();
         QList<AtemInputModel> getAtemInput();
+        QList<AtemAudioInputModel> getAtemAudioInput();
+        QList<AtemAudioInputStateModel> getAtemAudioInputState();
         QList<AtemKeyerStateModel> getAtemKeyerState();
         QList<AtemSwitcherModel> getAtemSwitcher();
         QList<AtemVideoFormatModel> getAtemVideoFormat();

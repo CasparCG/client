@@ -32,6 +32,9 @@
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
 #include "Inspector/Atem/InspectorAtemVideoFormatWidget.h"
 #include "Inspector/Atem/InspectorAtemKeyerStateWidget.h"
+#include "Inspector/Atem/InspectorAtemAudioInputStateWidget.h"
+#include "Inspector/Atem/InspectorAtemAudioGainWidget.h"
+#include "Inspector/Atem/InspectorAtemAudioInputBalanceWidget.h"
 #include "Inspector/TriCaster/InspectorInputWidget.h"
 #include "Inspector/TriCaster/InspectorTakeWidget.h"
 #include "Inspector/TriCaster/InspectorAutoWidget.h"
@@ -71,6 +74,9 @@
 #include "Commands/Atem/AtemAutoCommand.h"
 #include "Commands/Atem/AtemKeyerStateCommand.h"
 #include "Commands/Atem/AtemVideoFormatCommand.h"
+#include "Commands/Atem/AtemAudioInputStateCommand.h"
+#include "Commands/Atem/AtemAudioGainCommand.h"
+#include "Commands/Atem/AtemAudioInputBalanceCommand.h"
 #include "Commands/TriCaster/InputCommand.h"
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/AutoCommand.h"
@@ -123,6 +129,9 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(36)), 0, new InspectorAtemAutoWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(37)), 0, new InspectorAtemKeyerStateWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(38)), 0, new InspectorAtemVideoFormatWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(39)), 0, new InspectorAtemAudioInputStateWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(40)), 0, new InspectorAtemAudioGainWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(41)), 0, new InspectorAtemAudioInputBalanceWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -164,6 +173,9 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(36)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(37)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(38)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
@@ -210,6 +222,9 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
     this->treeWidgetInspector->topLevelItem(36)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(37)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(38)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
 
     if (dynamic_cast<TemplateCommand*>(event.getCommand()))
     {
@@ -400,6 +415,21 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
         this->treeWidgetInspector->topLevelItem(38)->setHidden(false);
     }
+    else if (dynamic_cast<AtemAudioInputStateCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(39)->setHidden(false);
+    }
+    else if (dynamic_cast<AtemAudioGainCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(40)->setHidden(false);
+    }
+    else if (dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(41)->setHidden(false);
+    }
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
@@ -443,6 +473,9 @@ void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
     this->treeWidgetInspector->topLevelItem(36)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(37)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(38)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
 }
 
 void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
@@ -486,6 +519,9 @@ void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
     this->treeWidgetInspector->topLevelItem(36)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(37)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(38)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
 }
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)

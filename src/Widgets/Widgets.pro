@@ -123,7 +123,13 @@ HEADERS += \
     Rundown/Atem/RundownAtemKeyerStateWidget.h \
     Inspector/Atem/InspectorAtemKeyerStateWidget.h \
     Rundown/Atem/RundownAtemVideoFormatWidget.h \
-    Inspector/Atem/InspectorAtemVideoFormatWidget.h
+    Inspector/Atem/InspectorAtemVideoFormatWidget.h \
+    Inspector/Atem/InspectorAtemAudioInputStateWidget.h \
+    Rundown/Atem/RundownAtemAudioInputStateWidget.h \
+    Rundown/Atem/RundownAtemAudioInputBalanceWidget.h \
+    Rundown/Atem/RundownAtemAudioGainWidget.h \
+    Inspector/Atem/InspectorAtemAudioInputBalanceWidget.h \
+    Inspector/Atem/InspectorAtemAudioGainWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -235,7 +241,13 @@ SOURCES += \
     Rundown/Atem/RundownAtemKeyerStateWidget.cpp \
     Inspector/Atem/InspectorAtemKeyerStateWidget.cpp \
     Rundown/Atem/RundownAtemVideoFormatWidget.cpp \
-    Inspector/Atem/InspectorAtemVideoFormatWidget.cpp
+    Inspector/Atem/InspectorAtemVideoFormatWidget.cpp \
+    Inspector/Atem/InspectorAtemAudioInputStateWidget.cpp \
+    Rundown/Atem/RundownAtemAudioInputStateWidget.cpp \
+    Rundown/Atem/RundownAtemAudioInputBalanceWidget.cpp \
+    Rundown/Atem/RundownAtemAudioGainWidget.cpp \
+    Inspector/Atem/InspectorAtemAudioInputBalanceWidget.cpp \
+    Inspector/Atem/InspectorAtemAudioGainWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -336,7 +348,13 @@ FORMS += \
     Rundown/Atem/RundownAtemKeyerStateWidget.ui \
     Inspector/Atem/InspectorAtemKeyerStateWidget.ui \
     Rundown/Atem/RundownAtemVideoFormatWidget.ui \
-    Inspector/Atem/InspectorAtemVideoFormatWidget.ui
+    Inspector/Atem/InspectorAtemVideoFormatWidget.ui \
+    Inspector/Atem/InspectorAtemAudioInputStateWidget.ui \
+    Rundown/Atem/RundownAtemAudioInputStateWidget.ui \
+    Rundown/Atem/RundownAtemAudioInputBalanceWidget.ui \
+    Rundown/Atem/RundownAtemAudioGainWidget.ui \
+    Inspector/Atem/InspectorAtemAudioInputBalanceWidget.ui \
+    Inspector/Atem/InspectorAtemAudioGainWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

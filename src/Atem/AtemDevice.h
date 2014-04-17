@@ -18,6 +18,9 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
 
         void setKeyerState(const QString& keyer, bool state);
         void setVideoFormat(const QString& format);
+        void setAudioInputState(const QString& input, const QString& state);
+        void setAudioInputBalance(const QString& input, float balance);
+        void setAudioGain(const QString& source, float gain);
 
         Q_SIGNAL void connectionStateChanged(AtemDevice&);
 

@@ -18,6 +18,11 @@ namespace Atem
     static const QString DEFAULT_KEYER = "0";
     static const bool DEFAULT_KEYER_STATE = false;
     static const QString DEFAULT_VIDEO_FORMAT = "4";
+    static const QString DEFAULT_AUDIO_INPUT = "1";
+    static const QString DEFAULT_AUDIO_INPUT_STATE = "0";
+    static const float DEFAULT_AUDIO_INPUT_BALANCE = 0.0f;
+    static const float DEFAULT_AUDIO_GAIN = 0.0f;
+    static const QString DEFAULT_AUDIO_GAIN_SOURCE = "0";
 }
 
 namespace TriCaster
@@ -331,6 +336,9 @@ namespace Rundown
     static const QString ATEMKEYERSTATE = "ATEMKEYERSTATE";
     static const QString ATEMCUT = "ATEMCUT";
     static const QString ATEMVIDEOFORMAT = "ATEMVIDEOFORMAT";
+    static const QString ATEMAUDIOINPUTSTATE = "ATEMAUDIOINPUTSTATE";
+    static const QString ATEMAUDIOGAIN = "ATEMAUDIOGAIN";
+    static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";

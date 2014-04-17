@@ -52,6 +52,8 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE AtemAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemKeyerState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemVideoFormat (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemAudioInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemAudioInputState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterProduct (Id INTEGER PRIMARY KEY, Name TEXT)");
     sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
     sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
@@ -194,6 +196,21 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 8', '8')");
     sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 9', '9')");
     sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 10', '10')");
+
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 1', '1')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 2', '2')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 3', '3')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 4', '4')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 5', '5')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 6', '6')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 7', '7')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 8', '8')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 9', '9')");
+    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 10', '10')");
+
+    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('Off', '0')");
+    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('On', '1')");
+    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('AFV', '2')");
 
     sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('Background', 'background')");
     sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('DSK 1', '0')");
@@ -750,6 +767,40 @@ QList<AtemInputModel> DatabaseManager::getAtemInput()
     QList<AtemInputModel> models;
     while (sql.next())
         models.push_back(AtemInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemAudioInputModel> DatabaseManager::getAtemAudioInput()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemAudioInput t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemAudioInputModel> models;
+    while (sql.next())
+        models.push_back(AtemAudioInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemAudioInputState t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<AtemAudioInputStateModel> models;
+    while (sql.next())
+        models.push_back(AtemAudioInputStateModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }

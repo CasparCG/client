@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>728</height>
+    <height>779</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>667</height>
+        <height>718</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -85,7 +85,7 @@
             <x>0</x>
             <y>0</y>
             <width>287</width>
-            <height>665</height>
+            <height>716</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -997,6 +997,75 @@
              <item>
               <property name="text">
                <string>Video Format</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Audio Input</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Audio Gain</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Audio Input Balance</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

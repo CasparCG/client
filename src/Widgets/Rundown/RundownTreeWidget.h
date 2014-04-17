@@ -134,8 +134,11 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addAtemTriggerAutoItem();
         Q_SLOT void addAtemTriggerCutItem();
         Q_SLOT void addAtemSelectInputItem();
-        Q_SLOT void addAtemSetKeyerStateItem();
-        Q_SLOT void addAtemSetVideoFormatItem();
+        Q_SLOT void addAtemKeyerStateItem();
+        Q_SLOT void addAtemVideoFormatItem();
+        Q_SLOT void addAtemAudioInputStateItem();
+        Q_SLOT void addAtemAudioInputGainItem();
+        Q_SLOT void addAtemAudioInputBalanceItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);
