@@ -56,6 +56,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands();
+
     protected:
         void dragEnterEvent(QDragEnterEvent* event);
         void dropEvent(QDropEvent* event);

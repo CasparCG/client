@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownAtemKeyerStateWidget : public QWidget, Ui::RundownAt
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

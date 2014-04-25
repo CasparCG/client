@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownVolumeWidget : public QWidget, Ui::RundownVolumeWidg
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

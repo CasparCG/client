@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool loaded;

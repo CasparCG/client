@@ -29,5 +29,7 @@ class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
 
         virtual void setCompactView(bool compactView) = 0;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool expanded) = 0;
+
+        virtual void clearDelayedCommands() = 0;
 };

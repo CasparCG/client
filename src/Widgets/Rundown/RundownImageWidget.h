@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownImageWidget : public QWidget, Ui::RundownImageWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool loaded;

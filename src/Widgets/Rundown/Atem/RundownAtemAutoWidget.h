@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownAtemAutoWidget : public QWidget, Ui::RundownAtemAuto
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

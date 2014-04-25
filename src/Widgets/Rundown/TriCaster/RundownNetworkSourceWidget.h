@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownNetworkSourceWidget : public QWidget, Ui::RundownNet
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

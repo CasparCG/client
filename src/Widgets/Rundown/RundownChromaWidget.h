@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownChromaWidget : public QWidget, Ui::RundownChromaWidg
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

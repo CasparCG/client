@@ -49,6 +49,8 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

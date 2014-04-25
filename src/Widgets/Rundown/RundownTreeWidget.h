@@ -81,6 +81,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         QTreeWidgetItem* copyItem;
         QTreeWidgetItem* activeItem;
+        QTreeWidgetItem* currentPlayingAutoStepItem;
 
         OscSubscription* upControlSubscription;
         OscSubscription* downControlSubscription;

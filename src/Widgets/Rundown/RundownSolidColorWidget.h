@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool loaded;

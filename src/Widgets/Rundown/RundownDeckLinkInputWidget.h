@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool loaded;

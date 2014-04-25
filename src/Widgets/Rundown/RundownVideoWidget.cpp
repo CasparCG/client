@@ -308,6 +308,11 @@ void RundownVideoWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownVideoWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
 bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)

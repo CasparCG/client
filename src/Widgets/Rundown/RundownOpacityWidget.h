@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownOpacityWidget : public QWidget, Ui::RundownOpacityWi
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

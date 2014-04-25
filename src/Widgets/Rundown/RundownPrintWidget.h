@@ -53,6 +53,8 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

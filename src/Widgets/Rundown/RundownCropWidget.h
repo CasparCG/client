@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownCropWidget : public QWidget, Ui::RundownCropWidget, 
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

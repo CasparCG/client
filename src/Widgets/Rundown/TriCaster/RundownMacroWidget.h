@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownMacroWidget : public QWidget, Ui::RundownMacroWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

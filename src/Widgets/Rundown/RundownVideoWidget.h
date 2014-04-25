@@ -58,6 +58,8 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands();
+
     private:
         bool active;
         bool loaded;

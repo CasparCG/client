@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownAtemAudioInputStateWidget : public QWidget, Ui::Rund
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

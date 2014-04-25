@@ -53,6 +53,8 @@ class WIDGETS_EXPORT RundownKeyerWidget : public QWidget, Ui::RundownKeyerWidget
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

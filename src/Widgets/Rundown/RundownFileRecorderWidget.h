@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

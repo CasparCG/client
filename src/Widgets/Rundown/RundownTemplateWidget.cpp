@@ -245,6 +245,11 @@ void RundownTemplateWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownTemplateWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
 bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)

@@ -56,8 +56,8 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), currentAutoPlayWidget(NULL),
-      copyItem(NULL), activeItem(NULL), allowRemoteTriggering(false), upControlSubscription(NULL), downControlSubscription(NULL),
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteTriggering(false), currentAutoPlayWidget(NULL),
+      copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL), downControlSubscription(NULL),
       stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
       nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL), clearControlSubscription(NULL),
       clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
@@ -867,15 +867,30 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem->child(i)));
 
                 dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);
+
                 if (type == Playout::PlayoutType::Preview)
                     return true; // We are done.
             }
         }
 
         // Check if group item have auto step enabled.
-        if ((type != Playout::PlayoutType::Clear && type != Playout::PlayoutType::ClearVideolayer && type != Playout::PlayoutType::ClearChannel) &&
-            dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
-        {
+        if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() &&
+            (type != Playout::PlayoutType::Clear && type != Playout::PlayoutType::ClearVideolayer && type != Playout::PlayoutType::ClearChannel))
+        { 
+            if (type == Playout::PlayoutType::Play)
+            {
+                if (this->currentPlayingAutoStepItem != NULL)
+                {
+                    for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
+                    {
+                        QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->currentPlayingAutoStepItem->child(i), 0);
+                        dynamic_cast<AbstractRundownWidget*>(childWidget)->clearDelayedCommands();
+                    }
+                }
+
+                this->currentPlayingAutoStepItem = currentItem;
+            }
+
             QTimer::singleShot(500, this, SLOT(selectItemBelow()));
 
             bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;

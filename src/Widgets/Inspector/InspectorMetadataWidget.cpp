@@ -28,10 +28,12 @@ void InspectorMetadataWidget::rundownItemSelected(const RundownItemSelectedEvent
 
     blockAllSignals(true);
 
-    this->lineEditLabel->setEnabled(false);
+    this->lineEditLabel->setEnabled(true);
+
+    this->lineEditLabel->setReadOnly(false);
 
     this->lineEditType->setText(this->model->getType());
-    this->lineEditLabel->clear();
+    this->lineEditLabel->setText(this->model->getLabel());
 
     blockAllSignals(false);
 }
@@ -42,12 +44,10 @@ void InspectorMetadataWidget::libraryItemSelected(const LibraryItemSelectedEvent
 
     blockAllSignals(true);
 
-    this->lineEditLabel->setEnabled(true);
-
-    this->lineEditLabel->setReadOnly(false);
+    this->lineEditLabel->setEnabled(false);
 
     this->lineEditType->setText(this->model->getType());
-    this->lineEditLabel->setText(this->model->getLabel());
+    this->lineEditLabel->clear();
 
     blockAllSignals(false);
 }

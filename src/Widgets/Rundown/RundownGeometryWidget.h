@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

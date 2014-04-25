@@ -52,6 +52,8 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

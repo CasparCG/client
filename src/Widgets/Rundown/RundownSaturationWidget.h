@@ -54,6 +54,8 @@ class WIDGETS_EXPORT RundownSaturationWidget : public QWidget, Ui::RundownSatura
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;

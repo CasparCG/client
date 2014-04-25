@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownAtemAudioGainWidget : public QWidget, Ui::RundownAte
 
         virtual void setCompactView(bool compactView);
 
+        virtual void clearDelayedCommands() {}
+
     private:
         bool active;
         bool inGroup;
