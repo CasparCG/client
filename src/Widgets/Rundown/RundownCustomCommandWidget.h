@@ -70,6 +70,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
         OscSubscription* nextControlSubscription;
         OscSubscription* updateControlSubscription;
         OscSubscription* invokeControlSubscription;
+        OscSubscription* previewControlSubscription;
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
@@ -88,6 +89,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
         Q_SLOT void executeNext();
         Q_SLOT void executeUpdate();
         Q_SLOT void executeInvoke();
+        Q_SLOT void executePreview();
         Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
@@ -104,6 +106,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);

@@ -154,13 +154,13 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuAtem->setTitle("ATEM");
     //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Audio Input State", this, SLOT(addAtemAudioInputStateItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Audio Input Balance", this, SLOT(addAtemAudioInputBalanceItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Keyer State", this, SLOT(addAtemKeyerStateItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Video Format", this, SLOT(addAtemVideoFormatItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
 
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
@@ -223,6 +223,8 @@ void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& 
         executeCommand(Playout::PlayoutType::Update, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F7) // Invoke.
         executeCommand(Playout::PlayoutType::Invoke, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F8) // Preview.
+        executeCommand(Playout::PlayoutType::Preview, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F10) // Clear.
         executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F11) // Clear videolayer.
@@ -501,6 +503,28 @@ void RundownTreeWidget::openRundown(const QString& path)
     std::cout << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount()).toStdString();
 
     this->activeRundown = path;
+}
+
+void RundownTreeWidget::openRundownFromUrl(const QString& path)
+{
+    this->networkManager = new QNetworkAccessManager(this);
+    QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(doOpenRundownFromUrl(QNetworkReply*)));
+    this->networkManager->get(QNetworkRequest(QUrl(path)));
+}
+
+void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
+{
+    qApp->clipboard()->setText(QString::fromUtf8(reply->readAll()));
+    pasteSelectedItems();
+
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
+        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
+
+    this->treeWidgetRundown->setFocus();
+
+    this->treeWidgetRundown->checkEmptyRundown();
+
+    this->activeRundown = reply->request().url().toString();
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)
@@ -849,6 +873,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
         {
             QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+
+            bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
+            if (previewOnAutoStep)
+                QTimer::singleShot(600, this, SLOT(executePreview()));
         }
     }
     else if (rundownWidgetParent != NULL && rundownWidgetParent->isGroup())
@@ -883,6 +911,11 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
 void RundownTreeWidget::selectItemBelow()
 {
     this->treeWidgetRundown->selectItemBelow();
+}
+
+void RundownTreeWidget::executePreview()
+{
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F8, Qt::NoModifier));
 }
 
 void RundownTreeWidget::addBlendModeItem()

@@ -129,7 +129,8 @@ HEADERS += \
     Rundown/Atem/RundownAtemAudioInputBalanceWidget.h \
     Rundown/Atem/RundownAtemAudioGainWidget.h \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.h \
-    Inspector/Atem/InspectorAtemAudioGainWidget.h
+    Inspector/Atem/InspectorAtemAudioGainWidget.h \
+    Rundown/OpenRundownFromUrlDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -247,7 +248,8 @@ SOURCES += \
     Rundown/Atem/RundownAtemAudioInputBalanceWidget.cpp \
     Rundown/Atem/RundownAtemAudioGainWidget.cpp \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.cpp \
-    Inspector/Atem/InspectorAtemAudioGainWidget.cpp
+    Inspector/Atem/InspectorAtemAudioGainWidget.cpp \
+    Rundown/OpenRundownFromUrlDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -354,7 +356,8 @@ FORMS += \
     Rundown/Atem/RundownAtemAudioInputBalanceWidget.ui \
     Rundown/Atem/RundownAtemAudioGainWidget.ui \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.ui \
-    Inspector/Atem/InspectorAtemAudioGainWidget.ui
+    Inspector/Atem/InspectorAtemAudioGainWidget.ui \
+    Rundown/OpenRundownFromUrlDialog.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -556,7 +559,13 @@ OTHER_FILES += \
     Images/Atem/TriggerCut.png \
     Images/Atem/TriggerAutoSmallHover.png \
     Images/Atem/TriggerAutoSmall.png \
-    Images/Atem/TriggerAuto.png
+    Images/Atem/TriggerAuto.png \
+    Images/AtemTriggerCutSmallHover.png \
+    Images/AtemTriggerCutSmall.png \
+    Images/AtemTriggerCut.png \
+    Images/AtemAudioGainSmall.png \
+    Images/Atem/AudioGainSmall.png \
+    Images/Atem/AudioGain.png
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

@@ -18,8 +18,8 @@ RundownCustomCommandWidget::RundownCustomCommandWidget(const LibraryModel& model
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
       playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL),
-      updateControlSubscription(NULL), invokeControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
-      clearChannelControlSubscription(NULL)
+      updateControlSubscription(NULL), invokeControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL),
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -120,6 +120,7 @@ AbstractRundownWidget* RundownCustomCommandWidget::clone()
     command->setNextCommand(this->command.getNextCommand());
     command->setUpdateCommand(this->command.getUpdateCommand());
     command->setInvokeCommand(this->command.getInvokeCommand());
+    command->setPreviewCommand(this->command.getPreviewCommand());
     command->setClearCommand(this->command.getClearCommand());
     command->setClearVideolayerCommand(this->command.getClearVideolayerCommand());
     command->setClearChannelCommand(this->command.getClearChannelCommand());
@@ -246,6 +247,8 @@ bool RundownCustomCommandWidget::executeCommand(Playout::PlayoutType::Type type)
         executeUpdate();
     else if (type == Playout::PlayoutType::Invoke)
         executeInvoke();
+    else if (type == Playout::PlayoutType::Preview)
+        executePreview();
     else if (type == Playout::PlayoutType::Clear)
         executeClear();
     else if (type == Playout::PlayoutType::ClearVideolayer)
@@ -378,6 +381,23 @@ void RundownCustomCommandWidget::executeInvoke()
     }
 }
 
+void RundownCustomCommandWidget::executePreview()
+{
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected() && !this->command.getInvokeCommand().isEmpty())
+        device->sendCommand(this->command.getPreviewCommand());
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+        if (deviceShadow != NULL && deviceShadow->isConnected() && !this->command.getInvokeCommand().isEmpty())
+            deviceShadow->sendCommand(this->command.getPreviewCommand());
+    }
+}
+
 void RundownCustomCommandWidget::executeClear()
 {
     this->executeTimer.stop();
@@ -484,6 +504,9 @@ void RundownCustomCommandWidget::configureOscSubscriptions()
     if (this->invokeControlSubscription != NULL)
         this->invokeControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->previewControlSubscription != NULL)
+        this->previewControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
 
@@ -532,8 +555,14 @@ void RundownCustomCommandWidget::configureOscSubscriptions()
     QString invokeControlFilter = Osc::DEFAULT_INVOKE_CONTROL_FILTER;
     invokeControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
-    QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+    QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
+    QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -612,6 +641,12 @@ void RundownCustomCommandWidget::invokeControlSubscriptionReceived(const QString
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Invoke);
+}
+
+void RundownCustomCommandWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Preview);
 }
 
 void RundownCustomCommandWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

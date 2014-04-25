@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
 }
 
@@ -61,6 +62,7 @@ void MainWindow::setupMenu()
     this->fileMenu = new QMenu(this);
     this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
     this->openRundownAction = this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
+    this->openRundownFromUrlAction = this->fileMenu->addAction("Open Rundown from repository...", this, SLOT(openRundownFromUrl()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
@@ -99,6 +101,7 @@ void MainWindow::setupMenu()
     this->playoutMenu->addAction("Next", this, SLOT(executeNext()), QKeySequence::fromString("F5"));
     this->playoutMenu->addAction("Update", this, SLOT(executeUpdate()), QKeySequence::fromString("F6"));
     this->playoutMenu->addAction("Invoke", this, SLOT(executeInvoke()), QKeySequence::fromString("F7"));
+    this->playoutMenu->addAction("Preview", this, SLOT(executePreview()), QKeySequence::fromString("F8"));
     this->playoutMenu->addSeparator();
     this->playoutMenu->addAction("Clear", this, SLOT(executeClear()), QKeySequence::fromString("F10"));
     this->playoutMenu->addAction("Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
@@ -156,6 +159,11 @@ void MainWindow::openRundownMenu(const OpenRundownMenuEvent& event)
     this->openRundownAction->setEnabled(event.getEnabled());
 }
 
+void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)
+{
+    this->openRundownFromUrlAction->setEnabled(event.getEnabled());
+}
+
 void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
 {
     // We do not want to trigger check changed event.
@@ -208,6 +216,11 @@ void MainWindow::openRundown()
     EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent());
 }
 
+void MainWindow::openRundownFromUrl()
+{
+    EventManager::getInstance().fireOpenRundownFromUrlEvent(OpenRundownFromUrlEvent());
+}
+
 void MainWindow::saveRundown()
 {
     EventManager::getInstance().fireSaveRundownEvent(SaveRundownEvent(false));
@@ -251,6 +264,11 @@ void MainWindow::executeUpdate()
 void MainWindow::executeInvoke()
 {
     EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F7, Qt::NoModifier));
+}
+
+void MainWindow::executePreview()
+{
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F8, Qt::NoModifier));
 }
 
 void MainWindow::executeClear()

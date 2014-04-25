@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>235</width>
-    <height>336</height>
+    <height>364</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -249,6 +249,39 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPreview">
+     <item>
+      <spacer name="horizontalSpacerPreview">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>24</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPreview">
+       <property name="text">
+        <string>Preview</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditPreview"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutClear">
      <item>
       <spacer name="horizontalSpacerClear">
@@ -417,7 +450,6 @@
     </spacer>
    </item>
   </layout>
-  <zorder>labelTriggerOnNext</zorder>
  </widget>
  <resources/>
  <connections>
@@ -540,8 +572,8 @@
    <slot>clearCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>212</x>
-     <y>219</y>
+     <x>224</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -556,8 +588,8 @@
    <slot>clearVideolayerCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>204</x>
-     <y>246</y>
+     <x>224</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
      <x>227</x>
@@ -572,8 +604,8 @@
    <slot>clearChannelCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>267</y>
+     <x>224</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -588,12 +620,28 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>304</y>
+     <x>109</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>235</x>
+     <x>234</x>
      <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditPreview</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>previewCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>201</y>
     </hint>
    </hints>
   </connection>
@@ -610,5 +658,6 @@
   <slot>clearVideolayerCommandChanged(QString)</slot>
   <slot>clearChannelCommandChanged(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>previewCommandChanged(QString)</slot>
  </slots>
 </ui>

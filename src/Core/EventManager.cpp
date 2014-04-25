@@ -46,6 +46,16 @@ void EventManager::fireOpenRundownEvent(const OpenRundownEvent& event)
     emit openRundown(event);
 }
 
+void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
+{
+    emit openRundownMenu(event);
+}
+
+void EventManager::fireOpenRundownFromUrlEvent(const OpenRundownFromUrlEvent& event)
+{
+    emit openRundownFromUrl(event);
+}
+
 void EventManager::fireSaveRundownEvent(const SaveRundownEvent& event)
 {
     emit saveRundown(event);
@@ -101,9 +111,9 @@ void EventManager::fireNewRundownMenuEvent(const NewRundownMenuEvent& event)
     emit newRundownMenu(event);
 }
 
-void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
+void EventManager::fireOpenRundownFromUrlMenuEvent(const OpenRundownFromUrlMenuEvent& event)
 {
-    emit openRundownMenu(event);
+    emit openRundownFromUrlMenu(event);
 }
 
 void EventManager::fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggeringMenuEvent& event)

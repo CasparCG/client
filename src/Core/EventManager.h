@@ -41,6 +41,8 @@
 #include "Events/Rundown/NewRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
+#include "Events/Rundown/OpenRundownFromUrlEvent.h"
+#include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
@@ -73,6 +75,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
         Q_SIGNAL void openRundown(const OpenRundownEvent&);
+        Q_SIGNAL void openRundownMenu(const OpenRundownMenuEvent&);
+        Q_SIGNAL void openRundownFromUrl(const OpenRundownFromUrlEvent&);
         Q_SIGNAL void addTemplateData(const AddTemplateDataEvent&);
         Q_SIGNAL void saveRundown(const SaveRundownEvent&);
         Q_SIGNAL void oscOutputChanged(const OscOutputChangedEvent&);
@@ -83,7 +87,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void statusbar(const StatusbarEvent&);
         Q_SIGNAL void newRundown(const NewRundownEvent&);
         Q_SIGNAL void newRundownMenu(const NewRundownMenuEvent&);
-        Q_SIGNAL void openRundownMenu(const OpenRundownMenuEvent&);
+        Q_SIGNAL void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
         Q_SIGNAL void dataChanged(const DataChangedEvent&);
         Q_SIGNAL void mediaChanged(const MediaChangedEvent&);
         Q_SIGNAL void templateChanged(const TemplateChangedEvent&);
@@ -115,6 +119,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);
+        void fireOpenRundownFromUrlMenuEvent(const OpenRundownFromUrlMenuEvent&);
         void fireAddTemplateDataEvent(const AddTemplateDataEvent&);
         void fireSaveRundownEvent(const SaveRundownEvent&);
         void fireOscOutputChangedEvent(const OscOutputChangedEvent&);
@@ -127,6 +132,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireNewRundownEvent(const NewRundownEvent&);
         void fireNewRundownMenuEvent(const NewRundownMenuEvent&);
         void fireOpenRundownMenuEvent(const OpenRundownMenuEvent&);
+        void fireOpenRundownFromUrlEvent(const OpenRundownFromUrlEvent&);
         void fireDataChangedEvent(const DataChangedEvent&);
         void fireMediaChangedEvent(const MediaChangedEvent&);
         void fireTemplateChangedEvent(const TemplateChangedEvent&);

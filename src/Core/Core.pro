@@ -151,7 +151,9 @@ HEADERS += \
     Models/Atem/AtemAudioInputStateModel.h \
     Commands/Atem/AtemAudioInputStateCommand.h \
     Commands/Atem/AtemAudioInputBalanceCommand.h \
-    Commands/Atem/AtemAudioGainCommand.h
+    Commands/Atem/AtemAudioGainCommand.h \
+    Events/Rundown/OpenRundownFromUrlEvent.h \
+    Events/Rundown/OpenRundownFromUrlMenuEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -292,7 +294,9 @@ SOURCES += \
     Models/Atem/AtemAudioInputStateModel.cpp \
     Commands/Atem/AtemAudioInputStateCommand.cpp \
     Commands/Atem/AtemAudioInputBalanceCommand.cpp \
-    Commands/Atem/AtemAudioGainCommand.cpp
+    Commands/Atem/AtemAudioGainCommand.cpp \
+    Events/Rundown/OpenRundownFromUrlEvent.cpp \
+    Events/Rundown/OpenRundownFromUrlMenuEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

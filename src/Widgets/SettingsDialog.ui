@@ -77,7 +77,7 @@
      <property name="geometry">
       <rect>
        <x>111</x>
-       <y>262</y>
+       <y>260</y>
        <width>61</width>
        <height>20</height>
       </rect>
@@ -93,7 +93,7 @@
      <property name="geometry">
       <rect>
        <x>181</x>
-       <y>260</y>
+       <y>258</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -109,7 +109,7 @@
      <property name="geometry">
       <rect>
        <x>271</x>
-       <y>264</y>
+       <y>262</y>
        <width>62</width>
        <height>16</height>
       </rect>
@@ -331,7 +331,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>429</y>
+       <y>490</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -347,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>437</y>
+       <y>498</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -360,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>459</y>
+       <y>520</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -386,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>460</y>
+       <y>521</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -439,6 +439,54 @@
        <string>Flat</string>
       </property>
      </item>
+    </widget>
+    <widget class="QLineEdit" name="lineEditRundownRepository">
+     <property name="geometry">
+      <rect>
+       <x>178</x>
+       <y>445</y>
+       <width>221</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="placeholderText">
+      <string>URL</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpiSerialPort_2">
+     <property name="geometry">
+      <rect>
+       <x>88</x>
+       <y>447</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Repository:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxPreviewOnAutoStep">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>411</y>
+       <width>291</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Preview on AutoStep</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
@@ -3124,8 +3172,8 @@
    <slot>synchronizeIntervalChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>313</y>
+     <x>201</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -3860,8 +3908,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>510</y>
+     <x>263</x>
+     <y>575</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4029,6 +4077,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditRundownRepository</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>rundownRepositoryChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>493</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxPreviewOnAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>previewOnAutoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>698</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4077,5 +4157,7 @@
   <slot>removeAtemDevice()</slot>
   <slot>showImportAtemDeviceDialog()</slot>
   <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>rundownRepositoryChanged()</slot>
+  <slot>previewOnAutoStepChanged(int)</slot>
  </slots>
 </ui>

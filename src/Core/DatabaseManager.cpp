@@ -109,6 +109,8 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Frames')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('Theme', 'Default')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'true')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else

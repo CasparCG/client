@@ -182,6 +182,8 @@
         <file>Images/Atem/TriggerCut.png</file>
         <file>Images/Atem/TriggerCutSmall.png</file>
         <file>Images/Atem/TriggerCutSmallHover.png</file>
+        <file>Images/Atem/AudioGain.png</file>
+        <file>Images/Atem/AudioGainSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default/Default.css</file>

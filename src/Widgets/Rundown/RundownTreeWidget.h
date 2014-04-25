@@ -36,6 +36,9 @@
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
 
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkAccessManager>
+
 class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 {
     Q_OBJECT
@@ -46,6 +49,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         void setActive(bool active);
         void openRundown(const QString& path);
+        void openRundownFromUrl(const QString& path);
         void saveRundown(bool saveAs);
 
         bool getAllowRemoteTriggering() const;
@@ -90,6 +94,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
+
+        QNetworkAccessManager* networkManager;
 
         bool pasteSelectedItems();
         bool duplicateSelectedItems();
@@ -148,6 +154,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
         Q_SLOT void contextMenuNewTriggered(QAction*);
         Q_SLOT void selectItemBelow();
+        Q_SLOT void executePreview();
         Q_SLOT bool removeSelectedItems();
         Q_SLOT void saveAsPreset();
         Q_SLOT void addOscOutputItem();
@@ -174,4 +181,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void doOpenRundownFromUrl(QNetworkReply*);
 };

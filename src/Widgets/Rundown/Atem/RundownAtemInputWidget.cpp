@@ -18,7 +18,7 @@ RundownAtemInputWidget::RundownAtemInputWidget(const LibraryModel& model, QWidge
                                                bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), playControlSubscription(NULL),
-      updateControlSubscription(NULL)
+      updateControlSubscription(NULL), previewControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -214,6 +214,8 @@ bool RundownAtemInputWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
+    else if (type == Playout::PlayoutType::Preview)
+        executePreview();
 
     if (this->active)
         this->animation->start(1);
@@ -228,6 +230,16 @@ void RundownAtemInputWidget::executePlay()
         const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
         if (device != NULL && device->isConnected())
             device->selectInput(this->command.getSwitcher(), this->command.getInput());
+    }
+}
+
+void RundownAtemInputWidget::executePreview()
+{
+    foreach (const AtemDeviceModel& model, AtemDeviceManager::getInstance().getDeviceModels())
+    {
+        const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
+        if (device != NULL && device->isConnected())
+            device->selectInput("prev", this->command.getInput());
     }
 }
 
@@ -266,6 +278,9 @@ void RundownAtemInputWidget::configureOscSubscriptions()
     if (this->updateControlSubscription != NULL)
         this->updateControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->previewControlSubscription != NULL)
+        this->previewControlSubscription->disconnect(); // Disconnect all events.
+
     QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
     playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
@@ -277,6 +292,12 @@ void RundownAtemInputWidget::configureOscSubscriptions()
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
+    QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
 void RundownAtemInputWidget::allowGpiChanged(bool allowGpi)
@@ -319,4 +340,10 @@ void RundownAtemInputWidget::updateControlSubscriptionReceived(const QString& pr
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
+}
+
+void RundownAtemInputWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Preview);
 }

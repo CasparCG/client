@@ -66,6 +66,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;
+        OscSubscription* previewControlSubscription;
 
         QTimer executeTimer;
 
@@ -75,6 +76,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         void configureOscSubscriptions();
 
         Q_SLOT void executePlay();
+        Q_SLOT void executePreview();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
@@ -83,6 +85,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         Q_SLOT void deviceAdded(TriCasterDevice&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void preview(const PreviewEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
         Q_SLOT void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);

@@ -29,6 +29,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         const QString& getNextCommand() const;
         const QString& getUpdateCommand() const;
         const QString& getInvokeCommand() const;
+        const QString& getPreviewCommand() const;
         const QString& getClearCommand() const;
         const QString& getClearVideolayerCommand() const;
         const QString& getClearChannelCommand() const;
@@ -41,6 +42,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         void setNextCommand(const QString& command);
         void setUpdateCommand(const QString& command);
         void setInvokeCommand(const QString& command);
+        void setPreviewCommand(const QString& command);
         void setClearCommand(const QString& command);
         void setClearVideolayerCommand(const QString& command);
         void setClearChannelCommand(const QString& command);
@@ -54,6 +56,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         QString nextCommand;
         QString updateCommand;
         QString invokeCommand;
+        QString previewCommand;
         QString clearCommand;
         QString clearVideolayerCommand;
         QString clearChannelCommand;
@@ -66,6 +69,7 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         Q_SIGNAL void nextCommandChanged(const QString&);
         Q_SIGNAL void updateCommandChanged(const QString&);
         Q_SIGNAL void invokeCommandChanged(const QString&);
+        Q_SIGNAL void previewCommandChanged(const QString&);
         Q_SIGNAL void clearCommandChanged(const QString&);
         Q_SIGNAL void clearVideolayerCommandChanged(const QString&);
         Q_SIGNAL void clearChannelCommandChanged(const QString&);

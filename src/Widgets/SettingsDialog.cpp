@@ -64,6 +64,9 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
+    this->lineEditRundownRepository->setText(DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue());
+    bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
+    this->checkBoxPreviewOnAutoStep->setChecked(previewOnAutoStep);
 
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
@@ -778,4 +781,15 @@ void SettingsDialog::tricasterProductChanged(QString product)
 void SettingsDialog::themeChanged(QString theme)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "Theme", this->comboBoxTheme->currentText()));
+}
+
+void SettingsDialog::rundownRepositoryChanged()
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RundownRepository", this->lineEditRundownRepository->text()));
+}
+
+void SettingsDialog::previewOnAutoStepChanged(int state)
+{
+    QString previewOnAutoStep = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "PreviewOnAutoStep", previewOnAutoStep));
 }

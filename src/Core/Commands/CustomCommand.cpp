@@ -5,7 +5,8 @@
 CustomCommand::CustomCommand(QObject* parent)
     : AbstractCommand(parent),
       stopCommand(""), playCommand(""), loadCommand(""), pauseCommand(""), nextCommand(""), updateCommand(""),
-      invokeCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""), triggerOnNext(Custom::DEFAULT_TRIGGER_ON_NEXT)
+      invokeCommand(""), previewCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""),
+      triggerOnNext(Custom::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 
@@ -42,6 +43,11 @@ const QString& CustomCommand::getUpdateCommand() const
 const QString& CustomCommand::getInvokeCommand() const
 {
     return this->invokeCommand;
+}
+
+const QString& CustomCommand::getPreviewCommand() const
+{
+    return this->previewCommand;
 }
 
 const QString& CustomCommand::getClearCommand() const
@@ -106,6 +112,12 @@ void CustomCommand::setInvokeCommand(const QString& command)
     emit invokeCommandChanged(this->invokeCommand);
 }
 
+void CustomCommand::setPreviewCommand(const QString& command)
+{
+    this->previewCommand = command;
+    emit previewCommandChanged(this->previewCommand);
+}
+
 void CustomCommand::setClearCommand(const QString& command)
 {
     this->clearCommand = command;
@@ -141,6 +153,7 @@ void CustomCommand::readProperties(boost::property_tree::wptree& pt)
     setNextCommand(QString::fromStdWString(pt.get(L"nextCommand", L"")));
     setUpdateCommand(QString::fromStdWString(pt.get(L"updateCommand", L"")));
     setInvokeCommand(QString::fromStdWString(pt.get(L"invokeCommand", L"")));
+    setPreviewCommand(QString::fromStdWString(pt.get(L"previewCommand", L"")));
     setClearCommand(QString::fromStdWString(pt.get(L"clearCommand", L"")));
     setClearVideolayerCommand(QString::fromStdWString(pt.get(L"clearVideolayerCommand", L"")));
     setClearChannelCommand(QString::fromStdWString(pt.get(L"clearChannelCommand", L"")));
@@ -158,6 +171,7 @@ void CustomCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("nextCommand", this->getNextCommand());
     writer->writeTextElement("updateCommand", this->getUpdateCommand());
     writer->writeTextElement("invokeCommand", this->getInvokeCommand());
+    writer->writeTextElement("previewCommand", this->getPreviewCommand());
     writer->writeTextElement("clearCommand", this->getClearCommand());
     writer->writeTextElement("clearVideolayerCommand", this->getClearVideolayerCommand());
     writer->writeTextElement("clearChannelCommand", this->getClearChannelCommand());

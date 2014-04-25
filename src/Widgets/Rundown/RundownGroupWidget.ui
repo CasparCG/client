@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>825</width>
+    <width>925</width>
     <height>36</height>
    </rect>
   </property>
@@ -55,7 +55,7 @@
        <rect>
         <x>62</x>
         <y>2</y>
-        <width>271</width>
+        <width>401</width>
         <height>16</height>
        </rect>
       </property>
@@ -92,7 +92,7 @@
      <widget class="QLabel" name="labelNoteField">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>470</x>
         <y>1</y>
         <width>271</width>
         <height>35</height>

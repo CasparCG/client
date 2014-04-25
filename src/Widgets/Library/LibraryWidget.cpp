@@ -415,7 +415,7 @@ void LibraryWidget::setupTools()
     widgetAtemInput->setText(5, "0");
 
     QTreeWidgetItem* widgetAtemAudioGain = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
-    widgetAtemAudioGain->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemAudioGain->setIcon(0, QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"));
     widgetAtemAudioGain->setText(0, "Set Audio Gain");
     widgetAtemAudioGain->setText(1, "0");
     widgetAtemAudioGain->setText(2, "Set Audio Gain");
@@ -469,7 +469,7 @@ void LibraryWidget::setupTools()
     widgetAtemAuto->setText(5, "0");
 
     QTreeWidgetItem* widgetAtemCut = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
-    widgetAtemCut->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
+    widgetAtemCut->setIcon(0, QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"));
     widgetAtemCut->setText(0, "Trigger Cut");
     widgetAtemCut->setText(1, "0");
     widgetAtemCut->setText(2, "Trigger Cut");

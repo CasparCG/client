@@ -1,5 +1,6 @@
 #include "RundownWidget.h"
 #include "RundownTreeWidget.h"
+#include "OpenRundownFromUrlDialog.h"
 
 #include "EventManager.h"
 #include "Events/Rundown/CompactViewEvent.h"
@@ -30,15 +31,18 @@ RundownWidget::RundownWidget(QWidget* parent)
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
     int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
+    this->tabWidgetRundown->setTabToolTip(index, Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundown(const NewRundownEvent&)), this, SLOT(newRundown(const NewRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeRundown(const CloseRundownEvent&)), this, SLOT(closeRundown(const CloseRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deleteRundown(const DeleteRundownEvent&)), this, SLOT(deleteRundown(const DeleteRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundown(const OpenRundownEvent&)), this, SLOT(openRundown(const OpenRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrl(const OpenRundownFromUrlEvent&)), this, SLOT(openRundownFromUrl(const OpenRundownFromUrlEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveRundown(const SaveRundownEvent&)), this, SLOT(saveRundown(const SaveRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
 }
@@ -49,6 +53,7 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
     this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(createNewRundown()));
     this->openRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundownFromDisk()));
+    this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
@@ -72,6 +77,11 @@ void RundownWidget::openRundownMenu(const OpenRundownMenuEvent& event)
     this->openRundownAction->setEnabled(event.getEnabled());
 }
 
+void RundownWidget::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)
+{
+    this->openRundownFromUrlAction->setEnabled(event.getEnabled());
+}
+
 void RundownWidget::newRundown(const NewRundownEvent& event)
 {
     RundownTreeWidget* widget = new RundownTreeWidget(this);
@@ -82,6 +92,7 @@ void RundownWidget::newRundown(const NewRundownEvent& event)
     {
         EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(false));
         EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
+        EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
     }
 }
 
@@ -110,6 +121,7 @@ void RundownWidget::deleteRundown(const DeleteRundownEvent& event)
     {
         EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(true));
         EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(true));
+        EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(true));
     }
 
     // Delete the page widget, which automatically removes the tab as well.
@@ -123,7 +135,7 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
     if (event.getPath().isEmpty())
         path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
     else
-        path =  event.getPath();
+        path = event.getPath();
 
     if (!path.isEmpty())
     {
@@ -133,6 +145,7 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
         RundownTreeWidget* widget = new RundownTreeWidget(this);       
 
         int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, info.baseName());
+        this->tabWidgetRundown->setTabToolTip(index, path);
         this->tabWidgetRundown->setCurrentIndex(index);
 
         widget->openRundown(path);
@@ -141,6 +154,42 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
         {
             EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
+            EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
+        }
+
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+    }
+}
+
+void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
+{
+    QString path = "";
+
+    if (event.getPath().isEmpty())
+    {
+        OpenRundownFromUrlDialog* dialog = new OpenRundownFromUrlDialog(this);
+        if (dialog->exec() == QDialog::Accepted)
+            path = dialog->getPath();
+    }
+
+    if (!path.isEmpty())
+    {
+        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
+
+        RundownTreeWidget* widget = new RundownTreeWidget(this);
+
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, path);
+        this->tabWidgetRundown->setTabToolTip(index, path);
+        this->tabWidgetRundown->setCurrentIndex(index);
+
+        widget->openRundownFromUrl(path);
+
+        if (this->tabWidgetRundown->count() == Rundown::MAX_NUMBER_OF_RUNDONWS)
+        {
+            EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(false));
+            EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
+            EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
         }
 
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
@@ -159,14 +208,6 @@ void RundownWidget::activeRundownChanged(const ActiveRundownChangedEvent& event)
     this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), info.baseName());
 }
 
-
-
-
-
-
-
-
-
 void RundownWidget::createNewRundown()
 {
     EventManager::getInstance().fireNewRundownEvent(NewRundownEvent());
@@ -175,6 +216,11 @@ void RundownWidget::createNewRundown()
 void RundownWidget::openRundownFromDisk()
 {
     EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent());
+}
+
+void RundownWidget::openRundownFromRepo()
+{
+    EventManager::getInstance().fireOpenRundownFromUrlEvent(OpenRundownFromUrlEvent());
 }
 
 void RundownWidget::saveRundownToDisk()

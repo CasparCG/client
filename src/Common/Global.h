@@ -79,6 +79,7 @@ namespace Osc
     static const QString DEFAULT_NEXT_CONTROL_FILTER = "/control/#UID#/next";
     static const QString DEFAULT_UPDATE_CONTROL_FILTER = "/control/#UID#/update";
     static const QString DEFAULT_INVOKE_CONTROL_FILTER = "/control/#UID#/invoke";
+    static const QString DEFAULT_PREVIEW_CONTROL_FILTER = "/control/#UID#/preview";
     static const QString DEFAULT_CLEAR_CONTROL_FILTER = "/control/#UID#/clear";
     static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = "/control/#UID#/clearvideolayer";
     static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = "/control/#UID#/clearchannel";
@@ -429,9 +430,10 @@ namespace Playout
             Next = QEvent::User + 150,
             Update = QEvent::User + 160,
             Invoke = QEvent::User + 170,
-            Clear = QEvent::User + 180,
-            ClearVideolayer = QEvent::User + 190,
-            ClearChannel = QEvent::User + 200
+            Preview = QEvent::User + 180,
+            Clear = QEvent::User + 190,
+            ClearVideolayer = QEvent::User + 200,
+            ClearChannel = QEvent::User + 210
         };
     };
 

@@ -43,6 +43,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
         QAction* newRundownAction;
         QAction* openRundownAction;
+        QAction* openRundownFromUrlAction;
         //QAction* exportPresetAction;
         QAction* saveAsPresetAction;
         QAction* allowRemoteTriggeringAction;
@@ -51,6 +52,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
         Q_SLOT void newRundown();
         Q_SLOT void openRundown();
+        Q_SLOT void openRundownFromUrl();
         Q_SLOT void saveRundown();
         Q_SLOT void saveAsRundown();
         Q_SLOT void executeStop();
@@ -60,6 +62,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void executeNext();
         Q_SLOT void executeUpdate();
         Q_SLOT void executeInvoke();
+        Q_SLOT void executePreview();
         Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
@@ -80,5 +83,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
+        Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
         Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
 };
