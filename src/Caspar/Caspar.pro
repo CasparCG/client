@@ -26,4 +26,4 @@ SOURCES += \
     Models/CasparTemplate.cpp \
     Models/CasparMedia.cpp \
     Models/CasparData.cpp \
-    AmcpDevic.cpp
+    AmcpDevice.cpp

@@ -2,7 +2,7 @@
 
 #include "Shared.h"
 
-#include "QAtemConnection.h"
+#include "qatemconnection.h"
 
 #include <QtCore/QObject>
 
