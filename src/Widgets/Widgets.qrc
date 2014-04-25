@@ -184,6 +184,19 @@
         <file>Images/Atem/TriggerCutSmallHover.png</file>
         <file>Images/Atem/AudioGain.png</file>
         <file>Images/Atem/AudioGainSmall.png</file>
+        <file>Images/Atem/AudioGainSmallHover.png</file>
+        <file>Images/Atem/AudioInputBalanceSmall.png</file>
+        <file>Images/Atem/AudioInputBalanceSmallHover.png</file>
+        <file>Images/Atem/AudioInputBalence.png</file>
+        <file>Images/Atem/AudioInputState.png</file>
+        <file>Images/Atem/AudioInputStateSmall.png</file>
+        <file>Images/Atem/AudioInputStateSmallHover.png</file>
+        <file>Images/Atem/KeyerState.png</file>
+        <file>Images/Atem/KeyerStateSmall.png</file>
+        <file>Images/Atem/KeyerStateSmallHover.png</file>
+        <file>Images/Atem/VideoFormat.png</file>
+        <file>Images/Atem/VideoFormatSmall.png</file>
+        <file>Images/Atem/VideoFormatSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default/Default.css</file>

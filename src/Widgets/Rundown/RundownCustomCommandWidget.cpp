@@ -384,7 +384,7 @@ void RundownCustomCommandWidget::executeInvoke()
 void RundownCustomCommandWidget::executePreview()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected() && !this->command.getInvokeCommand().isEmpty())
+    if (device != NULL && device->isConnected() && !this->command.getPreviewCommand().isEmpty())
         device->sendCommand(this->command.getPreviewCommand());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -393,7 +393,7 @@ void RundownCustomCommandWidget::executePreview()
             continue;
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected() && !this->command.getInvokeCommand().isEmpty())
+        if (deviceShadow != NULL && deviceShadow->isConnected() && !this->command.getPreviewCommand().isEmpty())
             deviceShadow->sendCommand(this->command.getPreviewCommand());
     }
 }

@@ -565,7 +565,20 @@ OTHER_FILES += \
     Images/AtemTriggerCut.png \
     Images/AtemAudioGainSmall.png \
     Images/Atem/AudioGainSmall.png \
-    Images/Atem/AudioGain.png
+    Images/Atem/AudioGain.png \
+    Images/Atem/AudioGainSmallHover.png \
+    Images/Atem/VideoFormatSmallHover.png \
+    Images/Atem/VideoFormatSmall.png \
+    Images/Atem/VideoFormat.png \
+    Images/Atem/KeyerStateSmallHover.png \
+    Images/Atem/KeyerStateSmall.png \
+    Images/Atem/KeyerState.png \
+    Images/Atem/AudioInputStateSmallHover.png \
+    Images/Atem/AudioInputStateSmall.png \
+    Images/Atem/AudioInputState.png \
+    Images/Atem/AudioInputBalence.png \
+    Images/Atem/AudioInputBalanceSmallHover.png \
+    Images/Atem/AudioInputBalanceSmall.png
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

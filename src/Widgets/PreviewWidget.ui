@@ -159,7 +159,7 @@
           </spacer>
          </item>
          <item row="1" column="2">
-          <widget class="QLabel" name="labelPreview">
+          <widget class="QLabel" name="labelPreviewImage">
            <property name="minimumSize">
             <size>
              <width>228</width>

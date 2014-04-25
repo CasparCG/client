@@ -155,11 +155,11 @@ void RundownTreeWidget::setupMenus()
     //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Audio Input State", this, SLOT(addAtemAudioInputStateItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Audio Input Balance", this, SLOT(addAtemAudioInputBalanceItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Keyer State", this, SLOT(addAtemKeyerStateItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Set Video Format", this, SLOT(addAtemVideoFormatItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioInputStateSmall.png"), "Set Audio Input State", this, SLOT(addAtemAudioInputStateItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioInputBalanceSmall.png"), "Set Audio Input Balance", this, SLOT(addAtemAudioInputBalanceItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/KeyerStateSmall.png"), "Set Keyer State", this, SLOT(addAtemKeyerStateItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/VideoFormatSmall.png"), "Set Video Format", this, SLOT(addAtemVideoFormatItem()));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
 
     this->contextMenuTools = new QMenu(this);
@@ -811,7 +811,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
         return true;
     }
     else
+    {
         dynamic_cast<AbstractPlayoutCommand*>(selectedWidget)->executeCommand(type);
+    }
 
     if (rundownWidget != NULL && rundownWidget->isGroup())
     {
@@ -865,6 +867,8 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem->child(i)));
 
                 dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);
+                if (type == Playout::PlayoutType::Preview)
+                    return true; // We are done.
             }
         }
 

@@ -32,6 +32,7 @@ void InspectorCustomCommandWidget::rundownItemSelected(const RundownItemSelected
         this->lineEditNext->setText(this->command->getNextCommand());
         this->lineEditUpdate->setText(this->command->getUpdateCommand());
         this->lineEditInvoke->setText(this->command->getInvokeCommand());
+        this->lineEditPreview->setText(this->command->getPreviewCommand());
         this->lineEditClear->setText(this->command->getClearCommand());
         this->lineEditClearVideolayer->setText(this->command->getClearVideolayerCommand());
         this->lineEditClearChannel->setText(this->command->getClearChannelCommand());
@@ -50,6 +51,7 @@ void InspectorCustomCommandWidget::blockAllSignals(bool block)
     this->lineEditNext->blockSignals(block);
     this->lineEditUpdate->blockSignals(block);
     this->lineEditInvoke->blockSignals(block);
+    this->lineEditPreview->blockSignals(block);
     this->lineEditClear->blockSignals(block);
     this->lineEditClearVideolayer->blockSignals(block);
     this->lineEditClearChannel->blockSignals(block);
@@ -89,6 +91,11 @@ void InspectorCustomCommandWidget::updateCommandChanged(QString command)
 void InspectorCustomCommandWidget::invokeCommandChanged(QString command)
 {
     this->command->setInvokeCommand(command);
+}
+
+void InspectorCustomCommandWidget::previewCommandChanged(QString command)
+{
+    this->command->setPreviewCommand(command);
 }
 
 void InspectorCustomCommandWidget::clearCommandChanged(QString command)

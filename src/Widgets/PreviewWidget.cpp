@@ -61,13 +61,13 @@ void PreviewWidget::setThumbnail()
         this->image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
 
         if (this->previewAlpha)
-            this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+            this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
         else
-            this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
+            this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image));
     }
     else
     {
-        this->labelPreview->setPixmap(NULL);
+        this->labelPreviewImage->setPixmap(NULL);
     }
 }
 
@@ -76,12 +76,12 @@ void PreviewWidget::switchPreview()
     if (this->previewAlpha)
     {
         this->toolButtonPreviewAlpha->setStyleSheet("");
-        this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
+        this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image));
     }
     else
     {
         this->toolButtonPreviewAlpha->setStyleSheet("border-color: firebrick;");
-        this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+        this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
     }
 
     this->previewAlpha = !this->previewAlpha;
