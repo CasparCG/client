@@ -67,6 +67,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->lineEditRundownRepository->setText(DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue());
     bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
     this->checkBoxPreviewOnAutoStep->setChecked(previewOnAutoStep);
+    bool clearDelayedCommandsOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
+    this->checkBoxClearDelayedCommandsOnAutoStep->setChecked(clearDelayedCommandsOnAutoStep);
 
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
@@ -792,4 +794,10 @@ void SettingsDialog::previewOnAutoStepChanged(int state)
 {
     QString previewOnAutoStep = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "PreviewOnAutoStep", previewOnAutoStep));
+}
+
+void SettingsDialog::clearDelayedCommandsOnAutoStepChanged(int state)
+{
+    QString clearDelayedCommandsOnAutoStep = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ClearDelayedCommandsOnAutoStep", clearDelayedCommandsOnAutoStep));
 }

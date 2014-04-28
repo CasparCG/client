@@ -821,7 +821,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
         else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
-            // The group have auto play enabled, then we want to play the items within the group.
+            // The group have AutoPlay enabled, play the items within the group.
             bool isFirstChild = true;
 
             QList<AbstractRundownWidget*>* autoPlayQueue = new QList<AbstractRundownWidget*>();
@@ -831,7 +831,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
                 if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
                 {
-                    // Auto play is set on the group. Skip video items without auto play.
+                    // Skip video items without AutoPlay.
                     if (!dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
                         continue;
 
@@ -860,59 +860,62 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
         }
         else
         {
+            // Setting: Should we clear delayed commands on play if the group have AutoStep property set.
+            bool clearDelayedCommands = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
+            if (clearDelayedCommands)
+            {
+                if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() && type == Playout::PlayoutType::Play)
+                {
+                    if (this->currentPlayingAutoStepItem != NULL)
+                    {
+                        for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
+                        {
+                            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->currentPlayingAutoStepItem->child(i), 0);
+                            dynamic_cast<AbstractRundownWidget*>(childWidget)->clearDelayedCommands();
+                        }
+                    }
+
+                    this->currentPlayingAutoStepItem = currentItem;
+                }
+            }
+
+            // Execute command on the selected item.
             for (int i = 0; i < currentItem->childCount(); i++)
             {
                 QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
 
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem->child(i)));
 
-                dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);
-
-                if (type == Playout::PlayoutType::Preview)
-                    return true; // We are done.
+                dynamic_cast<AbstractPlayoutCommand*>(childWidget)->executeCommand(type);         
             }
+
+            if (type == Playout::PlayoutType::Preview)
+                return true; // We are done.
         }
 
-        // Check if group item have auto step enabled.
-        if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() &&
-            (type != Playout::PlayoutType::Clear && type != Playout::PlayoutType::ClearVideolayer && type != Playout::PlayoutType::ClearChannel))
+        // Setting: Should we AutoStep and send Preview on next item.
+        if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
         { 
-            if (type == Playout::PlayoutType::Play)
-            {
-                if (this->currentPlayingAutoStepItem != NULL)
-                {
-                    for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
-                    {
-                        QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->currentPlayingAutoStepItem->child(i), 0);
-                        dynamic_cast<AbstractRundownWidget*>(childWidget)->clearDelayedCommands();
-                    }
-                }
-
-                this->currentPlayingAutoStepItem = currentItem;
-            }
-
             QTimer::singleShot(500, this, SLOT(selectItemBelow()));
 
             bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
-            if (previewOnAutoStep)
+            if (previewOnAutoStep && type == Playout::PlayoutType::Play)
                 QTimer::singleShot(600, this, SLOT(executePreview()));
         }
     }
     else if (rundownWidgetParent != NULL && rundownWidgetParent->isGroup())
     {
-        // The parent of the selected item is a group. If group have auto play
-        // enabled, then we want to play current item and below within the group.
+        // The selected items parent is a group. If the group have AutoPlay property set, then play current item and below within the group.
         if (type == Playout::PlayoutType::Play && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
         {
             QList<AbstractRundownWidget*>* autoPlayQueue = new QList<AbstractRundownWidget*>();
-            //for (int i = currentIndex.row(); i < currentItem->parent()->childCount(); i++)
             for (int i = currentItem->parent()->indexOfChild(currentItem); i < currentItem->parent()->childCount(); i++)
             {
                 QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->parent()->child(i), 0);
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
                 if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
                 {
-                    // Auto play is set on the group. Skip video items without auto play.
+                    // Skip video items without AutoPlay.
                     if (!dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
                         continue;
 

@@ -82,4 +82,5 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void themeChanged(QString);
         Q_SLOT void rundownRepositoryChanged();
         Q_SLOT void previewOnAutoStepChanged(int);
+        Q_SLOT void clearDelayedCommandsOnAutoStepChanged(int);
 };

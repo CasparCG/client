@@ -311,6 +311,10 @@ void RundownVideoWidget::checkEmptyDevice()
 void RundownVideoWidget::clearDelayedCommands()
 {
     this->executeTimer.stop();
+
+    this->paused = false;
+    this->loaded = false;
+    this->playing = false;
 }
 
 bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
