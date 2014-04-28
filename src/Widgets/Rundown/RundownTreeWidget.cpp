@@ -211,6 +211,8 @@ void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& 
 
     if (event.getKey() == Qt::Key_F1) // Stop.
         executeCommand(Playout::PlayoutType::Stop, Action::ActionType::KeyPress);
+    else if (event.getKey() == Qt::Key_F2 && event.getModifiers() == Qt::ShiftModifier) // Play Now.
+        executeCommand(Playout::PlayoutType::PlayNow, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F2) // Play.
         executeCommand(Playout::PlayoutType::Play, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F3) // Load.

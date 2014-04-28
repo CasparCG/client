@@ -425,15 +425,16 @@ namespace Playout
         {
             Stop = QEvent::User + 110,
             Play = QEvent::User + 120,
-            Pause = QEvent::User + 130,
-            Load = QEvent::User + 140,
-            Next = QEvent::User + 150,
-            Update = QEvent::User + 160,
-            Invoke = QEvent::User + 170,
-            Preview = QEvent::User + 180,
-            Clear = QEvent::User + 190,
-            ClearVideolayer = QEvent::User + 200,
-            ClearChannel = QEvent::User + 210
+            PlayNow = QEvent::User + 130,
+            Pause = QEvent::User + 140,
+            Load = QEvent::User + 150,
+            Next = QEvent::User + 160,
+            Update = QEvent::User + 170,
+            Invoke = QEvent::User + 180,
+            Preview = QEvent::User + 190,
+            Clear = QEvent::User + 200,
+            ClearVideolayer = QEvent::User + 210,
+            ClearChannel = QEvent::User + 220
         };
     };
 

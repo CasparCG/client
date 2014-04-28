@@ -273,6 +273,8 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 
         this->executeTimer.start();
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Update)
     {
         this->executeTimer.disconnect(); // Disconnect all events.

@@ -264,6 +264,8 @@ bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Pause)
         executePause();
     else if (type == Playout::PlayoutType::Load)

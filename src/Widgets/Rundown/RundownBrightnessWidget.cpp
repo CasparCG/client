@@ -237,6 +237,8 @@ bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType::Type type)
                 this->executeTimer.start();
             }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Clear)
         executeStop();
     else if (type == Playout::PlayoutType::ClearVideolayer)

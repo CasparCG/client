@@ -57,6 +57,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void saveAsRundown();
         Q_SLOT void executeStop();
         Q_SLOT void executePlay();
+        Q_SLOT void executePlayNow();
         Q_SLOT void executePause();
         Q_SLOT void executeLoad();
         Q_SLOT void executeNext();

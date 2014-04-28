@@ -239,6 +239,8 @@ bool RundownGridWidget::executeCommand(Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearVideolayer)

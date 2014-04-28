@@ -212,6 +212,8 @@ bool RundownAtemAudioInputBalanceWidget::executeCommand(Playout::PlayoutType::Ty
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
             QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
 

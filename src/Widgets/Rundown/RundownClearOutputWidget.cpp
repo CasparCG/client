@@ -230,6 +230,8 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        this->executeTimer.start(0);
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearVideolayer)

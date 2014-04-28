@@ -345,6 +345,8 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
             }
         }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Pause)
         executePause();
     else if (type == Playout::PlayoutType::Load)

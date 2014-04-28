@@ -238,6 +238,8 @@ bool RundownOpacityWidget::executeCommand(Playout::PlayoutType::Type type)
             this->executeTimer.start();
         }
     }
+    else if (type == Playout::PlayoutType::PlayNow)
+        executePlay();
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
     else if (type == Playout::PlayoutType::Clear)
