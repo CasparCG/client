@@ -114,7 +114,10 @@ AbstractRundownWidget* RundownAtemAutoWidget::clone()
                                                               this->inGroup, this->compactView);
 
     AtemAutoCommand* command = dynamic_cast<AtemAutoCommand*>(widget->getCommand());
+    command->setChannel(this->command.getChannel());
+    command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
+    command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());

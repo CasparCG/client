@@ -34,7 +34,7 @@ void InspectorVolumeWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
         this->sliderVolume->setValue(QString("%1").arg(this->command->getVolume() * 100).toFloat());
         this->spinBoxVolume->setValue(QString("%1").arg(this->command->getVolume() * 100).toFloat());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
@@ -46,7 +46,7 @@ void InspectorVolumeWidget::blockAllSignals(bool block)
 {
     this->sliderVolume->blockSignals(block);
     this->spinBoxVolume->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
@@ -64,9 +64,9 @@ void InspectorVolumeWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorVolumeWidget::durationChanged(int duration)
+void InspectorVolumeWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorVolumeWidget::tweenChanged(QString tween)
@@ -88,33 +88,7 @@ void InspectorVolumeWidget::spinBoxVolumeChanged(int volume)
     this->sliderVolume->setValue(volume);
 }
 
-void InspectorVolumeWidget::resetVolume(QString volume)
-{
-    this->sliderVolume->setValue(Mixer::DEFAULT_VOLUME * 100);
-    this->command->setVolume(static_cast<float>(this->sliderVolume->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorVolumeWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorVolumeWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
 void InspectorVolumeWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorVolumeWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

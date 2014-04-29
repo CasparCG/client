@@ -32,7 +32,7 @@ void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->command = dynamic_cast<AudioCommand*>(event.getCommand());
 
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->checkBoxLoop->setChecked(this->command->getLoop());
@@ -46,7 +46,7 @@ void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 void InspectorAudioWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
     this->checkBoxLoop->blockSignals(block);
@@ -98,9 +98,9 @@ void InspectorAudioWidget::transitionChanged(QString transition)
     this->command->setTransition(transition);
 }
 
-void InspectorAudioWidget::durationChanged(int duration)
+void InspectorAudioWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorAudioWidget::directionChanged(QString direction)
@@ -126,46 +126,4 @@ void InspectorAudioWidget::useAutoChanged(int state)
 void InspectorAudioWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
-}
-
-void InspectorAudioWidget::resetTransition(QString transition)
-{
-    this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
-    this->command->setTransition(this->comboBoxTransition->currentText());
-}
-
-void InspectorAudioWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorAudioWidget::resetDirection(QString direction)
-{
-    this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
-    this->command->setDirection(this->comboBoxDirection->currentText());
-}
-
-void InspectorAudioWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
-void InspectorAudioWidget::resetLoop(QString loop)
-{
-    this->checkBoxLoop->setChecked(Audio::DEFAULT_LOOP);
-    this->command->setLoop(this->checkBoxLoop->isChecked());
-}
-
-void InspectorAudioWidget::resetUseAuto(QString useAuto)
-{
-    this->checkBoxUseAuto->setChecked(Audio::DEFAULT_USE_AUTO);
-    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
-}
-
-void InspectorAudioWidget::resetTriggerOnNext(QString triggerOnNext)
-{
-    this->checkBoxTriggerOnNext->setChecked(Audio::DEFAULT_TRIGGER_ON_NEXT);
-    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

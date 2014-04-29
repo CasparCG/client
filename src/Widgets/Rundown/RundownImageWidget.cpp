@@ -130,12 +130,13 @@ AbstractRundownWidget* RundownImageWidget::clone()
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
+    command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setImageName(this->command.getImageName());
     command->setTransition(this->command.getTransition());
-    command->setDuration(this->command.getDuration());
+    command->setTransitionDuration(this->command.getTransitionDuration());
     command->setTween(this->command.getTween());
     command->setDirection(this->command.getDirection());
     command->setUseAuto(this->command.getUseAuto());
@@ -254,11 +255,21 @@ bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                this->executeTimer.setInterval(startDelay);
+
+                if (this->command.getDuration() > 0)
+                {
+                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
+                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
+                }
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
                 this->executeTimer.setInterval(this->command.getDelay());
+
+                if (this->command.getDuration() > 0)
+                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
             }
 
             this->executeTimer.start();
@@ -317,7 +328,7 @@ void RundownImageWidget::executePlay()
             device->playImage(this->command.getChannel(), this->command.getVideolayer());
         else
             device->playImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getUseAuto());
     }
 
@@ -333,7 +344,7 @@ void RundownImageWidget::executePlay()
                 deviceShadow->playImage(this->command.getChannel(), this->command.getVideolayer());
             else
                 deviceShadow->playImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getUseAuto());
         }
     }
@@ -381,7 +392,7 @@ void RundownImageWidget::executeLoad()
     if (device != NULL && device->isConnected())
     {
         device->loadImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                          this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                          this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getUseAuto());
     }
 
@@ -394,7 +405,7 @@ void RundownImageWidget::executeLoad()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->loadImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                                    this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                    this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getUseAuto());
         }
     }

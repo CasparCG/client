@@ -5,7 +5,7 @@
 GeometryCommand::GeometryCommand(QObject* parent)
     : AbstractCommand(parent),
       positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS), scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE),
-      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT),
+      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT),
       defer(Mixer::DEFAULT_DEFER)
 {
 }
@@ -30,9 +30,9 @@ float GeometryCommand::getScaleY() const
     return this->scaleY;
 }
 
-int GeometryCommand::getDuration() const
+int GeometryCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transtitionDuration;
 }
 
 const QString& GeometryCommand::getTween() const
@@ -74,10 +74,10 @@ void GeometryCommand::setScaleY(float scaleY)
     emit scaleYChanged(this->scaleY);
 }
 
-void GeometryCommand::setDuration(int duration)
+void GeometryCommand::setTransitionDuration(int transtitionDuration)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transtitionDuration = transtitionDuration;
+    emit transtitionDurationChanged(this->transtitionDuration);
 }
 
 void GeometryCommand::setTween(const QString& tween)
@@ -106,7 +106,7 @@ void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
     setPositionY(pt.get(L"positiony", Mixer::DEFAULT_GEOMETRY_YPOS));
     setScaleX(pt.get(L"scalex", Mixer::DEFAULT_GEOMETRY_XSCALE));
     setScaleY(pt.get(L"scaley", Mixer::DEFAULT_GEOMETRY_YSCALE));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
@@ -116,12 +116,12 @@ void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("positionx", QString::number(this->getPositionX()));
-    writer->writeTextElement("positiony", QString::number(this->getPositionY()));
-    writer->writeTextElement("scalex", QString::number(this->getScaleX()));
-    writer->writeTextElement("scaley", QString::number(this->getScaleY()));
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
-    writer->writeTextElement("tween", this->getTween());
+    writer->writeTextElement("positionx", QString::number(getPositionX()));
+    writer->writeTextElement("positiony", QString::number(getPositionY()));
+    writer->writeTextElement("scalex", QString::number(getScaleX()));
+    writer->writeTextElement("scaley", QString::number(getScaleY()));
+    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

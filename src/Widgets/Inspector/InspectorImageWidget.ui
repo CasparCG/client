@@ -58,9 +58,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+    <layout class="QHBoxLayout" name="horizontalLayoutTransitionDuration">
      <item>
-      <spacer name="horizontalSpacerDuration">
+      <spacer name="horizontalSpacerTransitionDuration">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -76,7 +76,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDuration">
+      <widget class="QLabel" name="labelTransitionDuration">
        <property name="text">
         <string>Duration</string>
        </property>
@@ -86,7 +86,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBoxDuration">
+      <widget class="QSpinBox" name="spinBoxTransitionDuration">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -307,22 +307,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>spinBoxDuration</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>durationChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>223</x>
-     <y>46</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBoxTransition</sender>
    <signal>currentIndexChanged(QString)</signal>
    <receiver>InspectorImageWidget</receiver>
@@ -371,114 +355,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelTransition</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetTransition(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>47</x>
-     <y>22</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>44</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>48</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTween</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>94</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDirection</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetDirection(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>66</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>9</x>
-     <y>89</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelUseAuto</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetUseAuto(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>82</x>
-     <y>239</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>73</x>
-     <y>249</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxUseAuto</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorImageWidget</receiver>
    <slot>useAutoChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>238</y>
+     <x>113</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
      <y>247</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTriggerOnNext</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorImageWidget</receiver>
-   <slot>resetTriggerOnNext(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>51</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>17</x>
-     <y>228</y>
     </hint>
    </hints>
   </connection>
@@ -489,8 +377,8 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>216</y>
+     <x>109</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -498,9 +386,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>spinBoxTransitionDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorImageWidget</receiver>
+   <slot>transitionDurationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>loopChanged(int)</slot>
   <slot>transitionChanged(QString)</slot>
   <slot>directionChanged(QString)</slot>

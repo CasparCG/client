@@ -32,7 +32,7 @@ void InspectorOpacityWidget::rundownItemSelected(const RundownItemSelectedEvent&
 
         this->sliderOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
         this->spinBoxOpacity->setValue(QString("%1").arg(this->command->getOpacity() * 100).toFloat());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         this->checkBoxDefer->setChecked(this->command->getDefer());
@@ -45,7 +45,7 @@ void InspectorOpacityWidget::blockAllSignals(bool block)
 {
     this->sliderOpacity->blockSignals(block);
     this->spinBoxOpacity->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
@@ -64,9 +64,9 @@ void InspectorOpacityWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorOpacityWidget::durationChanged(int duration)
+void InspectorOpacityWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorOpacityWidget::tweenChanged(QString tween)

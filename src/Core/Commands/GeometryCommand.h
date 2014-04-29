@@ -26,7 +26,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         float getPositionY() const;
         float getScaleX() const;
         float getScaleY() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getTriggerOnNext() const;
         bool getDefer() const;
@@ -35,7 +35,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         void setPositionY(float positionY);
         void setScaleX(float scaleX);
         void setScaleY(float scaleY);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
@@ -45,7 +45,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         float positionY;
         float scaleX;
         float scaleY;
-        int duration;
+        int transtitionDuration;
         QString tween;
         bool triggerOnNext;
         bool defer;
@@ -54,7 +54,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         Q_SIGNAL void positionYChanged(float);
         Q_SIGNAL void scaleXChanged(float);
         Q_SIGNAL void scaleYChanged(float);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);

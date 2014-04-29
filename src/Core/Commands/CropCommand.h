@@ -26,7 +26,7 @@ class CORE_EXPORT CropCommand : public AbstractCommand
         float getCropRight() const;
         float getCropTop() const;
         float getCropBottom() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getDefer() const;
 
@@ -34,7 +34,7 @@ class CORE_EXPORT CropCommand : public AbstractCommand
         void setCropRight(float cropRight);
         void setCropTop(float cropTop);
         void setCropBottom(float cropBottom);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
@@ -43,7 +43,7 @@ class CORE_EXPORT CropCommand : public AbstractCommand
         float cropRight;
         float cropTop;
         float cropBottom;
-        int duration;
+        int transtitionDuration;
         QString tween;
         bool defer;
 
@@ -51,7 +51,7 @@ class CORE_EXPORT CropCommand : public AbstractCommand
         Q_SIGNAL void cropRightChanged(float);
         Q_SIGNAL void cropTopChanged(float);
         Q_SIGNAL void cropBottomChanged(float);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };

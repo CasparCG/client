@@ -17,6 +17,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         virtual ~AbstractCommand();
 
         virtual int getDelay() const;
+        virtual int getDuration() const;
         virtual int getChannel() const;
         virtual int getVideolayer() const;
         virtual bool getAllowGpi() const;
@@ -26,6 +27,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         virtual void setChannel(int channel);
         virtual void setVideolayer(int videolayer);
         virtual void setDelay(int delay);
+        virtual void setDuration(int duration);
         virtual void setAllowGpi(bool allowGpi);
         virtual void setAllowRemoteTriggering(bool allowRemoteTriggering);
         virtual void setRemoteTriggerId(const QString& id);
@@ -39,6 +41,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         int channel;
         int videolayer;
         int delay;
+        int duration;
         bool allowGpi;
         bool allowRemoteTriggering;
         QString remoteTriggerId;
@@ -47,6 +50,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         Q_SIGNAL void channelChanged(int);
         Q_SIGNAL void videolayerChanged(int);
         Q_SIGNAL void delayChanged(int);
+        Q_SIGNAL void durationChanged(int);
         Q_SIGNAL void allowGpiChanged(bool);
         Q_SIGNAL void allowRemoteTriggeringChanged(bool);
         Q_SIGNAL void remoteTriggerIdChanged(const QString&);

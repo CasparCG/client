@@ -38,7 +38,7 @@ void InspectorCropWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
         this->spinBoxCropRight->setValue(QString("%1").arg(this->command->getCropRight() * 100).toFloat());
         this->spinBoxCropTop->setValue(QString("%1").arg(this->command->getCropTop() * 100).toFloat());
         this->spinBoxCropBottom->setValue(QString("%1").arg(this->command->getCropBottom() * 100).toFloat());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
@@ -56,7 +56,7 @@ void InspectorCropWidget::blockAllSignals(bool block)
     this->spinBoxCropRight->blockSignals(block);
     this->spinBoxCropTop->blockSignals(block);
     this->spinBoxCropBottom->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
@@ -130,9 +130,9 @@ void InspectorCropWidget::spinBoxCropBottomChanged(int cropBottom)
     this->sliderCropBottom->setValue(cropBottom);
 }
 
-void InspectorCropWidget::durationChanged(int duration)
+void InspectorCropWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorCropWidget::tweenChanged(QString tween)
@@ -140,57 +140,7 @@ void InspectorCropWidget::tweenChanged(QString tween)
     this->command->setTween(tween);
 }
 
-void InspectorCropWidget::resetCropLeft(QString value)
-{
-    this->sliderCropLeft->setValue(Mixer::DEFAULT_CROP_LEFT);
-    this->command->setCropLeft(static_cast<float>(this->sliderCropLeft->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::resetCropRight(QString value)
-{
-    this->sliderCropRight->setValue(Mixer::DEFAULT_CROP_RIGHT);
-    this->command->setCropRight(static_cast<float>(this->sliderCropRight->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::resetCropTop(QString value)
-{
-    this->sliderCropTop->setValue(Mixer::DEFAULT_CROP_TOP * 100);
-    this->command->setCropTop(static_cast<float>(this->sliderCropTop->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::resetCropBottom(QString value)
-{
-    this->sliderCropBottom->setValue(Mixer::DEFAULT_CROP_BOTTOM * 100);
-    this->command->setCropBottom(static_cast<float>(this->sliderCropBottom->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::resetDuration(QString value)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorCropWidget::resetTween(QString value)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
 void InspectorCropWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorCropWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

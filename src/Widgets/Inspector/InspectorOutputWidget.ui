@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>244</width>
-    <height>252</height>
+    <width>313</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -254,7 +254,60 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelMillisecond">
+      <widget class="QLabel" name="labelDelayMillisecond">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+     <item>
+      <spacer name="horizontalSpacerDuration">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>17</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDuration">
+       <property name="text">
+        <string>Duration</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>99999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDurationMillisecond">
        <property name="text">
         <string/>
        </property>
@@ -460,8 +513,8 @@
    <slot>allowGpiChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>165</y>
+     <x>152</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>185</x>
@@ -524,8 +577,8 @@
    <slot>allowRemoteTriggeringChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>128</x>
-     <y>187</y>
+     <x>213</x>
+     <y>223</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -540,8 +593,8 @@
    <slot>remoteTriggerIdChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>168</x>
-     <y>215</y>
+     <x>295</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>249</x>
@@ -556,12 +609,28 @@
    <slot>atemDeviceNameChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>19</y>
+     <x>302</x>
+     <y>29</y>
     </hint>
     <hint type="destinationlabel">
      <x>250</x>
      <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorOutputWidget</receiver>
+   <slot>durationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>320</x>
+     <y>162</y>
     </hint>
    </hints>
   </connection>
@@ -577,5 +646,6 @@
   <slot>allowRemoteTriggeringChanged(int)</slot>
   <slot>remoteTriggerIdChanged(QString)</slot>
   <slot>atemDeviceNameChanged(QString)</slot>
+  <slot>durationChanged(int)</slot>
  </slots>
 </ui>

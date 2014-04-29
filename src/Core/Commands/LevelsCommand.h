@@ -27,7 +27,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         float getMinOut() const;
         float getMaxOut() const;
         float getGamma() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getDefer() const;
 
@@ -36,7 +36,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         void setMinOut(float minOut);
         void setMaxOut(float maxOut);
         void setGamma(float gamma);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
@@ -46,7 +46,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         float minOut;
         float maxOut;
         float gamma;
-        int duration;
+        int transtitionDuration;
         QString tween;
         bool defer;
 
@@ -55,7 +55,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         Q_SIGNAL void minOutChanged(float);
         Q_SIGNAL void maxOutChanged(float);
         Q_SIGNAL void gammaChanged(float);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };

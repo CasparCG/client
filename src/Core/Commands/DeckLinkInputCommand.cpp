@@ -5,7 +5,7 @@
 DeckLinkInputCommand::DeckLinkInputCommand(QObject* parent)
     : AbstractCommand(parent),
       device(DeckLinkInput::DEFAULT_DEVICE), format(DeckLinkInput::DEFAULT_FORMAT), transition(Mixer::DEFAULT_TRANSITION),
-      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION)
+      transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION)
 {
 }
 
@@ -24,9 +24,9 @@ const QString& DeckLinkInputCommand::getTransition() const
     return this->transition;
 }
 
-int DeckLinkInputCommand::getDuration() const
+int DeckLinkInputCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transtitionDuration;
 }
 
 const QString& DeckLinkInputCommand::getDirection() const
@@ -57,10 +57,10 @@ void DeckLinkInputCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void DeckLinkInputCommand::setDuration(int duration)
+void DeckLinkInputCommand::setTransitionDuration(int transtitionDuration)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transtitionDuration = transtitionDuration;
+    emit transtitionDurationChanged(this->transtitionDuration);
 }
 
 void DeckLinkInputCommand::setDirection(const QString& direction)
@@ -82,7 +82,7 @@ void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
     setDevice(pt.get(L"device", DeckLinkInput::DEFAULT_DEVICE));
     setFormat(QString::fromStdWString(pt.get(L"format", DeckLinkInput::DEFAULT_FORMAT.toStdWString())));
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
 }
@@ -91,10 +91,10 @@ void DeckLinkInputCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("device", QString::number(this->getDevice()));
-    writer->writeTextElement("format", this->getFormat());
-    writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("direction", this->getDirection());
+    writer->writeTextElement("device", QString::number(getDevice()));
+    writer->writeTextElement("format", getFormat());
+    writer->writeTextElement("transition", getTransition());
+    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("tween", getTween());
+    writer->writeTextElement("direction", getDirection());
 }

@@ -4,7 +4,7 @@
 
 GridCommand::GridCommand(QObject* parent)
     : AbstractCommand(parent),
-      grid(Mixer::DEFAULT_GRID), duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      grid(Mixer::DEFAULT_GRID), transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
 }
 
@@ -13,9 +13,9 @@ int GridCommand::getGrid() const
     return this->grid;
 }
 
-int GridCommand::getDuration() const
+int GridCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transitionDuration;
 }
 
 const QString& GridCommand::getTween() const
@@ -34,10 +34,10 @@ void GridCommand::setGrid(int grid)
     emit gridChanged(this->grid);
 }
 
-void GridCommand::setDuration(int duration)
+void GridCommand::setTransitionDuration(int transitionDuration)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void GridCommand::setTween(const QString& tween)
@@ -57,7 +57,7 @@ void GridCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setGrid(pt.get(L"grid", Mixer::DEFAULT_GRID));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
@@ -66,8 +66,8 @@ void GridCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("grid", QString::number(this->getGrid()));
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
-    writer->writeTextElement("tween", this->getTween());
+    writer->writeTextElement("grid", QString::number(getGrid()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("tween", getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

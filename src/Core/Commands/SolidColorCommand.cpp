@@ -4,7 +4,7 @@
 
 SolidColorCommand::SolidColorCommand(QObject* parent)
     : AbstractCommand(parent),
-      color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), duration(Mixer::DEFAULT_DURATION),
+      color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), transtitionDuration(Mixer::DEFAULT_DURATION),
       tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(SolidColor::DEFAULT_USE_AUTO),
       triggerOnNext(SolidColor::DEFAULT_TRIGGER_ON_NEXT)
 {
@@ -20,9 +20,9 @@ const QString& SolidColorCommand::getTransition() const
     return this->transition;
 }
 
-int SolidColorCommand::getDuration() const
+int SolidColorCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transtitionDuration;
 }
 
 const QString& SolidColorCommand::getDirection() const
@@ -57,10 +57,10 @@ void SolidColorCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void SolidColorCommand::setDuration(int duration)
+void SolidColorCommand::setTransitionDuration(int transtitionDuration)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transtitionDuration = transtitionDuration;
+    emit transtitionDurationChanged(this->transtitionDuration);
 }
 
 void SolidColorCommand::setDirection(const QString& direction)
@@ -92,7 +92,7 @@ void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
     setColor(QString::fromStdWString(pt.get(L"solidcolor", SolidColor::DEFAULT_COLOR.toStdWString())));
@@ -104,10 +104,10 @@ void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("direction", this->getDirection());
-    writer->writeTextElement("solidcolor", this->getColor());
+    writer->writeTextElement("transition", getTransition());
+    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("tween", getTween());
+    writer->writeTextElement("direction", getDirection());
+    writer->writeTextElement("solidcolor", getColor());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

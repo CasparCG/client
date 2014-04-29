@@ -32,7 +32,7 @@ void InspectorImageWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->command = dynamic_cast<ImageCommand*>(event.getCommand());
 
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -45,7 +45,7 @@ void InspectorImageWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 void InspectorImageWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
@@ -96,9 +96,9 @@ void InspectorImageWidget::transitionChanged(QString transition)
     this->command->setTransition(transition);
 }
 
-void InspectorImageWidget::durationChanged(int duration)
+void InspectorImageWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorImageWidget::directionChanged(QString direction)
@@ -119,40 +119,4 @@ void InspectorImageWidget::useAutoChanged(int state)
 void InspectorImageWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
-}
-
-void InspectorImageWidget::resetTransition(QString transition)
-{
-    this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
-    this->command->setTransition(this->comboBoxTransition->currentText());
-}
-
-void InspectorImageWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorImageWidget::resetDirection(QString direction)
-{
-    this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
-    this->command->setDirection(this->comboBoxDirection->currentText());
-}
-
-void InspectorImageWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
-void InspectorImageWidget::resetUseAuto(QString useAuto)
-{
-    this->checkBoxUseAuto->setChecked(Image::DEFAULT_USE_AUTO);
-    this->command->setUseAuto(this->checkBoxUseAuto->isChecked());
-}
-
-void InspectorImageWidget::resetTriggerOnNext(QString triggerOnNext)
-{
-    this->checkBoxTriggerOnNext->setChecked(Image::DEFAULT_TRIGGER_ON_NEXT);
-    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

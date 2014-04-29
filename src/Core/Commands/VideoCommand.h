@@ -24,7 +24,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
 
         const QString& getVideoName() const;
         const QString& getTransition() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
         bool getLoop() const;
@@ -36,7 +36,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
 
         void setVideoName(const QString& videoName);
         void setTransition(const QString& transition);
-        void setDuration(int duration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
         void setFreezeOnLoad(bool freezeOnLoad);
@@ -49,7 +49,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
     private:
         QString videoName;
         QString transition;
-        int duration;
+        int transitionDuration;
         QString tween;
         QString direction;
         bool loop;
@@ -61,7 +61,7 @@ class CORE_EXPORT VideoCommand : public AbstractCommand
 
         Q_SIGNAL void videoNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void loopChanged(bool);

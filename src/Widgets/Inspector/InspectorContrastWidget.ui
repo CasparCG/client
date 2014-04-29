@@ -67,7 +67,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutDuration">
      <item>
-      <spacer name="horizontalSpacerDuration">
+      <spacer name="horizontalSpacerTransitionDuration">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -83,14 +83,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDuration">
+      <widget class="QLabel" name="labelTransitionDuration">
        <property name="text">
         <string>Duration</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBoxDuration">
+      <widget class="QSpinBox" name="spinBoxTransitionDuration">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -215,7 +215,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelDuration</sender>
+   <sender>labelTransitionDuration</sender>
    <signal>linkActivated(QString)</signal>
    <receiver>InspectorContrastWidget</receiver>
    <slot>resetDuration(QString)</slot>
@@ -247,7 +247,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxDuration</sender>
+   <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorContrastWidget</receiver>
    <slot>durationChanged(int)</slot>

@@ -23,23 +23,23 @@ class CORE_EXPORT GridCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         int getGrid() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getDefer() const;
 
         void setGrid(int grid);
-        void setDuration(int duration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private:
         int grid;
-        int duration;
+        int transitionDuration;
         QString tween;
         bool defer;
 
         Q_SIGNAL void gridChanged(int);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };

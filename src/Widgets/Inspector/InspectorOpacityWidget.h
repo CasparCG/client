@@ -28,7 +28,7 @@ class WIDGETS_EXPORT InspectorOpacityWidget : public QWidget, Ui::InspectorOpaci
 
         Q_SLOT void sliderOpacityChanged(int);
         Q_SLOT void spinBoxOpacityChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);

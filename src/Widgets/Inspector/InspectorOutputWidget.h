@@ -51,6 +51,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void channelChanged(int);
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
+        Q_SLOT void durationChanged(int);
         Q_SLOT void tricasterDeviceAdded(TriCasterDevice&);
         Q_SLOT void tricasterDeviceRemoved();
         Q_SLOT void tricasterDeviceNameChanged(QString);

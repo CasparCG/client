@@ -58,9 +58,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutDuration">
+    <layout class="QHBoxLayout" name="horizontalLayoutTransitionDuration">
      <item>
-      <spacer name="horizontalSpacerDuration">
+      <spacer name="horizontalSpacerTransitionDuration">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -76,7 +76,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDuration">
+      <widget class="QLabel" name="labelTransitionDuration">
        <property name="text">
         <string>Duration</string>
        </property>
@@ -86,7 +86,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBoxDuration">
+      <widget class="QSpinBox" name="spinBoxTransitionDuration">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -239,7 +239,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutLength">
      <item>
-      <spacer name="horizontalSpacerSeekLength_2">
+      <spacer name="horizontalSpacerLength">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -525,22 +525,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>spinBoxDuration</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>InspectorVideoWidget</receiver>
-   <slot>durationChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>223</x>
-     <y>46</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxLoop</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorVideoWidget</receiver>
@@ -637,7 +621,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDuration</sender>
+   <sender>labelTransitionDuration</sender>
    <signal>linkActivated(QString)</signal>
    <receiver>InspectorVideoWidget</receiver>
    <slot>resetDuration(QString)</slot>
@@ -723,8 +707,8 @@
    <slot>resetFreezeOnLoad(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>253</y>
+     <x>91</x>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -740,7 +724,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>110</x>
-     <y>249</y>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>239</x>
@@ -755,8 +739,8 @@
    <slot>resetTriggerOnNext(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>88</x>
-     <y>281</y>
+     <x>90</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>17</x>
@@ -772,7 +756,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>109</x>
-     <y>277</y>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -787,7 +771,7 @@
    <slot>lengthChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
+     <x>207</x>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
@@ -803,8 +787,8 @@
    <slot>autoPlayChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>299</y>
+     <x>112</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
@@ -812,9 +796,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>spinBoxTransitionDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorVideoWidget</receiver>
+   <slot>transitionDurationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>loopChanged(int)</slot>
   <slot>transitionChanged(QString)</slot>
   <slot>directionChanged(QString)</slot>

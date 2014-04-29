@@ -33,7 +33,7 @@ void InspectorDeckLinkInputWidget::rundownItemSelected(const RundownItemSelected
         this->spinBoxDevice->setValue(this->command->getDevice());
         this->comboBoxFormat->setCurrentIndex(this->comboBoxFormat->findText(this->command->getFormat()));
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
     }
@@ -46,7 +46,7 @@ void InspectorDeckLinkInputWidget::blockAllSignals(bool block)
     this->spinBoxDevice->blockSignals(block);
     this->comboBoxFormat->blockSignals(block);
     this->comboBoxTransition->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
 }
@@ -118,9 +118,9 @@ void InspectorDeckLinkInputWidget::transitionChanged(QString transition)
     this->command->setTransition(transition);
 }
 
-void InspectorDeckLinkInputWidget::durationChanged(int duration)
+void InspectorDeckLinkInputWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorDeckLinkInputWidget::directionChanged(QString direction)
@@ -131,40 +131,4 @@ void InspectorDeckLinkInputWidget::directionChanged(QString direction)
 void InspectorDeckLinkInputWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
-}
-
-void InspectorDeckLinkInputWidget::resetTransition(QString transition)
-{
-    this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText("CUT"));
-    this->command->setTransition(this->comboBoxTransition->currentText());
-}
-
-void InspectorDeckLinkInputWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorDeckLinkInputWidget::resetDirection(QString direction)
-{
-    this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText("RIGHT"));
-    this->command->setDirection(this->comboBoxDirection->currentText());
-}
-
-void InspectorDeckLinkInputWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText("Linear"));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
-void InspectorDeckLinkInputWidget::resetDevice(QString)
-{
-    this->spinBoxDevice->setValue(DeckLinkInput::DEFAULT_DEVICE);
-    this->command->setDevice(this->spinBoxDevice->value());
-}
-
-void InspectorDeckLinkInputWidget::resetFormat(QString)
-{
-    this->comboBoxFormat->setCurrentIndex(this->comboBoxFormat->findText(DeckLinkInput::DEFAULT_FORMAT));
-    this->command->setFormat(this->comboBoxFormat->currentText());
 }

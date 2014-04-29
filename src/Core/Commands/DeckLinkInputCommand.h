@@ -25,14 +25,14 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         int getDevice() const;
         const QString& getFormat() const;
         const QString& getTransition() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
 
         void setDevice(int device);
         void setFormat(const QString& format);
         void setTransition(const QString& transition);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
 
@@ -40,14 +40,14 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         int device;
         QString format;
         QString transition;
-        int duration;
+        int transtitionDuration;
         QString tween;
         QString direction;
 
         Q_SIGNAL void deviceChanged(int);
         Q_SIGNAL void formatChanged(QString);
         Q_SIGNAL void transitionChanged(const QString&);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void resetDevice(QString);

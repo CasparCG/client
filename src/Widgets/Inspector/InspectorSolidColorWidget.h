@@ -32,7 +32,7 @@ class WIDGETS_EXPORT InspectorSolidColorWidget : public QWidget, Ui::InspectorSo
         Q_SLOT void colorDialogClicked();
         Q_SLOT void colorChanged(QString);
         Q_SLOT void transitionChanged(QString);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void directionChanged(QString);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void useAutoChanged(int);

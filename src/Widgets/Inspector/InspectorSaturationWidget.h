@@ -28,12 +28,8 @@ class WIDGETS_EXPORT InspectorSaturationWidget : public QWidget, Ui::InspectorSa
 
         Q_SLOT void sliderSaturationChanged(int);
         Q_SLOT void spinBoxSaturationChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
-        Q_SLOT void resetSaturation(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
-        Q_SLOT void resetDefer(QString);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

@@ -34,15 +34,8 @@ class WIDGETS_EXPORT InspectorCropWidget : public QWidget, Ui::InspectorCropWidg
         Q_SLOT void spinBoxCropRightChanged(int);
         Q_SLOT void spinBoxCropTopChanged(int);
         Q_SLOT void spinBoxCropBottomChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
-        Q_SLOT void resetCropLeft(QString);
-        Q_SLOT void resetCropRight(QString);
-        Q_SLOT void resetCropTop(QString);
-        Q_SLOT void resetCropBottom(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
-        Q_SLOT void resetDefer(QString);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

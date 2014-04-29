@@ -23,23 +23,23 @@ class CORE_EXPORT ContrastCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         float getContrast() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getDefer() const;
 
         void setContrast(float contrast);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private: 
         float contrast;
-        int duration;
+        int transtitionDuration;
         QString tween;
         bool defer;
 
         Q_SIGNAL void contrastChanged(float);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };

@@ -24,7 +24,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
 
         const QString& getColor() const;
         const QString& getTransition() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
         bool getUseAuto() const;
@@ -32,7 +32,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
 
         void setColor(const QString& color);
         void setTransition(const QString& transition);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
         void setUseAuto(bool useAuto);
@@ -41,7 +41,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
     private:
         QString color;
         QString transition;
-        int duration;
+        int transtitionDuration;
         QString tween;
         QString direction;
         bool useAuto;
@@ -49,7 +49,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
 
         Q_SIGNAL void colorChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void useAutoChanged(bool);

@@ -23,26 +23,26 @@ class CORE_EXPORT OpacityCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         float getOpacity() const;
-        int getDuration() const;
+        int getTransitionDuration() const;
         const QString& getTween() const;
         bool getTriggerOnNext() const;
         bool getDefer() const;
 
         void setOpacity(float opacity);
-        void setDuration(int duration);
+        void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
 
     private:
         float opacity;
-        int duration;
+        int transtitionDuration;
         QString tween;
         bool triggerOnNext;
         bool defer;
 
         Q_SIGNAL void opacityChanged(float);
-        Q_SIGNAL void durationChanged(int);
+        Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);

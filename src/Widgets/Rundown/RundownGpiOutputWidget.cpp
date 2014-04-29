@@ -69,7 +69,10 @@ AbstractRundownWidget* RundownGpiOutputWidget::clone()
                                                                 this->active, this->inGroup, this->compactView);
 
     GpiOutputCommand* command = dynamic_cast<GpiOutputCommand*>(widget->getCommand());
+    command->setChannel(this->command.getChannel());
+    command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
+    command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());

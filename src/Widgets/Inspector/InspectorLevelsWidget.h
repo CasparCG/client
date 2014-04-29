@@ -36,16 +36,8 @@ class WIDGETS_EXPORT InspectorLevelsWidget : public QWidget, Ui::InspectorLevels
         Q_SLOT void spinBoxMaxInChanged(int);
         Q_SLOT void spinBoxMaxOutChanged(int);
         Q_SLOT void spinBoxGammaChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
-        Q_SLOT void resetMinIn(QString);
-        Q_SLOT void resetMinOut(QString);
-        Q_SLOT void resetMaxIn(QString);
-        Q_SLOT void resetMaxOut(QString);
-        Q_SLOT void resetGamma(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
-        Q_SLOT void resetDefer(QString);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

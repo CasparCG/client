@@ -7,7 +7,7 @@
 AudioCommand::AudioCommand(QObject* parent)
     : AbstractCommand(parent),
       audioName(Audio::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
+      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
       triggerOnNext(Audio::DEFAULT_TRIGGER_ON_NEXT), useAuto(Audio::DEFAULT_USE_AUTO)
 {
     this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
@@ -23,9 +23,9 @@ const QString& AudioCommand::getTransition() const
     return this->transition;
 }
 
-int AudioCommand::getDuration() const
+int AudioCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transitionDuration;
 }
 
 const QString& AudioCommand::getDirection() const
@@ -65,10 +65,10 @@ void AudioCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void AudioCommand::setDuration(int duration)
+void AudioCommand::setTransitionDuration(int transitionDuration)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void AudioCommand::setDirection(const QString& direction)
@@ -106,7 +106,7 @@ void AudioCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
     setLoop(pt.get(L"loop", Audio::DEFAULT_LOOP));
@@ -118,10 +118,10 @@ void AudioCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("direction", this->getDirection());
+    writer->writeTextElement("transition", getTransition());
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("tween", getTween());
+    writer->writeTextElement("direction", getDirection());
     writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");

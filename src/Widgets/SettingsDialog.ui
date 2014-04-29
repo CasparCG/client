@@ -359,7 +359,7 @@
     <widget class="QComboBox" name="comboBoxDelayType">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>210</x>
        <y>546</y>
        <width>112</width>
        <height>20</height>
@@ -387,12 +387,12 @@
       <rect>
        <x>60</x>
        <y>547</y>
-       <width>81</width>
+       <width>141</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Delay:</string>
+      <string>Delay and Duration:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

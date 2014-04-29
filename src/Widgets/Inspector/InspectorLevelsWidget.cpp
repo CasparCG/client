@@ -40,7 +40,7 @@ void InspectorLevelsWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->spinBoxMaxOut->setValue(QString("%1").arg(this->command->getMaxOut() * 100).toFloat());
         this->sliderGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
         this->spinBoxGamma->setValue(QString("%1").arg(this->command->getGamma() * 100).toFloat());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
@@ -60,7 +60,7 @@ void InspectorLevelsWidget::blockAllSignals(bool block)
     this->spinBoxMinOut->blockSignals(block);
     this->spinBoxMaxOut->blockSignals(block);
     this->spinBoxGamma->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
@@ -148,9 +148,9 @@ void InspectorLevelsWidget::spinBoxGammaChanged(int gamma)
     this->sliderGamma->setValue(gamma);
 }
 
-void InspectorLevelsWidget::durationChanged(int duration)
+void InspectorLevelsWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorLevelsWidget::tweenChanged(QString tween)
@@ -158,65 +158,7 @@ void InspectorLevelsWidget::tweenChanged(QString tween)
     this->command->setTween(tween);
 }
 
-void InspectorLevelsWidget::resetMinIn(QString minIn)
-{
-    this->sliderMinIn->setValue(Mixer::DEFAULT_LEVELS_MIN_IN);
-    this->command->setMinIn(static_cast<float>(this->sliderMinIn->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorLevelsWidget::resetMaxIn(QString maxIn)
-{
-    this->sliderMaxIn->setValue(Mixer::DEFAULT_LEVELS_MAX_IN * 100);
-    this->command->setMaxIn(static_cast<float>(this->sliderMaxIn->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorLevelsWidget::resetMinOut(QString minOut)
-{
-    this->sliderMinOut->setValue(Mixer::DEFAULT_LEVELS_MIN_OUT);
-    this->command->setMinOut(static_cast<float>(this->sliderMinOut->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorLevelsWidget::resetMaxOut(QString maxOut)
-{
-    this->sliderMaxOut->setValue(Mixer::DEFAULT_LEVELS_MAX_OUT * 100);
-    this->command->setMaxOut(static_cast<float>(this->sliderMaxOut->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorLevelsWidget::resetGamma(QString gamma)
-{
-    this->sliderGamma->setValue(Mixer::DEFAULT_LEVELS_GAMMA * 100);
-    this->command->setGamma(static_cast<float>(this->sliderGamma->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorLevelsWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorLevelsWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
 void InspectorLevelsWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorLevelsWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

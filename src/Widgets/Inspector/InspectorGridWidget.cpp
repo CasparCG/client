@@ -30,7 +30,7 @@ void InspectorGridWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
         this->command = dynamic_cast<GridCommand*>(event.getCommand());
 
         this->spinBoxGrid->setValue(this->command->getGrid());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
@@ -41,7 +41,7 @@ void InspectorGridWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
 void InspectorGridWidget::blockAllSignals(bool block)
 {
     this->spinBoxGrid->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
@@ -59,9 +59,9 @@ void InspectorGridWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorGridWidget::durationChanged(int duration)
+void InspectorGridWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorGridWidget::tweenChanged(QString tween)
@@ -76,33 +76,7 @@ void InspectorGridWidget::gridChanged(int grid)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGridWidget::resetGrid(QString grid)
-{
-    this->spinBoxGrid->setValue(1);
-    this->command->setGrid(this->spinBoxGrid->value());
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorGridWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorGridWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
 void InspectorGridWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorGridWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

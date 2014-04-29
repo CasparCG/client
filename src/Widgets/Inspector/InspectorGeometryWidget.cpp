@@ -41,7 +41,7 @@ void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent
 
         setScaleAndPositionValues();
 
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         this->checkBoxDefer->setChecked(this->command->getDefer());
@@ -101,7 +101,7 @@ void InspectorGeometryWidget::blockAllSignals(bool block)
     this->spinBoxPositionY->blockSignals(block);
     this->spinBoxScaleX->blockSignals(block);
     this->spinBoxScaleY->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
@@ -206,9 +206,9 @@ void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)
     this->sliderScaleY->setValue(scaleY);
 }
 
-void InspectorGeometryWidget::durationChanged(int duration)
+void InspectorGeometryWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorGeometryWidget::tweenChanged(QString tween)

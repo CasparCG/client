@@ -5,7 +5,7 @@
 ImageCommand::ImageCommand(QObject* parent)
     : AbstractCommand(parent),
       imageName(Image::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      duration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
+      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
       triggerOnNext(Image::DEFAULT_TRIGGER_ON_NEXT), useAuto(Image::DEFAULT_USE_AUTO)
 {
 }
@@ -20,9 +20,9 @@ const QString& ImageCommand::getTransition() const
     return this->transition;
 }
 
-int ImageCommand::getDuration() const
+int ImageCommand::getTransitionDuration() const
 {
-    return this->duration;
+    return this->transitionDuration;
 }
 
 const QString& ImageCommand::getDirection() const
@@ -57,10 +57,10 @@ void ImageCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void ImageCommand::setDuration(int duration)
+void ImageCommand::setTransitionDuration(int durationTransition)
 {
-    this->duration = duration;
-    emit durationChanged(this->duration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void ImageCommand::setDirection(const QString& direction)
@@ -92,7 +92,7 @@ void ImageCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setDuration(pt.get(L"duration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
     setUseAuto(pt.get(L"useauto", Image::DEFAULT_USE_AUTO));
@@ -104,7 +104,7 @@ void ImageCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("duration", QString::number(this->getDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(this->getTransitionDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("direction", this->getDirection());
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");

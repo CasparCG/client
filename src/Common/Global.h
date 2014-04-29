@@ -181,6 +181,7 @@ namespace Output
     static const int DEFAULT_AUDIO_VIDEOLAYER = 30;
     static const int DEFAULT_FLASH_VIDEOLAYER = 20;
     static const int DEFAULT_DELAY = 0;
+    static const int DEFAULT_DURATION = 0;
     static const bool DEFAULT_ALLOW_GPI = false;
     static const bool DEFAULT_ALLOW_REMOTE_TRIGGERING = false;
     static const QString DEFAULT_REMOTE_TRIGGER_ID = "";

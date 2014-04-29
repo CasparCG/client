@@ -37,7 +37,7 @@ void InspectorSolidColorWidget::rundownItemSelected(const RundownItemSelectedEve
 
         this->lineEditColor->setText(this->command->getColor());
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -50,7 +50,7 @@ void InspectorSolidColorWidget::blockAllSignals(bool block)
 {
     this->lineEditColor->blockSignals(block);
     this->comboBoxTransition->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
@@ -135,9 +135,9 @@ void InspectorSolidColorWidget::transitionChanged(QString transition)
     this->command->setTransition(transition);
 }
 
-void InspectorSolidColorWidget::durationChanged(int duration)
+void InspectorSolidColorWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorSolidColorWidget::directionChanged(QString direction)

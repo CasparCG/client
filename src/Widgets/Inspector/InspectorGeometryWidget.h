@@ -39,7 +39,7 @@ class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeom
         Q_SLOT void spinBoxScaleXChanged(int);
         Q_SLOT void sliderScaleYChanged(int);
         Q_SLOT void spinBoxScaleYChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);

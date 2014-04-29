@@ -28,12 +28,8 @@ class WIDGETS_EXPORT InspectorContrastWidget : public QWidget, Ui::InspectorCont
 
         Q_SLOT void sliderContrastChanged(int);
         Q_SLOT void spinBoxContrastChanged(int);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString tween);
-        Q_SLOT void resetContrast(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetTween(QString);
         Q_SLOT void deferChanged(int);
-        Q_SLOT void resetDefer(QString);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

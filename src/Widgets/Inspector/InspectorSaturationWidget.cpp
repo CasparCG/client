@@ -32,7 +32,7 @@ void InspectorSaturationWidget::rundownItemSelected(const RundownItemSelectedEve
 
         this->sliderSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
         this->spinBoxSaturation->setValue(QString("%1").arg(this->command->getSaturation() * 100).toFloat());
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
@@ -44,7 +44,7 @@ void InspectorSaturationWidget::blockAllSignals(bool block)
 {
     this->sliderSaturation->blockSignals(block);
     this->spinBoxSaturation->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
@@ -62,9 +62,9 @@ void InspectorSaturationWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorSaturationWidget::durationChanged(int duration)
+void InspectorSaturationWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorSaturationWidget::tweenChanged(QString tween)
@@ -86,33 +86,7 @@ void InspectorSaturationWidget::spinBoxSaturationChanged(int saturation)
     this->sliderSaturation->setValue(saturation);
 }
 
-void InspectorSaturationWidget::resetSaturation(QString saturation)
-{
-    this->sliderSaturation->setValue(Mixer::DEFAULT_SATURATION * 100);
-    this->command->setSaturation(static_cast<float>(this->sliderSaturation->value()) / 100);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorSaturationWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorSaturationWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
 void InspectorSaturationWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
-}
-
-void InspectorSaturationWidget::resetDefer(QString defer)
-{
-    this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
-    this->command->setDefer(this->checkBoxDefer->isChecked());
 }

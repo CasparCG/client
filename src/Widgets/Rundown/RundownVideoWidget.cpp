@@ -163,12 +163,13 @@ AbstractRundownWidget* RundownVideoWidget::clone()
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
+    command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setVideoName(this->command.getVideoName());
     command->setTransition(this->command.getTransition());
-    command->setDuration(this->command.getDuration());
+    command->setTransitionDuration(this->command.getTransitionDuration());
     command->setTween(this->command.getTween());
     command->setDirection(this->command.getDirection());
     command->setLoop(this->command.getLoop());
@@ -334,11 +335,21 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
                     const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
                     double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-                    this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                    int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                    this->executeTimer.setInterval(startDelay);
+
+                    if (this->command.getDuration() > 0)
+                    {
+                        int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
+                        QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
+                    }
                 }
                 else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
                 {
                     this->executeTimer.setInterval(this->command.getDelay());
+
+                    if (this->command.getDuration() > 0)
+                        QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
                 }
 
                 this->executeTimer.start();
@@ -414,14 +425,14 @@ void RundownVideoWidget::executePlay()
             if (this->command.getAutoPlay())
             {
                 device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                   this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                   this->command.getLoop(), true);
             }
             else
             {
                 device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                  this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                   this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                   this->command.getLoop(), this->command.getAutoPlay());
             }
@@ -445,14 +456,14 @@ void RundownVideoWidget::executePlay()
                 if (this->command.getAutoPlay())
                 {
                     deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                             this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                             this->command.getLoop(), true);
                 }
                 else
                 {
                     deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                            this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                             this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                             this->command.getLoop(), this->command.getAutoPlay());
                 }
@@ -508,7 +519,7 @@ void RundownVideoWidget::executeLoad()
     if (device != NULL && device->isConnected())
     {
         device->loadVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                          this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                          this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                           this->command.getLoop(), this->command.getFreezeOnLoad(), false);
     }
@@ -522,7 +533,7 @@ void RundownVideoWidget::executeLoad()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             deviceShadow->loadVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                    this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                    this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                     this->command.getLoop(), this->command.getFreezeOnLoad(), false);
         }
@@ -542,7 +553,7 @@ void RundownVideoWidget::executeNext()
         if (device != NULL && device->isConnected())
         {
             device->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                              this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                               this->command.getLoop(), false);
 
@@ -557,7 +568,7 @@ void RundownVideoWidget::executeNext()
             if (deviceShadow != NULL && deviceShadow->isConnected())
             {
                 deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                        this->command.getTransition(), this->command.getDuration(), this->command.getTween(),
+                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                         this->command.getLoop(), false);
             }

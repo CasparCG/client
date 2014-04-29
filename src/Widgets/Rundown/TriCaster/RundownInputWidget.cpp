@@ -114,7 +114,10 @@ AbstractRundownWidget* RundownInputWidget::clone()
                                                         this->inGroup, this->compactView);
 
     InputCommand* command = dynamic_cast<InputCommand*>(widget->getCommand());
+    command->setChannel(this->command.getChannel());
+    command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
+    command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());

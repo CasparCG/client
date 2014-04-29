@@ -31,7 +31,7 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         void blockAllSignals(bool block);
 
         Q_SLOT void transitionChanged(QString);
-        Q_SLOT void durationChanged(int);
+        Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void directionChanged(QString);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void loopChanged(int);
@@ -39,15 +39,6 @@ class WIDGETS_EXPORT InspectorVideoWidget : public QWidget, Ui::InspectorVideoWi
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void seekChanged(int);
         Q_SLOT void lengthChanged(int);
-        Q_SLOT void resetTransition(QString);
-        Q_SLOT void resetDuration(QString);
-        Q_SLOT void resetDirection(QString);
-        Q_SLOT void resetTween(QString);
-        Q_SLOT void resetSeek(QString);
-        Q_SLOT void resetLength(QString);
-        Q_SLOT void resetLoop(QString);
-        Q_SLOT void resetFreezeOnLoad(QString);
-        Q_SLOT void resetTriggerOnNext(QString);
         Q_SLOT void autoPlayChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

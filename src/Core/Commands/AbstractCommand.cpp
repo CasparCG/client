@@ -4,7 +4,7 @@
 
 AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY),
+      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY), duration(Output::DEFAULT_DURATION),
       allowGpi(Output::DEFAULT_ALLOW_GPI), allowRemoteTriggering(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING), remoteTriggerId(Output::DEFAULT_REMOTE_TRIGGER_ID)
 {
 }
@@ -26,6 +26,11 @@ int AbstractCommand::getVideolayer() const
 int AbstractCommand::getDelay() const
 {
     return this->delay;
+}
+
+int AbstractCommand::getDuration() const
+{
+    return this->duration;
 }
 
 bool AbstractCommand::getAllowGpi() const
@@ -61,6 +66,12 @@ void AbstractCommand::setDelay(int delay)
     emit delayChanged(this->delay);
 }
 
+void AbstractCommand::setDuration(int duration)
+{
+    this->duration = duration;
+    emit durationChanged(this->duration);
+}
+
 void AbstractCommand::setAllowGpi(bool allowGpi)
 {
     this->allowGpi = allowGpi;
@@ -84,6 +95,7 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel", Output::DEFAULT_CHANNEL));
     if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer", Output::DEFAULT_VIDEOLAYER));
     if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay", Output::DEFAULT_DELAY));
+    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration", Output::DEFAULT_DURATION));
     if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
     if (pt.count(L"allowremotetriggering") > 0) setAllowRemoteTriggering(pt.get<bool>(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
     if (pt.count(L"remotetriggerid") > 0) setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
@@ -91,9 +103,10 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 
 void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(this->getChannel()));
-    writer->writeTextElement("videolayer", QString::number(this->getVideolayer()));
-    writer->writeTextElement("delay", QString::number(this->getDelay()));
+    writer->writeTextElement("channel", QString::number(getChannel()));
+    writer->writeTextElement("videolayer", QString::number(getVideolayer()));
+    writer->writeTextElement("delay", QString::number(getDelay()));
+    writer->writeTextElement("duration", QString::number(getDuration()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
     writer->writeTextElement("remotetriggerid", getRemoteTriggerId());

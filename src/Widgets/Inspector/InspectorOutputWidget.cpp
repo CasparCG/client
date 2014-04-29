@@ -97,16 +97,24 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     this->spinBoxChannel->setEnabled(true);
     this->spinBoxVideolayer->setEnabled(true);
     this->spinBoxDelay->setEnabled(true);
+    this->spinBoxDuration->setEnabled(true);
     this->checkBoxAllowGpi->setEnabled(true);
     this->checkBoxAllowRemoteTriggering->setEnabled(true);
     this->labelRemoteTriggerId->setEnabled(true);
     this->lineEditRemoteTriggerId->setEnabled(true);
 
-    this->labelMillisecond->setVisible(true);
+    this->labelDelayMillisecond->setVisible(true);
+    this->labelDurationMillisecond->setVisible(true);
     if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-        this->labelMillisecond->setText("frm");
+    {
+        this->labelDelayMillisecond->setText("frm");
+        this->labelDurationMillisecond->setText("frm");
+    }
     else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-        this->labelMillisecond->setText("ms");
+    {
+        this->labelDelayMillisecond->setText("ms");
+        this->labelDurationMillisecond->setText("ms");
+    }
 
     if (event.getCommand() != NULL && event.getLibraryModel() != NULL)
     {
@@ -127,6 +135,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->spinBoxChannel->setValue(this->command->getChannel());
         this->spinBoxVideolayer->setValue(this->command->getVideolayer());
         this->spinBoxDelay->setValue(this->command->getDelay());
+        this->spinBoxDuration->setValue(this->command->getDuration());
         this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
         this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
         this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
@@ -139,10 +148,18 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
         fillTargetCombo(this->model->getType());
 
-        if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
-            dynamic_cast<PrintCommand*>(event.getCommand()) ||
-            dynamic_cast<FileRecorderCommand*>(event.getCommand()) ||
-            dynamic_cast<GridCommand*>(event.getCommand()))
+        if (dynamic_cast<FileRecorderCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
+
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
+        }
+        else if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
+                 dynamic_cast<PrintCommand*>(event.getCommand()) ||
+                 dynamic_cast<GridCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
@@ -156,14 +173,17 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDelay->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
 
-            this->labelMillisecond->setText("ms");
+            this->labelDelayMillisecond->setText("ms");
+            this->labelDurationMillisecond->setText("ms");
 
             this->comboBoxDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<OscOutputCommand*>(event.getCommand()))
@@ -172,13 +192,16 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
 
-            this->labelMillisecond->setText("ms");
+            this->labelDelayMillisecond->setText("ms");
+            this->labelDurationMillisecond->setText("ms");
 
             this->comboBoxDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<SeparatorCommand*>(event.getCommand()))
         {
@@ -187,6 +210,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDelay->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
             this->checkBoxAllowGpi->setEnabled(false);
             this->checkBoxAllowRemoteTriggering->setEnabled(false);
             this->labelRemoteTriggerId->setEnabled(false);
@@ -197,6 +221,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
             this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
             this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
             this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
@@ -211,6 +236,13 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
         }
+        else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
+
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
+        }
         else if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()) ||
                  dynamic_cast<BlendModeCommand*>(event.getCommand()) ||
                  dynamic_cast<BrightnessCommand*>(event.getCommand()) ||
@@ -223,7 +255,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<SaturationCommand*>(event.getCommand()) ||
                  dynamic_cast<VolumeCommand*>(event.getCommand()) ||
                  dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
-                 dynamic_cast<ClearOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
@@ -244,12 +275,15 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
 
-            this->labelMillisecond->setText("ms");
+            this->labelDelayMillisecond->setText("ms");
+            this->labelDurationMillisecond->setText("ms");
 
             this->comboBoxTarget->clear();
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<AtemInputCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemCutCommand*>(event.getCommand()) ||
@@ -269,12 +303,15 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
 
-            this->labelMillisecond->setText("ms");
+            this->labelDelayMillisecond->setText("ms");
+            this->labelDurationMillisecond->setText("ms");
 
             this->comboBoxTarget->clear();
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
     }
 
@@ -301,13 +338,16 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     this->spinBoxChannel->setEnabled(false);
     this->spinBoxVideolayer->setEnabled(false);
     this->spinBoxDelay->setEnabled(false);
+    this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
     this->labelRemoteTriggerId->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
-    this->labelMillisecond->setText("");
-    this->labelMillisecond->setVisible(false);
+    this->labelDelayMillisecond->setText("");
+    this->labelDelayMillisecond->setVisible(false);
+    this->labelDurationMillisecond->setText("");
+    this->labelDurationMillisecond->setVisible(false);
 
     this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
     this->comboBoxAtemDevice->setCurrentIndex(this->comboBoxAtemDevice->findText(this->model->getDeviceName()));
@@ -339,13 +379,16 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->spinBoxChannel->setEnabled(false);
     this->spinBoxVideolayer->setEnabled(false);
     this->spinBoxDelay->setEnabled(false);
+    this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
     this->labelRemoteTriggerId->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
-    this->labelMillisecond->setText("");
-    this->labelMillisecond->setVisible(false);
+    this->labelDelayMillisecond->setText("");
+    this->labelDelayMillisecond->setVisible(false);
+    this->labelDurationMillisecond->setText("");
+    this->labelDurationMillisecond->setVisible(false);
 
     this->comboBoxDevice->setCurrentIndex(-1);
     this->comboBoxAtemDevice->setCurrentIndex(-1);
@@ -354,6 +397,7 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
     this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
     this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
+    this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
     this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
     this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
     this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
@@ -421,6 +465,7 @@ void InspectorOutputWidget::blockAllSignals(bool block)
     this->spinBoxChannel->blockSignals(block);
     this->spinBoxVideolayer->blockSignals(block);
     this->spinBoxDelay->blockSignals(block);
+    this->spinBoxDuration->blockSignals(block);
     this->checkBoxAllowGpi->blockSignals(block);
     this->checkBoxAllowRemoteTriggering->blockSignals(block);
     this->lineEditRemoteTriggerId->blockSignals(block);
@@ -557,6 +602,11 @@ void InspectorOutputWidget::videolayerChanged(int videolayer)
 void InspectorOutputWidget::delayChanged(int delay)
 {
     this->command->setDelay(delay);
+}
+
+void InspectorOutputWidget::durationChanged(int duration)
+{
+    this->command->setDuration(duration);
 }
 
 void InspectorOutputWidget::allowGpiChanged(int state)

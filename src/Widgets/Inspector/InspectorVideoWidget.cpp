@@ -37,7 +37,7 @@ void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->command = dynamic_cast<VideoCommand*>(event.getCommand());
 
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
-        this->spinBoxDuration->setValue(this->command->getDuration());
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->spinBoxSeek->setValue(this->command->getSeek());
@@ -70,7 +70,7 @@ void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& e
 void InspectorVideoWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
-    this->spinBoxDuration->blockSignals(block);
+    this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
     this->spinBoxSeek->blockSignals(block);
@@ -125,9 +125,9 @@ void InspectorVideoWidget::transitionChanged(QString transition)
     this->command->setTransition(transition);
 }
 
-void InspectorVideoWidget::durationChanged(int duration)
+void InspectorVideoWidget::transitionDurationChanged(int transitionDuration)
 {
-    this->command->setDuration(duration);
+    this->command->setTransitionDuration(transitionDuration);
 }
 
 void InspectorVideoWidget::directionChanged(QString direction)
@@ -163,60 +163,6 @@ void InspectorVideoWidget::seekChanged(int seek)
 void InspectorVideoWidget::lengthChanged(int length)
 {
     this->command->setLength(length);
-}
-
-void InspectorVideoWidget::resetTransition(QString transition)
-{
-    this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(Mixer::DEFAULT_TRANSITION));
-    this->command->setTransition(this->comboBoxTransition->currentText());
-}
-
-void InspectorVideoWidget::resetDuration(QString duration)
-{
-    this->spinBoxDuration->setValue(Mixer::DEFAULT_DURATION);
-    this->command->setDuration(this->spinBoxDuration->value());
-}
-
-void InspectorVideoWidget::resetDirection(QString direction)
-{
-    this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(Mixer::DEFAULT_DIRECTION));
-    this->command->setDirection(this->comboBoxDirection->currentText());
-}
-
-void InspectorVideoWidget::resetTween(QString tween)
-{
-    this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(Mixer::DEFAULT_TWEEN));
-    this->command->setTween(this->comboBoxTween->currentText());
-}
-
-void InspectorVideoWidget::resetSeek(QString seek)
-{
-    this->spinBoxSeek->setValue(Video::DEFAULT_SEEK);
-    this->command->setSeek(this->spinBoxSeek->value());
-}
-
-void InspectorVideoWidget::resetLength(QString length)
-{
-    this->spinBoxLength->setValue(Video::DEFAULT_LENGTH);
-    this->command->setLength(this->spinBoxLength->value());
-}
-
-void InspectorVideoWidget::resetLoop(QString loop)
-{
-    this->checkBoxLoop->setChecked(Video::DEFAULT_LOOP);
-    this->command->setLoop(this->checkBoxLoop->isChecked());
-}
-
-void InspectorVideoWidget::resetFreezeOnLoad(QString freezeOnLoad)
-{
-    this->checkBoxFreezeOnLoad->setChecked(Video::DEFAULT_FREEZE_ON_LOAD);
-    this->command->setFreezeOnLoad(this->checkBoxFreezeOnLoad->isChecked());
-}
-
-void InspectorVideoWidget::resetTriggerOnNext(QString triggerOnNext)
-{
-    this->checkBoxTriggerOnNext->setChecked(Video::DEFAULT_TRIGGER_ON_NEXT);
-    this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }
 
 void InspectorVideoWidget::autoPlayChanged(int state)
