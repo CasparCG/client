@@ -688,7 +688,7 @@ public slots:
     /// Set the state of the audio input. 0 = Off, 1 = On, 2 = AFV
     void setAudioInputState(quint16 index, quint8 state);
     /// Set the balance of the audio input. @p balance is a value between -1.0 and +1.0.
-    void setAudioInputBalance(quint8 index, float balance);
+    void setAudioInputBalance(quint16 index, float balance);
     /// Set the gain of the audio input @p index. @p left and @p right is between +6dB and -60dB (-infdB)
     void setAudioInputGain(quint16 index, float gain);
     /// Set the gain of the audio master output. @p left and @p right is between +6dB and -60dB (-infdB)
