@@ -78,56 +78,88 @@ void InspectorCropWidget::sliderCropLeftChanged(int cropLeft)
 {
     this->command->setCropLeft(static_cast<float>(cropLeft) / 100);
 
+    this->spinBoxCropLeft->blockSignals(true);
     this->spinBoxCropLeft->setValue(cropLeft);
+    this->spinBoxCropLeft->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropLeftChanged(int cropLeft)
 {
+    this->command->setCropLeft(static_cast<float>(cropLeft) / 100);
+
+    this->sliderCropLeft->blockSignals(true);
     this->sliderCropLeft->setValue(cropLeft);
+    this->sliderCropLeft->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::sliderCropRightChanged(int cropRight)
 {
     this->command->setCropRight(static_cast<float>(cropRight) / 100);
 
+    this->spinBoxCropRight->blockSignals(true);
     this->spinBoxCropRight->setValue(cropRight);
+    this->spinBoxCropRight->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropRightChanged(int cropRight)
 {
+    this->command->setCropRight(static_cast<float>(cropRight) / 100);
+
+    this->sliderCropRight->blockSignals(true);
     this->sliderCropRight->setValue(cropRight);
+    this->sliderCropRight->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::sliderCropTopChanged(int cropTop)
 {
     this->command->setCropTop(static_cast<float>(cropTop) / 100);
 
+    this->spinBoxCropTop->blockSignals(true);
     this->spinBoxCropTop->setValue(cropTop);
+    this->spinBoxCropTop->blockSignals(true);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropTopChanged(int cropTop)
 {
+    this->command->setCropTop(static_cast<float>(cropTop) / 100);
+
+    this->sliderCropTop->blockSignals(true);
     this->sliderCropTop->setValue(cropTop);
+    this->sliderCropTop->blockSignals(true);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::sliderCropBottomChanged(int cropBottom)
 {
     this->command->setCropBottom(static_cast<float>(cropBottom) / 100);
 
+    this->sliderCropBottom->blockSignals(true);
     this->spinBoxCropBottom->setValue(cropBottom);
+    this->sliderCropBottom->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::spinBoxCropBottomChanged(int cropBottom)
 {
+    this->command->setCropBottom(static_cast<float>(cropBottom) / 100);
+
+    this->sliderCropBottom->blockSignals(true);
     this->sliderCropBottom->setValue(cropBottom);
+    this->sliderCropBottom->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorCropWidget::transitionDurationChanged(int transitionDuration)

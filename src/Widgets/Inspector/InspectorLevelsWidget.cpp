@@ -82,70 +82,110 @@ void InspectorLevelsWidget::sliderMinInChanged(int minIn)
 {
     this->command->setMinIn(static_cast<float>(minIn) / 100);
 
+    this->spinBoxMinIn->blockSignals(true);
     this->spinBoxMinIn->setValue(minIn);
+    this->spinBoxMinIn->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMinInChanged(int minIn)
 {
+    this->command->setMinIn(static_cast<float>(minIn) / 100);
+
+    this->sliderMinIn->blockSignals(true);
     this->sliderMinIn->setValue(minIn);
+    this->sliderMinIn->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::sliderMaxInChanged(int maxIn)
 {
     this->command->setMaxIn(static_cast<float>(maxIn) / 100);
 
+    this->spinBoxMaxIn->blockSignals(true);
     this->spinBoxMaxIn->setValue(maxIn);
+    this->spinBoxMaxIn->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMaxInChanged(int maxIn)
 {
+    this->command->setMaxIn(static_cast<float>(maxIn) / 100);
+
+    this->sliderMaxIn->blockSignals(true);
     this->sliderMaxIn->setValue(maxIn);
+    this->sliderMaxIn->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::sliderMinOutChanged(int minOut)
 {
     this->command->setMinOut(static_cast<float>(minOut) / 100);
 
+    this->spinBoxMinOut->blockSignals(true);
     this->spinBoxMinOut->setValue(minOut);
+    this->spinBoxMinOut->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMinOutChanged(int minOut)
 {
+    this->command->setMinOut(static_cast<float>(minOut) / 100);
+
+    this->sliderMinOut->blockSignals(true);
     this->sliderMinOut->setValue(minOut);
+    this->sliderMinOut->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::sliderMaxOutChanged(int maxOut)
 {
     this->command->setMaxOut(static_cast<float>(maxOut) / 100);
 
+    this->spinBoxMaxOut->blockSignals(true);
     this->spinBoxMaxOut->setValue(maxOut);
+    this->spinBoxMaxOut->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxMaxOutChanged(int maxOut)
 {
+    this->command->setMaxOut(static_cast<float>(maxOut) / 100);
+
+    this->sliderMaxOut->blockSignals(true);
     this->sliderMaxOut->setValue(maxOut);
+    this->sliderMaxOut->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::sliderGammaChanged(int gamma)
 {
     this->command->setGamma(static_cast<float>(gamma) / 100);
 
+    this->spinBoxGamma->blockSignals(true);
     this->spinBoxGamma->setValue(gamma);
+    this->spinBoxGamma->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::spinBoxGammaChanged(int gamma)
 {
+    this->command->setGamma(static_cast<float>(gamma) / 100);
+
+    this->sliderGamma->blockSignals(true);
     this->sliderGamma->setValue(gamma);
+    this->sliderGamma->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorLevelsWidget::transitionDurationChanged(int transitionDuration)

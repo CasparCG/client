@@ -76,14 +76,22 @@ void InspectorSaturationWidget::sliderSaturationChanged(int saturation)
 {
     this->command->setSaturation(static_cast<float>(saturation) / 100);
 
+    this->spinBoxSaturation->blockSignals(true);
     this->spinBoxSaturation->setValue(saturation);
+    this->spinBoxSaturation->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorSaturationWidget::spinBoxSaturationChanged(int saturation)
 {
+    this->command->setSaturation(static_cast<float>(saturation) / 100);
+
+    this->sliderSaturation->blockSignals(true);
     this->sliderSaturation->setValue(saturation);
+    this->sliderSaturation->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorSaturationWidget::deferChanged(int state)

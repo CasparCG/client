@@ -82,13 +82,16 @@
      <item>
       <widget class="QSlider" name="sliderGain">
        <property name="minimum">
-        <number>-600</number>
+        <number>-6000</number>
        </property>
        <property name="maximum">
-        <number>60</number>
+        <number>600</number>
        </property>
        <property name="singleStep">
-        <number>10</number>
+        <number>100</number>
+       </property>
+       <property name="pageStep">
+        <number>100</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -104,7 +107,7 @@
         <double>6.000000000000000</double>
        </property>
        <property name="singleStep">
-        <double>0.010000000000000</double>
+        <double>0.100000000000000</double>
        </property>
       </widget>
      </item>

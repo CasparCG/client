@@ -77,14 +77,22 @@ void InspectorContrastWidget::sliderContrastChanged(int contrast)
 {
     this->command->setContrast(static_cast<float>(contrast) / 100);
 
+    this->spinBoxContrast->blockSignals(true);
     this->spinBoxContrast->setValue(contrast);
+    this->spinBoxContrast->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorContrastWidget::spinBoxContrastChanged(int contrast)
 {
+    this->command->setContrast(static_cast<float>(contrast) / 100);
+
+    this->sliderContrast->blockSignals(true);
     this->sliderContrast->setValue(contrast);
+    this->sliderContrast->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorContrastWidget::deferChanged(int state)

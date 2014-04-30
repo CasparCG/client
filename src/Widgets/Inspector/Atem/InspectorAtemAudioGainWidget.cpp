@@ -70,12 +70,18 @@ void InspectorAtemAudioGainWidget::sliderGainChanged(int value)
 {
     this->command->setGain(static_cast<float>(value) / 100);
 
+    this->doubleSpinBoxGain->blockSignals(true);
     this->doubleSpinBoxGain->setValue(static_cast<float>(value) / 100);
+    this->doubleSpinBoxGain->blockSignals(false);
 }
 
 void InspectorAtemAudioGainWidget::doubleSpinBoxGainChanged(double value)
 {
+    this->command->setGain(static_cast<float>(value));
+
+    this->sliderGain->blockSignals(true);
     this->sliderGain->setValue(value * 100);
+    this->sliderGain->blockSignals(false);
 }
 
 void InspectorAtemAudioGainWidget::triggerOnNextChanged(int state)

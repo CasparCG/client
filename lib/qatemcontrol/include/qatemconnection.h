@@ -77,11 +77,18 @@ public:
         QString shortText;
     };
 
+    enum MediaType
+    {
+        StillMedia = 1,
+        ClipMedia = 2
+    };
+
     struct MediaInfo
     {
         quint8 index;
         bool used;
         QString name;
+        MediaType type;
     };
 
     struct MediaPlayerState
@@ -119,9 +126,9 @@ public:
     bool debugEnabled() const { return m_debugEnabled; }
 
     /// @returns the index of the input that is on program
-    quint8 programInput() const { return m_programInput; }
+    quint16 programInput() const { return m_programInput; }
     /// @returns the index of the input that is on preview
-    quint8 previewInput() const { return m_previewInput; }
+    quint16 previewInput() const { return m_previewInput; }
 
     /// @returns the tally state of the input @p id. 1 = program, 2 = preview and 3 = both
     quint8 tallyState(quint8 id) const;
@@ -294,7 +301,8 @@ public:
     InputInfo inputInfo(quint16 index) const { return m_inputInfos.value(index); }
     QMap<quint16, InputInfo> inputInfos () const { return m_inputInfos; }
 
-    MediaInfo mediaInfo(quint8 index) const { return m_mediaInfos.value(index); }
+    MediaInfo stillMediaInfo(quint8 index) const { return m_stillMediaInfos.value(index); }
+    MediaInfo clipMediaInfo(quint8 index) const { return m_clipMediaInfos.value(index); }
 
     /// @returns index of the multi view layout, 0 = prg/prv on top, 1 = prg/prv on bottom, 2 = prg/prv on left, 3 = prg/prv on right
     quint8 multiViewLayout() const { return m_multiViewLayout; }
@@ -682,7 +690,7 @@ public slots:
     /// Set the balance of the audio input. @p balance is a value between -1.0 and +1.0.
     void setAudioInputBalance(quint8 index, float balance);
     /// Set the gain of the audio input @p index. @p left and @p right is between +6dB and -60dB (-infdB)
-    void setAudioInputGain(quint8 index, float gain);
+    void setAudioInputGain(quint16 index, float gain);
     /// Set the gain of the audio master output. @p left and @p right is between +6dB and -60dB (-infdB)
     void setAudioMasterOutputGain(float gain);
     /// Enables audio monitoring using the breakout cable.
@@ -718,6 +726,8 @@ protected slots:
     void on_ver(const QByteArray& payload);
     void onInPr(const QByteArray& payload);
     void onMPSE(const QByteArray& payload);
+    void onMPfe(const QByteArray& payload);
+    void onMPCS(const QByteArray& payload);
     void onMvIn(const QByteArray& payload);
     void onMvPr(const QByteArray& payload);
     void onVidM(const QByteArray& payload);
@@ -815,7 +825,8 @@ private:
 
     QMap<quint16, InputInfo> m_inputInfos;
 
-    QHash<quint8, MediaInfo> m_mediaInfos;
+    QHash<quint8, MediaInfo> m_stillMediaInfos;
+    QHash<quint8, MediaInfo> m_clipMediaInfos;
 
     QHash<quint8, quint8> m_multiViewInputs;
     quint8 m_multiViewLayout;
@@ -1034,7 +1045,7 @@ signals:
     void mediaPoolClip1SizeChanged(quint8 size);
     void mediaPoolClip2SizeChanged(quint8 size);
 
-    void audioInputChanged(quint8 index, const AudioInput& input);
+    void audioInputChanged(quint8 index, const QAtemConnection::AudioInput& input);
     void audioMonitorEnabledChanged(bool enabled);
     void audioMonitorGainChanged(float gain);
     void audioMonitorMutedChanged(bool muted);

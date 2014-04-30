@@ -68,12 +68,18 @@ void InspectorAtemAudioInputBalanceWidget::sliderBalanceChanged(int value)
 {
     this->command->setBalance(static_cast<float>(value) / 100);
 
+    this->doubleSpinBoxBalance->blockSignals(true);
     this->doubleSpinBoxBalance->setValue(static_cast<float>(value) / 100);
+    this->doubleSpinBoxBalance->blockSignals(false);
 }
 
 void InspectorAtemAudioInputBalanceWidget::doubleSpinBoxBalanceChanged(double value)
 {
+    this->command->setBalance(static_cast<float>(value));
+
+    this->sliderBalance->blockSignals(true);
     this->sliderBalance->setValue(value * 100);
+    this->sliderBalance->blockSignals(false);
 }
 
 void InspectorAtemAudioInputBalanceWidget::triggerOnNextChanged(int state)

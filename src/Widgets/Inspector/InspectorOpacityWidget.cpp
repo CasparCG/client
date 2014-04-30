@@ -78,14 +78,22 @@ void InspectorOpacityWidget::sliderOpacityChanged(int opacity)
 {
     this->command->setOpacity(static_cast<float>(opacity) / 100);
 
+    this->spinBoxOpacity->blockSignals(true);
     this->spinBoxOpacity->setValue(opacity);
+    this->spinBoxOpacity->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorOpacityWidget::spinBoxOpacityChanged(int opacity)
 {
+    this->command->setOpacity(static_cast<float>(opacity) / 100);
+
+    this->sliderOpacity->blockSignals(true);
     this->sliderOpacity->setValue(opacity);
+    this->sliderOpacity->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorOpacityWidget::triggerOnNextChanged(int state)

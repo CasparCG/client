@@ -154,56 +154,88 @@ void InspectorGeometryWidget::sliderPositionXChanged(int positionX)
 {
     this->command->setPositionX(static_cast<float>(positionX) / this->resolutionWidth);
 
+    this->spinBoxPositionX->blockSignals(true);
     this->spinBoxPositionX->setValue(positionX);
+    this->spinBoxPositionX->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionXChanged(int positionX)
 {
+    this->command->setPositionX(static_cast<float>(positionX) / this->resolutionWidth);
+
+    this->sliderPositionX->blockSignals(true);
     this->sliderPositionX->setValue(positionX);
+    this->sliderPositionX->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::sliderPositionYChanged(int positionY)
 {
     this->command->setPositionY(static_cast<float>(positionY) / this->resolutionHeight);
 
+    this->spinBoxPositionY->blockSignals(true);
     this->spinBoxPositionY->setValue(positionY);
+    this->spinBoxPositionY->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxPositionYChanged(int positionY)
 {
+    this->command->setPositionY(static_cast<float>(positionY) / this->resolutionHeight);
+
+    this->sliderPositionY->blockSignals(true);
     this->sliderPositionY->setValue(positionY);
+    this->sliderPositionY->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::sliderScaleXChanged(int scaleX)
 {
     this->command->setScaleX(static_cast<float>(scaleX) / this->resolutionWidth);
 
+    this->spinBoxScaleX->blockSignals(true);
     this->spinBoxScaleX->setValue(scaleX);
+    this->spinBoxScaleX->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleXChanged(int scaleX)
 {
+    this->command->setScaleX(static_cast<float>(scaleX) / this->resolutionWidth);
+
+    this->sliderScaleX->blockSignals(true);
     this->sliderScaleX->setValue(scaleX);
+    this->sliderScaleX->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::sliderScaleYChanged(int scaleY)
 {
     this->command->setScaleY(static_cast<float>(scaleY) / this->resolutionHeight);
 
+    this->spinBoxScaleY->blockSignals(true);
     this->spinBoxScaleY->setValue(scaleY);
+    this->spinBoxScaleY->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)
 {
+    this->command->setScaleY(static_cast<float>(scaleY) / this->resolutionHeight);
+
+    this->sliderScaleY->blockSignals(true);
     this->sliderScaleY->setValue(scaleY);
+    this->sliderScaleY->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorGeometryWidget::transitionDurationChanged(int transitionDuration)

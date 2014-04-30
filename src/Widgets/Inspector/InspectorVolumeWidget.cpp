@@ -78,14 +78,22 @@ void InspectorVolumeWidget::sliderVolumeChanged(int volume)
 {
     this->command->setVolume(static_cast<float>(volume) / 100);
 
+    this->spinBoxVolume->blockSignals(true);
     this->spinBoxVolume->setValue(volume);
+    this->spinBoxVolume->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorVolumeWidget::spinBoxVolumeChanged(int volume)
 {
+    this->command->setVolume(static_cast<float>(volume) / 100);
+
+    this->sliderVolume->blockSignals(true);
     this->sliderVolume->setValue(volume);
+    this->sliderVolume->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorVolumeWidget::deferChanged(int state)

@@ -76,14 +76,22 @@ void InspectorBrightnessWidget::sliderBrightnessChanged(int brightness)
 {
     this->command->setBrightness(static_cast<float>(brightness) / 100);
 
+    this->spinBoxBrightness->blockSignals(true);
     this->spinBoxBrightness->setValue(brightness);
+    this->spinBoxBrightness->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorBrightnessWidget::spinBoxBrightnessChanged(int brightness)
 {
+    this->command->setBrightness(static_cast<float>(brightness) / 100);
+
+    this->sliderBrightness->blockSignals(true);
     this->sliderBrightness->setValue(brightness);
+    this->sliderBrightness->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
 void InspectorBrightnessWidget::deferChanged(int state)
