@@ -284,38 +284,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelDevice</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetDevice(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>18</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelFormat</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetFormat(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>51</x>
-     <y>51</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxDevice</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
@@ -348,22 +316,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelTransition</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetTransition(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>60</x>
-     <y>77</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-4</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBoxTransition</sender>
    <signal>currentIndexChanged(QString)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
@@ -380,26 +332,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelTransitionDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>47</x>
-     <y>111</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>110</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>197</x>
@@ -408,22 +344,6 @@
     <hint type="destinationlabel">
      <x>231</x>
      <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTween</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>61</x>
-     <y>137</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>140</y>
     </hint>
    </hints>
   </connection>
@@ -440,22 +360,6 @@
     <hint type="destinationlabel">
      <x>232</x>
      <y>137</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDirection</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorDeckLinkInputWidget</receiver>
-   <slot>resetDirection(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>161</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -484,7 +388,7 @@
   <slot>resetTransition(QString)</slot>
   <slot>transitionChanged(QString)</slot>
   <slot>resetDuration(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>resetTween(QString)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>resetDirection(QString)</slot>

@@ -268,7 +268,7 @@
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorOpacityWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>196</x>
@@ -364,7 +364,7 @@
  <slots>
   <slot>sliderOpacityChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>spinBoxOpacityChanged(int)</slot>
   <slot>deferChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>

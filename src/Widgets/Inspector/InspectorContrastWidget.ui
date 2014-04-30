@@ -215,42 +215,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelTransitionDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorContrastWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>113</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorContrastWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>13</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorContrastWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>177</x>
@@ -275,22 +243,6 @@
     <hint type="destinationlabel">
      <x>187</x>
      <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelContrast</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorContrastWidget</receiver>
-   <slot>resetContrast(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>23</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>8</x>
-     <y>24</y>
     </hint>
    </hints>
   </connection>
@@ -327,22 +279,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorContrastWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>49</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-3</x>
-     <y>103</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDefer</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorContrastWidget</receiver>
@@ -365,7 +301,7 @@
   <slot>resetDuration(QString)</slot>
   <slot>resetTween(QString)</slot>
   <slot>tweenChanged(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>spinBoxContrastChanged(int)</slot>
   <slot>resetDefer(QString)</slot>
   <slot>deferChanged(int)</slot>

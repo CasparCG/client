@@ -356,74 +356,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelCropLeft</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetCropLeft(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>75</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelCropTop</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetCropTop(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>62</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>24</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelCropRight</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetCropRight(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>11</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelCropBottom</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetCropBottom(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>52</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>27</x>
-     <y>195</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorCropWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>203</x>
@@ -448,38 +384,6 @@
     <hint type="destinationlabel">
      <x>211</x>
      <y>158</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>169</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>160</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTransitionDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>51</x>
-     <y>130</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>131</y>
     </hint>
    </hints>
   </connection>
@@ -612,22 +516,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorCropWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>188</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>7</x>
-     <y>185</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDefer</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorCropWidget</receiver>
@@ -655,7 +543,7 @@
   <slot>resetCropBottom(QString)</slot>
   <slot>resetDuration(QString)</slot>
   <slot>resetTween(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>spinBoxCropLeftChanged(int)</slot>
   <slot>spinBoxCropRightChanged(int)</slot>

@@ -208,54 +208,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGridWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTransitionDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGridWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>139</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelGrid</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGridWidget</receiver>
-   <slot>resetGrid(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>69</x>
-     <y>21</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>23</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxGrid</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorGridWidget</receiver>
@@ -300,22 +252,6 @@
     <hint type="destinationlabel">
      <x>206</x>
      <y>80</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorGridWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>101</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>102</y>
     </hint>
    </hints>
   </connection>

@@ -218,7 +218,7 @@
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorSaturationWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>196</x>
@@ -301,7 +301,7 @@
   <slot>resetDuration(QString)</slot>
   <slot>resetTween(QString)</slot>
   <slot>tweenChanged(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>spinBoxSaturationChanged(int)</slot>
   <slot>resetDefer(QString)</slot>
   <slot>deferChanged(int)</slot>

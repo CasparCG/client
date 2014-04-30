@@ -403,122 +403,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>labelMinIn</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetMinIn(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>189</x>
-     <y>9</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelMinOut</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetMinOut(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>45</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelMaxIn</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetMaxIn(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>75</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelMaxOut</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetMaxOut(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>53</x>
-     <y>103</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelGamma</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetGamma(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>56</x>
-     <y>135</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>136</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTransitionDuration</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetDuration(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>50</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>171</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelEasing</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetTween(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>54</x>
-     <y>189</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>203</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorLevelsWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>171</x>
@@ -707,22 +595,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>labelDefer</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorLevelsWidget</receiver>
-   <slot>resetDefer(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>52</x>
-     <y>217</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>229</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxDefer</sender>
    <signal>stateChanged(int)</signal>
    <receiver>InspectorLevelsWidget</receiver>
@@ -752,7 +624,7 @@
   <slot>resetGamma(QString)</slot>
   <slot>resetDuration(QString)</slot>
   <slot>resetTween(QString)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>spinBoxMinInChanged(int)</slot>
   <slot>spinBoxMinOutChanged(int)</slot>

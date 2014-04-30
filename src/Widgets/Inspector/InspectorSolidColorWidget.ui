@@ -359,7 +359,7 @@
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorSolidColorWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
@@ -485,7 +485,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>transitionChanged(QString)</slot>
   <slot>directionChanged(QString)</slot>
   <slot>tweenChanged(QString)</slot>

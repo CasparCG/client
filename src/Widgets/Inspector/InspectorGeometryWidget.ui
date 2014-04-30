@@ -372,7 +372,7 @@
    <sender>spinBoxTransitionDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorGeometryWidget</receiver>
-   <slot>durationChanged(int)</slot>
+   <slot>transitionDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>151</x>
@@ -566,7 +566,7 @@
   <slot>scaleYChanged(int)</slot>
   <slot>sliderPositionXChanged(int)</slot>
   <slot>sliderPositionYChanged(int)</slot>
-  <slot>durationChanged(int)</slot>
+  <slot>transitionDurationChanged(int)</slot>
   <slot>tweenChanged(QString)</slot>
   <slot>spinBoxPositionXChanged(int)</slot>
   <slot>spinBoxPositionYChanged(int)</slot>
