@@ -56,11 +56,11 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteTriggering(false), currentAutoPlayWidget(NULL),
-      copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL), downControlSubscription(NULL),
-      stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
-      nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteTriggering(false), repositoryRundown(false),
+      currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
+      downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
+      pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
     setupMenus();
@@ -523,10 +523,23 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
         this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
     this->treeWidgetRundown->setFocus();
-
     this->treeWidgetRundown->checkEmptyRundown();
 
     this->activeRundown = reply->request().url().toString();
+    this->repositoryRundown = true;
+}
+
+void RundownTreeWidget::reloadRundown()
+{
+    if (this->activeRundown == Rundown::DEFAULT_NAME)
+        return;
+
+    this->treeWidgetRundown->removeAllItems();
+
+    if (this->repositoryRundown)
+        openRundownFromUrl(this->activeRundown);
+    else
+        openRundown(this->activeRundown);
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)

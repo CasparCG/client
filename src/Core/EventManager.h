@@ -47,6 +47,7 @@
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
@@ -74,6 +75,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
+        Q_SIGNAL void reloadRundown(const ReloadRundownEvent&);
         Q_SIGNAL void openRundown(const OpenRundownEvent&);
         Q_SIGNAL void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SIGNAL void openRundownFromUrl(const OpenRundownFromUrlEvent&);
@@ -118,6 +120,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
+        void fireReloadRundownEvent(const ReloadRundownEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);
         void fireOpenRundownFromUrlMenuEvent(const OpenRundownFromUrlMenuEvent&);
         void fireAddTemplateDataEvent(const AddTemplateDataEvent&);

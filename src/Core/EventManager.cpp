@@ -66,6 +66,11 @@ void EventManager::fireCloseRundownEvent(const CloseRundownEvent& event)
     emit closeRundown(event);
 }
 
+void EventManager::fireReloadRundownEvent(const ReloadRundownEvent& event)
+{
+    emit reloadRundown(event);
+}
+
 void EventManager::fireAddTemplateDataEvent(const AddTemplateDataEvent& event)
 {
     emit addTemplateData(event);

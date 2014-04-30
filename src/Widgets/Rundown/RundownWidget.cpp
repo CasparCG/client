@@ -45,6 +45,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrl(const OpenRundownFromUrlEvent&)), this, SLOT(openRundownFromUrl(const OpenRundownFromUrlEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveRundown(const SaveRundownEvent&)), this, SLOT(saveRundown(const SaveRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundown(const ReloadRundownEvent&)), this, SLOT(reloadRundown(const ReloadRundownEvent&)));
 }
 
 void RundownWidget::setupMenus()
@@ -60,6 +61,8 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Reload Rundown", this, SLOT(reloadCurrentRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeCurrentRundown()));
     this->allowRemoteTriggeringAction->setCheckable(true);
@@ -197,6 +200,15 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
     }
 }
 
+void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Reloading rundown..."));
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->reloadRundown();
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
 void RundownWidget::saveRundown(const SaveRundownEvent& event)
 {
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->saveRundown(event.getSaveAs());
@@ -236,6 +248,11 @@ void RundownWidget::saveAsRundownToDisk()
 void RundownWidget::toggleCompactView()
 {
     EventManager::getInstance().fireToggleCompactViewEvent(CompactViewEvent());
+}
+
+void RundownWidget::reloadCurrentRundown()
+{
+    EventManager::getInstance().fireReloadRundownEvent(ReloadRundownEvent());
 }
 
 void RundownWidget::closeCurrentRundown()

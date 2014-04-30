@@ -485,7 +485,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Preview on AutoStep</string>
+      <string>Preview next item on AutoStep</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxClearDelayedCommandsOnAutoStep">

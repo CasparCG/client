@@ -15,6 +15,7 @@
 #include "Events/Rundown/OpenRundownFromUrlEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
+#include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 
 #include <QtCore/QEvent>
@@ -42,6 +43,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
         Q_SLOT void openRundownFromDisk();
         Q_SLOT void openRundownFromRepo();
+        Q_SLOT void reloadCurrentRundown();
         Q_SLOT void closeCurrentRundown();
         Q_SLOT void createNewRundown();
         Q_SLOT void saveRundownToDisk();
@@ -63,4 +65,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void openRundownFromUrl(const OpenRundownFromUrlEvent&);
         Q_SLOT void saveRundown(const SaveRundownEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
+        Q_SLOT void reloadRundown(const ReloadRundownEvent&);
 };

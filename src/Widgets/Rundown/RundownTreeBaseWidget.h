@@ -58,6 +58,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void groupItems();
         void ungroupItems();
         void removeSelectedItems();
+        void removeAllItems();
         void selectItemAbove();
         void selectItemBelow();
         void checkEmptyRundown();

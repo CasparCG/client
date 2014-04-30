@@ -51,6 +51,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void openRundown(const QString& path);
         void openRundownFromUrl(const QString& path);
         void saveRundown(bool saveAs);
+        void reloadRundown();
 
         bool getAllowRemoteTriggering() const;
         bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
@@ -61,6 +62,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool active;
         bool enterPressed;
         bool allowRemoteTriggering;
+        bool repositoryRundown;
 
         QString page;
         QString activeRundown;

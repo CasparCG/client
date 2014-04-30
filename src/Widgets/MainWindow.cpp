@@ -88,6 +88,8 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
+    this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
+    this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
     this->allowRemoteTriggeringAction->setCheckable(true);
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
@@ -307,6 +309,11 @@ void MainWindow::allowRemoteTriggering(bool enabled)
 void MainWindow::closeRundown()
 {
     EventManager::getInstance().fireCloseRundownEvent(CloseRundownEvent());
+}
+
+void MainWindow::reloadRundown()
+{
+    EventManager::getInstance().fireReloadRundownEvent(ReloadRundownEvent());
 }
 
 void MainWindow::showAboutDialog()

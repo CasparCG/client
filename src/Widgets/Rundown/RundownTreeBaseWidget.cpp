@@ -244,6 +244,36 @@ void RundownTreeBaseWidget::removeSelectedItems()
     checkEmptyRundown();
 }
 
+void RundownTreeBaseWidget::removeAllItems()
+{
+    for (int i = QTreeWidget::invisibleRootItem()->childCount() - 1; i >= 0; i--)
+    {
+        QTreeWidgetItem* item = QTreeWidget::invisibleRootItem()->child(i);
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->isGroup())
+        {
+            for (int i = item->childCount() - 1; i >= 0; i--)
+            {
+                QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+
+                // Remove our items from the auto play queue if they exists.
+                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                delete childWidget;
+                delete item->child(i);
+            }
+        }
+
+        // Remove our items from the auto play queue if they exists.
+        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        delete widget;
+        delete item;
+    }
+
+    checkEmptyRundown();
+}
+
 void RundownTreeBaseWidget::groupItems()
 {
     if (QTreeWidget::currentItem() == NULL)
