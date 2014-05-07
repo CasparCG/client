@@ -44,8 +44,9 @@ void OpenRundownFromUrlDialog::finished(QNetworkReply* reply)
         QStringList pathSplit = QUrl(rundown).path().split("/");
 
         QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetRundowns);
-        //treeItem->setIcon(0, QIcon(":/Graphics/Images/RundownSmall.png"));
+        treeItem->setIcon(0, QIcon(":/Graphics/Images/Rundown.png"));
         treeItem->setText(1, pathSplit.last());
+        treeItem->setTextAlignment(1, Qt::AlignTop);
         treeItem->setText(2, "");
         treeItem->setText(3, rundown);
     }

@@ -197,6 +197,7 @@
         <file>Images/Atem/VideoFormat.png</file>
         <file>Images/Atem/VideoFormatSmall.png</file>
         <file>Images/Atem/VideoFormatSmallHover.png</file>
+        <file>Images/Rundown.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default/Default.css</file>

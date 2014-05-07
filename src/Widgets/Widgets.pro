@@ -578,7 +578,8 @@ OTHER_FILES += \
     Images/Atem/AudioInputState.png \
     Images/Atem/AudioInputBalence.png \
     Images/Atem/AudioInputBalanceSmallHover.png \
-    Images/Atem/AudioInputBalanceSmall.png
+    Images/Atem/AudioInputBalanceSmall.png \
+    Images/Rundown.png
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

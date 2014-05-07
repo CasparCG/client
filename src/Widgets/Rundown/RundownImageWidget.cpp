@@ -90,6 +90,8 @@ void RundownImageWidget::targetChanged(const TargetChangedEvent& event)
 
     this->model.setName(event.getTarget());
     this->command.setImageName(event.getTarget());
+
+    setThumbnail();
 }
 
 void RundownImageWidget::deviceChanged(const DeviceChangedEvent& event)
@@ -197,9 +199,13 @@ LibraryModel* RundownImageWidget::getLibraryModel()
 
 void RundownImageWidget::setThumbnail()
 {
+    QString data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+
+    /*
     QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
     if (data.isEmpty())
         data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
+    */
 
     QImage image;
     image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
