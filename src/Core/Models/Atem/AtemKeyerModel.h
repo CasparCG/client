@@ -4,10 +4,10 @@
 
 #include <QtCore/QString>
 
-class CORE_EXPORT AtemInputModel
+class CORE_EXPORT AtemKeyerModel
 {
     public:
-        explicit AtemInputModel(int id, const QString& name, const QString& value);
+        explicit AtemKeyerModel(int id, const QString& name, const QString& value);
 
         int getId() const;
         const QString& getName() const;

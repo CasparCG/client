@@ -38,8 +38,6 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/RundownModel.h"
 
-#include <iostream>
-
 #include <QtCore/QDebug>
 #include <QtCore/QPoint>
 #include <QtCore/QTextCodec>
@@ -492,7 +490,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         file.close();
 
-        std::cout << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed()).toStdString();
+        qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
 
         if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
             this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
@@ -502,7 +500,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
     this->treeWidgetRundown->checkEmptyRundown();
 
-    std::cout << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount()).toStdString();
+    qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
 
     this->activeRundown = path;
 }

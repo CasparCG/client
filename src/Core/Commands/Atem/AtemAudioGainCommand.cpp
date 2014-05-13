@@ -4,13 +4,13 @@
 
 AtemAudioGainCommand::AtemAudioGainCommand(QObject* parent)
     : AbstractCommand(parent),
-      source(Atem::DEFAULT_AUDIO_GAIN_SOURCE), gain(Atem::DEFAULT_AUDIO_GAIN), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+      input(Atem::DEFAULT_AUDIO_INPUT), gain(Atem::DEFAULT_AUDIO_GAIN), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 
-const QString& AtemAudioGainCommand::getSource() const
+const QString& AtemAudioGainCommand::getInput() const
 {
-    return this->source;
+    return this->input;
 }
 
 float AtemAudioGainCommand::getGain() const
@@ -23,10 +23,10 @@ bool AtemAudioGainCommand::getTriggerOnNext() const
     return this->triggerOnNext;
 }
 
-void AtemAudioGainCommand::setSource(const QString& source)
+void AtemAudioGainCommand::setInput(const QString& input)
 {
-    this->source = source;
-    emit sourceChanged(this->source);
+    this->input = input;
+    emit inputChanged(this->input);
 }
 
 void AtemAudioGainCommand::setGain(float gain)
@@ -45,7 +45,7 @@ void AtemAudioGainCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setSource(QString::fromStdWString(pt.get(L"audiogainsource", Atem::DEFAULT_AUDIO_GAIN_SOURCE.toStdWString())));
+    setInput(QString::fromStdWString(pt.get(L"audiogaininput", Atem::DEFAULT_AUDIO_INPUT.toStdWString())));
     setGain(pt.get(L"gain", Atem::DEFAULT_AUDIO_GAIN));
     setTriggerOnNext(pt.get(L"triggeronnext", Atem::DEFAULT_TRIGGER_ON_NEXT));
 }
@@ -54,7 +54,7 @@ void AtemAudioGainCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("audiogainsource", getSource());
+    writer->writeTextElement("audiogaininput", getInput());
     writer->writeTextElement("gain", QString::number(getGain()));
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

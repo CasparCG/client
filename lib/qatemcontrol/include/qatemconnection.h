@@ -425,9 +425,10 @@ public:
     quint16 stingerMixRate() const { return m_stingerMixRate; }
 
     /// @returns audio input info for input @p index
-    AudioInput audioInput(quint8 index) { return m_audioInputs.value(index); }
+    AudioInput audioInput(quint16 index) { return m_audioInputs.value(index); }
+    QHash<quint16, AudioInput> audioInputs() { return m_audioInputs; }
     /// @return audio tally state for audio input @p index
-    bool audioTallyState(quint8 index) { return m_audioTally.value(index); }
+    bool audioTallyState(quint16 index) { return m_audioTally.value(index); }
 
     /// @returns true if the monitor function is enabled on the audio breakout cable.
     bool audioMonitorEnabled() const { return m_audioMonitorEnabled; }
@@ -438,7 +439,7 @@ public:
     qint8 audioMonitorSolo() const { return m_audioMonitorSolo; }
     float audioMasterOutputGain() const { return m_audioMasterOutputGain; }
 
-    AudioLevel audioLevel(quint8 index) const { return m_audioLevels.value(index); }
+    AudioLevel audioLevel(quint16 index) const { return m_audioLevels.value(index); }
     float audioMasterOutputLevelLeft() const { return m_audioMasterOutputLevelLeft;}
     float audioMasterOutputLevelRight() const { return m_audioMasterOutputLevelRight;}
 
@@ -876,9 +877,9 @@ private:
     quint16 m_stingerTriggerPoint;
     quint16 m_stingerMixRate;
 
-    QHash<quint8, AudioInput> m_audioInputs;
-    QHash<quint8, bool> m_audioTally;
-    QHash<quint8, AudioLevel> m_audioLevels;
+    QHash<quint16, AudioInput> m_audioInputs;
+    QHash<quint16, bool> m_audioTally;
+    QHash<quint16, AudioLevel> m_audioLevels;
 
     bool m_audioMonitorEnabled;
     float m_audioMonitorGain;

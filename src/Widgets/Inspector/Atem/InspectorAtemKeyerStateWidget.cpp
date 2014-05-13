@@ -4,8 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Models/Atem/AtemKeyerStateModel.h"
-#include "Models/Atem/AtemInputModel.h"
+#include "Models/Atem/AtemKeyerModel.h"
 
 #include <QtGui/QApplication>
 
@@ -51,8 +50,8 @@ void InspectorAtemKeyerStateWidget::loadAtemKeyer()
     // Events will not be triggered while we update the values.
     this->comboBoxKeyer->blockSignals(true);
 
-    QList<AtemKeyerStateModel> models = DatabaseManager::getInstance().getAtemKeyerState();
-    foreach (AtemKeyerStateModel model, models)
+    QList<AtemKeyerModel> models = DatabaseManager::getInstance().getAtemKeyer();
+    foreach (AtemKeyerModel model, models)
         this->comboBoxKeyer->addItem(model.getName(), model.getValue());
 
     this->comboBoxKeyer->blockSignals(false);

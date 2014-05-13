@@ -36,7 +36,7 @@ LibraryManager& LibraryManager::getInstance()
 
 void LibraryManager::initialize()
 {
-    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
+    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent(0));
     EventManager::getInstance().fireAutoRefreshLibraryEvent(AutoRefreshLibraryEvent((DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false,
                                                                                     DatabaseManager::getInstance().getConfigurationByName("RefreshLibraryInterval").getValue().toInt() * 1000));
 }
@@ -311,8 +311,12 @@ void LibraryManager::thumbnailChanged(const QList<CasparThumbnail>& thumbnailIte
                                                    thumbnailItem.getName(), device.getAddress()));
     }
 
-    QSharedPointer<ThumbnailWorker> thumbnailWorker(new ThumbnailWorker(processModels));
-    thumbnailWorker->start();
+    bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
+    if (storeThumbnailsInDatabase)
+    {
+        QSharedPointer<ThumbnailWorker> thumbnailWorker(new ThumbnailWorker(processModels));
+        thumbnailWorker->start();
 
-    this->thumbnailWorkers.push_back(thumbnailWorker);
+        this->thumbnailWorkers.push_back(thumbnailWorker);
+    }
 }

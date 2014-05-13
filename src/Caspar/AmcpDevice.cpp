@@ -25,8 +25,6 @@ void AmcpDevice::connectDevice()
         return;
 
     this->socket->connectToHost(this->address, this->port);
-
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void AmcpDevice::disconnectDevice()
@@ -56,7 +54,7 @@ void AmcpDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(connectAmcpDevice()));
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void AmcpDevice::setDisableCommands(bool disable)

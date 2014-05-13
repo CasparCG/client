@@ -28,7 +28,6 @@ void DatabaseManager::initialize()
     if (QSqlDatabase::database().tables().count() > 0)
         return;
 
-    // Setup the database.
     QSqlQuery sql;
     sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
@@ -46,13 +45,11 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE OscOutput (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
     sql.exec("CREATE TABLE AtemDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Description TEXT)");
-    sql.exec("CREATE TABLE AtemInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemKeyerState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
+    sql.exec("CREATE TABLE AtemKeyer (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemVideoFormat (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemAudioInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE AtemAudioInputState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE TriCasterProduct (Id INTEGER PRIMARY KEY, Name TEXT)");
     sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
@@ -112,6 +109,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else
@@ -187,29 +185,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Transition (Value) VALUES('PUSH')");
     sql.exec("INSERT INTO Transition (Value) VALUES('SLIDE')");
     sql.exec("INSERT INTO Transition (Value) VALUES('WIPE')");
-
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('BLACK', '0')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 1', '1')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 2', '2')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 3', '3')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 4', '4')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 5', '5')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 6', '6')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 7', '7')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 8', '8')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 9', '9')");
-    sql.exec("INSERT INTO AtemInput (Name, Value) VALUES('Input 10', '10')");
-
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 1', '1')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 2', '2')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 3', '3')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 4', '4')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 5', '5')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 6', '6')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 7', '7')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 8', '8')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 9', '9')");
-    sql.exec("INSERT INTO AtemAudioInput (Name, Value) VALUES('Audio Input 10', '10')");
 
     sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('Off', '0')");
     sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('On', '1')");
@@ -757,40 +732,6 @@ QList<AtemStepModel> DatabaseManager::getAtemStep()
     return models;
 }
 
-QList<AtemInputModel> DatabaseManager::getAtemInput()
-{
-    QMutexLocker locker(&mutex);
-
-    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemInput t");
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    QList<AtemInputModel> models;
-    while (sql.next())
-        models.push_back(AtemInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
-
-    return models;
-}
-
-QList<AtemAudioInputModel> DatabaseManager::getAtemAudioInput()
-{
-    QMutexLocker locker(&mutex);
-
-    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemAudioInput t");
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    QList<AtemAudioInputModel> models;
-    while (sql.next())
-        models.push_back(AtemAudioInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
-
-    return models;
-}
-
 QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
 {
     QMutexLocker locker(&mutex);
@@ -808,19 +749,19 @@ QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
     return models;
 }
 
-QList<AtemKeyerStateModel> DatabaseManager::getAtemKeyerState()
+QList<AtemKeyerModel> DatabaseManager::getAtemKeyer()
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemKeyerState t");
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemKeyer t");
 
     QSqlQuery sql;
     if (!sql.exec(query))
        qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
-    QList<AtemKeyerStateModel> models;
+    QList<AtemKeyerModel> models;
     while (sql.next())
-        models.push_back(AtemKeyerStateModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemKeyerModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }
@@ -2055,4 +1996,37 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
     }
 
     QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deleteThumbnails()
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("DELETE FROM Thumbnail");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    const QList<LibraryModel>& models = this->getLibraryMedia();
+    for (int i = 0; i < models.count(); i++)
+    {
+        const LibraryModel& model = models.at(i);
+        if (model.getThumbnailId() > 0)
+        {
+            QString query = QString("UPDATE Library SET ThumbnailId = 0 WHERE Id = %1").arg(model.getId());
+
+            if (!sql.exec(query))
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+        }
+    }
+
+    QSqlDatabase::database().commit();
+
+    // Shrink file on disk.
+    query = QString("VACUUM Thumbnail");
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 }

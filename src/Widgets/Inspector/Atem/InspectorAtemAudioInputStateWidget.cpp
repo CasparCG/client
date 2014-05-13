@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
@@ -15,8 +16,8 @@ InspectorAtemAudioInputStateWidget::InspectorAtemAudioInputStateWidget(QWidget* 
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 
-    loadAtemInput();
     loadAtemInputState();
 }
 
@@ -30,6 +31,11 @@ void InspectorAtemAudioInputStateWidget::rundownItemSelected(const RundownItemSe
     {
         this->command = dynamic_cast<AtemAudioInputStateCommand*>(event.getCommand());
 
+        this->comboBoxInput->clear();
+        const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (device != NULL)
+            loadAtemAudioInput(device->inputInfos());
+
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->comboBoxState->setCurrentIndex(this->comboBoxState->findData(this->command->getState()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -38,24 +44,42 @@ void InspectorAtemAudioInputStateWidget::rundownItemSelected(const RundownItemSe
     blockAllSignals(false);
 }
 
+void InspectorAtemAudioInputStateWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
+{
+    if (this->model != NULL)
+    {
+        // Should we update the device name?
+        if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
+        {
+            const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
+            loadAtemAudioInput(device->inputInfos());
+        }
+    }
+}
+
+void InspectorAtemAudioInputStateWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values
+    this->comboBoxInput->blockSignals(true);
+
+    this->comboBoxInput->clear();
+    this->comboBoxInput->addItem("Master", "0");
+
+    foreach (quint16 key, inputs.keys())
+    {
+        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+    }
+
+    this->comboBoxInput->blockSignals(false);
+}
+
 void InspectorAtemAudioInputStateWidget::blockAllSignals(bool block)
 {
     this->comboBoxInput->blockSignals(block);
     this->comboBoxState->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
-}
-
-void InspectorAtemAudioInputStateWidget::loadAtemInput()
-{
-    // We do not have a command object, block the signals.
-    // Events will not be triggered while we update the values.
-    this->comboBoxInput->blockSignals(true);
-
-    QList<AtemAudioInputModel> models = DatabaseManager::getInstance().getAtemAudioInput();
-    foreach (AtemAudioInputModel model, models)
-        this->comboBoxInput->addItem(model.getName(), model.getValue());
-
-    this->comboBoxInput->blockSignals(false);
 }
 
 void InspectorAtemAudioInputStateWidget::loadAtemInputState()

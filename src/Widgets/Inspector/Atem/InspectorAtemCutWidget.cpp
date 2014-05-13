@@ -52,7 +52,10 @@ void InspectorAtemCutWidget::loadAtemStep()
 
     QList<AtemStepModel> models = DatabaseManager::getInstance().getAtemStep();
     foreach (AtemStepModel model, models)
+    {
         this->comboBoxStep->addItem(model.getName(), model.getValue());
+        break; // We can't do CUT on DSK.
+    }
 
     this->comboBoxStep->blockSignals(false);
 }

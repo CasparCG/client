@@ -2,10 +2,10 @@
 
 #include "Global.h"
 
+#include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemSwitcherModel.h"
-#include "Models/Atem/AtemInputModel.h"
 
 #include <QtGui/QApplication>
 
@@ -16,9 +16,9 @@ InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 
     loadAtemSwitcher();
-    loadAtemInput();
 }
 
 void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -31,12 +31,44 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
     {
         this->command = dynamic_cast<AtemInputCommand*>(event.getCommand());
 
-        this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
+        this->comboBoxInput->clear();
+        const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (device != NULL)
+            loadAtemInput(device->inputInfos());
+
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
+        this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
     blockAllSignals(false);
+}
+
+void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
+{
+    if (this->model != NULL)
+    {
+        // Should we update the device name?
+        if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
+        {
+            const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
+            loadAtemInput(device->inputInfos());
+        }
+    }
+}
+
+void InspectorAtemInputWidget::loadAtemInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values
+    this->comboBoxInput->blockSignals(true);
+
+    this->comboBoxInput->clear();
+
+    foreach (quint16 key, inputs.keys())
+        this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+
+    this->comboBoxInput->blockSignals(false);
 }
 
 void InspectorAtemInputWidget::blockAllSignals(bool block)
@@ -57,19 +89,6 @@ void InspectorAtemInputWidget::loadAtemSwitcher()
         this->comboBoxSwitcher->addItem(model.getName(), model.getValue());
 
     this->comboBoxSwitcher->blockSignals(false);
-}
-
-void InspectorAtemInputWidget::loadAtemInput()
-{
-    // We do not have a command object, block the signals.
-    // Events will not be triggered while we update the values.
-    this->comboBoxInput->blockSignals(true);
-
-    QList<AtemInputModel> models = DatabaseManager::getInstance().getAtemInput();
-    foreach (AtemInputModel model, models)
-        this->comboBoxInput->addItem(model.getName(), model.getValue());
-
-    this->comboBoxInput->blockSignals(false);
 }
 
 void InspectorAtemInputWidget::switcherChanged(int index)

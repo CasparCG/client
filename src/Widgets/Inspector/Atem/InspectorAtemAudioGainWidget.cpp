@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
@@ -15,8 +16,7 @@ InspectorAtemAudioGainWidget::InspectorAtemAudioGainWidget(QWidget* parent)
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
-
-    loadAtemSource();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 }
 
 void InspectorAtemAudioGainWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -29,7 +29,12 @@ void InspectorAtemAudioGainWidget::rundownItemSelected(const RundownItemSelected
     {
         this->command = dynamic_cast<AtemAudioGainCommand*>(event.getCommand());
 
-        this->comboBoxSource->setCurrentIndex(this->comboBoxSource->findData(this->command->getSource()));
+        this->comboBoxInput->clear();
+        const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (device != NULL)
+            loadAtemAudioInput(device->inputInfos());
+
+        this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->sliderGain->setValue(this->command->getGain() * 100);
         this->doubleSpinBoxGain->setValue(this->command->getGain());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -38,32 +43,47 @@ void InspectorAtemAudioGainWidget::rundownItemSelected(const RundownItemSelected
     blockAllSignals(false);
 }
 
+void InspectorAtemAudioGainWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
+{
+    if (this->model != NULL)
+    {
+        // Should we update the device name?
+        if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
+        {
+            const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
+            loadAtemAudioInput(device->inputInfos());
+        }
+    }
+}
+
+void InspectorAtemAudioGainWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxInput->blockSignals(true);
+
+    this->comboBoxInput->addItem("Master", "0");
+
+    foreach (quint16 key, inputs.keys())
+    {
+        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+    }
+
+    this->comboBoxInput->blockSignals(false);
+}
+
 void InspectorAtemAudioGainWidget::blockAllSignals(bool block)
 {
-    this->comboBoxSource->blockSignals(block);
+    this->comboBoxInput->blockSignals(block);
     this->sliderGain->blockSignals(block);
     this->doubleSpinBoxGain->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
-void InspectorAtemAudioGainWidget::loadAtemSource()
+void InspectorAtemAudioGainWidget::inputChanged(int index)
 {
-    // We do not have a command object, block the signals.
-    // Events will not be triggered while we update the values.
-    this->comboBoxSource->blockSignals(true);
-
-    this->comboBoxSource->addItem("Master", "0");
-
-    QList<AtemAudioInputModel> models = DatabaseManager::getInstance().getAtemAudioInput();
-    foreach (AtemAudioInputModel model, models)
-        this->comboBoxSource->addItem(model.getName(), model.getValue());
-
-    this->comboBoxSource->blockSignals(false);
-}
-
-void InspectorAtemAudioGainWidget::sourceChanged(int index)
-{
-    this->command->setSource(this->comboBoxSource->itemData(index).toString());
+    this->command->setInput(this->comboBoxInput->itemData(index).toString());
 }
 
 void InspectorAtemAudioGainWidget::sliderGainChanged(int value)

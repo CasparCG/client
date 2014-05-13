@@ -121,7 +121,7 @@ AbstractRundownWidget* RundownAtemAudioGainWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setSource(this->command.getSource());
+    command->setInput(this->command.getInput());
     command->setGain(this->command.getGain());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
 
@@ -232,7 +232,7 @@ void RundownAtemAudioGainWidget::executePlay()
     {
         const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
         if (device != NULL && device->isConnected())
-            device->setAudioGain(this->command.getSource(), this->command.getGain());
+            device->setAudioGain(this->command.getInput(), this->command.getGain());
     }
 }
 

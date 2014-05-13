@@ -20,13 +20,12 @@
 #include "Models/PresetModel.h"
 #include "Models/OscOutputModel.h"
 #include "Models/Atem/AtemDeviceModel.h"
-#include "Models/Atem/AtemInputModel.h"
 #include "Models/Atem/AtemAudioInputModel.h"
 #include "Models/Atem/AtemAudioInputStateModel.h"
 #include "Models/Atem/AtemSwitcherModel.h"
 #include "Models/Atem/AtemStepModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
-#include "Models/Atem/AtemKeyerStateModel.h"
+#include "Models/Atem/AtemKeyerModel.h"
 #include "Models/Atem/AtemVideoFormatModel.h"
 #include "Models/TriCaster/TriCasterProductModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
@@ -78,10 +77,8 @@ class CORE_EXPORT DatabaseManager
         void deleteOscOutput(int id);
 
         QList<AtemStepModel> getAtemStep();
-        QList<AtemInputModel> getAtemInput();
-        QList<AtemAudioInputModel> getAtemAudioInput();
         QList<AtemAudioInputStateModel> getAtemAudioInputState();
-        QList<AtemKeyerStateModel> getAtemKeyerState();
+        QList<AtemKeyerModel> getAtemKeyer();
         QList<AtemSwitcherModel> getAtemSwitcher();
         QList<AtemVideoFormatModel> getAtemVideoFormat();
         QList<AtemAutoTransitionModel> getAtemAutoTransition();
@@ -146,6 +143,7 @@ class CORE_EXPORT DatabaseManager
         QList<ThumbnailModel> getThumbnailByDeviceAddress(const QString& address);
         ThumbnailModel getThumbnailByNameAndDeviceName(const QString& name, const QString& deviceName);
         void updateThumbnail(const ThumbnailModel& model);
+        void deleteThumbnails();
 
     private:
         QMutex mutex;

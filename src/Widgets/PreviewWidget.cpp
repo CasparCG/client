@@ -41,7 +41,7 @@ void PreviewWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 
 void PreviewWidget::setThumbnail()
 {
-    if (this->model->getType() == "AUDIO")
+    if (this->model->getType() != "STILL" && this->model->getType() != "VIDEO")
         return;
 
     int thumbnailId = this->model->getThumbnailId();

@@ -2,6 +2,8 @@
 
 #include "Shared.h"
 
+#include "qatemconnection.h"
+
 #include "SwitcherDevice.h"
 
 class ATEM_EXPORT AtemDevice : public SwitcherDevice
@@ -13,6 +15,9 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
 
         void triggerAuto(const QString& target, int speed, const QString& transition);
         void triggerCut();
+
+        QMap<quint16, QAtemConnection::InputInfo> inputInfos();
+        QHash<quint16, QAtemConnection::AudioInput> audioInputs();
 
         void selectInput(const QString& switcher, const QString& input);
 

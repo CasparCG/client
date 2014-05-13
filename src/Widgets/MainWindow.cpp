@@ -79,8 +79,8 @@ void MainWindow::setupMenu()
     this->editMenu->addAction("Settings...", this, SLOT(showSettingsDialog()));
 
     this->viewMenu = new QMenu(this);
-    this->viewMenu->addAction("Log...", this, SLOT(showLog()));
-    this->viewMenu->addSeparator();
+    //this->viewMenu->addAction("Log...", this, SLOT(showLog()));
+    //this->viewMenu->addSeparator();
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
 
     this->libraryMenu = new QMenu(this);

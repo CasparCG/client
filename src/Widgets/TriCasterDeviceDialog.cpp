@@ -131,13 +131,16 @@ void TriCasterDeviceDialog::connectionStateChanged(TriCasterDevice& device)
 {
     QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(connectionStateChanged(TriCasterDevice&)));
 
-    QMessageBox box(this);
-    box.setWindowTitle("Test Connection");
-    box.setText(QString("Successfully connected to TriCaster mixer: %1:%2").arg(device.getAddress()).arg(device.getPort()));
-    box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
-    box.setStandardButtons(QMessageBox::Ok);
-    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
-    box.exec();
+    if (device.isConnected())
+    {
+        QMessageBox box(this);
+        box.setWindowTitle("Test Connection");
+        box.setText(QString("Successfully connected to TriCaster mixer: %1:%2").arg(device.getAddress()).arg(device.getPort()));
+        box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+        box.exec();
+    }
 
     this->device->disconnectDevice();
 }

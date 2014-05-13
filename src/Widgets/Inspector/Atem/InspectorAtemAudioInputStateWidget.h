@@ -3,6 +3,9 @@
 #include "../../Shared.h"
 #include "ui_InspectorAtemAudioInputStateWidget.h"
 
+#include "AtemDevice.h"
+
+#include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
@@ -23,12 +26,13 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
         LibraryModel* model;
         AtemAudioInputStateCommand* command;
 
-        void loadAtemInput();
         void loadAtemInputState();
         void blockAllSignals(bool block);
+        void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
 
         Q_SLOT void inputChanged(int);
         Q_SLOT void stateChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void atemDeviceChanged(const AtemDeviceChangedEvent&);
 };

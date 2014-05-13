@@ -138,13 +138,11 @@ HEADERS += \
     Commands/Atem/AtemInputCommand.h \
     Commands/Atem/AtemAutoCommand.h \
     Models/Atem/AtemSwitcherModel.h \
-    Models/Atem/AtemInputModel.h \
     Models/Atem/AtemStepModel.h \
     Commands/Atem/AtemCutCommand.h \
     Models/Atem/AtemAutoTransitionModel.h \
     Models/Atem/AtemAutoSpeedModel.h \
     Commands/Atem/AtemKeyerStateCommand.h \
-    Models/Atem/AtemKeyerStateModel.h \
     Models/Atem/AtemVideoFormatModel.h \
     Commands/Atem/AtemVideoFormatCommand.h \
     Models/Atem/AtemAudioInputModel.h \
@@ -154,7 +152,8 @@ HEADERS += \
     Commands/Atem/AtemAudioGainCommand.h \
     Events/Rundown/OpenRundownFromUrlEvent.h \
     Events/Rundown/OpenRundownFromUrlMenuEvent.h \
-    Events/Rundown/ReloadRundownEvent.h
+    Events/Rundown/ReloadRundownEvent.h \
+    Models/Atem/AtemKeyerModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -282,13 +281,11 @@ SOURCES += \
     Commands/Atem/AtemInputCommand.cpp \
     Commands/Atem/AtemAutoCommand.cpp \
     Models/Atem/AtemSwitcherModel.cpp \
-    Models/Atem/AtemInputModel.cpp \
     Models/Atem/AtemStepModel.cpp \
     Commands/Atem/AtemCutCommand.cpp \
     Models/Atem/AtemAutoTransitionModel.cpp \
     Models/Atem/AtemAutoSpeedModel.cpp \
     Commands/Atem/AtemKeyerStateCommand.cpp \
-    Models/Atem/AtemKeyerStateModel.cpp \
     Models/Atem/AtemVideoFormatModel.cpp \
     Commands/Atem/AtemVideoFormatCommand.cpp \
     Models/Atem/AtemAudioInputModel.cpp \
@@ -298,7 +295,8 @@ SOURCES += \
     Commands/Atem/AtemAudioGainCommand.cpp \
     Events/Rundown/OpenRundownFromUrlEvent.cpp \
     Events/Rundown/OpenRundownFromUrlMenuEvent.cpp \
-    Events/Rundown/ReloadRundownEvent.cpp
+    Events/Rundown/ReloadRundownEvent.cpp \
+    Models/Atem/AtemKeyerModel.cpp
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

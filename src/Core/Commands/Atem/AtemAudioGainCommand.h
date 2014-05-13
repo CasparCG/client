@@ -22,20 +22,20 @@ class CORE_EXPORT AtemAudioGainCommand: public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getSource() const;
+        const QString& getInput() const;
         float getGain() const;
         bool getTriggerOnNext() const;
 
-        void setSource(const QString& source);
+        void setInput(const QString& input);
         void setGain(float gain);
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString source;
+        QString input;
         float gain;
         bool triggerOnNext;
 
-        Q_SIGNAL void sourceChanged(const QString&);
+        Q_SIGNAL void inputChanged(const QString&);
         Q_SIGNAL void gainChanged(float);
         Q_SIGNAL void triggerOnNextChanged(bool);
 };

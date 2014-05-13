@@ -119,13 +119,16 @@ void AtemDeviceDialog::connectionStateChanged(AtemDevice& device)
 {
     QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(AtemDevice&)), this, SLOT(connectionStateChanged(AtemDevice&)));
 
-    QMessageBox box(this);
-    box.setWindowTitle("Test Connection");
-    box.setText(QString("Successfully connected to ATEM mixer: %1").arg(device.getAddress()));
-    box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
-    box.setStandardButtons(QMessageBox::Ok);
-    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
-    box.exec();
+    if (device.isConnected())
+    {
+        QMessageBox box(this);
+        box.setWindowTitle("Test Connection");
+        box.setText(QString("Successfully connected to ATEM mixer: %1").arg(device.getAddress()));
+        box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
+        box.setStandardButtons(QMessageBox::Ok);
+        box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+        box.exec();
+    }
 
     this->device->disconnectDevice();
 }

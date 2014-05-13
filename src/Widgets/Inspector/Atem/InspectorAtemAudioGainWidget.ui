@@ -18,9 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutSource">
+    <layout class="QHBoxLayout" name="horizontalLayoutInput">
      <item>
-      <spacer name="horizontalSpacerSource">
+      <spacer name="horizontalSpacerInput">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -29,21 +29,21 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>52</width>
+         <width>60</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelSource">
+      <widget class="QLabel" name="labelInput">
        <property name="text">
-        <string>Source</string>
+        <string>Input</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxSource">
+      <widget class="QComboBox" name="comboBoxInput">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -203,22 +203,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxSource</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>InspectorAtemAudioGainWidget</receiver>
-   <slot>sourceChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>177</x>
-     <y>18</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>229</x>
-     <y>22</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>sliderGain</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorAtemAudioGainWidget</receiver>
@@ -250,9 +234,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBoxInput</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAtemAudioGainWidget</receiver>
+   <slot>inputChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>sourceChanged(int)</slot>
+  <slot>inputChanged(int)</slot>
   <slot>sliderGainChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
   <slot>doubleSpinBoxGainChanged(double)</slot>

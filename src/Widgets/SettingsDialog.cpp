@@ -14,6 +14,7 @@
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
+#include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/ConfigurationModel.h"
 #include "Models/DeviceModel.h"
@@ -29,6 +30,7 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
+#include <QtGui/QMessageBox>
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
@@ -71,6 +73,9 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxClearDelayedCommandsOnAutoStep->setChecked(clearDelayedCommandsOnAutoStep);
 
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
+
+    bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
+    this->checkBoxStoreThumbnailsInDatabase->setChecked(storeThumbnailsInDatabase);
 
     this->lineEditOscInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
@@ -800,4 +805,27 @@ void SettingsDialog::clearDelayedCommandsOnAutoStepChanged(int state)
 {
     QString clearDelayedCommandsOnAutoStep = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ClearDelayedCommandsOnAutoStep", clearDelayedCommandsOnAutoStep));
+}
+
+void SettingsDialog::storeThumbnailsInDatabaseChanged(int state)
+{
+    QString storeThumbnailsInDatabase = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StoreThumbnailsInDatabase", storeThumbnailsInDatabase));
+}
+
+void SettingsDialog::deleteThumbnails()
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Deleting thumbnails..."));
+
+    DatabaseManager::getInstance().deleteThumbnails();
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+
+    QMessageBox box(this);
+    box.setWindowTitle("Database");
+    box.setText(QString("Successfully deleted all thumbnails from the database."));
+    box.setIconPixmap(QPixmap(":/Graphics/Images/Information.png"));
+    box.setStandardButtons(QMessageBox::Ok);
+    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+    box.exec();
 }

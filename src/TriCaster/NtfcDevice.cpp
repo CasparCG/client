@@ -23,8 +23,6 @@ void NtfcDevice::connectDevice()
         return;
 
     this->socket->connectToHost(this->address, this->port);
-
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void NtfcDevice::disconnectDevice()
@@ -54,7 +52,7 @@ void NtfcDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(connectNtfcDevice()));
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 bool NtfcDevice::isConnected() const

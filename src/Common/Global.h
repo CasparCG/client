@@ -22,7 +22,6 @@ namespace Atem
     static const QString DEFAULT_AUDIO_INPUT_STATE = "0";
     static const float DEFAULT_AUDIO_INPUT_BALANCE = 0.0f;
     static const float DEFAULT_AUDIO_GAIN = 0.0f;
-    static const QString DEFAULT_AUDIO_GAIN_SOURCE = "0";
 }
 
 namespace TriCaster

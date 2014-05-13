@@ -41,7 +41,11 @@ void loadDatabase(QApplication& application)
         databaseLocation = QString("%1/%2%3.s3db").arg(path).arg(application.arguments().at(application.arguments().indexOf(QRegExp("-database")) + 1)).arg(DATABASE_VERSION);
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName(databaseLocation);
+    if (application.arguments().contains("-dbmemory"))
+        database.setDatabaseName(":memory:");
+    else
+        database.setDatabaseName(databaseLocation);
+
     if (!database.open())
         qCritical() << "Unable to open database";
 }

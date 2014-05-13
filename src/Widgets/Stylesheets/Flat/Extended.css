@@ -24,7 +24,7 @@
     border-bottom-width: 1px;
 }
 
-#pushButtonOk
+#pushButtonDeleteThumbnails, #pushButtonOk
 {
     background-color: rgba(28, 28, 28, 255);
 }
@@ -45,7 +45,7 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineDatabase, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
 {
     background-color: rgba(65, 65, 65, 255);
 }

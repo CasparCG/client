@@ -2,8 +2,10 @@
 
 #include <QtNetwork/QHostAddress>
 
+#include <QtCore/QDebug>
 #include <QtCore/QStringList>
 #include <QtCore/QTimer>
+#include <QtCore/QThread>
 
 SwitcherDevice::SwitcherDevice(const QString& address, QObject* parent)
     : QObject(parent),
@@ -25,8 +27,6 @@ void SwitcherDevice::connectDevice()
         return;
 
     this->atemConnection->connectToSwitcher(QHostAddress(this->address));
-
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void SwitcherDevice::disconnectDevice()
@@ -43,6 +43,8 @@ void SwitcherDevice::disconnectDevice()
 
 void SwitcherDevice::setConnected()
 {
+    qDebug() << this->address << QString(": Connected");
+
     this->connected = true;
     this->command = SwitcherDevice::CONNECTIONSTATE;
 
@@ -51,6 +53,8 @@ void SwitcherDevice::setConnected()
 
 void SwitcherDevice::setDisconnected()
 {
+    qDebug() << this->address << QString(": Disconnected");
+
     this->connected = false;
     this->command = SwitcherDevice::CONNECTIONSTATE;
 

@@ -4,7 +4,7 @@
 
 AtemCutCommand::AtemCutCommand(QObject* parent)
     : AbstractCommand(parent),
-      step(""), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+      step("background"), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
 {
 }
 

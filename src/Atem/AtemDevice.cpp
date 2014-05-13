@@ -43,6 +43,16 @@ void AtemDevice::triggerCut()
     SwitcherDevice::atemConnection->doCut();
 }
 
+QMap<quint16, QAtemConnection::InputInfo> AtemDevice::inputInfos()
+{
+    return SwitcherDevice::atemConnection->inputInfos();
+}
+
+QHash<quint16, QAtemConnection::AudioInput> AtemDevice::audioInputs()
+{
+    return SwitcherDevice::atemConnection->audioInputs();
+}
+
 void AtemDevice::selectInput(const QString& switcher, const QString& input)
 {
     if (switcher == "pgm")

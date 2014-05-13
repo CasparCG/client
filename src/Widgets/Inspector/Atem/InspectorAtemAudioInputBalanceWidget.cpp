@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
@@ -15,8 +16,7 @@ InspectorAtemAudioInputBalanceWidget::InspectorAtemAudioInputBalanceWidget(QWidg
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
-
-    loadAtemInput();
+    QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 }
 
 void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -29,13 +29,49 @@ void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItem
     {
         this->command = dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand());
 
+        this->comboBoxInput->clear();
+        const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (device != NULL)
+            loadAtemAudioInput(device->inputInfos());
+
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->sliderBalance->setValue(this->command->getBalance() * 100);
         this->doubleSpinBoxBalance->setValue(this->command->getBalance());
-        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext()); 
     }
 
     blockAllSignals(false);
+}
+
+void InspectorAtemAudioInputBalanceWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
+{
+    if (this->model != NULL)
+    {
+        // Should we update the device name?
+        if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
+        {
+            const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
+            loadAtemAudioInput(device->inputInfos());
+        }
+    }
+}
+
+void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values
+    this->comboBoxInput->blockSignals(true);
+
+    this->comboBoxInput->clear();
+    this->comboBoxInput->addItem("Master", "0");
+
+    foreach (quint16 key, inputs.keys())
+    {
+        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+    }
+
+    this->comboBoxInput->blockSignals(false);
 }
 
 void InspectorAtemAudioInputBalanceWidget::blockAllSignals(bool block)
@@ -44,19 +80,6 @@ void InspectorAtemAudioInputBalanceWidget::blockAllSignals(bool block)
     this->sliderBalance->blockSignals(block);
     this->doubleSpinBoxBalance->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
-}
-
-void InspectorAtemAudioInputBalanceWidget::loadAtemInput()
-{
-    // We do not have a command object, block the signals.
-    // Events will not be triggered while we update the values.
-    this->comboBoxInput->blockSignals(true);
-
-    QList<AtemAudioInputModel> models = DatabaseManager::getInstance().getAtemAudioInput();
-    foreach (AtemAudioInputModel model, models)
-        this->comboBoxInput->addItem(model.getName(), model.getValue());
-
-    this->comboBoxInput->blockSignals(false);
 }
 
 void InspectorAtemAudioInputBalanceWidget::inputChanged(int index)
