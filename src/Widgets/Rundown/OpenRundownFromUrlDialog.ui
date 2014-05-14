@@ -80,19 +80,6 @@
     </property>
    </column>
   </widget>
-  <widget class="QLabel" name="labelRundownInformation">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>484</y>
-     <width>591</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>* Select the rundown from the list to open</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>
