@@ -532,12 +532,32 @@ void RundownTreeWidget::reloadRundown()
     if (this->activeRundown == Rundown::DEFAULT_NAME)
         return;
 
+    int itemRow = 0;
+    int groupRow = 0;
+    bool inGroup = false;
+
+    if (this->treeWidgetRundown->currentItem() != NULL)
+    {
+        itemRow = this->treeWidgetRundown->currentIndex().row();
+        if (this->treeWidgetRundown->currentItem()->parent() != NULL)
+        {
+            inGroup = true;
+            groupRow = this->treeWidgetRundown->invisibleRootItem()->indexOfChild(this->treeWidgetRundown->currentItem()->parent());
+        }
+    }
+
     this->treeWidgetRundown->removeAllItems();
 
     if (this->repositoryRundown)
         openRundownFromUrl(this->activeRundown);
     else
         openRundown(this->activeRundown);
+
+    this->treeWidgetRundown->clearSelection();
+    if (inGroup)
+       this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(groupRow)->child(itemRow));
+    else
+        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(itemRow));
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)
