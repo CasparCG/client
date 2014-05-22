@@ -228,6 +228,9 @@ bool RundownGridWidget::executeCommand(Playout::PlayoutType::Type type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+                if (this->command.getChannel() > channelFormats.count())
+                    return true;
+
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
                 this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
