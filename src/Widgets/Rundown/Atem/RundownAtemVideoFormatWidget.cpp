@@ -227,12 +227,9 @@ bool RundownAtemVideoFormatWidget::executeCommand(Playout::PlayoutType::Type typ
 
 void RundownAtemVideoFormatWidget::executePlay()
 {
-    foreach (const AtemDeviceModel& model, AtemDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->setVideoFormat(this->command.getFormat());
-    }
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->setVideoFormat(this->command.getFormat());
 }
 
 void RundownAtemVideoFormatWidget::delayChanged(int delay)

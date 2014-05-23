@@ -228,12 +228,9 @@ bool RundownNetworkSourceWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownNetworkSourceWidget::executePlay()
 {
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->selectNetworkSource(this->command.getTarget(), this->command.getSource());
-    }
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->selectNetworkSource(this->command.getTarget(), this->command.getSource());
 }
 
 void RundownNetworkSourceWidget::delayChanged(int delay)

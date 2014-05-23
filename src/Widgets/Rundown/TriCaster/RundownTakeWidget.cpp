@@ -227,12 +227,9 @@ bool RundownTakeWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownTakeWidget::executePlay()
 {
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->triggerTake(this->command.getStep());
-    }
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->triggerTake(this->command.getStep());
 }
 
 void RundownTakeWidget::delayChanged(int delay)

@@ -229,12 +229,9 @@ bool RundownAtemAutoWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAtemAutoWidget::executePlay()
 {
-    foreach (const AtemDeviceModel& model, AtemDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
-    }
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
 }
 
 void RundownAtemAutoWidget::delayChanged(int delay)

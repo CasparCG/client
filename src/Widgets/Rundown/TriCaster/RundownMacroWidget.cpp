@@ -227,12 +227,9 @@ bool RundownMacroWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownMacroWidget::executePlay()
 {
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->playMacro(this->command.getMacro());
-    }
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->playMacro(this->command.getMacro());
 }
 
 void RundownMacroWidget::delayChanged(int delay)

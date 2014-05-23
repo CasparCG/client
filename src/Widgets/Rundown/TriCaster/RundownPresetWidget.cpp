@@ -228,12 +228,9 @@ bool RundownPresetWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownPresetWidget::executePlay()
 {
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->selectPreset(this->command.getSource(), this->command.getPreset());
-    }
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    if (device != NULL && device->isConnected())
+        device->selectPreset(this->command.getSource(), this->command.getPreset());
 }
 
 void RundownPresetWidget::delayChanged(int delay)
