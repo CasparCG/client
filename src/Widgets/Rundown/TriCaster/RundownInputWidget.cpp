@@ -230,19 +230,16 @@ bool RundownInputWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownInputWidget::executePlay()
 {
-    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->selectInput(this->command.getSwitcher(), this->command.getInput(), DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue());
 }
 
 void RundownInputWidget::executePreview()
 {
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<TriCasterDevice>  device = TriCasterDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->selectInput("prev", this->command.getInput(), DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue());
-    }
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+        device->selectInput("prev", this->command.getInput(), DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue());
 }
 
 void RundownInputWidget::delayChanged(int delay)

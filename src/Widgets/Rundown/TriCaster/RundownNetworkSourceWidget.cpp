@@ -228,7 +228,7 @@ bool RundownNetworkSourceWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownNetworkSourceWidget::executePlay()
 {
-    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->selectNetworkSource(this->command.getTarget(), this->command.getSource());
 }

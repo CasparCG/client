@@ -230,19 +230,16 @@ bool RundownAtemInputWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAtemInputWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->selectInput(this->command.getSwitcher(), this->command.getInput());
 }
 
 void RundownAtemInputWidget::executePreview()
 {
-    foreach (const AtemDeviceModel& model, AtemDeviceManager::getInstance().getDeviceModels())
-    {
-        const QSharedPointer<AtemDevice>  device = AtemDeviceManager::getInstance().getDeviceByName(model.getName());
-        if (device != NULL && device->isConnected())
-            device->selectInput("prev", this->command.getInput());
-    }
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+        device->selectInput("prev", this->command.getInput());
 }
 
 void RundownAtemInputWidget::delayChanged(int delay)

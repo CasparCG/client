@@ -228,7 +228,7 @@ bool RundownAtemAudioInputBalanceWidget::executeCommand(Playout::PlayoutType::Ty
 
 void RundownAtemAudioInputBalanceWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setAudioInputBalance(this->command.getInput(), this->command.getBalance());
 }

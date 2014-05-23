@@ -228,7 +228,7 @@ bool RundownAtemKeyerStateWidget::executeCommand(Playout::PlayoutType::Type type
 
 void RundownAtemKeyerStateWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setKeyerState(this->command.getKeyer(), this->command.getState());
 }

@@ -227,7 +227,7 @@ bool RundownAtemCutWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAtemCutWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->triggerCut();
 }

@@ -228,7 +228,7 @@ bool RundownAtemAudioInputStateWidget::executeCommand(Playout::PlayoutType::Type
 
 void RundownAtemAudioInputStateWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setAudioInputState(this->command.getInput(), this->command.getState());
 }

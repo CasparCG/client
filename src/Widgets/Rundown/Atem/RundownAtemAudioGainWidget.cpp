@@ -228,7 +228,7 @@ bool RundownAtemAudioGainWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAtemAudioGainWidget::executePlay()
 {
-    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setAudioGain(this->command.getInput(), this->command.getGain());
 }

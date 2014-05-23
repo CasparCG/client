@@ -229,7 +229,7 @@ bool RundownAutoWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAutoWidget::executePlay()
 {
-    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getName());
+    const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
 }
