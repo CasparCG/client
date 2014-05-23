@@ -181,9 +181,9 @@ void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     QMessageBox box(this);
-    box.setWindowTitle("Quit");
+    box.setWindowTitle("Quit Application");
     box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
-    box.setText("Are you sure you want to quit? Unsaved changes to your rundowns will be lost!");
+    box.setText("Are you sure you want to quit the application? Unsaved changes to your rundowns will be lost!");
     box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
     box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     box.buttons().at(0)->setIcon(QIcon());

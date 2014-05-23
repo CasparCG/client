@@ -13,6 +13,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 #include <QtGui/QFileDialog>
+#include <QtGui/QMessageBox>
 #include <QtGui/QToolButton>
 
 RundownWidget::RundownWidget(QWidget* parent)
@@ -120,15 +121,29 @@ void RundownWidget::closeRundown(const CloseRundownEvent& event)
 
 void RundownWidget::deleteRundown(const DeleteRundownEvent& event)
 {
-    if (this->tabWidgetRundown->count() <= Rundown::MAX_NUMBER_OF_RUNDONWS)
-    {
-        EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(true));
-        EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(true));
-        EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(true));
-    }
+    QMessageBox box(this);
+    box.setWindowTitle("Close Rundown");
+    box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
+    box.setText("Are you sure you want to close the rundown? Unsaved changes will be lost!");
+    box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
+    box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    box.buttons().at(0)->setIcon(QIcon());
+    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+    box.buttons().at(1)->setIcon(QIcon());
+    box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
 
-    // Delete the page widget, which automatically removes the tab as well.
-    delete this->tabWidgetRundown->widget(event.getIndex());
+    if (box.exec() == QMessageBox::Yes)
+    {
+        // Delete the page widget, which automatically removes the tab as well.
+        delete this->tabWidgetRundown->widget(event.getIndex());
+
+        if (this->tabWidgetRundown->count() <= Rundown::MAX_NUMBER_OF_RUNDONWS)
+        {
+            EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(true));
+            EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(true));
+            EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(true));
+        }
+    }
 }
 
 void RundownWidget::openRundown(const OpenRundownEvent& event)
