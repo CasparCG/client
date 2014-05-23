@@ -57,7 +57,7 @@ void ImageCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void ImageCommand::setTransitionDuration(int durationTransition)
+void ImageCommand::setTransitionDuration(int transitionDuration)
 {
     this->transitionDuration = transitionDuration;
     emit transitionDurationChanged(this->transitionDuration);
