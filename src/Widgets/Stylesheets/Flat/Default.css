@@ -490,6 +490,10 @@ QMenuBar::item:pressed
 {
     background-color: rgba(35, 35, 35, 255);
 }
+QMenuBar::item:disabled
+{
+    color: rgba(128, 128, 128, 255);
+}
 
 /*
  * QMenu
@@ -515,6 +519,10 @@ QMenu::item:selected
 {
     color: rgba(255, 255, 255, 255);
     background-color: rgba(70, 115, 195, 64);
+}
+QMenu::item:disabled
+{
+    color: rgba(128, 128, 128, 255);
 }
 QMenu::indicator
 {
