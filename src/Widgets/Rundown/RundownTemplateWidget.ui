@@ -289,5 +289,6 @@
  <connections/>
  <slots>
   <slot>addToCombo()</slot>
+  <slot>showAddTemplateDataDialog(QString)</slot>
  </slots>
 </ui>

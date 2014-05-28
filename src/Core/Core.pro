@@ -153,7 +153,8 @@ HEADERS += \
     Events/Rundown/OpenRundownFromUrlEvent.h \
     Events/Rundown/OpenRundownFromUrlMenuEvent.h \
     Events/Rundown/ReloadRundownEvent.h \
-    Models/Atem/AtemKeyerModel.h
+    Models/Atem/AtemKeyerModel.h \
+    Events/Inspector/ShowAddTemplateDataDialogEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -296,7 +297,8 @@ SOURCES += \
     Events/Rundown/OpenRundownFromUrlEvent.cpp \
     Events/Rundown/OpenRundownFromUrlMenuEvent.cpp \
     Events/Rundown/ReloadRundownEvent.cpp \
-    Models/Atem/AtemKeyerModel.cpp
+    Models/Atem/AtemKeyerModel.cpp \
+    Events/Inspector/ShowAddTemplateDataDialogEvent.cpp
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

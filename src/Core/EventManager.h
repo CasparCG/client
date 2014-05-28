@@ -24,6 +24,7 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/TemplateChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
+#include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
@@ -115,6 +116,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
+        Q_SIGNAL void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -162,4 +164,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event);
         void fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent&);
         void fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent&);
+        void fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataDialogEvent&);
 };

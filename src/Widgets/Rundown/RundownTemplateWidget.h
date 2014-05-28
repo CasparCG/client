@@ -20,6 +20,7 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
 
+#include <QtCore/QEvent>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
@@ -59,6 +60,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         virtual void clearDelayedCommands();
 
     protected:
+        virtual bool eventFilter(QObject* target, QEvent* event);
         void dragEnterEvent(QDragEnterEvent* event);
         void dropEvent(QDropEvent* event);
 

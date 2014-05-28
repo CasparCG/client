@@ -70,6 +70,16 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     checkDeviceConnection();
 
     configureOscSubscriptions();
+
+    this->installEventFilter(this);
+}
+
+bool RundownTemplateWidget::eventFilter(QObject* object, QEvent* event)
+{
+    if (event->type() == QEvent::MouseButtonDblClick)
+        EventManager::getInstance().fireShowAddTemplateDataDialogEvent(ShowAddTemplateDataDialogEvent());
+
+    return QObject::eventFilter(object, event);
 }
 
 void RundownTemplateWidget::labelChanged(const LabelChangedEvent& event)

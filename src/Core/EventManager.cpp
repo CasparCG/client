@@ -76,6 +76,11 @@ void EventManager::fireAddTemplateDataEvent(const AddTemplateDataEvent& event)
     emit addTemplateData(event);
 }
 
+void EventManager::fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataDialogEvent& event)
+{
+    emit showAddTemplateDataDialog(event);
+}
+
 void EventManager::fireOscOutputChangedEvent(const OscOutputChangedEvent& event)
 {
     emit oscOutputChanged(event);

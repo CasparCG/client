@@ -5,6 +5,7 @@
 
 #include "Commands/TemplateCommand.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
+#include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -46,4 +47,5 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
+        Q_SLOT void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
 };

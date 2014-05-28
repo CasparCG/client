@@ -22,10 +22,11 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     this->treeWidgetTemplateData->setColumnWidth(1, 87);
     this->fieldCounter = this->treeWidgetTemplateData->invisibleRootItem()->childCount();
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&)), this, SLOT(showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addTemplateData(const AddTemplateDataEvent&)), this, SLOT(addTemplateData(const AddTemplateDataEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
-    qApp->installEventFilter(this);
+    this->treeWidgetTemplateData->installEventFilter(this);
 }
 
 bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
@@ -33,24 +34,29 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
     if (event->type() == QEvent::KeyPress)
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
-        if (target == this->treeWidgetTemplateData)
-        {
-            if (keyEvent->key() == Qt::Key_Delete)
-                return removeRow();
-            else if ((keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) && keyEvent->modifiers() == Qt::ShiftModifier)
-                return editRow();
-            else if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
-                return addRow();
-            else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
-                return duplicateSelectedItem();
-            else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
-                return copySelectedItem();
-            else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
-                return pasteSelectedItem();
-        }
+        if (keyEvent->key() == Qt::Key_Delete)
+            return removeRow();
+        else if ((keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) && keyEvent->modifiers() == Qt::ShiftModifier)
+            return editRow();
+        else if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
+            return addRow();
+        else if (keyEvent->key() == Qt::Key_D && keyEvent->modifiers() == Qt::ControlModifier)
+            return duplicateSelectedItem();
+        else if (keyEvent->key() == Qt::Key_C && keyEvent->modifiers() == Qt::ControlModifier)
+            return copySelectedItem();
+        else if (keyEvent->key() == Qt::Key_V && keyEvent->modifiers() == Qt::ControlModifier)
+            return pasteSelectedItem();
     }
 
     return QObject::eventFilter(target, event);
+}
+
+void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent& event)
+{
+    int index = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1;
+    this->treeWidgetTemplateData->setCurrentItem(this->treeWidgetTemplateData->invisibleRootItem()->child(index));
+
+    addRow();
 }
 
 void InspectorTemplateWidget::addTemplateData(const AddTemplateDataEvent& event)
