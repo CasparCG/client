@@ -595,9 +595,6 @@
        <height>638</height>
       </rect>
      </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
@@ -814,9 +811,6 @@
        <height>251</height>
       </rect>
      </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
@@ -995,9 +989,6 @@
        <width>535</width>
        <height>251</height>
       </rect>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>
@@ -3007,9 +2998,6 @@
        <width>535</width>
        <height>251</height>
       </rect>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>

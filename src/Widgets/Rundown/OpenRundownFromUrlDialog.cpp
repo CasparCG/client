@@ -9,6 +9,7 @@
 
 #include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QMessageBox>
 
 #include <QDebug>
@@ -26,6 +27,26 @@ OpenRundownFromUrlDialog::OpenRundownFromUrlDialog(QWidget* parent)
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(finished(QNetworkReply*)));
     this->repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
     this->networkManager->get(QNetworkRequest(QUrl(this->repositoryUrl)));
+
+    qApp->installEventFilter(this);
+}
+
+bool OpenRundownFromUrlDialog::eventFilter(QObject* target, QEvent* event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if (target == this->treeWidgetRundowns)
+        {
+            if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)
+            {
+                QDialog::accept();
+                return true;
+            }
+        }
+    }
+
+    return QObject::eventFilter(target, event);
 }
 
 void OpenRundownFromUrlDialog::accept()
@@ -58,4 +79,9 @@ QString OpenRundownFromUrlDialog::getPath() const
         return "";
 
     return this->treeWidgetRundowns->selectedItems().at(0)->text(3);
+}
+
+void OpenRundownFromUrlDialog::itemDoubleClicked(QTreeWidgetItem* current, int index)
+{
+    QDialog::accept();
 }

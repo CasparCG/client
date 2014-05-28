@@ -22,7 +22,7 @@ void TemplateDataTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 void TemplateDataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
     if (!(event->buttons() & Qt::LeftButton))
-             return;
+        return;
 
     if ((event->pos() - dragStartPosition).manhattanLength() < qApp->startDragDistance())
          return;
@@ -45,12 +45,12 @@ void TemplateDataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     drag->exec(Qt::CopyAction);
 }
 
-Qt::DropActions TemplateDataTreeBaseWidget::supportedDropActions () const
+Qt::DropActions TemplateDataTreeBaseWidget::supportedDropActions() const
 {
     return Qt::CopyAction;
 }
 
-QStringList TemplateDataTreeBaseWidget::mimeTypes () const
+QStringList TemplateDataTreeBaseWidget::mimeTypes() const
 {
     QStringList list;
     list.append("application/library-dataitem");

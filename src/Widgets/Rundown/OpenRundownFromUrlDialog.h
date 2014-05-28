@@ -10,6 +10,7 @@
 #include <QtCore/QList>
 
 #include <QtGui/QDialog>
+#include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
 
 #include <QtNetwork/QNetworkReply>
@@ -25,6 +26,7 @@ class WIDGETS_EXPORT OpenRundownFromUrlDialog : public QDialog, Ui::OpenRundownF
         QString getPath() const;
 
     protected:
+        virtual bool eventFilter(QObject* target, QEvent* event);
         void accept();
 
     private:
@@ -33,4 +35,5 @@ class WIDGETS_EXPORT OpenRundownFromUrlDialog : public QDialog, Ui::OpenRundownF
         QNetworkAccessManager* networkManager;
 
         Q_SLOT void finished(QNetworkReply*);
+        Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
 };

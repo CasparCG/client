@@ -41,12 +41,6 @@
      <height>471</height>
     </rect>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="alternatingRowColors">
-    <bool>true</bool>
-   </property>
    <property name="rootIsDecorated">
     <bool>false</bool>
    </property>
@@ -99,13 +93,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidgetRundowns</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>OpenRundownFromUrlDialog</receiver>
+   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>442</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>678</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>addressFinished()</slot>
-  <slot>nameFinished()</slot>
-  <slot>testConnection()</slot>
   <slot>okClicked()</slot>
-  <slot>nameChanged(QString)</slot>
-  <slot>addressChanged(QString)</slot>
+  <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
  </slots>
 </ui>

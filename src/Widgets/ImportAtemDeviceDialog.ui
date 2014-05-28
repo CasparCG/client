@@ -41,9 +41,6 @@
      <height>471</height>
     </rect>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="alternatingRowColors">
     <bool>true</bool>
    </property>

@@ -10,6 +10,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCursor>
+#include <QtGui/QKeyEvent>
 #include <QtGui/QResizeEvent>
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
