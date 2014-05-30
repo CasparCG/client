@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setupMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
-    setWindowTitle(QString("%1 %2.%3.%4 BETA 1").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
+    setWindowTitle(QString("%1 %2.%3.%4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
     this->applicationTitle = this->windowTitle();
 
     this->widgetAction->setVisible(false);
@@ -60,16 +60,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 void MainWindow::setupMenu()
 {
     this->fileMenu = new QMenu(this);
-    this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()));
-    this->openRundownAction = this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()));
-    this->openRundownFromUrlAction = this->fileMenu->addAction("Open Rundown from repository...", this, SLOT(openRundownFromUrl()));
+    this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()), QKeySequence::fromString("Ctrl+N"));
+    this->openRundownAction = this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()), QKeySequence::fromString("Ctrl+O"));
+    this->openRundownFromUrlAction = this->fileMenu->addAction("Open Rundown from repository...", this, SLOT(openRundownFromUrl()), QKeySequence::fromString("Ctrl+Shift+O"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
     this->saveAsPresetAction = this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
-    this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()));
+    this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()), QKeySequence::fromString("Ctrl+Shift+S"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
     //this->exportPresetAction = this->fileMenu->actions().at(4)->setEnabled(false);

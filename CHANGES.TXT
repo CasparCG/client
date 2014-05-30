@@ -4,7 +4,8 @@ CasparCG Client 2.0.7
 - FIX: Transition duration is not set correctly on image items.
 - FIX: Thumbnail preview for videos is missing in the preview inspector.
 - NEW: Double click on a template item in the rundown open up add template data dialog.
-
+- NEW: Added keyboard shortcuts for open rundown (Ctrl+O), open rundown from repository (Ctrl+Shift+O),
+       new rundown (Ctrl+N) and save as (Ctrl+Shift+S).
 
 
 CasparCG Client 2.0.7 BETA 1
