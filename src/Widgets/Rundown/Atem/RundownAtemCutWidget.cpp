@@ -210,7 +210,10 @@ void RundownAtemCutWidget::checkEmptyDevice()
 bool RundownAtemCutWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
-    {       
+    {
+        if (this->command.getDelay() < 0)
+            return true;
+
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
             QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
     }

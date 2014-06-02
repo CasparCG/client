@@ -14,6 +14,24 @@ TemplateDataDialog::TemplateDataDialog(QWidget* parent)
     setupUi(this);
 
     this->textEditValue->setFocus();
+
+    //this->installEventFilter(this);
+    this->textEditValue->installEventFilter(this);
+}
+
+bool TemplateDataDialog::eventFilter(QObject* target, QEvent* event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Enter)
+        {
+            QDialog::accept();
+            return true;
+        }
+    }
+
+    return QObject::eventFilter(target, event);
 }
 
 void TemplateDataDialog::accept()

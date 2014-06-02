@@ -221,35 +221,38 @@ bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update || type == Playout::PlayoutType::Load)
     {
-            if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        if (this->command.getDelay() < 0)
+            return true;
+
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
+        {
+            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
-                if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+                if (this->command.getChannel() > channelFormats.count())
+                    return true;
+
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+
+                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                this->executeTimer.setInterval(startDelay);
+
+                if (this->command.getDuration() > 0)
                 {
-                    const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                    if (this->command.getChannel() > channelFormats.count())
-                        return true;
-
-                    double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                    int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                    this->executeTimer.setInterval(startDelay);
-
-                    if (this->command.getDuration() > 0)
-                    {
-                        int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                        QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
-                    }
+                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
+                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
                 }
-                else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-                {
-                    this->executeTimer.setInterval(this->command.getDelay());
-
-                    if (this->command.getDuration() > 0)
-                        QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
-                }
-
-                this->executeTimer.start();
             }
+            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+            {
+                this->executeTimer.setInterval(this->command.getDelay());
+
+                if (this->command.getDuration() > 0)
+                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
+            }
+
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();

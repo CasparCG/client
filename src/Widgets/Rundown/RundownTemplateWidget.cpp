@@ -267,6 +267,9 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if (type == Playout::PlayoutType::Play)
     {
+        if (this->command.getDelay() < 0)
+            return true;
+
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
@@ -301,6 +304,9 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         executePlay();
     else if (type == Playout::PlayoutType::Update)
     {
+        if (this->command.getDelay() < 0)
+            return true;
+
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
 

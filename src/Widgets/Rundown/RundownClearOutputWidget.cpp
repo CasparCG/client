@@ -206,7 +206,10 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) ||
              (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext()))
-    {  
+    {
+        if (this->command.getDelay() < 0)
+            return true;
+
         this->executeTimer.disconnect(); // Disconnect all events.
 
         if (this->command.getClearChannel())

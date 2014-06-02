@@ -221,6 +221,9 @@ bool RundownVolumeWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Update)
     {
+        if (this->command.getDelay() < 0)
+            return true;
+
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)

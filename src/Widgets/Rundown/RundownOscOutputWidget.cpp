@@ -163,6 +163,9 @@ bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
+        if (this->command.getDelay() < 0)
+            return true;
+
         if (!this->command.getOutput().isEmpty() && !this->command.getPath().isEmpty())
         {
             this->executeTimer.setInterval(this->command.getDelay());

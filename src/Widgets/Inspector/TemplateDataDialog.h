@@ -3,6 +3,8 @@
 #include "../Shared.h"
 #include "ui_TemplateDataDialog.h"
 
+#include <QtCore/QEvent>
+
 #include <QtGui/QDialog>
 #include <QtGui/QWidget>
 
@@ -20,5 +22,6 @@ class WIDGETS_EXPORT TemplateDataDialog : public QDialog, Ui::TemplateDataDialog
         void setValue(const QString& value);
 
     protected:
+        virtual bool eventFilter(QObject* target, QEvent* event);
         void accept();
 };

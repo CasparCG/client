@@ -160,6 +160,9 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         executeStop();
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
+        if (this->command.getDelay() < 0)
+            return true;
+
         this->executeTimer.setInterval(this->command.getDelay());
         this->executeTimer.start();
     }

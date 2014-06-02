@@ -56,7 +56,19 @@ void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDat
     int index = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetTemplateData->setCurrentItem(this->treeWidgetTemplateData->invisibleRootItem()->child(index));
 
-    addRow();
+    TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    dialog->setName(QString("f%1").arg(this->fieldCounter));
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        QTreeWidgetItem* treeItem = new QTreeWidgetItem();
+        treeItem->setText(0, dialog->getName());
+        treeItem->setText(1, dialog->getValue());
+
+        this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
+        this->treeWidgetTemplateData->setCurrentItem(treeItem);
+
+        this->fieldCounter++;
+    }
 }
 
 void InspectorTemplateWidget::addTemplateData(const AddTemplateDataEvent& event)
