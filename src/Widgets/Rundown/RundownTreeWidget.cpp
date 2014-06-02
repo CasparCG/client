@@ -485,8 +485,14 @@ void RundownTreeWidget::openRundown(const QString& path)
         QTextStream stream(&file);
         stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
+        // Save the latest value stored in the clipboard.
+        QString latest = qApp->clipboard()->text();
+
         qApp->clipboard()->setText(stream.readAll());
         pasteSelectedItems();
+
+        // Set previous stored clipboard value.
+        qApp->clipboard()->setText(latest);
 
         file.close();
 
@@ -514,8 +520,14 @@ void RundownTreeWidget::openRundownFromUrl(const QString& path)
 
 void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 {
+    // Save the latest value stored in the clipboard.
+    QString latest = qApp->clipboard()->text();
+
     qApp->clipboard()->setText(QString::fromUtf8(reply->readAll()));
     pasteSelectedItems();
+
+    // Set previous stored clipboard value.
+    qApp->clipboard()->setText(latest);
 
     if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
         this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));

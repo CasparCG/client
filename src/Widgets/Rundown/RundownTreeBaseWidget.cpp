@@ -198,11 +198,17 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
 
 bool RundownTreeBaseWidget::duplicateSelectedItems()
 {
+    // Save the latest value stored in the clipboard.
+    QString latest = qApp->clipboard()->text();
+
     if (!copySelectedItems())
         return true;
 
     if (!pasteSelectedItems())
         return true;
+
+    // Set previous stored clipboard value.
+    qApp->clipboard()->setText(latest);
 
     return true;
 }

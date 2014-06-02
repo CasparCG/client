@@ -15,7 +15,6 @@ TemplateDataDialog::TemplateDataDialog(QWidget* parent)
 
     this->textEditValue->setFocus();
 
-    //this->installEventFilter(this);
     this->textEditValue->installEventFilter(this);
 }
 
