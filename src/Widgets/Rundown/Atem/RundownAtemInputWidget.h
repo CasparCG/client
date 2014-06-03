@@ -55,7 +55,9 @@ class WIDGETS_EXPORT RundownAtemInputWidget : public QWidget, Ui::RundownAtemInp
 
         virtual void setCompactView(bool compactView);
 
-        virtual void clearDelayedCommands() {}
+        virtual void clearDelayedCommands();
+
+        virtual void setUsed(bool used);
 
     private:
         bool active;

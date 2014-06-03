@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
                                        bool compactView)
@@ -248,6 +250,32 @@ void RundownImageWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownImageWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+
+    this->paused = false;
+    this->loaded = false;
+    this->playing = false;
+}
+
+void RundownImageWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -360,6 +388,8 @@ void RundownImageWidget::executePlay()
                                         this->command.getDirection(), this->command.getUseAuto());
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

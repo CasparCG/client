@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownGeometryWidget::RundownGeometryWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                              bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -219,6 +221,28 @@ void RundownGeometryWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownGeometryWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownGeometryWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownGeometryWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -313,6 +337,8 @@ void RundownGeometryWidget::executePlay()
                                       this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
                                       this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownGeometryWidget::executeClearVideolayer()

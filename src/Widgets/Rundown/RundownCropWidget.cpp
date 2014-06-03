@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
     : QWidget(parent),
@@ -218,6 +220,28 @@ void RundownCropWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownCropWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownCropWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownCropWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -310,6 +334,8 @@ void RundownCropWidget::executePlay()
                                       this->command.getCropRight(), this->command.getCropTop(), this->command.getCropBottom(),
                                       this->command.getDuration(), this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownCropWidget::executeClearVideolayer()

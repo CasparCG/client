@@ -3,6 +3,7 @@
 #include "Global.h"
 #include "GpiManager.h"
 #include "EventManager.h"
+#include "DatabaseManager.h"
 
 #include "Events/Inspector/LabelChangedEvent.h"
 
@@ -11,7 +12,7 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidget>
-
+#include <QtGui/QGraphicsOpacityEffect>
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
@@ -151,10 +152,30 @@ void RundownGroupWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
+void RundownGroupWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (this->active)
         this->animation->start(1);
+
+    if (type == Playout::PlayoutType::Play)
+        setUsed(true);
 
     return true;
 }
@@ -172,6 +193,10 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
         if (widget == this)
         {
             EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(type, child));
+
+            if (type == Playout::PlayoutType::Play)
+                setUsed(true);
+
             break;
         }
     }

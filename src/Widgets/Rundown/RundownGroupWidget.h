@@ -53,6 +53,8 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         virtual void clearDelayedCommands() {}
 
+        virtual void setUsed(bool used);
+
     private:
         bool active;
         bool compactView;

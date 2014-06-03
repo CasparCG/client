@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                  bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -215,6 +217,28 @@ void RundownBrightnessWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownBrightnessWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownBrightnessWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -305,6 +329,8 @@ void RundownBrightnessWidget::executePlay()
             deviceShadow->setBrightness(this->command.getChannel(), this->command.getVideolayer(), this->command.getBrightness(),
                                         this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownBrightnessWidget::executeClearVideolayer()

@@ -52,6 +52,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void openRundownFromUrl(const QString& path);
         void saveRundown(bool saveAs);
         void reloadRundown();
+        void setUsed(bool used);
+        void setAllUsed(bool used);
 
         bool getAllowRemoteTriggering() const;
         bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
@@ -69,6 +71,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         QMenu* contextMenuTools;
         QMenu* contextMenuColor;
+        QMenu* contextMenuMark;
         QMenu* contextMenuMixer;
         QMenu* contextMenuOther;
         QMenu* contextMenuTriCaster;
@@ -185,4 +188,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void doOpenRundownFromUrl(QNetworkReply*);
+        Q_SLOT void markItemAsUsed();
+        Q_SLOT void markItemAsUnused();
+        Q_SLOT void markAllItemsAsUsed();
+        Q_SLOT void markAllItemsAsUnused();
 };

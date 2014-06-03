@@ -14,6 +14,7 @@
 #include <QtCore/QObject>
 
 #include <QtGui/QPixmap>
+#include <QtGui/QGraphicsOpacityEffect>
 
 RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
@@ -228,6 +229,32 @@ void RundownAudioWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownAudioWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+
+    this->paused = false;
+    this->loaded = false;
+    this->playing = false;
+}
+
+void RundownAudioWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -348,6 +375,8 @@ void RundownAudioWidget::executePlay()
             }
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

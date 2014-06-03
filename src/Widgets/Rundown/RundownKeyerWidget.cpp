@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -201,6 +203,28 @@ void RundownKeyerWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownKeyerWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownKeyerWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownKeyerWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -289,6 +313,8 @@ void RundownKeyerWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setKeyer(this->command.getChannel(), this->command.getVideolayer(), 1, this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownKeyerWidget::executeClearVideolayer()

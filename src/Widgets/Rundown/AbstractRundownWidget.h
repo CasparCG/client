@@ -32,4 +32,6 @@ class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
         virtual void setExpanded(bool expanded) = 0;
 
         virtual void clearDelayedCommands() = 0;
+
+        virtual void setUsed(bool used) = 0;
 };

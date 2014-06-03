@@ -15,6 +15,7 @@
 #include <QtCore/QFileInfo>
 
 #include <QtGui/QPixmap>
+#include <QtGui/QGraphicsOpacityEffect>
 
 RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
@@ -318,6 +319,23 @@ void RundownVideoWidget::clearDelayedCommands()
     this->playing = false;
 }
 
+void RundownVideoWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -476,6 +494,8 @@ void RundownVideoWidget::executePlay()
             }
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

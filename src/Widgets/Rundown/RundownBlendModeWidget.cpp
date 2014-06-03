@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -212,6 +214,28 @@ void RundownBlendModeWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownBlendModeWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownBlendModeWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownBlendModeWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -300,6 +324,8 @@ void RundownBlendModeWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
     }
+
+    setUsed(true);
 }
 
 void RundownBlendModeWidget::executeClearVideolayer()

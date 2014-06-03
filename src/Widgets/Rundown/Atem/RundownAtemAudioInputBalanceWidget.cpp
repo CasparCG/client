@@ -14,6 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownAtemAudioInputBalanceWidget::RundownAtemAudioInputBalanceWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -208,6 +210,28 @@ void RundownAtemAudioInputBalanceWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownAtemAudioInputBalanceWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownAtemAudioInputBalanceWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownAtemAudioInputBalanceWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
@@ -234,6 +258,8 @@ void RundownAtemAudioInputBalanceWidget::executePlay()
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setAudioInputBalance(this->command.getInput(), this->command.getBalance());
+
+    setUsed(true);
 }
 
 void RundownAtemAudioInputBalanceWidget::delayChanged(int delay)

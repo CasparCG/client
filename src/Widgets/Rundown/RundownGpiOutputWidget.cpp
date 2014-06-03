@@ -12,6 +12,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -154,6 +156,28 @@ void RundownGpiOutputWidget::setColor(const QString& color)
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
+void RundownGpiOutputWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownGpiOutputWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -191,6 +215,8 @@ void RundownGpiOutputWidget::executeStop()
 void RundownGpiOutputWidget::executePlay()
 {
     GpiManager::getInstance().getGpiDevice()->trigger(this->command.getGpoPort());
+
+    setUsed(true);
 }
 
 void RundownGpiOutputWidget::delayChanged(int delay)

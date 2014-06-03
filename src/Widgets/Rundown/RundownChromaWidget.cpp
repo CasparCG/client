@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownChromaWidget::RundownChromaWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                          bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -217,6 +219,28 @@ void RundownChromaWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownChromaWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownChromaWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownChromaWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -307,6 +331,8 @@ void RundownChromaWidget::executePlay()
             deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
                                     this->command.getSpread(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
     }
+
+    setUsed(true);
 }
 
 void RundownChromaWidget::executeClearVideolayer()

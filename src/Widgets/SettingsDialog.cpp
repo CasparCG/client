@@ -71,6 +71,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxPreviewOnAutoStep->setChecked(previewOnAutoStep);
     bool clearDelayedCommandsOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
     this->checkBoxClearDelayedCommandsOnAutoStep->setChecked(clearDelayedCommandsOnAutoStep);
+    bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+    this->checkBoxMarkUsedItems->setChecked(markUsedItems);
 
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
@@ -828,4 +830,10 @@ void SettingsDialog::deleteThumbnails()
     box.setStandardButtons(QMessageBox::Ok);
     box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
     box.exec();
+}
+
+void SettingsDialog::markUsedItemsChanged(int state)
+{
+    QString markUsedItems = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "MarkUsedItems", markUsedItems));
 }

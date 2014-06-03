@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                      bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -213,6 +215,28 @@ void RundownFileRecorderWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownFileRecorderWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownFileRecorderWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -303,6 +327,8 @@ void RundownFileRecorderWidget::executePlay()
             deviceShadow->startRecording(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
                                          this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
     }
+
+    setUsed(true);
 }
 
 void RundownFileRecorderWidget::channelChanged(int channel)

@@ -60,6 +60,8 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
 
         virtual void clearDelayedCommands();
 
+        virtual void setUsed(bool used);
+
     private:
         bool active;
         bool loaded;

@@ -169,6 +169,13 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTools->addMenu(this->contextMenuTriCaster);
     this->contextMenuTools->addMenu(this->contextMenuAtem);
 
+    this->contextMenuMark = new QMenu(this);
+    this->contextMenuMark->setTitle("Mark Item");
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Used", this, SLOT(markItemAsUsed()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Unused", this, SLOT(markItemAsUnused()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Used", this, SLOT(markAllItemsAsUsed()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Unused", this, SLOT(markAllItemsAsUnused()));
+
     this->contextMenuColor = new QMenu(this);
     this->contextMenuColor->setTitle("Colorize Item");
     //this->contextMenuColor->setIcon(QIcon(":/Graphics/Images/Color.png"));
@@ -190,6 +197,8 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/GroupSmall.png"),*/ "Group");
     this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/UngroupSmall.png"),*/ "Ungroup");
+    this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addMenu(this->contextMenuMark);
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
@@ -247,6 +256,26 @@ bool RundownTreeWidget::removeSelectedItems()
     this->treeWidgetRundown->checkEmptyRundown();
 
     return true;
+}
+
+void RundownTreeWidget::markItemAsUsed()
+{
+    EventManager::getInstance().fireMarkItemAsUsedEvent(MarkItemAsUsedEvent());
+}
+
+void RundownTreeWidget::markItemAsUnused()
+{
+    EventManager::getInstance().fireMarkItemAsUnusedEvent(MarkItemAsUnusedEvent());
+}
+
+void RundownTreeWidget::markAllItemsAsUsed()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUsedEvent(MarkAllItemsAsUsedEvent());
+}
+
+void RundownTreeWidget::markAllItemsAsUnused()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
 void RundownTreeWidget::addPresetItem(const AddPresetItemEvent& event)
@@ -669,9 +698,10 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
     {
         this->contextMenuRundown->actions().at(2)->setEnabled(false); // Group.
         this->contextMenuRundown->actions().at(3)->setEnabled(false); // Ungroup.
-        this->contextMenuRundown->actions().at(5)->setEnabled(false); // Colorize.
-        this->contextMenuRundown->actions().at(7)->setEnabled(false); // Save as Preset.
-        this->contextMenuRundown->actions().at(9)->setEnabled(false); // Remove.
+        this->contextMenuRundown->actions().at(5)->setEnabled(false); // Mark Item.
+        this->contextMenuRundown->actions().at(7)->setEnabled(false); // Colorize Item.
+        this->contextMenuRundown->actions().at(9)->setEnabled(false); // Save as Preset.
+        this->contextMenuRundown->actions().at(11)->setEnabled(false); // Remove.
     }
 
     this->contextMenuRundown->exec(this->treeWidgetRundown->mapToGlobal(point));
@@ -807,6 +837,43 @@ bool RundownTreeWidget::pasteSelectedItems()
 bool RundownTreeWidget::copySelectedItems() const
 {
     return this->treeWidgetRundown->copySelectedItems();
+}
+
+void RundownTreeWidget::setUsed(bool used)
+{
+    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+
+    rundownWidget->setUsed(used);
+    if (rundownWidget != NULL && rundownWidget->isGroup())
+    {
+        for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+        {
+            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+
+            dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
+        }
+    }
+}
+
+void RundownTreeWidget::setAllUsed(bool used)
+{
+    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+    {
+        QTreeWidgetItem* currentItem = this->treeWidgetRundown->invisibleRootItem()->child(i);
+        AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0));
+
+        rundownWidget->setUsed(used);
+        if (rundownWidget != NULL && rundownWidget->isGroup())
+        {
+            for (int i = 0; i < currentItem->childCount(); i++)
+            {
+                QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
+
+                dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
+            }
+        }
+    }
 }
 
 bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item)

@@ -47,10 +47,21 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveRundown(const SaveRundownEvent&)), this, SLOT(saveRundown(const SaveRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundown(const ReloadRundownEvent&)), this, SLOT(reloadRundown(const ReloadRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUsed(const MarkItemAsUsedEvent&)), this, SLOT(markItemAsUsed(const MarkItemAsUsedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUnused(const MarkItemAsUnusedEvent&)), this, SLOT(markItemAsUnused(const MarkItemAsUnusedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)), this, SLOT(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)), this, SLOT(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)));
 }
 
 void RundownWidget::setupMenus()
 {
+    this->contextMenuMark = new QMenu(this);
+    this->contextMenuMark->setTitle("Mark Item");
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Used", this, SLOT(markItemAsUsed()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Unused", this, SLOT(markItemAsUnused()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Used", this, SLOT(markAllItemsAsUsed()));
+    this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Unused", this, SLOT(markAllItemsAsUnused()));
+
     this->contextMenuRundownDropdown = new QMenu(this);
     this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
     this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(createNewRundown()));
@@ -59,6 +70,8 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addMenu(this->contextMenuMark);
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
@@ -69,7 +82,6 @@ void RundownWidget::setupMenus()
     this->allowRemoteTriggeringAction->setCheckable(true);
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
-
 
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)
 {
@@ -215,6 +227,42 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
     }
 }
 
+void RundownWidget::markItemAsUsed(const MarkItemAsUsedEvent& event)
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark Item as Used..."));
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(true);
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
+void RundownWidget::markItemAsUnused(const MarkItemAsUnusedEvent& event)
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark Item as Unused..."));
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(false);
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
+void RundownWidget::markAllItemsAsUsed(const MarkAllItemsAsUsedEvent& event)
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark All Items as Used..."));
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(true);
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
+void RundownWidget::markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent& event)
+{
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark All Items as Unused..."));
+
+    dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(false);
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
 void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
 {
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Reloading rundown..."));
@@ -273,6 +321,26 @@ void RundownWidget::reloadCurrentRundown()
 void RundownWidget::closeCurrentRundown()
 {
     EventManager::getInstance().fireCloseRundownEvent(CloseRundownEvent());
+}
+
+void RundownWidget::markItemAsUsedInRundown()
+{
+    EventManager::getInstance().fireMarkItemAsUsedEvent(MarkItemAsUsedEvent());
+}
+
+void RundownWidget::markItemAsUnusedInRundown()
+{
+    EventManager::getInstance().fireMarkItemAsUnusedEvent(MarkItemAsUnusedEvent());
+}
+
+void RundownWidget::markAllItemsAsUsedInRundown()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUsedEvent(MarkAllItemsAsUsedEvent());
+}
+
+void RundownWidget::markAllItemsAsUnusedInRundown()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
 void RundownWidget::allowRemoteTriggering(bool enabled)

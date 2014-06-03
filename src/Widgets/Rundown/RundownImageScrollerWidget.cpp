@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
                                                        bool compactView)
@@ -252,6 +254,32 @@ void RundownImageScrollerWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownImageScrollerWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+
+    this->paused = false;
+    this->loaded = false;
+    this->playing = false;
+}
+
+void RundownImageScrollerWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -362,6 +390,8 @@ void RundownImageScrollerWidget::executePlay()
                                               this->command.getProgressive());
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

@@ -14,6 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownAtemKeyerStateWidget::RundownAtemKeyerStateWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                          bool inGroup, bool compactView)
     : QWidget(parent),
@@ -208,6 +210,28 @@ void RundownAtemKeyerStateWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownAtemKeyerStateWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownAtemKeyerStateWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownAtemKeyerStateWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
@@ -234,6 +258,8 @@ void RundownAtemKeyerStateWidget::executePlay()
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setKeyerState(this->command.getKeyer(), this->command.getState());
+
+    setUsed(true);
 }
 
 void RundownAtemKeyerStateWidget::delayChanged(int delay)

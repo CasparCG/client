@@ -8,6 +8,10 @@
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/MarkItemAsUsedEvent.h"
+#include "Events/Rundown/MarkItemAsUnusedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUsedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUnusedEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 
@@ -37,6 +41,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* viewMenu;
         QMenu* libraryMenu;
         QMenu* rundownMenu;
+        QMenu* markMenu;
         QMenu* playoutMenu;
         QMenu* helpMenu;
         QMenuBar* menuBar;
@@ -78,6 +83,10 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void saveAsPreset();
         Q_SLOT void closeRundown();
         Q_SLOT void reloadRundown();
+        Q_SLOT void markItemAsUsedInRundown();
+        Q_SLOT void markItemAsUnusedInRundown();
+        Q_SLOT void markAllItemsAsUsedInRundown();
+        Q_SLOT void markAllItemsAsUnusedInRundown();
         Q_SLOT void allowRemoteTriggering(bool);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);

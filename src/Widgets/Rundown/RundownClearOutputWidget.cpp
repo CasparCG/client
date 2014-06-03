@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                    bool inGroup, bool compactView)
     : QWidget(parent),
@@ -200,6 +202,28 @@ void RundownClearOutputWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownClearOutputWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownClearOutputWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -274,6 +298,8 @@ void RundownClearOutputWidget::executeClearVideolayer()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
+
+    setUsed(true);
 }
 
 void RundownClearOutputWidget::executeClearChannel()
@@ -299,6 +325,8 @@ void RundownClearOutputWidget::executeClearChannel()
             deviceShadow->clearMixerChannel(this->command.getChannel());
         }
     }
+
+    setUsed(true);
 }
 
 void RundownClearOutputWidget::channelChanged(int channel)

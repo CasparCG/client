@@ -41,6 +41,10 @@
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/NewRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/MarkItemAsUsedEvent.h"
+#include "Events/Rundown/MarkItemAsUnusedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUsedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUnusedEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/OpenRundownFromUrlEvent.h"
 #include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
@@ -117,6 +121,10 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
         Q_SIGNAL void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
+        Q_SIGNAL void markItemAsUsed(const MarkItemAsUsedEvent&);
+        Q_SIGNAL void markItemAsUnused(const MarkItemAsUnusedEvent&);
+        Q_SIGNAL void markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&);
+        Q_SIGNAL void markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -165,4 +173,8 @@ class CORE_EXPORT EventManager : public QObject
         void fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent&);
         void fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent&);
         void fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataDialogEvent&);
+        void fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent&);
+        void fireMarkItemAsUnusedEvent(const MarkItemAsUnusedEvent&);
+        void fireMarkAllItemsAsUsedEvent(const MarkAllItemsAsUsedEvent&);
+        void fireMarkAllItemsAsUnusedEvent(const MarkAllItemsAsUnusedEvent&);
 };

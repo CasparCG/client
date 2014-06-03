@@ -14,6 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                          bool inGroup, bool compactView)
     : QWidget(parent),
@@ -200,6 +202,28 @@ void RundownCommitWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownCommitWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownCommitWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownCommitWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -264,6 +288,8 @@ void RundownCommitWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setCommit(this->command.getChannel());
     }
+
+    setUsed(true);
 }
 
 void RundownCommitWidget::channelChanged(int channel)

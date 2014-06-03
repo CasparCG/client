@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownCustomCommandWidget::RundownCustomCommandWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -210,6 +212,28 @@ void RundownCustomCommandWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownCustomCommandWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownCustomCommandWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownCustomCommandWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -313,6 +337,8 @@ void RundownCustomCommandWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected() && !this->command.getPlayCommand().isEmpty())
             deviceShadow->sendCommand(this->command.getPlayCommand());
     }
+
+    setUsed(true);
 }
 
 void RundownCustomCommandWidget::executeLoad()

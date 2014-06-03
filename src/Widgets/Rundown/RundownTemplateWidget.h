@@ -59,6 +59,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
         virtual void clearDelayedCommands();
 
+        virtual void setUsed(bool used);
+
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
         void dragEnterEvent(QDragEnterEvent* event);

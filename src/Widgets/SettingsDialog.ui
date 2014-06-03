@@ -331,7 +331,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>516</y>
+       <y>542</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -347,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>524</y>
+       <y>550</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -360,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>546</y>
+       <y>572</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -386,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>547</y>
+       <y>573</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -444,7 +444,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>471</y>
+       <y>497</y>
        <width>221</width>
        <height>20</height>
       </rect>
@@ -456,11 +456,11 @@
       <string>URL</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labelGpiSerialPort_2">
+    <widget class="QLabel" name="labelRepository">
      <property name="geometry">
       <rect>
        <x>88</x>
-       <y>473</y>
+       <y>499</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -508,7 +508,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>598</y>
+       <y>624</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -517,11 +517,11 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="labelDelay_2">
+    <widget class="QLabel" name="labelDeleteThumbnail">
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>654</y>
+       <y>680</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -533,11 +533,11 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="labelInspector_2">
+    <widget class="QLabel" name="labelDatabase">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>590</y>
+       <y>616</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -553,7 +553,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>653</y>
+       <y>679</y>
        <width>112</width>
        <height>22</height>
       </rect>
@@ -569,7 +569,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>618</y>
+       <y>644</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -579,6 +579,22 @@
      </property>
      <property name="text">
       <string>Store thumbnails in database</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxMarkUsedItems">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>463</y>
+       <width>291</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Mark used items (Windows and Linux only)</string>
      </property>
     </widget>
    </widget>
@@ -3989,8 +4005,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>263</x>
-     <y>597</y>
+     <x>265</x>
+     <y>623</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4165,8 +4181,8 @@
    <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>515</y>
+     <x>344</x>
+     <y>548</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -4213,8 +4229,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>692</y>
+     <x>250</x>
+     <y>732</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -4229,12 +4245,28 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>286</x>
-     <y>658</y>
+     <x>288</x>
+     <y>692</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
      <y>646</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxMarkUsedItems</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>markUsedItemsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>498</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>372</y>
     </hint>
    </hints>
   </connection>
@@ -4291,5 +4323,6 @@
   <slot>clearDelayedCommandsOnAutoStepChanged(int)</slot>
   <slot>deleteThumbnails()</slot>
   <slot>storeThumbnailsInDatabaseChanged(int)</slot>
+  <slot>markUsedItemsChanged(int)</slot>
  </slots>
 </ui>

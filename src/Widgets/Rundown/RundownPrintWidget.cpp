@@ -12,6 +12,8 @@
 
 #include <QtCore/QObject>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -198,6 +200,28 @@ void RundownPrintWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownPrintWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownPrintWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownPrintWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -262,6 +286,8 @@ void RundownPrintWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->print(this->command.getChannel(), this->command.getOutput());
     }
+
+    setUsed(true);
 }
 
 void RundownPrintWidget::channelChanged(int channel)

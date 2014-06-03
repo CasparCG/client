@@ -14,6 +14,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownMacroWidget::RundownMacroWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)
     : QWidget(parent),
@@ -207,6 +209,28 @@ void RundownMacroWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownMacroWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownMacroWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownMacroWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
@@ -233,6 +257,8 @@ void RundownMacroWidget::executePlay()
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->playMacro(this->command.getMacro());
+
+    setUsed(true);
 }
 
 void RundownMacroWidget::delayChanged(int delay)

@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
     : QWidget(parent),
@@ -157,6 +159,28 @@ void RundownOscOutputWidget::setColor(const QString& color)
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
+void RundownOscOutputWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownOscOutputWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -208,6 +232,8 @@ void RundownOscOutputWidget::executePlay()
         OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt());
     else if (this->command.getType() == "String")
         OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
+
+    setUsed(true);
 }
 
 void RundownOscOutputWidget::delayChanged(int delay)

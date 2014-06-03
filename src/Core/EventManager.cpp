@@ -81,6 +81,26 @@ void EventManager::fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataD
     emit showAddTemplateDataDialog(event);
 }
 
+void EventManager::fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent& event)
+{
+    emit markItemAsUsed(event);
+}
+
+void EventManager::fireMarkItemAsUnusedEvent(const MarkItemAsUnusedEvent& event)
+{
+    emit markItemAsUnused(event);
+}
+
+void EventManager::fireMarkAllItemsAsUsedEvent(const MarkAllItemsAsUsedEvent& event)
+{
+    emit markAllItemsAsUsed(event);
+}
+
+void EventManager::fireMarkAllItemsAsUnusedEvent(const MarkAllItemsAsUnusedEvent& event)
+{
+    emit markAllItemsAsUnused(event);
+}
+
 void EventManager::fireOscOutputChangedEvent(const OscOutputChangedEvent& event)
 {
     emit oscOutputChanged(event);

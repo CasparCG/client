@@ -11,6 +11,10 @@
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/NewRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
+#include "Events/Rundown/MarkItemAsUsedEvent.h"
+#include "Events/Rundown/MarkItemAsUnusedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUsedEvent.h"
+#include "Events/Rundown/MarkAllItemsAsUnusedEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/OpenRundownFromUrlEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
@@ -33,6 +37,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 
     private:
         QMenu* contextMenuRundownDropdown;
+        QMenu* contextMenuMark;
 
         QAction* newRundownAction;
         QAction* openRundownAction;
@@ -45,6 +50,14 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void openRundownFromRepo();
         Q_SLOT void reloadCurrentRundown();
         Q_SLOT void closeCurrentRundown();
+        Q_SLOT void markItemAsUsedInRundown();
+        Q_SLOT void markItemAsUnusedInRundown();
+        Q_SLOT void markAllItemsAsUsedInRundown();
+        Q_SLOT void markAllItemsAsUnusedInRundown();
+        Q_SLOT void markItemAsUsed(const MarkItemAsUsedEvent&);
+        Q_SLOT void markItemAsUnused(const MarkItemAsUnusedEvent&);
+        Q_SLOT void markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&);
+        Q_SLOT void markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&);
         Q_SLOT void createNewRundown();
         Q_SLOT void saveRundownToDisk();
         Q_SLOT void saveAsRundownToDisk();
@@ -65,5 +78,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void openRundownFromUrl(const OpenRundownFromUrlEvent&);
         Q_SLOT void saveRundown(const SaveRundownEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
-        Q_SLOT void reloadRundown(const ReloadRundownEvent&);
+        Q_SLOT void reloadRundown(const ReloadRundownEvent&);   
 };

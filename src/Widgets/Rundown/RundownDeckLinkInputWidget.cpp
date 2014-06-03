@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
                                                        bool compactView)
@@ -219,6 +221,28 @@ void RundownDeckLinkInputWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownDeckLinkInputWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownDeckLinkInputWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -327,6 +351,8 @@ void RundownDeckLinkInputWidget::executePlay()
                                               this->command.getFormat());
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

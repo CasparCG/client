@@ -86,7 +86,16 @@ void MainWindow::setupMenu()
     this->libraryMenu = new QMenu(this);
     this->libraryMenu->addAction("Refresh Library", this, SLOT(refreshLibrary()), QKeySequence::fromString("Ctrl+R"));
 
+    this->markMenu = new QMenu(this);
+    this->markMenu->setTitle("Mark Item");
+    this->markMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Used", this, SLOT(markItemAsUsed()));
+    this->markMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Unused", this, SLOT(markItemAsUnused()));
+    this->markMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Used", this, SLOT(markAllItemsAsUsed()));
+    this->markMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Unused", this, SLOT(markAllItemsAsUnused()));
+
     this->rundownMenu = new QMenu(this);
+    this->rundownMenu->addMenu(this->markMenu);
+    this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
@@ -295,6 +304,26 @@ void MainWindow::executeClearVideolayer()
 void MainWindow::executeClearChannel()
 {
     EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
+}
+
+void MainWindow::markItemAsUsedInRundown()
+{
+    EventManager::getInstance().fireMarkItemAsUsedEvent(MarkItemAsUsedEvent());
+}
+
+void MainWindow::markItemAsUnusedInRundown()
+{
+    EventManager::getInstance().fireMarkItemAsUnusedEvent(MarkItemAsUnusedEvent());
+}
+
+void MainWindow::markAllItemsAsUsedInRundown()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUsedEvent(MarkAllItemsAsUsedEvent());
+}
+
+void MainWindow::markAllItemsAsUnusedInRundown()
+{
+    EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
 void MainWindow::toggleCompactView()

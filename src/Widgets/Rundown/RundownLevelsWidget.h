@@ -54,7 +54,9 @@ class WIDGETS_EXPORT RundownLevelsWidget : public QWidget, Ui::RundownLevelsWidg
 
         virtual void setCompactView(bool compactView);
 
-        virtual void clearDelayedCommands() {}
+        virtual void clearDelayedCommands();
+
+        virtual void setUsed(bool used);
 
     private:
         bool active;

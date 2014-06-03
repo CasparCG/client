@@ -15,6 +15,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
     : QWidget(parent),
@@ -217,6 +219,28 @@ void RundownGridWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownGridWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownGridWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownGridWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -278,6 +302,8 @@ void RundownGridWidget::executePlay()
             deviceShadow->setGrid(this->command.getChannel(), this->command.getGrid(), this->command.getTransitionDuration(),
                                   this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownGridWidget::executeClearVideolayer()

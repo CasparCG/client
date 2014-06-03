@@ -54,7 +54,9 @@ class WIDGETS_EXPORT RundownContrastWidget : public QWidget, Ui::RundownContrast
 
         virtual void setCompactView(bool compactView);
 
-        virtual void clearDelayedCommands() {}
+        virtual void clearDelayedCommands();
+
+        virtual void setUsed(bool used);
 
     private:
         bool active;

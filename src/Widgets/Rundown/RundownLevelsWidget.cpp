@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownLevelsWidget::RundownLevelsWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                          bool inGroup, bool compactView)
     : QWidget(parent),
@@ -219,6 +221,28 @@ void RundownLevelsWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownLevelsWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownLevelsWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownLevelsWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -311,6 +335,8 @@ void RundownLevelsWidget::executePlay()
                                     this->command.getGamma(), this->command.getMinOut(), this->command.getMaxOut(), this->command.getTransitionDuration(),
                                     this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownLevelsWidget::executeClearVideolayer()

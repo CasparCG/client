@@ -50,7 +50,9 @@ class WIDGETS_EXPORT RundownOscOutputWidget : public QWidget, Ui::RundownOscOutp
 
         virtual void setCompactView(bool compactView);
 
-        virtual void clearDelayedCommands() {}
+        virtual void clearDelayedCommands();
+
+        virtual void setUsed(bool used);
 
     private:
         bool active;

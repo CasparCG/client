@@ -13,6 +13,7 @@
 #include <QtCore/QObject>
 
 #include <QtGui/QPixmap>
+#include <QtGui/QGraphicsOpacityEffect>
 
 RundownSolidColorWidget::RundownSolidColorWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
@@ -210,6 +211,28 @@ void RundownSolidColorWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownSolidColorWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownSolidColorWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -330,6 +353,8 @@ void RundownSolidColorWidget::executePlay()
             }
         }
     }
+
+    setUsed(true);
 
     this->paused = false;
     this->loaded = false;

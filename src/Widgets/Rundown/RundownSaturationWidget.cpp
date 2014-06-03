@@ -13,6 +13,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#include <QtGui/QGraphicsOpacityEffect>
+
 RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                  bool active, bool inGroup, bool compactview)
     : QWidget(parent),
@@ -215,6 +217,28 @@ void RundownSaturationWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
+void RundownSaturationWidget::clearDelayedCommands()
+{
+    this->executeTimer.stop();
+}
+
+void RundownSaturationWidget::setUsed(bool used)
+{
+    if (used)
+    {
+        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+        if (markUsedItems && this->graphicsEffect() == NULL)
+        {
+            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+            effect->setOpacity(0.25);
+
+            this->setGraphicsEffect(effect);
+        }
+    }
+    else
+        this->setGraphicsEffect(NULL);
+}
+
 bool RundownSaturationWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
@@ -305,6 +329,8 @@ void RundownSaturationWidget::executePlay()
             deviceShadow->setSaturation(this->command.getChannel(), this->command.getVideolayer(), this->command.getSaturation(),
                                         this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
+
+    setUsed(true);
 }
 
 void RundownSaturationWidget::executeClearVideolayer()
