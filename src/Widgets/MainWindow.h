@@ -83,10 +83,10 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void saveAsPreset();
         Q_SLOT void closeRundown();
         Q_SLOT void reloadRundown();
-        Q_SLOT void markItemAsUsedInRundown();
-        Q_SLOT void markItemAsUnusedInRundown();
-        Q_SLOT void markAllItemsAsUsedInRundown();
-        Q_SLOT void markAllItemsAsUnusedInRundown();
+        Q_SLOT void markItemAsUsed();
+        Q_SLOT void markItemAsUnused();
+        Q_SLOT void markAllItemsAsUsed();
+        Q_SLOT void markAllItemsAsUnused();
         Q_SLOT void allowRemoteTriggering(bool);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);

@@ -306,22 +306,22 @@ void MainWindow::executeClearChannel()
     EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));
 }
 
-void MainWindow::markItemAsUsedInRundown()
+void MainWindow::markItemAsUsed()
 {
     EventManager::getInstance().fireMarkItemAsUsedEvent(MarkItemAsUsedEvent());
 }
 
-void MainWindow::markItemAsUnusedInRundown()
+void MainWindow::markItemAsUnused()
 {
     EventManager::getInstance().fireMarkItemAsUnusedEvent(MarkItemAsUnusedEvent());
 }
 
-void MainWindow::markAllItemsAsUsedInRundown()
+void MainWindow::markAllItemsAsUsed()
 {
     EventManager::getInstance().fireMarkAllItemsAsUsedEvent(MarkAllItemsAsUsedEvent());
 }
 
-void MainWindow::markAllItemsAsUnusedInRundown()
+void MainWindow::markAllItemsAsUnused()
 {
     EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
