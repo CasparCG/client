@@ -331,7 +331,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>542</y>
+       <y>544</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -347,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>550</y>
+       <y>552</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -360,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>572</y>
+       <y>574</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -386,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>573</y>
+       <y>575</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -508,7 +508,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>624</y>
+       <y>626</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -521,7 +521,7 @@
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>680</y>
+       <y>682</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -537,7 +537,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>616</y>
+       <y>618</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -553,7 +553,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>679</y>
+       <y>681</y>
        <width>112</width>
        <height>22</height>
       </rect>
@@ -569,7 +569,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>644</y>
+       <y>646</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -594,7 +594,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Mark used items (Windows and Linux only)</string>
+      <string>Mark used items (Windows only)</string>
      </property>
     </widget>
    </widget>

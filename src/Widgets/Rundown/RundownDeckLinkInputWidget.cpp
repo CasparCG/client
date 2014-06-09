@@ -207,6 +207,11 @@ void RundownDeckLinkInputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownDeckLinkInputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownDeckLinkInputWidget::setColor(const QString& color)
 {
     this->color = color;

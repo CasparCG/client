@@ -196,6 +196,11 @@ void RundownInputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownInputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownInputWidget::setColor(const QString& color)
 {
     this->color = color;

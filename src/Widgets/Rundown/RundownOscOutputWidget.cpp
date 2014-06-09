@@ -153,6 +153,11 @@ void RundownOscOutputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownOscOutputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownOscOutputWidget::setColor(const QString& color)
 {
     this->color = color;

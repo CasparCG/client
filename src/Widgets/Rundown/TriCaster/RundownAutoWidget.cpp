@@ -197,6 +197,11 @@ void RundownAutoWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAutoWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAutoWidget::setColor(const QString& color)
 {
     this->color = color;

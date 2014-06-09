@@ -198,6 +198,16 @@
         <file>Images/Atem/VideoFormatSmall.png</file>
         <file>Images/Atem/VideoFormatSmallHover.png</file>
         <file>Images/Rundown.png</file>
+        <file>Images/Sienna.png</file>
+        <file>Images/Chocolate.png</file>
+        <file>Images/SeaGreen.png</file>
+        <file>Images/OliveDrab.png</file>
+        <file>Images/RoyalBlue.png</file>
+        <file>Images/DarkKhaki.png</file>
+        <file>Images/MaroonLight.png</file>
+        <file>Images/Maroon.png</file>
+        <file>Images/SteelBlue.png</file>
+        <file>Images/DarkSlateGray.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Default/Default.css</file>

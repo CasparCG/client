@@ -240,6 +240,11 @@ void RundownImageScrollerWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownImageScrollerWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownImageScrollerWidget::setColor(const QString& color)
 {
     this->color = color;

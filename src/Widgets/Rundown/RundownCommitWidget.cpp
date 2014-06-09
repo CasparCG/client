@@ -188,6 +188,11 @@ void RundownCommitWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownCommitWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownCommitWidget::setColor(const QString& color)
 {
     this->color = color;

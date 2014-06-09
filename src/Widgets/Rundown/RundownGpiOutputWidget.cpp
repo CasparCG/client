@@ -150,6 +150,11 @@ void RundownGpiOutputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownGpiOutputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownGpiOutputWidget::setColor(const QString& color)
 {
     this->color = color;

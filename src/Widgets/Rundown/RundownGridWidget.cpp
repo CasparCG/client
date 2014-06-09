@@ -205,6 +205,11 @@ void RundownGridWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownGridWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownGridWidget::setColor(const QString& color)
 {
     this->color = color;

@@ -195,6 +195,11 @@ void RundownAtemCutWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAtemCutWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAtemCutWidget::setColor(const QString& color)
 {
     this->color = color;

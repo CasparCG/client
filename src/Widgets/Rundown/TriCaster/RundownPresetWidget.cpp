@@ -196,6 +196,11 @@ void RundownPresetWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownPresetWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownPresetWidget::setColor(const QString& color)
 {
     this->color = color;

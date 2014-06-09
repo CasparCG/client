@@ -203,6 +203,11 @@ void RundownVolumeWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownVolumeWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownVolumeWidget::setColor(const QString& color)
 {
     this->color = color;

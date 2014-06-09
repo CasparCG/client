@@ -215,6 +215,11 @@ void RundownAudioWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAudioWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAudioWidget::setColor(const QString& color)
 {
     this->color = color;

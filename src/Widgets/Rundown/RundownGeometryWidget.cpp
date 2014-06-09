@@ -207,6 +207,11 @@ void RundownGeometryWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownGeometryWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownGeometryWidget::setColor(const QString& color)
 {
     this->color = color;

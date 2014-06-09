@@ -26,6 +26,7 @@ class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
         virtual void setActive(bool active) = 0;
         virtual void setInGroup(bool inGroup) = 0;
         virtual void setColor(const QString& color) = 0;
+        virtual QString getColor() const = 0;
 
         virtual void setCompactView(bool compactView) = 0;
 

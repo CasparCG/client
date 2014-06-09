@@ -195,6 +195,11 @@ void RundownTakeWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownTakeWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownTakeWidget::setColor(const QString& color)
 {
     this->color = color;

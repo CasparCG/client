@@ -197,6 +197,11 @@ void RundownSolidColorWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownSolidColorWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownSolidColorWidget::setColor(const QString& color)
 {
     this->color = color;

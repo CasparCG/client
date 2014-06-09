@@ -203,6 +203,11 @@ void RundownBrightnessWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownBrightnessWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownBrightnessWidget::setColor(const QString& color)
 {
     this->color = color;

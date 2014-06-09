@@ -45,6 +45,7 @@ class WIDGETS_EXPORT RundownImageScrollerWidget : public QWidget, Ui::RundownIma
         virtual void setActive(bool active);
         virtual void setInGroup(bool inGroup);
         virtual void setColor(const QString& color);
+        virtual QString getColor() const;
 
         virtual void setExpanded(bool expanded) {}
 

@@ -186,6 +186,11 @@ void RundownPrintWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownPrintWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownPrintWidget::setColor(const QString& color)
 {
     this->color = color;

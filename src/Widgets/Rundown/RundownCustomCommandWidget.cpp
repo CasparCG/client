@@ -198,6 +198,11 @@ void RundownCustomCommandWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownCustomCommandWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownCustomCommandWidget::setColor(const QString& color)
 {
     this->color = color;

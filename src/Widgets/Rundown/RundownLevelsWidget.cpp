@@ -207,6 +207,11 @@ void RundownLevelsWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownLevelsWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownLevelsWidget::setColor(const QString& color)
 {
     this->color = color;

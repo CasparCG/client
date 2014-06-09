@@ -196,6 +196,11 @@ void RundownAtemInputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAtemInputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAtemInputWidget::setColor(const QString& color)
 {
     this->color = color;

@@ -134,6 +134,11 @@ LibraryModel* RundownGroupWidget::getLibraryModel()
     return &this->model;
 }
 
+QString RundownGroupWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownGroupWidget::setColor(const QString& color)
 {
     this->color = color;

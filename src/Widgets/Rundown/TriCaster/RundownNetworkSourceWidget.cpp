@@ -196,6 +196,11 @@ void RundownNetworkSourceWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownNetworkSourceWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownNetworkSourceWidget::setColor(const QString& color)
 {
     this->color = color;

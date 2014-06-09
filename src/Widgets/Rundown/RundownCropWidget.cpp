@@ -206,6 +206,11 @@ void RundownCropWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownCropWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownCropWidget::setColor(const QString& color)
 {
     this->color = color;

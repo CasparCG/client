@@ -236,6 +236,11 @@ void RundownImageWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownImageWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownImageWidget::setColor(const QString& color)
 {
     this->color = color;

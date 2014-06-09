@@ -188,6 +188,11 @@ void RundownClearOutputWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownClearOutputWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownClearOutputWidget::setColor(const QString& color)
 {
     this->color = color;

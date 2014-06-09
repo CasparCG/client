@@ -196,6 +196,11 @@ void RundownAtemKeyerStateWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAtemKeyerStateWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAtemKeyerStateWidget::setColor(const QString& color)
 {
     this->color = color;

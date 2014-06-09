@@ -244,6 +244,11 @@ void RundownTemplateWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownTemplateWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownTemplateWidget::setColor(const QString& color)
 {
     this->color = color;

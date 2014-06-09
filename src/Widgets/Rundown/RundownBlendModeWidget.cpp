@@ -200,6 +200,11 @@ void RundownBlendModeWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownBlendModeWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownBlendModeWidget::setColor(const QString& color)
 {
     this->color = color;

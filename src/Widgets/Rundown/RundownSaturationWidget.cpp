@@ -203,6 +203,11 @@ void RundownSaturationWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownSaturationWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownSaturationWidget::setColor(const QString& color)
 {
     this->color = color;

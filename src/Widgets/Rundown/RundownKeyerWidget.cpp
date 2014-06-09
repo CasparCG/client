@@ -189,6 +189,11 @@ void RundownKeyerWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownKeyerWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownKeyerWidget::setColor(const QString& color)
 {
     this->color = color;

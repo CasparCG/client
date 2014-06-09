@@ -201,6 +201,11 @@ void RundownFileRecorderWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownFileRecorderWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownFileRecorderWidget::setColor(const QString& color)
 {
     this->color = color;

@@ -179,18 +179,25 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuColor = new QMenu(this);
     this->contextMenuColor->setTitle("Colorize Item");
     //this->contextMenuColor->setIcon(QIcon(":/Graphics/Images/Color.png"));
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Chocolate");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkKhaki");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "DarkSlateGray");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Maroon");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "MaroonLight");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "OliveDrab");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "RoyalBlue");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SeaGreen");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Sienna");
-    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "SteelBlue");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Chocolate.png"),*/ "Chocolate");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/DarkKhaki.png"),*/ "DarkKhaki");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/DarkSlateGray.png"),*/ "DarkSlateGray");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Maroon.png"),*/ "Maroon");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/MaroonLight.png"),*/ "MaroonLight");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/OliveDrab.png"),*/ "OliveDrab");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/RoyalBlue.png"),*/ "RoyalBlue");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/SeaGreen.png"),*/ "SeaGreen");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Sienna.png"),*/ "Sienna");
+    this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/SteelBlue.png"),*/ "SteelBlue");
     this->contextMenuColor->addSeparator();
     this->contextMenuColor->addAction(/*QIcon(":/Graphics/Images/Color.png"),*/ "Reset");
+
+    foreach (QAction* action, this->contextMenuColor->actions())
+    {
+        action->setCheckable(true);
+        action->setChecked(false);
+        action->font().setItalic(true);
+    }
 
     this->contextMenuRundown = new QMenu(this);
     this->contextMenuRundown->addMenu(this->contextMenuTools);
@@ -704,6 +711,33 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
         this->contextMenuRundown->actions().at(11)->setEnabled(false); // Remove.
     }
 
+    if (this->treeWidgetRundown->selectedItems().count() > 0)
+    {
+        if (this->treeWidgetRundown->selectedItems().count() == 1)
+        {
+            QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+            if (dynamic_cast<AbstractRundownWidget*>(currentItemWidget) != NULL)
+            {
+                QString color = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getColor();
+                QString name = colorLookup(color, true);
+
+                foreach (QAction* action, this->contextMenuColor->actions())
+                {
+                    if (action->text() == name)
+                        action->setChecked(true);
+                    else
+                        action->setChecked(false);
+                }
+            }
+        }
+        else
+        {
+            foreach (QAction* action, this->contextMenuColor->actions())
+                action->setChecked(false);
+        }
+    }
+
     this->contextMenuRundown->exec(this->treeWidgetRundown->mapToGlobal(point));
 }
 
@@ -711,30 +745,61 @@ void RundownTreeWidget::contextMenuNewTriggered(QAction* action)
 {
 }
 
+QString RundownTreeWidget::colorLookup(const QString& color, bool reverse) const
+{
+    if (reverse)
+    {
+        if (color == Color::SIENNA_COLOR)
+            return "Sienna";
+        else if (color == Color::OLIVEDRAB_COLOR)
+            return "OliveDrab";
+        else if (color == Color::SEAGREEN_COLOR)
+            return "SeaGreen";
+        else if (color == Color::CHOCOLATE_COLOR)
+            return "Chocolate";
+        else if (color == Color::DARKSLATEGRAY_COLOR)
+            return "DarkSlateGray";
+        else if (color == Color::STEELBLUE_COLOR)
+            return "SteelBlue";
+        else if (color == Color::MAROON_COLOR)
+            return "Maroon";
+        else if (color == Color::MAROONLIGHT_COLOR)
+            return "MaroonLight";
+        else if (color == Color::DARKKHAKI_COLOR)
+            return "DarkKhaki";
+        else if (color == Color::ROYALBLUE_COLOR)
+            return "RoyalBlue";
+    }
+    else
+    {
+        if (color == "Sienna")
+            return Color::SIENNA_COLOR;
+        else if (color == "OliveDrab")
+            return Color::OLIVEDRAB_COLOR;
+        else if (color == "SeaGreen")
+            return Color::SEAGREEN_COLOR;
+        else if (color == "Chocolate")
+            return Color::CHOCOLATE_COLOR;
+        else if (color == "DarkSlateGray")
+            return Color::DARKSLATEGRAY_COLOR;
+        else if (color == "SteelBlue")
+            return Color::STEELBLUE_COLOR;
+        else if (color == "Maroon")
+            return Color::MAROON_COLOR;
+        else if (color == "MaroonLight")
+            return Color::MAROONLIGHT_COLOR;
+        else if (color == "DarkKhaki")
+            return Color::DARKKHAKI_COLOR;
+        else if (color == "RoyalBlue")
+            return Color::ROYALBLUE_COLOR;
+    }
+
+    return ""; // Reset
+}
+
 void RundownTreeWidget::contextMenuColorTriggered(QAction* action)
 {
-    if (action->text() == "Sienna")
-        colorizeItems(Color::SIENNA_COLOR);
-    else if (action->text() == "OliveDrab")
-        colorizeItems(Color::OLIVEDRAB_COLOR);
-    else if (action->text() == "SeaGreen")
-        colorizeItems(Color::SEAGREEN_COLOR);
-    else if (action->text() == "Chocolate")
-        colorizeItems(Color::CHOCOLATE_COLOR);
-    else if (action->text() == "DarkSlateGray")
-        colorizeItems(Color::DARKSLATEGRAY_COLOR);
-    else if (action->text() == "SteelBlue")
-        colorizeItems(Color::STEELBLUE_COLOR);
-    else if (action->text() == "Maroon")
-        colorizeItems(Color::MAROON_COLOR);
-    else if (action->text() == "MaroonLight")
-        colorizeItems(Color::MAROONLIGHT_COLOR);
-    else if (action->text() == "DarkKhaki")
-        colorizeItems(Color::DARKKHAKI_COLOR);
-    else if (action->text() == "RoyalBlue")
-        colorizeItems(Color::ROYALBLUE_COLOR);
-    else
-        colorizeItems(""); // Reset
+    colorizeItems(colorLookup(action->text(), false));
 }
 
 void RundownTreeWidget::contextMenuRundownTriggered(QAction* action)

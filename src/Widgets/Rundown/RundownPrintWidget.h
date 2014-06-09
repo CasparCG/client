@@ -43,6 +43,7 @@ class WIDGETS_EXPORT RundownPrintWidget : public QWidget, Ui::RundownPrintWidget
         virtual void setActive(bool active);
         virtual void setInGroup(bool inGroup);
         virtual void setColor(const QString& color);
+        virtual QString getColor() const;
 
         virtual void setExpanded(bool expanded) {}
 

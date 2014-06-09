@@ -195,6 +195,11 @@ void RundownMacroWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownMacroWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownMacroWidget::setColor(const QString& color)
 {
     this->color = color;

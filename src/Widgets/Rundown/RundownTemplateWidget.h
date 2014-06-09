@@ -47,6 +47,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         virtual void setActive(bool active);
         virtual void setInGroup(bool inGroup);
         virtual void setColor(const QString& color);
+        virtual QString getColor() const;
 
         virtual void setExpanded(bool expanded) {}
 
@@ -60,6 +61,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         virtual void clearDelayedCommands();
 
         virtual void setUsed(bool used);
+
+
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);

@@ -89,6 +89,11 @@ LibraryModel* RundownSeparatorWidget::getLibraryModel()
     return &this->model;
 }
 
+QString RundownSeparatorWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownSeparatorWidget::setColor(const QString& color)
 {
     this->color = color;

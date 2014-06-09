@@ -44,6 +44,7 @@ class WIDGETS_EXPORT RundownChromaWidget : public QWidget, Ui::RundownChromaWidg
         virtual void setActive(bool active);
         virtual void setInGroup(bool inGroup);
         virtual void setColor(const QString& color);
+        virtual QString getColor() const;
 
         virtual void setExpanded(bool expanded) {}
 

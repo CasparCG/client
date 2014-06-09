@@ -290,6 +290,11 @@ void RundownVideoWidget::setInGroup(bool inGroup)
     }
 }
 
+QString RundownVideoWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownVideoWidget::setColor(const QString& color)
 {
     this->color = color;

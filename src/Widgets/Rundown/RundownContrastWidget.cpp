@@ -203,6 +203,11 @@ void RundownContrastWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownContrastWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownContrastWidget::setColor(const QString& color)
 {
     this->color = color;

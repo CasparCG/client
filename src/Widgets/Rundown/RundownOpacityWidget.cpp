@@ -204,6 +204,11 @@ void RundownOpacityWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownOpacityWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownOpacityWidget::setColor(const QString& color)
 {
     this->color = color;

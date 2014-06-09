@@ -195,6 +195,12 @@ void RundownAtemVideoFormatWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+
+QString RundownAtemVideoFormatWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAtemVideoFormatWidget::setColor(const QString& color)
 {
     this->color = color;

@@ -196,6 +196,11 @@ void RundownAtemAudioInputBalanceWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
+QString RundownAtemAudioInputBalanceWidget::getColor() const
+{
+    return this->color;
+}
+
 void RundownAtemAudioInputBalanceWidget::setColor(const QString& color)
 {
     this->color = color;
