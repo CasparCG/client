@@ -131,7 +131,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
     std::wstringstream wstringstream;
     wstringstream << qApp->clipboard()->text().toStdWString();
 
-    int offset = 1;
+    int offset = 1; // Drop offset.
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 

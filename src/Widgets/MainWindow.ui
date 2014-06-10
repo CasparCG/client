@@ -10,12 +10,6 @@
     <height>950</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>1460</width>
-    <height>950</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>CasparCG Client</string>
   </property>
