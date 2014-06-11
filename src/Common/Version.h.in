@@ -8,4 +8,4 @@
 
 #define RC_VERSION \"2.0.7.0\"
 
-#define DATABASE_VERSION \"207\"
+#define DATABASE_VERSION \"207b2\"
