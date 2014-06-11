@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownChromaWidget : public QWidget, Ui::RundownChromaWidg
         ChromaCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

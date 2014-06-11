@@ -29,6 +29,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -247,8 +248,7 @@ void RundownAudioWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -381,7 +381,8 @@ void RundownAudioWidget::executePlay()
         }
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 
     this->paused = false;
     this->loaded = false;

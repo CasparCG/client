@@ -28,6 +28,7 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -216,8 +217,7 @@ void RundownCommitWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -294,7 +294,8 @@ void RundownCommitWidget::executePlay()
             deviceShadow->setCommit(this->command.getChannel());
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownCommitWidget::channelChanged(int channel)

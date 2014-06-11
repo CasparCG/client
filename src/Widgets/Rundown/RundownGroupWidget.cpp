@@ -25,6 +25,8 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);
@@ -161,8 +163,7 @@ void RundownGroupWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -180,7 +181,10 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
         this->animation->start(1);
 
     if (type == Playout::PlayoutType::Play)
-        setUsed(true);
+    {
+        if (this->markUsedItems)
+            setUsed(true);
+    }
 
     return true;
 }
@@ -200,7 +204,10 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
             EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(type, child));
 
             if (type == Playout::PlayoutType::Play)
-                setUsed(true);
+            {
+                if (this->markUsedItems)
+                    setUsed(true);
+            }
 
             break;
         }

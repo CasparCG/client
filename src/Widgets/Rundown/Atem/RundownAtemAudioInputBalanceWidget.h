@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemAudioInputBalanceWidget : public QWidget, Ui::Ru
         LibraryModel model;
         AtemAudioInputBalanceCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

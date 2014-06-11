@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownMacroWidget : public QWidget, Ui::RundownMacroWidget
         LibraryModel model;
         MacroCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

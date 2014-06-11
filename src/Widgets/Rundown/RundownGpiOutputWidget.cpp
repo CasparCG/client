@@ -25,6 +25,8 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);
@@ -170,8 +172,7 @@ void RundownGpiOutputWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -192,8 +193,11 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
         if (this->command.getDelay() < 0)
             return true;
 
-        this->executeTimer.setInterval(this->command.getDelay());
-        this->executeTimer.start();
+        if (GpiManager::getInstance().getGpiDevice()->isConnected())
+        {
+            this->executeTimer.setInterval(this->command.getDelay());
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
@@ -221,7 +225,8 @@ void RundownGpiOutputWidget::executePlay()
 {
     GpiManager::getInstance().getGpiDevice()->trigger(this->command.getGpoPort());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownGpiOutputWidget::delayChanged(int delay)
@@ -236,7 +241,7 @@ void RundownGpiOutputWidget::gpiOutputPortChanged(int port)
 
 void RundownGpiOutputWidget::checkGpiConnection()
 {
-    labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));

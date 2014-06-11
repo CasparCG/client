@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownBrightnessWidget : public QWidget, Ui::RundownBright
         BrightnessCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

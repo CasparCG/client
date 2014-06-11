@@ -27,6 +27,7 @@ RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidge
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -228,8 +229,7 @@ void RundownBlendModeWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -330,7 +330,8 @@ void RundownBlendModeWidget::executePlay()
             deviceShadow->setBlendMode(this->command.getChannel(), this->command.getVideolayer(), this->command.getBlendMode());
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownBlendModeWidget::executeClearVideolayer()

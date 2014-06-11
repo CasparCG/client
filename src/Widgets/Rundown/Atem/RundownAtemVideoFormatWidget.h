@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemVideoFormatWidget : public QWidget, Ui::RundownA
         LibraryModel model;
         AtemVideoFormatCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

@@ -27,6 +27,7 @@ RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWid
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -231,8 +232,7 @@ void RundownBrightnessWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -335,7 +335,8 @@ void RundownBrightnessWidget::executePlay()
                                         this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownBrightnessWidget::executeClearVideolayer()

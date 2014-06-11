@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         LibraryModel model;
         InputCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

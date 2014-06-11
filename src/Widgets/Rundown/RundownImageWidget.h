@@ -72,6 +72,7 @@ class WIDGETS_EXPORT RundownImageWidget : public QWidget, Ui::RundownImageWidget
         ImageCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

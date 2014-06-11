@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownCropWidget : public QWidget, Ui::RundownCropWidget, 
         CropCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

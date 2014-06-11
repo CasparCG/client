@@ -26,6 +26,8 @@ RundownAtemAudioGainWidget::RundownAtemAudioGainWidget(const LibraryModel& model
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownAtemAudioGainWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -264,7 +265,8 @@ void RundownAtemAudioGainWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->setAudioGain(this->command.getInput(), this->command.getGain());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemAudioGainWidget::delayChanged(int delay)

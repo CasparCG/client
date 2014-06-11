@@ -26,6 +26,7 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -229,8 +230,7 @@ void RundownFileRecorderWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -333,7 +333,8 @@ void RundownFileRecorderWidget::executePlay()
                                          this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownFileRecorderWidget::channelChanged(int channel)

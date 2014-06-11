@@ -26,6 +26,8 @@ RundownAtemAutoWidget::RundownAtemAutoWidget(const LibraryModel& model, QWidget*
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -225,8 +227,7 @@ void RundownAtemAutoWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -265,7 +266,8 @@ void RundownAtemAutoWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemAutoWidget::delayChanged(int delay)

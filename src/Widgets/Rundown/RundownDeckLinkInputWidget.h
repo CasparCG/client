@@ -72,6 +72,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         DeckLinkInputCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

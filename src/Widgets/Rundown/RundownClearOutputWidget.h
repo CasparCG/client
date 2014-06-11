@@ -67,6 +67,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         ClearOutputCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

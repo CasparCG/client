@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAutoWidget : public QWidget, Ui::RundownAutoWidget, 
         LibraryModel model;
         AutoCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

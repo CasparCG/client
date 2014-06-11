@@ -26,6 +26,8 @@ RundownTakeWidget::RundownTakeWidget(const LibraryModel& model, QWidget* parent,
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -223,8 +225,7 @@ void RundownTakeWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -263,7 +264,8 @@ void RundownTakeWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->triggerTake(this->command.getStep());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownTakeWidget::delayChanged(int delay)

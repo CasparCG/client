@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemAudioGainWidget : public QWidget, Ui::RundownAte
         LibraryModel model;
         AtemAudioGainCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

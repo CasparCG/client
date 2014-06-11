@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownVolumeWidget : public QWidget, Ui::RundownVolumeWidg
         VolumeCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

@@ -64,6 +64,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         GroupCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

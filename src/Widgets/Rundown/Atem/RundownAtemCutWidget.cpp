@@ -26,6 +26,8 @@ RundownAtemCutWidget::RundownAtemCutWidget(const LibraryModel& model, QWidget* p
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -223,8 +225,7 @@ void RundownAtemCutWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -263,7 +264,8 @@ void RundownAtemCutWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->triggerCut();
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemCutWidget::delayChanged(int delay)

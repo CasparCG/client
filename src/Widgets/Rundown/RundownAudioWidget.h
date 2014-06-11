@@ -72,6 +72,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         AudioCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

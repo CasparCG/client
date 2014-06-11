@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemAudioInputStateWidget : public QWidget, Ui::Rund
         LibraryModel model;
         AtemAudioInputStateCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

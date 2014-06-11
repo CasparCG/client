@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemAutoWidget : public QWidget, Ui::RundownAtemAuto
         LibraryModel model;
         AtemAutoCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

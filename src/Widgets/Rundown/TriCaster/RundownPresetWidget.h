@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
         LibraryModel model;
         PresetCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

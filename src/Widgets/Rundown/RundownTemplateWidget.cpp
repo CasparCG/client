@@ -30,6 +30,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -274,8 +275,7 @@ void RundownTemplateWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -299,32 +299,35 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         this->executeTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-        if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-            if (this->command.getChannel() > channelFormats.count())
-                return true;
-
-            double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-            int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-            this->executeTimer.setInterval(startDelay);
-
-            if (this->command.getDuration() > 0)
+            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
-                int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+                if (this->command.getChannel() > channelFormats.count())
+                    return true;
+
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+
+                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                this->executeTimer.setInterval(startDelay);
+
+                if (this->command.getDuration() > 0)
+                {
+                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
+                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
+                }
             }
-        }
-        else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-        {
-            this->executeTimer.setInterval(this->command.getDelay());
+            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+            {
+                this->executeTimer.setInterval(this->command.getDelay());
 
-            if (this->command.getDuration() > 0)
-                QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
-        }
+                if (this->command.getDuration() > 0)
+                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
+            }
 
-        this->executeTimer.start();
+            this->executeTimer.start();
+        }
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
@@ -440,7 +443,8 @@ void RundownTemplateWidget::executePlay()
         }
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 
     this->loaded = false;
 }

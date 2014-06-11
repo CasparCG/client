@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
         LibraryModel model;
         TakeCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

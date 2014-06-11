@@ -29,6 +29,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setThumbnail();
     setColor(this->color);
@@ -272,8 +273,7 @@ void RundownImageScrollerWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -396,7 +396,8 @@ void RundownImageScrollerWidget::executePlay()
         }
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 
     this->paused = false;
     this->loaded = false;

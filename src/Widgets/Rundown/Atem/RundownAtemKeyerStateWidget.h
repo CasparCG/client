@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownAtemKeyerStateWidget : public QWidget, Ui::RundownAt
         LibraryModel model;
         AtemKeyerStateCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

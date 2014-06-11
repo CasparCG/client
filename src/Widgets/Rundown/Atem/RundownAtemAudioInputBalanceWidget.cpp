@@ -26,6 +26,8 @@ RundownAtemAudioInputBalanceWidget::RundownAtemAudioInputBalanceWidget(const Lib
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownAtemAudioInputBalanceWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -264,7 +265,8 @@ void RundownAtemAudioInputBalanceWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->setAudioInputBalance(this->command.getInput(), this->command.getBalance());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemAudioInputBalanceWidget::delayChanged(int delay)

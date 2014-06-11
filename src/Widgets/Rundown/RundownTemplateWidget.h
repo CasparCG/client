@@ -79,6 +79,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         TemplateCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

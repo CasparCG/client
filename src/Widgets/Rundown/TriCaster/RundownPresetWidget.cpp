@@ -26,6 +26,8 @@ RundownPresetWidget::RundownPresetWidget(const LibraryModel& model, QWidget* par
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownPresetWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -264,7 +265,8 @@ void RundownPresetWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->selectPreset(this->command.getSource(), this->command.getPreset());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownPresetWidget::delayChanged(int delay)

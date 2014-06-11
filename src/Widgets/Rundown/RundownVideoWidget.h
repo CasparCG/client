@@ -78,6 +78,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         bool sendAutoPlay;
         bool hasSentAutoPlay;
         QString delayType;
+        bool markUsedItems;
 
         OscFileModel* fileModel;
         OscSubscription* timeSubscription;

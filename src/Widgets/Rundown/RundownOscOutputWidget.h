@@ -63,6 +63,7 @@ class WIDGETS_EXPORT RundownOscOutputWidget : public QWidget, Ui::RundownOscOutp
         LibraryModel model;
         OscOutputCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

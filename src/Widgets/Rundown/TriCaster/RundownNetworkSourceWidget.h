@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownNetworkSourceWidget : public QWidget, Ui::RundownNet
         LibraryModel model;
         NetworkSourceCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* playControlSubscription;
         OscSubscription* updateControlSubscription;

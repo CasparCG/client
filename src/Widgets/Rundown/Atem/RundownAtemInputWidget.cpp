@@ -26,6 +26,8 @@ RundownAtemInputWidget::RundownAtemInputWidget(const LibraryModel& model, QWidge
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownAtemInputWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -266,7 +267,8 @@ void RundownAtemInputWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->selectInput(this->command.getSwitcher(), this->command.getInput());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemInputWidget::executePreview()

@@ -26,6 +26,8 @@ RundownAtemKeyerStateWidget::RundownAtemKeyerStateWidget(const LibraryModel& mod
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownAtemKeyerStateWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -264,7 +265,8 @@ void RundownAtemKeyerStateWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->setKeyerState(this->command.getKeyer(), this->command.getState());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownAtemKeyerStateWidget::delayChanged(int delay)

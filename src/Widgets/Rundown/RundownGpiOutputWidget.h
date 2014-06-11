@@ -65,6 +65,7 @@ class WIDGETS_EXPORT RundownGpiOutputWidget : public QWidget, Ui::RundownGpiOutp
         LibraryModel model;
         GpiOutputCommand command;
         ActiveAnimation* animation;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

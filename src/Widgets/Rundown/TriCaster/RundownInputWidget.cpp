@@ -26,6 +26,8 @@ RundownInputWidget::RundownInputWidget(const LibraryModel& model, QWidget* paren
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+
     setColor(color);
     setActive(active);
     setCompactView(compactView);
@@ -224,8 +226,7 @@ void RundownInputWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -266,7 +267,8 @@ void RundownInputWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->selectInput(this->command.getSwitcher(), this->command.getInput(), DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue());
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownInputWidget::executePreview()

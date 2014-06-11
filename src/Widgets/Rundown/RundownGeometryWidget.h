@@ -68,6 +68,7 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
         GeometryCommand command;
         ActiveAnimation* animation;
         QString delayType;
+        bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;

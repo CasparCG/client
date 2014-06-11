@@ -16,7 +16,7 @@
 #include <QtGui/QGraphicsOpacityEffect>
 
 RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                 bool active, bool inGroup, bool compactview)
+                                                 bool active, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
       playControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
@@ -27,6 +27,7 @@ RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWid
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
+    this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -231,8 +232,7 @@ void RundownSaturationWidget::setUsed(bool used)
 {
     if (used)
     {
-        bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
-        if (markUsedItems && this->graphicsEffect() == NULL)
+        if (this->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
@@ -335,7 +335,8 @@ void RundownSaturationWidget::executePlay()
                                         this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownSaturationWidget::executeClearVideolayer()
