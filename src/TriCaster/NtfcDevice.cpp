@@ -23,6 +23,8 @@ void NtfcDevice::connectDevice()
         return;
 
     this->socket->connectToHost(this->address, this->port);
+
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void NtfcDevice::disconnectDevice()
