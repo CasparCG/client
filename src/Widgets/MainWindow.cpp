@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setupMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
-    setWindowTitle(QString("%1 %2.%3.%4 BETA 2").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
+    setWindowTitle(QString("%1 %2.%3.%4").arg(this->windowTitle()).arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
     this->applicationTitle = this->windowTitle();
 
     this->widgetAction->setVisible(false);
@@ -189,21 +189,8 @@ void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    QMessageBox box(this);
-    box.setWindowTitle("Quit Application");
-    box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
-    box.setText("Are you sure you want to quit the application? Unsaved changes to your rundowns will be lost!");
-    box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
-    box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    box.buttons().at(0)->setIcon(QIcon());
-    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
-    box.buttons().at(1)->setIcon(QIcon());
-    box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
-
-    if (box.exec() == QMessageBox::Yes)
-        event->accept();
-    else
-        event->ignore();
+    this->widgetRundown->checkForSaveBeforeQuit();
+    event->accept();
 }
 
 void MainWindow::importPreset()

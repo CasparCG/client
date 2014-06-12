@@ -35,6 +35,8 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
     public:
         explicit RundownWidget(QWidget* parent = 0);
 
+        void checkForSaveBeforeQuit();
+
     private:
         QMenu* contextMenuRundownDropdown;
         QMenu* contextMenuMark;

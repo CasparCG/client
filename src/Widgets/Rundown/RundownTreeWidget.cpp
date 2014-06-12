@@ -43,6 +43,7 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTime>
 #include <QtCore/QTextStream>
+#include <QtCore/QCryptographicHash>
 
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -523,8 +524,14 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         // Save the latest value stored in the clipboard.
         QString latest = qApp->clipboard()->text();
+        QString data = stream.readAll();
 
-        qApp->clipboard()->setText(stream.readAll());
+        //qDebug() << data;
+
+        this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
+        qDebug() << QString("RundownTreeWidget::openRundown: Md5 hash is %1").arg(this->hexHash);
+
+        qApp->clipboard()->setText(data);
         pasteSelectedItems();
 
         // Set previous stored clipboard value.
@@ -532,7 +539,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         file.close();
 
-        qDebug() << QString("RundownTreeWidget::eventFilter: Parsing rundown file completed, %1 msec").arg(time.elapsed());
+        qDebug() << QString("RundownTreeWidget::openRundown: Parsing rundown file completed in %1 msec").arg(time.elapsed());
 
         if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
             this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
@@ -542,7 +549,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
     this->treeWidgetRundown->checkEmptyRundown();
 
-    qDebug() << QString("%1 msec (%2)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+    qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
 
     this->activeRundown = path;
 }
@@ -651,6 +658,36 @@ void RundownTreeWidget::saveRundown(bool saveAs)
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
         EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
     }
+}
+
+bool RundownTreeWidget::checkForSave() const
+{
+    // Don't save empty rundowns.
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+        return false;
+
+    QByteArray data;
+    QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+
+    writer->writeStartDocument();
+    writer->writeStartElement("items");
+    writer->writeTextElement("allowremotetriggering", (this->allowRemoteTriggering == true) ? "true" : "false");
+
+    for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
+        this->treeWidgetRundown->writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
+
+    writer->writeEndElement();
+    writer->writeEndDocument();
+
+    //qDebug() << QString(data);
+
+    QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
+    qDebug() << QString("RundownTreeWidget::checkForSave: Md5 hash is %1").arg(hexHash);
+
+    if (hexHash != this->hexHash)
+        return true;
+
+    return false;
 }
 
 void RundownTreeWidget::colorizeItems(const QString& color)

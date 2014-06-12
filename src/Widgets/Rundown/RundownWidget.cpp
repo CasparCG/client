@@ -83,6 +83,29 @@ void RundownWidget::setupMenus()
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
 
+void RundownWidget::checkForSaveBeforeQuit()
+{
+    for (int i = 0; i < this->tabWidgetRundown->count(); i++)
+    {
+        if (dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->checkForSave())
+        {
+            QMessageBox box(this);
+            box.setWindowTitle("Quit Application");
+            box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
+            box.setText(QString("You have unsaved changes in your %1 rundown. Do you want to save it before you quit?").arg(this->tabWidgetRundown->tabText(i)));
+            box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
+            box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            box.buttons().at(0)->setIcon(QIcon());
+            box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+            box.buttons().at(1)->setIcon(QIcon());
+            box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
+
+            if (box.exec() == QMessageBox::Yes)
+                dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->saveRundown(false);
+        }
+    }
+}
+
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)
 {
     this->newRundownAction->setEnabled(event.getEnabled());
@@ -133,28 +156,31 @@ void RundownWidget::closeRundown(const CloseRundownEvent& event)
 
 void RundownWidget::deleteRundown(const DeleteRundownEvent& event)
 {
-    QMessageBox box(this);
-    box.setWindowTitle("Close Rundown");
-    box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
-    box.setText("Are you sure you want to close the rundown? Unsaved changes will be lost!");
-    box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
-    box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    box.buttons().at(0)->setIcon(QIcon());
-    box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
-    box.buttons().at(1)->setIcon(QIcon());
-    box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
-
-    if (box.exec() == QMessageBox::Yes)
+    if (dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(event.getIndex()))->checkForSave())
     {
-        // Delete the page widget, which automatically removes the tab as well.
-        delete this->tabWidgetRundown->widget(event.getIndex());
+        QMessageBox box(this);
+        box.setWindowTitle("Close Rundown");
+        box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
+        box.setText(QString("You have unsaved changes in your %1 rundown. Do you want to save before you close?").arg(this->tabWidgetRundown->tabText(event.getIndex())));
+        box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        box.buttons().at(0)->setIcon(QIcon());
+        box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
+        box.buttons().at(1)->setIcon(QIcon());
+        box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
 
-        if (this->tabWidgetRundown->count() <= Rundown::MAX_NUMBER_OF_RUNDONWS)
-        {
-            EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(true));
-            EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(true));
-            EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(true));
-        }
+        if (box.exec() == QMessageBox::Yes)
+            dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(event.getIndex()))->saveRundown(false);
+    }
+
+    // Delete the page widget, which automatically removes the tab as well.
+    delete this->tabWidgetRundown->widget(event.getIndex());
+
+    if (this->tabWidgetRundown->count() <= Rundown::MAX_NUMBER_OF_RUNDONWS)
+    {
+        EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(true));
+        EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(true));
+        EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(true));
     }
 }
 

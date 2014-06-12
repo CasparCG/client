@@ -55,6 +55,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void setUsed(bool used);
         void setAllUsed(bool used);
 
+        bool checkForSave() const;
+
         bool getAllowRemoteTriggering() const;
         bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
 
@@ -68,6 +70,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         QString page;
         QString activeRundown;
+        QString hexHash;
 
         QMenu* contextMenuTools;
         QMenu* contextMenuColor;
