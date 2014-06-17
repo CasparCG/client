@@ -130,7 +130,9 @@ HEADERS += \
     Rundown/Atem/RundownAtemAudioGainWidget.h \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.h \
     Inspector/Atem/InspectorAtemAudioGainWidget.h \
-    Rundown/OpenRundownFromUrlDialog.h
+    Rundown/OpenRundownFromUrlDialog.h \
+    AudioMeterWidget.h \
+    AudioLevelsWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -249,7 +251,9 @@ SOURCES += \
     Rundown/Atem/RundownAtemAudioGainWidget.cpp \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.cpp \
     Inspector/Atem/InspectorAtemAudioGainWidget.cpp \
-    Rundown/OpenRundownFromUrlDialog.cpp
+    Rundown/OpenRundownFromUrlDialog.cpp \
+    AudioMeterWidget.cpp \
+    AudioLevelsWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -357,7 +361,9 @@ FORMS += \
     Rundown/Atem/RundownAtemAudioGainWidget.ui \
     Inspector/Atem/InspectorAtemAudioInputBalanceWidget.ui \
     Inspector/Atem/InspectorAtemAudioGainWidget.ui \
-    Rundown/OpenRundownFromUrlDialog.ui
+    Rundown/OpenRundownFromUrlDialog.ui \
+    AudioMeterWidget.ui \
+    AudioLevelsWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

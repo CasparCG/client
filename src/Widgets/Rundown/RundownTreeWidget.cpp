@@ -565,8 +565,14 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 {
     // Save the latest value stored in the clipboard.
     QString latest = qApp->clipboard()->text();
+    QString data = QString::fromUtf8(reply->readAll());
 
-    qApp->clipboard()->setText(QString::fromUtf8(reply->readAll()));
+    //qDebug() << data;
+
+    this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
+    qDebug() << QString("RundownTreeWidget::doOpenRundownFromUrl: Md5 hash is %1").arg(this->hexHash);
+
+    qApp->clipboard()->setText(data);
     pasteSelectedItems();
 
     // Set previous stored clipboard value.
@@ -636,8 +642,8 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
         if (file.open(QFile::WriteOnly))
         {
-            QXmlStreamWriter* writer = new QXmlStreamWriter();
-            writer->setDevice(&file);
+            QByteArray data;
+            QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
 
             writer->writeStartDocument();
             writer->writeStartElement("items");
@@ -649,6 +655,12 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->writeEndElement();
             writer->writeEndDocument();
 
+            //qDebug() << QString(data);
+
+            this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
+            qDebug() << QString("RundownTreeWidget::saveRundown: Md5 hash is %1").arg(this->hexHash);
+
+            file.write(data);
             file.close();
         }
 

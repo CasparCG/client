@@ -109,6 +109,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevels', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
 #if defined(Q_OS_WIN)

@@ -74,6 +74,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
     this->checkBoxMarkUsedItems->setChecked(markUsedItems);
 
+    bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
+    this->checkBoxShowAudioLevels->setChecked(showAudioLevels);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
@@ -836,4 +838,10 @@ void SettingsDialog::markUsedItemsChanged(int state)
 {
     QString markUsedItems = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "MarkUsedItems", markUsedItems));
+}
+
+void SettingsDialog::showAudioLevelsChanged(int state)
+{
+    QString showAudioLevels = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowAudioLevels", showAudioLevels));
 }

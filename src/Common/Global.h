@@ -71,6 +71,7 @@ namespace Osc
     static const QString DEFAULT_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path";
     static const QString DEFAULT_PAUSED_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused";
     static const QString DEFAULT_LOOP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop";
+    static const QString DEFAULT_AUDIO_FILTER = "#IPADDRESS#/channel/#CHANNEL#/mixer/audio/#AUDIOCHANNEL#/dBFS";
     static const QString DEFAULT_STOP_CONTROL_FILTER = "/control/#UID#/stop";
     static const QString DEFAULT_PLAY_CONTROL_FILTER = "/control/#UID#/play";
     static const QString DEFAULT_LOAD_CONTROL_FILTER = "/control/#UID#/load";

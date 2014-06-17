@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>817</height>
+    <height>825</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>700</width>
-    <height>817</height>
+    <height>825</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>700</width>
-    <height>817</height>
+    <height>825</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <x>9</x>
      <y>10</y>
      <width>680</width>
-     <height>767</height>
+     <height>775</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -360,7 +360,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>574</y>
+       <y>606</y>
        <width>112</width>
        <height>20</height>
       </rect>
@@ -386,7 +386,7 @@
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>575</y>
+       <y>607</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -508,7 +508,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>626</y>
+       <y>658</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -521,7 +521,7 @@
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>682</y>
+       <y>713</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -537,7 +537,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>618</y>
+       <y>650</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -553,7 +553,7 @@
      <property name="geometry">
       <rect>
        <x>178</x>
-       <y>681</y>
+       <y>712</y>
        <width>112</width>
        <height>22</height>
       </rect>
@@ -569,7 +569,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>646</y>
+       <y>678</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -595,6 +595,22 @@
      </property>
      <property name="text">
       <string>Mark used items (Windows only)</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxShowAudioLevels">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>572</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Show audio levels</string>
      </property>
     </widget>
    </widget>
@@ -3130,7 +3146,7 @@
    <property name="geometry">
     <rect>
      <x>615</x>
-     <y>785</y>
+     <y>793</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -3146,7 +3162,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>780</y>
+     <y>788</y>
      <width>591</width>
      <height>16</height>
     </rect>
@@ -3254,7 +3270,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>658</x>
-     <y>778</y>
+     <y>793</y>
     </hint>
     <hint type="destinationlabel">
      <x>594</x>
@@ -4005,8 +4021,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>265</x>
-     <y>623</y>
+     <x>267</x>
+     <y>657</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4041,7 +4057,7 @@
      <y>149</y>
     </hint>
     <hint type="destinationlabel">
-     <x>714</x>
+     <x>699</x>
      <y>141</y>
     </hint>
    </hints>
@@ -4089,7 +4105,7 @@
      <y>728</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
+     <x>699</x>
      <y>723</y>
     </hint>
    </hints>
@@ -4105,7 +4121,7 @@
      <y>533</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
+     <x>699</x>
      <y>501</y>
     </hint>
    </hints>
@@ -4169,7 +4185,7 @@
      <y>395</y>
     </hint>
     <hint type="destinationlabel">
-     <x>702</x>
+     <x>699</x>
      <y>380</y>
     </hint>
    </hints>
@@ -4185,7 +4201,7 @@
      <y>548</y>
     </hint>
     <hint type="destinationlabel">
-     <x>703</x>
+     <x>699</x>
      <y>464</y>
     </hint>
    </hints>
@@ -4229,11 +4245,11 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>250</x>
-     <y>732</y>
+     <x>252</x>
+     <y>765</y>
     </hint>
     <hint type="destinationlabel">
-     <x>701</x>
+     <x>699</x>
      <y>665</y>
     </hint>
    </hints>
@@ -4245,8 +4261,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>692</y>
+     <x>290</x>
+     <y>726</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4267,6 +4283,22 @@
     <hint type="destinationlabel">
      <x>699</x>
      <y>372</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowAudioLevels</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAudioLevelsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>612</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>600</y>
     </hint>
    </hints>
   </connection>
@@ -4324,5 +4356,6 @@
   <slot>deleteThumbnails()</slot>
   <slot>storeThumbnailsInDatabaseChanged(int)</slot>
   <slot>markUsedItemsChanged(int)</slot>
+  <slot>showAudioLevelsChanged(int)</slot>
  </slots>
 </ui>

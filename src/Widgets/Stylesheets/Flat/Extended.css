@@ -114,9 +114,9 @@
 
 #treeWidgetTool, #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
 {
+    background-color: rgba(35, 35, 35, 255);
     border-width: 0px;
     color: rgba(190, 190, 190, 255);
-    background-color: rgba(35, 35, 35, 255);
 }
 #treeWidgetTool
 {
@@ -334,6 +334,40 @@
 }
 
 /*
+ * AudioLevelsWidget
+ */
+#pageAudioLevels
+{
+    background-color: rgba(35, 35, 35, 255);
+}
+
+/*
+ * AudioMeterWidget
+ */
+#labelAudioMeterChannel
+{
+    background-color: transparent;
+    color: rgba(65, 65, 65, 255);
+    font-size: 8px;
+}
+#labelAudioMeter0, #labelAudioMeter9, #labelAudioMeter20, #labelAudioMeter60
+{
+    color: rgba(65, 65, 65, 255);
+    font-size: 8px;
+}
+#progressBarAudioMeter
+{
+    border-color: rgba(65, 65, 65, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+#progressBarAudioMeter::chunk
+{
+    background-color: lime;
+    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 green, stop: 1 lime);*/
+}
+
+/*
  * OscTimeWidget
  */
 #labelOscTime
@@ -353,7 +387,7 @@
 #progressBarOscTime::chunk
 {
     background-color: green;
-    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
+    /*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 green, stop:1 lime);
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
     border-radius: 2px;*/
 }

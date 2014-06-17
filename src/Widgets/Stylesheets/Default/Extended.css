@@ -330,6 +330,39 @@
 }
 
 /*
+ * AudioLevelsWidget
+ */
+#pageAudioLevels
+{
+    background-color: rgba(60, 60, 60, 255);
+}
+
+/*
+ * AudioMeterWidget
+ */
+#labelAudioMeterChannel
+{
+    background-color: transparent;
+    color: rgba(128, 128, 128, 255);
+    font-size: 8px;
+}
+#labelAudioMeter0, #labelAudioMeter9, #labelAudioMeter20, #labelAudioMeter60
+{
+    color: rgba(128, 128, 128, 255);
+    font-size: 8px;
+}
+#progressBarAudioMeter
+{
+    border-color: rgba(42, 42, 42, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+#progressBarAudioMeter::chunk
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 green, stop: 1 lime);
+}
+
+/*
  * OscTimeWidget
  */
 #labelOscTime

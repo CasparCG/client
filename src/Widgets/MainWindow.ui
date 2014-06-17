@@ -104,6 +104,22 @@
          </widget>
         </item>
         <item>
+         <widget class="AudioLevelsWidget" name="widgetAudioLevels" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>289</width>
+            <height>130</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="InspectorWidget" name="widgetInspector" native="true">
           <property name="minimumSize">
            <size>
@@ -173,6 +189,12 @@
    <class>ActionWidget</class>
    <extends>QWidget</extends>
    <header>Action/ActionWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AudioLevelsWidget</class>
+   <extends>QWidget</extends>
+   <header>AudioLevelsWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

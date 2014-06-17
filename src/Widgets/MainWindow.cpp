@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterHorizontal->setSizes(QList<int>() << 1 << 0);
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
+    bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
+    if (!showAudioLevels)
+        this->widgetAudioLevels->setVisible(false);
+
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
