@@ -193,8 +193,10 @@ void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    this->widgetRundown->checkForSaveBeforeQuit();
-    event->accept();
+    if (this->widgetRundown->checkForSaveBeforeQuit())
+        event->accept();
+    else
+        event->ignore();
 }
 
 void MainWindow::importPreset()

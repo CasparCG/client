@@ -83,7 +83,7 @@ void RundownWidget::setupMenus()
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
 
-void RundownWidget::checkForSaveBeforeQuit()
+bool RundownWidget::checkForSaveBeforeQuit()
 {
     for (int i = 0; i < this->tabWidgetRundown->count(); i++)
     {
@@ -94,16 +94,23 @@ void RundownWidget::checkForSaveBeforeQuit()
             box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
             box.setText(QString("You have unsaved changes in your %1 rundown. Do you want to save it before you quit?").arg(this->tabWidgetRundown->tabText(i)));
             box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
-            box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            box.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
             box.buttons().at(0)->setIcon(QIcon());
             box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
             box.buttons().at(1)->setIcon(QIcon());
             box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
+            box.buttons().at(2)->setIcon(QIcon());
+            box.buttons().at(2)->setFocusPolicy(Qt::NoFocus);
 
-            if (box.exec() == QMessageBox::Yes)
+            int result = box.exec();
+            if (result == QMessageBox::Yes)
                 dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->saveRundown(false);
+            else if (result == QMessageBox::Cancel)
+                return false;
         }
     }
+
+    return true;
 }
 
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)
@@ -163,14 +170,19 @@ void RundownWidget::deleteRundown(const DeleteRundownEvent& event)
         box.setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
         box.setText(QString("You have unsaved changes in your %1 rundown. Do you want to save before you close?").arg(this->tabWidgetRundown->tabText(event.getIndex())));
         box.setIconPixmap(QPixmap(":/Graphics/Images/Attention.png"));
-        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
         box.buttons().at(0)->setIcon(QIcon());
         box.buttons().at(0)->setFocusPolicy(Qt::NoFocus);
         box.buttons().at(1)->setIcon(QIcon());
         box.buttons().at(1)->setFocusPolicy(Qt::NoFocus);
+        box.buttons().at(2)->setIcon(QIcon());
+        box.buttons().at(2)->setFocusPolicy(Qt::NoFocus);
 
-        if (box.exec() == QMessageBox::Yes)
+        int result = box.exec();
+        if (result == QMessageBox::Yes)
             dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(event.getIndex()))->saveRundown(false);
+        else if (result == QMessageBox::Cancel)
+            return;
     }
 
     // Delete the page widget, which automatically removes the tab as well.
