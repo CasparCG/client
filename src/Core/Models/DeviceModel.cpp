@@ -2,9 +2,9 @@
 
 DeviceModel::DeviceModel(int id, const QString& name, const QString& address, int port, const QString& username,
                          const QString& password, const QString& description, const QString& version, const QString& shadow,
-                         int channels, const QString& channelFormats)
+                         int channels, const QString& channelFormats, int previewChannel)
     : id(id), port(port), name(name), address(address), username(username),  password(password), description(description),
-      version(version), shadow(shadow), channels(channels), channelFormats(channelFormats)
+      version(version), shadow(shadow), channels(channels), channelFormats(channelFormats), previewChannel(previewChannel)
 {
 }
 
@@ -61,4 +61,9 @@ int DeviceModel::getChannels() const
 const QString& DeviceModel::getChannelFormats() const
 {
     return this->channelFormats;
+}
+
+int DeviceModel::getPreviewChannel() const
+{
+    return this->previewChannel;
 }

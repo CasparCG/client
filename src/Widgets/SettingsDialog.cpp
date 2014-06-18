@@ -74,6 +74,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
     this->checkBoxMarkUsedItems->setChecked(markUsedItems);
 
+    bool showPreview = (DatabaseManager::getInstance().getConfigurationByName("ShowPreview").getValue() == "true") ? true : false;
+    this->checkBoxShowPreview->setChecked(showPreview);
     bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
     this->checkBoxShowAudioLevels->setChecked(showAudioLevels);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
@@ -126,8 +128,14 @@ void SettingsDialog::loadDevice()
 
         treeItem->setText(8, model.getVersion());
         treeItem->setText(9, model.getShadow());
-        treeItem->setText(10, QString("%1").arg(model.getChannels()));
+
+        if (model.getChannels() > 0)
+            treeItem->setText(10, QString("%1").arg(model.getChannels()));
+
         treeItem->setText(11, model.getChannelFormats());
+
+        if (model.getPreviewChannel() > 0)
+            treeItem->setText(12, QString("%1").arg(model.getPreviewChannel()));
     }
 
     checkEmptyDeviceList();
@@ -319,7 +327,7 @@ void SettingsDialog::showImportDeviceDialog()
                 DatabaseManager::getInstance().insertDevice(DeviceModel(0, model.getName(), model.getAddress(),
                                                                         model.getPort(), model.getUsername(),
                                                                         model.getPassword(), model.getDescription(),
-                                                                        "", model.getShadow(), 0, ""));
+                                                                        "", model.getShadow(), 0, "", model.getPreviewChannel()));
             }
 
             loadDevice();
@@ -393,7 +401,7 @@ void SettingsDialog::showAddDeviceDialog()
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                "", dialog->getShadow(), 0, ""));
+                                                                "", dialog->getShadow(), 0, "", dialog->getPreviewChannel()));
 
         loadDevice();
 
@@ -507,7 +515,8 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 model.getVersion(), dialog->getShadow(),
-                                                                model.getChannels(), model.getChannelFormats()));
+                                                                model.getChannels(), model.getChannelFormats(),
+                                                                dialog->getPreviewChannel()));
 
         loadDevice();
 
@@ -844,4 +853,10 @@ void SettingsDialog::showAudioLevelsChanged(int state)
 {
     QString showAudioLevels = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowAudioLevels", showAudioLevels));
+}
+
+void SettingsDialog::showPreviewChanged(int state)
+{
+    QString showPreview = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowPreview", showPreview));
 }

@@ -404,6 +404,8 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
+    else if (type == Playout::PlayoutType::Preview)
+        executePreview();
 
     if (this->active)
         this->animation->start(1);
@@ -621,7 +623,14 @@ void RundownVideoWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+
+        // Clear preview channels videolayer.
+        const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel.getPreviewChannel() > 0)
+            device->clearVideolayer(deviceModel.getPreviewChannel(), this->command.getVideolayer());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -630,7 +639,13 @@ void RundownVideoWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+
+            // Clear preview channels videolayer.
+            if (model.getPreviewChannel() > 0)
+                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.getVideolayer());
+        }
     }
 
     this->paused = false;
@@ -653,6 +668,14 @@ void RundownVideoWidget::executeClearChannel()
     {
         device->clearChannel(this->command.getChannel());
         device->clearMixerChannel(this->command.getChannel());
+
+        // Clear preview channel.
+        const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel.getPreviewChannel() > 0)
+        {
+            device->clearChannel(deviceModel.getPreviewChannel());
+            device->clearMixerChannel(deviceModel.getPreviewChannel());
+        }
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -665,6 +688,13 @@ void RundownVideoWidget::executeClearChannel()
         {
             deviceShadow->clearChannel(this->command.getChannel());
             deviceShadow->clearMixerChannel(this->command.getChannel());
+
+            // Clear preview channel.
+            if (model.getPreviewChannel() > 0)
+            {
+                deviceShadow->clearChannel(model.getPreviewChannel());
+                deviceShadow->clearMixerChannel(model.getPreviewChannel());
+            }
         }
     }
 
@@ -677,6 +707,60 @@ void RundownVideoWidget::executeClearChannel()
     this->widgetOscTime->reset();
 
     this->hasSentAutoPlay = false;
+}
+
+void RundownVideoWidget::executePreview()
+{
+    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+    if (deviceModel.getPreviewChannel() > 0)
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+        {
+            if (this->command.getAutoPlay())
+            {
+                device->playVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                  this->command.getLoop(), true);
+            }
+            else
+            {
+                device->playVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                  this->command.getLoop(), this->command.getAutoPlay());
+            }
+        }
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        if (model.getPreviewChannel() > 0)
+        {
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+            {
+                if (this->command.getAutoPlay())
+                {
+                    deviceShadow->playVideo(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                            this->command.getLoop(), true);
+                }
+                else
+                {
+                    deviceShadow->playVideo(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                            this->command.getLoop(), this->command.getAutoPlay());
+                }
+            }
+        }
+    }
 }
 
 void RundownVideoWidget::checkGpiConnection()

@@ -29,6 +29,7 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
         const QString getPassword() const;
         const QString getDescription() const;
         const QString getShadow() const;
+        int getPreviewChannel() const;
 
     protected:
         void accept();
@@ -42,4 +43,5 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
         Q_SLOT void addressChanged(QString);
         Q_SLOT void testConnection();
         Q_SLOT void connectionStateChanged(CasparDevice&);
+        Q_SLOT void previewChanged(int);
 };

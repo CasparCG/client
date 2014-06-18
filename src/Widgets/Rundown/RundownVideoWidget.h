@@ -115,6 +115,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         Q_SLOT void executePause();
         Q_SLOT void executeStop();
         Q_SLOT void executeNext();
+        Q_SLOT void executePreview();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);

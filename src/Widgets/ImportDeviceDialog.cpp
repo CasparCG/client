@@ -56,8 +56,9 @@ DeviceModel ImportDeviceDialog::parseData(boost::property_tree::wptree& pt)
     QString password = QString::fromStdWString(pt.get(L"password", L""));
     QString description = QString::fromStdWString(pt.get(L"description", L""));
     QString shadow = QString::fromStdWString(pt.get(L"shadow", L"No"));
+    QString previewChannel = QString::fromStdWString(pt.get(L"previewchannel", L"0"));
 
-    return DeviceModel(0, name, address, port.toInt(), username, password, description, "", shadow, 0, "");
+    return DeviceModel(0, name, address, port.toInt(), username, password, description, "", shadow, 0, "", previewChannel.toInt());
 }
 
 const QList<DeviceModel> ImportDeviceDialog::getDevice() const

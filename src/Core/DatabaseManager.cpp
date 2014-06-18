@@ -32,7 +32,7 @@ void DatabaseManager::initialize()
     sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
     sql.exec("CREATE TABLE Chroma (Id INTEGR PRIMARY KEY, Key TEXT)");
-    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT)");
+    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT, PreviewChannel INTEGER)");
     sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
     sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT)");
     sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
@@ -110,6 +110,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevels', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowPreview', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
 #if defined(Q_OS_WIN)
@@ -127,7 +128,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Chroma (Key) VALUES('Magenta')");
 
 #if defined(Q_OS_WIN)
-    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '')");
+    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0)");
 #endif
 
     sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
@@ -1287,7 +1288,7 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 
 QList<DeviceModel> DatabaseManager::getDevice()
 {
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
                   "ORDER BY d.Name");
 
     QSqlQuery sql;
@@ -1298,7 +1299,7 @@ QList<DeviceModel> DatabaseManager::getDevice()
     while (sql.next())
         models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                                      sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString()));
+                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt()));
 
     return models;
 }
@@ -1307,7 +1308,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
                             "WHERE d.Name = '%1'").arg(name);
 
     QSqlQuery sql;
@@ -1318,14 +1319,14 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                        sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString());
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
                             "WHERE d.Address = '%1'").arg(address);
 
     QSqlQuery sql;
@@ -1336,7 +1337,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                        sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString());
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt());
 }
 
 void DatabaseManager::insertDevice(const DeviceModel& model)
@@ -1345,11 +1346,11 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats) "
-                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9, '%10')")
+    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) "
+                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9, '%10', %11)")
                             .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
                             .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
-                            .arg(model.getChannels()).arg(model.getChannelFormats());
+                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel());
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -1364,8 +1365,12 @@ void DatabaseManager::updateDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query = QString("UPDATE Device SET Name = '%1', Address = '%2', Port = %3, Username = '%4', Password = '%5', Description = '%6', Shadow = '%7' WHERE Id = %8")
-                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername()).arg(model.getPassword()).arg(model.getDescription()).arg(model.getShadow()).arg(model.getId());
+    QString query = QString("UPDATE Device SET Name = '%1', Address = '%2', Port = %3, Username = '%4', Password = '%5', Description = '%6', Version = '%7', Shadow = '%8', Channels = %9, ChannelFormats = '%10', PreviewChannel = %11 "
+                            "WHERE Id = %12")
+                            .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
+                            .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
+                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel())
+                            .arg(model.getId());
 
     QSqlQuery sql;
     if (!sql.exec(query))

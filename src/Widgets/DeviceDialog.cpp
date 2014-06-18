@@ -31,6 +31,8 @@ void DeviceDialog::setDeviceModel(const DeviceModel& model)
     this->lineEditPassword->setText(model.getPassword());
     this->lineEditDescription->setText(model.getDescription());
     this->checkBoxShadow->setChecked((model.getShadow() == "Yes") ? true : false);
+    this->checkBoxPreview->setChecked((model.getPreviewChannel() > 0) ? true : false);
+    this->spinBoxPreviewChannel->setEnabled(this->checkBoxPreview->isChecked());
 }
 
 const QString DeviceDialog::getName() const
@@ -69,6 +71,11 @@ const QString DeviceDialog::getDescription() const
 const QString DeviceDialog::getShadow() const
 {
     return this->checkBoxShadow->checkState() == Qt::Checked ? "Yes" : "No";
+}
+
+int DeviceDialog::getPreviewChannel() const
+{
+    return (this->checkBoxPreview->isChecked() == true) ? this->spinBoxPreviewChannel->value() : 0;
 }
 
 void DeviceDialog::accept()
@@ -163,4 +170,9 @@ void DeviceDialog::connectionStateChanged(CasparDevice& device)
     }
 
     this->device->disconnectDevice();
+}
+
+void DeviceDialog::previewChanged(int state)
+{
+    this->spinBoxPreviewChannel->setEnabled(state == Qt::Checked);
 }

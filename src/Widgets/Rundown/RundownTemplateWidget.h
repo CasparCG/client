@@ -108,6 +108,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
+        Q_SLOT void executePreview();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void flashlayerChanged(int);

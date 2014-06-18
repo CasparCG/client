@@ -87,4 +87,5 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void storeThumbnailsInDatabaseChanged(int);
         Q_SLOT void markUsedItemsChanged(int);
         Q_SLOT void showAudioLevelsChanged(int);
+        Q_SLOT void showPreviewChanged(int);
 };

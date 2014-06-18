@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterHorizontal->setSizes(QList<int>() << 1 << 0);
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
+    bool showPreview = (DatabaseManager::getInstance().getConfigurationByName("ShowPreview").getValue() == "true") ? true : false;
+    if (!showPreview)
+        this->widgetPreview->setVisible(false);
+
     bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
     if (!showAudioLevels)
         this->widgetAudioLevels->setVisible(false);
