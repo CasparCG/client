@@ -253,7 +253,7 @@ bool RundownInputWidget::executeCommand(Playout::PlayoutType::Type type)
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
     else if (type == Playout::PlayoutType::Preview)
-        executePreview();
+        executePlayPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -271,7 +271,7 @@ void RundownInputWidget::executePlay()
         setUsed(true);
 }
 
-void RundownInputWidget::executePreview()
+void RundownInputWidget::executePlayPreview()
 {
     const QSharedPointer<TriCasterDevice> device = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

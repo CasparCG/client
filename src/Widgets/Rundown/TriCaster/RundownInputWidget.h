@@ -82,7 +82,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         void configureOscSubscriptions();
 
         Q_SLOT void executePlay();
-        Q_SLOT void executePreview();
+        Q_SLOT void executePlayPreview();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void remoteTriggerIdChanged(const QString&);

@@ -91,7 +91,10 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        QTimer executeStartTimer;
+        QTimer executeStopTimer;
+        QTimer executeStartPreviewTimer;
+        QTimer executeStopPreviewTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();
@@ -108,7 +111,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
-        Q_SLOT void executePreview();
+        Q_SLOT void executePlayPreview();
+        Q_SLOT void executeStopPreview();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void flashlayerChanged(int);

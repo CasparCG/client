@@ -1120,13 +1120,23 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
         }
 
         // Setting: Should we AutoStep and send Preview on next item.
-        if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
+        if ((type != Playout::PlayoutType::Clear &&
+             type != Playout::PlayoutType::ClearVideolayer &&
+             type != Playout::PlayoutType::ClearChannel) &&
+             dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
         { 
-            QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+            QTreeWidgetItem* previousItem = this->treeWidgetRundown->currentItem();
 
-            bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
-            if (previewOnAutoStep && type == Playout::PlayoutType::Play)
-                QTimer::singleShot(600, this, SLOT(executePreview()));
+            selectItemBelow();
+            //QTimer::singleShot(500, this, SLOT(selectItemBelow()));
+
+            if (this->treeWidgetRundown->currentItem() != previousItem)
+            {
+                bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
+                if (previewOnAutoStep && type == Playout::PlayoutType::Play)
+                    executePreview();
+                    //QTimer::singleShot(600, this, SLOT(executePreview()));
+            }
         }
     }
     else if (rundownWidgetParent != NULL && rundownWidgetParent->isGroup())
