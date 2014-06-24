@@ -19,8 +19,8 @@ RundownGeometryWidget::RundownGeometryWidget(const LibraryModel& model, QWidget*
                                              bool active, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
-      playControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      playControlSubscription(NULL), playNowControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -436,6 +436,9 @@ void RundownGeometryWidget::configureOscSubscriptions()
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->nextControlSubscription != NULL)
         this->nextControlSubscription->disconnect(); // Disconnect all events.
 
@@ -462,6 +465,12 @@ void RundownGeometryWidget::configureOscSubscriptions()
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
     nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -534,6 +543,12 @@ void RundownGeometryWidget::playControlSubscriptionReceived(const QString& predi
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownGeometryWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownGeometryWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

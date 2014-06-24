@@ -22,9 +22,9 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
-      loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
-      nextControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
-      clearChannelControlSubscription(NULL), animation(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false)
+      loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
+      pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL),
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), animation(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false)
 {
     setupUi(this);
 
@@ -55,8 +55,6 @@ RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* paren
 
     this->executeStartTimer.setSingleShot(true);
     this->executeStopTimer.setSingleShot(true);
-    this->executeStartPreviewTimer.setSingleShot(true);
-    this->executeStopPreviewTimer.setSingleShot(true);
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -322,8 +320,6 @@ void RundownVideoWidget::clearDelayedCommands()
 {
     this->executeStartTimer.stop();
     this->executeStopTimer.stop();
-    this->executeStartPreviewTimer.stop();
-    this->executeStopPreviewTimer.stop();
 
     this->paused = false;
     this->loaded = false;
@@ -417,46 +413,7 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
     else if (type == Playout::PlayoutType::Preview)
-    {
-        this->executeStartPreviewTimer.disconnect(); // Disconnect all events.
-        this->executeStopPreviewTimer.disconnect(); // Disconnect all events.
-        QObject::connect(&this->executeStartPreviewTimer, SIGNAL(timeout()), SLOT(executePlayPreview()));
-        QObject::connect(&this->executeStopPreviewTimer, SIGNAL(timeout()), SLOT(executeStopPreview()));
-
-        if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
-        {
-            const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
-
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (deviceModel.getPreviewChannel() > channelFormats.count())
-                    return true;
-
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[deviceModel.getPreviewChannel() - 1]).getFramesPerSecond().toDouble();
-
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeStartPreviewTimer.setInterval(startDelay);
-
-                if (this->command.getDuration() > 0)
-                {
-                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    this->executeStopPreviewTimer.setInterval(startDelay + stopDelay);
-                }
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeStartPreviewTimer.setInterval(this->command.getDelay());
-
-                if (this->command.getDuration() > 0)
-                    this->executeStopPreviewTimer.setInterval(this->command.getDelay() + this->command.getDuration());
-            }
-
-            this->executeStartPreviewTimer.start();
-            if (this->executeStopPreviewTimer.interval() > 0)
-                this->executeStopPreviewTimer.start();
-        }
-    }
+        executeLoadPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -471,7 +428,14 @@ void RundownVideoWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->stopVideo(this->command.getChannel(), this->command.getVideolayer());
+
+        // Stop preview channels item.
+        const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel.getPreviewChannel() > 0)
+            device->stopVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -480,7 +444,13 @@ void RundownVideoWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->stopVideo(this->command.getChannel(), this->command.getVideolayer());
+
+            // Stop preview channels item.
+            if (model.getPreviewChannel() > 0)
+                deviceShadow->stopVideo(model.getPreviewChannel(), this->command.getVideolayer());
+        }
     }
 
     this->paused = false;
@@ -492,33 +462,6 @@ void RundownVideoWidget::executeStop()
     this->widgetOscTime->reset();
 
     this->hasSentAutoPlay = false;
-}
-
-void RundownVideoWidget::executeStopPreview()
-{
-    this->executeStartPreviewTimer.stop();
-    this->executeStopPreviewTimer.stop();
-
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
-    if (deviceModel.getPreviewChannel() > 0)
-    {
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-        if (device != NULL && device->isConnected())
-            device->stopVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer());
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        if (model.getPreviewChannel() > 0)
-        {
-            const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
-            if (deviceShadow != NULL && deviceShadow->isConnected())
-                deviceShadow->stopVideo(model.getPreviewChannel(), this->command.getVideolayer());
-        }
-    }
 }
 
 void RundownVideoWidget::executePlay()
@@ -592,60 +535,6 @@ void RundownVideoWidget::executePlay()
         this->sendAutoPlay= true;
 }
 
-void RundownVideoWidget::executePlayPreview()
-{
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
-    if (deviceModel.getPreviewChannel() > 0)
-    {
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-        if (device != NULL && device->isConnected())
-        {
-            if (this->command.getAutoPlay())
-            {
-                device->playVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                  this->command.getLoop(), true);
-            }
-            else
-            {
-                device->playVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                  this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                  this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                  this->command.getLoop(), this->command.getAutoPlay());
-            }
-        }
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        if (model.getPreviewChannel() > 0)
-        {
-            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
-            if (deviceShadow != NULL && deviceShadow->isConnected())
-            {
-                if (this->command.getAutoPlay())
-                {
-                    deviceShadow->playVideo(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                            this->command.getLoop(), true);
-                }
-                else
-                {
-                    deviceShadow->playVideo(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
-                                            this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                            this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
-                                            this->command.getLoop(), this->command.getAutoPlay());
-                }
-            }
-        }
-    }
-}
-
 void RundownVideoWidget::executePause()
 {
     if (!this->playing)
@@ -712,6 +601,40 @@ void RundownVideoWidget::executeLoad()
     this->sendAutoPlay= false;
 }
 
+void RundownVideoWidget::executeLoadPreview()
+{
+    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+    if (deviceModel.getPreviewChannel() > 0)
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+        {
+            device->loadVideo(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                              this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                              this->command.getLoop(), true, false);
+        }
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        if (model.getPreviewChannel() > 0)
+        {
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+            {
+                deviceShadow->loadVideo(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                        this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
+                                        this->command.getLoop(), true, false);
+            }
+        }
+    }
+}
+
 void RundownVideoWidget::executeNext()
 {
     if (this->command.getAutoPlay())
@@ -754,8 +677,6 @@ void RundownVideoWidget::executeClearVideolayer()
 {
     this->executeStartTimer.stop();
     this->executeStopTimer.stop();
-    this->executeStartPreviewTimer.stop();
-    this->executeStopPreviewTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -799,8 +720,6 @@ void RundownVideoWidget::executeClearChannel()
 {
     this->executeStartTimer.stop();
     this->executeStopTimer.stop();
-    this->executeStartPreviewTimer.stop();
-    this->executeStopPreviewTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -899,6 +818,9 @@ void RundownVideoWidget::configureOscSubscriptions()
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->loadControlSubscription != NULL)
         this->loadControlSubscription->disconnect(); // Disconnect all events.
 
@@ -910,6 +832,9 @@ void RundownVideoWidget::configureOscSubscriptions()
 
     if (this->updateControlSubscription != NULL)
         this->updateControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->previewControlSubscription != NULL)
+        this->previewControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
@@ -980,6 +905,12 @@ void RundownVideoWidget::configureOscSubscriptions()
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
     QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
     loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
@@ -1003,6 +934,12 @@ void RundownVideoWidget::configureOscSubscriptions()
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
+    QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -1183,6 +1120,12 @@ void RundownVideoWidget::playControlSubscriptionReceived(const QString& predicat
         executeCommand(Playout::PlayoutType::Play);
 }
 
+void RundownVideoWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::PlayNow);
+}
+
 void RundownVideoWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
@@ -1205,6 +1148,12 @@ void RundownVideoWidget::updateControlSubscriptionReceived(const QString& predic
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
+}
+
+void RundownVideoWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Preview);
 }
 
 void RundownVideoWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

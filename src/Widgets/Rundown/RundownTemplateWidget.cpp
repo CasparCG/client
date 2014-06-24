@@ -21,8 +21,8 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
                                              bool loaded, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
-      playControlSubscription(NULL), loadControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
-      invokeControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
+      invokeControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
     setAcceptDrops(true);
@@ -439,7 +439,14 @@ void RundownTemplateWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->stopTemplate(this->command.getChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+
+        // Stop preview channels item.
+        const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel.getPreviewChannel() > 0)
+            device->stopTemplate(deviceModel.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -448,7 +455,13 @@ void RundownTemplateWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->stopTemplate(this->command.getChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+
+            // Stop preview channels item.
+            if (model.getPreviewChannel() > 0)
+                deviceShadow->stopTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+        }
     }
 
     this->loaded = false;
@@ -831,6 +844,9 @@ void RundownTemplateWidget::configureOscSubscriptions()
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->loadControlSubscription != NULL)
         this->loadControlSubscription->disconnect(); // Disconnect all events.
 
@@ -842,6 +858,9 @@ void RundownTemplateWidget::configureOscSubscriptions()
 
     if (this->invokeControlSubscription != NULL)
         this->invokeControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->previewControlSubscription != NULL)
+        this->previewControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
@@ -863,6 +882,12 @@ void RundownTemplateWidget::configureOscSubscriptions()
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
     loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -887,6 +912,12 @@ void RundownTemplateWidget::configureOscSubscriptions()
     this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
     QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
+    QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -949,6 +980,12 @@ void RundownTemplateWidget::playControlSubscriptionReceived(const QString& predi
         executeCommand(Playout::PlayoutType::Play);
 }
 
+void RundownTemplateWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::PlayNow);
+}
+
 void RundownTemplateWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
@@ -959,6 +996,12 @@ void RundownTemplateWidget::invokeControlSubscriptionReceived(const QString& pre
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Invoke);
+}
+
+void RundownTemplateWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Preview);
 }
 
 void RundownTemplateWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

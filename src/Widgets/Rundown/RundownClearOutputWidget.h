@@ -71,6 +71,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* nextControlSubscription;
         OscSubscription* updateControlSubscription;
         OscSubscription* clearControlSubscription;
@@ -96,6 +97,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);

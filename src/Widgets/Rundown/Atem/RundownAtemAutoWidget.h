@@ -71,6 +71,7 @@ class WIDGETS_EXPORT RundownAtemAutoWidget : public QWidget, Ui::RundownAtemAuto
         bool markUsedItems;
 
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* updateControlSubscription;
 
         QTimer executeTimer;
@@ -88,6 +89,7 @@ class WIDGETS_EXPORT RundownAtemAutoWidget : public QWidget, Ui::RundownAtemAuto
         Q_SLOT void deviceConnectionStateChanged(AtemDevice&);
         Q_SLOT void deviceAdded(AtemDevice&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void preview(const PreviewEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);

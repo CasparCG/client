@@ -71,6 +71,7 @@ class WIDGETS_EXPORT RundownAtemAudioInputBalanceWidget : public QWidget, Ui::Ru
         bool markUsedItems;
 
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* updateControlSubscription;
 
         QTimer executeTimer;
@@ -88,6 +89,7 @@ class WIDGETS_EXPORT RundownAtemAudioInputBalanceWidget : public QWidget, Ui::Ru
         Q_SLOT void deviceConnectionStateChanged(AtemDevice&);
         Q_SLOT void deviceAdded(AtemDevice&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void preview(const PreviewEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);

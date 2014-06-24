@@ -47,12 +47,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterHorizontal->setSizes(QList<int>() << 1 << 0);
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
-    bool showPreview = (DatabaseManager::getInstance().getConfigurationByName("ShowPreview").getValue() == "true") ? true : false;
-    if (!showPreview)
+    bool showPreviewPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowPreviewPanel").getValue() == "true") ? true : false;
+    if (!showPreviewPanel)
         this->widgetPreview->setVisible(false);
 
-    bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
-    if (!showAudioLevels)
+    bool showLivePanel = (DatabaseManager::getInstance().getConfigurationByName("ShowLivePanel").getValue() == "true") ? true : false;
+    if (!showLivePanel)
+        this->widgetLive->setVisible(false);
+
+    bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
+    if (!showAudioLevelsPanel)
         this->widgetAudioLevels->setVisible(false);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));

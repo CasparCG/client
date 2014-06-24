@@ -19,8 +19,8 @@ RundownChromaWidget::RundownChromaWidget(const LibraryModel& model, QWidget* par
                                          bool active, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
-      playControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
-      clearChannelControlSubscription(NULL)
+      playControlSubscription(NULL), playNowControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL),
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -430,6 +430,9 @@ void RundownChromaWidget::configureOscSubscriptions()
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->updateControlSubscription != NULL)
         this->updateControlSubscription->disconnect(); // Disconnect all events.
 
@@ -453,6 +456,12 @@ void RundownChromaWidget::configureOscSubscriptions()
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
     updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -519,6 +528,12 @@ void RundownChromaWidget::playControlSubscriptionReceived(const QString& predica
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownChromaWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownChromaWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

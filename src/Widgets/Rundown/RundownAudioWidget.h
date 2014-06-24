@@ -76,6 +76,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* loadControlSubscription;
         OscSubscription* pauseControlSubscription;
         OscSubscription* nextControlSubscription;
@@ -108,6 +109,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);

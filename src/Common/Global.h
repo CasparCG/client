@@ -74,6 +74,7 @@ namespace Osc
     static const QString DEFAULT_AUDIO_FILTER = "#IPADDRESS#/channel/#CHANNEL#/mixer/audio/#AUDIOCHANNEL#/dBFS";
     static const QString DEFAULT_STOP_CONTROL_FILTER = "/control/#UID#/stop";
     static const QString DEFAULT_PLAY_CONTROL_FILTER = "/control/#UID#/play";
+    static const QString DEFAULT_PLAYNOW_CONTROL_FILTER = "/control/#UID#/playnow";
     static const QString DEFAULT_LOAD_CONTROL_FILTER = "/control/#UID#/load";
     static const QString DEFAULT_PAUSE_CONTROL_FILTER = "/control/#UID#/pause";
     static const QString DEFAULT_NEXT_CONTROL_FILTER = "/control/#UID#/next";
@@ -445,6 +446,8 @@ namespace Playout
             return PlayoutType::Stop;
         else if (value == "Play")
             return PlayoutType::Play;
+        else if (value == "PlayNow")
+            return PlayoutType::PlayNow;
         else if (value == "Pause")
             return PlayoutType::Pause;
         else if (value == "Load")
@@ -455,6 +458,8 @@ namespace Playout
             return PlayoutType::Update;
         else if (value == "Invoke")
             return PlayoutType::Invoke;
+        else if (value == "Preview")
+            return PlayoutType::Preview;
         else if (value == "Clear")
             return PlayoutType::Clear;
         else if (value == "ClearVideolayer")
@@ -473,6 +478,8 @@ namespace Playout
             return "Stop";
         case PlayoutType::Play:
             return "Play";
+        case PlayoutType::PlayNow:
+            return "PlayNow";
         case PlayoutType::Pause:
             return "Pause";
         case PlayoutType::Load:
@@ -483,6 +490,8 @@ namespace Playout
             return "Update";
         case PlayoutType::Invoke:
             return "Invoke";
+        case PlayoutType::Preview:
+            return "Preview";
         case PlayoutType::Clear:
             return "Clear";
         case PlayoutType::ClearVideolayer:
@@ -500,11 +509,13 @@ namespace Playout
 
         result.push_back(PlayoutType::Stop);
         result.push_back(PlayoutType::Play);
+        result.push_back(PlayoutType::PlayNow);
         result.push_back(PlayoutType::Pause);
         result.push_back(PlayoutType::Load);
         result.push_back(PlayoutType::Next);
         result.push_back(PlayoutType::Update);
         result.push_back(PlayoutType::Invoke);
+        result.push_back(PlayoutType::Preview);
         result.push_back(PlayoutType::Clear);
         result.push_back(PlayoutType::ClearVideolayer);
         result.push_back(PlayoutType::ClearChannel);

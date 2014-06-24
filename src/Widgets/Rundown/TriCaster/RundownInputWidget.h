@@ -71,6 +71,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         bool markUsedItems;
 
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* updateControlSubscription;
         OscSubscription* previewControlSubscription;
 
@@ -90,6 +91,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         Q_SLOT void deviceConnectionStateChanged(TriCasterDevice&);
         Q_SLOT void deviceAdded(TriCasterDevice&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void preview(const PreviewEvent&);

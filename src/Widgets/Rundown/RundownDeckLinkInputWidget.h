@@ -76,6 +76,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* loadControlSubscription;
         OscSubscription* pauseControlSubscription;
         OscSubscription* clearControlSubscription;
@@ -105,6 +106,7 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);

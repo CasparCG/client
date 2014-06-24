@@ -19,8 +19,9 @@ RundownSolidColorWidget::RundownSolidColorWidget(const LibraryModel& model, QWid
                                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color),
-      model(model), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
-      nextControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      model(model), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
+      pauseControlSubscription(NULL), nextControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
+      clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -525,6 +526,9 @@ void RundownSolidColorWidget::configureOscSubscriptions()
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->loadControlSubscription != NULL)
         this->loadControlSubscription->disconnect(); // Disconnect all events.
 
@@ -554,6 +558,12 @@ void RundownSolidColorWidget::configureOscSubscriptions()
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
     loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -632,6 +642,12 @@ void RundownSolidColorWidget::playControlSubscriptionReceived(const QString& pre
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
+}
+
+void RundownSolidColorWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownSolidColorWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

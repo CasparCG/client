@@ -32,6 +32,22 @@
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayoutLeft">
         <item>
+         <widget class="PreviewWidget" name="widgetPreview" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>289</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="LibraryWidget" name="widgetLibrary" native="true">
           <property name="minimumSize">
            <size>
@@ -88,7 +104,7 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="PreviewWidget" name="widgetPreview" native="true">
+         <widget class="LiveWidget" name="widgetLive" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -195,6 +211,12 @@
    <class>AudioLevelsWidget</class>
    <extends>QWidget</extends>
    <header>AudioLevelsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LiveWidget</class>
+   <extends>QWidget</extends>
+   <header>LiveWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

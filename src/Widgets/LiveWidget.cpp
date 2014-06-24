@@ -1,4 +1,4 @@
-#include "PreviewWidget.h"
+#include "LiveWidget.h"
 
 #include "Global.h"
 
@@ -7,45 +7,42 @@
 #include "Models/LibraryModel.h"
 #include "Models/ThumbnailModel.h"
 
-PreviewWidget::PreviewWidget(QWidget* parent)
+LiveWidget::LiveWidget(QWidget* parent)
     : QWidget(parent),
       previewAlpha(false)
 {
     setupUi(this);
 
-    QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
+    //QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
+    //QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    //QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
 }
 
-void PreviewWidget::targetChanged(const TargetChangedEvent& event)
+void LiveWidget::targetChanged(const TargetChangedEvent& event)
 {
     this->model->setName(event.getTarget());
 
     setThumbnail();
 }
 
-void PreviewWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
+void LiveWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
 
     setThumbnail();
 }
 
-void PreviewWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+void LiveWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
 
     setThumbnail();
 }
 
-void PreviewWidget::setThumbnail()
+void LiveWidget::setThumbnail()
 {
     if (this->model->getType() != "STILL" && this->model->getType() != "MOVIE")
-    {
-        this->labelPreviewImage->setPixmap(NULL);
         return;
-    }
 
     int thumbnailId = this->model->getThumbnailId();
     QString name = this->model->getName();
@@ -74,7 +71,7 @@ void PreviewWidget::setThumbnail()
     }
 }
 
-void PreviewWidget::switchPreview()
+void LiveWidget::switchPreview()
 {
     if (this->previewAlpha)
     {

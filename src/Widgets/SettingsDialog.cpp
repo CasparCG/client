@@ -74,10 +74,12 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
     this->checkBoxMarkUsedItems->setChecked(markUsedItems);
 
-    bool showPreview = (DatabaseManager::getInstance().getConfigurationByName("ShowPreview").getValue() == "true") ? true : false;
-    this->checkBoxShowPreview->setChecked(showPreview);
-    bool showAudioLevels = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevels").getValue() == "true") ? true : false;
-    this->checkBoxShowAudioLevels->setChecked(showAudioLevels);
+    bool showPreviewPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowPreviewPanel").getValue() == "true") ? true : false;
+    this->checkBoxShowPreview->setChecked(showPreviewPanel);
+    bool showLivePanel = (DatabaseManager::getInstance().getConfigurationByName("ShowLivePanel").getValue() == "true") ? true : false;
+    this->checkBoxShowLive->setChecked(showLivePanel);
+    bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
+    this->checkBoxShowAudioLevels->setChecked(showAudioLevelsPanel);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
@@ -851,12 +853,18 @@ void SettingsDialog::markUsedItemsChanged(int state)
 
 void SettingsDialog::showAudioLevelsChanged(int state)
 {
-    QString showAudioLevels = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowAudioLevels", showAudioLevels));
+    QString showAudioLevelsPanel = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowAudioLevelsPanel", showAudioLevelsPanel));
 }
 
 void SettingsDialog::showPreviewChanged(int state)
 {
-    QString showPreview = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowPreview", showPreview));
+    QString showPreviewPanel = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowPreviewPanel", showPreviewPanel));
+}
+
+void SettingsDialog::showLiveChanged(int state)
+{
+    QString showLivePanel = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowLivePanel", showLivePanel));
 }

@@ -76,7 +76,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>37</width>
+         <width>33</width>
          <height>20</height>
         </size>
        </property>
@@ -85,7 +85,7 @@
      <item>
       <widget class="QLabel" name="labelCropTop">
        <property name="text">
-        <string>Right</string>
+        <string>Width</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -170,7 +170,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>24</width>
+         <width>31</width>
          <height>20</height>
         </size>
        </property>
@@ -179,7 +179,7 @@
      <item>
       <widget class="QLabel" name="labelCropBottom">
        <property name="text">
-        <string>Bottom</string>
+        <string>Height</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
