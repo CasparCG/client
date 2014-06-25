@@ -158,7 +158,8 @@ HEADERS += \
     Events/Rundown/MarkItemAsUsedEvent.h \
     Events/Rundown/MarkItemAsUnusedEvent.h \
     Events/Rundown/MarkAllItemsAsUsedEvent.h \
-    Events/Rundown/MarkAllItemsAsUnusedEvent.h
+    Events/Rundown/MarkAllItemsAsUnusedEvent.h \
+    Commands/PlayoutCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -306,7 +307,8 @@ SOURCES += \
     Events/Rundown/MarkItemAsUsedEvent.cpp \
     Events/Rundown/MarkItemAsUnusedEvent.cpp \
     Events/Rundown/MarkAllItemsAsUsedEvent.cpp \
-    Events/Rundown/MarkAllItemsAsUnusedEvent.cpp
+    Events/Rundown/MarkAllItemsAsUnusedEvent.cpp \
+    Commands/PlayoutCommand.cpp
 
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol

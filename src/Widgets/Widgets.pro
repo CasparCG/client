@@ -133,7 +133,9 @@ HEADERS += \
     Rundown/OpenRundownFromUrlDialog.h \
     AudioMeterWidget.h \
     AudioLevelsWidget.h \
-    LiveWidget.h
+    LiveWidget.h \
+    Rundown/RundownPlayoutCommandWidget.h \
+    Inspector/InspectorPlayoutCommandWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -255,7 +257,9 @@ SOURCES += \
     Rundown/OpenRundownFromUrlDialog.cpp \
     AudioMeterWidget.cpp \
     AudioLevelsWidget.cpp \
-    LiveWidget.cpp
+    LiveWidget.cpp \
+    Rundown/RundownPlayoutCommandWidget.cpp \
+    Inspector/InspectorPlayoutCommandWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -366,7 +370,9 @@ FORMS += \
     Rundown/OpenRundownFromUrlDialog.ui \
     AudioMeterWidget.ui \
     AudioLevelsWidget.ui \
-    LiveWidget.ui
+    LiveWidget.ui \
+    Rundown/RundownPlayoutCommandWidget.ui \
+    Inspector/InspectorPlayoutCommandWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

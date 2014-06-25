@@ -27,6 +27,7 @@
 #include "Inspector/InspectorCustomCommandWidget.h"
 #include "Inspector/InspectorChromaWidget.h"
 #include "Inspector/InspectorOscOutputWidget.h"
+#include "Inspector/InspectorPlayoutCommandWidget.h"
 #include "Inspector/Atem/InspectorAtemInputWidget.h"
 #include "Inspector/Atem/InspectorAtemCutWidget.h"
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
@@ -66,6 +67,7 @@
 #include "Commands/VolumeCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
 #include "Commands/ImageScrollerCommand.h"
+#include "Commands/PlayoutCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/CustomCommand.h"
 #include "Commands/OscOutputCommand.h"
@@ -132,6 +134,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(39)), 0, new InspectorAtemAudioInputStateWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(40)), 0, new InspectorAtemAudioGainWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(41)), 0, new InspectorAtemAudioInputBalanceWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(42)), 0, new InspectorPlayoutCommandWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -176,6 +179,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(42)->setHidden(true);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
@@ -225,6 +229,7 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
     this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(42)->setHidden(true);
 
     if (dynamic_cast<TemplateCommand*>(event.getCommand()))
     {
@@ -430,6 +435,11 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
         this->treeWidgetInspector->topLevelItem(41)->setHidden(false);
     }
+    else if (dynamic_cast<PlayoutCommand*>(event.getCommand()))
+    {
+        this->treeWidgetInspector->topLevelItem(1)->setHidden(false);
+        this->treeWidgetInspector->topLevelItem(42)->setHidden(false);
+    }
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
@@ -476,6 +486,7 @@ void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
     this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(42)->setHidden(true);
 }
 
 void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
@@ -522,6 +533,7 @@ void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
     this->treeWidgetInspector->topLevelItem(39)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(40)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(41)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(42)->setHidden(true);
 }
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)

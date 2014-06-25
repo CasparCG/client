@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>779</height>
+    <height>796</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,7 +49,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>718</height>
+        <height>735</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -85,7 +85,7 @@
             <x>0</x>
             <y>0</y>
             <width>287</width>
-            <height>716</height>
+            <height>733</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1066,6 +1066,29 @@
              <item>
               <property name="text">
                <string>Audio Input Balance</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Playout Command</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

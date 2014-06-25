@@ -333,6 +333,15 @@ void LibraryWidget::setupTools()
     widgetOscOutput->setText(4, Rundown::OSCOUTPUT);
     widgetOscOutput->setText(5, "0");
 
+    QTreeWidgetItem* widgetPlayoutCommand = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetPlayoutCommand->setIcon(0, QIcon(":/Graphics/Images/CustomCommandSmall.png"));
+    widgetPlayoutCommand->setText(0, "Playout Command");
+    widgetPlayoutCommand->setText(1, "0");
+    widgetPlayoutCommand->setText(2, "Playout Command");
+    widgetPlayoutCommand->setText(3, "");
+    widgetPlayoutCommand->setText(4, Rundown::PLAYOUTCOMMAND);
+    widgetPlayoutCommand->setText(5, "0");
+
     QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
     widgetSolidColor->setText(0, "Solid Color");

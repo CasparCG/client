@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorPlayoutCommandWidget</class>
+ <widget class="QWidget" name="InspectorPlayoutCommandWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>193</width>
+    <height>56</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutPlayoutCommand">
+     <item>
+      <spacer name="horizontalSpacerPlayoutCommand">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>15</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelPlayout">
+       <property name="text">
+        <string>Playout</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxPlayoutCommand">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Play</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Play Now</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pause</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Load</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Next</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Update</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Invoke</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Preview</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Clear Video Layer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Clear Channel</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerPlayoutCommand">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>comboBoxPlayoutCommand</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorPlayoutCommandWidget</receiver>
+   <slot>playoutCommandChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>202</x>
+     <y>10</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>playoutCommandChanged(QString)</slot>
+ </slots>
+</ui>

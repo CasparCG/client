@@ -29,6 +29,7 @@
 #include "Commands/SolidColorCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Commands/ChromaCommand.h"
+#include "Commands/PlayoutCommand.h"
 #include "Commands/OscOutputCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
@@ -152,14 +153,21 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
-            this->spinBoxDuration->setEnabled(false);
+            //this->spinBoxDuration->setEnabled(false);
 
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
-                 dynamic_cast<PrintCommand*>(event.getCommand()) ||
-                 dynamic_cast<GridCommand*>(event.getCommand()))
+                 dynamic_cast<PrintCommand*>(event.getCommand()))
+        {
+            this->comboBoxTarget->setEnabled(false);
+            this->spinBoxVideolayer->setEnabled(false);
+            this->spinBoxDuration->setEnabled(false);
+
+            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+        }
+        else if (dynamic_cast<GridCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
@@ -186,7 +194,8 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
-                 dynamic_cast<OscOutputCommand*>(event.getCommand()))
+                 dynamic_cast<OscOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {
             this->comboBoxDevice->setEnabled(false);
             this->comboBoxTarget->setEnabled(false);

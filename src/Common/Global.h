@@ -188,6 +188,7 @@ namespace Output
     static const QString DEFAULT_REMOTE_TRIGGER_ID = "";
     static const QString DEFAULT_DELAY_IN_FRAMES = "Frames";
     static const QString DEFAULT_DELAY_IN_MILLISECONDS = "Milliseconds";
+    static const QString DEFAULT_PLAYOUT_COMMAND = "Play";
 }
 
 namespace Audio
@@ -327,6 +328,7 @@ namespace Rundown
     static const QString TEMPLATE = "TEMPLATE";
     static const QString VIDEO = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
+    static const QString PLAYOUTCOMMAND = "PLAYOUTCOMMAND";
     static const QString CHROMAKEY = "CHROMAKEY";
     static const QString TRICASTERAUTO = "TRICASTERAUTO";
     static const QString TRICASTERTAKE = "TRICASTERTAKE";

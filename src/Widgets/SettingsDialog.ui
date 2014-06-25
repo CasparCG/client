@@ -1379,6 +1379,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1400,6 +1405,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1448,6 +1458,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1469,6 +1484,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1517,6 +1537,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1538,6 +1563,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1586,6 +1616,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1607,6 +1642,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1655,6 +1695,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1676,6 +1721,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1724,6 +1774,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1745,6 +1800,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1793,6 +1853,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1814,6 +1879,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>
@@ -1862,6 +1932,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Play Now</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Pause</string>
       </property>
      </item>
@@ -1883,6 +1958,11 @@
      <item>
       <property name="text">
        <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
       </property>
      </item>
      <item>

@@ -26,6 +26,7 @@
 #include "RundownAudioWidget.h"
 #include "RundownImageWidget.h"
 #include "RundownCustomCommandWidget.h"
+#include "RundownPlayoutCommandWidget.h"
 #include "RundownChromaWidget.h"
 #include "RundownOscOutputWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
@@ -93,6 +94,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ATEMAUDIOINPUTSTATE) return new RundownAtemAudioInputStateWidget(model, this);
     else if (model.getType() == Rundown::ATEMAUDIOGAIN) return new RundownAtemAudioGainWidget(model, this);
     else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
+    else if (model.getType() == Rundown::PLAYOUTCOMMAND) return new RundownPlayoutCommandWidget(model, this);
 
     return NULL;
 }

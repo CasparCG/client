@@ -115,6 +115,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void configureOscSubscriptions();
         QString colorLookup(const QString& color, bool reverse) const;
 
+        Q_SLOT void addPlayoutCommandItem();
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();
         Q_SLOT void addPrintItem();

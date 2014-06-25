@@ -132,7 +132,7 @@ void MainWindow::setupMenu()
     this->playoutMenu->addAction("Clear Video Layer", this, SLOT(executeClearVideolayer()), QKeySequence::fromString("F11"));
     this->playoutMenu->addAction("Clear Channel", this, SLOT(executeClearChannel()), QKeySequence::fromString("F12"));
     this->playoutMenu->addSeparator();
-    this->playoutMenu->addAction("Play Now!", this, SLOT(executePlayNow()), QKeySequence::fromString("Shift+F2"));
+    this->playoutMenu->addAction("Play Now", this, SLOT(executePlayNow()), QKeySequence::fromString("Shift+F2"));
 
     this->helpMenu = new QMenu(this);
     QAction* action = this->helpMenu->addAction("View Help", this, SLOT(showHelpDialog()), QKeySequence::fromString("Ctrl+H"));
