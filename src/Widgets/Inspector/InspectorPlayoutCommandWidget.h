@@ -3,7 +3,7 @@
 #include "../Shared.h"
 #include "ui_InspectorPlayoutCommandWidget.h"
 
-#include "Commands/PLayoutCommand.h"
+#include "Commands/PlayoutCommand.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 

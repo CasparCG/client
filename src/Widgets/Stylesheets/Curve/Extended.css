@@ -1,0 +1,440 @@
+/*
+ * MainWindow
+ */
+#MainWindow > #centralWidget
+{
+    background-color: rgba(64, 64, 64, 255);
+    border-bottom-color: rgba(42, 42, 42, 255);
+    border-bottom-width: 1px;
+    border-radius: 0px;
+}
+
+/*
+ * AddDeviceDialog
+ */
+#toolButtonTestConnection
+{
+    image: url(:/Graphics/Images/TestConnection.png);
+}
+
+/*
+ * SettingsDialog
+ */
+#labelSettingsInformation, #labelImportInformation
+{
+    color: rgba(190, 190, 190, 255);
+    font-size: 10px;
+}
+
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineDatabase, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
+{
+    background-color: rgba(42, 42, 42, 255);
+}
+#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddAtemDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
+{
+    image: url(:/Graphics/Images/Add.png);
+}
+#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddAtemDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
+{
+    image: url(:/Graphics/Images/AddHover.png);
+}
+#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveAtemDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
+{
+    image: url(:/Graphics/Images/Remove.png);
+}
+#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveAtemDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
+{
+    image: url(:/Graphics/Images/RemoveHover.png);
+}
+#toolButtonImportDevice, #toolButtonImportTriCasterDevice, #toolButtonImportAtemDevice
+{
+    image: url(:/Graphics/Images/Import.png);
+}
+#toolButtonImportDevice:hover, #toolButtonImportTriCasterDevice:hover, #toolButtonImportAtemDevice:hover
+{
+    image: url(:/Graphics/Images/ImportHover.png);
+}
+
+/*
+ * DeviceFilterWidget
+ */
+#comboBoxDeviceFilter:hover
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+}
+#comboBoxDeviceFilter:!editable:on, #comboBoxDeviceFilter::drop-down:editable:on
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+}
+#lineEditDeviceFilter
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+    border-width: 0px;
+    min-height: 19px;
+}
+
+/*
+ * LibraryWidget
+ */
+#lineEditDeviceFilter:disabled
+{
+    color: rgba(255, 255, 255, 255);
+}
+#treeWidgetTool, #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
+{
+    border-width: 0px;
+    color: rgba(190, 190, 190, 255);
+}
+#treeWidgetTool
+{
+    background-color: rgba(60, 60, 60, 255);
+    border-width: 0px;
+    color: rgba(190, 190, 190, 255);
+}
+#treeWidgetTool::branch:closed:has-children:has-siblings, #treeWidgetTool::branch:has-children:!has-siblings:closed
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowRight.png);
+}
+#treeWidgetTool::branch:open:has-children:has-siblings, #treeWidgetTool::branch:open:has-children:!has-siblings
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowDown.png);
+}
+
+/*
+ * InspectorWidget
+ */
+#treeWidgetInspector
+{
+    background-color: rgba(60, 60, 60, 255);
+    border-width: 0px;
+    color: rgba(190, 190, 190, 255);
+}
+#treeWidgetInspector::branch:closed:has-children:has-siblings, #treeWidgetInspector::branch:has-children:!has-siblings:closed
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowRight.png);
+}
+#treeWidgetInspector::branch:open:has-children:has-siblings, #treeWidgetInspector::branch:open:has-children:!has-siblings
+{
+    background-color: rgba(55, 55, 55, 255);
+    image: url(:/Graphics/Images/ArrowDown.png);
+}
+#treeWidgetInspector QLabel
+{
+    color: rgba(190, 190, 190, 255);
+}
+#treeWidgetInspector QLabel:disabled
+{
+    color: rgba(128, 128, 128, 255);
+}
+
+#checkBoxAllowGpi, #checkBoxAllowRemoteTriggering
+{
+    color: rgba(190, 190, 190, 255);
+}
+
+#toolButtonMasterVolume
+{
+    image: url(:/Graphics/Images/MasterVolumeOn.png);
+    padding: 4px;
+}
+#toolButtonDisableCommand
+{
+    image: url(:/Graphics/Images/DisableCommandOn.png);
+    padding: 2px;
+}
+
+/*
+ * InspectorSolidColorWidget
+ */
+#toolButtonColor
+{
+    image: url(:/Graphics/Images/SolidColorSmall.png);
+}
+
+/*
+ * InspectorTemplateWidget
+ */
+#treeWidgetTemplateData
+{
+    alternate-background-color: rgba(60, 60, 60, 255);
+}
+
+/*
+ * Rundown items
+ */
+#frameItem, #frameStatus
+{
+    background-color: transparent;
+    border-radius: 0px;
+}
+#labelThumbnail
+{
+    border-width: 1px;
+    image: url(:/Graphics/Images/Checkerboard.png);
+}
+#labelLabel, #labelNoteField
+{
+    font-size: 13px;
+}
+#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelRemoteTriggerId, #labelGpiOutputPort
+{
+    color: rgba(190, 190, 190, 255);
+}
+
+/*
+ * RundownWidget
+ */
+#toolButtonRundownDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonRundownDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
+}
+
+#tabWidgetRundown::pane
+{
+    border-width: 0px;
+
+    position: absolute;
+    top: 0px;
+}
+#tabWidgetRundown QTabBar::tab
+{
+    border-bottom-width: 0px;
+}
+#tabWidgetRundown QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#treeWidgetRundown
+{
+    background-color: rgba(64, 64, 64, 255);
+    border-top-left-radius: 0px;
+}
+#treeWidgetRundown::item:selected
+{
+    background-color: rgba(80, 80, 80, 255);
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 255);
+}
+#treeWidgetRundown::item:hover:selected
+{
+    background-color: rgba(80, 80, 80, 255);
+}
+#treeWidgetRundown::item:has-children
+{
+    background-color: transparent;
+}
+#treeWidgetRundown::item:has-children:selected
+{
+    background-color: rgba(80, 80, 80, 255);
+}
+#treeWidgetRundown::branch
+{
+    background-color: transparent;
+}
+
+/*
+ * ActionWidget
+ */
+#tabWidgetAction::pane
+{
+    border-width: 0px;
+
+    position: absolute;
+    top: 0px;
+}
+#tabWidgetAction QTabBar::tab
+{
+    border-bottom-width: 0px;
+}
+#tabWidgetAction QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#listWidgetAction
+{
+    background-color: rgba(64, 64, 64, 255);
+    border-top-left-radius: 0px;
+}
+#listWidgetAction::item
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+    border-color: rgba(42, 42, 42, 255);
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+
+    min-width: 64px;
+    min-height: 64px;
+}
+#listWidgetAction::item:hover
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
+}
+
+/*
+ * PreviewWidget
+ */
+#labelPreview
+{
+    image: url(:/Graphics/Images/Checkerboard.png);
+}
+#tabPreview
+{
+    background-color: rgba(60, 60, 60, 255);
+    border-width: 0px;
+}
+#tabWidgetPreview::pane
+{
+    background-color: rgba(60, 60, 60, 255);
+    top: 0px;
+}
+#tabWidgetPreview QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonPreviewDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonPreviewDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
+}
+
+/*
+ * AudioLevelsWidget
+ */
+#tabAudioLevels
+{
+    background-color: rgba(60, 60, 60, 255);
+}
+
+#tabWidgetAudioLevels::pane
+{
+    background-color: rgba(60, 60, 60, 255);
+    top: 0px;
+}
+#tabWidgetAudioLevels QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonAudioLevelsDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonAudioLevelsDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
+}
+
+/*
+ * AudioMeterWidget
+ */
+#labelAudioMeterChannel
+{
+    background-color: transparent;
+    color: rgba(128, 128, 128, 255);
+    font-size: 8px;
+}
+#labelAudioMeter0, #labelAudioMeter9, #labelAudioMeter20, #labelAudioMeter60
+{
+    color: rgba(128, 128, 128, 255);
+    font-size: 8px;
+}
+
+#progressBarAudioMeter
+{
+    border-color: rgba(42, 42, 42, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+#progressBarAudioMeter::chunk
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 green, stop: 1 lime);
+}
+
+/*
+ * OscTimeWidget
+ */
+#labelOscTime
+{
+    font-size: 13px;
+}
+#labelOscInTime, #labelOscOutTime
+{
+    color: rgba(190, 190, 190, 255);
+    font-size: 11px;
+}
+
+#progressBarOscTime
+{
+    border-color: lime;
+    border-radius: 0px;
+}
+#progressBarOscTime::chunk
+{
+    background-color: green;
+    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
+    border-radius: 2px;*/
+}
+
+/*
+ * AboutWidget
+ */
+#labelApplicationVersion
+{
+    font-size: 13px;
+}
+
+/*
+ * LiveWidget
+ */
+#labelLive
+{
+    image: url(:/Graphics/Images/StreamNotAvailable.png);
+}
+#tabLive
+{
+    background-color: rgba(60, 60, 60, 255);
+}
+
+#tabWidgetLive::pane
+{
+    background-color: rgba(60, 60, 60, 255);
+    top: 0px;
+}
+#tabWidgetLive QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonLiveDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonLiveDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
+}

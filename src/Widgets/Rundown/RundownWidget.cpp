@@ -20,15 +20,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent)
 {
     setupUi(this);
-
     setupMenus();
-
-    QToolButton* toolButtonRundownDropdown = new QToolButton(this);
-    toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
-    toolButtonRundownDropdown->setMenu(this->contextMenuRundownDropdown);
-    toolButtonRundownDropdown->setPopupMode(QToolButton::InstantPopup);
-    this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
-    //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     RundownTreeWidget* widget = new RundownTreeWidget(this);
     int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
@@ -63,7 +55,7 @@ void RundownWidget::setupMenus()
     this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "All as Unused", this, SLOT(markAllItemsAsUnusedInRundown()));
 
     this->contextMenuRundownDropdown = new QMenu(this);
-    this->contextMenuRundownDropdown->setTitle("Rundown Dropdown");
+    this->contextMenuRundownDropdown->setTitle("Dropdown");
     this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(createNewRundown()));
     this->openRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundownFromDisk()));
     this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
@@ -75,11 +67,19 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
+    this->allowRemoteTriggeringAction->setCheckable(true);
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Reload Rundown", this, SLOT(reloadCurrentRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeCurrentRundown()));
-    this->allowRemoteTriggeringAction->setCheckable(true);
+
+    QToolButton* toolButtonRundownDropdown = new QToolButton(this);
+    toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
+    toolButtonRundownDropdown->setMenu(this->contextMenuRundownDropdown);
+    toolButtonRundownDropdown->setPopupMode(QToolButton::InstantPopup);
+    this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
+    //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
+
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
 }
 

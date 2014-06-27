@@ -215,7 +215,7 @@ bool RundownTreeBaseWidget::duplicateSelectedItems()
 
 void RundownTreeBaseWidget::checkEmptyRundown()
 {
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::DEFAULT_THEME)
+    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
     else
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");

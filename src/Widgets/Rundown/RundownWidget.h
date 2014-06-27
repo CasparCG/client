@@ -25,7 +25,9 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
+#include <QtGui/QAction>
 #include <QtGui/QKeyEvent>
+#include <QtGui/QMenu>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget

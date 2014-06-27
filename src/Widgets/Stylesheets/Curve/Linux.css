@@ -1,0 +1,35 @@
+/*
+ * QHeaderView
+ */
+QHeaderView::section
+{
+    padding: 4px;
+}
+
+/*
+ * QToolTip
+ */
+QToolTip
+{
+    font-size: 12px;
+}
+
+/*
+ * QTabBar
+ */
+QTabBar::tab
+{
+    min-height: 18px;
+}
+
+/*
+ * AudioMeterWidget
+ */
+#labelAudioMeterChannel
+{
+    font-size: 9px;
+}
+#labelAudioMeter0, #labelAudioMeter9, #labelAudioMeter20, #labelAudioMeter60
+{
+    font-size: 9px;
+}

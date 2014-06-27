@@ -208,17 +208,18 @@
         <file>Images/Maroon.png</file>
         <file>Images/SteelBlue.png</file>
         <file>Images/DarkSlateGray.png</file>
+        <file>Images/StreamNotAvailable.png</file>
     </qresource>
     <qresource prefix="/Appearances">
-        <file>Stylesheets/Default/Default.css</file>
-        <file>Stylesheets/Default/Extended.css</file>
-        <file>Stylesheets/Default/Linux.css</file>
-        <file>Stylesheets/Default/Mac.css</file>
-        <file>Stylesheets/Default/Windows.css</file>
         <file>Stylesheets/Flat/Default.css</file>
         <file>Stylesheets/Flat/Extended.css</file>
         <file>Stylesheets/Flat/Linux.css</file>
         <file>Stylesheets/Flat/Mac.css</file>
         <file>Stylesheets/Flat/Windows.css</file>
+        <file>Stylesheets/Curve/Default.css</file>
+        <file>Stylesheets/Curve/Extended.css</file>
+        <file>Stylesheets/Curve/Linux.css</file>
+        <file>Stylesheets/Curve/Mac.css</file>
+        <file>Stylesheets/Curve/Windows.css</file>
     </qresource>
 </RCC>

@@ -39,6 +39,7 @@ OTHER_FILES += \
 win32:RC_FILE = Windows.rc
 else:macx:ICON = Images/CasparCG.icns
 
+DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
@@ -47,15 +48,23 @@ else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/li
 else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
 else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
 
+DEPENDPATH += $$PWD/../../lib/oscpack/include
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
 else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
 else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 
+DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+
+DEPENDPATH += $$PWD/../../lib/libvlc/include
+INCLUDEPATH += $$PWD/../../lib/libvlc/include
+win32:LIBS += -L$$PWD/../../lib/libvlc/lib/win32/ -lvlc -lvlccore
+else:macx:LIBS += -L$$PWD/../../lib/libvlc/lib/macx/ -lvlc -lvlccore
+else:unix:LIBS += -L$$PWD/../../lib/libvlc/lib/linux/ -lvlc -lvlccore
 
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include

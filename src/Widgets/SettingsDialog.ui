@@ -431,7 +431,7 @@
      </property>
      <item>
       <property name="text">
-       <string>Default</string>
+       <string>Curve</string>
       </property>
      </item>
      <item>
@@ -656,7 +656,7 @@
        <x>110</x>
        <y>42</y>
        <width>535</width>
-       <height>638</height>
+       <height>701</height>
       </rect>
      </property>
      <property name="rootIsDecorated">
@@ -741,7 +741,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -766,7 +766,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -820,7 +820,7 @@
      <property name="geometry">
       <rect>
        <x>612</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -850,7 +850,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>354</y>
+       <y>385</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -875,9 +875,9 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>94</y>
+       <y>93</y>
        <width>535</width>
-       <height>251</height>
+       <height>283</height>
       </rect>
      </property>
      <property name="rootIsDecorated">
@@ -959,7 +959,7 @@
      <property name="geometry">
       <rect>
        <x>612</x>
-       <y>354</y>
+       <y>385</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -1013,7 +1013,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>354</y>
+       <y>385</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -1038,7 +1038,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>399</y>
+       <y>430</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -1054,9 +1054,9 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>429</y>
+       <y>461</y>
        <width>535</width>
-       <height>251</height>
+       <height>283</height>
       </rect>
      </property>
      <property name="rootIsDecorated">
@@ -1106,7 +1106,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>407</y>
+       <y>438</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -1119,7 +1119,7 @@
      <property name="geometry">
       <rect>
        <x>149</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -1144,7 +1144,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>
@@ -1169,7 +1169,7 @@
      <property name="geometry">
       <rect>
        <x>612</x>
-       <y>689</y>
+       <y>752</y>
        <width>33</width>
        <height>22</height>
       </rect>

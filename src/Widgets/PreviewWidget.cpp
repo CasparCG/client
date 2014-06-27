@@ -7,15 +7,37 @@
 #include "Models/LibraryModel.h"
 #include "Models/ThumbnailModel.h"
 
+#include <QtGui/QToolButton>
+
 PreviewWidget::PreviewWidget(QWidget* parent)
     : QWidget(parent),
-      previewAlpha(false)
+      viewAlpha(false), collapsed(false)
 {
     setupUi(this);
+    setupMenus();
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
+}
+
+void PreviewWidget::setupMenus()
+{
+    this->contextMenuPreviewDropdown = new QMenu(this);
+    this->contextMenuPreviewDropdown->setTitle("Dropdown");
+    this->viewAlphaAction = this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "View Alpha");
+    this->viewAlphaAction->setCheckable(true);
+    this->contextMenuPreviewDropdown->addSeparator();
+    this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Expand / Collapse", this, SLOT(toggleExpandCollapse()));
+
+    QToolButton* toolButtonPreviewDropdown = new QToolButton(this);
+    toolButtonPreviewDropdown->setObjectName("toolButtonPreviewDropdown");
+    toolButtonPreviewDropdown->setMenu(this->contextMenuPreviewDropdown);
+    toolButtonPreviewDropdown->setPopupMode(QToolButton::InstantPopup);
+    this->tabWidgetPreview->setCornerWidget(toolButtonPreviewDropdown);
+    //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
+
+    QObject::connect(this->viewAlphaAction, SIGNAL(toggled(bool)), this, SLOT(viewAlphaChanged(bool)));
 }
 
 void PreviewWidget::targetChanged(const TargetChangedEvent& event)
@@ -43,7 +65,7 @@ void PreviewWidget::setThumbnail()
 {
     if (this->model->getType() != "STILL" && this->model->getType() != "MOVIE")
     {
-        this->labelPreviewImage->setPixmap(NULL);
+        this->labelPreview->setPixmap(NULL);
         return;
     }
 
@@ -63,29 +85,30 @@ void PreviewWidget::setThumbnail()
     {
         this->image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
 
-        if (this->previewAlpha)
-            this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+        if (this->viewAlpha)
+            this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
         else
-            this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image));
+            this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
     }
     else
     {
-        this->labelPreviewImage->setPixmap(NULL);
+        this->labelPreview->setPixmap(NULL);
     }
 }
 
-void PreviewWidget::switchPreview()
+void PreviewWidget::viewAlphaChanged(bool enabled)
 {
-    if (this->previewAlpha)
-    {
-        this->toolButtonPreviewAlpha->setStyleSheet("");
-        this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image));
-    }
+    if (enabled)
+        this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
     else
-    {
-        this->toolButtonPreviewAlpha->setStyleSheet("border-color: firebrick;");
-        this->labelPreviewImage->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
-    }
+        this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
 
-    this->previewAlpha = !this->previewAlpha;
+    this->viewAlpha = enabled;
+}
+
+void PreviewWidget::toggleExpandCollapse()
+{
+    this->collapsed = !this->collapsed;
+
+    this->setFixedHeight((this->collapsed == true) ? Panel::COMPACT_PREVIEW_HEIGHT : Panel::DEFAULT_PREVIEW_HEIGHT);
 }

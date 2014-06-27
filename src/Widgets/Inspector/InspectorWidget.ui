@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>796</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -1230,7 +1239,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>287</x>
-     <y>692</y>
+     <y>794</y>
     </hint>
     <hint type="destinationlabel">
      <x>98</x>
@@ -1246,7 +1255,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>32</x>
-     <y>692</y>
+     <y>794</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>

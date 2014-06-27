@@ -4,6 +4,7 @@
 #include "ui_AudioLevelsWidget.h"
 
 #include <QtGui/QImage>
+#include <QtGui/QMenu>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT AudioLevelsWidget : public QWidget, Ui::AudioLevelsWidget
@@ -12,4 +13,13 @@ class WIDGETS_EXPORT AudioLevelsWidget : public QWidget, Ui::AudioLevelsWidget
 
     public:
         explicit AudioLevelsWidget(QWidget* parent = 0);
+
+    private:
+        bool collapsed;
+
+        QMenu* contextMenuAudioLevelsDropdown;
+
+        void setupMenus();
+
+        Q_SLOT void toggleExpandCollapse();
 };

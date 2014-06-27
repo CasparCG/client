@@ -315,30 +315,74 @@
 /*
  * PreviewWidget
  */
-#pagePreview
+#labelPreview
 {
-    background-color: rgba(35, 35, 35, 255);
-}
-#labelPreviewImage
-{
-    border-width: 1px;
     image: url(:/Graphics/Images/Checkerboard.png);
 }
-#toolButtonPreviewAlpha
+#tabPreview
 {
-    image: url(:/Graphics/Images/PreviewAlpha.png);
+    background-color: rgba(35, 35, 35, 255);
+    border-width: 0px;
 }
-#toolButtonPreviewAlpha:hover
+
+#tabWidgetPreview::pane
 {
-    image: url(:/Graphics/Images/PreviewAlphaHover.png);
+    background-color: rgba(35, 35, 35, 255);
+    border-bottom-color: rgba(45, 45, 45, 255);
+    top: 0px;
+}
+#tabWidgetPreview QTabBar::tab
+{
+    background-color: transparent;
+}
+#tabWidgetPreview QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonPreviewDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonPreviewDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
 }
 
 /*
  * AudioLevelsWidget
  */
-#pageAudioLevels
+#tabAudioLevels
 {
     background-color: rgba(35, 35, 35, 255);
+}
+
+#tabWidgetAudioLevels::pane
+{
+    background-color: rgba(35, 35, 35, 255);
+    border-bottom-color: rgba(45, 45, 45, 255);
+    top: 0px;
+}
+#tabWidgetAudioLevels QTabBar::tab
+{
+    background-color: transparent;
+}
+#tabWidgetAudioLevels QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonAudioLevelsDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonAudioLevelsDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
 }
 
 /*
@@ -355,6 +399,7 @@
     color: rgba(128, 128, 128, 255);
     font-size: 8px;
 }
+
 #progressBarAudioMeter
 {
     border-color: rgba(65, 65, 65, 255);
@@ -379,6 +424,7 @@
     color: rgba(190, 190, 190, 255);
     font-size: 11px;
 }
+
 #progressBarOscTime
 {
     border-color: lime;
@@ -406,4 +452,43 @@
 #labelApplicationVersion
 {
     font-size: 13px;
+}
+
+/*
+ * LiveWidget
+ */
+#labelLive
+{
+    image: url(:/Graphics/Images/StreamNotAvailable.png);
+}
+#tabLive
+{
+    background-color: rgba(35, 35, 35, 255);
+    border-width: 0px;
+}
+
+#tabWidgetLive::pane
+{
+    background-color: rgba(35, 35, 35, 255);
+    border-bottom-color: rgba(45, 45, 45, 255);
+    top: 0px;
+}
+#tabWidgetLive QTabBar::tab
+{
+    background-color: transparent;
+}
+#tabWidgetLive QTabBar::tab:selected
+{
+    padding-bottom: 3px;
+}
+
+#toolButtonLiveDropdown
+{
+    background-color: transparent;
+    border-width: 0px;
+    image: url(:/Graphics/Images/Dropdown.png);
+}
+#toolButtonLiveDropdown::hover
+{
+    image: url(:/Graphics/Images/DropdownHover.png);
 }

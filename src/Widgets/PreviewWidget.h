@@ -8,7 +8,9 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
+#include <QtGui/QAction>
 #include <QtGui/QImage>
+#include <QtGui/QMenu>
 #include <QtGui/QWidget>
 
 class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
@@ -19,13 +21,20 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
         explicit PreviewWidget(QWidget* parent = 0);
 
     private:
+        bool viewAlpha;
+        bool collapsed;
         QImage image;
-        bool previewAlpha;
         LibraryModel* model;
 
+        QMenu* contextMenuPreviewDropdown;
+
+        QAction* viewAlphaAction;
+
+        void setupMenus();
         void setThumbnail();
 
-        Q_SLOT void switchPreview();
+        Q_SLOT void toggleExpandCollapse();
+        Q_SLOT void viewAlphaChanged(bool);
         Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);

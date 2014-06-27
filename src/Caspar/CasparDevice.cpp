@@ -332,6 +332,17 @@ void CasparDevice::stopRecording(int channel)
     writeMessage(QString("REMOVE %1 FILE").arg(channel));
 }
 
+void CasparDevice::startStream(int channel, int port)
+{
+    writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -vcodec libx264 -format mpegts -vf scale=287:175 -tune zerolatency -preset ultrafast -crf 25")
+                 .arg(channel).arg(port));
+}
+
+void CasparDevice::stopStream(int channel, int port)
+{
+    writeMessage(QString("REMOVE %1 STREAM udp://<client_ip_address>:%2").arg(channel).arg(port));
+}
+
 void CasparDevice::print(int channel, const QString& output)
 {
     writeMessage(QString("ADD %1 IMAGE \"%2\"").arg(channel).arg(output));
