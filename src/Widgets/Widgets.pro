@@ -135,7 +135,8 @@ HEADERS += \
     AudioLevelsWidget.h \
     LiveWidget.h \
     Rundown/RundownPlayoutCommandWidget.h \
-    Inspector/InspectorPlayoutCommandWidget.h
+    Inspector/InspectorPlayoutCommandWidget.h \
+    LiveDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -259,7 +260,8 @@ SOURCES += \
     AudioLevelsWidget.cpp \
     LiveWidget.cpp \
     Rundown/RundownPlayoutCommandWidget.cpp \
-    Inspector/InspectorPlayoutCommandWidget.cpp
+    Inspector/InspectorPlayoutCommandWidget.cpp \
+    LiveDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -372,7 +374,8 @@ FORMS += \
     AudioLevelsWidget.ui \
     LiveWidget.ui \
     Rundown/RundownPlayoutCommandWidget.ui \
-    Inspector/InspectorPlayoutCommandWidget.ui
+    Inspector/InspectorPlayoutCommandWidget.ui \
+    LiveDialog.ui
 
 RESOURCES += \
     Widgets.qrc \

@@ -25,10 +25,10 @@ void PreviewWidget::setupMenus()
 {
     this->contextMenuPreviewDropdown = new QMenu(this);
     this->contextMenuPreviewDropdown->setTitle("Dropdown");
-    this->viewAlphaAction = this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "View Alpha");
+    this->viewAlphaAction = this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/ViewAlpha    .png"),*/ "View Alpha");
     this->viewAlphaAction->setCheckable(true);
     this->contextMenuPreviewDropdown->addSeparator();
-    this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Expand / Collapse", this, SLOT(toggleExpandCollapse()));
+    this->expandCollapseAction = this->contextMenuPreviewDropdown->addAction(/*QIcon(":/Graphics/Images/Collapse.png"),*/ "Collapse", this, SLOT(toggleExpandCollapse()));
 
     QToolButton* toolButtonPreviewDropdown = new QToolButton(this);
     toolButtonPreviewDropdown->setObjectName("toolButtonPreviewDropdown");
@@ -110,5 +110,6 @@ void PreviewWidget::toggleExpandCollapse()
 {
     this->collapsed = !this->collapsed;
 
+    this->expandCollapseAction->setText((this->collapsed == true) ? "Expand" : "Collapse");
     this->setFixedHeight((this->collapsed == true) ? Panel::COMPACT_PREVIEW_HEIGHT : Panel::DEFAULT_PREVIEW_HEIGHT);
 }

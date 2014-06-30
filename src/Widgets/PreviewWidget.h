@@ -29,6 +29,7 @@ class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
         QMenu* contextMenuPreviewDropdown;
 
         QAction* viewAlphaAction;
+        QAction* expandCollapseAction;
 
         void setupMenus();
         void setThumbnail();

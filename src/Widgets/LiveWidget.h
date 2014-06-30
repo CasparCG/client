@@ -2,16 +2,11 @@
 
 #include "Shared.h"
 #include "ui_LiveWidget.h"
-
-#include "Events/Inspector/TargetChangedEvent.h"
-#include "Events/Library/LibraryItemSelectedEvent.h"
-#include "Events/Rundown/RundownItemSelectedEvent.h"
-#include "Models/LibraryModel.h"
+#include "LiveDialog.h"
 
 #include <vlc/vlc.h>
 
 #include <QtGui/QAction>
-#include <QtGui/QImage>
 #include <QtGui/QMenu>
 #include <QtGui/QWidget>
 
@@ -24,31 +19,42 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         ~LiveWidget();
 
     private:
-        QImage image;
         bool collapsed;
-        LibraryModel* model;
+        bool windowMode;
         QString deviceName;
         QString deviceChannel;
+
+        LiveDialog* liveDialog;
 
         libvlc_media_t* vlcMedia;
         libvlc_instance_t* vlcInstance;
         libvlc_media_player_t* vlcMediaPlayer;
 
         QMenu* streamMenu;
+        QMenu* audioMenu;
+        QMenu* audioTrackMenu;
         QMenu* contextMenuLiveDropdown;
 
         QAction* muteAction;
+        QAction* windowModeAction;
         QAction* streamMenuAction;
+        QAction* audioTrackAction;
+        QAction* audioTrackMenuAction;
+        QAction* expandCollapseAction;
 
         void setupMenus();
+        void setupAudioTrackMenu();
         void setupStreamMenu();
-        void setupStream();
+        void setupRenderTarget(bool windowMode);
         void startStream(const QString& deviceName, const QString& deviceChannel);
         void stopStream(const QString& deviceName, const QString& deviceChannel);
 
+        Q_SLOT void toggleWindowMode();
         Q_SLOT void disconnectStream();
         Q_SLOT void muteAudio(bool);
         Q_SLOT void toggleExpandCollapse();
+        Q_SLOT void audioTrackMenuHovered();
         Q_SLOT void streamMenuHovered();
         Q_SLOT void streamMenuActionTriggered(QAction*);
+        Q_SLOT void audioMenuActionTriggered(QAction*);
 };

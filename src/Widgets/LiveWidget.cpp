@@ -4,20 +4,19 @@
 
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
-#include "EventManager.h"
 #include "Models/DeviceModel.h"
-#include "Models/LibraryModel.h"
-#include "Models/ThumbnailModel.h"
 
-#include <QtCore/QTimer>
 #include <QtGui/QToolButton>
 
 LiveWidget::LiveWidget(QWidget* parent)
     : QWidget(parent),
-      collapsed(false), deviceName(""), deviceChannel("")
+      collapsed(false), windowMode(false), deviceName(""), deviceChannel(""), vlcMedia(NULL), vlcInstance(NULL), vlcMediaPlayer(NULL)
 {
     setupUi(this);
     setupMenus();
+
+    this->liveDialog = new LiveDialog(this);
+    QObject::connect(this->liveDialog, SIGNAL(rejected()), this, SLOT(toggleWindowMode()));
 
     const char* const vlcArguments[] =
     {
@@ -29,7 +28,10 @@ LiveWidget::LiveWidget(QWidget* parent)
     this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
     this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);
 
-    setupStream();
+    this->vlcMedia = libvlc_media_new_location(this->vlcInstance, "udp://@0.0.0.0:5004");
+    libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
+
+    setupRenderTarget(this->windowMode);
 }
 
 LiveWidget::~LiveWidget()
@@ -39,6 +41,10 @@ LiveWidget::~LiveWidget()
     libvlc_media_player_stop(this->vlcMediaPlayer);
     libvlc_media_player_release(this->vlcMediaPlayer);
     libvlc_release(this->vlcInstance);
+
+    this->vlcMediaPlayer = NULL;
+    this->vlcMediaPlayer = NULL;
+    this->vlcInstance = NULL;
 }
 
 void LiveWidget::setupMenus()
@@ -46,17 +52,31 @@ void LiveWidget::setupMenus()
     this->contextMenuLiveDropdown = new QMenu(this);
     this->contextMenuLiveDropdown->setTitle("Dropdown");
 
+    this->audioTrackMenu = new QMenu(this);
+    this->audioTrackMenu->setTitle("Audio Track");
+
+    this->audioMenu = new QMenu(this);
+    this->audioMenu->setTitle("Audio");
+    this->audioTrackMenuAction = this->audioMenu->addMenu(this->audioTrackMenu);
+    this->audioMenu->addSeparator();
+    this->muteAction = this->audioMenu->addAction(/*QIcon(":/Graphics/Images/MuteSound.png"),*/ "Mute");
+    this->muteAction->setCheckable(true);
+
     this->streamMenu = new QMenu(this);
-    this->streamMenu->setTitle("Connect to");
+    this->streamMenu->setTitle("Connect");
     this->streamMenuAction = this->contextMenuLiveDropdown->addMenu(this->streamMenu);
     this->contextMenuLiveDropdown->addSeparator();
-    this->muteAction = this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Mute Audio");
-    this->muteAction->setCheckable(true);
+    this->contextMenuLiveDropdown->addMenu(this->audioMenu);
     this->contextMenuLiveDropdown->addSeparator();
-    this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Expand / Collapse", this, SLOT(toggleExpandCollapse()));
+    this->windowModeAction = this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/WindowMode.png"),*/ "Window Mode", this, SLOT(toggleWindowMode()));
+    this->windowModeAction->setCheckable(true);
+    this->contextMenuLiveDropdown->addSeparator();
+    this->expandCollapseAction = this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/Collapse.png"),*/ "Collapse", this, SLOT(toggleExpandCollapse()));
 
     QObject::connect(this->streamMenuAction, SIGNAL(hovered()), this, SLOT(streamMenuHovered()));
+    QObject::connect(this->audioTrackMenuAction, SIGNAL(hovered()), this, SLOT(audioTrackMenuHovered()));
     QObject::connect(this->streamMenu, SIGNAL(triggered(QAction*)), this, SLOT(streamMenuActionTriggered(QAction*)));
+    QObject::connect(this->audioTrackMenu, SIGNAL(triggered(QAction*)), this, SLOT(audioMenuActionTriggered(QAction*)));
     QObject::connect(this->muteAction, SIGNAL(toggled(bool)), this, SLOT(muteAudio(bool)));
 
     QToolButton* toolButtonLiveDropdown = new QToolButton(this);
@@ -66,6 +86,44 @@ void LiveWidget::setupMenus()
 
     this->tabWidgetLive->setCornerWidget(toolButtonLiveDropdown);
     //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
+}
+
+void LiveWidget::audioTrackMenuHovered()
+{
+    setupAudioTrackMenu();
+}
+
+void LiveWidget::setupAudioTrackMenu()
+{
+    if (!libvlc_media_player_is_playing(this->vlcMediaPlayer))
+        return;
+
+    foreach (QAction* action, this->audioTrackMenu->actions())
+        this->audioTrackMenu->removeAction(action);
+
+    int currentTrack = libvlc_audio_get_track(this->vlcMediaPlayer);
+    libvlc_track_description_t* trackDescription = libvlc_audio_get_track_description(this->vlcMediaPlayer);
+    while (trackDescription != NULL)
+    {
+        this->audioTrackAction = this->audioTrackMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ trackDescription->psz_name);
+        this->audioTrackAction->setCheckable(true);
+        this->audioTrackAction->setData(trackDescription->i_id);
+
+        if (trackDescription->i_id == currentTrack)
+            this->audioTrackAction->setChecked(true);
+
+        trackDescription = trackDescription->p_next;
+    }
+}
+
+void LiveWidget::audioMenuActionTriggered(QAction* action)
+{
+    libvlc_audio_set_track(this->vlcMediaPlayer, action->data().toInt());
+}
+
+void LiveWidget::streamMenuHovered()
+{
+    setupStreamMenu();
 }
 
 void LiveWidget::setupStreamMenu()
@@ -84,11 +142,6 @@ void LiveWidget::setupStreamMenu()
     this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Disconnect", this, SLOT(disconnectStream()));
 }
 
-void LiveWidget::streamMenuHovered()
-{
-    setupStreamMenu();
-}
-
 void LiveWidget::streamMenuActionTriggered(QAction* action)
 {
     if (!action->text().contains(':'))
@@ -102,17 +155,14 @@ void LiveWidget::streamMenuActionTriggered(QAction* action)
     startStream(this->deviceName, this->deviceChannel);
 }
 
-void LiveWidget::setupStream()
+void LiveWidget::setupRenderTarget(bool windowMode)
 {
-    this->vlcMedia = libvlc_media_new_location(this->vlcInstance, "udp://@0.0.0.0:5004");
-    libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
-
 #if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, this->labelLive->winId());
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
 #elif defined(Q_OS_MAC)
-    libvlc_media_player_set_agl(this->vlcMediaPlayer, this->labelLive->winId());
+    libvlc_media_player_set_agl(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
 #elif defined(Q_OS_LINUX)
-    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, this->labelLive->winId());
+    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
 #endif
 }
 
@@ -141,7 +191,22 @@ void LiveWidget::startStream(const QString& deviceName, const QString& deviceCha
 
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
         if (device != NULL && device->isConnected())
-            device->startStream(this->deviceChannel.toInt(), 5004);
+        {
+            if (this->windowMode)
+            {
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->deviceName).getChannelFormats().split(",");
+                if (this->deviceChannel.toInt() > channelFormats.count())
+                    return;
+
+                FormatModel format = DatabaseManager::getInstance().getFormat(channelFormats[this->deviceChannel.toInt() - 1]);
+
+                device->startStream(this->deviceChannel.toInt(), 5004, format.getHeight(), format.getWidth());
+            }
+            else
+            {
+                device->startStream(this->deviceChannel.toInt(), 5004);
+            }
+        }
     }
 }
 
@@ -154,5 +219,28 @@ void LiveWidget::toggleExpandCollapse()
 {
     this->collapsed = !this->collapsed;
 
+    this->expandCollapseAction->setText((this->collapsed == true) ? "Expand" : "Collapse");
     this->setFixedHeight((this->collapsed == true) ? Panel::COMPACT_LIVE_HEIGHT : Panel::DEFAULT_LIVE_HEIGHT);
+}
+
+void LiveWidget::toggleWindowMode()
+{
+    stopStream(this->deviceName, this->deviceChannel);
+
+    if (this->windowMode)
+    {
+        this->windowModeAction->blockSignals(true);
+        this->windowModeAction->setChecked(false);
+        this->windowModeAction->blockSignals(false);
+
+        this->liveDialog->hide();
+    }
+    else
+    {
+        this->liveDialog->show();
+    }
+
+    this->windowMode = !this->windowMode;
+    setupRenderTarget(this->windowMode);
+    startStream(this->deviceName, this->deviceChannel);
 }

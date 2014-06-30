@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LiveDialog</class>
+ <widget class="QDialog" name="LiveDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Live</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="labelLive">
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>showAddDeviceDialog()</slot>
+  <slot>removeDevice()</slot>
+  <slot>fontSizeChanged(int)</slot>
+  <slot>deviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>synchronizeIntervalChanged(int)</slot>
+  <slot>startFullscreenChanged(int)</slot>
+  <slot>autoSynchronizeChanged(int)</slot>
+  <slot>gpi1Changed()</slot>
+  <slot>gpi2Changed()</slot>
+  <slot>gpi3Changed()</slot>
+  <slot>gpi4Changed()</slot>
+  <slot>gpi5Changed()</slot>
+  <slot>gpi6Changed()</slot>
+  <slot>gpi7Changed()</slot>
+  <slot>gpi8Changed()</slot>
+  <slot>serialPortChanged()</slot>
+  <slot>gpo1Changed()</slot>
+  <slot>gpo2Changed()</slot>
+  <slot>gpo3Changed()</slot>
+  <slot>gpo4Changed()</slot>
+  <slot>gpo5Changed()</slot>
+  <slot>gpo6Changed()</slot>
+  <slot>gpo7Changed()</slot>
+  <slot>gpo8Changed()</slot>
+  <slot>baudRateChanged(QString)</slot>
+  <slot>autoStepChanged(int)</slot>
+  <slot>showThumbnailTooltipChanged(int)</slot>
+  <slot>reverseOscTimeChanged(int)</slot>
+  <slot>disableInAndOutPointsChanged(int)</slot>
+  <slot>oscPortChanged()</slot>
+  <slot>showAddTriCasterDeviceDialog()</slot>
+  <slot>removeTriCasterDevice()</slot>
+  <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>showImportDeviceDialog()</slot>
+  <slot>showImportTriCasterDeviceDialog()</slot>
+  <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>showAddOscOutputDialog()</slot>
+  <slot>removeOscOutput()</slot>
+  <slot>delayTypeChanged(QString)</slot>
+  <slot>tricasterProductChanged(QString)</slot>
+  <slot>enableOscInputChanged(int)</slot>
+  <slot>themeChanged(QString)</slot>
+  <slot>showAddAtemDeviceDialog()</slot>
+  <slot>removeAtemDevice()</slot>
+  <slot>showImportAtemDeviceDialog()</slot>
+  <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+  <slot>rundownRepositoryChanged()</slot>
+  <slot>previewOnAutoStepChanged(int)</slot>
+  <slot>clearDelayedCommandsOnAutoStepChanged(int)</slot>
+  <slot>deleteThumbnails()</slot>
+  <slot>storeThumbnailsInDatabaseChanged(int)</slot>
+  <slot>markUsedItemsChanged(int)</slot>
+  <slot>showAudioLevelsChanged(int)</slot>
+  <slot>showPreviewChanged(int)</slot>
+  <slot>showLiveChanged(int)</slot>
+ </slots>
+</ui>

@@ -17,6 +17,8 @@ class WIDGETS_EXPORT AudioLevelsWidget : public QWidget, Ui::AudioLevelsWidget
     private:
         bool collapsed;
 
+        QAction* expandCollapseAction;
+
         QMenu* contextMenuAudioLevelsDropdown;
 
         void setupMenus();

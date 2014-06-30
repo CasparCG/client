@@ -23,7 +23,7 @@ void AudioLevelsWidget::setupMenus()
 {
     this->contextMenuAudioLevelsDropdown = new QMenu(this);
     this->contextMenuAudioLevelsDropdown->setTitle("Dropdown");
-    this->contextMenuAudioLevelsDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Expand / Collapse", this, SLOT(toggleExpandCollapse()));
+    this->expandCollapseAction = this->contextMenuAudioLevelsDropdown->addAction(/*QIcon(":/Graphics/Images/Collapse.png"),*/ "Collapse", this, SLOT(toggleExpandCollapse()));
 
     QToolButton* toolButtonAudioLevelsDropdown = new QToolButton(this);
     toolButtonAudioLevelsDropdown->setObjectName("toolButtonAudioLevelsDropdown");
@@ -37,5 +37,6 @@ void AudioLevelsWidget::toggleExpandCollapse()
 {
     this->collapsed = !this->collapsed;
 
+    this->expandCollapseAction->setText((this->collapsed == true) ? "Expand" : "Collapse");
     this->setFixedHeight((this->collapsed == true) ? Panel::COMPACT_AUDIOLEVELS_HEIGHT : Panel::DEFAULT_AUDIOLEVELS_HEIGHT);
 }
