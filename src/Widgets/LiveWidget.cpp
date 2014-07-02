@@ -18,12 +18,24 @@ LiveWidget::LiveWidget(QWidget* parent)
     this->liveDialog = new LiveDialog(this);
     QObject::connect(this->liveDialog, SIGNAL(rejected()), this, SLOT(toggleWindowMode()));
 
-    const char* const vlcArguments[] =
-    {
-        "-I", "dummy",
-        "--ignore-config", // Don't use VLC's config.
-        "--network-caching=200"
-    };
+    QStringList arguments;
+    arguments.append("--intf=dummy");
+    arguments.append("--ignore-config");
+    arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt()));
+
+    bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
+    if (disableAudioInStream)
+        arguments.append("--no-audio");
+
+    QString args;
+    foreach (QString value, arguments)
+        args += value + " ";
+
+    qDebug() << QString("LiveWidget::LiveWidget: Using arguments: %1").arg(args.trimmed());
+
+    char* vlcArguments[arguments.size()];
+    for (int i = 0; i < arguments.count(); i++)
+        vlcArguments[i] = (char*)qstrdup(arguments.at(i).toLocal8Bit().data());
 
     this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
     this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);
@@ -38,11 +50,9 @@ LiveWidget::~LiveWidget()
 {
     stopStream(this->deviceName, this->deviceChannel);
 
-    libvlc_media_player_stop(this->vlcMediaPlayer);
     libvlc_media_player_release(this->vlcMediaPlayer);
     libvlc_release(this->vlcInstance);
 
-    this->vlcMediaPlayer = NULL;
     this->vlcMediaPlayer = NULL;
     this->vlcInstance = NULL;
 }

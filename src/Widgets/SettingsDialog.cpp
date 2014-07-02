@@ -82,6 +82,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxShowAudioLevels->setChecked(showAudioLevelsPanel);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
+    bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
+    this->checkBoxDisableAudioInStream->setChecked(disableAudioInStream);
+    this->spinBoxNetworkCache->setValue(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt());
+
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
     this->checkBoxStoreThumbnailsInDatabase->setChecked(storeThumbnailsInDatabase);
 
@@ -867,4 +871,15 @@ void SettingsDialog::showLiveChanged(int state)
 {
     QString showLivePanel = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowLivePanel", showLivePanel));
+}
+
+void SettingsDialog::disableAudioInStreamChanged(int state)
+{
+    QString disableAudioInStream = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DisableAudioInStream", disableAudioInStream));
+}
+
+void SettingsDialog::networkCacheChanged(int value)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "NetworkCache", QString("%1").arg(value)));
 }

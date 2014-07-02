@@ -45,7 +45,7 @@
     font-size: 10px;
 }
 
-#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineDatabase, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
+#lineStartup, #lineAppearance, #lineLibrary, #lineRundown, #lineInspector, #lineLive, #lineDatabase, #lineOscInput, #lineCasparCG, #lineTriCaster, #lineAtem, #lineGpiDevice, #lineGpiInput, #lineGpiOutput, #lineOscOutput
 {
     background-color: rgba(65, 65, 65, 255);
 }

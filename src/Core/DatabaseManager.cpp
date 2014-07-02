@@ -114,6 +114,8 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowLivePanel', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableAudioInStream', 'true')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('NetworkCache', '200')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else
