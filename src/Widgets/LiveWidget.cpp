@@ -207,7 +207,7 @@ void LiveWidget::startStream(const QString& deviceName, const QString& deviceCha
         libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Size, 40);
         libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Color, 0xFFFFFF);
         libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Refresh, 0);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Enable, 1);/*
+        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Enable, 1);*/
 
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
         if (device != NULL && device->isConnected())
