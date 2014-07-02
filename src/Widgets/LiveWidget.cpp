@@ -19,7 +19,7 @@ LiveWidget::LiveWidget(QWidget* parent)
     QObject::connect(this->liveDialog, SIGNAL(rejected()), this, SLOT(toggleWindowMode()));
 
     QStringList arguments;
-    arguments.append("--intf=dummy");
+    //arguments.append("--vout=macosx");
     arguments.append("--ignore-config");
     arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt()));
 
@@ -98,6 +98,17 @@ void LiveWidget::setupMenus()
     //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 }
 
+void LiveWidget::setupRenderTarget(bool windowMode)
+{
+#if defined(Q_OS_WIN)
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+#elif defined(Q_OS_MAC)
+    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
+#elif defined(Q_OS_LINUX)
+    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+#endif
+}
+
 void LiveWidget::audioTrackMenuHovered()
 {
     setupAudioTrackMenu();
@@ -163,17 +174,6 @@ void LiveWidget::streamMenuActionTriggered(QAction* action)
     this->deviceChannel = action->text().split(':')[1];
 
     startStream(this->deviceName, this->deviceChannel);
-}
-
-void LiveWidget::setupRenderTarget(bool windowMode)
-{
-#if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
-#elif defined(Q_OS_MAC)
-    libvlc_media_player_set_agl(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
-#elif defined(Q_OS_LINUX)
-    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
-#endif
 }
 
 void LiveWidget::disconnectStream()
