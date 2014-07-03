@@ -397,8 +397,9 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
+                // Is preview channel valid?
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (deviceModel.getPreviewChannel() > channelFormats.count())
+                if (deviceModel.getPreviewChannel() == 0 || deviceModel.getPreviewChannel() > channelFormats.count())
                     return true;
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[deviceModel.getPreviewChannel() - 1]).getFramesPerSecond().toDouble();
