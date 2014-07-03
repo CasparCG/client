@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownSolidColorWidget.h"
+#include "ui_RundownFadeToBlackWidget.h"
 
 #include "Global.h"
 
@@ -14,7 +14,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/SolidColorCommand.h"
+#include "Commands/FadeToBlackCommand.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
@@ -24,14 +24,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidColorWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownFadeToBlackWidget : public QWidget, Ui::RundownFadeToBlackWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownSolidColorWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                         bool active = false, bool loaded = false, bool paused = false, bool playing = false,
-                                         bool inGroup = false, bool compactView = false);
+        explicit RundownFadeToBlackWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                          bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                          bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -68,7 +68,7 @@ class WIDGETS_EXPORT RundownSolidColorWidget : public QWidget, Ui::RundownSolidC
         bool compactView;
         QString color;
         LibraryModel model;
-        SolidColorCommand command;
+        FadeToBlackCommand command;
         ActiveAnimation* animation;
         QString delayType;
         bool markUsedItems;

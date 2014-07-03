@@ -358,4 +358,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Input State", "", "", Rundown::ATEMAUDIOINPUTSTATE, 0, "")));
     else if (type ==  Rundown::PLAYOUTCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Playout Command", "", "", Rundown::PLAYOUTCOMMAND, 0, "")));
+    else if (type ==  Rundown::FADETOBLACK)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade to Black", "", "", Rundown::FADETOBLACK, 0, "")));
 }

@@ -27,6 +27,7 @@
 #include "Commands/SaturationCommand.h"
 #include "Commands/SeparatorCommand.h"
 #include "Commands/SolidColorCommand.h"
+#include "Commands/FadeToBlackCommand.h"
 #include "Commands/VolumeCommand.h"
 #include "Commands/ChromaCommand.h"
 #include "Commands/PlayoutCommand.h"
@@ -264,6 +265,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<SaturationCommand*>(event.getCommand()) ||
                  dynamic_cast<VolumeCommand*>(event.getCommand()) ||
                  dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
+                 dynamic_cast<FadeToBlackCommand*>(event.getCommand()) ||
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InspectorFadeToBlackWidget</class>
+ <widget class="QWidget" name="InspectorFadeToBlackWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>220</width>
+    <height>196</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTransition">
+     <item>
+      <spacer name="horizontalSpacerTransition">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>35</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTransition">
+       <property name="text">
+        <string>Transition</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTransition">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTransitionDuration">
+     <item>
+      <spacer name="horizontalSpacerTransitionDuration">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>41</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTransitionDuration">
+       <property name="text">
+        <string>Duration</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBoxTransitionDuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTween">
+     <item>
+      <spacer name="horizontalSpacerTween">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>54</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTween">
+       <property name="text">
+        <string>Tween</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxTween">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutDirection">
+     <item>
+      <spacer name="horizontalSpacerDirection">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDirection">
+       <property name="text">
+        <string>Direction</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxDirection">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutUseAuto">
+     <item>
+      <spacer name="horizontalSpacerUseAuto1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>36</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelUseAuto">
+       <property name="text">
+        <string>Use auto</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUseAuto">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerUseAuto2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacerColor">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>spinBoxTransitionDuration</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>transitionDurationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTransition</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>transitionChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxDirection</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>directionChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTween</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>tweenChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseAuto</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>useAutoChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>146</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>transitionDurationChanged(int)</slot>
+  <slot>transitionChanged(QString)</slot>
+  <slot>directionChanged(QString)</slot>
+  <slot>tweenChanged(QString)</slot>
+  <slot>pauseOnLoadChanged(int)</slot>
+  <slot>useAutoChanged(int)</slot>
+  <slot>colorDialogClicked()</slot>
+  <slot>colorChanged(QString)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
+ </slots>
+</ui>

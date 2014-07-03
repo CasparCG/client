@@ -1,93 +1,88 @@
-#include "SolidColorCommand.h"
+#include "FadeToBlackCommand.h"
 
 #include "Global.h"
 
-SolidColorCommand::SolidColorCommand(QObject* parent)
+FadeToBlackCommand::FadeToBlackCommand(QObject* parent)
     : AbstractCommand(parent),
-      color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(SolidColor::DEFAULT_USE_AUTO),
-      triggerOnNext(SolidColor::DEFAULT_TRIGGER_ON_NEXT)
+      color(FadeToBlack::DEFAULT_COLOR), transition(FadeToBlack::DEFAULT_TRANSITION), transtitionDuration(FadeToBlack::DEFAULT_DURATION),
+      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(FadeToBlack::DEFAULT_USE_AUTO),
+      triggerOnNext(FadeToBlack::DEFAULT_TRIGGER_ON_NEXT)
 {
+    this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }
 
-const QString& SolidColorCommand::getColor() const
+const QString& FadeToBlackCommand::getColor() const
 {
     return this->color;
 }
 
-const QString& SolidColorCommand::getTransition() const
+const QString& FadeToBlackCommand::getTransition() const
 {
     return this->transition;
 }
 
-int SolidColorCommand::getTransitionDuration() const
+int FadeToBlackCommand::getTransitionDuration() const
 {
     return this->transtitionDuration;
 }
 
-const QString& SolidColorCommand::getDirection() const
+const QString& FadeToBlackCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& SolidColorCommand::getTween() const
+const QString& FadeToBlackCommand::getTween() const
 {
     return this->tween;
 }
 
-bool SolidColorCommand::getUseAuto() const
+bool FadeToBlackCommand::getUseAuto() const
 {
     return this->useAuto;
 }
 
-bool SolidColorCommand::getTriggerOnNext() const
+bool FadeToBlackCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-void SolidColorCommand::setColor(const QString& color)
-{
-    this->color = color;
-    emit colorChanged(this->color);
-}
-
-void SolidColorCommand::setTransition(const QString& transition)
+void FadeToBlackCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void SolidColorCommand::setTransitionDuration(int transtitionDuration)
+void FadeToBlackCommand::setTransitionDuration(int transtitionDuration)
 {
     this->transtitionDuration = transtitionDuration;
     emit transtitionDurationChanged(this->transtitionDuration);
 }
 
-void SolidColorCommand::setDirection(const QString& direction)
+void FadeToBlackCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void SolidColorCommand::setTween(const QString& tween)
+void FadeToBlackCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void SolidColorCommand::setUseAuto(bool useAuto)
+void FadeToBlackCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
 }
 
-void SolidColorCommand::setTriggerOnNext(bool triggerOnNext)
+void FadeToBlackCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
+void FadeToBlackCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -95,12 +90,11 @@ void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
     setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
-    setColor(QString::fromStdWString(pt.get(L"solidcolor", SolidColor::DEFAULT_COLOR.toStdWString())));
-    setUseAuto(pt.get(L"useauto", SolidColor::DEFAULT_USE_AUTO));
-    setTriggerOnNext(pt.get(L"triggeronnext", SolidColor::DEFAULT_TRIGGER_ON_NEXT));
+    setUseAuto(pt.get(L"useauto", FadeToBlack::DEFAULT_USE_AUTO));
+    setTriggerOnNext(pt.get(L"triggeronnext", FadeToBlack::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
+void FadeToBlackCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
@@ -108,7 +102,6 @@ void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("direction", getDirection());
-    writer->writeTextElement("solidcolor", getColor());
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

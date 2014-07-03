@@ -1,4 +1,4 @@
-#include "RundownSolidColorWidget.h"
+#include "RundownFadeToBlackWidget.h"
 
 #include "Global.h"
 
@@ -15,8 +15,8 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QGraphicsOpacityEffect>
 
-RundownSolidColorWidget::RundownSolidColorWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                                 bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
+RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                                   bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color),
       model(model), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
@@ -69,7 +69,7 @@ RundownSolidColorWidget::RundownSolidColorWidget(const LibraryModel& model, QWid
     configureOscSubscriptions();
 }
 
-void RundownSolidColorWidget::labelChanged(const LabelChangedEvent& event)
+void RundownFadeToBlackWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -80,7 +80,7 @@ void RundownSolidColorWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-void RundownSolidColorWidget::deviceChanged(const DeviceChangedEvent& event)
+void RundownFadeToBlackWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -108,13 +108,13 @@ void RundownSolidColorWidget::deviceChanged(const DeviceChangedEvent& event)
     checkDeviceConnection();
 }
 
-AbstractRundownWidget* RundownSolidColorWidget::clone()
+AbstractRundownWidget* RundownFadeToBlackWidget::clone()
 {
-    RundownSolidColorWidget* widget = new RundownSolidColorWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                                  this->loaded, this->paused, this->playing, this->inGroup,
-                                                                  this->compactView);
+    RundownFadeToBlackWidget* widget = new RundownFadeToBlackWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                                    this->loaded, this->paused, this->playing, this->inGroup,
+                                                                    this->compactView);
 
-    SolidColorCommand* command = dynamic_cast<SolidColorCommand*>(widget->getCommand());
+    FadeToBlackCommand* command = dynamic_cast<FadeToBlackCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -122,7 +122,6 @@ AbstractRundownWidget* RundownSolidColorWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setColor(this->command.getColor());
     command->setTransition(this->command.getTransition());
     command->setTransitionDuration(this->command.getTransitionDuration());
     command->setTween(this->command.getTween());
@@ -133,7 +132,7 @@ AbstractRundownWidget* RundownSolidColorWidget::clone()
     return widget;
 }
 
-void RundownSolidColorWidget::setCompactView(bool compactView)
+void RundownFadeToBlackWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -151,37 +150,37 @@ void RundownSolidColorWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownSolidColorWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownFadeToBlackWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownSolidColorWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownFadeToBlackWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownSolidColorWidget::isGroup() const
+bool RundownFadeToBlackWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownSolidColorWidget::isInGroup() const
+bool RundownFadeToBlackWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownSolidColorWidget::getCommand()
+AbstractCommand* RundownFadeToBlackWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownSolidColorWidget::getLibraryModel()
+LibraryModel* RundownFadeToBlackWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownSolidColorWidget::setActive(bool active)
+void RundownFadeToBlackWidget::setActive(bool active)
 {
     this->active = active;
 
@@ -193,24 +192,24 @@ void RundownSolidColorWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownSolidColorWidget::setInGroup(bool inGroup)
+void RundownFadeToBlackWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-QString RundownSolidColorWidget::getColor() const
+QString RundownFadeToBlackWidget::getColor() const
 {
     return this->color;
 }
 
-void RundownSolidColorWidget::setColor(const QString& color)
+void RundownFadeToBlackWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
-void RundownSolidColorWidget::checkEmptyDevice()
+void RundownFadeToBlackWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: firebrick;");
@@ -218,12 +217,12 @@ void RundownSolidColorWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-void RundownSolidColorWidget::clearDelayedCommands()
+void RundownFadeToBlackWidget::clearDelayedCommands()
 {
     this->executeTimer.stop();
 }
 
-void RundownSolidColorWidget::setUsed(bool used)
+void RundownFadeToBlackWidget::setUsed(bool used)
 {
     if (used)
     {
@@ -239,7 +238,7 @@ void RundownSolidColorWidget::setUsed(bool used)
         this->setGraphicsEffect(NULL);
 }
 
-bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownFadeToBlackWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
@@ -299,7 +298,7 @@ bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownSolidColorWidget::executeStop()
+void RundownFadeToBlackWidget::executeStop()
 {
     this->executeTimer.stop();
 
@@ -322,7 +321,7 @@ void RundownSolidColorWidget::executeStop()
     this->playing = false;
 }
 
-void RundownSolidColorWidget::executePlay()
+void RundownFadeToBlackWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -368,7 +367,7 @@ void RundownSolidColorWidget::executePlay()
     this->playing = true;
 }
 
-void RundownSolidColorWidget::executePause()
+void RundownFadeToBlackWidget::executePause()
 {
     if (!this->playing)
         return;
@@ -400,7 +399,7 @@ void RundownSolidColorWidget::executePause()
     this->paused = !this->paused;
 }
 
-void RundownSolidColorWidget::executeLoad()
+void RundownFadeToBlackWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -429,7 +428,7 @@ void RundownSolidColorWidget::executeLoad()
     this->playing = false;
 }
 
-void RundownSolidColorWidget::executeClearVideolayer()
+void RundownFadeToBlackWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
@@ -452,7 +451,7 @@ void RundownSolidColorWidget::executeClearVideolayer()
     this->playing = false;
 }
 
-void RundownSolidColorWidget::executeClearChannel()
+void RundownFadeToBlackWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
@@ -481,22 +480,22 @@ void RundownSolidColorWidget::executeClearChannel()
     this->playing = false;
 }
 
-void RundownSolidColorWidget::channelChanged(int channel)
+void RundownFadeToBlackWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownSolidColorWidget::videolayerChanged(int videolayer)
+void RundownFadeToBlackWidget::videolayerChanged(int videolayer)
 {
     this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
-void RundownSolidColorWidget::delayChanged(int delay)
+void RundownFadeToBlackWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownSolidColorWidget::checkGpiConnection()
+void RundownFadeToBlackWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -506,7 +505,7 @@ void RundownSolidColorWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownSolidColorWidget::checkDeviceConnection()
+void RundownFadeToBlackWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -515,7 +514,7 @@ void RundownSolidColorWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownSolidColorWidget::configureOscSubscriptions()
+void RundownFadeToBlackWidget::configureOscSubscriptions()
 {
     if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
         return;
@@ -602,29 +601,29 @@ void RundownSolidColorWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownSolidColorWidget::allowGpiChanged(bool allowGpi)
+void RundownFadeToBlackWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownSolidColorWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownFadeToBlackWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }
 
-void RundownSolidColorWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+void RundownFadeToBlackWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 {
     configureOscSubscriptions();
 
     this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
-void RundownSolidColorWidget::deviceConnectionStateChanged(CasparDevice& device)
+void RundownFadeToBlackWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
     checkDeviceConnection();
 }
 
-void RundownSolidColorWidget::deviceAdded(CasparDevice& device)
+void RundownFadeToBlackWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
@@ -632,55 +631,55 @@ void RundownSolidColorWidget::deviceAdded(CasparDevice& device)
     checkDeviceConnection();
 }
 
-void RundownSolidColorWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownSolidColorWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownSolidColorWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
-void RundownSolidColorWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Load);
 }
 
-void RundownSolidColorWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Pause);
 }
 
-void RundownSolidColorWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Next);
 }
 
-void RundownSolidColorWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownSolidColorWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideolayer);
 }
 
-void RundownSolidColorWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFadeToBlackWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);

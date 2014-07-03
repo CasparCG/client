@@ -336,12 +336,12 @@ void CasparDevice::startStream(int channel, int port, int quality, int width, in
 {
     if (width > 0 && height > 0)
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf scale=%4:%5")
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf format=pix_fmts=yuv420p,scale=%4:%5:interl=1")
                      .arg(channel).arg(port).arg(quality).arg(width).arg(height));
     }
     else
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast")
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf format=pix_fmts=yuv420p")
                      .arg(channel).arg(port).arg(quality));
     }
 }

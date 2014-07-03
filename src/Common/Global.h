@@ -278,6 +278,15 @@ namespace SolidColor
     static const QString DEFAULT_COLOR = "#00000000";
 }
 
+namespace FadeToBlack
+{
+    static const bool DEFAULT_USE_AUTO = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const QString DEFAULT_COLOR = "#00000000";
+    static const int DEFAULT_DURATION = 12;
+    static const QString DEFAULT_TRANSITION = "MIX";
+}
+
 namespace Library
 {
     static const int TOOLS_PAGE_INDEX = 0;
@@ -335,6 +344,7 @@ namespace Rundown
     static const QString VIDEO = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const QString PLAYOUTCOMMAND = "PLAYOUTCOMMAND";
+    static const QString FADETOBLACK = "FADETOBLACK";
     static const QString CHROMAKEY = "CHROMAKEY";
     static const QString TRICASTERAUTO = "TRICASTERAUTO";
     static const QString TRICASTERTAKE = "TRICASTERTAKE";

@@ -128,6 +128,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addVideoItem();
         Q_SLOT void addBlendModeItem();
         Q_SLOT void addSolidColorItem();
+        Q_SLOT void addFadeToBlackItem();
         Q_SLOT void addBrightnessItem();
         Q_SLOT void addCommitItem();
         Q_SLOT void addContrastItem();

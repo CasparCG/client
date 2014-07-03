@@ -23,6 +23,8 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
         bool masterVolumeMuted;
         bool disableCommand;
 
+        void setDefaultVisibleWidgets();
+
         Q_SLOT void masterVolumeClicked();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
         Q_SLOT void disableCommandClicked();

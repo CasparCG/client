@@ -306,6 +306,15 @@ void LibraryWidget::setupTools()
     widgetDeckLinkInput->setText(4, Rundown::DECKLINKINPUT);
     widgetDeckLinkInput->setText(5, "0");
 
+    QTreeWidgetItem* widgetFadeToBlack = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetFadeToBlack->setText(0, "Fade to Black");
+    widgetFadeToBlack->setText(1, "0");
+    widgetFadeToBlack->setText(2, "Fade to Black");
+    widgetFadeToBlack->setText(3, "");
+    widgetFadeToBlack->setText(4, Rundown::FADETOBLACK);
+    widgetFadeToBlack->setText(5, "0");
+
     QTreeWidgetItem* widgetFileRecorder = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetFileRecorder->setIcon(0, QIcon(":/Graphics/Images/FileRecorderSmall.png"));
     widgetFileRecorder->setText(0, "File Recorder");
