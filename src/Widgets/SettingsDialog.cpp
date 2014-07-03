@@ -84,6 +84,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
     this->checkBoxDisableAudioInStream->setChecked(disableAudioInStream);
+    this->spinBoxQuality->setValue(100 - DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt());
     this->spinBoxNetworkCache->setValue(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt());
 
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
@@ -882,4 +883,9 @@ void SettingsDialog::disableAudioInStreamChanged(int state)
 void SettingsDialog::networkCacheChanged(int value)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "NetworkCache", QString("%1").arg(value)));
+}
+
+void SettingsDialog::streamQualityChanged(int quality)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamQuality", QString("%1").arg(100 - quality)));
 }

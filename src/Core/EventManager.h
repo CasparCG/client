@@ -15,6 +15,7 @@
 #include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/CloseApplicationEvent.h"
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
@@ -125,6 +126,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void markItemAsUnused(const MarkItemAsUnusedEvent&);
         Q_SIGNAL void markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&);
         Q_SIGNAL void markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&);
+        Q_SIGNAL void closeApplication(const CloseApplicationEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -177,4 +179,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireMarkItemAsUnusedEvent(const MarkItemAsUnusedEvent&);
         void fireMarkAllItemsAsUsedEvent(const MarkAllItemsAsUsedEvent&);
         void fireMarkAllItemsAsUnusedEvent(const MarkAllItemsAsUnusedEvent&);
+        void fireCloseApplicationEvent(const CloseApplicationEvent&);
 };

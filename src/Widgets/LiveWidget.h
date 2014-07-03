@@ -4,6 +4,8 @@
 #include "ui_LiveWidget.h"
 #include "LiveDialog.h"
 
+#include "Events/CloseApplicationEvent.h"
+
 #include <vlc/vlc.h>
 
 #include <QtGui/QAction>
@@ -16,7 +18,6 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
 
     public:
         explicit LiveWidget(QWidget* parent = 0);
-        ~LiveWidget();
 
     private:
         bool collapsed;
@@ -57,4 +58,5 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         Q_SLOT void streamMenuHovered();
         Q_SLOT void streamMenuActionTriggered(QAction*);
         Q_SLOT void audioMenuActionTriggered(QAction*);
+        Q_SLOT void closeApplication(const CloseApplicationEvent&);
 };

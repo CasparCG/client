@@ -84,7 +84,7 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
         void stopRecording(int channel);
 
-        void startStream(int channel, int port, int height = 287, int width = 175);
+        void startStream(int channel, int port, int quality = 23, int width = 0, int height = 0);
         void stopStream(int channel, int port);
 
         void print(int channel, const QString& output);

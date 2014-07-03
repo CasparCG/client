@@ -24,6 +24,12 @@ namespace Atem
     static const float DEFAULT_AUDIO_GAIN = 0.0f;
 }
 
+namespace Stream
+{
+    static const int COMPACT_WIDTH = 287;
+    static const int COMPACT_HEIGHT = 175;
+}
+
 namespace TriCaster
 {
     static const int DEFAULT_PORT = 5950;

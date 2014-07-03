@@ -202,7 +202,11 @@ void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (this->widgetRundown->checkForSaveBeforeQuit())
+    {
+        EventManager::getInstance().fireCloseApplicationEvent(CloseApplicationEvent());
+
         event->accept();
+    }
     else
         event->ignore();
 }

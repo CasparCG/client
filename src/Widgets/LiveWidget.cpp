@@ -4,6 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
+#include "EventManager.h"
 #include "Models/DeviceModel.h"
 
 #include <QtGui/QToolButton>
@@ -20,7 +21,6 @@ LiveWidget::LiveWidget(QWidget* parent)
 
     QStringList arguments;
     arguments.append("--ignore-config");
-    //arguments.append("--sub-filter=marq");
     arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt()));
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
@@ -44,9 +44,11 @@ LiveWidget::LiveWidget(QWidget* parent)
     libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
 
     setupRenderTarget(this->windowMode);
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(closeApplication(const CloseApplicationEvent&)), this, SLOT(closeApplication(const CloseApplicationEvent&)));
 }
 
-LiveWidget::~LiveWidget()
+void LiveWidget::closeApplication(const CloseApplicationEvent& event)
 {
     stopStream(this->deviceName, this->deviceChannel);
 
@@ -199,33 +201,15 @@ void LiveWidget::startStream(const QString& deviceName, const QString& deviceCha
     {
         libvlc_media_player_play(this->vlcMediaPlayer);
 
-        /*libvlc_video_set_marquee_string(this->vlcMediaPlayer, libvlc_marquee_Text, QString("Channel 1").toUtf8().data());
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_X, 50);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Y, 50);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Timeout, 50000);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Opacity, 255);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Size, 40);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Color, 0xFFFFFF);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Refresh, 0);
-        libvlc_video_set_marquee_int(this->vlcMediaPlayer, libvlc_marquee_Enable, 1);*/
-
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
         if (device != NULL && device->isConnected())
         {
+            int quality = DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt();
+
             if (this->windowMode)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->deviceName).getChannelFormats().split(",");
-                if (this->deviceChannel.toInt() > channelFormats.count())
-                    return;
-
-                FormatModel format = DatabaseManager::getInstance().getFormat(channelFormats[this->deviceChannel.toInt() - 1]);
-
-                device->startStream(this->deviceChannel.toInt(), 5004, format.getHeight(), format.getWidth());
-            }
+                device->startStream(this->deviceChannel.toInt(), 5004, quality);
             else
-            {
-                device->startStream(this->deviceChannel.toInt(), 5004);
-            }
+                device->startStream(this->deviceChannel.toInt(), 5004, quality, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
         }
     }
 }

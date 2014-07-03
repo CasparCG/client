@@ -271,6 +271,11 @@ void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
     emit addRudnownItem(AddRudnownItemEvent(model));
 }
 
+void EventManager::fireCloseApplicationEvent(const CloseApplicationEvent& event)
+{
+    emit closeApplication(CloseApplicationEvent(event));
+}
+
 void EventManager::fireAddRudnownItemEvent(const QString& type)
 {
     if (type == Rundown::BLENDMODE)

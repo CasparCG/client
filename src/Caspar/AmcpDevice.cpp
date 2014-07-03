@@ -82,7 +82,10 @@ const QString &AmcpDevice::getAddress() const
 void AmcpDevice::writeMessage(const QString& message)
 {
     if (this->connected && !this->disableCommands)
+    {
         this->socket->write(QString("%1\r\n").arg(message.trimmed()).toUtf8());
+        this->socket->flush();
+    }
 }
 
 void AmcpDevice::readMessage()
