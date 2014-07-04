@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>235</width>
-    <height>364</height>
+    <height>442</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -267,7 +267,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelPreview">
+      <widget class="QLabel" name="labelPrev">
        <property name="text">
         <string>Preview</string>
        </property>
