@@ -381,9 +381,9 @@ namespace Panel
     static const int DEFAULT_PREVIEW_HEIGHT = 188;
     static const int DEFAULT_LIVE_HEIGHT = 188;
     static const int DEFAULT_AUDIOLEVELS_HEIGHT = 147;
-    static const int COMPACT_PREVIEW_HEIGHT = 26;
-    static const int COMPACT_LIVE_HEIGHT = 26;
-    static const int COMPACT_AUDIOLEVELS_HEIGHT = 26;
+    static const int COMPACT_PREVIEW_HEIGHT = 25;
+    static const int COMPACT_LIVE_HEIGHT = 25;
+    static const int COMPACT_AUDIOLEVELS_HEIGHT = 25;
 }
 
 namespace Xml
