@@ -377,7 +377,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         executeInvoke();
     else if (type == Playout::PlayoutType::Clear)
         executeClear();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -1026,7 +1026,7 @@ void RundownTemplateWidget::clearControlSubscriptionReceived(const QString& pred
 void RundownTemplateWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownTemplateWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

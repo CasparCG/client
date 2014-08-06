@@ -50,6 +50,7 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
 
         void pauseVideo(int channel, int videolayer);
+        void resumeVideo(int channel, int videolayer);
         void playVideo(int channel, int videolayer);
         void playVideo(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);

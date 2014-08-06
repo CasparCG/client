@@ -172,6 +172,11 @@ void CasparDevice::pauseVideo(int channel, int videolayer)
     writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
 }
 
+void CasparDevice::resumeVideo(int channel, int videolayer)
+{
+    writeMessage(QString("RESUME %1-%2").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::playVideo(int channel, int videolayer)
 {
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));

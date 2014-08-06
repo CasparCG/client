@@ -456,14 +456,14 @@ namespace Playout
             Stop = QEvent::User + 110,
             Play = QEvent::User + 120,
             PlayNow = QEvent::User + 130,
-            Pause = QEvent::User + 140,
+            PauseResume = QEvent::User + 140,
             Load = QEvent::User + 150,
             Next = QEvent::User + 160,
             Update = QEvent::User + 170,
             Invoke = QEvent::User + 180,
             Preview = QEvent::User + 190,
             Clear = QEvent::User + 200,
-            ClearVideolayer = QEvent::User + 210,
+            ClearVideoLayer = QEvent::User + 210,
             ClearChannel = QEvent::User + 220
         };
     };
@@ -474,10 +474,10 @@ namespace Playout
             return PlayoutType::Stop;
         else if (value == "Play")
             return PlayoutType::Play;
-        else if (value == "PlayNow")
+        else if (value == "Play Now")
             return PlayoutType::PlayNow;
-        else if (value == "Pause")
-            return PlayoutType::Pause;
+        else if (value == "Pause / Resume")
+            return PlayoutType::PauseResume;
         else if (value == "Load")
             return PlayoutType::Load;
         else if (value == "Next")
@@ -490,9 +490,9 @@ namespace Playout
             return PlayoutType::Preview;
         else if (value == "Clear")
             return PlayoutType::Clear;
-        else if (value == "ClearVideolayer")
-            return PlayoutType::ClearVideolayer;
-        else if (value == "ClearChannel")
+        else if (value == "Clear Video Layer")
+            return PlayoutType::ClearVideoLayer;
+        else if (value == "Clear Channel")
             return PlayoutType::ClearChannel;
         else
             throw std::invalid_argument(value.toStdString());
@@ -507,9 +507,9 @@ namespace Playout
         case PlayoutType::Play:
             return "Play";
         case PlayoutType::PlayNow:
-            return "PlayNow";
-        case PlayoutType::Pause:
-            return "Pause";
+            return "Play Now";
+        case PlayoutType::PauseResume:
+            return "Pause / Resume";
         case PlayoutType::Load:
             return "Load";
         case PlayoutType::Next:
@@ -522,10 +522,10 @@ namespace Playout
             return "Preview";
         case PlayoutType::Clear:
             return "Clear";
-        case PlayoutType::ClearVideolayer:
-            return "ClearVideolayer";
+        case PlayoutType::ClearVideoLayer:
+            return "Clear Video Layer";
         case PlayoutType::ClearChannel:
-            return "ClearChannel";
+            return "Clear Channel";
         default:
             throw std::invalid_argument("Invalid enum constant");
         }
@@ -538,14 +538,14 @@ namespace Playout
         result.push_back(PlayoutType::Stop);
         result.push_back(PlayoutType::Play);
         result.push_back(PlayoutType::PlayNow);
-        result.push_back(PlayoutType::Pause);
+        result.push_back(PlayoutType::PauseResume);
         result.push_back(PlayoutType::Load);
         result.push_back(PlayoutType::Next);
         result.push_back(PlayoutType::Update);
         result.push_back(PlayoutType::Invoke);
         result.push_back(PlayoutType::Preview);
         result.push_back(PlayoutType::Clear);
-        result.push_back(PlayoutType::ClearVideolayer);
+        result.push_back(PlayoutType::ClearVideoLayer);
         result.push_back(PlayoutType::ClearChannel);
 
         return result;

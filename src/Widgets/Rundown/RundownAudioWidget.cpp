@@ -303,13 +303,13 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
         executePlay();
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
-    else if (type == Playout::PlayoutType::Pause)
+    else if (type == Playout::PlayoutType::PauseResume)
         executePause();
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -694,7 +694,7 @@ void RundownAudioWidget::loadControlSubscriptionReceived(const QString& predicat
 void RundownAudioWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause);
+        executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownAudioWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -718,7 +718,7 @@ void RundownAudioWidget::clearControlSubscriptionReceived(const QString& predica
 void RundownAudioWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownAudioWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

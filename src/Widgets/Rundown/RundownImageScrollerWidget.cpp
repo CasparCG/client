@@ -326,13 +326,13 @@ bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
-    else if (type == Playout::PlayoutType::Pause)
+    else if (type == Playout::PlayoutType::PauseResume)
         executePause();
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -686,7 +686,7 @@ void RundownImageScrollerWidget::loadControlSubscriptionReceived(const QString& 
 void RundownImageScrollerWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause);
+        executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownImageScrollerWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -698,7 +698,7 @@ void RundownImageScrollerWidget::clearControlSubscriptionReceived(const QString&
 void RundownImageScrollerWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownImageScrollerWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

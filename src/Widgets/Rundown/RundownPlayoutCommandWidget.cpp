@@ -208,7 +208,7 @@ void RundownPlayoutCommandWidget::executePlay()
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F2, Qt::ShiftModifier));
     else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::Load))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F3, Qt::NoModifier));
-    else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::Pause))
+    else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::PauseResume))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F4, Qt::NoModifier));
     else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::Next))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F5, Qt::NoModifier));
@@ -220,7 +220,7 @@ void RundownPlayoutCommandWidget::executePlay()
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F8, Qt::NoModifier));
     else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::Clear))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F10, Qt::NoModifier));
-    else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::ClearVideolayer))
+    else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::ClearVideoLayer))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F11, Qt::NoModifier));
     else if (this->command.getPlayoutCommand() == Playout::toString(Playout::PlayoutType::ClearChannel))
         EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F12, Qt::NoModifier));

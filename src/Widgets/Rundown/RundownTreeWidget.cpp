@@ -235,7 +235,7 @@ void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& 
     else if (event.getKey() == Qt::Key_F3) // Load.
         executeCommand(Playout::PlayoutType::Load, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F4) // Pause.
-        executeCommand(Playout::PlayoutType::Pause, Action::ActionType::KeyPress);
+        executeCommand(Playout::PlayoutType::PauseResume, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F5) // Next.
         executeCommand(Playout::PlayoutType::Next, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F6) // Update.
@@ -247,7 +247,7 @@ void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& 
     else if (event.getKey() == Qt::Key_F10) // Clear.
         executeCommand(Playout::PlayoutType::Clear, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F11) // Clear videolayer.
-        executeCommand(Playout::PlayoutType::ClearVideolayer, Action::ActionType::KeyPress);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer, Action::ActionType::KeyPress);
     else if (event.getKey() == Qt::Key_F12) // Clear channel.
         executeCommand(Playout::PlayoutType::ClearChannel, Action::ActionType::KeyPress);
 }
@@ -1047,6 +1047,8 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
     {
         if (type == Playout::PlayoutType::Next && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
             EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
+        else if (type == Playout::PlayoutType::PauseResume && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
+            dynamic_cast<AbstractPlayoutCommand*>(this->currentAutoPlayWidget)->executeCommand(type);
         else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
             // The group have AutoPlay enabled, play the items within the group.
@@ -1123,7 +1125,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
 
         // Setting: Should we AutoStep and send Preview on next item.
         if ((type != Playout::PlayoutType::Clear &&
-             type != Playout::PlayoutType::ClearVideolayer &&
+             type != Playout::PlayoutType::ClearVideoLayer &&
              type != Playout::PlayoutType::ClearChannel) &&
              dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep())
         { 
@@ -1578,7 +1580,7 @@ void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Pause, this->treeWidgetRundown->currentItem()));
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PauseResume, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -1608,7 +1610,7 @@ void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicat
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
-        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideolayer, this->treeWidgetRundown->currentItem()));
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideoLayer, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

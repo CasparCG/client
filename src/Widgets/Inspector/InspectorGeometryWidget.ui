@@ -112,7 +112,7 @@
      <item>
       <widget class="QLabel" name="labelScaleX">
        <property name="text">
-        <string>Scale X</string>
+        <string>Size X</string>
        </property>
       </widget>
      </item>
@@ -149,7 +149,7 @@
      <item>
       <widget class="QLabel" name="labelScaleY">
        <property name="text">
-        <string>Scale Y</string>
+        <string>Size Y</string>
        </property>
       </widget>
      </item>

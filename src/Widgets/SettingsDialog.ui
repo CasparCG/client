@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -1531,7 +1531,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -1610,7 +1610,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -1689,7 +1689,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -1768,7 +1768,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -1847,7 +1847,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -1926,7 +1926,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -2005,7 +2005,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>
@@ -2084,7 +2084,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Pause</string>
+       <string>Pause / Resume</string>
       </property>
      </item>
      <item>

@@ -289,13 +289,13 @@ bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
-    else if (type == Playout::PlayoutType::Pause)
+    else if (type == Playout::PlayoutType::PauseResume)
         executePause();
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -637,7 +637,7 @@ void RundownDeckLinkInputWidget::loadControlSubscriptionReceived(const QString& 
 void RundownDeckLinkInputWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause);
+        executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownDeckLinkInputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -649,7 +649,7 @@ void RundownDeckLinkInputWidget::clearControlSubscriptionReceived(const QString&
 void RundownDeckLinkInputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownDeckLinkInputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

@@ -395,7 +395,7 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
-    else if (type == Playout::PlayoutType::Pause)
+    else if (type == Playout::PlayoutType::PauseResume)
         executePause();
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
@@ -408,7 +408,7 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -544,7 +544,7 @@ void RundownVideoWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->playVideo(this->command.getChannel(), this->command.getVideolayer());
+            device->resumeVideo(this->command.getChannel(), this->command.getVideolayer());
         else
             device->pauseVideo(this->command.getChannel(), this->command.getVideolayer());
     }
@@ -558,7 +558,7 @@ void RundownVideoWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->playVideo(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->resumeVideo(this->command.getChannel(), this->command.getVideolayer());
             else
                 deviceShadow->pauseVideo(this->command.getChannel(), this->command.getVideolayer());
         }
@@ -1135,7 +1135,7 @@ void RundownVideoWidget::loadControlSubscriptionReceived(const QString& predicat
 void RundownVideoWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause);
+        executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownVideoWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -1165,7 +1165,7 @@ void RundownVideoWidget::clearControlSubscriptionReceived(const QString& predica
 void RundownVideoWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownVideoWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

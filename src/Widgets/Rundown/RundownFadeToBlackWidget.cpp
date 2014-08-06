@@ -279,7 +279,7 @@ bool RundownFadeToBlackWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
-    else if (type == Playout::PlayoutType::Pause)
+    else if (type == Playout::PlayoutType::PauseResume)
         executePause();
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
@@ -287,7 +287,7 @@ bool RundownFadeToBlackWidget::executeCommand(Playout::PlayoutType::Type type)
         executePlay();
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -658,7 +658,7 @@ void RundownFadeToBlackWidget::loadControlSubscriptionReceived(const QString& pr
 void RundownFadeToBlackWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Pause);
+        executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownFadeToBlackWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -676,7 +676,7 @@ void RundownFadeToBlackWidget::clearControlSubscriptionReceived(const QString& p
 void RundownFadeToBlackWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownFadeToBlackWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

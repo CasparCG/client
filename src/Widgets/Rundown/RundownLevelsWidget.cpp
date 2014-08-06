@@ -291,7 +291,7 @@ bool RundownLevelsWidget::executeCommand(Playout::PlayoutType::Type type)
         executePlay();
     else if (type == Playout::PlayoutType::Clear)
         executeStop();
-    else if (type == Playout::PlayoutType::ClearVideolayer)
+    else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
@@ -555,7 +555,7 @@ void RundownLevelsWidget::clearControlSubscriptionReceived(const QString& predic
 void RundownLevelsWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::ClearVideolayer);
+        executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownLevelsWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

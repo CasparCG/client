@@ -372,7 +372,7 @@ void RundownGroupWidget::loadControlSubscriptionReceived(const QString& predicat
 void RundownGroupWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeOscCommand(Playout::PlayoutType::Pause);
+        executeOscCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownGroupWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -402,7 +402,7 @@ void RundownGroupWidget::clearControlSubscriptionReceived(const QString& predica
 void RundownGroupWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeOscCommand(Playout::PlayoutType::ClearVideolayer);
+        executeOscCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownGroupWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
