@@ -55,6 +55,8 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/Rundown/CopyItemPropertiesEvent.h"
+#include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
@@ -127,6 +129,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&);
         Q_SIGNAL void markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&);
         Q_SIGNAL void closeApplication(const CloseApplicationEvent&);
+        Q_SIGNAL void copyItemProperties(const CopyItemPropertiesEvent&);
+        Q_SIGNAL void pasteItemProperties(const PasteItemPropertiesEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -180,4 +184,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireMarkAllItemsAsUsedEvent(const MarkAllItemsAsUsedEvent&);
         void fireMarkAllItemsAsUnusedEvent(const MarkAllItemsAsUnusedEvent&);
         void fireCloseApplicationEvent(const CloseApplicationEvent&);
+        void fireCopyItemPropertiesEvent(const CopyItemPropertiesEvent&);
+        void firePasteItemPropertiesEvent(const PasteItemPropertiesEvent&);
 };

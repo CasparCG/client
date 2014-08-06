@@ -65,6 +65,8 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void createNewRundown();
         Q_SLOT void saveRundownToDisk();
         Q_SLOT void saveAsRundownToDisk();
+        Q_SLOT void copyItemProperties();
+        Q_SLOT void pasteItemProperties();
         Q_SLOT void toggleCompactView();
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);

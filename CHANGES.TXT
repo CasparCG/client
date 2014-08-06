@@ -1,3 +1,9 @@
+CasparCG Client 2.0.7
+=====================
+- NEW: Support for Copy (Shift+C) / Paste (Shift+V) item properties.
+
+
+
 CasparCG Client 2.0.7 BETA 3
 ============================
 - FIX: Various bug fixes.

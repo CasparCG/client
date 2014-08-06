@@ -80,6 +80,8 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)), this, SLOT(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(executePlayoutCommand(const ExecutePlayoutCommandEvent&)), this, SLOT(executePlayoutCommand(const ExecutePlayoutCommandEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)), this, SLOT(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(copyItemProperties(const CopyItemPropertiesEvent&)), this, SLOT(copyItemProperties(const CopyItemPropertiesEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -210,6 +212,9 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuMark);
     this->contextMenuRundown->addSeparator();
+    this->contextMenuRundown->addAction("Copy Properties", this, SLOT(copyItemProperties()));
+    this->contextMenuRundown->addAction("Paste Properties", this, SLOT(pasteItemProperties()));
+    this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addMenu(this->contextMenuColor);
     this->contextMenuRundown->addSeparator();
     this->contextMenuRundown->addAction(/*QIcon(":/Graphics/Images/PresetSmall.png"),*/ "Save as Preset...", this, SLOT(saveAsPreset()));
@@ -258,6 +263,34 @@ void RundownTreeWidget::saveAsPreset(const SaveAsPresetEvent& event)
         return;
 
     saveAsPreset();
+}
+
+void RundownTreeWidget::copyItemProperties()
+{
+    EventManager::getInstance().fireCopyItemPropertiesEvent(CopyItemPropertiesEvent());
+}
+
+void RundownTreeWidget::pasteItemProperties()
+{
+    EventManager::getInstance().firePasteItemPropertiesEvent(PasteItemPropertiesEvent());
+}
+
+void RundownTreeWidget::copyItemProperties(const CopyItemPropertiesEvent& event)
+{
+    if (!this->active)
+        return;
+
+    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
+    if (!dynamic_cast<AbstractRundownWidget*>(selectedWidget)->isGroup())
+        this->treeWidgetRundown->copyItemProperties();
+}
+
+void RundownTreeWidget::pasteItemProperties(const PasteItemPropertiesEvent& event)
+{
+    if (!this->active)
+        return;
+
+    this->treeWidgetRundown->pasteItemProperties();
 }
 
 bool RundownTreeWidget::removeSelectedItems()

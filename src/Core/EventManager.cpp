@@ -276,6 +276,16 @@ void EventManager::fireCloseApplicationEvent(const CloseApplicationEvent& event)
     emit closeApplication(CloseApplicationEvent(event));
 }
 
+void EventManager::fireCopyItemPropertiesEvent(const CopyItemPropertiesEvent& event)
+{
+    emit copyItemProperties(CopyItemPropertiesEvent(event));
+}
+
+void EventManager::firePasteItemPropertiesEvent(const PasteItemPropertiesEvent& event)
+{
+    emit pasteItemProperties(PasteItemPropertiesEvent(event));
+}
+
 void EventManager::fireAddRudnownItemEvent(const QString& type)
 {
     if (type == Rundown::BLENDMODE)

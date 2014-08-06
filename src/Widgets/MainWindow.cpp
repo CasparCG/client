@@ -16,6 +16,8 @@
 #include "Events/Rundown/NewRundownEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/Rundown/CopyItemPropertiesEvent.h"
+#include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
@@ -107,6 +109,9 @@ void MainWindow::setupMenu()
 
     this->rundownMenu = new QMenu(this);
     this->rundownMenu->addMenu(this->markMenu);
+    this->rundownMenu->addSeparator();
+    this->rundownMenu->addAction("Copy Item Properties", this, SLOT(copyItemProperties()), QKeySequence::fromString("Shift+C"));
+    this->rundownMenu->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()), QKeySequence::fromString("Shift+V"));
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
@@ -249,6 +254,16 @@ void MainWindow::saveRundown()
 void MainWindow::saveAsRundown()
 {
     EventManager::getInstance().fireSaveRundownEvent(SaveRundownEvent(true));
+}
+
+void MainWindow::copyItemProperties()
+{
+    EventManager::getInstance().fireCopyItemPropertiesEvent(CopyItemPropertiesEvent());
+}
+
+void MainWindow::pasteItemProperties()
+{
+    EventManager::getInstance().firePasteItemPropertiesEvent(PasteItemPropertiesEvent());
 }
 
 void MainWindow::executeStop()

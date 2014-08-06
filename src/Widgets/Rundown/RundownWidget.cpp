@@ -4,6 +4,8 @@
 
 #include "EventManager.h"
 #include "Events/Rundown/CompactViewEvent.h"
+#include "Events/Rundown/CopyItemPropertiesEvent.h"
+#include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 
 #include <QtCore/QUuid>
@@ -64,6 +66,9 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addMenu(this->contextMenuMark);
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction("Copy Item Properties", this, SLOT(copyItemProperties()));
+    this->contextMenuRundownDropdown->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
@@ -344,6 +349,16 @@ void RundownWidget::saveRundownToDisk()
 void RundownWidget::saveAsRundownToDisk()
 {
     EventManager::getInstance().fireSaveRundownEvent(SaveRundownEvent(true));
+}
+
+void RundownWidget::copyItemProperties()
+{
+    EventManager::getInstance().fireCopyItemPropertiesEvent(CopyItemPropertiesEvent());
+}
+
+void RundownWidget::pasteItemProperties()
+{
+    EventManager::getInstance().firePasteItemPropertiesEvent(PasteItemPropertiesEvent());
 }
 
 void RundownWidget::toggleCompactView()

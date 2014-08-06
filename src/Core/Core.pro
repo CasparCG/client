@@ -161,7 +161,9 @@ HEADERS += \
     Events/Rundown/MarkAllItemsAsUnusedEvent.h \
     Commands/PlayoutCommand.h \
     Events/CloseApplicationEvent.h \
-    Commands/FadeToBlackCommand.h
+    Commands/FadeToBlackCommand.h \
+    Events/Rundown/PasteItemPropertiesEvent.h \
+    Events/Rundown/CopyItemPropertiesEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -312,7 +314,9 @@ SOURCES += \
     Events/Rundown/MarkAllItemsAsUnusedEvent.cpp \
     Commands/PlayoutCommand.cpp \
     Events/CloseApplicationEvent.cpp \
-    Commands/FadeToBlackCommand.cpp
+    Commands/FadeToBlackCommand.cpp \
+    Events/Rundown/PasteItemPropertiesEvent.cpp \
+    Events/Rundown/CopyItemPropertiesEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

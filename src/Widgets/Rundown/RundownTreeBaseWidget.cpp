@@ -126,6 +126,37 @@ bool RundownTreeBaseWidget::copySelectedItems() const
     return true;
 }
 
+bool RundownTreeBaseWidget::copyItemProperties() const
+{
+    copySelectedItems();
+}
+
+bool RundownTreeBaseWidget::pasteItemProperties()
+{
+    qDebug() << qApp->clipboard()->text();
+    std::wstringstream wstringstream;
+    wstringstream << qApp->clipboard()->text().toStdWString();
+
+    boost::property_tree::wptree pt;
+    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    {
+        QString type = QString::fromStdWString(parentValue.second.get(L"type", L""));
+        if (type == "GROUP")
+            return false;
+
+        foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
+        {
+            AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+            if (widget->getLibraryModel()->getType() == type)
+                widget->getCommand()->readProperties(parentValue.second);
+        }
+    }
+
+    return true;
+}
+
 bool RundownTreeBaseWidget::pasteSelectedItems()
 {
     std::wstringstream wstringstream;

@@ -21,6 +21,8 @@
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/Rundown/CopyItemPropertiesEvent.h"
+#include "Events/Rundown/PasteItemPropertiesEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -198,4 +200,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void markItemAsUnused();
         Q_SLOT void markAllItemsAsUsed();
         Q_SLOT void markAllItemsAsUnused();
+        Q_SLOT void copyItemProperties(const CopyItemPropertiesEvent&);
+        Q_SLOT void pasteItemProperties(const PasteItemPropertiesEvent&);
+        Q_SLOT void copyItemProperties();
+        Q_SLOT void pasteItemProperties();
 };
