@@ -280,6 +280,9 @@ void RundownTreeWidget::copyItemProperties(const CopyItemPropertiesEvent& event)
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     if (!dynamic_cast<AbstractRundownWidget*>(selectedWidget)->isGroup())
         this->treeWidgetRundown->copyItemProperties();
