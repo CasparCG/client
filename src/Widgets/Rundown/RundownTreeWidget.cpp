@@ -1082,9 +1082,15 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
     if (rundownWidget != NULL && rundownWidget->isGroup())
     {
         if (type == Playout::PlayoutType::Next && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
-            EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
+        {
+            if (this->currentAutoPlayWidget != NULL)
+                EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
+        }
         else if (type == Playout::PlayoutType::PauseResume && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
-            dynamic_cast<AbstractPlayoutCommand*>(this->currentAutoPlayWidget)->executeCommand(type);
+        {
+            if (this->currentAutoPlayWidget != NULL)
+                dynamic_cast<AbstractPlayoutCommand*>(this->currentAutoPlayWidget)->executeCommand(type);
+        }
         else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
             // The group have AutoPlay enabled, play the items within the group.

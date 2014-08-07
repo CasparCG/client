@@ -530,6 +530,7 @@ void RundownVideoWidget::executePlay()
     this->paused = false;
     this->loaded = false;
     this->playing = true;
+    this->hasSentAutoPlay = false;
 
     if (this->command.getAutoPlay())
         this->sendAutoPlay= true;
