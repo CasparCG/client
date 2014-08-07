@@ -385,7 +385,7 @@ namespace Panel
     static const int COMPACT_PREVIEW_HEIGHT = 25;
     static const int COMPACT_LIVE_HEIGHT = 25;
     static const int COMPACT_AUDIOLEVELS_HEIGHT = 25;
-#elif defined(Q_OS_LINUX)
+#else
     static const int COMPACT_PREVIEW_HEIGHT = 27;
     static const int COMPACT_LIVE_HEIGHT = 27;
     static const int COMPACT_AUDIOLEVELS_HEIGHT = 27;
