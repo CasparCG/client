@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd "`dirname "$0"`"
+
+export VLC_PLUGIN_PATH=lib/plugins
+
+./client
