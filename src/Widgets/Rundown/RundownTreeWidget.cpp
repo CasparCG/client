@@ -283,9 +283,7 @@ void RundownTreeWidget::copyItemProperties(const CopyItemPropertiesEvent& event)
     if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
-    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
-    if (!dynamic_cast<AbstractRundownWidget*>(selectedWidget)->isGroup())
-        this->treeWidgetRundown->copyItemProperties();
+    this->treeWidgetRundown->copyItemProperties();
 }
 
 void RundownTreeWidget::pasteItemProperties(const PasteItemPropertiesEvent& event)
@@ -793,9 +791,11 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
         this->contextMenuRundown->actions().at(2)->setEnabled(false); // Group.
         this->contextMenuRundown->actions().at(3)->setEnabled(false); // Ungroup.
         this->contextMenuRundown->actions().at(5)->setEnabled(false); // Mark Item.
-        this->contextMenuRundown->actions().at(7)->setEnabled(false); // Colorize Item.
-        this->contextMenuRundown->actions().at(9)->setEnabled(false); // Save as Preset.
-        this->contextMenuRundown->actions().at(11)->setEnabled(false); // Remove.
+        this->contextMenuRundown->actions().at(7)->setEnabled(false); // Copy Properties.
+        this->contextMenuRundown->actions().at(8)->setEnabled(false); // Paste Properties.
+        this->contextMenuRundown->actions().at(10)->setEnabled(false); // Colorize Item.
+        this->contextMenuRundown->actions().at(12)->setEnabled(false); // Save as Preset.
+        this->contextMenuRundown->actions().at(14)->setEnabled(false); // Remove.
     }
 
     if (this->treeWidgetRundown->selectedItems().count() > 0)
@@ -993,6 +993,9 @@ bool RundownTreeWidget::copySelectedItems() const
 
 void RundownTreeWidget::setUsed(bool used)
 {
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 

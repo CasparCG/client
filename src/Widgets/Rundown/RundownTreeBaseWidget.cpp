@@ -143,8 +143,6 @@ bool RundownTreeBaseWidget::pasteItemProperties()
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
         QString type = QString::fromStdWString(parentValue.second.get(L"type", L""));
-        if (type == "GROUP")
-            return false;
 
         foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
         {
