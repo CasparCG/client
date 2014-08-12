@@ -4,8 +4,8 @@
 
 # /lib/
 /lib/libvlc/lib/win32/plugins/plugins.dat
-/lib/libvlc/lib/macx/plugins/plugins.dat
-/lib/libvlc/lib/linux/plugins/plugins.dat
+/lib/libvlc/lib/macx/lib/plugins/plugins.dat
+/lib/libvlc/lib/linux/lib/plugins/plugins.dat
 
 # /src/
 /src/Solution.pro.user
