@@ -49,8 +49,8 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    this->executeStartTimer.setSingleShot(true);
+    this->executeStopTimer.setSingleShot(true);
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -237,7 +237,8 @@ void RundownAudioWidget::checkEmptyDevice()
 
 void RundownAudioWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->executeStartTimer.stop();
+    this->executeStopTimer.stop();
 
     this->paused = false;
     this->loaded = false;
@@ -269,6 +270,13 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
         if (this->command.getDelay() < 0)
             return true;
 
+        this->executeStartTimer.setInterval(0);
+        this->executeStopTimer.setInterval(0);
+        this->executeStartTimer.disconnect(); // Disconnect all events.
+        this->executeStopTimer.disconnect(); // Disconnect all events.
+        QObject::connect(&this->executeStartTimer, SIGNAL(timeout()), SLOT(executePlay()));
+        QObject::connect(&this->executeStopTimer, SIGNAL(timeout()), SLOT(executeStop()));
+
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
@@ -280,23 +288,25 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
                 int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeTimer.setInterval(startDelay);
+                this->executeStartTimer.setInterval(startDelay);
 
                 if (this->command.getDuration() > 0)
                 {
                     int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
+                    this->executeStopTimer.setInterval(startDelay + stopDelay);
                 }
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executeTimer.setInterval(this->command.getDelay());
+                this->executeStartTimer.setInterval(this->command.getDelay());
 
                 if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
+                    this->executeStopTimer.setInterval(this->command.getDelay() + this->command.getDuration());
             }
 
-            this->executeTimer.start();
+            this->executeStartTimer.start();
+            if (this->executeStopTimer.interval() > 0)
+                this->executeStopTimer.start();
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -322,7 +332,8 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
 
 void RundownAudioWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->executeStartTimer.stop();
+    this->executeStopTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -452,7 +463,8 @@ void RundownAudioWidget::executeLoad()
 
 void RundownAudioWidget::executeClearVideolayer()
 {
-    this->executeTimer.stop();
+    this->executeStartTimer.stop();
+    this->executeStopTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -475,7 +487,8 @@ void RundownAudioWidget::executeClearVideolayer()
 
 void RundownAudioWidget::executeClearChannel()
 {
-    this->executeTimer.stop();
+    this->executeStartTimer.stop();
+    this->executeStopTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

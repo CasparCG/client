@@ -12,6 +12,7 @@
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/TemplateChangedEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
+#include "Events/Library/LibraryFilterChangedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
@@ -33,6 +34,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         AbstractCommand* command;
         LibraryModel* model;
         QString delayType;
+        QString libraryFilter;
 
         void checkEmptyDevice();
         void checkEmptyAtemDevice();
@@ -65,4 +67,5 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
+        Q_SLOT void libraryFilterChanged(const LibraryFilterChangedEvent&);
 };

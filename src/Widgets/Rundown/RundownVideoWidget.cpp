@@ -355,6 +355,8 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
             executePlay();
         else if (!this->command.getTriggerOnNext() || type == Playout::PlayoutType::Update)
         {
+            this->executeStartTimer.setInterval(0);
+            this->executeStopTimer.setInterval(0);
             this->executeStartTimer.disconnect(); // Disconnect all events.
             this->executeStopTimer.disconnect(); // Disconnect all events.
             QObject::connect(&this->executeStartTimer, SIGNAL(timeout()), SLOT(executePlay()));

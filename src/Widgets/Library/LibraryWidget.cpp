@@ -872,6 +872,8 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
 
 void LibraryWidget::filterLibrary()
 {
+    EventManager::getInstance().fireLibraryFilterChangedEvent(LibraryFilterChangedEvent(this->lineEditFilter->text()));
+
     EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());

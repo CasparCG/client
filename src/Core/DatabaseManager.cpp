@@ -103,7 +103,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterPort', '5950')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Frames')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Milliseconds')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('Theme', 'Flat')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
@@ -1680,6 +1680,38 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
     QString query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
                             "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND d.Id = %1 "
                             "ORDER BY l.Name, l.DeviceId").arg(deviceId);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+
+    QList<LibraryModel> models;
+    while (sql.next())
+        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
+                                      sql.value(5).toString()));
+
+    return models;
+}
+
+QList<LibraryModel> DatabaseManager::getLibraryByDeviceIdAndFilter(int deviceId, const QString& filter)
+{
+    QMutexLocker locker(&mutex);
+
+    QString query;
+
+    if (filter.isEmpty())
+    {
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND d.Id = %1 "
+                        "ORDER BY l.Name, l.DeviceId").arg(deviceId);
+    }
+    else // Filter.
+    {
+        query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND d.Id = %1 AND l.Name LIKE '%%2%' "
+                        "ORDER BY l.Name, l.DeviceId").arg(deviceId).arg(filter);
+    }
 
     QSqlQuery sql;
     if (!sql.exec(query))

@@ -56,7 +56,7 @@
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     : QWidget(parent),
-      command(NULL), model(NULL), delayType("")
+      command(NULL), model(NULL), delayType(""), libraryFilter("")
 {
     setupUi(this);
 
@@ -82,6 +82,12 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(mediaChanged(const MediaChangedEvent&)), this, SLOT(mediaChanged(const MediaChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(templateChanged(const TemplateChangedEvent&)), this, SLOT(templateChanged(const TemplateChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(libraryFilterChanged(const LibraryFilterChangedEvent&)), this, SLOT(libraryFilterChanged(const LibraryFilterChangedEvent&)));
+}
+
+void InspectorOutputWidget::libraryFilterChanged(const LibraryFilterChangedEvent& event)
+{
+    this->libraryFilter = event.getFilter();
 }
 
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -495,23 +501,28 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type)
 
     const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model->getDeviceName());
 
-    QList<LibraryModel> models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel.getId());
-    if (models.count() == 0)
-        return;
+    QList<LibraryModel> models;
+    if (this->libraryFilter.isEmpty())
+        models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel.getId());
+    else
+        models = DatabaseManager::getInstance().getLibraryByDeviceIdAndFilter(deviceModel.getId(), this->libraryFilter);
 
-    foreach (LibraryModel model, models)
+    if (models.count() > 0)
     {
-        if (type == "MOVIE" && model.getType() == "MOVIE")
-            this->comboBoxTarget->addItem(model.getName());
-        else if (type == Rundown::AUDIO && model.getType() == Rundown::AUDIO)
-            this->comboBoxTarget->addItem(model.getName());
-        else if (type == Rundown::TEMPLATE && model.getType() == Rundown::TEMPLATE)
-            this->comboBoxTarget->addItem(model.getName());
-        else if ((type == Rundown::IMAGE || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
-            this->comboBoxTarget->addItem(model.getName());
-    }
+        foreach (LibraryModel model, models)
+        {
+            if (type == "MOVIE" && model.getType() == "MOVIE")
+                this->comboBoxTarget->addItem(model.getName());
+            else if (type == Rundown::AUDIO && model.getType() == Rundown::AUDIO)
+                this->comboBoxTarget->addItem(model.getName());
+            else if (type == Rundown::TEMPLATE && model.getType() == Rundown::TEMPLATE)
+                this->comboBoxTarget->addItem(model.getName());
+            else if ((type == Rundown::IMAGE || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
+                this->comboBoxTarget->addItem(model.getName());
+        }
 
-    this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
+        this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
+    }
 }
 
 void InspectorOutputWidget::checkEmptyDevice()

@@ -151,6 +151,11 @@ void EventManager::fireAllowRemoteTriggeringMenuEvent(const AllowRemoteTriggerin
     emit allowRemoteTriggeringMenu(event);
 }
 
+void EventManager::fireLibraryFilterChangedEvent(const LibraryFilterChangedEvent& event)
+{
+    emit libraryFilterChanged(event);
+}
+
 void EventManager::fireMediaChangedEvent(const MediaChangedEvent& event)
 {
     emit mediaChanged(event);

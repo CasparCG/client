@@ -85,7 +85,8 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        QTimer executeStartTimer;
+        QTimer executeStopTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();

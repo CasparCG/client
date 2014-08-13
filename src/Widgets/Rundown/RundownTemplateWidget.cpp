@@ -302,6 +302,8 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
         if (this->command.getDelay() < 0)
             return true;
 
+        this->executeStartTimer.setInterval(0);
+        this->executeStopTimer.setInterval(0);
         this->executeStartTimer.disconnect(); // Disconnect all events.
         this->executeStopTimer.disconnect(); // Disconnect all events.
         QObject::connect(&this->executeStartTimer, SIGNAL(timeout()), SLOT(executePlay()));

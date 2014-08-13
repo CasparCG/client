@@ -29,6 +29,7 @@
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
+#include "Events/Library/LibraryFilterChangedEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AddRudnownItemEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
@@ -131,6 +132,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void closeApplication(const CloseApplicationEvent&);
         Q_SIGNAL void copyItemProperties(const CopyItemPropertiesEvent&);
         Q_SIGNAL void pasteItemProperties(const PasteItemPropertiesEvent&);
+        Q_SIGNAL void libraryFilterChanged(const LibraryFilterChangedEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -186,4 +188,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireCloseApplicationEvent(const CloseApplicationEvent&);
         void fireCopyItemPropertiesEvent(const CopyItemPropertiesEvent&);
         void firePasteItemPropertiesEvent(const PasteItemPropertiesEvent&);
+        void fireLibraryFilterChangedEvent(const LibraryFilterChangedEvent&);
 };
