@@ -153,7 +153,7 @@ void RundownTemplateWidget::dropEvent(QDropEvent* event)
         QString dndData = QString::fromUtf8(event->mimeData()->data("application/library-dataitem"));
         if (dndData.startsWith("<treeWidgetData>"))
         {
-            QStringList dataSplit = dndData.split(",");
+            QStringList dataSplit = dndData.split(",,");
             EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(dataSplit.at(1), true));
         }
     }

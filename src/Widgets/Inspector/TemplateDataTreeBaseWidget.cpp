@@ -30,9 +30,9 @@ void TemplateDataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
     QString data;
     foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
     {
-        data.append(QString("<%1>,%2,%3;").arg(this->objectName())
-                                          .arg(item->text(0))
-                                          .arg(item->text(1)));
+        data.append(QString("<%1>,,%2,,%3;").arg(this->objectName())
+                                            .arg(item->text(0))
+                                            .arg(item->text(1)));
     }
     data.remove(data.length() - 1, 1); // Remove last index of ;
 
@@ -79,7 +79,7 @@ bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index
         QString dndData = QString::fromUtf8(mimeData->data("application/library-dataitem"));
         if (dndData.startsWith("<treeWidgetData>"))
         {
-            QStringList dataSplit = dndData.split(",");
+            QStringList dataSplit = dndData.split(",,");
             EventManager::getInstance().fireAddTemplateDataEvent(AddTemplateDataEvent(dataSplit.at(1), true));
         }
     }
@@ -88,7 +88,7 @@ bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index
         QString dndData = QString::fromUtf8(mimeData->data("application/inspector-templatedataitem"));
         if (dndData.startsWith("<treeWidgetTemplateData>"))
         {
-            QStringList dataSplit = dndData.split(",");
+            QStringList dataSplit = dndData.split(",,");
 
             QTreeWidgetItem* treeItem = new QTreeWidgetItem();
             treeItem->setText(0, dataSplit.at(1));

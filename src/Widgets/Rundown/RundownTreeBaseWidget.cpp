@@ -759,7 +759,7 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
             QStringList dndDataSplit = dndData.split(";");
             foreach(QString data, dndDataSplit)
             {
-                QStringList dataSplit = data.split(",");
+                QStringList dataSplit = data.split(",,");
                 EventManager::getInstance().fireAddRudnownItemEvent(LibraryModel(dataSplit.at(2).toInt(), dataSplit.at(3), dataSplit.at(1),
                                                                                  dataSplit.at(4), dataSplit.at(5), dataSplit.at(6).toInt(),
                                                                                  dataSplit.at(7)));
@@ -769,7 +769,7 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
         {
             QTreeWidget::setCurrentItem(parent);
 
-            QStringList dataSplit = dndData.split(",");
+            QStringList dataSplit = dndData.split(",,");
             EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(dataSplit.at(3)));
         }
     }

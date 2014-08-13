@@ -1,6 +1,7 @@
 CasparCG Client 2.0.7 BETA 4
 ============================
 - FIX: Duration value is not set correct in cases.
+- FIX: Issue with drag and drop presets.
 - NEW: Support for Copy (Shift+C) / Paste (Shift+V) item properties.
 - NEW: Library filter also effect target combo in the output panel.
 - UPDATE: Changed default setting for delay and duration to milliseconds.
