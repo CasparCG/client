@@ -5,9 +5,9 @@ CasparCG Client 2.0.7 BETA 4
 - FIX: Export menu should only be active when a preset is selected, issue #88.
 - FIX: Save preset as menu should only be active when a item in the rundown is selected.
 - FIX: Issue with swithing to a empty tab.
-- NEW: Support for Copy (Shift+C) / Paste (Shift+V) item properties.
-- NEW: Library filter also effect target combo in the output panel.
-- UPDATE: Changed default setting for delay and duration to milliseconds.
+- NEW: Support for copy (shift+c) / paste (shift+v) item properties.
+- NEW: Library filter also effect the target combo in the output panel.
+- UPDATE: Changed the default setting for delay and duration to milliseconds.
 - UPDATE: UI changes, including issue #82. 
 
 
