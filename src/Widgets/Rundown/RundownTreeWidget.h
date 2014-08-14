@@ -166,6 +166,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void itemClicked(QTreeWidgetItem*, int);
+        Q_SLOT void itemSelectionChanged();
         Q_SLOT void contextMenuNewTriggered(QAction*);
         Q_SLOT void selectItemBelow();
         Q_SLOT void executePreview();

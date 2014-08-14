@@ -60,7 +60,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     if (!showAudioLevelsPanel)
         this->widgetAudioLevels->setVisible(false);
 
-    QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(activeRundownChanged(const ActiveRundownChangedEvent&)), this, SLOT(activeRundownChanged(const ActiveRundownChangedEvent&)));
@@ -68,6 +67,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -78,14 +79,13 @@ void MainWindow::setupMenu()
     this->openRundownFromUrlAction = this->fileMenu->addAction("Open Rundown from repository...", this, SLOT(openRundownFromUrl()), QKeySequence::fromString("Ctrl+Shift+O"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
-    this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
+    this->exportPresetAction = this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
     this->saveAsPresetAction = this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
     this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()), QKeySequence::fromString("Ctrl+Shift+S"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
-    //this->exportPresetAction = this->fileMenu->actions().at(4)->setEnabled(false);
     this->saveAsPresetAction->setEnabled(false);
 
     this->editMenu = new QMenu(this);
@@ -156,11 +156,6 @@ void MainWindow::setupMenu()
     setMenuBar(this->menuBar);
 }
 
-void MainWindow::rundownItemSelected(const RundownItemSelectedEvent& event)
-{
-    this->saveAsPresetAction->setEnabled(true);
-}
-
 void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 {
     this->saveAsPresetAction->setEnabled(false);
@@ -188,6 +183,16 @@ void MainWindow::newRundownMenu(const NewRundownMenuEvent& event)
 void MainWindow::openRundownMenu(const OpenRundownMenuEvent& event)
 {
     this->openRundownAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::exportPresetMenu(const ExportPresetMenuEvent& event)
+{
+    this->exportPresetAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::saveAsPresetMenu(const SaveAsPresetMenuEvent& event)
+{
+    this->saveAsPresetAction->setEnabled(event.getEnabled());
 }
 
 void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)

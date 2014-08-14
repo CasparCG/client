@@ -16,6 +16,8 @@
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/CloseApplicationEvent.h"
+#include "Events/ExportPresetMenuEvent.h"
+#include "Events/SaveAsPresetMenuEvent.h"
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
@@ -133,6 +135,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void copyItemProperties(const CopyItemPropertiesEvent&);
         Q_SIGNAL void pasteItemProperties(const PasteItemPropertiesEvent&);
         Q_SIGNAL void libraryFilterChanged(const LibraryFilterChangedEvent&);
+        Q_SIGNAL void exportPresetMenu(const ExportPresetMenuEvent&);
+        Q_SIGNAL void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -189,4 +193,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireCopyItemPropertiesEvent(const CopyItemPropertiesEvent&);
         void firePasteItemPropertiesEvent(const PasteItemPropertiesEvent&);
         void fireLibraryFilterChangedEvent(const LibraryFilterChangedEvent&);
+        void fireExportPresetMenuEvent(const ExportPresetMenuEvent&);
+        void fireSaveAsPresetMenuEvent(const SaveAsPresetMenuEvent&);
 };

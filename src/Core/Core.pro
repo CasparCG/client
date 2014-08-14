@@ -164,7 +164,9 @@ HEADERS += \
     Commands/FadeToBlackCommand.h \
     Events/Rundown/PasteItemPropertiesEvent.h \
     Events/Rundown/CopyItemPropertiesEvent.h \
-    Events/Library/LibraryFilterChangedEvent.h
+    Events/Library/LibraryFilterChangedEvent.h \
+    Events/ExportPresetMenuEvent.h \
+    Events/SaveAsPresetMenuEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -318,7 +320,9 @@ SOURCES += \
     Commands/FadeToBlackCommand.cpp \
     Events/Rundown/PasteItemPropertiesEvent.cpp \
     Events/Rundown/CopyItemPropertiesEvent.cpp \
-    Events/Library/LibraryFilterChangedEvent.cpp
+    Events/Library/LibraryFilterChangedEvent.cpp \
+    Events/ExportPresetMenuEvent.cpp \
+    Events/SaveAsPresetMenuEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

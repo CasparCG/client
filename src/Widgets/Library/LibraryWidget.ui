@@ -671,8 +671,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -864,8 +864,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>122</y>
+     <x>97</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>227</x>
@@ -880,8 +880,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>96</x>
-     <y>196</y>
+     <x>95</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>228</x>
@@ -896,8 +896,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>154</y>
+     <x>96</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>254</x>
@@ -928,8 +928,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>96</x>
-     <y>217</y>
+     <x>95</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -944,8 +944,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>253</x>
-     <y>170</y>
+     <x>97</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -960,8 +960,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>154</y>
+     <x>96</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -976,8 +976,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>108</y>
+     <x>97</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -992,8 +992,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>196</y>
+     <x>96</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -1008,8 +1008,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>70</y>
+     <x>96</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -1088,12 +1088,28 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>163</x>
-     <y>297</y>
+     <x>97</x>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
      <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetPreset</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>

@@ -51,6 +51,16 @@ void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
     emit openRundownMenu(event);
 }
 
+void EventManager::fireExportPresetMenuEvent(const ExportPresetMenuEvent& event)
+{
+    emit exportPresetMenu(event);
+}
+
+void EventManager::fireSaveAsPresetMenuEvent(const SaveAsPresetMenuEvent& event)
+{
+    emit saveAsPresetMenu(event);
+}
+
 void EventManager::fireOpenRundownFromUrlEvent(const OpenRundownFromUrlEvent& event)
 {
     emit openRundownFromUrl(event);

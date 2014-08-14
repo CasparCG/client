@@ -500,14 +500,17 @@ void RundownTreeWidget::setActive(bool active)
 
     if (this->active)
     {
-        this->treeWidgetRundown->setCurrentItem(this->activeItem);
-
-        if (this->treeWidgetRundown->currentItem() != NULL)
+        if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
         {
-            QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+            this->treeWidgetRundown->setCurrentItem(this->activeItem);
 
-            dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+            if (this->treeWidgetRundown->currentItem() != NULL)
+            {
+                QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+                QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
+
+                dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+            }
         }
     }
     else
@@ -541,9 +544,13 @@ void RundownTreeWidget::setActive(bool active)
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). Make sure we update the right item in the
-        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(true));
+    }
+    else // Empty rundown.
+    {
+        EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(false));
     }
 }
 
@@ -897,6 +904,17 @@ void RundownTreeWidget::contextMenuRundownTriggered(QAction* action)
         this->treeWidgetRundown->ungroupItems();
 }
 
+void RundownTreeWidget::itemSelectionChanged()
+{
+    if (this->treeWidgetRundown->currentItem() == NULL || this->treeWidgetRundown->selectedItems().count() == 0)
+    {
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(false));
+        return;
+    }
+
+    EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(true));
+}
+
 void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
 {
     if (this->treeWidgetRundown->currentItem() == NULL)
@@ -918,9 +936,8 @@ void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). Make sure we update the right item in the
-        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(true));
     }
 }
 
@@ -951,15 +968,13 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 
-        // Use synchronous event through sendEvent(). Make sure we update the right item in the
-        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireRundownItemSelectedEvent(RundownItemSelectedEvent(command, model, currentItemWidget, currentItemWidgetParent));
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(true));
     }
     else if (currentItem == NULL && previous != NULL && this->treeWidgetRundown->invisibleRootItem()->childCount() == 1) // Last item was removed form the rundown.
     {
-        // Use synchronous event through sendEvent(). Make sure we update the right item in the
-        // inspector which will not be the case with postEvent() if we trigger keys really fast.
         EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
+        EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(false));
     }
 }
 
