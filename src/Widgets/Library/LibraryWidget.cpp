@@ -364,7 +364,7 @@ void LibraryWidget::setupTools()
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
     widgetSeparator->setText(0, "Separator");
     widgetSeparator->setText(1, "0");
-    widgetSeparator->setText(2, "Separator");
+    widgetSeparator->setText(2, "");
     widgetSeparator->setText(3, "");
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");

@@ -23,7 +23,9 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_SEPARATOR_COLOR));
+
+    this->labelActiveColor->setVisible(false);
+    //this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_SEPARATOR_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
 
@@ -97,7 +99,11 @@ QString RundownSeparatorWidget::getColor() const
 void RundownSeparatorWidget::setColor(const QString& color)
 {
     this->color = color;
-    this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
+
+    if (this->color.isEmpty())
+        this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(Color::DEFAULT_SEPARATOR_COLOR));
+    else
+        this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
 void RundownSeparatorWidget::setActive(bool active)

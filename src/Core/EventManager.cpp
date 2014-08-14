@@ -328,7 +328,7 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
     else if (type == Rundown::FILERECORDER)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "File Recorder", "", "", Rundown::FILERECORDER, 0, "")));
     else if (type == Rundown::SEPARATOR)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Separator", "", "", Rundown::SEPARATOR, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "", "", "", Rundown::SEPARATOR, 0, "")));
     else if (type == Rundown::GRID)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Grid", "", "", Rundown::GRID, 0, "")));
     else if (type == Rundown::SOLIDCOLOR)
