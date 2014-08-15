@@ -24,6 +24,7 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         bool windowMode;
         QString deviceName;
         QString deviceChannel;
+        bool useKey;
 
         LiveDialog* liveDialog;
 

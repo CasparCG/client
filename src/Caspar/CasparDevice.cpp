@@ -337,17 +337,17 @@ void CasparDevice::stopRecording(int channel)
     writeMessage(QString("REMOVE %1 FILE").arg(channel));
 }
 
-void CasparDevice::startStream(int channel, int port, int quality, int width, int height)
+void CasparDevice::startStream(int channel, int port, int quality, bool key, int width, int height)
 {
     if (width > 0 && height > 0)
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf scale=%4:%5")
-                     .arg(channel).arg(port).arg(quality).arg(width).arg(height));
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf %4scale=%5:%6")
+                     .arg(channel).arg(port).arg(quality).arg((key == true) ? "alphaextract," : "").arg(width).arg(height));
     }
     else
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast")
-                     .arg(channel).arg(port).arg(quality));
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast %4")
+                     .arg(channel).arg(port).arg(quality).arg((key == true) ? "-vf alphaextract" : ""));
     }
 }
 

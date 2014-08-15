@@ -166,7 +166,8 @@ HEADERS += \
     Events/Rundown/CopyItemPropertiesEvent.h \
     Events/Library/LibraryFilterChangedEvent.h \
     Events/ExportPresetMenuEvent.h \
-    Events/SaveAsPresetMenuEvent.h
+    Events/SaveAsPresetMenuEvent.h \
+    Events/ToggleFullscreenEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -322,7 +323,8 @@ SOURCES += \
     Events/Rundown/CopyItemPropertiesEvent.cpp \
     Events/Library/LibraryFilterChangedEvent.cpp \
     Events/ExportPresetMenuEvent.cpp \
-    Events/SaveAsPresetMenuEvent.cpp
+    Events/SaveAsPresetMenuEvent.cpp \
+    Events/ToggleFullscreenEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

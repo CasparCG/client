@@ -11,7 +11,7 @@
 
 LiveWidget::LiveWidget(QWidget* parent)
     : QWidget(parent),
-      collapsed(false), windowMode(false), deviceName(""), deviceChannel(""), vlcMedia(NULL), vlcInstance(NULL), vlcMediaPlayer(NULL)
+      collapsed(false), windowMode(false), deviceName(""), deviceChannel(""), useKey(false), vlcMedia(NULL), vlcInstance(NULL), vlcMediaPlayer(NULL)
 {
     setupUi(this);
     setupMenus();
@@ -75,7 +75,7 @@ void LiveWidget::setupMenus()
     this->muteAction->setCheckable(true);
 
     this->streamMenu = new QMenu(this);
-    this->streamMenu->setTitle("Connect");
+    this->streamMenu->setTitle("Connect to");
     this->streamMenuAction = this->contextMenuLiveDropdown->addMenu(this->streamMenu);
     this->contextMenuLiveDropdown->addSeparator();
     this->contextMenuLiveDropdown->addMenu(this->audioMenu);
@@ -158,7 +158,10 @@ void LiveWidget::setupStreamMenu()
     foreach (DeviceModel model, models)
     {
         for (int i = 0; i < model.getChannels(); i++)
-            this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ QString("%1:%2").arg(model.getName()).arg(i + 1));
+        {
+            this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ QString("Device: %1, Channel: %2 (Fill)").arg(model.getName()).arg(i + 1));
+            this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ QString("Device: %1, Channel: %2 (Key)").arg(model.getName()).arg(i + 1));
+        }
     }
 
     this->streamMenu->addSeparator();
@@ -167,13 +170,14 @@ void LiveWidget::setupStreamMenu()
 
 void LiveWidget::streamMenuActionTriggered(QAction* action)
 {
-    if (!action->text().contains(':'))
+    if (!action->text().contains(':') && !action->text().contains(','))
         return;
 
     stopStream(this->deviceName, this->deviceChannel);
 
-    this->deviceName = action->text().split(':')[0];
-    this->deviceChannel = action->text().split(':')[1];
+    this->useKey = action->text().contains("(Key)");
+    this->deviceName = action->text().split(',').at(0).split(':').at(1).trimmed();
+    this->deviceChannel = action->text().split(',').at(1).split(':').at(1).trimmed().split(' ').at(0).trimmed();
 
     startStream(this->deviceName, this->deviceChannel);
 }
@@ -181,6 +185,9 @@ void LiveWidget::streamMenuActionTriggered(QAction* action)
 void LiveWidget::disconnectStream()
 {
     stopStream(this->deviceName, this->deviceChannel);
+
+    this->deviceName.clear();
+    this->deviceChannel.clear();
 }
 
 void LiveWidget::stopStream(const QString& deviceName, const QString& deviceChannel)
@@ -207,9 +214,9 @@ void LiveWidget::startStream(const QString& deviceName, const QString& deviceCha
             int quality = DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt();
 
             if (this->windowMode)
-                device->startStream(this->deviceChannel.toInt(), 5004, quality);
+                device->startStream(this->deviceChannel.toInt(), 5004, quality, this->useKey);
             else
-                device->startStream(this->deviceChannel.toInt(), 5004, quality, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
+                device->startStream(this->deviceChannel.toInt(), 5004, quality, this->useKey, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
         }
     }
 }
@@ -241,7 +248,7 @@ void LiveWidget::toggleWindowMode()
     }
     else
     {
-        this->liveDialog->show();
+        this->liveDialog->visible();
     }
 
     this->windowMode = !this->windowMode;

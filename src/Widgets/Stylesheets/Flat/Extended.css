@@ -441,7 +441,7 @@
 /*
  * Dialog backgrounds
  */
-#AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #TriCasterDeviceDialog, #ImportTriCasterDeviceDialog, #AtemDeviceDialog, #ImportAtemDeviceDialog, #OscOutputDialog, #TemplateDataDialog
+#AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #TriCasterDeviceDialog, #ImportTriCasterDeviceDialog, #AtemDeviceDialog, #ImportAtemDeviceDialog, #OscOutputDialog, #TemplateDataDialog, #LiveDialog
 {
     background-color: rgba(35, 35, 35, 255);
 }

@@ -11,6 +11,7 @@
 #include "Events/ExportPresetEvent.h"
 #include "Events/ImportPresetEvent.h"
 #include "Events/SaveAsPresetEvent.h"
+#include "Events/ToggleFullscreenEvent.h"
 #include "Events/Rundown/CloseRundownEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/NewRundownEvent.h"
@@ -397,6 +398,8 @@ void MainWindow::showSettingsDialog()
 void MainWindow::toggleFullscreen()
 {
     isFullScreen() ? setWindowState(Qt::WindowNoState) : setWindowState(Qt::WindowFullScreen);
+
+    EventManager::getInstance().fireToggleFullscreenEvent(ToggleFullscreenEvent());
 }
 
 void MainWindow::refreshLibrary()

@@ -18,6 +18,7 @@
 #include "Events/CloseApplicationEvent.h"
 #include "Events/ExportPresetMenuEvent.h"
 #include "Events/SaveAsPresetMenuEvent.h"
+#include "Events/ToggleFullscreenEvent.h"
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
@@ -137,6 +138,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void libraryFilterChanged(const LibraryFilterChangedEvent&);
         Q_SIGNAL void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SIGNAL void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
+        Q_SIGNAL void toggleFullscreen(const ToggleFullscreenEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -195,4 +197,5 @@ class CORE_EXPORT EventManager : public QObject
         void fireLibraryFilterChangedEvent(const LibraryFilterChangedEvent&);
         void fireExportPresetMenuEvent(const ExportPresetMenuEvent&);
         void fireSaveAsPresetMenuEvent(const SaveAsPresetMenuEvent&);
+        void fireToggleFullscreenEvent(const ToggleFullscreenEvent&);
 };

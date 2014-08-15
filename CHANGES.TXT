@@ -5,8 +5,10 @@ CasparCG Client 2.0.7 BETA 4
 - FIX: Export menu should only be active when a preset is selected, issue #88.
 - FIX: Save preset as menu should only be active when a item in the rundown is selected.
 - FIX: Issue with swithing to a empty tab.
+- NEW: Support for fullscreen in the live view when using window mode. 
 - NEW: Support for copy (shift+c) / paste (shift+v) item properties.
 - NEW: Library filter also effect the target combo in the output panel.
+- NEW: Added support for preview the key signal in the live view.
 - UPDATE: Changed the default setting for delay and duration to milliseconds.
 - UPDATE: UI changes, including issue #82. 
 
