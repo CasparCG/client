@@ -260,8 +260,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -341,8 +341,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -422,8 +422,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -509,8 +509,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -593,8 +593,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>71</height>
+        <width>289</width>
+        <height>414</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1018,22 +1018,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditFilter</sender>
-   <signal>returnPressed()</signal>
-   <receiver>LibraryWidget</receiver>
-   <slot>filterLibrary()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>587</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-3</x>
-     <y>572</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>treeWidgetTool</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
    <receiver>LibraryWidget</receiver>
@@ -1113,6 +1097,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditFilter</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>LibraryWidget</receiver>
+   <slot>filterChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>571</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>filterLibrary()</slot>
@@ -1122,5 +1122,6 @@
   <slot>itemEntered(QTreeWidgetItem*,int)</slot>
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>toggleExpandItem(QTreeWidgetItem*,int)</slot>
+  <slot>filterChanged(QString)</slot>
  </slots>
 </ui>
