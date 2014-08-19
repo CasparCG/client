@@ -20,6 +20,7 @@ LiveWidget::LiveWidget(QWidget* parent)
     QObject::connect(this->liveDialog, SIGNAL(rejected()), this, SLOT(toggleWindowMode()));
 
     QStringList arguments;
+    arguments.append("--no-osd");
     arguments.append("--ignore-config");
     arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt()));
 

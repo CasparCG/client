@@ -26,8 +26,8 @@ namespace Atem
 
 namespace Stream
 {
-    static const int COMPACT_WIDTH = 287;
-    static const int COMPACT_HEIGHT = 175;
+    static const int COMPACT_WIDTH = 288;
+    static const int COMPACT_HEIGHT = 162;
 }
 
 namespace TriCaster
