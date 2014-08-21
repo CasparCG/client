@@ -61,6 +61,16 @@ void EventManager::fireSaveAsPresetMenuEvent(const SaveAsPresetMenuEvent& event)
     emit saveAsPresetMenu(event);
 }
 
+void EventManager::fireSaveMenuEvent(const SaveMenuEvent& event)
+{
+    emit saveMenu(event);
+}
+
+void EventManager::fireSaveAsMenuEvent(const SaveAsMenuEvent& event)
+{
+    emit saveAsMenu(event);
+}
+
 void EventManager::fireToggleFullscreenEvent(const ToggleFullscreenEvent& event)
 {
     emit toggleFullscreen(event);

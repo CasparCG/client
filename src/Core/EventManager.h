@@ -54,6 +54,8 @@
 #include "Events/Rundown/OpenRundownFromUrlEvent.h"
 #include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
+#include "Events/Rundown/SaveMenuEvent.h"
+#include "Events/Rundown/SaveAsMenuEvent.h"
 #include "Events/Rundown/RemoteRundownTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -139,6 +141,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SIGNAL void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
         Q_SIGNAL void toggleFullscreen(const ToggleFullscreenEvent&);
+        Q_SIGNAL void saveMenu(const SaveMenuEvent&);
+        Q_SIGNAL void saveAsMenu(const SaveAsMenuEvent&);
 
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
@@ -198,4 +202,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireExportPresetMenuEvent(const ExportPresetMenuEvent&);
         void fireSaveAsPresetMenuEvent(const SaveAsPresetMenuEvent&);
         void fireToggleFullscreenEvent(const ToggleFullscreenEvent&);
+        void fireSaveMenuEvent(const SaveMenuEvent&);
+        void fireSaveAsMenuEvent(const SaveAsMenuEvent&);
 };

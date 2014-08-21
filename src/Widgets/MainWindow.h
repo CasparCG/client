@@ -15,6 +15,8 @@
 #include "Events/Rundown/MarkAllItemsAsUsedEvent.h"
 #include "Events/Rundown/MarkAllItemsAsUnusedEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
+#include "Events/Rundown/SaveMenuEvent.h"
+#include "Events/Rundown/SaveAsMenuEvent.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
@@ -52,6 +54,8 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QAction* openRundownFromUrlAction;
         QAction* exportPresetAction;
         QAction* saveAsPresetAction;
+        QAction* saveAction;
+        QAction* saveAsAction;
         QAction* allowRemoteTriggeringAction;
 
         void setupMenu();
@@ -100,4 +104,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
         Q_SLOT void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SLOT void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
+        Q_SLOT void saveMenu(const SaveMenuEvent&);
+        Q_SLOT void saveAsMenu(const SaveAsMenuEvent&);
 };

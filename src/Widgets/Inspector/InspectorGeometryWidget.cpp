@@ -33,18 +33,23 @@ void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent
     if (dynamic_cast<GeometryCommand*>(event.getCommand()))
     {
         this->command = dynamic_cast<GeometryCommand*>(event.getCommand());
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-        const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
-        this->resolutionWidth = formatModel.getWidth();
-        this->resolutionHeight = formatModel.getHeight();
+        const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (!model.getName().isEmpty())
+        {
+            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
-        setScaleAndPositionValues();
+            this->resolutionWidth = formatModel.getWidth();
+            this->resolutionHeight = formatModel.getHeight();
 
-        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
-        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-        this->checkBoxDefer->setChecked(this->command->getDefer());
+            setScaleAndPositionValues();
+
+            this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+            this->checkBoxDefer->setChecked(this->command->getDefer());
+        }
     }
     else
         this->command = NULL;
@@ -58,13 +63,17 @@ void InspectorGeometryWidget::deviceChanged(const DeviceChangedEvent& event)
 
     if (this->command != NULL)
     {
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(event.getDeviceName()).getChannelFormats().split(",");
-        const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+        const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(event.getDeviceName());
+        if (!model.getName().isEmpty())
+        {
+            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
-        this->resolutionWidth = formatModel.getWidth();
-        this->resolutionHeight = formatModel.getHeight();
+            this->resolutionWidth = formatModel.getWidth();
+            this->resolutionHeight = formatModel.getHeight();
 
-        setScaleAndPositionValues();
+            setScaleAndPositionValues();
+        }
     }
 
     blockAllSignals(false);
@@ -76,15 +85,19 @@ void InspectorGeometryWidget::channelChanged(const ChannelChangedEvent& event)
 
     if (this->model != NULL && this->command != NULL)
     {
-        const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-        if (event.getChannel() <= channelFormats.count())
+        const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (!model.getName().isEmpty())
         {
-            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(event.getChannel() - 1));
+            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            if (event.getChannel() <= channelFormats.count())
+            {
+                const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(event.getChannel() - 1));
 
-            this->resolutionWidth = formatModel.getWidth();
-            this->resolutionHeight = formatModel.getHeight();
+                this->resolutionWidth = formatModel.getWidth();
+                this->resolutionHeight = formatModel.getHeight();
 
-            setScaleAndPositionValues();
+                setScaleAndPositionValues();
+            }
         }
     }
 

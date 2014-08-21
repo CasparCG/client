@@ -45,6 +45,8 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUnused(const MarkItemAsUnusedEvent&)), this, SLOT(markItemAsUnused(const MarkItemAsUnusedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)), this, SLOT(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)), this, SLOT(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
 }
 
 void RundownWidget::setupMenus()
@@ -62,8 +64,8 @@ void RundownWidget::setupMenus()
     this->openRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundownFromDisk()));
     this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
+    this->saveAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
+    this->saveAsAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addMenu(this->contextMenuMark);
     this->contextMenuRundownDropdown->addSeparator();
@@ -313,6 +315,16 @@ void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->reloadRundown();
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
+void RundownWidget::saveMenu(const SaveMenuEvent& event)
+{
+    this->saveAction->setEnabled(event.getEnabled());
+}
+
+void RundownWidget::saveAsMenu(const SaveAsMenuEvent& event)
+{
+    this->saveAsAction->setEnabled(event.getEnabled());
 }
 
 void RundownWidget::saveRundown(const SaveRundownEvent& event)

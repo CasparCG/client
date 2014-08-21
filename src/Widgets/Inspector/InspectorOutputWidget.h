@@ -42,7 +42,7 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         void checkEmptyTarget();
         void blockAllSignals(bool block);
 
-        void fillTargetCombo(const QString& type);
+        void fillTargetCombo(const QString& type, QString deviceName = "");
 
         Q_SLOT void targetChanged(QString);
         Q_SLOT void deviceAdded(CasparDevice&);

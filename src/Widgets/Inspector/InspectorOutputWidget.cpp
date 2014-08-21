@@ -435,11 +435,7 @@ void InspectorOutputWidget::deviceChanged(const DeviceChangedEvent& event)
     blockAllSignals(true);
 
     if (!event.getDeviceName().isEmpty())
-    {
-        this->model->setDeviceName(event.getDeviceName());
-
-        fillTargetCombo(this->model->getType());
-    }
+        fillTargetCombo(this->model->getType(), event.getDeviceName());
 
     checkEmptyDevice();
     checkEmptyAtemDevice();
@@ -488,18 +484,21 @@ void InspectorOutputWidget::blockAllSignals(bool block)
     this->lineEditRemoteTriggerId->blockSignals(block);
 }
 
-void InspectorOutputWidget::fillTargetCombo(const QString& type)
+void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceName)
 {
     if (this->model == NULL)
         return;
 
     this->comboBoxTarget->clear();
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+    if (deviceName.isEmpty())
+        deviceName = this->model->getDeviceName();
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(deviceName);
     if (device == NULL)
         return;
 
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model->getDeviceName());
+    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(deviceName);
 
     QList<LibraryModel> models;
     if (this->libraryFilter.isEmpty())

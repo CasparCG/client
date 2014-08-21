@@ -70,6 +70,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -83,8 +85,8 @@ void MainWindow::setupMenu()
     this->exportPresetAction = this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
     this->saveAsPresetAction = this->fileMenu->addAction("Save as Preset...", this, SLOT(saveAsPreset()));
     this->fileMenu->addSeparator();
-    this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
-    this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()), QKeySequence::fromString("Ctrl+Shift+S"));
+    this->saveAction = this->fileMenu->addAction("Save", this, SLOT(saveRundown()), QKeySequence::fromString("Ctrl+S"));
+    this->saveAsAction = this->fileMenu->addAction("Save As...", this, SLOT(saveAsRundown()), QKeySequence::fromString("Ctrl+Shift+S"));
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
     this->saveAsPresetAction->setEnabled(false);
@@ -194,6 +196,16 @@ void MainWindow::exportPresetMenu(const ExportPresetMenuEvent& event)
 void MainWindow::saveAsPresetMenu(const SaveAsPresetMenuEvent& event)
 {
     this->saveAsPresetAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::saveMenu(const SaveMenuEvent& event)
+{
+    this->saveAction->setEnabled(event.getEnabled());
+}
+
+void MainWindow::saveAsMenu(const SaveAsMenuEvent& event)
+{
+    this->saveAsAction->setEnabled(event.getEnabled());
 }
 
 void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)

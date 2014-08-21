@@ -36,6 +36,8 @@
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/OpenRundownEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/SaveMenuEvent.h"
+#include "Events/Rundown/SaveAsMenuEvent.h"
 #include "Models/RundownModel.h"
 
 #include <QtCore/QDebug>
@@ -528,6 +530,17 @@ void RundownTreeWidget::setActive(bool active)
 
     EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
 
+    if (this->repositoryRundown)
+    {
+        EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
+        EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
+    }
+    else
+    {
+        EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(true));
+        EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(true));
+    }
+
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
     QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
 
@@ -629,6 +642,9 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
     this->activeRundown = reply->request().url().toString();
     this->repositoryRundown = true;
+
+    EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
+    EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
 }
 
 void RundownTreeWidget::reloadRundown()
@@ -719,6 +735,10 @@ bool RundownTreeWidget::checkForSave() const
 {
     // Don't save empty rundowns.
     if (this->treeWidgetRundown->invisibleRootItem()->childCount() == 0)
+        return false;
+
+    // We can't save repository rundowns.
+    if (this->repositoryRundown)
         return false;
 
     QByteArray data;

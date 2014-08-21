@@ -3,7 +3,7 @@
 #include "EventManager.h"
 
 LiveDialog::LiveDialog(QWidget* parent)
-    : QDialog(parent, Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint),
+    : QDialog(parent, Qt::Window | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint),
       applicationFullscreen(false)
 {
     setupUi(this);
