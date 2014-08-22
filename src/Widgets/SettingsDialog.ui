@@ -452,6 +452,9 @@
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
      </property>
+     <property name="toolTip">
+      <string>http://&lt;host&gt;:&lt;port&gt;/urllist/&lt;profile&gt;</string>
+     </property>
      <property name="placeholderText">
       <string>URL</string>
      </property>

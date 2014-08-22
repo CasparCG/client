@@ -67,7 +67,7 @@ int NtfcDevice::getPort() const
     return this->port;
 }
 
-const QString &NtfcDevice::getAddress() const
+const QString& NtfcDevice::getAddress() const
 {
     return this->address;
 }

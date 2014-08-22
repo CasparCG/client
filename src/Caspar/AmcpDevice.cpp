@@ -74,7 +74,7 @@ int AmcpDevice::getPort() const
     return this->port;
 }
 
-const QString &AmcpDevice::getAddress() const
+const QString& AmcpDevice::getAddress() const
 {
     return this->address;
 }

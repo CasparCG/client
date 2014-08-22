@@ -182,7 +182,7 @@ void CasparDevice::playVideo(int channel, int videolayer)
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playVideo(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+void CasparDevice::playVideo(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                              const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto)
 {
     if (useAuto)
@@ -225,7 +225,7 @@ void CasparDevice::playAudio(int channel, int videolayer)
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playAudio(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+void CasparDevice::playAudio(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                              const QString& easing, const QString& direction, bool loop, bool useAuto)
 {
     if (useAuto)
@@ -262,7 +262,7 @@ void CasparDevice::playColor(int channel, int videolayer)
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playColor(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+void CasparDevice::playColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                              const QString& easing, const QString& direction, bool useAuto)
 {
     if (useAuto)
@@ -297,7 +297,7 @@ void CasparDevice::playImage(int channel, int videolayer)
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playImage(int channel, int videolayer, const QString& name, const QString &transition, int duration,
+void CasparDevice::playImage(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                              const QString& easing, const QString& direction, bool useAuto)
 {
     if (useAuto)

@@ -677,6 +677,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Osc/debug/ -losc
 else:macx:LIBS += -L$$OUT_PWD/../Osc/ -losc
 else:unix:LIBS += -L$$OUT_PWD/../Osc/ -losc
 
+DEPENDPATH += $$OUT_PWD/../Repository $$PWD/../Repository
+INCLUDEPATH += $$OUT_PWD/../Repository $$PWD/../Repository
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Repository/release/ -lrepository
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Repository/debug/ -lrepository
+else:macx:LIBS += -L$$OUT_PWD/../Repository/ -lrepository
+else:unix:LIBS += -L$$OUT_PWD/../Repository/ -lrepository
+
 DEPENDPATH += $$OUT_PWD/../Gpi $$PWD/../Gpi
 INCLUDEPATH += $$OUT_PWD/../Gpi $$PWD/../Gpi
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Gpi/release/ -lgpi

@@ -61,7 +61,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
       currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
       downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
-      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
 {
     setupUi(this);
     setupMenus();
@@ -643,8 +643,32 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     this->activeRundown = reply->request().url().toString();
     this->repositoryRundown = true;
 
+    const QString repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
+
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(repositoryUrl));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(connectionStateChanged(RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(addChanged(const RepositoryAdd&, RepositoryDevice&)), this, SLOT(addChanged(const RepositoryAdd&, RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(removeChanged(const RepositoryRemove&, RepositoryDevice&)), this, SLOT(removeChanged(const RepositoryRemove&, RepositoryDevice&)));
+    this->repositoryDevice->connectDevice();
+
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
+}
+
+void RundownTreeWidget::connectionStateChanged(RepositoryDevice& device)
+{
+    qDebug() << QString("RundownTreeWidget::connectionStateChanged: %1").arg(device.getAddress());
+    device.subscribe(QFileInfo(this->activeRundown).baseName());
+}
+
+void RundownTreeWidget::addChanged(const RepositoryAdd& data, RepositoryDevice& device)
+{
+    qDebug() << QString("RundownTreeWidget::addChanged: ADD %1 %2").arg(data.getId()).arg(data.getData());
+}
+
+void RundownTreeWidget::removeChanged(const RepositoryRemove& data, RepositoryDevice& device)
+{
+    qDebug() << QString("RundownTreeWidget::addChanged: REMOVE %1").arg(data.getId());
 }
 
 void RundownTreeWidget::reloadRundown()

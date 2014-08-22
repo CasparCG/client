@@ -7,7 +7,7 @@
 class CASPAR_EXPORT CasparMedia
 {
     public:
-    explicit CasparMedia(const QString& name, const QString& type, const QString& timecode);
+        explicit CasparMedia(const QString& name, const QString& type, const QString& timecode);
 
         const QString& getName() const;
         const QString& getType() const;

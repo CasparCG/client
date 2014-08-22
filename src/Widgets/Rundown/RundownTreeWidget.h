@@ -8,6 +8,7 @@
 #include "Global.h"
 
 #include "GpiDevice.h"
+#include "RepositoryDevice.h"
 
 #include "Events/AddPresetItemEvent.h"
 #include "Events/SaveAsPresetEvent.h"
@@ -33,6 +34,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
+#include <QtCore/QSharedPointer>
 
 #include <QtGui/QMenu>
 #include <QtGui/QTreeWidgetItem>
@@ -105,6 +107,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
+
+        QSharedPointer<RepositoryDevice> repositoryDevice;
 
         QNetworkAccessManager* networkManager;
 
@@ -205,4 +209,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void pasteItemProperties(const PasteItemPropertiesEvent&);
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
+        Q_SLOT void connectionStateChanged(RepositoryDevice&);
+        Q_SLOT void addChanged(const RepositoryAdd&, RepositoryDevice&);
+        Q_SLOT void removeChanged(const RepositoryRemove&, RepositoryDevice&);
 };
