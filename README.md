@@ -12,10 +12,10 @@ professional production.
 The Windows version has been tested on Windows 7 x64. 
 No extra installations required.
 
-The Mac version has been tested on Mac OS X 10.7 / 10.9.
+The Mac version has been tested on Mac OS X 10.9.
 No extra installations required.
 
-The Linux version has been tested on Ubuntu 13.10 64-bit.
+The Linux version has been tested on Ubuntu 14.04 LTS 64-bit.
 The Linux version requires that you pre-install Qt 4.8.* libraries.
 
 ## Installation Windows
