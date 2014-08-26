@@ -15,7 +15,7 @@ class REPOSITORY_EXPORT RepositoryDevice : public RrupDevice
 
         const QString resolveIpAddress() const;
 
-        void subscribe(const QString& name);
+        void subscribe(const QString& rundown, const QString& profile);
 
         Q_SIGNAL void connectionStateChanged(RepositoryDevice&);
         Q_SIGNAL void addChanged(const RepositoryAdd&, RepositoryDevice&);

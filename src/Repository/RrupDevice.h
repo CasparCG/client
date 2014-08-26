@@ -20,7 +20,6 @@ class REPOSITORY_EXPORT RrupDevice : public QObject
         bool isConnected() const;
         int getPort() const;
         const QString& getAddress() const;
-        const QString& getProfile() const;
 
         Q_SLOT void connectDevice();
 
@@ -55,7 +54,6 @@ class REPOSITORY_EXPORT RrupDevice : public QObject
         bool connected;
         QString line;
         QString address;
-        QString profile;
 
         RrupDeviceCommand translateCommand(const QString& command);
 

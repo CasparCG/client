@@ -8,15 +8,9 @@
 
 RrupDevice::RrupDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(RrupDevice::NONE), port(port), state(RrupDevice::ExpectingHeader), connected(false), address(address), profile("")
+      command(RrupDevice::NONE), port(port), state(RrupDevice::ExpectingHeader), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
-
-    QUrl url(this->address);
-    //QUrl url("http://localhost/urllist/default");
-
-    this->address = url.host();
-    this->profile =  QDir(url.path()).dirName();
 
     QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
@@ -80,11 +74,6 @@ int RrupDevice::getPort() const
 const QString& RrupDevice::getAddress() const
 {
     return this->address;
-}
-
-const QString& RrupDevice::getProfile() const
-{
-    return this->profile;
 }
 
 void RrupDevice::writeMessage(const QString& message)

@@ -645,7 +645,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
     const QString repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
 
-    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(repositoryUrl));
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(repositoryUrl).host()));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(connectionStateChanged(RepositoryDevice&)));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(addChanged(const RepositoryAdd&, RepositoryDevice&)), this, SLOT(addChanged(const RepositoryAdd&, RepositoryDevice&)));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(removeChanged(const RepositoryRemove&, RepositoryDevice&)), this, SLOT(removeChanged(const RepositoryRemove&, RepositoryDevice&)));
@@ -658,7 +658,12 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 void RundownTreeWidget::connectionStateChanged(RepositoryDevice& device)
 {
     qDebug() << QString("RundownTreeWidget::connectionStateChanged: %1").arg(device.getAddress());
-    device.subscribe(QFileInfo(this->activeRundown).baseName());
+
+    QStringList repositoryUrl = this->activeRundown.split("/");
+    QString rundown = repositoryUrl.takeLast();
+    QString profile = repositoryUrl.takeLast();
+
+    device.subscribe(rundown, profile);
 }
 
 void RundownTreeWidget::addChanged(const RepositoryAdd& data, RepositoryDevice& device)

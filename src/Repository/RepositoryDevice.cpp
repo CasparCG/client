@@ -29,9 +29,9 @@ const QString RepositoryDevice::resolveIpAddress() const
     return hostInfo.addresses().at(0).toString();
 }
 
-void RepositoryDevice::subscribe(const QString& name)
+void RepositoryDevice::subscribe(const QString& rundown, const QString& profile)
 {
-    writeMessage(QString("SUBSCRIBE %1 %2").arg(name).arg(RrupDevice::getProfile()));
+    writeMessage(QString("SUBSCRIBE %1 %2").arg(rundown).arg(profile));
 }
 
 void RepositoryDevice::sendNotification()
