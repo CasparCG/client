@@ -121,7 +121,7 @@ void CasparDevice::addTemplate(int channel, int videolayer, int flashlayer, cons
 
 void CasparDevice::invokeTemplate(int channel, int videolayer, int flashlayer, const QString& label)
 {
-    writeMessage(QString("CG %1-%2 INVOKE %3 %4")
+    writeMessage(QString("CG %1-%2 INVOKE %3 \"%4\"")
                  .arg(channel).arg(videolayer).arg(flashlayer).arg(label));
 }
 
