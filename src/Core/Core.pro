@@ -126,7 +126,6 @@ HEADERS += \
     Models/TriCaster/TriCasterProductModel.h \
     Events/SaveAsPresetEvent.h \
     Events/Rundown/CloseRundownEvent.h \
-    Events/Rundown/RemoteRundownTriggeringEvent.h \
     Events/Rundown/AllowRemoteTriggeringMenuEvent.h \
     Events/Rundown/ExecutePlayoutCommandEvent.h \
     Events/Rundown/OpenRundownMenuEvent.h \
@@ -169,7 +168,8 @@ HEADERS += \
     Events/SaveAsPresetMenuEvent.h \
     Events/ToggleFullscreenEvent.h \
     Events/Rundown/SaveMenuEvent.h \
-    Events/Rundown/SaveAsMenuEvent.h
+    Events/Rundown/SaveAsMenuEvent.h \
+    Events/Rundown/AllowRemoteTriggeringEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -285,7 +285,6 @@ SOURCES += \
     Models/TriCaster/TriCasterProductModel.cpp \
     Events/SaveAsPresetEvent.cpp \
     Events/Rundown/CloseRundownEvent.cpp \
-    Events/Rundown/RemoteRundownTriggeringEvent.cpp \
     Events/Rundown/AllowRemoteTriggeringMenuEvent.cpp \
     Events/Rundown/ExecutePlayoutCommandEvent.cpp \
     Events/Rundown/OpenRundownMenuEvent.cpp \
@@ -328,7 +327,8 @@ SOURCES += \
     Events/SaveAsPresetMenuEvent.cpp \
     Events/ToggleFullscreenEvent.cpp \
     Events/Rundown/SaveMenuEvent.cpp \
-    Events/Rundown/SaveAsMenuEvent.cpp
+    Events/Rundown/SaveAsMenuEvent.cpp \
+    Events/Rundown/AllowRemoteTriggeringEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

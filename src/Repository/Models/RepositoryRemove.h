@@ -7,10 +7,10 @@
 class REPOSITORY_EXPORT RepositoryRemove
 {
     public:
-        explicit RepositoryRemove(const QString& id);
+        explicit RepositoryRemove(const QString& storyId);
 
-        const QString& getId() const;
+        const QString& getStoryId() const;
 
     private:
-        QString id;
+        QString storyId;
 };

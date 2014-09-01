@@ -56,7 +56,7 @@
 #include "Events/Rundown/OpenRundownMenuEvent.h"
 #include "Events/Rundown/SaveMenuEvent.h"
 #include "Events/Rundown/SaveAsMenuEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
@@ -125,7 +125,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void addRudnownItem(const AddRudnownItemEvent&);
         Q_SIGNAL void toggleCompactView(const CompactViewEvent&);
         Q_SIGNAL void executeRundownItem(const ExecuteRundownItemEvent&);
-        Q_SIGNAL void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
+        Q_SIGNAL void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SIGNAL void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SIGNAL void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SIGNAL void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
@@ -187,7 +187,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireAddRudnownItemEvent(const LibraryModel& model);
         void fireToggleCompactViewEvent(const CompactViewEvent& event);
         void fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event);
-        void fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event);
+        void fireAllowRemoteTriggeringEvent(const AllowRemoteTriggeringEvent& event);
         void fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent&);
         void fireAutoPlayNextRundownItemEvent(const AutoPlayNextRundownItemEvent&);
         void fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataDialogEvent&);

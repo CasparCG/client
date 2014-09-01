@@ -1,11 +1,11 @@
 #include "RepositoryRemove.h"
 
-RepositoryRemove::RepositoryRemove(const QString& id)
-    : id(id)
+RepositoryRemove::RepositoryRemove(const QString& storyId)
+    : storyId(storyId)
 {
 }
 
-const QString& RepositoryRemove::getId() const
+const QString& RepositoryRemove::getStoryId() const
 {
-    return this->id;
+    return this->storyId;
 }

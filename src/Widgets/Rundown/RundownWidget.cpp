@@ -6,7 +6,7 @@
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QDebug>
@@ -33,6 +33,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundown(const NewRundownEvent&)), this, SLOT(newRundown(const NewRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeRundown(const CloseRundownEvent&)), this, SLOT(closeRundown(const CloseRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deleteRundown(const DeleteRundownEvent&)), this, SLOT(deleteRundown(const DeleteRundownEvent&)));
@@ -87,7 +88,7 @@ void RundownWidget::setupMenus()
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
-    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
+    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
 }
 
 bool RundownWidget::checkForSaveBeforeQuit()
@@ -149,7 +150,7 @@ void RundownWidget::newRundown(const NewRundownEvent& event)
     }
 }
 
-void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void RundownWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
 {
     // We do not want to trigger check changed event.
     this->allowRemoteTriggeringAction->blockSignals(true);
@@ -160,6 +161,11 @@ void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEve
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon());
     else
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
+}
+
+void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+{
+    this->allowRemoteTriggeringAction->setEnabled(event.getEnabled());
 }
 
 void RundownWidget::closeRundown(const CloseRundownEvent& event)
@@ -408,10 +414,9 @@ void RundownWidget::markAllItemsAsUnusedInRundown()
     EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
-void RundownWidget::allowRemoteTriggering(bool enabled)
+void RundownWidget::remoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(enabled));
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(enabled));
 }
 
 bool RundownWidget::selectTab(int index)

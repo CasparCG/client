@@ -8,6 +8,7 @@
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/MarkItemAsUsedEvent.h"
@@ -101,6 +102,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
+        Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
         Q_SLOT void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SLOT void saveAsPresetMenu(const SaveAsPresetMenuEvent&);

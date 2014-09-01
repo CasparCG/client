@@ -7,12 +7,12 @@
 class REPOSITORY_EXPORT RepositoryAdd
 {
     public:
-        explicit RepositoryAdd(const QString& id, const QString& data);
+        explicit RepositoryAdd(const QString& storyId, const QString& data);
 
-        const QString& getId() const;
+        const QString& getStoryId() const;
         const QString& getData() const;
 
     private:
-        QString id;
+        QString storyId;
         QString data;
 };

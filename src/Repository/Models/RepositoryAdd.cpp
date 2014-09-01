@@ -1,13 +1,13 @@
 #include "RepositoryAdd.h"
 
-RepositoryAdd::RepositoryAdd(const QString& id, const QString& data)
-    : id(id), data(data)
+RepositoryAdd::RepositoryAdd(const QString& storyId, const QString& data)
+    : storyId(storyId), data(data)
 {
 }
 
-const QString& RepositoryAdd::getId() const
+const QString& RepositoryAdd::getStoryId() const
 {
-    return this->id;
+    return this->storyId;
 }
 
 const QString& RepositoryAdd::getData() const

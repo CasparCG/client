@@ -23,7 +23,7 @@
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
@@ -213,12 +214,17 @@ void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event
     this->openRundownFromUrlAction->setEnabled(event.getEnabled());
 }
 
-void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void MainWindow::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
 {
     // We do not want to trigger check changed event.
     this->allowRemoteTriggeringAction->blockSignals(true);
     this->allowRemoteTriggeringAction->setChecked(event.getEnabled());
     this->allowRemoteTriggeringAction->blockSignals(false);
+}
+
+void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+{
+    this->allowRemoteTriggeringAction->setEnabled(event.getEnabled());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -370,8 +376,7 @@ void MainWindow::toggleCompactView()
 
 void MainWindow::allowRemoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(enabled));
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(enabled));
 }
 
 void MainWindow::closeRundown()

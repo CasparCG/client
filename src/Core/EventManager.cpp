@@ -291,9 +291,9 @@ void EventManager::fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& ev
     emit executeRundownItem(event);
 }
 
-void EventManager::fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event)
+void EventManager::fireAllowRemoteTriggeringEvent(const AllowRemoteTriggeringEvent& event)
 {
-    emit remoteRundownTriggering(event);
+    emit allowRemoteTriggering(event);
 }
 
 void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)

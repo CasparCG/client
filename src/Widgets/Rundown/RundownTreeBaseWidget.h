@@ -46,7 +46,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
         void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer) const;
 
-        bool pasteSelectedItems();
+        bool pasteSelectedItems(bool repositoryRundown = false);
         bool pasteItemProperties();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
@@ -64,6 +64,9 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void selectItemAbove();
         void selectItemBelow();
         void checkEmptyRundown();
+        void checRepositoryUpdates();
+        void removeRepositoryItem(const QString& storyId);
+        void addRepositoryItem(const QString& storyId, const QString& data);
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 

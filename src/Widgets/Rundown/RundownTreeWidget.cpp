@@ -57,7 +57,7 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteTriggering(false), repositoryRundown(false),
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
       currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
       downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -76,7 +76,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(addRudnownItem(const AddRudnownItemEvent&)), this, SLOT(addRudnownItem(const AddRudnownItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(toggleCompactView(const CompactViewEvent&)), this, SLOT(toggleCompactView(const CompactViewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(executeRundownItem(const ExecuteRundownItemEvent&)), this, SLOT(executeRundownItem(const ExecuteRundownItemEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)), this, SLOT(remoteRundownTriggering(const RemoteRundownTriggeringEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayRundownItem(const AutoPlayRundownItemEvent&)), this, SLOT(autoPlayRundownItem(const AutoPlayRundownItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayChanged(const AutoPlayChangedEvent&)), this, SLOT(autoPlayChanged(const AutoPlayChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)), this, SLOT(autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&)));
@@ -381,14 +381,14 @@ void RundownTreeWidget::executeRundownItem(const ExecuteRundownItemEvent& event)
         executeCommand(event.getType(), Action::ActionType::KeyPress, event.getItem());
 }
 
-void RundownTreeWidget::remoteRundownTriggering(const RemoteRundownTriggeringEvent& event)
+void RundownTreeWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
 {
     if (!this->active)
         return;
 
-    this->allowRemoteTriggering = event.getEnabled();
+    this->allowRemoteRundownTriggering = event.getEnabled();
 
-    (this->allowRemoteTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
+    (this->allowRemoteRundownTriggering == true) ? configureOscSubscriptions() : resetOscSubscriptions();
 }
 
 void RundownTreeWidget::addRudnownItem(const AddRudnownItemEvent& event)
@@ -514,6 +514,21 @@ void RundownTreeWidget::setActive(bool active)
                 dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
             }
         }
+
+        EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(this->allowRemoteRundownTriggering));
+
+        if (this->repositoryRundown)
+        {
+            EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
+            EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
+            EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(false));
+        }
+        else
+        {
+            EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(true));
+            EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(true));
+            EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(true));
+        }
     }
     else
     {
@@ -529,17 +544,6 @@ void RundownTreeWidget::setActive(bool active)
     }
 
     EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
-
-    if (this->repositoryRundown)
-    {
-        EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
-        EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
-    }
-    else
-    {
-        EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(true));
-        EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(true));
-    }
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
     QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
@@ -619,6 +623,9 @@ void RundownTreeWidget::openRundownFromUrl(const QString& path)
 
 void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 {
+    this->repositoryRundown = true;
+    this->activeRundown = reply->request().url().toString();
+
     // Save the latest value stored in the clipboard.
     QString latest = qApp->clipboard()->text();
     QString data = QString::fromUtf8(reply->readAll());
@@ -640,24 +647,21 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     this->treeWidgetRundown->setFocus();
     this->treeWidgetRundown->checkEmptyRundown();
 
-    this->activeRundown = reply->request().url().toString();
-    this->repositoryRundown = true;
-
     const QString repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
 
     this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(repositoryUrl).host()));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(connectionStateChanged(RepositoryDevice&)));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(addChanged(const RepositoryAdd&, RepositoryDevice&)), this, SLOT(addChanged(const RepositoryAdd&, RepositoryDevice&)));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(removeChanged(const RepositoryRemove&, RepositoryDevice&)), this, SLOT(removeChanged(const RepositoryRemove&, RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(addChanged(const RepositoryAdd&, RepositoryDevice&)), this, SLOT(repositoryAddChanged(const RepositoryAdd&, RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(removeChanged(const RepositoryRemove&, RepositoryDevice&)), this, SLOT(repositoryRemoveChanged(const RepositoryRemove&, RepositoryDevice&)));
     this->repositoryDevice->connectDevice();
 
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
 }
 
-void RundownTreeWidget::connectionStateChanged(RepositoryDevice& device)
+void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::connectionStateChanged: %1").arg(device.getAddress());
+    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1").arg(device.getAddress());
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();
@@ -666,14 +670,18 @@ void RundownTreeWidget::connectionStateChanged(RepositoryDevice& device)
     device.subscribe(rundown, profile);
 }
 
-void RundownTreeWidget::addChanged(const RepositoryAdd& data, RepositoryDevice& device)
+void RundownTreeWidget::repositoryAddChanged(const RepositoryAdd& data, RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::addChanged: ADD %1 %2").arg(data.getId()).arg(data.getData());
+    qDebug() << QString("RundownTreeWidget::repositoryAddChanged: ADD %1 %2").arg(data.getStoryId()).arg(data.getData());
+
+    this->treeWidgetRundown->addRepositoryItem(data.getStoryId(), data.getData());
 }
 
-void RundownTreeWidget::removeChanged(const RepositoryRemove& data, RepositoryDevice& device)
+void RundownTreeWidget::repositoryRemoveChanged(const RepositoryRemove& data, RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::addChanged: REMOVE %1").arg(data.getId());
+    qDebug() << QString("RundownTreeWidget::repositoryRemoveChanged: REMOVE %1").arg(data.getStoryId());
+
+    this->treeWidgetRundown->removeRepositoryItem(data.getStoryId());
 }
 
 void RundownTreeWidget::reloadRundown()
@@ -735,7 +743,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
             writer->writeStartDocument();
             writer->writeStartElement("items");
-            writer->writeTextElement("allowremotetriggering", (this->allowRemoteTriggering == true) ? "true" : "false");
+            writer->writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
 
             for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
                 this->treeWidgetRundown->writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
@@ -775,7 +783,7 @@ bool RundownTreeWidget::checkForSave() const
 
     writer->writeStartDocument();
     writer->writeStartElement("items");
-    writer->writeTextElement("allowremotetriggering", (this->allowRemoteTriggering == true) ? "true" : "false");
+    writer->writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
 
     for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
         this->treeWidgetRundown->writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
@@ -1043,7 +1051,7 @@ bool RundownTreeWidget::duplicateSelectedItems()
 
 bool RundownTreeWidget::pasteSelectedItems()
 {
-    bool result = this->treeWidgetRundown->pasteSelectedItems();
+    bool result = this->treeWidgetRundown->pasteSelectedItems(this->repositoryRundown);
 
     this->treeWidgetRundown->checkEmptyRundown();
 
@@ -1174,7 +1182,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
                     if (!dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
                         continue;
 
-                    // Only execute the first child in the group, add the rest to the auto play queue.
+                    // Only execute the first child in the group, add the rest to the AutoPlay queue.
                     if (isFirstChild)
                     {
                         dynamic_cast<AbstractPlayoutCommand*>(rundownChildWidget)->executeCommand(type);
@@ -1536,7 +1544,7 @@ void RundownTreeWidget::removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlay
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const
 {
-    return this->allowRemoteTriggering;
+    return this->allowRemoteRundownTriggering;
 }
 
 void RundownTreeWidget::configureOscSubscriptions()
@@ -1650,7 +1658,7 @@ void RundownTreeWidget::resetOscSubscriptions()
 
 void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
     {
         this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemAbove();
@@ -1660,7 +1668,7 @@ void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, 
 
 void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
     {
         this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemBelow();
@@ -1670,60 +1678,60 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PauseResume, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideoLayer, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->allowRemoteTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem()));
 }
