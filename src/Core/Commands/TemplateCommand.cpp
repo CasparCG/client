@@ -17,10 +17,7 @@ int TemplateCommand::getFlashlayer() const
 
 const QString& TemplateCommand::getInvoke() const
 {
-    QString value = this->invoke;
-    value = value.replace("\\", "\\\\").replace("\"", "\\\"");
-
-    return value;
+    return this->invoke;
 }
 
 bool TemplateCommand::getUseStoredData() const
