@@ -41,7 +41,7 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
 #include <QtGui/QMessageBox>
-#include <QtGuiQMouseEvent>
+#include <QtGui/QMouseEvent>
 #include <QtGui/QToolButton>
 #endif
 
