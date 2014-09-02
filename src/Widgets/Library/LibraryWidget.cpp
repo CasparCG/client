@@ -20,6 +20,17 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QModelIndex>
 
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QClipboard>
+#include <QColor>
+#include <QIcon>
+#include <QtWidgets/QFileDialog>
+#include <QKeyEvent>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QStandardItemModel>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QColor>
@@ -28,6 +39,7 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QStandardItemModel>
+#endif
 
 #include <QtCore/QTimer>
 
@@ -69,7 +81,11 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetTemplate->setColumnHidden(5, true);
     this->treeWidgetTemplate->setColumnHidden(6, true);
 
+#if QT_VERSION >= 0x050000
+    this->treeWidgetVideo->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+#else
     this->treeWidgetVideo->header()->setResizeMode(0, QHeaderView::Stretch);
+#endif
     this->treeWidgetVideo->setColumnHidden(1, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);

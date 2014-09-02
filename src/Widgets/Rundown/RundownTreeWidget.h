@@ -34,9 +34,15 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QMenu>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
+#endif
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>

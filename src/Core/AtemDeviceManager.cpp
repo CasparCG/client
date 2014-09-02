@@ -10,7 +10,11 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 Q_GLOBAL_STATIC(AtemDeviceManager, atemDeviceManager)
 

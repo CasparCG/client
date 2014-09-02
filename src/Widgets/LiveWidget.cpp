@@ -7,7 +7,11 @@
 #include "EventManager.h"
 #include "Models/DeviceModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QToolButton>
+#else
 #include <QtGui/QToolButton>
+#endif
 
 LiveWidget::LiveWidget(QWidget* parent)
     : QWidget(parent),

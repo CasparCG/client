@@ -14,7 +14,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownAtemAudioGainWidget::RundownAtemAudioGainWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                        bool inGroup, bool compactView)

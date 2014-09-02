@@ -23,7 +23,11 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFileRecorderWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {

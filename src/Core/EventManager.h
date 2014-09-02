@@ -69,8 +69,13 @@
 
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidgetItem>
+#else
 #include <QtGui/QWidget>
 #include <QtGui/QTreeWidgetItem>
+#endif
 
 class CORE_EXPORT EventManager : public QObject
 {

@@ -7,7 +7,11 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 InspectorAtemAudioGainWidget::InspectorAtemAudioGainWidget(QWidget* parent)
     : QWidget(parent),

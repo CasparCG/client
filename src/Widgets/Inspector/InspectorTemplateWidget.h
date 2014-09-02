@@ -12,8 +12,13 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemplateWidget
 {

@@ -4,7 +4,11 @@
 
 #include "Global.h"
 
+#if QT_VERSION >= 0x050000
+#include <QKeyEvent>
+#else
 #include <QtGui/QKeyEvent>
+#endif
 
 class CORE_EXPORT ExecutePlayoutCommandEvent
 {

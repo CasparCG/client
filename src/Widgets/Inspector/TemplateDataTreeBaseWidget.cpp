@@ -3,8 +3,14 @@
 #include "EventManager.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QDrag>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
+#endif
 
 TemplateDataTreeBaseWidget::TemplateDataTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent)

@@ -17,6 +17,16 @@
 #include <QtCore/QRect>
 #include <QtCore/QXmlStreamWriter>
 
+#if QT_VERSION >= 0x050000
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
 #include <QtGui/QKeyEvent>
@@ -25,6 +35,7 @@
 #include <QtGui/QTreeWidget>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
+#endif
 
 typedef QPair<QRect, QModelIndex> QItemViewPaintPair;
 typedef QList<QItemViewPaintPair> QItemViewPaintPairs;

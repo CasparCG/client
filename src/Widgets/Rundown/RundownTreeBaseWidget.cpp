@@ -12,9 +12,16 @@
 
 #include <iostream>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QClipboard>
+#include <QPainter>
+#include <QDrag>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QPainter>
+#endif
 
 #include <QDebug>
 

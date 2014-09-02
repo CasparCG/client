@@ -10,9 +10,15 @@
 #include <QtCore/QDebug>
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
