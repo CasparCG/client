@@ -392,6 +392,8 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
 {
     blockAllSignals(true);
 
+    this->model = NULL;
+
     this->comboBoxDevice->setVisible(true);
     this->comboBoxAtemDevice->setVisible(false);
     this->comboBoxTriCasterDevice->setVisible(false);
@@ -494,10 +496,11 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
     if (this->model == NULL)
         return;
 
-    this->comboBoxTarget->clear();
-
     if (deviceName.isEmpty())
         deviceName = this->model->getDeviceName();
+
+    if (deviceName.isEmpty())
+        return;
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(deviceName);
     if (device == NULL)
@@ -513,6 +516,7 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
 
     if (models.count() > 0)
     {
+        this->comboBoxTarget->clear();
         foreach (LibraryModel model, models)
         {
             if (type == "MOVIE" && model.getType() == "MOVIE")
