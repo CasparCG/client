@@ -7,11 +7,19 @@
 
 #include <QtCore/QDebug>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QClipboard>
+#include <QCursor>
+#include <QKeyEvent>
+#include <QResizeEvent>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCursor>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QResizeEvent>
+#endif
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     : QWidget(parent),

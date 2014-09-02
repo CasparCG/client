@@ -12,7 +12,11 @@
 
 #include <QtCore/QEvent>
 
+#if QT_VERSION >= 0x050000
+#include <QStandardItemModel>
+#else
 #include <QtGui/QStandardItemModel>
+#endif
 
 DeviceFilterWidget::DeviceFilterWidget(QWidget* parent)
     : QWidget(parent), sendEvents(false)

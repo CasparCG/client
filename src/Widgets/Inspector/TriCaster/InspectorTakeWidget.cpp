@@ -6,7 +6,11 @@
 #include "EventManager.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 InspectorTakeWidget::InspectorTakeWidget(QWidget* parent)
     : QWidget(parent),

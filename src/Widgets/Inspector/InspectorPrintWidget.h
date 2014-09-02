@@ -11,7 +11,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWidget
 {

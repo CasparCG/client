@@ -9,7 +9,11 @@
 #include "DatabaseManager.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
     : QWidget(parent),

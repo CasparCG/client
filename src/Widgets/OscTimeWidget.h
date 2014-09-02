@@ -3,7 +3,11 @@
 #include "Shared.h"
 #include "ui_OscTimeWidget.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
 {

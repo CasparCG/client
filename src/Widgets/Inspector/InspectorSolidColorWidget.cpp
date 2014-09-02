@@ -10,7 +10,11 @@
 
 #include <QtCore/QDebug>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QColorDialog>
+#else
 #include <QtGui/QColorDialog>
+#endif
 
 InspectorSolidColorWidget::InspectorSolidColorWidget(QWidget* parent)
     : QWidget(parent),

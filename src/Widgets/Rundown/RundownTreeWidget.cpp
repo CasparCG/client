@@ -47,6 +47,15 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QCryptographicHash>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QClipboard>
+#include <QtWidgets/QFileDialog>
+#include <QIcon>
+#include <QKeyEvent>
+#include <QtWidgets/QTreeWidgetItem>
+#else
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
@@ -54,6 +63,7 @@
 #include <QtGui/QIcon>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
+#endif
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),

@@ -13,7 +13,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,
@@ -211,7 +215,7 @@ void RundownImageWidget::setThumbnail()
     */
 
     QImage image;
-    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    image.loadFromData(QByteArray::fromBase64(data.toLatin1()), "PNG");
     this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
 
     bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;

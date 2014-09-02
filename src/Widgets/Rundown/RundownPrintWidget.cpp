@@ -12,7 +12,11 @@
 
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)

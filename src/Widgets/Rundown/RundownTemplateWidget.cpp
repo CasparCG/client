@@ -15,7 +15,12 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QGraphicsOpacityEffect>
+#include <QMimeData>
+#else
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                              bool loaded, bool inGroup, bool compactView)

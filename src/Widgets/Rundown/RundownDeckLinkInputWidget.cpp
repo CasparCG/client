@@ -13,7 +13,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                        bool active, bool loaded, bool paused, bool playing, bool inGroup,

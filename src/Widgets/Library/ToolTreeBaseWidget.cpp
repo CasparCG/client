@@ -2,8 +2,14 @@
 
 #include <QtCore/QMimeData>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QDrag>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
+#endif
 
 ToolTreeBaseWidget::ToolTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent)

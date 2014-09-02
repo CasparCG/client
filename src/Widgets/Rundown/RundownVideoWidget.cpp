@@ -14,8 +14,13 @@
 #include <QtCore/QObject>
 #include <QtCore/QFileInfo>
 
+#if QT_VERSION >= 0x050000
+#include <QPixmap>
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QPixmap>
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownVideoWidget::RundownVideoWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
@@ -259,7 +264,7 @@ void RundownVideoWidget::setThumbnail()
     */
 
     QImage image;
-    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    image.loadFromData(QByteArray::fromBase64(data.toLatin1()), "PNG");
     this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
 
     bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;

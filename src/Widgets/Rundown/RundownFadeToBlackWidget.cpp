@@ -12,8 +12,13 @@
 
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QPixmap>
+#include <QtWidgets/QGraphicsOpacityEffect>
+#else
 #include <QtGui/QPixmap>
 #include <QtGui/QGraphicsOpacityEffect>
+#endif
 
 RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                    bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
