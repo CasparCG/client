@@ -68,11 +68,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -199,16 +197,6 @@ void MainWindow::saveAsPresetMenu(const SaveAsPresetMenuEvent& event)
     this->saveAsPresetAction->setEnabled(event.getEnabled());
 }
 
-void MainWindow::saveMenu(const SaveMenuEvent& event)
-{
-    this->saveAction->setEnabled(event.getEnabled());
-}
-
-void MainWindow::saveAsMenu(const SaveAsMenuEvent& event)
-{
-    this->saveAsAction->setEnabled(event.getEnabled());
-}
-
 void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)
 {
     this->openRundownFromUrlAction->setEnabled(event.getEnabled());
@@ -222,9 +210,11 @@ void MainWindow::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
     this->allowRemoteTriggeringAction->blockSignals(false);
 }
 
-void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void MainWindow::repositoryRundown(const RepositoryRundownEvent& event)
 {
-    this->allowRemoteTriggeringAction->setEnabled(event.getEnabled());
+    this->saveAction->setEnabled(!event.getRepositoryRundown());
+    this->saveAsAction->setEnabled(!event.getRepositoryRundown());
+    this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

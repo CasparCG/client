@@ -7,7 +7,7 @@
 
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
-#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/CloseRundownEvent.h"
 #include "Events/Rundown/DeleteRundownEvent.h"
 #include "Events/Rundown/NewRundownEvent.h"
@@ -22,8 +22,6 @@
 #include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
-#include "Events/Rundown/SaveMenuEvent.h"
-#include "Events/Rundown/SaveAsMenuEvent.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
@@ -83,7 +81,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
         Q_SLOT void newRundown(const NewRundownEvent&);
         Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
-        Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
         Q_SLOT void closeRundown(const CloseRundownEvent&);
         Q_SLOT void deleteRundown(const DeleteRundownEvent&);
         Q_SLOT void openRundown(const OpenRundownEvent&);
@@ -91,6 +89,4 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void saveRundown(const SaveRundownEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
         Q_SLOT void reloadRundown(const ReloadRundownEvent&);
-        Q_SLOT void saveMenu(const SaveMenuEvent&);
-        Q_SLOT void saveAsMenu(const SaveAsMenuEvent&);
 };

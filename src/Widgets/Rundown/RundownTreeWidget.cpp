@@ -516,19 +516,7 @@ void RundownTreeWidget::setActive(bool active)
         }
 
         EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(this->allowRemoteRundownTriggering));
-
-        if (this->repositoryRundown)
-        {
-            EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
-            EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
-            EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(false));
-        }
-        else
-        {
-            EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(true));
-            EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(true));
-            EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(true));
-        }
+        EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(this->repositoryRundown));
     }
     else
     {

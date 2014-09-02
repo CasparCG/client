@@ -59,6 +59,7 @@
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
@@ -143,7 +144,9 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void toggleFullscreen(const ToggleFullscreenEvent&);
         Q_SIGNAL void saveMenu(const SaveMenuEvent&);
         Q_SIGNAL void saveAsMenu(const SaveAsMenuEvent&);
+        Q_SIGNAL void repositoryRundown(const RepositoryRundownEvent&);
 
+        void fireRepositoryRundownEvent(const RepositoryRundownEvent&);
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);

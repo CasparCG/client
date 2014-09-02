@@ -169,7 +169,8 @@ HEADERS += \
     Events/ToggleFullscreenEvent.h \
     Events/Rundown/SaveMenuEvent.h \
     Events/Rundown/SaveAsMenuEvent.h \
-    Events/Rundown/AllowRemoteTriggeringEvent.h
+    Events/Rundown/AllowRemoteTriggeringEvent.h \
+    Events/Rundown/RepositoryRundownEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -328,7 +329,8 @@ SOURCES += \
     Events/ToggleFullscreenEvent.cpp \
     Events/Rundown/SaveMenuEvent.cpp \
     Events/Rundown/SaveAsMenuEvent.cpp \
-    Events/Rundown/AllowRemoteTriggeringEvent.cpp
+    Events/Rundown/AllowRemoteTriggeringEvent.cpp \
+    Events/Rundown/RepositoryRundownEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

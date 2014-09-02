@@ -34,7 +34,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundown(const NewRundownEvent&)), this, SLOT(newRundown(const NewRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeRundown(const CloseRundownEvent&)), this, SLOT(closeRundown(const CloseRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deleteRundown(const DeleteRundownEvent&)), this, SLOT(deleteRundown(const DeleteRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundown(const OpenRundownEvent&)), this, SLOT(openRundown(const OpenRundownEvent&)));
@@ -46,8 +46,6 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUnused(const MarkItemAsUnusedEvent&)), this, SLOT(markItemAsUnused(const MarkItemAsUnusedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)), this, SLOT(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)), this, SLOT(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
 }
 
 void RundownWidget::setupMenus()
@@ -163,9 +161,11 @@ void RundownWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& even
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
 }
 
-void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)
 {
-    this->allowRemoteTriggeringAction->setEnabled(event.getEnabled());
+    this->saveAction->setEnabled(!event.getRepositoryRundown());
+    this->saveAsAction->setEnabled(!event.getRepositoryRundown());
+    this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
 }
 
 void RundownWidget::closeRundown(const CloseRundownEvent& event)
@@ -321,16 +321,6 @@ void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->reloadRundown();
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
-}
-
-void RundownWidget::saveMenu(const SaveMenuEvent& event)
-{
-    this->saveAction->setEnabled(event.getEnabled());
-}
-
-void RundownWidget::saveAsMenu(const SaveAsMenuEvent& event)
-{
-    this->saveAsAction->setEnabled(event.getEnabled());
 }
 
 void RundownWidget::saveRundown(const SaveRundownEvent& event)

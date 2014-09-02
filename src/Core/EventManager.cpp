@@ -21,6 +21,11 @@ void EventManager::uninitialize()
 {
 }
 
+void EventManager::fireRepositoryRundownEvent(const RepositoryRundownEvent& event)
+{
+    emit repositoryRundown(event);
+}
+
 void EventManager::fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent& event)
 {
     emit tricasterDeviceChanged(event);

@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Commands/VideoCommand.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
-#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -167,7 +167,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
     bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
     EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
 
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(!repositoryRundown));
+    EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(repositoryRundown));
 
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
@@ -247,7 +247,6 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
 
     bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
     EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(false));
 
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
