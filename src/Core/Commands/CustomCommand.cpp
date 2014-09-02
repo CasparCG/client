@@ -32,7 +32,7 @@ const QString& CustomCommand::getPauseCommand() const
 
 const QString& CustomCommand::getNextCommand() const
 {
-    return this->pauseCommand;
+    return this->nextCommand;
 }
 
 const QString& CustomCommand::getUpdateCommand() const

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>220</width>
-    <height>225</height>
+    <height>261</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -144,6 +144,16 @@
        </property>
        <property name="maximum">
         <number>999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFrm1">
+       <property name="text">
+        <string>frm</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
