@@ -1,13 +1,22 @@
 #include "ImageTreeBaseWidget.h"
 
+#include "EventManager.h"
+
 #include <QtCore/QMimeData>
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
 
 ImageTreeBaseWidget::ImageTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+      lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void ImageTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void ImageTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -20,6 +29,9 @@ void ImageTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void ImageTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

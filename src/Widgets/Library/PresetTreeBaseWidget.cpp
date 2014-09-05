@@ -11,8 +11,15 @@
 #include <QtGui/QTreeWidgetItem>
 
 PresetTreeBaseWidget::PresetTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+      lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void PresetTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void PresetTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -25,6 +32,9 @@ void PresetTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void PresetTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

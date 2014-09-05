@@ -1,13 +1,22 @@
 #include "AudioTreeBaseWidget.h"
 
+#include "EventManager.h"
+
 #include <QtCore/QMimeData>
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
 
 AudioTreeBaseWidget::AudioTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+      lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void AudioTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void AudioTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -20,6 +29,9 @@ void AudioTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void AudioTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

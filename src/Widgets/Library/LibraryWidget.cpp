@@ -18,6 +18,8 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QTextStream>
+#include <QtCore/QTime>
+#include <QtCore/QTimer>
 #include <QtCore/QModelIndex>
 
 #include <QtGui/QApplication>
@@ -28,8 +30,6 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QStandardItemModel>
-
-#include <QtCore/QTimer>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
     : QWidget(parent)
@@ -100,6 +100,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(presetChanged(const PresetChangedEvent&)), this, SLOT(presetChanged(const PresetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(importPreset(const ImportPresetEvent&)), this, SLOT(importPreset(const ImportPresetEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPreset(const ExportPresetEvent&)), this, SLOT(exportPreset(const ExportPresetEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
 
     QTimer::singleShot(0, this, SLOT(loadLibrary()));
 }
@@ -522,6 +523,35 @@ void LibraryWidget::setupUiMenu()
     QObject::connect(this->contextMenuImage, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuImageTriggered(QAction*)));
     QObject::connect(this->contextMenuPreset, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuPresetTriggered(QAction*)));
     QObject::connect(this->contextMenuData, SIGNAL(triggered(QAction*)), this, SLOT(contextMenuDataTriggered(QAction*)));
+}
+
+void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    QTime time;
+    time.start();
+
+    for (int i = 0; i < this->treeWidgetTool->topLevelItemCount(); i++)
+        this->treeWidgetTool->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetAudio->topLevelItemCount(); i++)
+        this->treeWidgetAudio->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetImage->topLevelItemCount(); i++)
+        this->treeWidgetImage->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetTemplate->topLevelItemCount(); i++)
+        this->treeWidgetTemplate->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetVideo->topLevelItemCount(); i++)
+        this->treeWidgetVideo->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetData->topLevelItemCount(); i++)
+        this->treeWidgetData->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    for (int i = 0; i < this->treeWidgetPreset->topLevelItemCount(); i++)
+        this->treeWidgetPreset->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+
+    qDebug() << QString("LibraryWidget::repositoryRundown: Completed in %1 msec").arg(time.elapsed());
 }
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)

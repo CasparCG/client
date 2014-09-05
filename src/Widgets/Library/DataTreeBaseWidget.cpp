@@ -1,13 +1,22 @@
 #include "DataTreeBaseWidget.h"
 
+#include "EventManager.h"
+
 #include <QtCore/QMimeData>
 
 #include <QtGui/QApplication>
 #include <QtGui/QTreeWidgetItem>
 
 DataTreeBaseWidget::DataTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+      lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void DataTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void DataTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -20,6 +29,9 @@ void DataTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void DataTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

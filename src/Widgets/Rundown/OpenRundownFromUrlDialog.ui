@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
-     <x>595</x>
-     <y>489</y>
+     <x>593</x>
+     <y>488</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -35,10 +35,10 @@
   <widget class="QTreeWidget" name="treeWidgetRundowns">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>658</width>
-     <height>471</height>
+     <x>11</x>
+     <y>11</y>
+     <width>657</width>
+     <height>465</height>
     </rect>
    </property>
    <property name="rootIsDecorated">

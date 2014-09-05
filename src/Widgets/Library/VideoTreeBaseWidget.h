@@ -4,6 +4,8 @@
 
 #include "Global.h"
 
+#include "Events/Rundown/RepositoryRundownEvent.h"
+
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWidget>
 #include <QtGui/QTreeWidget>
@@ -20,5 +22,8 @@ class WIDGETS_EXPORT VideoTreeBaseWidget : public QTreeWidget
         void mousePressEvent(QMouseEvent* event);
 
     private:
+        bool lock;
         QPoint dragStartPosition;
+
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };
