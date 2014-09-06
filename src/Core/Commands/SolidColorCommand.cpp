@@ -2,7 +2,12 @@
 
 #include "Global.h"
 
-#include <QtGui/QColor.h>
+#if QT_VERSION >= 0x050000
+#include <QColor>
+#else
+#include <QtGui/QColor>
+#endif
+
 
 SolidColorCommand::SolidColorCommand(QObject* parent)
     : AbstractCommand(parent),
