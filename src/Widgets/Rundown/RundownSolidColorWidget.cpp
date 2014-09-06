@@ -333,7 +333,7 @@ void RundownSolidColorWidget::executePlay()
         }
         else
         {
-            device->playColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getColor(),
+            device->playColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPremultipliedColor(),
                               this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getUseAuto());
         }
@@ -353,7 +353,7 @@ void RundownSolidColorWidget::executePlay()
             }
             else
             {
-                deviceShadow->playColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getColor(),
+                deviceShadow->playColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPremultipliedColor(),
                                         this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getUseAuto());
             }
@@ -405,7 +405,7 @@ void RundownSolidColorWidget::executeLoad()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->loadColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getColor(),
+        device->loadColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPremultipliedColor(),
                           this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getUseAuto());
     }
@@ -418,7 +418,7 @@ void RundownSolidColorWidget::executeLoad()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->loadColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getColor(),
+            deviceShadow->loadColor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPremultipliedColor(),
                                     this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getUseAuto());
         }
