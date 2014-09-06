@@ -850,6 +850,9 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
         this->contextMenuRundown->actions().at(14)->setEnabled(false); // Remove.
     }
 
+    if (this->repositoryRundown)
+        this->contextMenuRundown->actions().at(12)->setEnabled(false); // Save as Preset.
+
     if (this->treeWidgetRundown->selectedItems().count() > 0)
     {
         if (this->treeWidgetRundown->selectedItems().count() == 1)
