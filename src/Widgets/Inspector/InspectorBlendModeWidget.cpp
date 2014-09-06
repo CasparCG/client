@@ -7,7 +7,11 @@
 #include "Events/PreviewEvent.h"
 #include "Models/BlendModeModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 InspectorBlendModeWidget::InspectorBlendModeWidget(QWidget* parent)
     : QWidget(parent),

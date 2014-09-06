@@ -24,9 +24,15 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#else
 #include <QtGui/QWidget>
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
+#endif
 
 class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {

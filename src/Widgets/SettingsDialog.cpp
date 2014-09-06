@@ -27,10 +27,17 @@
 #include <QtCore/QTimer>
 #include <QtCore/QRegExp>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QFileDialog>
+#include <QIcon>
+#include <QtWidgets/QMessageBox>
+#else
 #include <QtGui/QComboBox>
 #include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
 #include <QtGui/QMessageBox>
+#endif
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)

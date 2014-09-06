@@ -29,12 +29,21 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QDesktopServices>
+#include <QIcon>
+#include <QtWidgets/QMessageBox>
+#include <QMouseEvent>
+#include <QtWidgets/QToolButton>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
 #include <QtGui/QMessageBox>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QToolButton>
+#endif
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {

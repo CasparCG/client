@@ -12,11 +12,19 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QIcon>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolButton>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QIcon>
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 #include <QtGui/QToolButton>
+#endif
 
 RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent)

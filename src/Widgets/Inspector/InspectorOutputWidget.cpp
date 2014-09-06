@@ -51,8 +51,13 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QLineEdit>
+#else
 #include <QtGui/QApplication>
 #include <QtGui/QLineEdit>
+#endif
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     : QWidget(parent),

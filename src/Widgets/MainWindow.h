@@ -21,10 +21,17 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 {

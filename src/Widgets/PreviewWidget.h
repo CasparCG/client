@@ -8,10 +8,17 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QAction>
+#include <QImage>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QAction>
 #include <QtGui/QImage>
 #include <QtGui/QMenu>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
 {

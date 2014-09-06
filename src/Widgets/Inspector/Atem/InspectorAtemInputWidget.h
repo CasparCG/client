@@ -13,7 +13,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAtemInputWidget
 {

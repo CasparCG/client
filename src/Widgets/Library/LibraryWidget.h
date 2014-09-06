@@ -16,10 +16,17 @@
 #include <QtCore/QPoint>
 #include <QtCore/QTimer>
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+#include <QKeyEvent>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
 {

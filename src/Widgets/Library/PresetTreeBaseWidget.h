@@ -4,10 +4,17 @@
 
 #include "Global.h"
 
+#if QT_VERSION >= 0x050000
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidget>
+#else
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWidget>
 #include <QtGui/QTreeWidget>
+#endif
 
 class WIDGETS_EXPORT PresetTreeBaseWidget : public QTreeWidget
 {

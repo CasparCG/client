@@ -7,7 +7,11 @@
 #include "Models/LibraryModel.h"
 #include "Models/ThumbnailModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QToolButton>
+#else
 #include <QtGui/QToolButton>
+#endif
 
 PreviewWidget::PreviewWidget(QWidget* parent)
     : QWidget(parent),
@@ -65,7 +69,7 @@ void PreviewWidget::setThumbnail()
 {
     if (this->model->getType() != "STILL" && this->model->getType() != "MOVIE")
     {
-        this->labelPreview->setPixmap(NULL);
+        this->labelPreview->clear();
         return;
     }
 
@@ -83,7 +87,7 @@ void PreviewWidget::setThumbnail()
 
     if (!data.isEmpty())
     {
-        this->image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+        this->image.loadFromData(QByteArray::fromBase64(data.toLatin1()), "PNG");
 
         if (this->viewAlpha)
             this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
@@ -92,7 +96,7 @@ void PreviewWidget::setThumbnail()
     }
     else
     {
-        this->labelPreview->setPixmap(NULL);
+        this->labelPreview->clear();
     }
 }
 

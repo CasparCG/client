@@ -7,8 +7,13 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QImage>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QImage>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT AudioMeterWidget : public QWidget, Ui::AudioMeterWidget
 {

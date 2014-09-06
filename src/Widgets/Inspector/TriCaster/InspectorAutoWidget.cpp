@@ -8,7 +8,11 @@
 #include "Models/TriCaster/TriCasterAutoSpeedModel.h"
 #include "Models/TriCaster/TriCasterAutoTransitionModel.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets/QApplication>
+#else
 #include <QtGui/QApplication>
+#endif
 
 InspectorAutoWidget::InspectorAutoWidget(QWidget* parent)
     : QWidget(parent),

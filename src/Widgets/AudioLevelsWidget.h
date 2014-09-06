@@ -3,9 +3,15 @@
 #include "Shared.h"
 #include "ui_AudioLevelsWidget.h"
 
+#if QT_VERSION >= 0x050000
+#include <QImage>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
+#else
 #include <QtGui/QImage>
 #include <QtGui/QMenu>
 #include <QtGui/QWidget>
+#endif
 
 class WIDGETS_EXPORT AudioLevelsWidget : public QWidget, Ui::AudioLevelsWidget
 {
