@@ -28,10 +28,10 @@
   <widget class="QTabWidget" name="tabWidgetSettings">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>10</y>
-     <width>680</width>
-     <height>830</height>
+     <x>11</x>
+     <y>11</y>
+     <width>678</width>
+     <height>826</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -3409,8 +3409,8 @@
   <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
-     <x>615</x>
-     <y>848</y>
+     <x>614</x>
+     <y>847</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -3426,7 +3426,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>843</y>
+     <y>839</y>
      <width>591</width>
      <height>16</height>
     </rect>
