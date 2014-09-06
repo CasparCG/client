@@ -2,6 +2,8 @@
 
 #include "Global.h"
 
+#include <QtGui/QColor.h>
+
 SolidColorCommand::SolidColorCommand(QObject* parent)
     : AbstractCommand(parent),
       color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), transtitionDuration(Mixer::DEFAULT_DURATION),
@@ -13,6 +15,24 @@ SolidColorCommand::SolidColorCommand(QObject* parent)
 const QString& SolidColorCommand::getColor() const
 {
     return this->color;
+}
+
+const QString SolidColorCommand::getPremultipliedColor() const
+{
+    QString hexColor = this->color;
+    hexColor.remove('#');
+
+    int alpha = hexColor.mid(0, 2).toInt(0, 16);
+    int red = hexColor.mid(2, 2).toInt(0, 16);
+    int green = hexColor.mid(4, 2).toInt(0, 16);
+    int blue = hexColor.mid(6, 2).toInt(0, 16);
+
+    red = (red * alpha) / 255;
+    green = (green * alpha) / 255;
+    blue = (blue * alpha) / 255;
+
+    QString color;
+    return color.sprintf("#%02x%02x%02x%02x", alpha, red, green, blue);
 }
 
 const QString& SolidColorCommand::getTransition() const

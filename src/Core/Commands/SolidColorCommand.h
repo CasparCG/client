@@ -23,6 +23,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getColor() const;
+        const QString getPremultipliedColor() const;
         const QString& getTransition() const;
         int getTransitionDuration() const;
         const QString& getTween() const;

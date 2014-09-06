@@ -275,7 +275,7 @@ namespace SolidColor
 {
     static const bool DEFAULT_USE_AUTO = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-    static const QString DEFAULT_COLOR = "#00000000";
+    static const QString DEFAULT_COLOR = "#FF000000";
 }
 
 namespace FadeToBlack
