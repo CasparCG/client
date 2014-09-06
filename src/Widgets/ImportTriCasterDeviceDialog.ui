@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButtonOk">
    <property name="geometry">
     <rect>
-     <x>595</x>
-     <y>489</y>
+     <x>593</x>
+     <y>488</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -35,10 +35,10 @@
   <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>658</width>
-     <height>471</height>
+     <x>12</x>
+     <y>12</y>
+     <width>655</width>
+     <height>465</height>
     </rect>
    </property>
    <property name="alternatingRowColors">
@@ -79,7 +79,7 @@
    <property name="geometry">
     <rect>
      <x>11</x>
-     <y>484</y>
+     <y>480</y>
      <width>591</width>
      <height>16</height>
     </rect>

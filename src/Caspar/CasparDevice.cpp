@@ -265,22 +265,22 @@ void CasparDevice::playColor(int channel, int videolayer)
     writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
 }
 
-void CasparDevice::playColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+void CasparDevice::playColor(int channel, int videolayer, const QString& color, const QString &transition, int duration,
                              const QString& easing, const QString& direction, bool useAuto)
 {
     if (useAuto)
-        loadColor(channel, videolayer, name, transition, duration, easing, direction, useAuto);
+        loadColor(channel, videolayer, color, transition, duration, easing, direction, useAuto);
     else
         writeMessage(QString("PLAY %1-%2 \"%3\" %4 %5 %6 %7")
-                     .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                     .arg(channel).arg(videolayer).arg(color).arg(transition).arg(duration).arg(easing)
                      .arg(direction));
 }
 
-void CasparDevice::loadColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+void CasparDevice::loadColor(int channel, int videolayer, const QString& color, const QString& transition, int duration,
                              const QString& easing, const QString& direction, bool useAuto)
 {
     writeMessage(QString("LOADBG %1-%2 \"%3\" %4 %5 %6 %7 %8")
-                 .arg(channel).arg(videolayer).arg(name).arg(transition).arg(duration).arg(easing)
+                 .arg(channel).arg(videolayer).arg(color).arg(transition).arg(duration).arg(easing)
                  .arg(direction)
                  .arg((useAuto == true) ? "AUTO" : ""));
 }

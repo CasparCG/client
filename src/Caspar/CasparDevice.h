@@ -68,9 +68,9 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
 
         void pauseColor(int channel, int videolayer);
         void playColor(int channel, int videolayer);
-        void playColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void playColor(int channel, int videolayer, const QString& color, const QString& transition, int duration,
                        const QString& easing, const QString& direction, bool useAuto);
-        void loadColor(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void loadColor(int channel, int videolayer, const QString& color, const QString& transition, int duration,
                        const QString& easing, const QString& direction, bool useAuto);
         void stopColor(int channel, int videolayer);
 
