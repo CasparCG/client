@@ -8,7 +8,6 @@
 #include <QtGui/QColor>
 #endif
 
-
 SolidColorCommand::SolidColorCommand(QObject* parent)
     : AbstractCommand(parent),
       color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), transtitionDuration(Mixer::DEFAULT_DURATION),
