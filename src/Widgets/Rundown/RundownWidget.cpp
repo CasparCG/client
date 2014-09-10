@@ -7,6 +7,8 @@
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/InsertRepositoryChangesEvent.h"
+#include "Events/Rundown/DiscardRepositoryChangesEvent.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QDebug>
@@ -59,25 +61,30 @@ void RundownWidget::setupMenus()
 
     this->contextMenuRundownDropdown = new QMenu(this);
     this->contextMenuRundownDropdown->setTitle("Dropdown");
-    this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(createNewRundown()));
-    this->openRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundownFromDisk()));
-    this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
+    this->newRundownAction = this->contextMenuRundownDropdown->addAction("New Rundown", this, SLOT(createNewRundown()));
+    this->openRundownAction = this->contextMenuRundownDropdown->addAction("Open Rundown...", this, SLOT(openRundownFromDisk()));
+    this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction("Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->saveAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
-    this->saveAsAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
+    this->saveAction = this->contextMenuRundownDropdown->addAction("Save", this, SLOT(saveRundownToDisk()));
+    this->saveAsAction = this->contextMenuRundownDropdown->addAction("Save As...", this, SLOT(saveAsRundownToDisk()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addMenu(this->contextMenuMark);
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Copy Item Properties", this, SLOT(copyItemProperties()));
     this->contextMenuRundownDropdown->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
-    this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
+    this->contextMenuRundownDropdown->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction("Allow Remote Triggering");
     this->allowRemoteTriggeringAction->setCheckable(true);
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Reload Rundown", this, SLOT(reloadCurrentRundown()));
+    this->insertRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
+    this->discardRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeCurrentRundown()));
+    this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
+    this->insertRepositoryChangesAction->setEnabled(false);
+    this->discardRepositoryChangesAction->setEnabled(false);
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -166,6 +173,8 @@ void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)
     this->saveAction->setEnabled(!event.getRepositoryRundown());
     this->saveAsAction->setEnabled(!event.getRepositoryRundown());
     this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
+    this->discardRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
+    this->insertRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
 }
 
 void RundownWidget::closeRundown(const CloseRundownEvent& event)
@@ -407,6 +416,16 @@ void RundownWidget::markAllItemsAsUnusedInRundown()
 void RundownWidget::remoteTriggering(bool enabled)
 {
     EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(enabled));
+}
+
+void RundownWidget::insertRepositoryChanges()
+{
+    EventManager::getInstance().fireInsertRepositoryChangesEvent(InsertRepositoryChangesEvent());
+}
+
+void RundownWidget::discardRepositoryChanges()
+{
+    EventManager::getInstance().fireDiscardRepositoryChangesEvent(DiscardRepositoryChangesEvent());
 }
 
 bool RundownWidget::selectTab(int index)

@@ -50,6 +50,8 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QAction* saveAsAction;
         QAction* openRundownFromUrlAction;
         QAction* allowRemoteTriggeringAction;
+        QAction* insertRepositoryChangesAction;
+        QAction* discardRepositoryChangesAction;
 
         void setupMenus();
 
@@ -76,6 +78,8 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void tabCloseRequested(int);
         Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
         Q_SLOT void remoteTriggering(bool);
+        Q_SLOT void insertRepositoryChanges();
+        Q_SLOT void discardRepositoryChanges();
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);

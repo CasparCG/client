@@ -3,8 +3,7 @@
 #include "Shared.h"
 
 #include "RrupDevice.h"
-#include "Models/RepositoryAdd.h"
-#include "Models/RepositoryRemove.h"
+#include "Models/RepositoryChangeModel.h"
 
 class REPOSITORY_EXPORT RepositoryDevice : public RrupDevice
 {
@@ -18,8 +17,7 @@ class REPOSITORY_EXPORT RepositoryDevice : public RrupDevice
         void subscribe(const QString& rundown, const QString& profile);
 
         Q_SIGNAL void connectionStateChanged(RepositoryDevice&);
-        Q_SIGNAL void addChanged(const RepositoryAdd&, RepositoryDevice&);
-        Q_SIGNAL void removeChanged(const RepositoryRemove&, RepositoryDevice&);
+        Q_SIGNAL void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
 
     protected:
         void sendNotification();

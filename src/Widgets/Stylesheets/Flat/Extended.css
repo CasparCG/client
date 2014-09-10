@@ -258,11 +258,11 @@
 }
 #treeWidgetRundown::item:selected
 {
-    background-color: rgba(70, 115, 195, 64);
+    background-color: rgba(0, 255, 0, 64);
 
     border-style: solid;
     border-width: 1px;
-    border-color: rgba(70, 115, 195, 255);
+    border-color: rgba(0, 255, 0, 255);
 }
 #treeWidgetRundown::item:has-children
 {
@@ -270,7 +270,7 @@
 }
 #treeWidgetRundown::item:has-children:selected
 {
-    background-color: rgba(70, 115, 195, 64);
+    background-color: rgba(0, 255, 0, 64);
 }
 #treeWidgetRundown::branch
 {

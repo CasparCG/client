@@ -9,6 +9,7 @@
 
 #include "GpiDevice.h"
 #include "RepositoryDevice.h"
+#include "Models/RepositoryChangeModel.h"
 
 #include "Events/AddPresetItemEvent.h"
 #include "Events/SaveAsPresetEvent.h"
@@ -24,6 +25,8 @@
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
+#include "Events/Rundown/DiscardRepositoryChangesEvent.h"
+#include "Events/Rundown/InsertRepositoryChangesEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -210,6 +213,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
         Q_SLOT void repositoryConnectionStateChanged(RepositoryDevice&);
-        Q_SLOT void repositoryAddChanged(const RepositoryAdd&, RepositoryDevice&);
-        Q_SLOT void repositoryRemoveChanged(const RepositoryRemove&, RepositoryDevice&);
+        Q_SLOT void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
+        Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
+        Q_SLOT void discardRepositoryChanges(const DiscardRepositoryChangesEvent&);
 };

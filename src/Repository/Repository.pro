@@ -14,12 +14,10 @@ DEFINES += REPOSITORY_LIBRARY
 HEADERS += \
     Shared.h \
     RepositoryDevice.h \
-    Models/RepositoryRemove.h \
-    Models/RepositoryAdd.h \
-    RrupDevice.h
+    RrupDevice.h \
+    Models/RepositoryChangeModel.h
 	
 SOURCES += \
     RepositoryDevice.cpp \
-    Models/RepositoryRemove.cpp \
-    Models/RepositoryAdd.cpp \
-    RrupDevice.cpp
+    RrupDevice.cpp \
+    Models/RepositoryChangeModel.cpp

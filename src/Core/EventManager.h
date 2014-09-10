@@ -64,6 +64,8 @@
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
+#include "Events/Rundown/DiscardRepositoryChangesEvent.h"
+#include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
@@ -145,6 +147,8 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void saveMenu(const SaveMenuEvent&);
         Q_SIGNAL void saveAsMenu(const SaveAsMenuEvent&);
         Q_SIGNAL void repositoryRundown(const RepositoryRundownEvent&);
+        Q_SIGNAL void discardRepositoryChanges(const DiscardRepositoryChangesEvent&);
+        Q_SIGNAL void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
 
         void fireRepositoryRundownEvent(const RepositoryRundownEvent&);
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
@@ -207,4 +211,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireToggleFullscreenEvent(const ToggleFullscreenEvent&);
         void fireSaveMenuEvent(const SaveMenuEvent&);
         void fireSaveAsMenuEvent(const SaveAsMenuEvent&);
+        void fireDiscardRepositoryChangesEvent(const DiscardRepositoryChangesEvent&);
+        void fireInsertRepositoryChangesEvent(const InsertRepositoryChangesEvent&);
 };

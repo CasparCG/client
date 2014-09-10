@@ -170,7 +170,10 @@ HEADERS += \
     Events/Rundown/SaveMenuEvent.h \
     Events/Rundown/SaveAsMenuEvent.h \
     Events/Rundown/AllowRemoteTriggeringEvent.h \
-    Events/Rundown/RepositoryRundownEvent.h
+    Events/Rundown/RepositoryRundownEvent.h \
+    Models/RepositoryChangeModel.h \
+    Events/Rundown/DiscardRepositoryChangesEvent.h \
+    Events/Rundown/InsertRepositoryChangesEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -330,7 +333,10 @@ SOURCES += \
     Events/Rundown/SaveMenuEvent.cpp \
     Events/Rundown/SaveAsMenuEvent.cpp \
     Events/Rundown/AllowRemoteTriggeringEvent.cpp \
-    Events/Rundown/RepositoryRundownEvent.cpp
+    Events/Rundown/RepositoryRundownEvent.cpp \
+    Models/RepositoryChangeModel.cpp \
+    Events/Rundown/DiscardRepositoryChangesEvent.cpp \
+    Events/Rundown/InsertRepositoryChangesEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

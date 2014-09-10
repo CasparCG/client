@@ -84,6 +84,8 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)), this, SLOT(removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(copyItemProperties(const CopyItemPropertiesEvent&)), this, SLOT(copyItemProperties(const CopyItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(discardRepositoryChanges(const DiscardRepositoryChangesEvent&)), this, SLOT(discardRepositoryChanges(const DiscardRepositoryChangesEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -639,8 +641,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
     this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(repositoryUrl).host()));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(addChanged(const RepositoryAdd&, RepositoryDevice&)), this, SLOT(repositoryAddChanged(const RepositoryAdd&, RepositoryDevice&)));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(removeChanged(const RepositoryRemove&, RepositoryDevice&)), this, SLOT(repositoryRemoveChanged(const RepositoryRemove&, RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
     this->repositoryDevice->connectDevice();
 
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
@@ -649,7 +650,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1").arg(device.getAddress());
+    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1, Status: %2").arg(device.getAddress()).arg((device.isConnected() == true) ? "Connected" : "Disconnected");
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();
@@ -658,18 +659,27 @@ void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& devic
     device.subscribe(rundown, profile);
 }
 
-void RundownTreeWidget::repositoryAddChanged(const RepositoryAdd& data, RepositoryDevice& device)
+void RundownTreeWidget::repositoryChanged(const RepositoryChangeModel& model, RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryAddChanged: ADD %1 %2").arg(data.getStoryId()).arg(data.getData());
+    //qDebug() << QString("RundownTreeWidget::repositoryChanged: %1 %2 %3").arg(model.getType()).arg(model.getStoryId()).arg(model.getData());
 
-    this->treeWidgetRundown->addRepositoryItem(data.getStoryId(), data.getData());
+    this->treeWidgetRundown->addRepositoryChange(model);
 }
 
-void RundownTreeWidget::repositoryRemoveChanged(const RepositoryRemove& data, RepositoryDevice& device)
+void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEvent& event)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryRemoveChanged: REMOVE %1").arg(data.getStoryId());
+    if (!this->active)
+        return;
 
-    this->treeWidgetRundown->removeRepositoryItem(data.getStoryId());
+    this->treeWidgetRundown->applyRepositoryChanges();
+}
+
+void RundownTreeWidget::discardRepositoryChanges(const DiscardRepositoryChangesEvent& event)
+{
+    if (!this->active)
+        return;
+
+    this->treeWidgetRundown->clearRepositoryChanges();
 }
 
 void RundownTreeWidget::reloadRundown()
@@ -851,7 +861,10 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
     }
 
     if (this->repositoryRundown)
+    {
+        this->contextMenuRundown->actions().at(10)->setEnabled(false); // Colorize Item.
         this->contextMenuRundown->actions().at(12)->setEnabled(false); // Save as Preset.
+    }
 
     if (this->treeWidgetRundown->selectedItems().count() > 0)
     {

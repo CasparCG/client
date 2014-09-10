@@ -46,18 +46,18 @@ void RepositoryDevice::sendNotification()
         }
         case RrupDevice::ADD:
         {
-            QString id = RrupDevice::response.split("\r\n").at(1).trimmed();
+            QString storyId = RrupDevice::response.split("\r\n").at(1).trimmed();
             QString data = RrupDevice::response.split("\r\n").at(2).trimmed();
 
-            emit addChanged(RepositoryAdd(id, data), *this);
+            emit repositoryChanged(RepositoryChangeModel("ADD", storyId, data), *this);
 
             break;
         }
         case RrupDevice::REMOVE:
         {
-            QString id = RrupDevice::response.split("\r\n").at(1).trimmed();
+            QString storyId = RrupDevice::response.split("\r\n").at(1).trimmed();
 
-            emit removeChanged(RepositoryRemove(id), *this);
+            emit repositoryChanged(RepositoryChangeModel("REMOVE", storyId), *this);
 
             break;
         }

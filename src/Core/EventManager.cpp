@@ -21,6 +21,16 @@ void EventManager::uninitialize()
 {
 }
 
+void EventManager::fireInsertRepositoryChangesEvent(const InsertRepositoryChangesEvent& event)
+{
+    emit insertRepositoryChanges(event);
+}
+
+void EventManager::fireDiscardRepositoryChangesEvent(const DiscardRepositoryChangesEvent& event)
+{
+    emit discardRepositoryChanges(event);
+}
+
 void EventManager::fireRepositoryRundownEvent(const RepositoryRundownEvent& event)
 {
     emit repositoryRundown(event);

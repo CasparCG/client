@@ -2,6 +2,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QStringList>
+#include <QtCore/QTextCodec>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
  #include <QtCore/QUrl>
@@ -11,6 +12,8 @@ RrupDevice::RrupDevice(const QString& address, int port, QObject* parent)
       command(RrupDevice::NONE), port(port), state(RrupDevice::ExpectingHeader), connected(false), address(address)
 {
     this->socket = new QTcpSocket(this);
+
+    this->decoder = new QTextDecoder(QTextCodec::codecForName("UTF-8"));
 
     QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
@@ -87,13 +90,17 @@ void RrupDevice::writeMessage(const QString& message)
 
 void RrupDevice::readMessage()
 {
-    while (this->socket->bytesAvailable() && this->socket->canReadLine())
+    while (this->socket->bytesAvailable())
     {
-        this->response += QString::fromUtf8(this->socket->readLine());
-        if (this->response.endsWith("\r\n\r\n"))
-        {
-            QStringList tokens = this->response.split("\r\n");
+        this->fragments += this->decoder->toUnicode(this->socket->readAll());
 
+        int position;
+        while ((position = this->fragments.indexOf("\r\n\r\n")) != -1)
+        {
+            this->response = this->fragments.left(position);
+            this->fragments.remove(0, position + 4);
+
+            QStringList tokens = this->response.split("\r\n");
             this->command = translateCommand(tokens.at(0));
 
             sendNotification();

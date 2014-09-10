@@ -24,6 +24,7 @@
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/DiscardRepositoryChangesEvent.h"
 
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
@@ -117,11 +118,16 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
+    this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
+    this->discardRepositoryChangesAction = this->rundownMenu->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
+    this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
     this->allowRemoteTriggeringAction->setCheckable(true);
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
+    this->insertRepositoryChangesAction->setEnabled(false);
+    this->discardRepositoryChangesAction->setEnabled(false);
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -215,6 +221,8 @@ void MainWindow::repositoryRundown(const RepositoryRundownEvent& event)
     this->saveAction->setEnabled(!event.getRepositoryRundown());
     this->saveAsAction->setEnabled(!event.getRepositoryRundown());
     this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
+    this->discardRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
+    this->insertRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -372,6 +380,16 @@ void MainWindow::allowRemoteTriggering(bool enabled)
 void MainWindow::closeRundown()
 {
     EventManager::getInstance().fireCloseRundownEvent(CloseRundownEvent());
+}
+
+void MainWindow::discardRepositoryChanges()
+{
+    EventManager::getInstance().fireDiscardRepositoryChangesEvent(DiscardRepositoryChangesEvent());
+}
+
+void MainWindow::insertRepositoryChanges()
+{
+    EventManager::getInstance().fireInsertRepositoryChangesEvent(InsertRepositoryChangesEvent());
 }
 
 void MainWindow::reloadRundown()

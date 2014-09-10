@@ -141,6 +141,11 @@ QString RundownGroupWidget::getColor() const
     return this->color;
 }
 
+void RundownGroupWidget::setExpanded(bool expanded)
+{
+    this->labelGroupColor->setVisible(expanded);
+}
+
 void RundownGroupWidget::setColor(const QString& color)
 {
     this->color = color;

@@ -226,82 +226,6 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
     return true;
 }
 
-void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QString& data)
-{
-    int row = -1;
-
-    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
-    {
-        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
-        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
-        if (widget->getCommand()->getStoryId() == storyId)
-            row = QTreeWidget::indexFromItem(item).row();
-    }
-
-    int offset = 1;
-    std::wstringstream wstringstream;
-    wstringstream << data.toStdWString();
-
-    boost::property_tree::wptree pt;
-    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
-
-    bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
-    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
-
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
-    {
-        if (parentValue.first != L"item")
-            continue;
-
-        AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
-
-        QTreeWidgetItem* parentItem = new QTreeWidgetItem();
-        if (QTreeWidget::currentItem() == NULL || QTreeWidget::currentItem()->parent() == NULL) // Top level item.
-        {
-            parentWidget->setInGroup(false);
-            parentWidget->setExpanded(false);
-
-            // If we don't have a selected row then we add the item to the bottom of the
-            // rundown. This can be the case when we drag and drop a preset to the rundown.
-            if (row == -1)
-                QTreeWidget::invisibleRootItem()->insertChild(0, parentItem);
-            else
-                QTreeWidget::invisibleRootItem()->insertChild(row + offset++, parentItem);
-        }
-        else
-        {
-            if (parentWidget->isGroup())
-                continue; // We don't support group in groups.
-
-            parentWidget->setInGroup(true);
-
-            QTreeWidget::currentItem()->parent()->insertChild(row + offset++, parentItem);
-        }
-
-        QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
-
-        if (parentWidget->isGroup())
-        {
-            //bool expanded = parentValue.second.get(L"expanded", false);
-            //parentItem->setExpanded(expanded);
-
-            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
-            {
-                AbstractRundownWidget* childWidget = readProperties(childValue.second);
-                childWidget->setInGroup(true);
-
-                QTreeWidgetItem* childItem = new QTreeWidgetItem();
-                parentItem->addChild(childItem);
-
-                QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
-            }
-        }
-
-        QTreeWidget::doItemsLayout(); // Refresh
-    }
-}
-
-
 bool RundownTreeBaseWidget::duplicateSelectedItems()
 {
     // Save the latest value stored in the clipboard.
@@ -325,54 +249,6 @@ void RundownTreeBaseWidget::checkEmptyRundown()
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
     else
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
-}
-
-void RundownTreeBaseWidget::checRepositoryUpdates()
-{
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
-        QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 1; }");
-    else
-        QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
-}
-
-void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
-{
-    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
-    {
-        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
-        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
-        if (widget->getCommand()->getStoryId() == storyId)
-        {
-            if (hasItemBelow())
-                selectItemBelow();
-            else
-                selectItemAbove();
-
-            AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
-            if (widget->isGroup())
-            {
-                for (int i = item->childCount() - 1; i >= 0; i--)
-                {
-                    QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
-
-                    // Remove our items from the AutoPlay queue if they exists.
-                    EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
-
-                    delete childWidget;
-                    delete item->child(i);
-                }
-            }
-
-            // Remove our items from the AutoPlay queue if they exists.
-            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
-
-            delete widget;
-            delete item;
-        }
-    }
-
-    checkEmptyRundown();
-    checRepositoryUpdates();
 }
 
 void RundownTreeBaseWidget::removeSelectedItems()
@@ -791,6 +667,10 @@ void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Delete)
         removeSelectedItems();
+    else if (event->key() == Qt::Key_Insert)
+        applyRepositoryChanges();
+    else if (event->key() == Qt::Key_Escape)
+        clearRepositoryChanges();
     else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
         duplicateSelectedItems();
     else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
@@ -992,4 +872,196 @@ void RundownTreeBaseWidget::selectItemBelow()
         if (itemBelowWidget != NULL)
             dynamic_cast<AbstractRundownWidget*>(itemBelowWidget)->setActive(true);
     }
+}
+
+
+
+
+
+
+
+
+
+void RundownTreeBaseWidget::applyRepositoryChanges()
+{
+    qDebug() << "RundownTreeBaseWidget::applyRepositoryChanges()";
+
+    // Get the current selected item story id.
+    QString currentStoryId = currentItemStoryId();
+
+    int index = 0;
+    while (index < this->repositoryChanges.count())
+    {
+        const RepositoryChangeModel& model = this->repositoryChanges.at(index);
+
+        // Skip update if ADD or REMOVE contians the current selected item story id.
+        if (model.getStoryId() == currentStoryId || containsStoryId(currentStoryId, model.getData()))
+        {
+            index++;
+            continue;
+        }
+
+        if (model.getType() == "ADD")
+            addRepositoryItem(model.getStoryId(), model.getData());
+        else
+            removeRepositoryItem(model.getStoryId());
+
+        this->repositoryChanges.removeAt(index);
+    }
+
+    checRepositoryChanges();
+}
+
+QString RundownTreeBaseWidget::currentItemStoryId()
+{
+    QString currentStoryId;
+    if (QTreeWidget::currentItem() != NULL)
+    {
+        QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+        AbstractRundownWidget* currentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0));
+        AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem->parent(), 0));
+
+        if (parentWidget != NULL)
+            currentStoryId = parentWidget->getCommand()->getStoryId(); // Group item.
+        else
+            currentStoryId = currentWidget->getCommand()->getStoryId(); // Group or top level item.
+    }
+
+    return currentStoryId;
+}
+
+bool RundownTreeBaseWidget::containsStoryId(const QString& storyId, const QString& data)
+{
+    if (!data.isEmpty())
+    {
+        std::wstringstream wstringstream;
+        wstringstream << data.toStdWString();
+
+        boost::property_tree::wptree pt;
+        boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+        {
+            if (parentValue.second.count(L"storyid") > 0)
+            {
+                QString storyid = QString::fromStdWString(parentValue.second.get(L"storyid", L""));
+                if (storyid == storyId)
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void RundownTreeBaseWidget::clearRepositoryChanges()
+{
+    qDebug() << "RundownTreeBaseWidget::clearRepositoryChanges()";
+
+    this->repositoryChanges.clear();
+
+    checRepositoryChanges();
+}
+
+void RundownTreeBaseWidget::addRepositoryChange(const RepositoryChangeModel& model)
+{
+    this->repositoryChanges.append(model);
+
+    checRepositoryChanges();
+}
+
+void RundownTreeBaseWidget::checRepositoryChanges()
+{
+    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
+        QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 1; }");
+    else
+        QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
+}
+
+void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QString& data)
+{
+    int row = -1;
+
+    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
+    {
+        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->getCommand()->getStoryId() == storyId)
+            row = QTreeWidget::indexFromItem(item).row();
+    }
+
+    int offset = 1;
+    std::wstringstream wstringstream;
+    wstringstream << data.toStdWString();
+
+    boost::property_tree::wptree pt;
+    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+    bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
+
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    {
+        if (parentValue.first != L"item")
+            continue;
+
+        AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
+        parentWidget->setInGroup(false);
+        parentWidget->setExpanded(false);
+
+        QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+
+        QTreeWidget::invisibleRootItem()->insertChild(row + offset++, parentItem);
+        QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+        if (parentWidget->isGroup())
+        {
+            //bool expanded = parentValue.second.get(L"expanded", false);
+            //parentItem->setExpanded(expanded);
+
+            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            {
+                AbstractRundownWidget* childWidget = readProperties(childValue.second);
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+
+                QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+        }
+
+        QTreeWidget::doItemsLayout(); // Refresh
+    }
+}
+
+void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
+{
+    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
+    {
+        qDebug() << i;
+        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->getCommand()->getStoryId() == storyId)
+        {
+            if (widget->isGroup())
+            {
+                for (int i = item->childCount() - 1; i >= 0; i--)
+                {
+                    QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+
+                    // Remove our items from the AutoPlay queue if they exists.
+                    EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                    delete childWidget;
+                    delete item->child(i);
+                }
+            }
+
+            delete widget;
+            delete item;
+        }
+    }
+
+    checkEmptyRundown();
 }

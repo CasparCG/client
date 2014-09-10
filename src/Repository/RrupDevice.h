@@ -3,6 +3,7 @@
 #include "Shared.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QTextDecoder>
 
 #include <QtNetwork/QTcpSocket>
 #include <QtNetwork/QAbstractSocket>
@@ -54,6 +55,8 @@ class REPOSITORY_EXPORT RrupDevice : public QObject
         bool connected;
         QString line;
         QString address;
+        QTextDecoder* decoder;
+        QString fragments;
 
         RrupDeviceCommand translateCommand(const QString& command);
 

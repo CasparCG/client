@@ -5,6 +5,8 @@
 
 #include "Global.h"
 
+#include "Models/RepositoryChangeModel.h"
+
 #include "OscSubscription.h"
 #include "Events/AddPresetItemEvent.h"
 
@@ -64,9 +66,10 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void selectItemAbove();
         void selectItemBelow();
         void checkEmptyRundown();
-        void checRepositoryUpdates();
-        void removeRepositoryItem(const QString& storyId);
-        void addRepositoryItem(const QString& storyId, const QString& data);
+        void checRepositoryChanges();
+        void applyRepositoryChanges();
+        void clearRepositoryChanges();
+        void addRepositoryChange(const RepositoryChangeModel& model);
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 
@@ -79,4 +82,11 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool compactView;
 
         QPoint dragStartPosition;
+
+        QList<RepositoryChangeModel> repositoryChanges;
+
+        QString currentItemStoryId();
+        void removeRepositoryItem(const QString& storyId);
+        bool containsStoryId(const QString& storyId, const QString& data);
+        void addRepositoryItem(const QString& storyId, const QString& data);
 };
