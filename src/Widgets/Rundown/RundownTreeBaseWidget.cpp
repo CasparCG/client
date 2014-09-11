@@ -874,14 +874,6 @@ void RundownTreeBaseWidget::selectItemBelow()
     }
 }
 
-
-
-
-
-
-
-
-
 void RundownTreeBaseWidget::applyRepositoryChanges()
 {
     qDebug() << "RundownTreeBaseWidget::applyRepositoryChanges()";
@@ -997,9 +989,6 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-    bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
-    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
-
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
         if (parentValue.first != L"item")
@@ -1039,7 +1028,6 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
 {
     for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
     {
-        qDebug() << i;
         QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
         AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
         if (widget->getCommand()->getStoryId() == storyId)

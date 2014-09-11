@@ -445,7 +445,7 @@
       <rect>
        <x>178</x>
        <y>381</y>
-       <width>221</width>
+       <width>151</width>
        <height>20</height>
       </rect>
      </property>
@@ -597,7 +597,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Mark used items (Windows only)</string>
+      <string>Mark used items (Windows and Linux only)</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxShowAudioLevels">
@@ -793,6 +793,22 @@
      </property>
      <property name="text">
       <string>%</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxAutoUpdate">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>371</y>
+       <width>271</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Update repository rundowns automatically</string>
      </property>
     </widget>
    </widget>
@@ -3488,8 +3504,8 @@
    <slot>showAddDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>784</y>
+     <x>152</x>
+     <y>806</y>
     </hint>
     <hint type="destinationlabel">
      <x>39</x>
@@ -3504,8 +3520,8 @@
    <slot>removeDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>192</x>
-     <y>784</y>
+     <x>194</x>
+     <y>806</y>
     </hint>
     <hint type="destinationlabel">
      <x>80</x>
@@ -3776,8 +3792,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>370</x>
-     <y>254</y>
+     <x>372</x>
+     <y>256</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -3792,8 +3808,8 @@
    <slot>gpi4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>282</y>
+     <x>371</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel">
      <x>634</x>
@@ -3808,8 +3824,8 @@
    <slot>gpi5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>310</y>
+     <x>371</x>
+     <y>326</y>
     </hint>
     <hint type="destinationlabel">
      <x>602</x>
@@ -3968,8 +3984,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>577</y>
+     <x>223</x>
+     <y>597</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3984,8 +4000,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>576</y>
+     <x>447</x>
+     <y>598</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4000,8 +4016,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>240</x>
-     <y>612</y>
+     <x>242</x>
+     <y>632</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4016,8 +4032,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>611</y>
+     <x>447</x>
+     <y>633</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4032,8 +4048,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>647</y>
+     <x>215</x>
+     <y>667</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4048,8 +4064,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>646</y>
+     <x>447</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4064,8 +4080,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>682</y>
+     <x>215</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4080,8 +4096,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>681</y>
+     <x>447</x>
+     <y>703</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4096,8 +4112,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>717</y>
+     <x>215</x>
+     <y>737</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4112,8 +4128,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>716</y>
+     <x>447</x>
+     <y>738</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4128,8 +4144,8 @@
    <slot>baudRateChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>123</y>
+     <x>213</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4208,8 +4224,8 @@
    <slot>showImportDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>655</x>
-     <y>784</y>
+     <x>657</x>
+     <y>806</y>
     </hint>
     <hint type="destinationlabel">
      <x>691</x>
@@ -4464,8 +4480,8 @@
    <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>346</x>
-     <y>432</y>
+     <x>341</x>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4512,8 +4528,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>293</x>
-     <y>779</y>
+     <x>295</x>
+     <y>778</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4528,8 +4544,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>294</x>
-     <y>738</y>
+     <x>296</x>
+     <y>737</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4649,6 +4665,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxAutoUpdate</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>autoUpdateChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>409</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>693</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4709,5 +4741,6 @@
   <slot>disableAudioInStreamChanged(int)</slot>
   <slot>networkCacheChanged(int)</slot>
   <slot>streamQualityChanged(int)</slot>
+  <slot>autoUpdateChanged(int)</slot>
  </slots>
 </ui>

@@ -57,7 +57,7 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false), autoUpdateRundown(false),
       currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
       downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -65,6 +65,8 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 {
     setupUi(this);
     setupMenus();
+
+    this->autoUpdateRundown = (DatabaseManager::getInstance().getConfigurationByName("AutoUpdateRundown").getValue() == "true") ? true : false;
 
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
 
@@ -650,7 +652,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1, Status: %2").arg(device.getAddress()).arg((device.isConnected() == true) ? "Connected" : "Disconnected");
+    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1 (%2)").arg(device.getAddress()).arg((device.isConnected() == true) ? "connected" : "disconnected");
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();
@@ -661,9 +663,10 @@ void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& devic
 
 void RundownTreeWidget::repositoryChanged(const RepositoryChangeModel& model, RepositoryDevice& device)
 {
-    //qDebug() << QString("RundownTreeWidget::repositoryChanged: %1 %2 %3").arg(model.getType()).arg(model.getStoryId()).arg(model.getData());
-
     this->treeWidgetRundown->addRepositoryChange(model);
+
+    if (this->repositoryRundown && this->autoUpdateRundown)
+        this->treeWidgetRundown->applyRepositoryChanges();
 }
 
 void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEvent& event)
@@ -1037,6 +1040,9 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
         EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
         EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(false));
     }
+
+    if (this->repositoryRundown && this->autoUpdateRundown)
+        this->treeWidgetRundown->applyRepositoryChanges();
 }
 
 void RundownTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int index)

@@ -74,6 +74,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool enterPressed;
         bool allowRemoteRundownTriggering;
         bool repositoryRundown;
+        bool autoUpdateRundown;
 
         QString page;
         QString activeRundown;

@@ -427,19 +427,15 @@
 
 #progressBarOscTime
 {
-    border-color: lime;
+    border-color: rgba(0, 255, 0, 255);
     border-radius: 0px;
 }
 #progressBarOscTime::chunk
 {
     background-color: green;
-    /*background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 green, stop:1 lime);
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
-    border-radius: 2px;*/
 }
 
 /*
-<<<<<<< HEAD
  * Dialog backgrounds
  */
 #AboutDialog, #HelpDialog, #DeviceDialog, #ImportDeviceDialog, #TriCasterDeviceDialog, #ImportTriCasterDeviceDialog,
