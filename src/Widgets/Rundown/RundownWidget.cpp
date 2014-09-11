@@ -235,8 +235,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
-
         QFileInfo info(path);
         RundownTreeWidget* widget = new RundownTreeWidget(this);       
 
@@ -254,7 +252,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
         }
 
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
     }
 }
 
@@ -271,8 +268,6 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
-
         RundownTreeWidget* widget = new RundownTreeWidget(this);
 
         int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, path);
@@ -289,7 +284,6 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
         }
 
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
     }
 }
 

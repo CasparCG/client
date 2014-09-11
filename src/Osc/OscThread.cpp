@@ -13,5 +13,5 @@ void OscThread::run()
 
 void OscThread::stop()
 {
-    this->multiplexer->Break();
+    this->multiplexer->AsynchronousBreak();
 }

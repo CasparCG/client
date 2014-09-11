@@ -5,7 +5,7 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
- #include <QtCore/QUrl>
+#include <QtCore/QUrl>
 
 RrupDevice::RrupDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
@@ -22,6 +22,7 @@ RrupDevice::RrupDevice(const QString& address, int port, QObject* parent)
 
 RrupDevice::~RrupDevice()
 {
+    delete this->decoder;
 }
 
 void RrupDevice::connectDevice()

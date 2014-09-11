@@ -79,10 +79,12 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         int code;
         int state;
         bool connected;
-        QString line;
+        QString fragments;
         QString address;
         QString previousLine;
         bool disableCommands;
+
+        QTextDecoder* decoder;
 
         void parseLine(const QString& line);
         void parseHeader(const QString& line);

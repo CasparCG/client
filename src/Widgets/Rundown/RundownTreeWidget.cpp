@@ -569,6 +569,8 @@ void RundownTreeWidget::openRundown(const QString& path)
     QTime time;
     time.start();
 
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
+
     QFile file(path);
     if (file.open(QFile::ReadOnly | QIODevice::Text))
     {
@@ -605,10 +607,13 @@ void RundownTreeWidget::openRundown(const QString& path)
     qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
 
     this->activeRundown = path;
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownTreeWidget::openRundownFromUrl(const QString& path)
 {
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
     EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(false));
 
     this->networkManager = new QNetworkAccessManager(this);
@@ -652,6 +657,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
     EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(true));
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)

@@ -16,7 +16,8 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QPainter>
 
-#include <QDebug>
+#include <QtCore/QTime>
+#include <QtCore/QDebug>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent), compactView(false), theme("")
@@ -158,6 +159,9 @@ bool RundownTreeBaseWidget::pasteItemProperties()
 
 bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 {
+    QTime time;
+    time.start();
+
     std::wstringstream wstringstream;
     wstringstream << qApp->clipboard()->text().toStdWString();
 
@@ -222,7 +226,10 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
         }
 
         QTreeWidget::doItemsLayout(); // Refresh
+        QTreeWidget::repaint();
     }
+
+    qDebug() << QString("RundownTreeBaseWidget::pasteSelectedItems: Completed in %1").arg(time.elapsed());
 
     return true;
 }
@@ -1021,6 +1028,7 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
         }
 
         QTreeWidget::doItemsLayout(); // Refresh
+        QTreeWidget::repaint();
     }
 }
 
