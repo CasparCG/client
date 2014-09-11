@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundownMenu(const ReloadRundownMenuEvent&)), this, SLOT(reloadRundownMenu(const ReloadRundownMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -121,7 +122,7 @@ void MainWindow::setupMenu()
     this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
     this->discardRepositoryChangesAction = this->rundownMenu->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
     this->rundownMenu->addSeparator();
-    this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
+    this->reloadRundownAction = this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
     this->allowRemoteTriggeringAction->setCheckable(true);
@@ -162,6 +163,11 @@ void MainWindow::setupMenu()
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
     setMenuBar(this->menuBar);
+}
+
+void MainWindow::reloadRundownMenu(const ReloadRundownMenuEvent& event)
+{
+    this->reloadRundownAction->setEnabled(event.getEnabled());
 }
 
 void MainWindow::emptyRundown(const EmptyRundownEvent& event)

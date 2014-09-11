@@ -80,6 +80,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
 
     private:
         bool compactView;
+        QString theme;
 
         QPoint dragStartPosition;
 

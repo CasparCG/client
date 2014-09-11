@@ -19,8 +19,9 @@
 #include <QDebug>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent), compactView(false)
+    : QTreeWidget(parent), compactView(false), theme("")
 {
+    this->theme = DatabaseManager::getInstance().getConfigurationByName("Theme").getValue();
 }
 
 bool RundownTreeBaseWidget::getCompactView() const
@@ -245,7 +246,7 @@ bool RundownTreeBaseWidget::duplicateSelectedItems()
 
 void RundownTreeBaseWidget::checkEmptyRundown()
 {
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
+    if (this->theme == Appearance::CURVE_THEME)
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
     else
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
@@ -964,7 +965,9 @@ void RundownTreeBaseWidget::addRepositoryChange(const RepositoryChangeModel& mod
 
 void RundownTreeBaseWidget::checRepositoryChanges()
 {
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
+    qDebug() << "RundownTreeBaseWidget::checRepositoryChanges()";
+
+    if (this->theme == Appearance::CURVE_THEME)
         QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 1; }");
     else
         QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
@@ -1005,9 +1008,6 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
 
         if (parentWidget->isGroup())
         {
-            //bool expanded = parentValue.second.get(L"expanded", false);
-            //parentItem->setExpanded(expanded);
-
             BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
             {
                 AbstractRundownWidget* childWidget = readProperties(childValue.second);

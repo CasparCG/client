@@ -48,6 +48,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUnused(const MarkItemAsUnusedEvent&)), this, SLOT(markItemAsUnused(const MarkItemAsUnusedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)), this, SLOT(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)), this, SLOT(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundownMenu(const ReloadRundownMenuEvent&)), this, SLOT(reloadRundownMenu(const ReloadRundownMenuEvent&)));
 }
 
 void RundownWidget::setupMenus()
@@ -80,7 +81,7 @@ void RundownWidget::setupMenus()
     this->insertRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
     this->discardRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
+    this->reloadRundownAction = this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
     this->insertRepositoryChangesAction->setEnabled(false);
@@ -124,6 +125,11 @@ bool RundownWidget::checkForSaveBeforeQuit()
     }
 
     return true;
+}
+
+void RundownWidget::reloadRundownMenu(const ReloadRundownMenuEvent& event)
+{
+    this->reloadRundownAction->setEnabled(event.getEnabled());
 }
 
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)

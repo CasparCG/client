@@ -22,6 +22,7 @@
 #include "Events/Rundown/OpenRundownFromUrlMenuEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
+#include "Events/Rundown/ReloadRundownMenuEvent.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
@@ -52,6 +53,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QAction* allowRemoteTriggeringAction;
         QAction* insertRepositoryChangesAction;
         QAction* discardRepositoryChangesAction;
+        QAction* reloadRundownAction;
 
         void setupMenus();
 
@@ -93,4 +95,5 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT void saveRundown(const SaveRundownEvent&);
         Q_SLOT void activeRundownChanged(const ActiveRundownChangedEvent&);
         Q_SLOT void reloadRundown(const ReloadRundownEvent&);
+        Q_SLOT void reloadRundownMenu(const ReloadRundownMenuEvent&);
 };

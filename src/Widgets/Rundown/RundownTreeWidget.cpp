@@ -38,6 +38,7 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/SaveMenuEvent.h"
 #include "Events/Rundown/SaveAsMenuEvent.h"
+#include "Events/Rundown/ReloadRundownMenuEvent.h"
 #include "Models/RundownModel.h"
 
 #include <QtCore/QDebug>
@@ -608,6 +609,8 @@ void RundownTreeWidget::openRundown(const QString& path)
 
 void RundownTreeWidget::openRundownFromUrl(const QString& path)
 {
+    EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(false));
+
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(doOpenRundownFromUrl(QNetworkReply*)));
     this->networkManager->get(QNetworkRequest(QUrl(path)));
@@ -648,6 +651,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
+    EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(true));
 }
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)

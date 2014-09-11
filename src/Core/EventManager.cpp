@@ -66,6 +66,11 @@ void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
     emit openRundownMenu(event);
 }
 
+void EventManager::fireReloadRundownMenuEvent(const ReloadRundownMenuEvent& event)
+{
+    emit reloadRundownMenu(event);
+}
+
 void EventManager::fireExportPresetMenuEvent(const ExportPresetMenuEvent& event)
 {
     emit exportPresetMenu(event);
