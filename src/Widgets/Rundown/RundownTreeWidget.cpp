@@ -58,7 +58,7 @@
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false), autoUpdateRundown(false),
+      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
       currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
       downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -66,8 +66,6 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
 {
     setupUi(this);
     setupMenus();
-
-    this->autoUpdateRundown = (DatabaseManager::getInstance().getConfigurationByName("AutoUpdateRundown").getValue() == "true") ? true : false;
 
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
 
@@ -304,7 +302,6 @@ void RundownTreeWidget::pasteItemProperties(const PasteItemPropertiesEvent& even
 bool RundownTreeWidget::removeSelectedItems()
 {
     this->treeWidgetRundown->removeSelectedItems();
-    this->treeWidgetRundown->checkEmptyRundown();
 
     return true;
 }
@@ -337,10 +334,6 @@ void RundownTreeWidget::addPresetItem(const AddPresetItemEvent& event)
     qApp->clipboard()->setText(event.getPreset());
     pasteSelectedItems();
     selectItemBelow();
-
-    this->treeWidgetRundown->doItemsLayout(); // Refresh.
-
-    this->treeWidgetRundown->checkEmptyRundown();
 }
 
 void RundownTreeWidget::toggleCompactView(const CompactViewEvent& event)
@@ -592,17 +585,15 @@ void RundownTreeWidget::openRundown(const QString& path)
         // Set previous stored clipboard value.
         qApp->clipboard()->setText(latest);
 
-        file.close();
-
         qDebug() << QString("RundownTreeWidget::openRundown: Parsing rundown file completed in %1 msec").arg(time.elapsed());
+
+        file.close();
 
         if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
             this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
         this->treeWidgetRundown->setFocus();
     }
-
-    this->treeWidgetRundown->checkEmptyRundown();
 
     qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
 
@@ -645,7 +636,6 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
         this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
     this->treeWidgetRundown->setFocus();
-    this->treeWidgetRundown->checkEmptyRundown();
 
     const QString repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
 
@@ -674,9 +664,7 @@ void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& devic
 void RundownTreeWidget::repositoryChanged(const RepositoryChangeModel& model, RepositoryDevice& device)
 {
     this->treeWidgetRundown->addRepositoryChange(model);
-
-    if (this->repositoryRundown && this->autoUpdateRundown)
-        this->treeWidgetRundown->applyRepositoryChanges();
+    this->treeWidgetRundown->applyRepositoryChanges();
 }
 
 void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEvent& event)
@@ -685,6 +673,7 @@ void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEve
         return;
 
     this->treeWidgetRundown->applyRepositoryChanges();
+    this->treeWidgetRundown->checRepositoryChanges();
 }
 
 void RundownTreeWidget::discardRepositoryChanges(const DiscardRepositoryChangesEvent& event)
@@ -693,6 +682,7 @@ void RundownTreeWidget::discardRepositoryChanges(const DiscardRepositoryChangesE
         return;
 
     this->treeWidgetRundown->clearRepositoryChanges();
+    this->treeWidgetRundown->checRepositoryChanges();
 }
 
 void RundownTreeWidget::reloadRundown()
@@ -762,16 +752,12 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->writeEndElement();
             writer->writeEndDocument();
 
-            //qDebug() << QString(data);
-
             this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
             qDebug() << QString("RundownTreeWidget::saveRundown: Md5 hash is %1").arg(this->hexHash);
 
             file.write(data);
             file.close();
         }
-
-        this->treeWidgetRundown->checkEmptyRundown();
 
         this->activeRundown = path;
         EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));
@@ -1050,9 +1036,6 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
         EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
         EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(false));
     }
-
-    if (this->repositoryRundown && this->autoUpdateRundown)
-        this->treeWidgetRundown->applyRepositoryChanges();
 }
 
 void RundownTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int index)
@@ -1071,11 +1054,7 @@ bool RundownTreeWidget::duplicateSelectedItems()
 
 bool RundownTreeWidget::pasteSelectedItems()
 {
-    bool result = this->treeWidgetRundown->pasteSelectedItems(this->repositoryRundown);
-
-    this->treeWidgetRundown->checkEmptyRundown();
-
-    return result;
+    return this->treeWidgetRundown->pasteSelectedItems(this->repositoryRundown);
 }
 
 bool RundownTreeWidget::copySelectedItems() const

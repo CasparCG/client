@@ -229,6 +229,8 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
         QTreeWidget::repaint();
     }
 
+    checkEmptyRundown();
+
     qDebug() << QString("RundownTreeBaseWidget::pasteSelectedItems: Completed in %1").arg(time.elapsed());
 
     return true;
@@ -671,6 +673,15 @@ void RundownTreeBaseWidget::moveItemIntoGroup()
     }
 }
 
+void RundownTreeBaseWidget::setExpanded(bool expanded)
+{
+    QWidget* selectedWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+
+    if (rundownWidget->isGroup()) // Group.
+        rundownWidget->setExpanded(expanded);
+}
+
 void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Delete)
@@ -678,7 +689,7 @@ void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
     else if (event->key() == Qt::Key_Insert)
         applyRepositoryChanges();
     else if (event->key() == Qt::Key_Escape)
-        clearRepositoryChanges();
+        clearRepositoryChanges();  
     else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
         duplicateSelectedItems();
     else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
@@ -703,7 +714,14 @@ void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
     else if (event->key() == Qt::Key_Right && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
         moveItemIntoGroup();
     else
-        QTreeWidget::keyPressEvent(event);
+    {
+        if (event->key() == Qt::Key_Left)
+            setExpanded(false);
+        else if (event->key() == Qt::Key_Right)
+            setExpanded(true);
+
+        QTreeWidget::keyPressEvent(event);   
+    }
 }
 
 void RundownTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -909,7 +927,9 @@ void RundownTreeBaseWidget::applyRepositoryChanges()
         this->repositoryChanges.removeAt(index);
     }
 
-    checRepositoryChanges();
+    // Do we have updates which we can nott apply?
+    if (this->repositoryChanges.count() > 0)
+        checRepositoryChanges();
 }
 
 QString RundownTreeBaseWidget::currentItemStoryId()
@@ -959,21 +979,15 @@ void RundownTreeBaseWidget::clearRepositoryChanges()
     qDebug() << "RundownTreeBaseWidget::clearRepositoryChanges()";
 
     this->repositoryChanges.clear();
-
-    checRepositoryChanges();
 }
 
 void RundownTreeBaseWidget::addRepositoryChange(const RepositoryChangeModel& model)
 {
     this->repositoryChanges.append(model);
-
-    checRepositoryChanges();
 }
 
 void RundownTreeBaseWidget::checRepositoryChanges()
 {
-    qDebug() << "RundownTreeBaseWidget::checRepositoryChanges()";
-
     if (this->theme == Appearance::CURVE_THEME)
         QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 1; }");
     else
@@ -1028,7 +1042,7 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
         }
 
         QTreeWidget::doItemsLayout(); // Refresh
-        QTreeWidget::repaint();
+        //QTreeWidget::repaint();
     }
 }
 
@@ -1058,6 +1072,4 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
             delete item;
         }
     }
-
-    checkEmptyRundown();
 }

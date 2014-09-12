@@ -117,7 +117,6 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableAudioInStream', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StreamQuality', '25')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('NetworkCache', '1000')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoUpdateRundown', 'false')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else

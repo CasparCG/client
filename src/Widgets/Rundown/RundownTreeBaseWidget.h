@@ -70,6 +70,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void applyRepositoryChanges();
         void clearRepositoryChanges();
         void addRepositoryChange(const RepositoryChangeModel& model);
+        void setExpanded(bool expanded);
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 

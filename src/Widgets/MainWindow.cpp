@@ -119,8 +119,8 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
-    this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
-    this->discardRepositoryChangesAction = this->rundownMenu->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
+    this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()), QKeySequence::fromString("Ins"));
+    this->discardRepositoryChangesAction = this->rundownMenu->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()), QKeySequence::fromString("Esc"));
     this->rundownMenu->addSeparator();
     this->reloadRundownAction = this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
     this->rundownMenu->addSeparator();

@@ -73,8 +73,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxClearDelayedCommandsOnAutoStep->setChecked(clearDelayedCommandsOnAutoStep);
     bool markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
     this->checkBoxMarkUsedItems->setChecked(markUsedItems);
-    bool autoUpdateRundown = (DatabaseManager::getInstance().getConfigurationByName("AutoUpdateRundown").getValue() == "true") ? true : false;
-    this->checkBoxAutoUpdate->setChecked(autoUpdateRundown);
 
     bool showPreviewPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowPreviewPanel").getValue() == "true") ? true : false;
     this->checkBoxShowPreview->setChecked(showPreviewPanel);
@@ -815,12 +813,6 @@ void SettingsDialog::themeChanged(QString theme)
 void SettingsDialog::rundownRepositoryChanged()
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RundownRepository", this->lineEditRundownRepository->text()));
-}
-
-void SettingsDialog::autoUpdateChanged(int state)
-{
-    QString autoUpdate = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "AutoUpdateRundown", autoUpdate));;
 }
 
 void SettingsDialog::previewOnAutoStepChanged(int state)
