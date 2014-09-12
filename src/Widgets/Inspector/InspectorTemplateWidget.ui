@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>264</width>
-    <height>518</height>
+    <height>478</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -209,6 +209,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>24</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTriggerOnNext">
+       <property name="text">
+        <string>Trigger on next</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxTriggerOnNext">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerTriggerOnNext2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayoutData">
@@ -388,7 +441,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>174</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -404,7 +457,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>202</y>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>211</x>
@@ -451,8 +504,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>143</y>
+     <x>252</x>
+     <y>294</y>
     </hint>
     <hint type="destinationlabel">
      <x>263</x>
@@ -487,8 +540,24 @@
      <y>102</y>
     </hint>
     <hint type="destinationlabel">
-     <x>273</x>
+     <x>263</x>
      <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTriggerOnNext</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorTemplateWidget</receiver>
+   <slot>triggerOnNextChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>121</y>
     </hint>
    </hints>
   </connection>
@@ -502,5 +571,6 @@
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
   <slot>useUppercaseDataChanged(int)</slot>
+  <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

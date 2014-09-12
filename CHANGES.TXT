@@ -9,6 +9,7 @@ CasparCG Client 2.0.7 BETA 4
 - NEW: Support for copy (shift+c) / paste (shift+v) item properties.
 - NEW: Library filter also effect the target combo in the output panel.
 - NEW: Added support for preview the key signal in the live view.
+- NEW: Added support for trigger on next for templates.
 - UPDATE: Changed the default setting for delay and duration to milliseconds.
 - UPDATE: UI changes, including issue #82. 
 - UPDATE: Trigger changes to the library filter automatilly.
