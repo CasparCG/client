@@ -5,10 +5,10 @@
 
 #include "Global.h"
 
-#include "Models/RepositoryChangeModel.h"
-
 #include "OscSubscription.h"
 #include "Events/AddPresetItemEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
+#include "Models/RepositoryChangeModel.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -82,6 +82,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
     private:
         bool compactView;
         QString theme;
+        bool lock;
 
         QPoint dragStartPosition;
 
@@ -91,4 +92,5 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void removeRepositoryItem(const QString& storyId);
         bool containsStoryId(const QString& storyId, const QString& data);
         void addRepositoryItem(const QString& storyId, const QString& data);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

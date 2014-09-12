@@ -567,6 +567,8 @@ void RundownTreeWidget::openRundown(const QString& path)
     QFile file(path);
     if (file.open(QFile::ReadOnly | QIODevice::Text))
     {
+        this->activeRundown = path;
+
         QTextStream stream(&file);
         stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
@@ -593,11 +595,9 @@ void RundownTreeWidget::openRundown(const QString& path)
             this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
         this->treeWidgetRundown->setFocus();
+
+        qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
     }
-
-    qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
-
-    this->activeRundown = path;
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
@@ -637,9 +637,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
     this->treeWidgetRundown->setFocus();
 
-    const QString repositoryUrl = DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue();
-
-    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(repositoryUrl).host()));
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(reply->request().url().host()));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
     this->repositoryDevice->connectDevice();

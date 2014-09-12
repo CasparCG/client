@@ -20,9 +20,11 @@
 #include <QtCore/QDebug>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent), compactView(false), theme("")
+    : QTreeWidget(parent), compactView(false), theme(""), lock(false)
 {
     this->theme = DatabaseManager::getInstance().getConfigurationByName("Theme").getValue();
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
 }
 
 bool RundownTreeBaseWidget::getCompactView() const
@@ -734,6 +736,9 @@ void RundownTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void RundownTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 
@@ -900,9 +905,16 @@ void RundownTreeBaseWidget::selectItemBelow()
     }
 }
 
+void RundownTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
+}
+
 void RundownTreeBaseWidget::applyRepositoryChanges()
 {
     qDebug() << "RundownTreeBaseWidget::applyRepositoryChanges()";
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Updating rundown..."));
 
     // Get the current selected item story id.
     QString currentStoryId = currentItemStoryId();
@@ -913,7 +925,7 @@ void RundownTreeBaseWidget::applyRepositoryChanges()
         const RepositoryChangeModel& model = this->repositoryChanges.at(index);
 
         // Skip update if ADD or REMOVE contians the current selected item story id.
-        if (model.getStoryId() == currentStoryId || containsStoryId(currentStoryId, model.getData()))
+        if ((model.getType() == "REMOVE" && model.getStoryId() == currentStoryId) || (model.getType() == "ADD" && containsStoryId(currentStoryId, model.getData())))
         {
             index++;
             continue;
@@ -930,6 +942,8 @@ void RundownTreeBaseWidget::applyRepositoryChanges()
     // Do we have updates which we can nott apply?
     if (this->repositoryChanges.count() > 0)
         checRepositoryChanges();
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 QString RundownTreeBaseWidget::currentItemStoryId()
@@ -1003,7 +1017,10 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
         QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
         AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
         if (widget->getCommand()->getStoryId() == storyId)
+        {
             row = QTreeWidget::indexFromItem(item).row();
+            break; // We have found the last story id in the rundown.
+        }
     }
 
     int offset = 1;

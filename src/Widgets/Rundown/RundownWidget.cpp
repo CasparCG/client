@@ -235,12 +235,13 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
 
     if (!path.isEmpty())
     {
-        QFileInfo info(path);
         RundownTreeWidget* widget = new RundownTreeWidget(this);       
 
-        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, info.baseName());
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
         this->tabWidgetRundown->setTabToolTip(index, path);
         this->tabWidgetRundown->setCurrentIndex(index);
+
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
 
         widget->openRundown(path);
 
@@ -250,8 +251,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
             EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
         }
-
-        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
     }
 }
 
@@ -270,9 +269,11 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
     {
         RundownTreeWidget* widget = new RundownTreeWidget(this);
 
-        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, path);
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
         this->tabWidgetRundown->setTabToolTip(index, path);
         this->tabWidgetRundown->setCurrentIndex(index);
+
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
 
         widget->openRundownFromUrl(path);
 
@@ -281,9 +282,7 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
             EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
-        }
-
-        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
+        } 
     }
 }
 
@@ -340,7 +339,7 @@ void RundownWidget::saveRundown(const SaveRundownEvent& event)
 void RundownWidget::activeRundownChanged(const ActiveRundownChangedEvent& event)
 {
     QFileInfo info(event.getPath());
-    this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), info.baseName());
+    this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), (event.getPath().startsWith("http") == true) ? event.getPath().split("/").last() : info.baseName());
 }
 
 void RundownWidget::createNewRundown()
