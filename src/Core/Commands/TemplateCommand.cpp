@@ -5,7 +5,7 @@
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),
       flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(Template::DEFAULT_USE_STORED_DATA),
-      useUppercaseData(Template::DEFAULT_USE_UPPERCASE_DATA), templateName(Template::DEFAULT_TEMPLATENAME)
+      useUppercaseData(Template::DEFAULT_USE_UPPERCASE_DATA), templateName(Template::DEFAULT_TEMPLATENAME), triggerOnNext(Template::DEFAULT_TRIGGER_ON_NEXT)
 {
     this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }
@@ -70,6 +70,11 @@ const QList<TemplateDataModel>& TemplateCommand::getTemplateDataModels() const
     return this->models;
 }
 
+bool TemplateCommand::getTriggerOnNext() const
+{
+    return this->triggerOnNext;
+}
+
 void TemplateCommand::setFlashlayer(int flashlayer)
 {
     this->flashlayer = flashlayer;
@@ -106,6 +111,12 @@ void TemplateCommand::setTemplateDataModels(const QList<TemplateDataModel>& mode
     emit templateDataChanged(this->models);
 }
 
+void TemplateCommand::setTriggerOnNext(bool triggerOnNext)
+{
+    this->triggerOnNext = triggerOnNext;
+    emit triggerOnNextChanged(this->triggerOnNext);
+}
+
 void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -114,6 +125,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     setInvoke(QString::fromStdWString(pt.get(L"invoke", Template::DEFAULT_INVOKE.toStdWString())));
     setUseStoredData(pt.get(L"usestoreddata", Template::DEFAULT_USE_STORED_DATA));
     setUseUppercaseData(pt.get(L"useuppercasedata", Template::DEFAULT_USE_UPPERCASE_DATA));
+    setTriggerOnNext(pt.get(L"triggeronnext", Video::DEFAULT_TRIGGER_ON_NEXT));
 
     if (pt.count(L"templatedata") > 0)
     {
@@ -133,6 +145,7 @@ void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("invoke", this->getInvoke());
     writer->writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");
     writer->writeTextElement("useuppercasedata", (getUseUppercaseData() == true) ? "true" : "false");
+    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 
     if (this->models.count() > 0)
     {

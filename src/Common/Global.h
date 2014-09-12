@@ -254,6 +254,7 @@ namespace Template
     static const QString DEFAULT_TEMPLATENAME = "";
     static const bool DEFAULT_USE_STORED_DATA = false;
     static const bool DEFAULT_USE_UPPERCASE_DATA = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace DeckLinkInput

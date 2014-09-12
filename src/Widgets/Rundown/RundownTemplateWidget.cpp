@@ -178,6 +178,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
     command->setTemplateDataModels(this->command.getTemplateDataModels());
     command->setUseStoredData(this->command.getUseStoredData());
     command->setUseUppercaseData(this->command.getUseUppercaseData());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
@@ -297,7 +298,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play)
+    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
     {
         if (this->command.getDelay() < 0)
             return true;
@@ -361,7 +362,8 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
-                this->executeStartTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                this->executeStartTimer.setInterval(startDelay);
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
@@ -374,7 +376,12 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
     else if (type == Playout::PlayoutType::Load)
         executeLoad();
     else if (type == Playout::PlayoutType::Next)
-        executeNext();
+    {
+        if (this->command.getTriggerOnNext())
+            executePlay();
+        else
+            executeNext();
+    }
     else if (type == Playout::PlayoutType::Invoke)
         executeInvoke();
     else if (type == Playout::PlayoutType::Clear)

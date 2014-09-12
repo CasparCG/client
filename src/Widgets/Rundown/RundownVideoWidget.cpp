@@ -346,14 +346,14 @@ bool RundownVideoWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play)
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {
         if (this->command.getDelay() < 0)
             return true;
 
         if (this->command.getAutoPlay())
             executePlay();
-        else if (!this->command.getTriggerOnNext() || type == Playout::PlayoutType::Update)
+        else
         {
             this->executeStartTimer.setInterval(0);
             this->executeStopTimer.setInterval(0);
