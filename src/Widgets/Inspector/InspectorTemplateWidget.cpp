@@ -102,6 +102,7 @@ void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent
         this->lineEditInvoke->setText(this->command->getInvoke());
         this->checkBoxUseStoredData->setChecked(this->command->getUseStoredData());
         this->checkBoxUseUppercaseData->setChecked(this->command->getUseUppercaseData());
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
 
         for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
             delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
@@ -128,6 +129,7 @@ void InspectorTemplateWidget::blockAllSignals(bool block)
     this->lineEditInvoke->blockSignals(block);
     this->checkBoxUseStoredData->blockSignals(block);
     this->checkBoxUseUppercaseData->blockSignals(block);
+    this->checkBoxTriggerOnNext->blockSignals(block);
     this->treeWidgetTemplateData->blockSignals(block);
 }
 
@@ -259,6 +261,11 @@ void InspectorTemplateWidget::useStoredDataChanged(int state)
 void InspectorTemplateWidget::useUppercaseDataChanged(int state)
 {
     this->command->setUseUppercaseData((state == Qt::Checked) ? true : false);
+}
+
+void InspectorTemplateWidget::triggerOnNextChanged(int state)
+{
+    this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
 void InspectorTemplateWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)

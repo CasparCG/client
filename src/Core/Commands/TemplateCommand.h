@@ -30,6 +30,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         const QString& getTemplateName() const;
         const QString getTemplateData() const;
         const QList<TemplateDataModel>& getTemplateDataModels() const;
+        bool getTriggerOnNext() const;
 
         void setFlashlayer(int flashlayer); 
         void setInvoke(const QString& invoke);
@@ -37,6 +38,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         void setUseUppercaseData(bool useUppercaseData);
         void setTemplateName(const QString& templateName);
         void setTemplateDataModels(const QList<TemplateDataModel>& models);
+        void setTriggerOnNext(bool triggerOnNext);
 
     private:
         int flashlayer;
@@ -45,6 +47,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         bool useUppercaseData;
         QString templateName;
         QList<TemplateDataModel> models;
+        bool triggerOnNext;
 
         Q_SIGNAL void flashlayerChanged(int);
         Q_SIGNAL void invokeChanged(const QString&);
@@ -52,4 +55,5 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         Q_SIGNAL void useUppercaseDataChanged(bool);
         Q_SIGNAL void templateNameChanged(const QString&);
         Q_SIGNAL void templateDataChanged(const QList<TemplateDataModel>&);
+        Q_SIGNAL void triggerOnNextChanged(bool);
 };
