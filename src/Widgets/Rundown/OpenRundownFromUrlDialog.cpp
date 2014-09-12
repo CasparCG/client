@@ -21,6 +21,7 @@ OpenRundownFromUrlDialog::OpenRundownFromUrlDialog(QWidget* parent)
 
     this->treeWidgetRundowns->headerItem()->setText(0, "");
     this->treeWidgetRundowns->setColumnWidth(0, 25);
+    this->treeWidgetRundowns->setColumnHidden(2, true);
     this->treeWidgetRundowns->setColumnHidden(3, true);
 
     this->networkManager = new QNetworkAccessManager(this);

@@ -177,6 +177,9 @@ void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 
 void MainWindow::statusbar(const StatusbarEvent& event)
 {
+    if (this->statusBar()->currentMessage() == event.getMessage())
+        return;
+
     this->statusBar()->showMessage(event.getMessage(), event.getTimeout());
 }
 
