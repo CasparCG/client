@@ -8,7 +8,6 @@
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
-#include "Events/Rundown/DiscardRepositoryChangesEvent.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QDebug>
@@ -79,13 +78,11 @@ void RundownWidget::setupMenus()
     this->allowRemoteTriggeringAction->setCheckable(true);
     this->contextMenuRundownDropdown->addSeparator();
     this->insertRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
-    this->discardRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Discard Repository Changes", this, SLOT(discardRepositoryChanges()));
     this->contextMenuRundownDropdown->addSeparator();
     this->reloadRundownAction = this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
     this->insertRepositoryChangesAction->setEnabled(false);
-    this->discardRepositoryChangesAction->setEnabled(false);
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -179,7 +176,6 @@ void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)
     this->saveAction->setEnabled(!event.getRepositoryRundown());
     this->saveAsAction->setEnabled(!event.getRepositoryRundown());
     this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
-    this->discardRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
     this->insertRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
 }
 
@@ -420,11 +416,6 @@ void RundownWidget::remoteTriggering(bool enabled)
 void RundownWidget::insertRepositoryChanges()
 {
     EventManager::getInstance().fireInsertRepositoryChangesEvent(InsertRepositoryChangesEvent());
-}
-
-void RundownWidget::discardRepositoryChanges()
-{
-    EventManager::getInstance().fireDiscardRepositoryChangesEvent(DiscardRepositoryChangesEvent());
 }
 
 bool RundownWidget::selectTab(int index)

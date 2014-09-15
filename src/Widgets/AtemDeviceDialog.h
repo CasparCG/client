@@ -28,6 +28,7 @@ class WIDGETS_EXPORT AtemDeviceDialog : public QDialog, Ui::AtemDeviceDialog
 
     protected:
         void accept();
+        bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool editMode;

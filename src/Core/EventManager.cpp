@@ -26,11 +26,6 @@ void EventManager::fireInsertRepositoryChangesEvent(const InsertRepositoryChange
     emit insertRepositoryChanges(event);
 }
 
-void EventManager::fireDiscardRepositoryChangesEvent(const DiscardRepositoryChangesEvent& event)
-{
-    emit discardRepositoryChanges(event);
-}
-
 void EventManager::fireRepositoryRundownEvent(const RepositoryRundownEvent& event)
 {
     emit repositoryRundown(event);

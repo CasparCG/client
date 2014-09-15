@@ -172,7 +172,6 @@ HEADERS += \
     Events/Rundown/AllowRemoteTriggeringEvent.h \
     Events/Rundown/RepositoryRundownEvent.h \
     Models/RepositoryChangeModel.h \
-    Events/Rundown/DiscardRepositoryChangesEvent.h \
     Events/Rundown/InsertRepositoryChangesEvent.h \
     Events/Rundown/ReloadRundownMenuEvent.h
 
@@ -336,7 +335,6 @@ SOURCES += \
     Events/Rundown/AllowRemoteTriggeringEvent.cpp \
     Events/Rundown/RepositoryRundownEvent.cpp \
     Models/RepositoryChangeModel.cpp \
-    Events/Rundown/DiscardRepositoryChangesEvent.cpp \
     Events/Rundown/InsertRepositoryChangesEvent.cpp \
     Events/Rundown/ReloadRundownMenuEvent.cpp
 

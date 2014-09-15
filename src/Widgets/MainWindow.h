@@ -58,7 +58,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QAction* saveAsAction;
         QAction* allowRemoteTriggeringAction;
         QAction* insertRepositoryChangesAction;
-        QAction* discardRepositoryChangesAction;
         QAction* reloadRundownAction;
 
         void setupMenu();
@@ -98,7 +97,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
         Q_SLOT void insertRepositoryChanges();
-        Q_SLOT void discardRepositoryChanges();
         Q_SLOT void allowRemoteTriggering(bool);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void statusbar(const StatusbarEvent&);

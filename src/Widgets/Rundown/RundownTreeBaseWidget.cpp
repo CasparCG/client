@@ -689,9 +689,7 @@ void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
     if (event->key() == Qt::Key_Delete)
         removeSelectedItems();
     else if (event->key() == Qt::Key_Insert)
-        applyRepositoryChanges();
-    else if (event->key() == Qt::Key_Escape)
-        clearRepositoryChanges();  
+        applyRepositoryChanges(); 
     else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
         duplicateSelectedItems();
     else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
@@ -986,13 +984,6 @@ bool RundownTreeBaseWidget::containsStoryId(const QString& storyId, const QStrin
     }
 
     return false;
-}
-
-void RundownTreeBaseWidget::clearRepositoryChanges()
-{
-    qDebug() << "RundownTreeBaseWidget::clearRepositoryChanges()";
-
-    this->repositoryChanges.clear();
 }
 
 void RundownTreeBaseWidget::addRepositoryChange(const RepositoryChangeModel& model)

@@ -86,7 +86,6 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(copyItemProperties(const CopyItemPropertiesEvent&)), this, SLOT(copyItemProperties(const CopyItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(discardRepositoryChanges(const DiscardRepositoryChangesEvent&)), this, SLOT(discardRepositoryChanges(const DiscardRepositoryChangesEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -671,15 +670,6 @@ void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEve
         return;
 
     this->treeWidgetRundown->applyRepositoryChanges();
-    this->treeWidgetRundown->checRepositoryChanges();
-}
-
-void RundownTreeWidget::discardRepositoryChanges(const DiscardRepositoryChangesEvent& event)
-{
-    if (!this->active)
-        return;
-
-    this->treeWidgetRundown->clearRepositoryChanges();
     this->treeWidgetRundown->checRepositoryChanges();
 }
 

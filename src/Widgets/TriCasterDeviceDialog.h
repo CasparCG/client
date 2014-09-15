@@ -29,6 +29,7 @@ class WIDGETS_EXPORT TriCasterDeviceDialog : public QDialog, Ui::TriCasterDevice
 
     protected:
         void accept();
+        bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool editMode;

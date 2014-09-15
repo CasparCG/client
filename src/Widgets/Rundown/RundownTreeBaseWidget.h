@@ -68,7 +68,6 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void checkEmptyRundown();
         void checRepositoryChanges();
         void applyRepositoryChanges();
-        void clearRepositoryChanges();
         void addRepositoryChange(const RepositoryChangeModel& model);
         void setExpanded(bool expanded);
 

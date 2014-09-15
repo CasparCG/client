@@ -29,6 +29,7 @@ class WIDGETS_EXPORT OscOutputDialog : public QDialog, Ui::OscOutputDialog
 
     protected:
         void accept();
+        bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool editMode;
