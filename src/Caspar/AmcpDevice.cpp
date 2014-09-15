@@ -148,15 +148,12 @@ void AmcpDevice::parseLine(const QString& line)
             break;
         case AmcpDevice::ExpectingOneline:
             parseOneline(line);
-            this->previousLine = line;
             break;
         case AmcpDevice::ExpectingTwoline:
             parseTwoline(line);
-            this->previousLine = line;
             break;
         case AmcpDevice::ExpectingMultiline:
             parseMultiline(line);
-            this->previousLine = line;
             break;
         default:
             break;
@@ -194,26 +191,25 @@ void AmcpDevice::parseHeader(const QString& line)
 
 void AmcpDevice::parseOneline(const QString& line)
 {
-    if (line.length() > 0)
-         AmcpDevice::response.append(line);
-    else if (line.length() == 0 && AmcpDevice::response.count() > 0)
-        sendNotification();
+    AmcpDevice::response.append(line);
+
+    sendNotification();
 }
 
 void AmcpDevice::parseTwoline(const QString& line)
 {
-    if (line.length() > 0)
-         AmcpDevice::response.append(line);
-    else if (line.length() == 0 && AmcpDevice::response.count() > 1)
+    AmcpDevice::response.append(line);
+
+    if (AmcpDevice::response.count() == 2)
         sendNotification();
 }
 
 void AmcpDevice::parseMultiline(const QString& line)
 {
-    if (line.length() > 0)
-        AmcpDevice::response.append(line);
-    else if (line.length() == 0 && this->previousLine.length() == 0)
+    if (line.length() == 0)
         sendNotification();
+    else
+        AmcpDevice::response.append(line);
 }
 
 void AmcpDevice::resetDevice()

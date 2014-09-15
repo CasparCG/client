@@ -55,7 +55,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         void setActive(bool active);
         void openRundown(const QString& path);
-        void openRundownFromUrl(const QString& path);
+        void openRundownFromUrl(const QString& url);
         void saveRundown(bool saveAs);
         void reloadRundown();
         void setUsed(bool used);

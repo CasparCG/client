@@ -601,20 +601,26 @@ void RundownTreeWidget::openRundown(const QString& path)
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
-void RundownTreeWidget::openRundownFromUrl(const QString& path)
+void RundownTreeWidget::openRundownFromUrl(const QString& url)
 {
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
     EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(false));
 
+    this->activeRundown = url;
+
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host()));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
+    QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
+    this->repositoryDevice->connectDevice();
+
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(doOpenRundownFromUrl(QNetworkReply*)));
-    this->networkManager->get(QNetworkRequest(QUrl(path)));
+    this->networkManager->get(QNetworkRequest(QUrl(url)));
 }
 
 void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 {
     this->repositoryRundown = true;
-    this->activeRundown = reply->request().url().toString();
 
     // Save the latest value stored in the clipboard.
     QString latest = qApp->clipboard()->text();
@@ -635,11 +641,6 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
         this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 
     this->treeWidgetRundown->setFocus();
-
-    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(reply->request().url().host()));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
-    QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
-    this->repositoryDevice->connectDevice();
 
     EventManager::getInstance().fireSaveMenuEvent(SaveMenuEvent(false));
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));

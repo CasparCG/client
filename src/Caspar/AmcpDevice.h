@@ -81,7 +81,6 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         bool connected;
         QString fragments;
         QString address;
-        QString previousLine;
         bool disableCommands;
 
         QTextDecoder* decoder;
