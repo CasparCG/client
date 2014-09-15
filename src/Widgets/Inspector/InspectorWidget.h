@@ -6,6 +6,7 @@
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
@@ -35,4 +36,5 @@ class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void libraryItemSelected(const LibraryItemSelectedEvent&);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

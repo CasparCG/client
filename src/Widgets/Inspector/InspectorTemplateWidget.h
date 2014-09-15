@@ -53,4 +53,5 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
         Q_SLOT void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
+        Q_SLOT void triggerOnNextChanged(int);
 };

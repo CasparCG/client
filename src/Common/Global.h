@@ -141,7 +141,7 @@ namespace Appearance
 
 namespace Color
 {
-    static const QString DEFAULT_ACTIVE_COLOR = "Lime";
+    static const QString DEFAULT_ACTIVE_COLOR = "rgba(0, 255, 0, 255)";
     static const QString DEFAULT_CONSUMER_COLOR = "DarkSlateGray";
     static const QString DEFAULT_GPI_COLOR = "Chocolate";
     static const QString DEFAULT_GROUP_COLOR = "rgba(70, 115, 195, 255)";
@@ -254,6 +254,7 @@ namespace Template
     static const QString DEFAULT_TEMPLATENAME = "";
     static const bool DEFAULT_USE_STORED_DATA = false;
     static const bool DEFAULT_USE_UPPERCASE_DATA = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace DeckLinkInput

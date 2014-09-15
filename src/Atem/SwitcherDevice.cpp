@@ -70,7 +70,7 @@ bool SwitcherDevice::isConnected() const
     return this->connected;
 }
 
-const QString &SwitcherDevice::getAddress() const
+const QString& SwitcherDevice::getAddress() const
 {
     return this->address;
 }

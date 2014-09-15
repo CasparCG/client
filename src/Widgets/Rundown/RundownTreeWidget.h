@@ -8,6 +8,8 @@
 #include "Global.h"
 
 #include "GpiDevice.h"
+#include "RepositoryDevice.h"
+#include "Models/RepositoryChangeModel.h"
 
 #include "Events/AddPresetItemEvent.h"
 #include "Events/SaveAsPresetEvent.h"
@@ -18,11 +20,12 @@
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
+#include "Events/Rundown/InsertRepositoryChangesEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -33,6 +36,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
+#include <QtCore/QSharedPointer>
 
 #if QT_VERSION >= 0x050000
 #include <QtWidgets/QMenu>
@@ -57,7 +61,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         void setActive(bool active);
         void openRundown(const QString& path);
-        void openRundownFromUrl(const QString& path);
+        void openRundownFromUrl(const QString& url);
         void saveRundown(bool saveAs);
         void reloadRundown();
         void setUsed(bool used);
@@ -73,7 +77,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
     private:
         bool active;
         bool enterPressed;
-        bool allowRemoteTriggering;
+        bool allowRemoteRundownTriggering;
         bool repositoryRundown;
 
         QString page;
@@ -111,6 +115,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
+
+        QSharedPointer<RepositoryDevice> repositoryDevice;
 
         QNetworkAccessManager* networkManager;
 
@@ -186,7 +192,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
         Q_SLOT void toggleCompactView(const CompactViewEvent&);
         Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
-        Q_SLOT void remoteRundownTriggering(const RemoteRundownTriggeringEvent&);
+        Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
@@ -211,4 +217,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void pasteItemProperties(const PasteItemPropertiesEvent&);
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
+        Q_SLOT void repositoryConnectionStateChanged(RepositoryDevice&);
+        Q_SLOT void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
+        Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
 };

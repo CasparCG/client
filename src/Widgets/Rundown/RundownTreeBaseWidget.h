@@ -7,6 +7,8 @@
 
 #include "OscSubscription.h"
 #include "Events/AddPresetItemEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
+#include "Models/RepositoryChangeModel.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -57,7 +59,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
         void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer) const;
 
-        bool pasteSelectedItems();
+        bool pasteSelectedItems(bool repositoryRundown = false);
         bool pasteItemProperties();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
@@ -75,6 +77,10 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void selectItemAbove();
         void selectItemBelow();
         void checkEmptyRundown();
+        void checRepositoryChanges();
+        void applyRepositoryChanges();
+        void addRepositoryChange(const RepositoryChangeModel& model);
+        void setExpanded(bool expanded);
 
         virtual bool dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* data, Qt::DropAction action);
 
@@ -85,6 +91,16 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
 
     private:
         bool compactView;
+        QString theme;
+        bool lock;
 
         QPoint dragStartPosition;
+
+        QList<RepositoryChangeModel> repositoryChanges;
+
+        QString currentItemStoryId();
+        void removeRepositoryItem(const QString& storyId);
+        bool containsStoryId(const QString& storyId, const QString& data);
+        void addRepositoryItem(const QString& storyId, const QString& data);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

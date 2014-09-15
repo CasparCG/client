@@ -104,7 +104,7 @@ void RundownGroupWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
-        this->labelGroupColor->move(this->labelGroupColor->x(), Rundown::COMPACT_ITEM_HEIGHT - 2);
+        this->labelGroupColor->move(this->labelGroupColor->x(), Rundown::COMPACT_ITEM_HEIGHT - 1);
         this->labelIcon->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelAutoStep->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
@@ -112,7 +112,7 @@ void RundownGroupWidget::setCompactView(bool compactView)
     }
     else
     {
-        this->labelGroupColor->move(this->labelGroupColor->x(), Rundown::DEFAULT_ITEM_HEIGHT - 2);
+        this->labelGroupColor->move(this->labelGroupColor->x(), Rundown::DEFAULT_ITEM_HEIGHT - 1);
         this->labelIcon->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelAutoStep->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
@@ -145,6 +145,11 @@ LibraryModel* RundownGroupWidget::getLibraryModel()
 QString RundownGroupWidget::getColor() const
 {
     return this->color;
+}
+
+void RundownGroupWidget::setExpanded(bool expanded)
+{
+    this->labelGroupColor->setVisible(expanded);
 }
 
 void RundownGroupWidget::setColor(const QString& color)

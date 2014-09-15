@@ -7,6 +7,7 @@ SUBDIRS += \
     TriCaster \
     Gpi \
     Osc \
+    Repository \
     Core \
     Widgets \
     Shell

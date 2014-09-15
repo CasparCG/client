@@ -931,7 +931,7 @@ QTabBar::tab:first
 }
 QTabBar::tab:selected
 {
-    background-color: rgba(70, 115, 195, 255); /*rgba(0, 121, 203, 255);*/
+    background-color: rgba(70, 115, 195, 255);
     border-bottom-width: 0px;
     padding-bottom: 4px;
 }
