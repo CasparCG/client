@@ -104,14 +104,14 @@ void AbstractCommand::setStoryId(const QString& storyId)
 
 void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    if (pt.count(L"channel") > 0) setChannel(pt.get<int>(L"channel", Output::DEFAULT_CHANNEL));
-    if (pt.count(L"videolayer") > 0) setVideolayer(pt.get<int>(L"videolayer", Output::DEFAULT_VIDEOLAYER));
-    if (pt.count(L"delay") > 0) setDelay(pt.get<int>(L"delay", Output::DEFAULT_DELAY));
-    if (pt.count(L"duration") > 0) setDuration(pt.get<int>(L"duration", Output::DEFAULT_DURATION));
-    if (pt.count(L"allowgpi") > 0) setAllowGpi(pt.get<bool>(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
-    if (pt.count(L"allowremotetriggering") > 0) setAllowRemoteTriggering(pt.get<bool>(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
-    if (pt.count(L"remotetriggerid") > 0) setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
-    if (pt.count(L"storyid") > 0) setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
+    setChannel(pt.get<int>(L"channel", Output::DEFAULT_CHANNEL));
+    setVideolayer(pt.get<int>(L"videolayer", Output::DEFAULT_VIDEOLAYER));
+    setDelay(pt.get<int>(L"delay", Output::DEFAULT_DELAY));
+    setDuration(pt.get<int>(L"duration", Output::DEFAULT_DURATION));
+    setAllowGpi(pt.get<bool>(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
+    setAllowRemoteTriggering(pt.get<bool>(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
+    setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
+    setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
 }
 
 void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
