@@ -608,7 +608,9 @@ void RundownTreeWidget::openRundownFromUrl(const QString& url)
 
     this->activeRundown = url;
 
-    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host()));
+    QString repositoryPort = DatabaseManager::getInstance().getConfigurationByName("RepositoryPort").getValue();
+
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host(), (repositoryPort.isEmpty() == true) ? Repository::DEFAULT_PORT : repositoryPort.toInt()));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
     this->repositoryDevice->connectDevice();
@@ -650,7 +652,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1 (%2)").arg(device.getAddress()).arg((device.isConnected() == true) ? "connected" : "disconnected");
+    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1:%2 (%3)").arg(device.getAddress()).arg(device.getPort()).arg((device.isConnected() == true) ? "connected" : "disconnected");
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();

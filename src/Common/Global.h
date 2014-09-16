@@ -45,6 +45,11 @@ namespace TriCaster
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
+namespace Repository
+{
+    static const int DEFAULT_PORT = 8250;
+}
+
 namespace Osc
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;

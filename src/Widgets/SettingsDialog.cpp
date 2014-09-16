@@ -66,7 +66,13 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
+
     this->lineEditRundownRepository->setText(DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue());
+    this->lineEditRepositoryPort->setPlaceholderText(QString("%1").arg(Repository::DEFAULT_PORT));
+    QString repositoryPort = DatabaseManager::getInstance().getConfigurationByName("RepositoryPort").getValue();
+    if (!repositoryPort.isEmpty())
+        this->lineEditRepositoryPort->setText(repositoryPort);
+
     bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
     this->checkBoxPreviewOnAutoStep->setChecked(previewOnAutoStep);
     bool clearDelayedCommandsOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
@@ -790,9 +796,16 @@ void SettingsDialog::oscPortChanged()
     if (oscPort.isEmpty())
         oscPort = Osc::DEFAULT_PORT;
 
-    qDebug() << "OSC port: " << oscPort;
-
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+}
+
+void SettingsDialog::repositoryPortChanged()
+{
+    QString repositoryPort = this->lineEditRepositoryPort->text().trimmed();
+    if (repositoryPort.isEmpty())
+        repositoryPort = Repository::DEFAULT_PORT;
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RepositoryPort", repositoryPort));
 }
 
 void SettingsDialog::delayTypeChanged(QString delayType)

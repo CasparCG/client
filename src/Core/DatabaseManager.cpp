@@ -107,6 +107,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('Theme', 'Flat')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RepositoryPort', '8250')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevelsPanel', 'true')");
