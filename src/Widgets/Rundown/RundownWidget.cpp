@@ -6,7 +6,8 @@
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/InsertRepositoryChangesEvent.h"
 
 #include <QtCore/QUuid>
 #include <QtCore/QDebug>
@@ -41,7 +42,8 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundown(const NewRundownEvent&)), this, SLOT(newRundown(const NewRundownEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeRundown(const CloseRundownEvent&)), this, SLOT(closeRundown(const CloseRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deleteRundown(const DeleteRundownEvent&)), this, SLOT(deleteRundown(const DeleteRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundown(const OpenRundownEvent&)), this, SLOT(openRundown(const OpenRundownEvent&)));
@@ -53,8 +55,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(markItemAsUnused(const MarkItemAsUnusedEvent&)), this, SLOT(markItemAsUnused(const MarkItemAsUnusedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)), this, SLOT(markAllItemsAsUsed(const MarkAllItemsAsUsedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)), this, SLOT(markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundownMenu(const ReloadRundownMenuEvent&)), this, SLOT(reloadRundownMenu(const ReloadRundownMenuEvent&)));
 }
 
 void RundownWidget::setupMenus()
@@ -68,25 +69,28 @@ void RundownWidget::setupMenus()
 
     this->contextMenuRundownDropdown = new QMenu(this);
     this->contextMenuRundownDropdown->setTitle("Dropdown");
-    this->newRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "New Rundown", this, SLOT(createNewRundown()));
-    this->openRundownAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown...", this, SLOT(openRundownFromDisk()));
-    this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
+    this->newRundownAction = this->contextMenuRundownDropdown->addAction("New Rundown", this, SLOT(createNewRundown()));
+    this->openRundownAction = this->contextMenuRundownDropdown->addAction("Open Rundown...", this, SLOT(openRundownFromDisk()));
+    this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction("Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->saveAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save", this, SLOT(saveRundownToDisk()));
-    this->saveAsAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Save As...", this, SLOT(saveAsRundownToDisk()));
+    this->saveAction = this->contextMenuRundownDropdown->addAction("Save", this, SLOT(saveRundownToDisk()));
+    this->saveAsAction = this->contextMenuRundownDropdown->addAction("Save As...", this, SLOT(saveAsRundownToDisk()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addMenu(this->contextMenuMark);
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Copy Item Properties", this, SLOT(copyItemProperties()));
     this->contextMenuRundownDropdown->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Toggle Compact View", this, SLOT(toggleCompactView()));
-    this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
+    this->contextMenuRundownDropdown->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction("Allow Remote Triggering");
     this->allowRemoteTriggeringAction->setCheckable(true);
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Reload Rundown", this, SLOT(reloadCurrentRundown()));
+    this->insertRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Close Rundown", this, SLOT(closeCurrentRundown()));
+    this->reloadRundownAction = this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
+    this->insertRepositoryChangesAction->setEnabled(false);
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -95,7 +99,7 @@ void RundownWidget::setupMenus()
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
-    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
+    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
 }
 
 bool RundownWidget::checkForSaveBeforeQuit()
@@ -128,6 +132,11 @@ bool RundownWidget::checkForSaveBeforeQuit()
     return true;
 }
 
+void RundownWidget::reloadRundownMenu(const ReloadRundownMenuEvent& event)
+{
+    this->reloadRundownAction->setEnabled(event.getEnabled());
+}
+
 void RundownWidget::newRundownMenu(const NewRundownMenuEvent& event)
 {
     this->newRundownAction->setEnabled(event.getEnabled());
@@ -157,7 +166,7 @@ void RundownWidget::newRundown(const NewRundownEvent& event)
     }
 }
 
-void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void RundownWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
 {
     // We do not want to trigger check changed event.
     this->allowRemoteTriggeringAction->blockSignals(true);
@@ -168,6 +177,14 @@ void RundownWidget::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEve
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon());
     else
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
+}
+
+void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->saveAction->setEnabled(!event.getRepositoryRundown());
+    this->saveAsAction->setEnabled(!event.getRepositoryRundown());
+    this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
+    this->insertRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
 }
 
 void RundownWidget::closeRundown(const CloseRundownEvent& event)
@@ -222,14 +239,13 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
-
-        QFileInfo info(path);
         RundownTreeWidget* widget = new RundownTreeWidget(this);       
 
-        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, info.baseName());
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
         this->tabWidgetRundown->setTabToolTip(index, path);
         this->tabWidgetRundown->setCurrentIndex(index);
+
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
 
         widget->openRundown(path);
 
@@ -239,9 +255,6 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
             EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
         }
-
-        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
     }
 }
 
@@ -258,13 +271,13 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
 
     if (!path.isEmpty())
     {
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
-
         RundownTreeWidget* widget = new RundownTreeWidget(this);
 
-        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, path);
+        int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
         this->tabWidgetRundown->setTabToolTip(index, path);
         this->tabWidgetRundown->setCurrentIndex(index);
+
+        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
 
         widget->openRundownFromUrl(path);
 
@@ -273,10 +286,7 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
             EventManager::getInstance().fireNewRundownMenuEvent(NewRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
             EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
-        }
-
-        EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(path));
-        EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+        } 
     }
 }
 
@@ -325,16 +335,6 @@ void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
-void RundownWidget::saveMenu(const SaveMenuEvent& event)
-{
-    this->saveAction->setEnabled(event.getEnabled());
-}
-
-void RundownWidget::saveAsMenu(const SaveAsMenuEvent& event)
-{
-    this->saveAsAction->setEnabled(event.getEnabled());
-}
-
 void RundownWidget::saveRundown(const SaveRundownEvent& event)
 {
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->saveRundown(event.getSaveAs());
@@ -343,7 +343,7 @@ void RundownWidget::saveRundown(const SaveRundownEvent& event)
 void RundownWidget::activeRundownChanged(const ActiveRundownChangedEvent& event)
 {
     QFileInfo info(event.getPath());
-    this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), info.baseName());
+    this->tabWidgetRundown->setTabText(this->tabWidgetRundown->currentIndex(), (event.getPath().startsWith("http") == true) ? event.getPath().split("/").last() : info.baseName());
 }
 
 void RundownWidget::createNewRundown()
@@ -416,10 +416,14 @@ void RundownWidget::markAllItemsAsUnusedInRundown()
     EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
-void RundownWidget::allowRemoteTriggering(bool enabled)
+void RundownWidget::remoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(enabled));
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(enabled));
+}
+
+void RundownWidget::insertRepositoryChanges()
+{
+    EventManager::getInstance().fireInsertRepositoryChangesEvent(InsertRepositoryChangesEvent());
 }
 
 bool RundownWidget::selectTab(int index)

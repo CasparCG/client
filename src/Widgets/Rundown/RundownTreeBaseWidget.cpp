@@ -5,8 +5,8 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Commands/VideoCommand.h"
-#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -23,11 +23,15 @@
 #include <QtGui/QPainter>
 #endif
 
-#include <QDebug>
+#include <QtCore/QTime>
+#include <QtCore/QDebug>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent), compactView(false)
+    : QTreeWidget(parent), compactView(false), theme(""), lock(false)
 {
+    this->theme = DatabaseManager::getInstance().getConfigurationByName("Theme").getValue();
+
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
 }
 
 bool RundownTreeBaseWidget::getCompactView() const
@@ -162,8 +166,11 @@ bool RundownTreeBaseWidget::pasteItemProperties()
     return true;
 }
 
-bool RundownTreeBaseWidget::pasteSelectedItems()
+bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 {
+    QTime time;
+    time.start();
+
     std::wstringstream wstringstream;
     wstringstream << qApp->clipboard()->text().toStdWString();
 
@@ -172,8 +179,9 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
     bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(allowRemoteTriggering));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(allowRemoteTriggering));
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
+
+    EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(repositoryRundown));
 
     BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
     {
@@ -227,7 +235,12 @@ bool RundownTreeBaseWidget::pasteSelectedItems()
         }
 
         QTreeWidget::doItemsLayout(); // Refresh
+        QTreeWidget::repaint();
     }
+
+    checkEmptyRundown();
+
+    qDebug() << QString("RundownTreeBaseWidget::pasteSelectedItems: Completed in %1").arg(time.elapsed());
 
     return true;
 }
@@ -251,7 +264,7 @@ bool RundownTreeBaseWidget::duplicateSelectedItems()
 
 void RundownTreeBaseWidget::checkEmptyRundown()
 {
-    if (DatabaseManager::getInstance().getConfigurationByName("Theme").getValue() == Appearance::CURVE_THEME)
+    if (this->theme == Appearance::CURVE_THEME)
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 1; }");
     else
         QTreeWidget::setStyleSheet((QTreeWidget::invisibleRootItem()->childCount() == 0) ? "#treeWidgetRundown { border-width: 1; border-color: firebrick; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
@@ -276,7 +289,7 @@ void RundownTreeBaseWidget::removeSelectedItems()
             }
         }
 
-        // Remove our items from the auto play queue if they exists.
+        // Remove our items from the AutoPlay queue if they exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
 
         delete widget;
@@ -669,10 +682,21 @@ void RundownTreeBaseWidget::moveItemIntoGroup()
     }
 }
 
+void RundownTreeBaseWidget::setExpanded(bool expanded)
+{
+    QWidget* selectedWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+
+    if (rundownWidget->isGroup()) // Group.
+        rundownWidget->setExpanded(expanded);
+}
+
 void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Delete)
         removeSelectedItems();
+    else if (event->key() == Qt::Key_Insert)
+        applyRepositoryChanges(); 
     else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
         duplicateSelectedItems();
     else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
@@ -697,7 +721,14 @@ void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
     else if (event->key() == Qt::Key_Right && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
         moveItemIntoGroup();
     else
-        QTreeWidget::keyPressEvent(event);
+    {
+        if (event->key() == Qt::Key_Left)
+            setExpanded(false);
+        else if (event->key() == Qt::Key_Right)
+            setExpanded(true);
+
+        QTreeWidget::keyPressEvent(event);   
+    }
 }
 
 void RundownTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -710,6 +741,9 @@ void RundownTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void RundownTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 
@@ -873,5 +907,184 @@ void RundownTreeBaseWidget::selectItemBelow()
         QWidget* itemBelowWidget = QTreeWidget::itemWidget(itemBelow, 0);
         if (itemBelowWidget != NULL)
             dynamic_cast<AbstractRundownWidget*>(itemBelowWidget)->setActive(true);
+    }
+}
+
+void RundownTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
+}
+
+void RundownTreeBaseWidget::applyRepositoryChanges()
+{
+    qDebug() << "RundownTreeBaseWidget::applyRepositoryChanges()";
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Updating rundown..."));
+
+    // Get the current selected item story id.
+    QString currentStoryId = currentItemStoryId();
+
+    int index = 0;
+    while (index < this->repositoryChanges.count())
+    {
+        const RepositoryChangeModel& model = this->repositoryChanges.at(index);
+
+        // Skip update if ADD or REMOVE contians the current selected item story id.
+        if ((model.getType() == "REMOVE" && model.getStoryId() == currentStoryId) || (model.getType() == "ADD" && containsStoryId(currentStoryId, model.getData())))
+        {
+            index++;
+            continue;
+        }
+
+        if (model.getType() == "ADD")
+            addRepositoryItem(model.getStoryId(), model.getData());
+        else
+            removeRepositoryItem(model.getStoryId());
+
+        this->repositoryChanges.removeAt(index);
+    }
+
+    // Do we have updates which we can nott apply?
+    if (this->repositoryChanges.count() > 0)
+        checRepositoryChanges();
+
+    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+}
+
+QString RundownTreeBaseWidget::currentItemStoryId()
+{
+    QString currentStoryId;
+    if (QTreeWidget::currentItem() != NULL)
+    {
+        QTreeWidgetItem* currentItem = QTreeWidget::currentItem();
+        AbstractRundownWidget* currentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem, 0));
+        AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem->parent(), 0));
+
+        if (parentWidget != NULL)
+            currentStoryId = parentWidget->getCommand()->getStoryId(); // Group item.
+        else
+            currentStoryId = currentWidget->getCommand()->getStoryId(); // Group or top level item.
+    }
+
+    return currentStoryId;
+}
+
+bool RundownTreeBaseWidget::containsStoryId(const QString& storyId, const QString& data)
+{
+    if (!data.isEmpty())
+    {
+        std::wstringstream wstringstream;
+        wstringstream << data.toStdWString();
+
+        boost::property_tree::wptree pt;
+        boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+        {
+            if (parentValue.second.count(L"storyid") > 0)
+            {
+                QString storyid = QString::fromStdWString(parentValue.second.get(L"storyid", L""));
+                if (storyid == storyId)
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+void RundownTreeBaseWidget::addRepositoryChange(const RepositoryChangeModel& model)
+{
+    this->repositoryChanges.append(model);
+}
+
+void RundownTreeBaseWidget::checRepositoryChanges()
+{
+    if (this->theme == Appearance::CURVE_THEME)
+        QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 1; }");
+    else
+        QTreeWidget::setStyleSheet((this->repositoryChanges.count() > 0) ? "#treeWidgetRundown { border-width: 1; border-color: darkorange; }" : "#treeWidgetRundown { border-width: 0; border-top-width: 1; }");
+}
+
+void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QString& data)
+{
+    int row = -1;
+
+    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
+    {
+        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->getCommand()->getStoryId() == storyId)
+        {
+            row = QTreeWidget::indexFromItem(item).row();
+            break; // We have found the last story id in the rundown.
+        }
+    }
+
+    int offset = 1;
+    std::wstringstream wstringstream;
+    wstringstream << data.toStdWString();
+
+    boost::property_tree::wptree pt;
+    boost::property_tree::xml_parser::read_xml(wstringstream, pt);
+
+    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    {
+        if (parentValue.first != L"item")
+            continue;
+
+        AbstractRundownWidget* parentWidget = readProperties(parentValue.second);
+        parentWidget->setInGroup(false);
+        parentWidget->setExpanded(false);
+
+        QTreeWidgetItem* parentItem = new QTreeWidgetItem();
+
+        QTreeWidget::invisibleRootItem()->insertChild(row + offset++, parentItem);
+        QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+
+        if (parentWidget->isGroup())
+        {
+            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            {
+                AbstractRundownWidget* childWidget = readProperties(childValue.second);
+                childWidget->setInGroup(true);
+
+                QTreeWidgetItem* childItem = new QTreeWidgetItem();
+                parentItem->addChild(childItem);
+
+                QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
+            }
+        }
+
+        QTreeWidget::doItemsLayout(); // Refresh
+        //QTreeWidget::repaint();
+    }
+}
+
+void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
+{
+    for (int i = QTreeWidget::topLevelItemCount() - 1; i >= 0; i--)
+    {
+        QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
+        AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+        if (widget->getCommand()->getStoryId() == storyId)
+        {
+            if (widget->isGroup())
+            {
+                for (int i = item->childCount() - 1; i >= 0; i--)
+                {
+                    QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+
+                    // Remove our items from the AutoPlay queue if they exists.
+                    EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                    delete childWidget;
+                    delete item->child(i);
+                }
+            }
+
+            delete widget;
+            delete item;
+        }
     }
 }

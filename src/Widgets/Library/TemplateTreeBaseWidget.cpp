@@ -1,5 +1,7 @@
 #include "TemplateTreeBaseWidget.h"
 
+#include "EventManager.h"
+
 #include <QtCore/QMimeData>
 
 #if QT_VERSION >= 0x050000
@@ -12,8 +14,15 @@
 #endif
 
 TemplateTreeBaseWidget::TemplateTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+          lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void TemplateTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void TemplateTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -26,6 +35,9 @@ void TemplateTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void TemplateTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

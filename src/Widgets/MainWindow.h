@@ -8,15 +8,15 @@
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
-#include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/MarkItemAsUsedEvent.h"
 #include "Events/Rundown/MarkItemAsUnusedEvent.h"
 #include "Events/Rundown/MarkAllItemsAsUsedEvent.h"
 #include "Events/Rundown/MarkAllItemsAsUnusedEvent.h"
 #include "Events/Rundown/OpenRundownMenuEvent.h"
-#include "Events/Rundown/SaveMenuEvent.h"
-#include "Events/Rundown/SaveAsMenuEvent.h"
+#include "Events/Rundown/ReloadRundownMenuEvent.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
@@ -64,6 +64,8 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QAction* saveAction;
         QAction* saveAsAction;
         QAction* allowRemoteTriggeringAction;
+        QAction* insertRepositoryChangesAction;
+        QAction* reloadRundownAction;
 
         void setupMenu();
 
@@ -101,6 +103,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void markAllItemsAsUnused();
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
+        Q_SLOT void insertRepositoryChanges();
         Q_SLOT void allowRemoteTriggering(bool);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void statusbar(const StatusbarEvent&);
@@ -108,9 +111,9 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
-        Q_SLOT void allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&);
+        Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
         Q_SLOT void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SLOT void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
-        Q_SLOT void saveMenu(const SaveMenuEvent&);
-        Q_SLOT void saveAsMenu(const SaveAsMenuEvent&);
+        Q_SLOT void reloadRundownMenu(const ReloadRundownMenuEvent&);
 };

@@ -11,6 +11,7 @@
 #include "Events/ImportPresetEvent.h"
 #include "Events/PresetChangedEvent.h"
 #include "Events/Inspector/TemplateChangedEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>
@@ -66,4 +67,5 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         Q_SLOT void presetChanged(const PresetChangedEvent&);
         Q_SLOT void importPreset(const ImportPresetEvent&);
         Q_SLOT void exportPreset(const ExportPresetEvent&);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

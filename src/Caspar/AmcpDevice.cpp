@@ -2,6 +2,7 @@
 
 #include <QtCore/QStringList>
 #include <QtCore/QThread>
+#include <QtCore/QTextCodec>
 #include <QtCore/QTimer>
 
 AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
@@ -10,6 +11,8 @@ AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
 {
     this->socket = new QTcpSocket(this);
 
+    this->decoder = new QTextDecoder(QTextCodec::codecForName("UTF-8"));
+
     QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
     QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
@@ -17,6 +20,7 @@ AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
 
 AmcpDevice::~AmcpDevice()
 {
+    delete this->decoder;
 }
 
 void AmcpDevice::connectDevice()
@@ -74,7 +78,7 @@ int AmcpDevice::getPort() const
     return this->port;
 }
 
-const QString &AmcpDevice::getAddress() const
+const QString& AmcpDevice::getAddress() const
 {
     return this->address;
 }
@@ -90,19 +94,17 @@ void AmcpDevice::writeMessage(const QString& message)
 
 void AmcpDevice::readMessage()
 {
-    while (this->socket->bytesAvailable() && this->socket->canReadLine())
+    while (this->socket->bytesAvailable())
     {
-        this->line += QString::fromUtf8(this->socket->readLine());
-        if (this->line.endsWith("\r\n"))
+        this->fragments += this->decoder->toUnicode(this->socket->readAll());
+
+        int position;
+        while ((position = this->fragments.indexOf("\r\n")) != -1)
         {
-            if (this->line == "\r\n")
-                this->line.remove("\r\n");
+            QString line = this->fragments.left(position);
+            this->fragments.remove(0, position + 2);
 
-            QStringList lines = this->line.split("\r\n");
-            foreach (QString line, lines)
-                parseLine(line);
-
-            this->line.clear();
+            parseLine(line);
         }
     }
 }
@@ -146,15 +148,12 @@ void AmcpDevice::parseLine(const QString& line)
             break;
         case AmcpDevice::ExpectingOneline:
             parseOneline(line);
-            this->previousLine = line;
             break;
         case AmcpDevice::ExpectingTwoline:
             parseTwoline(line);
-            this->previousLine = line;
             break;
         case AmcpDevice::ExpectingMultiline:
             parseMultiline(line);
-            this->previousLine = line;
             break;
         default:
             break;
@@ -192,26 +191,25 @@ void AmcpDevice::parseHeader(const QString& line)
 
 void AmcpDevice::parseOneline(const QString& line)
 {
-    if (line.length() > 0)
-         AmcpDevice::response.append(line);
-    else if (line.length() == 0 && AmcpDevice::response.count() > 0)
-        sendNotification();
+    AmcpDevice::response.append(line);
+
+    sendNotification();
 }
 
 void AmcpDevice::parseTwoline(const QString& line)
 {
-    if (line.length() > 0)
-         AmcpDevice::response.append(line);
-    else if (line.length() == 0 && AmcpDevice::response.count() > 1)
+    AmcpDevice::response.append(line);
+
+    if (AmcpDevice::response.count() == 2)
         sendNotification();
 }
 
 void AmcpDevice::parseMultiline(const QString& line)
 {
-    if (line.length() > 0)
-        AmcpDevice::response.append(line);
-    else if (line.length() == 0 && this->line.length() == 0 && this->previousLine.length() == 0)
+    if (line.length() == 0)
         sendNotification();
+    else
+        AmcpDevice::response.append(line);
 }
 
 void AmcpDevice::resetDevice()

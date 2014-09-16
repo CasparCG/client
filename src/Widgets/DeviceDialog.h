@@ -38,6 +38,7 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
 
     protected:
         void accept();
+        bool eventFilter(QObject* target, QEvent* event);
 
     private:
         bool editMode;

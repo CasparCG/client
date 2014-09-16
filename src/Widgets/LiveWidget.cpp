@@ -175,7 +175,7 @@ void LiveWidget::setupStreamMenu()
 
 void LiveWidget::streamMenuActionTriggered(QAction* action)
 {
-    if (!action->text().contains(':') && !action->text().contains(','))
+    if (!action->text().contains(',') && !action->text().contains(':'))
         return;
 
     stopStream(this->deviceName, this->deviceChannel);

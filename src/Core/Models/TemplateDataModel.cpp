@@ -6,12 +6,12 @@ TemplateDataModel::TemplateDataModel(const QString& key, const QString& value)
     this->value = value;
 }
 
-const QString &TemplateDataModel::getKey() const
+const QString& TemplateDataModel::getKey() const
 {
     return this->key;
 }
 
-const QString &TemplateDataModel::getValue() const
+const QString& TemplateDataModel::getValue() const
 {
     return this->value;
 }

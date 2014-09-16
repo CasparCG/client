@@ -1,5 +1,7 @@
 #include "ToolTreeBaseWidget.h"
 
+#include "EventManager.h"
+
 #include <QtCore/QMimeData>
 
 #if QT_VERSION >= 0x050000
@@ -12,8 +14,15 @@
 #endif
 
 ToolTreeBaseWidget::ToolTreeBaseWidget(QWidget* parent)
-    : QTreeWidget(parent)
+    : QTreeWidget(parent),
+      lock(false)
 {
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
+}
+
+void ToolTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
 }
 
 void ToolTreeBaseWidget::mousePressEvent(QMouseEvent* event)
@@ -26,6 +35,9 @@ void ToolTreeBaseWidget::mousePressEvent(QMouseEvent* event)
 
 void ToolTreeBaseWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (this->lock)
+        return;
+
     if (!(event->buttons() & Qt::LeftButton))
              return;
 

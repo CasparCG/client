@@ -22,6 +22,23 @@ AtemDeviceDialog::AtemDeviceDialog(QWidget* parent)
 
     this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     this->lineEditAddress->setStyleSheet("border-color: firebrick;");
+
+    this->lineEditDeviceName->installEventFilter(this);
+}
+
+bool AtemDeviceDialog::eventFilter(QObject* target, QEvent* event)
+{
+    if (target == this->lineEditDeviceName)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+            if (keyEvent->text() == "," || keyEvent->text() == ":")
+                return true;
+        }
+    }
+
+    return QDialog::eventFilter(target, event);
 }
 
 void AtemDeviceDialog::setDeviceModel(const AtemDeviceModel& model)

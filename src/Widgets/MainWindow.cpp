@@ -23,7 +23,7 @@
 #include "Events/Rundown/AllowRemoteTriggeringMenuEvent.h"
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
-#include "Events/Rundown/RemoteRundownTriggeringEvent.h"
+#include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
@@ -76,11 +76,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)), this, SLOT(allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPresetMenu(const SaveAsPresetMenuEvent&)), this, SLOT(saveAsPresetMenu(const SaveAsPresetMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveMenu(const SaveMenuEvent&)), this, SLOT(saveMenu(const SaveMenuEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsMenu(const SaveAsMenuEvent&)), this, SLOT(saveAsMenu(const SaveAsMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(reloadRundownMenu(const ReloadRundownMenuEvent&)), this, SLOT(reloadRundownMenu(const ReloadRundownMenuEvent&)));
 }
 
 void MainWindow::setupMenu()
@@ -127,11 +127,14 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
     this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
     this->rundownMenu->addSeparator();
-    this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
+    this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()), QKeySequence::fromString("Ins"));
+    this->rundownMenu->addSeparator();
+    this->reloadRundownAction = this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
     this->allowRemoteTriggeringAction->setCheckable(true);
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
+    this->insertRepositoryChangesAction->setEnabled(false);
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -168,6 +171,11 @@ void MainWindow::setupMenu()
     setMenuBar(this->menuBar);
 }
 
+void MainWindow::reloadRundownMenu(const ReloadRundownMenuEvent& event)
+{
+    this->reloadRundownAction->setEnabled(event.getEnabled());
+}
+
 void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 {
     this->saveAsPresetAction->setEnabled(false);
@@ -175,6 +183,9 @@ void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 
 void MainWindow::statusbar(const StatusbarEvent& event)
 {
+    if (this->statusBar()->currentMessage() == event.getMessage())
+        return;
+
     this->statusBar()->showMessage(event.getMessage(), event.getTimeout());
 }
 
@@ -207,27 +218,25 @@ void MainWindow::saveAsPresetMenu(const SaveAsPresetMenuEvent& event)
     this->saveAsPresetAction->setEnabled(event.getEnabled());
 }
 
-void MainWindow::saveMenu(const SaveMenuEvent& event)
-{
-    this->saveAction->setEnabled(event.getEnabled());
-}
-
-void MainWindow::saveAsMenu(const SaveAsMenuEvent& event)
-{
-    this->saveAsAction->setEnabled(event.getEnabled());
-}
-
 void MainWindow::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& event)
 {
     this->openRundownFromUrlAction->setEnabled(event.getEnabled());
 }
 
-void MainWindow::allowRemoteTriggeringMenu(const AllowRemoteTriggeringMenuEvent& event)
+void MainWindow::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
 {
     // We do not want to trigger check changed event.
     this->allowRemoteTriggeringAction->blockSignals(true);
     this->allowRemoteTriggeringAction->setChecked(event.getEnabled());
     this->allowRemoteTriggeringAction->blockSignals(false);
+}
+
+void MainWindow::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->saveAction->setEnabled(!event.getRepositoryRundown());
+    this->saveAsAction->setEnabled(!event.getRepositoryRundown());
+    this->allowRemoteTriggeringAction->setEnabled(!event.getRepositoryRundown());
+    this->insertRepositoryChangesAction->setEnabled(event.getRepositoryRundown());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -379,13 +388,17 @@ void MainWindow::toggleCompactView()
 
 void MainWindow::allowRemoteTriggering(bool enabled)
 {
-    EventManager::getInstance().fireRemoteRundownTriggeringEvent(RemoteRundownTriggeringEvent(enabled));
-    EventManager::getInstance().fireAllowRemoteTriggeringMenuEvent(AllowRemoteTriggeringMenuEvent(enabled));
+    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(enabled));
 }
 
 void MainWindow::closeRundown()
 {
     EventManager::getInstance().fireCloseRundownEvent(CloseRundownEvent());
+}
+
+void MainWindow::insertRepositoryChanges()
+{
+    EventManager::getInstance().fireInsertRepositoryChangesEvent(InsertRepositoryChangesEvent());
 }
 
 void MainWindow::reloadRundown()

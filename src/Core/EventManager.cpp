@@ -25,6 +25,16 @@ void EventManager::uninitialize()
 {
 }
 
+void EventManager::fireInsertRepositoryChangesEvent(const InsertRepositoryChangesEvent& event)
+{
+    emit insertRepositoryChanges(event);
+}
+
+void EventManager::fireRepositoryRundownEvent(const RepositoryRundownEvent& event)
+{
+    emit repositoryRundown(event);
+}
+
 void EventManager::fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent& event)
 {
     emit tricasterDeviceChanged(event);
@@ -53,6 +63,11 @@ void EventManager::fireOpenRundownEvent(const OpenRundownEvent& event)
 void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
 {
     emit openRundownMenu(event);
+}
+
+void EventManager::fireReloadRundownMenuEvent(const ReloadRundownMenuEvent& event)
+{
+    emit reloadRundownMenu(event);
 }
 
 void EventManager::fireExportPresetMenuEvent(const ExportPresetMenuEvent& event)
@@ -295,9 +310,9 @@ void EventManager::fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& ev
     emit executeRundownItem(event);
 }
 
-void EventManager::fireRemoteRundownTriggeringEvent(const RemoteRundownTriggeringEvent& event)
+void EventManager::fireAllowRemoteTriggeringEvent(const AllowRemoteTriggeringEvent& event)
 {
-    emit remoteRundownTriggering(event);
+    emit allowRemoteTriggering(event);
 }
 
 void EventManager::fireAddRudnownItemEvent(const LibraryModel& model)
