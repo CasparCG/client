@@ -108,7 +108,7 @@ void LiveWidget::setupMenus()
 void LiveWidget::setupRenderTarget(bool windowMode)
 {
 #if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (void *)((windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId()));
 #elif defined(Q_OS_MAC)
     libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
 #elif defined(Q_OS_LINUX)
