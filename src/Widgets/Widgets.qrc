@@ -209,6 +209,12 @@
         <file>Images/SteelBlue.png</file>
         <file>Images/DarkSlateGray.png</file>
         <file>Images/StreamNotAvailable.png</file>
+        <file>Images/PlayoutCommand.png</file>
+        <file>Images/PlayoutCommandSmall.png</file>
+        <file>Images/PlayoutCommandSmallHover.png</file>
+        <file>Images/FadeToBlack.png</file>
+        <file>Images/FadeToBlackSmall.png</file>
+        <file>Images/FadeToBlackSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

@@ -136,11 +136,11 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
-    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FadeToBlackSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/OscOutputSmall.png"), "OSC Output", this, SLOT(addOscOutputItem()));
-    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/PlayoutCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
     this->contextMenuOther->addSeparator();
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));

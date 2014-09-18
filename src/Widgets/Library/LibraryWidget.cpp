@@ -311,7 +311,7 @@ void LibraryWidget::setupTools()
     widgetDeckLinkInput->setText(5, "0");
 
     QTreeWidgetItem* widgetFadeToBlack = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/FadeToBlackSmall.png"));
     widgetFadeToBlack->setText(0, "Fade to Black");
     widgetFadeToBlack->setText(1, "0");
     widgetFadeToBlack->setText(2, "Fade to Black");
@@ -347,7 +347,7 @@ void LibraryWidget::setupTools()
     widgetOscOutput->setText(5, "0");
 
     QTreeWidgetItem* widgetPlayoutCommand = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetPlayoutCommand->setIcon(0, QIcon(":/Graphics/Images/CustomCommandSmall.png"));
+    widgetPlayoutCommand->setIcon(0, QIcon(":/Graphics/Images/PlayoutCommandSmall.png"));
     widgetPlayoutCommand->setText(0, "Playout Command");
     widgetPlayoutCommand->setText(1, "0");
     widgetPlayoutCommand->setText(2, "Playout Command");
