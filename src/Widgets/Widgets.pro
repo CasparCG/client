@@ -615,7 +615,13 @@ OTHER_FILES += \
     Images/MaroonLight.png \
     Images/DarkKhaki.png \
     Images/RoyalBlue.png \
-    Images/StreamNotAvailable.png
+    Images/StreamNotAvailable.png \
+    Images/PlayoutCommandSmallHover.png \
+    Images/PlayoutCommandSmall.png \
+    Images/PauseProgressBarOverlay.png \
+    Images/FadeToBlackSmallHover.png \
+    Images/FadeToBlackSmall.png \
+    Images/FadeToBlack.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

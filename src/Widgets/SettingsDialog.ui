@@ -795,6 +795,41 @@
       <string>%</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineEditRepositoryPort">
+     <property name="geometry">
+      <rect>
+       <x>414</x>
+       <y>381</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>8250</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelRepositoryPort">
+     <property name="geometry">
+      <rect>
+       <x>354</x>
+       <y>383</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
@@ -4649,6 +4684,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditRepositoryPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>repositoryPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>701</x>
+     <y>700</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4710,5 +4761,6 @@
   <slot>networkCacheChanged(int)</slot>
   <slot>streamQualityChanged(int)</slot>
   <slot>autoUpdateChanged(int)</slot>
+  <slot>repositoryPortChanged()</slot>
  </slots>
 </ui>

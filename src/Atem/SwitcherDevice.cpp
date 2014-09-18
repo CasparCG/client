@@ -45,8 +45,6 @@ void SwitcherDevice::disconnectDevice()
 
 void SwitcherDevice::setConnected()
 {
-    qDebug() << this->address << QString(": Connected");
-
     this->connected = true;
     this->command = SwitcherDevice::CONNECTIONSTATE;
 
@@ -55,8 +53,6 @@ void SwitcherDevice::setConnected()
 
 void SwitcherDevice::setDisconnected()
 {
-    qDebug() << this->address << QString(": Disconnected");
-
     this->connected = false;
     this->command = SwitcherDevice::CONNECTIONSTATE;
 
