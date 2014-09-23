@@ -573,6 +573,7 @@ QToolBox::tab:selected
 {
     border-bottom-color: rgba(70, 115, 195, 255);
     border-bottom-width: 1px;
+    font-weight: normal;
 }
 QToolBox::tab:!selected
 {
