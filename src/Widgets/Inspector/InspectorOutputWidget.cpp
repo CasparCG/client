@@ -501,13 +501,15 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
     if (device == NULL)
         return;
 
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(deviceName);
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(deviceName);
+    if (deviceModel == NULL)
+        return;
 
     QList<LibraryModel> models;
     if (this->libraryFilter.isEmpty())
-        models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel.getId());
+        models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel->getId());
     else
-        models = DatabaseManager::getInstance().getLibraryByDeviceIdAndFilter(deviceModel.getId(), this->libraryFilter);
+        models = DatabaseManager::getInstance().getLibraryByDeviceIdAndFilter(deviceModel->getId(), this->libraryFilter);
 
     if (models.count() > 0)
     {
@@ -573,13 +575,13 @@ void InspectorOutputWidget::deviceRemoved()
 
 void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 {
-    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model == NULL || model->getShadow() == "Yes")
         return; // Don't add shadow systems.
 
     int index = this->comboBoxDevice->currentIndex();
 
-    this->comboBoxDevice->addItem(model.getName());
+    this->comboBoxDevice->addItem(model->getName());
 
     if (index == -1)
         this->comboBoxDevice->setCurrentIndex(index);

@@ -512,7 +512,7 @@ void RundownChromaWidget::deviceConnectionStateChanged(CasparDevice& device)
 
 void RundownChromaWidget::deviceAdded(CasparDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();

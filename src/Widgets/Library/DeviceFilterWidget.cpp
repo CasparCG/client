@@ -66,7 +66,7 @@ QList<QString> DeviceFilterWidget::getDeviceFilter()
         if (dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->checkState() == Qt::Checked)
         {
             QString name = dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->text();
-            devices.push_back(DeviceManager::getInstance().getDeviceModelByName(name).getAddress());
+            devices.push_back(DeviceManager::getInstance().getDeviceModelByName(name)->getAddress());
         }
     }
 
@@ -104,11 +104,11 @@ void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
     this->sendEvents = false;
 
-    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model == NULL || model->getShadow() == "Yes")
         return; // Don't add shadow systems.
 
-    this->comboBoxDeviceFilter->addItem(QString("%1").arg(model.getName()));
+    this->comboBoxDeviceFilter->addItem(QString("%1").arg(model->getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);

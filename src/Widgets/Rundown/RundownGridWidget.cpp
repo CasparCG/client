@@ -486,7 +486,7 @@ void RundownGridWidget::deviceConnectionStateChanged(CasparDevice& device)
 
 void RundownGridWidget::deviceAdded(CasparDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();

@@ -41,11 +41,11 @@ void ThumbnailWorker::process()
     this->currentTimestamp= this->thumbnailModels.at(0).getTimestamp();
     this->currentSize= this->thumbnailModels.at(0).getSize();
 
-    const DeviceModel& model = DeviceManager::getInstance().getDeviceModelByAddress(this->currentAddress);
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(this->currentAddress);
+    if (model == NULL || model->getShadow() == "Yes")
         return;
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model->getName());
     if (!device->isConnected())
     {
         this->thumbnailTimer.stop();

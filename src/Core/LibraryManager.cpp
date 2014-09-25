@@ -138,8 +138,8 @@ void LibraryManager::connectionStateChanged(CasparDevice& device)
     // Only refresh library for current device.
     if (device.isConnected())
     {
-        const DeviceModel& model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-        if (model.getShadow() == "Yes")
+        const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+        if (model == NULL || model->getShadow() == "Yes")
             return;
 
         device.refreshServerVersion();

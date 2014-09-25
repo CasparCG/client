@@ -107,26 +107,30 @@ QList<DeviceModel> DeviceManager::getDeviceModels() const
     return models;
 }
 
-const DeviceModel DeviceManager::getDeviceModelByName(const QString& name) const
+const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByName(const QString& name) const
 {
     foreach (const DeviceModel& model, this->deviceModels)
     {
         if (model.getName() == name)
-            return model;
+            return QSharedPointer<DeviceModel>(new DeviceModel(model));
     }
 
-    qCritical() << "No DeviceModel found for specified name";
+    qWarning() << "No DeviceModel found for specified name";
+
+    return QSharedPointer<DeviceModel>();
 }
 
-const DeviceModel DeviceManager::getDeviceModelByAddress(const QString& address) const
+const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByAddress(const QString& address) const
 {
     foreach (const DeviceModel& model, this->deviceModels)
     {
         if (model.getAddress() == address)
-            return model;
+           return QSharedPointer<DeviceModel>(new DeviceModel(model));
     }
 
-    qCritical() << "No DeviceModel found for specified address";
+    qWarning() << "No DeviceModel found for specified address";
+
+    return QSharedPointer<DeviceModel>();
 }
 
 const int DeviceManager::getDeviceCount() const

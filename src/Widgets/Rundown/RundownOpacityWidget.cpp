@@ -517,7 +517,7 @@ void RundownOpacityWidget::remoteTriggerIdChanged(const QString& remoteTriggerId
 
 void RundownOpacityWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
@@ -525,7 +525,7 @@ void RundownOpacityWidget::deviceConnectionStateChanged(CasparDevice& device)
 
 void RundownOpacityWidget::deviceAdded(CasparDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
