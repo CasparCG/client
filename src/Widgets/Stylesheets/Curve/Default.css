@@ -537,6 +537,7 @@ QToolBox::tab:selected
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     border-bottom-width: 1px;
+    font-weight: normal;
 }
 QToolBox::tab:selected:disabled
 {
