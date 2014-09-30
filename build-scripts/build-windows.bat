@@ -3,7 +3,7 @@
 :: Fail early if environment not set
 if not defined BUILD_QMAKE exit /b 1
 if not defined BUILD_MINGW_BIN exit /b 1
-if not defined BUILD_CLIENT_NAME exit /b 1
+if not defined BUILD_ARCHIVE_NAME exit /b 1
 if not defined BUILD_PARALLEL_THREADS exit /b 1
 if not defined BUILD_7ZIP exit /b 1
 
@@ -24,7 +24,7 @@ echo Building...
 mingw32-make || goto :error
 
 :: Create client folder to later zip
-set CLIENT_FOLDER=%BUILD_CLIENT_NAME%
+set CLIENT_FOLDER=CasparCG Client
 if exist "%CLIENT_FOLDER%" rmdir "%CLIENT_FOLDER%" /s /q || goto :error
 mkdir "%CLIENT_FOLDER%\%CLIENT_FOLDER%" || goto :error
 
@@ -50,7 +50,7 @@ copy ..\LICENSE.TXT "%CLIENT_FOLDER%" || goto :error
 
 :: Create zip file
 echo Creating zip...
-"%BUILD_7ZIP%" a "%BUILD_CLIENT_NAME%.zip" "%CLIENT_FOLDER%" || goto :error
+"%BUILD_7ZIP%" a "%BUILD_ARCHIVE_NAME%.zip" "%CLIENT_FOLDER%" || goto :error
 
 :: Skip exiting with failure
 goto :EOF
