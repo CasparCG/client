@@ -3635,8 +3635,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>185</y>
+     <x>213</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3651,8 +3651,8 @@
    <slot>gpi2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
-     <y>220</y>
+     <x>213</x>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3667,8 +3667,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>238</x>
-     <y>254</y>
+     <x>213</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3683,8 +3683,8 @@
    <slot>gpi4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>281</y>
+     <x>213</x>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3699,8 +3699,8 @@
    <slot>gpi5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>237</x>
-     <y>309</y>
+     <x>213</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3715,8 +3715,8 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>360</y>
+     <x>213</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3731,8 +3731,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>388</y>
+     <x>213</x>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3747,8 +3747,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>416</y>
+     <x>213</x>
+     <y>411</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3764,7 +3764,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>89</y>
+     <y>70</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3779,8 +3779,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>185</y>
+     <x>371</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3796,7 +3796,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>220</y>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3811,8 +3811,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>372</x>
-     <y>256</y>
+     <x>371</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -3828,7 +3828,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>291</y>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>634</x>
@@ -3844,7 +3844,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>326</y>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>602</x>
@@ -3860,7 +3860,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>360</y>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>551</x>
@@ -3876,7 +3876,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>388</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
@@ -3892,7 +3892,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>416</y>
+     <y>411</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3908,7 +3908,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>491</y>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3924,7 +3924,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>492</y>
+     <y>471</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3940,7 +3940,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>519</y>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3956,7 +3956,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>520</y>
+     <y>506</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3972,7 +3972,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>547</y>
+     <y>542</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3988,7 +3988,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>548</y>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4003,8 +4003,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>597</y>
+     <x>213</x>
+     <y>577</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4019,8 +4019,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>598</y>
+     <x>445</x>
+     <y>576</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4035,8 +4035,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>632</y>
+     <x>213</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4051,8 +4051,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>633</y>
+     <x>445</x>
+     <y>611</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4067,8 +4067,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>667</y>
+     <x>213</x>
+     <y>647</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4083,8 +4083,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>668</y>
+     <x>445</x>
+     <y>646</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4099,8 +4099,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>702</y>
+     <x>213</x>
+     <y>682</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4115,8 +4115,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>703</y>
+     <x>445</x>
+     <y>681</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4131,8 +4131,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>737</y>
+     <x>213</x>
+     <y>717</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4147,8 +4147,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>738</y>
+     <x>445</x>
+     <y>716</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4164,7 +4164,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>125</y>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4259,8 +4259,8 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>127</y>
+     <x>177</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -4275,8 +4275,8 @@
    <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>569</x>
-     <y>212</y>
+     <x>571</x>
+     <y>334</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -4291,8 +4291,8 @@
    <slot>removeOscOutput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>192</x>
-     <y>454</y>
+     <x>162</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4307,8 +4307,8 @@
    <slot>showAddOscOutputDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>454</y>
+     <x>123</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -4339,8 +4339,8 @@
    <slot>enableOscInputChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>81</y>
+     <x>123</x>
+     <y>72</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4499,8 +4499,8 @@
    <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
-     <y>433</y>
+     <x>309</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4547,8 +4547,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>295</x>
-     <y>778</y>
+     <x>263</x>
+     <y>756</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4563,8 +4563,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>296</x>
-     <y>737</y>
+     <x>264</x>
+     <y>720</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4697,6 +4697,22 @@
     <hint type="destinationlabel">
      <x>701</x>
      <y>700</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTriCasterProduct</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>tricasterProductChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>58</y>
     </hint>
    </hints>
   </connection>
