@@ -51,7 +51,7 @@ echo Copying documentation...
 cp -f ../CHANGES.TXT "$CLIENT_FOLDER/" || fail "Could not copy CHANGES.TXT"
 cp -f ../LICENSE.TXT "$CLIENT_FOLDER/" || fail "Could not copy LICENSE.TXT"
 
-# Create zip file
-echo Creating zip...
-tar cvzf "$BUILD_ARCHIVE_NAME.tar.gz" "$CLIENT_FOLDER" || fail "Could not create archive"
+# Create tar.gz file
+echo Creating tag.gz...
+tar -cvzf "$BUILD_ARCHIVE_NAME.tar.gz" "$CLIENT_FOLDER" || fail "Could not create archive"
 
