@@ -1038,20 +1038,23 @@ bool RundownTreeWidget::copySelectedItems() const
 
 void RundownTreeWidget::setUsed(bool used)
 {
-    if (this->treeWidgetRundown->currentItem() == NULL)
+    if (this->treeWidgetRundown->selectedItems().count() == 0)
         return;
 
-    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
-    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
-
-    rundownWidget->setUsed(used);
-    if (rundownWidget != NULL && rundownWidget->isGroup())
+    foreach (QTreeWidgetItem* selectedItem, this->treeWidgetRundown->selectedItems())
     {
-        for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-        {
-            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+        QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(selectedItem, 0);
+        AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 
-            dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
+        rundownWidget->setUsed(used);
+        if (rundownWidget != NULL && rundownWidget->isGroup())
+        {
+            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
+            {
+                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+
+                dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
+            }
         }
     }
 }
