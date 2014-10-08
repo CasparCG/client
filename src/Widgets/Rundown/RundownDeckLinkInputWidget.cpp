@@ -70,8 +70,6 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownDeckLinkInputWidget::labelChanged(const LabelChangedEvent& event)
@@ -508,7 +506,7 @@ void RundownDeckLinkInputWidget::checkDeviceConnection()
 
 void RundownDeckLinkInputWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

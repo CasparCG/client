@@ -69,8 +69,6 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownContrastWidget::preview(const PreviewEvent& event)
@@ -423,7 +421,7 @@ void RundownContrastWidget::checkDeviceConnection()
 
 void RundownContrastWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

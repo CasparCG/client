@@ -54,8 +54,6 @@ RundownPlayoutCommandWidget::RundownPlayoutCommandWidget(const LibraryModel& mod
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownPlayoutCommandWidget::labelChanged(const LabelChangedEvent& event)
@@ -250,6 +248,9 @@ void RundownPlayoutCommandWidget::checkGpiConnection()
 
 void RundownPlayoutCommandWidget::configureOscSubscriptions()
 {
+    if (!this->command.getAllowRemoteTriggering())
+        return;
+
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
 

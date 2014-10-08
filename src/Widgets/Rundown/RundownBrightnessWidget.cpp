@@ -69,8 +69,6 @@ RundownBrightnessWidget::RundownBrightnessWidget(const LibraryModel& model, QWid
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownBrightnessWidget::preview(const PreviewEvent& event)
@@ -423,7 +421,7 @@ void RundownBrightnessWidget::checkDeviceConnection()
 
 void RundownBrightnessWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

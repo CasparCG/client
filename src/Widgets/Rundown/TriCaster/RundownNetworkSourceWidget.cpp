@@ -64,8 +64,6 @@ RundownNetworkSourceWidget::RundownNetworkSourceWidget(const LibraryModel& model
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownNetworkSourceWidget::preview(const PreviewEvent& event)
@@ -299,7 +297,7 @@ void RundownNetworkSourceWidget::checkDeviceConnection()
 
 void RundownNetworkSourceWidget::configureOscSubscriptions()
 {
-    if (TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

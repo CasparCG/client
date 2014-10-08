@@ -64,8 +64,6 @@ RundownAtemInputWidget::RundownAtemInputWidget(const LibraryModel& model, QWidge
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAtemInputWidget::preview(const PreviewEvent& event)
@@ -308,7 +306,7 @@ void RundownAtemInputWidget::checkDeviceConnection()
 
 void RundownAtemInputWidget::configureOscSubscriptions()
 {
-    if (AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

@@ -69,8 +69,6 @@ RundownGeometryWidget::RundownGeometryWidget(const LibraryModel& model, QWidget*
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownGeometryWidget::preview(const PreviewEvent& event)
@@ -431,7 +429,7 @@ void RundownGeometryWidget::checkDeviceConnection()
 
 void RundownGeometryWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

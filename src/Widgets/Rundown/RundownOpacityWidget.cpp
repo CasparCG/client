@@ -69,8 +69,6 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownOpacityWidget::preview(const PreviewEvent& event)
@@ -426,7 +424,7 @@ void RundownOpacityWidget::checkDeviceConnection()
 
 void RundownOpacityWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

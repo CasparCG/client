@@ -64,8 +64,6 @@ RundownAtemKeyerStateWidget::RundownAtemKeyerStateWidget(const LibraryModel& mod
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAtemKeyerStateWidget::preview(const PreviewEvent& event)
@@ -299,7 +297,7 @@ void RundownAtemKeyerStateWidget::checkDeviceConnection()
 
 void RundownAtemKeyerStateWidget::configureOscSubscriptions()
 {
-    if (AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

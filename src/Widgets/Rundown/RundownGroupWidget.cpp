@@ -55,8 +55,6 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
@@ -239,6 +237,9 @@ void RundownGroupWidget::checkGpiConnection()
 
 void RundownGroupWidget::configureOscSubscriptions()
 {
+    if (!this->command.getAllowRemoteTriggering())
+        return;
+
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 

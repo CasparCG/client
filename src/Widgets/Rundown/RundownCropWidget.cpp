@@ -69,8 +69,6 @@ RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent,
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownCropWidget::preview(const PreviewEvent& event)
@@ -428,7 +426,7 @@ void RundownCropWidget::checkDeviceConnection()
 
 void RundownCropWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

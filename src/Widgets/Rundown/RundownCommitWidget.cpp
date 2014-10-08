@@ -67,8 +67,6 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownCommitWidget::labelChanged(const LabelChangedEvent& event)
@@ -333,7 +331,7 @@ void RundownCommitWidget::checkDeviceConnection()
 
 void RundownCommitWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

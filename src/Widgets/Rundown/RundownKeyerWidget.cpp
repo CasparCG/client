@@ -68,8 +68,6 @@ RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownKeyerWidget::labelChanged(const LabelChangedEvent& event)
@@ -407,7 +405,7 @@ void RundownKeyerWidget::checkDeviceConnection()
 
 void RundownKeyerWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

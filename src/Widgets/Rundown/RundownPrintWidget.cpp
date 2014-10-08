@@ -65,8 +65,6 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownPrintWidget::labelChanged(const LabelChangedEvent& event)
@@ -331,7 +329,7 @@ void RundownPrintWidget::checkDeviceConnection()
 
 void RundownPrintWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

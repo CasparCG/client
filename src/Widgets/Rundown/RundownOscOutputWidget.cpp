@@ -56,8 +56,6 @@ RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidge
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownOscOutputWidget::labelChanged(const LabelChangedEvent& event)
@@ -264,6 +262,9 @@ void RundownOscOutputWidget::checkGpiConnection()
 
 void RundownOscOutputWidget::configureOscSubscriptions()
 {
+    if (!this->command.getAllowRemoteTriggering())
+        return;
+
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 

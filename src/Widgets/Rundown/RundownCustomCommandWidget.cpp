@@ -65,8 +65,6 @@ RundownCustomCommandWidget::RundownCustomCommandWidget(const LibraryModel& model
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownCustomCommandWidget::labelChanged(const LabelChangedEvent& event)
@@ -538,7 +536,7 @@ void RundownCustomCommandWidget::checkDeviceConnection()
 
 void RundownCustomCommandWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

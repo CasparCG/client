@@ -69,8 +69,6 @@ RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWid
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownSaturationWidget::preview(const PreviewEvent& event)
@@ -423,7 +421,7 @@ void RundownSaturationWidget::checkDeviceConnection()
 
 void RundownSaturationWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

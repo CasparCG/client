@@ -80,8 +80,6 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     checkGpiConnection();
     checkDeviceConnection();
 
-    configureOscSubscriptions();
-
     this->installEventFilter(this);
 }
 
@@ -850,7 +848,7 @@ void RundownTemplateWidget::checkDeviceConnection()
 
 void RundownTemplateWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)
