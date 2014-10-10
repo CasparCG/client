@@ -835,7 +835,7 @@
       <rect>
        <x>110</x>
        <y>524</y>
-       <width>171</width>
+       <width>331</width>
        <height>17</height>
       </rect>
      </property>
@@ -843,7 +843,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Show countdown panel</string>
+      <string>Show countdown panel (Depends on the iNews backend)</string>
      </property>
     </widget>
    </widget>
