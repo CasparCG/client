@@ -70,8 +70,6 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownImageWidget::labelChanged(const LabelChangedEvent& event)
@@ -551,7 +549,7 @@ void RundownImageWidget::checkDeviceConnection()
 
 void RundownImageWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

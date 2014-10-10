@@ -393,9 +393,6 @@
 #progressBarOscTime::chunk
 {
     background-color: green;
-    /*background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(0, 112, 255, 255), stop:1 rgba(0, 128, 255, 255));
-    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(210, 105, 30, 255), stop:1 rgba(255, 140, 0, 255));
-    border-radius: 2px;*/
 }
 
 /*
@@ -437,4 +434,45 @@
 #toolButtonLiveDropdown::hover
 {
     image: url(:/Graphics/Images/DropdownHover.png);
+}
+
+/*
+ * CountdownWidget
+ */
+#lcdNumber
+{
+    color: rgba(200, 65, 65, 255);
+}
+#lcdNumberShadowHour
+{
+    color: rgba(55, 55, 55, 255);
+}
+#lcdNumberShadowMinute
+{
+    color: rgba(55, 55, 55, 255);
+}
+#lcdNumberShadowSecond
+{
+    color: rgba(55, 55, 55, 255);
+}
+#lcdNumberShadowMillisecond
+{
+    color: rgba(55, 55, 55, 255);
+}
+
+#progressBarCountdown
+{
+    border-color: rgba(42, 42, 42, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+#progressBarCountdown::chunk
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 green, stop: 1 lime);
+}
+
+#labelZero, #labelCountdown
+{
+    color: rgba(190, 190, 190, 255);
+    font-size: 13px;
 }

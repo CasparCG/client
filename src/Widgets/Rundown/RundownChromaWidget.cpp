@@ -65,8 +65,6 @@ RundownChromaWidget::RundownChromaWidget(const LibraryModel& model, QWidget* par
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownChromaWidget::preview(const PreviewEvent& event)
@@ -421,7 +419,7 @@ void RundownChromaWidget::checkDeviceConnection()
 
 void RundownChromaWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

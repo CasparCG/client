@@ -73,6 +73,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool enterPressed;
         bool allowRemoteRundownTriggering;
         bool repositoryRundown;
+        bool previewOnAutoStep;
+        bool clearDelayedCommands;
 
         QString page;
         QString activeRundown;
@@ -101,6 +103,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         OscSubscription* downControlSubscription;
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* loadControlSubscription;
         OscSubscription* pauseControlSubscription;
         OscSubscription* nextControlSubscription;
@@ -194,6 +197,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);

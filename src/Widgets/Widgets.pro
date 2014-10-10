@@ -138,7 +138,8 @@ HEADERS += \
     Inspector/InspectorPlayoutCommandWidget.h \
     LiveDialog.h \
     Rundown/RundownFadeToBlackWidget.h \
-    Inspector/InspectorFadeToBlackWidget.h
+    Inspector/InspectorFadeToBlackWidget.h \
+    CountdownWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -265,7 +266,8 @@ SOURCES += \
     Inspector/InspectorPlayoutCommandWidget.cpp \
     LiveDialog.cpp \
     Rundown/RundownFadeToBlackWidget.cpp \
-    Inspector/InspectorFadeToBlackWidget.cpp
+    Inspector/InspectorFadeToBlackWidget.cpp \
+    CountdownWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -381,7 +383,8 @@ FORMS += \
     Inspector/InspectorPlayoutCommandWidget.ui \
     LiveDialog.ui \
     Rundown/RundownFadeToBlackWidget.ui \
-    Inspector/InspectorFadeToBlackWidget.ui
+    Inspector/InspectorFadeToBlackWidget.ui \
+    CountdownWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

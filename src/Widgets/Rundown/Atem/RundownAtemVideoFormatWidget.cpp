@@ -60,8 +60,6 @@ RundownAtemVideoFormatWidget::RundownAtemVideoFormatWidget(const LibraryModel& m
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAtemVideoFormatWidget::preview(const PreviewEvent& event)
@@ -295,7 +293,7 @@ void RundownAtemVideoFormatWidget::checkDeviceConnection()
 
 void RundownAtemVideoFormatWidget::configureOscSubscriptions()
 {
-    if (AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

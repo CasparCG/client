@@ -67,8 +67,6 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownGridWidget::preview(const PreviewEvent& event)
@@ -398,6 +396,9 @@ void RundownGridWidget::checkDeviceConnection()
 
 void RundownGridWidget::configureOscSubscriptions()
 {
+    if (!this->command.getAllowRemoteTriggering())
+        return;
+
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 

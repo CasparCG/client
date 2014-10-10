@@ -59,13 +59,16 @@
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
-      currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL), upControlSubscription(NULL),
-      downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), loadControlSubscription(NULL),
-      pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
+      previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL),
+      upControlSubscription(NULL), downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
+      loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
 {
     setupUi(this);
     setupMenus();
+
+    this->previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
+    this->clearDelayedCommands = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
 
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
 
@@ -136,11 +139,11 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
-    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FadeToBlackSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/OscOutputSmall.png"), "OSC Output", this, SLOT(addOscOutputItem()));
-    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/PlayoutCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
     this->contextMenuOther->addSeparator();
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
@@ -608,9 +611,7 @@ void RundownTreeWidget::openRundownFromUrl(const QString& url)
 
     this->activeRundown = url;
 
-    QString repositoryPort = DatabaseManager::getInstance().getConfigurationByName("RepositoryPort").getValue();
-
-    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host(), (repositoryPort.isEmpty() == true) ? Repository::DEFAULT_PORT : repositoryPort.toInt()));
+    this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host()));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(connectionStateChanged(RepositoryDevice&)), this, SLOT(repositoryConnectionStateChanged(RepositoryDevice&)));
     QObject::connect(this->repositoryDevice.data(), SIGNAL(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)), this, SLOT(repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&)));
     this->repositoryDevice->connectDevice();
@@ -652,7 +653,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1:%2 (%3)").arg(device.getAddress()).arg(device.getPort()).arg((device.isConnected() == true) ? "connected" : "disconnected");
+    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1 (%2)").arg(device.getAddress()).arg((device.isConnected() == true) ? "connected" : "disconnected");
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();
@@ -681,8 +682,19 @@ void RundownTreeWidget::reloadRundown()
     if (this->activeRundown == Rundown::DEFAULT_NAME)
         return;
 
-    this->currentAutoPlayWidget = NULL;
-    this->currentPlayingAutoStepItem = NULL;
+    int itemRow = 0;
+    int groupRow = 0;
+    bool inGroup = false;
+
+    if (this->treeWidgetRundown->currentItem() != NULL)
+    {
+        itemRow = this->treeWidgetRundown->currentIndex().row();
+        if (this->treeWidgetRundown->currentItem()->parent() != NULL)
+        {
+            inGroup = true;
+            groupRow = this->treeWidgetRundown->invisibleRootItem()->indexOfChild(this->treeWidgetRundown->currentItem()->parent());
+        }
+    }
 
     this->treeWidgetRundown->removeAllItems();
 
@@ -690,6 +702,12 @@ void RundownTreeWidget::reloadRundown()
         openRundownFromUrl(this->activeRundown);
     else
         openRundown(this->activeRundown);
+
+    this->treeWidgetRundown->clearSelection();
+    if (inGroup)
+       this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(groupRow)->child(itemRow));
+    else
+        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(itemRow));
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)
@@ -1038,23 +1056,20 @@ bool RundownTreeWidget::copySelectedItems() const
 
 void RundownTreeWidget::setUsed(bool used)
 {
-    if (this->treeWidgetRundown->selectedItems().count() == 0)
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
-    foreach (QTreeWidgetItem* selectedItem, this->treeWidgetRundown->selectedItems())
+    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
+    AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
+
+    rundownWidget->setUsed(used);
+    if (rundownWidget != NULL && rundownWidget->isGroup())
     {
-        QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(selectedItem, 0);
-        AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
-
-        rundownWidget->setUsed(used);
-        if (rundownWidget != NULL && rundownWidget->isGroup())
+        for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
         {
-            for (int i = 0; i < this->treeWidgetRundown->currentItem()->childCount(); i++)
-            {
-                QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
+            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
 
-                dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
-            }
+            dynamic_cast<AbstractRundownWidget*>(childWidget)->setUsed(used);
         }
     }
 }
@@ -1184,8 +1199,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
         else
         {
             // Setting: Should we clear delayed commands on play if the group have AutoStep property set.
-            bool clearDelayedCommands = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
-            if (clearDelayedCommands)
+            if (this->clearDelayedCommands)
             {
                 if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() && type == Playout::PlayoutType::Play)
                 {
@@ -1229,8 +1243,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
 
             if (this->treeWidgetRundown->currentItem() != previousItem)
             {
-                bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
-                if (previewOnAutoStep && type == Playout::PlayoutType::Play)
+                if (this->previewOnAutoStep && type == Playout::PlayoutType::Play)
                     executePreview();
                     //QTimer::singleShot(600, this, SLOT(executePreview()));
             }
@@ -1523,79 +1536,6 @@ bool RundownTreeWidget::getAllowRemoteTriggering() const
     return this->allowRemoteRundownTriggering;
 }
 
-void RundownTreeWidget::configureOscSubscriptions()
-{
-    resetOscSubscriptions();
-
-    QFileInfo path(this->activeRundown);
-
-    QString upControlFilter = Osc::DEFAULT_UP_CONTROL_FILTER;
-    upControlFilter.replace("#UID#", path.baseName());
-    this->upControlSubscription = new OscSubscription(upControlFilter, this);
-    QObject::connect(this->upControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(upControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString downControlFilter = Osc::DEFAULT_DOWN_CONTROL_FILTER;
-    downControlFilter.replace("#UID#", path.baseName());
-    this->downControlSubscription = new OscSubscription(downControlFilter, this);
-    QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
-    stopControlFilter.replace("#UID#", path.baseName());
-    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
-    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
-    playControlFilter.replace("#UID#", path.baseName());
-    this->playControlSubscription = new OscSubscription(playControlFilter, this);
-    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
-    loadControlFilter.replace("#UID#", path.baseName());
-    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
-    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
-    nextControlFilter.replace("#UID#", path.baseName());
-    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
-    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
-    updateControlFilter.replace("#UID#", path.baseName());
-    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
-    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString invokeControlFilter = Osc::DEFAULT_INVOKE_CONTROL_FILTER;
-    invokeControlFilter.replace("#UID#", path.baseName());
-    this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
-    QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
-    clearControlFilter.replace("#UID#", path.baseName());
-    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
-    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
-    clearVideolayerControlFilter.replace("#UID#", path.baseName());
-    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
-    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
-    clearChannelControlFilter.replace("#UID#", path.baseName());
-    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
-    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-}
-
 void RundownTreeWidget::resetOscSubscriptions()
 {
     if (this->upControlSubscription != NULL)
@@ -1609,6 +1549,9 @@ void RundownTreeWidget::resetOscSubscriptions()
 
     if (this->playControlSubscription != NULL)
         this->playControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playNowControlSubscription != NULL)
+        this->playNowControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->loadControlSubscription != NULL)
         this->loadControlSubscription->disconnect(); // Disconnect all events.
@@ -1632,8 +1575,78 @@ void RundownTreeWidget::resetOscSubscriptions()
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 }
 
+void RundownTreeWidget::configureOscSubscriptions()
+{
+    resetOscSubscriptions();
+
+    QFileInfo path(this->activeRundown);
+
+    QString upControlFilter = Osc::DEFAULT_UP_RUNDOWN_CONTROL_FILTER;
+    this->upControlSubscription = new OscSubscription(upControlFilter, this);
+    QObject::connect(this->upControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(upControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString downControlFilter = Osc::DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER;
+    this->downControlSubscription = new OscSubscription(downControlFilter, this);
+    QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString stopControlFilter = Osc::DEFAULT_STOP_RUNDOWN_CONTROL_FILTER;
+    this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
+    QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playControlFilter = Osc::DEFAULT_PLAY_RUNDOWN_CONTROL_FILTER;
+    this->playControlSubscription = new OscSubscription(playControlFilter, this);
+    QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_RUNDOWN_CONTROL_FILTER;
+    this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
+    QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString loadControlFilter = Osc::DEFAULT_LOAD_RUNDOWN_CONTROL_FILTER;
+    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
+    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString nextControlFilter = Osc::DEFAULT_NEXT_RUNDOWN_CONTROL_FILTER;
+    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
+    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_RUNDOWN_CONTROL_FILTER;
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString invokeControlFilter = Osc::DEFAULT_INVOKE_RUNDOWN_CONTROL_FILTER;
+    this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
+    QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearControlFilter = Osc::DEFAULT_CLEAR_RUNDOWN_CONTROL_FILTER;
+    this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
+    QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_RUNDOWN_CONTROL_FILTER;
+    this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
+    QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_RUNDOWN_CONTROL_FILTER;
+    this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
+    QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
 void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
     {
         this->treeWidgetRundown->blockSignals(true);
@@ -1644,6 +1657,9 @@ void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, 
 
 void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
     {
         this->treeWidgetRundown->blockSignals(true);
@@ -1654,60 +1670,99 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
 
+void RundownTreeWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (!this->active)
+        return;
+
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
+}
+
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PauseResume, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideoLayer, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    if (!this->active)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem()));
 }

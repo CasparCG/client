@@ -408,7 +408,6 @@
 }
 #progressBarAudioMeter::chunk
 {
-    /*background-color: lime;*/
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 green, stop: 1 lime);
 }
 
@@ -489,4 +488,45 @@
 #toolButtonLiveDropdown::hover
 {
     image: url(:/Graphics/Images/DropdownHover.png);
+}
+
+/*
+ * CountdownWidget
+ */
+#lcdNumber
+{
+    color: rgba(200, 65, 65, 255);
+}
+#lcdNumberShadowHour
+{
+    color: rgba(35, 35, 35, 255);
+}
+#lcdNumberShadowMinute
+{
+    color: rgba(35, 35, 35, 255);
+}
+#lcdNumberShadowSecond
+{
+    color: rgba(35, 35, 35, 255);
+}
+#lcdNumberShadowMillisecond
+{
+    color: rgba(35, 35, 35, 255);
+}
+
+#progressBarCountdown
+{
+    border-color: rgba(65, 65, 65, 255);
+    border-style: solid;
+    border-width: 1px;
+}
+#progressBarCountdown::chunk
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 green, stop: 1 lime);
+}
+
+#labelZero, #labelCountdown
+{
+    color: rgba(190, 190, 190, 255);
+    font-size: 13px;
 }

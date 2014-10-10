@@ -61,6 +61,11 @@ void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
     emit openRundownMenu(event);
 }
 
+void EventManager::fireCountdownChangedEvent(const CountdownChangedEvent& event)
+{
+    emit countdownChanged(event);
+}
+
 void EventManager::fireReloadRundownMenuEvent(const ReloadRundownMenuEvent& event)
 {
     emit reloadRundownMenu(event);

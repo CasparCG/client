@@ -60,8 +60,6 @@ RundownMacroWidget::RundownMacroWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownMacroWidget::preview(const PreviewEvent& event)
@@ -294,7 +292,7 @@ void RundownMacroWidget::checkDeviceConnection()
 
 void RundownMacroWidget::configureOscSubscriptions()
 {
-    if (TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

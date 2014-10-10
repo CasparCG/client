@@ -23,16 +23,7 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>1</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -49,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -260,8 +251,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">
@@ -341,8 +332,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">
@@ -422,8 +413,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">
@@ -509,8 +500,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">
@@ -593,8 +584,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">
@@ -671,8 +662,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>414</height>
+        <width>96</width>
+        <height>64</height>
        </rect>
       </property>
       <attribute name="label">

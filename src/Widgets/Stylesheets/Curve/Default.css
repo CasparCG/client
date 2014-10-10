@@ -207,7 +207,6 @@ QSplitter::handle:horizontal
 QLCDNumber
 {
     background-color: transparent;
-    color: rgba(255, 255, 255, 255);
 }
 
 /*

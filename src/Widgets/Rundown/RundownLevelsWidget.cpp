@@ -65,8 +65,6 @@ RundownLevelsWidget::RundownLevelsWidget(const LibraryModel& model, QWidget* par
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownLevelsWidget::preview(const PreviewEvent& event)
@@ -425,7 +423,7 @@ void RundownLevelsWidget::checkDeviceConnection()
 
 void RundownLevelsWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

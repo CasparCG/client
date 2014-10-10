@@ -60,8 +60,6 @@ RundownAtemAudioInputStateWidget::RundownAtemAudioInputStateWidget(const Library
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAtemAudioInputStateWidget::preview(const PreviewEvent& event)
@@ -295,7 +293,7 @@ void RundownAtemAudioInputStateWidget::checkDeviceConnection()
 
 void RundownAtemAudioInputStateWidget::configureOscSubscriptions()
 {
-    if (AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

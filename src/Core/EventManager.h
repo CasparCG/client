@@ -15,6 +15,7 @@
 #include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/CountdownChangedEvent.h"
 #include "Events/CloseApplicationEvent.h"
 #include "Events/ExportPresetMenuEvent.h"
 #include "Events/SaveAsPresetMenuEvent.h"
@@ -87,6 +88,7 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void countdownChanged(const CountdownChangedEvent&);
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
         Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
@@ -150,6 +152,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
         Q_SIGNAL void reloadRundownMenu(const ReloadRundownMenuEvent&);
 
+        void fireCountdownChangedEvent(const CountdownChangedEvent&);
         void fireReloadRundownMenuEvent(const ReloadRundownMenuEvent&);
         void fireRepositoryRundownEvent(const RepositoryRundownEvent&);
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);

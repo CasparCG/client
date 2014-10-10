@@ -65,8 +65,6 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownVolumeWidget::preview(const PreviewEvent& event)
@@ -419,7 +417,7 @@ void RundownVolumeWidget::checkDeviceConnection()
 
 void RundownVolumeWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

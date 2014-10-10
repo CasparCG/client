@@ -60,8 +60,6 @@ RundownAtemAudioInputBalanceWidget::RundownAtemAudioInputBalanceWidget(const Lib
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAtemAudioInputBalanceWidget::preview(const PreviewEvent& event)
@@ -295,7 +293,7 @@ void RundownAtemAudioInputBalanceWidget::checkDeviceConnection()
 
 void RundownAtemAudioInputBalanceWidget::configureOscSubscriptions()
 {
-    if (AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->playControlSubscription != NULL)

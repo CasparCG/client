@@ -50,16 +50,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
     bool showPreviewPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowPreviewPanel").getValue() == "true") ? true : false;
-    if (!showPreviewPanel)
-        this->widgetPreview->setVisible(false);
+    this->widgetPreview->setVisible(showPreviewPanel);
 
     bool showLivePanel = (DatabaseManager::getInstance().getConfigurationByName("ShowLivePanel").getValue() == "true") ? true : false;
-    if (!showLivePanel)
-        this->widgetLive->setVisible(false);
+    this->widgetLive->setVisible(showLivePanel);
 
     bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
-    if (!showAudioLevelsPanel)
-        this->widgetAudioLevels->setVisible(false);
+    this->widgetAudioLevels->setVisible(showAudioLevelsPanel);
+
+    bool showCountdownPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowCountdownPanel").getValue() == "true") ? true : false;
+    this->widgetCountdown->setVisible(showCountdownPanel);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));

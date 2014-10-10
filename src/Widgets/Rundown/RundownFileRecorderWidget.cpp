@@ -63,8 +63,6 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownFileRecorderWidget::labelChanged(const LabelChangedEvent& event)
@@ -369,7 +367,7 @@ void RundownFileRecorderWidget::checkDeviceConnection()
 
 void RundownFileRecorderWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

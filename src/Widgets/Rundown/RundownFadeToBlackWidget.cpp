@@ -65,8 +65,6 @@ RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QW
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownFadeToBlackWidget::labelChanged(const LabelChangedEvent& event)
@@ -516,7 +514,7 @@ void RundownFadeToBlackWidget::checkDeviceConnection()
 
 void RundownFadeToBlackWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

@@ -65,8 +65,6 @@ RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidge
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownBlendModeWidget::preview(const PreviewEvent& event)
@@ -414,7 +412,7 @@ void RundownBlendModeWidget::checkDeviceConnection()
 
 void RundownBlendModeWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

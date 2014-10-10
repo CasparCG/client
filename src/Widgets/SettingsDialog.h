@@ -93,4 +93,5 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void disableAudioInStreamChanged(int);
         Q_SLOT void networkCacheChanged(int);
         Q_SLOT void streamQualityChanged(int);
+        Q_SLOT void showCountdownChanged(int);
 };

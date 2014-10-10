@@ -70,8 +70,6 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownImageScrollerWidget::labelChanged(const LabelChangedEvent& event)
@@ -553,7 +551,7 @@ void RundownImageScrollerWidget::checkDeviceConnection()
 
 void RundownImageScrollerWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

@@ -5,6 +5,7 @@
 #include "EventManager.h"
 #include "DatabaseManager.h"
 
+#include "Events/CountdownChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 
 #include <QtCore/QDebug>
@@ -49,8 +50,6 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(connectionStateChanged(bool, GpiDevice*)), this, SLOT(gpiConnectionStateChanged(bool, GpiDevice*)));
 
     checkGpiConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
@@ -80,6 +79,7 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->setNotes(this->command.getNotes());
     command->setAutoStep(this->command.getAutoStep());
     command->setAutoPlay(this->command.getAutoPlay());
+    command->setCountdown(this->command.getCountdown());
 
     return widget;
 }
@@ -185,8 +185,10 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
     if (this->active)
         this->animation->start(1);
 
-    if (type == Playout::PlayoutType::Play)
+    if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
     {
+        EventManager::getInstance().fireCountdownChangedEvent(CountdownChangedEvent(this->command.getCountdown()));
+
         if (this->markUsedItems)
             setUsed(true);
     }
@@ -208,8 +210,10 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
         {
             EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(type, child));
 
-            if (type == Playout::PlayoutType::Play)
+            if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
             {
+                EventManager::getInstance().fireCountdownChangedEvent(CountdownChangedEvent(this->command.getCountdown()));
+
                 if (this->markUsedItems)
                     setUsed(true);
             }
@@ -233,6 +237,9 @@ void RundownGroupWidget::checkGpiConnection()
 
 void RundownGroupWidget::configureOscSubscriptions()
 {
+    if (!this->command.getAllowRemoteTriggering())
+        return;
+
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 

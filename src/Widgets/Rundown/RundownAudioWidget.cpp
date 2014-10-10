@@ -72,8 +72,6 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
@@ -536,7 +534,7 @@ void RundownAudioWidget::checkDeviceConnection()
 
 void RundownAudioWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

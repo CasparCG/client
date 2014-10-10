@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <x>11</x>
      <y>11</y>
      <width>678</width>
-     <height>826</height>
+     <height>852</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -511,7 +511,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>668</y>
+       <y>694</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -524,7 +524,7 @@
      <property name="geometry">
       <rect>
        <x>67</x>
-       <y>725</y>
+       <y>751</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -540,7 +540,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>660</y>
+       <y>686</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -556,7 +556,7 @@
      <property name="geometry">
       <rect>
        <x>217</x>
-       <y>724</y>
+       <y>750</y>
        <width>112</width>
        <height>22</height>
       </rect>
@@ -572,7 +572,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>688</y>
+       <y>714</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -652,7 +652,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>554</y>
+       <y>580</y>
        <width>171</width>
        <height>17</height>
       </rect>
@@ -668,7 +668,7 @@
      <property name="geometry">
       <rect>
        <x>287</x>
-       <y>629</y>
+       <y>655</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -681,7 +681,7 @@
      <property name="geometry">
       <rect>
        <x>199</x>
-       <y>625</y>
+       <y>651</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -703,7 +703,7 @@
      <property name="geometry">
       <rect>
        <x>79</x>
-       <y>627</y>
+       <y>653</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -719,7 +719,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>526</y>
+       <y>552</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -735,7 +735,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>534</y>
+       <y>560</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -748,7 +748,7 @@
      <property name="geometry">
       <rect>
        <x>79</x>
-       <y>592</y>
+       <y>618</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -764,7 +764,7 @@
      <property name="geometry">
       <rect>
        <x>199</x>
-       <y>590</y>
+       <y>616</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -786,7 +786,7 @@
      <property name="geometry">
       <rect>
        <x>288</x>
-       <y>594</y>
+       <y>620</y>
        <width>31</width>
        <height>16</height>
       </rect>
@@ -828,6 +828,22 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxCountdown">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>524</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Show countdown panel</string>
      </property>
     </widget>
    </widget>
@@ -3448,7 +3464,7 @@
    <property name="geometry">
     <rect>
      <x>614</x>
-     <y>847</y>
+     <y>873</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -3464,7 +3480,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>839</y>
+     <y>865</y>
      <width>591</width>
      <height>16</height>
     </rect>
@@ -4547,8 +4563,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>263</x>
-     <y>756</y>
+     <x>230</x>
+     <y>782</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4563,8 +4579,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>264</x>
-     <y>720</y>
+     <x>123</x>
+     <y>746</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4643,8 +4659,8 @@
    <slot>networkCacheChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>663</y>
+     <x>212</x>
+     <y>683</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -4659,8 +4675,8 @@
    <slot>disableAudioInStreamChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>190</x>
-     <y>596</y>
+     <x>123</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>706</x>
@@ -4675,8 +4691,8 @@
    <slot>streamQualityChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>263</x>
-     <y>632</y>
+     <x>212</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
      <x>708</x>
@@ -4713,6 +4729,22 @@
     <hint type="destinationlabel">
      <x>1</x>
      <y>58</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxCountdown</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showCountdownChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>241</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>499</y>
     </hint>
    </hints>
   </connection>
@@ -4778,5 +4810,6 @@
   <slot>streamQualityChanged(int)</slot>
   <slot>autoUpdateChanged(int)</slot>
   <slot>repositoryPortChanged()</slot>
+  <slot>showCountdownChanged(int)</slot>
  </slots>
 </ui>

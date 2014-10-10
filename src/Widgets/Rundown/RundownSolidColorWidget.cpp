@@ -65,8 +65,6 @@ RundownSolidColorWidget::RundownSolidColorWidget(const LibraryModel& model, QWid
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownSolidColorWidget::labelChanged(const LabelChangedEvent& event)
@@ -517,7 +515,7 @@ void RundownSolidColorWidget::checkDeviceConnection()
 
 void RundownSolidColorWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

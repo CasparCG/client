@@ -95,8 +95,20 @@ namespace Osc
     static const QString DEFAULT_CLEAR_CONTROL_FILTER = "/control/#UID#/clear";
     static const QString DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER = "/control/#UID#/clearvideolayer";
     static const QString DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER = "/control/#UID#/clearchannel";
-    static const QString DEFAULT_UP_CONTROL_FILTER = "/control/#UID#/up";
-    static const QString DEFAULT_DOWN_CONTROL_FILTER = "/control/#UID#/down";
+    static const QString DEFAULT_STOP_RUNDOWN_CONTROL_FILTER = "/control/stop";
+    static const QString DEFAULT_PLAY_RUNDOWN_CONTROL_FILTER = "/control/play";
+    static const QString DEFAULT_PLAYNOW_RUNDOWN_CONTROL_FILTER = "/control/playnow";
+    static const QString DEFAULT_LOAD_RUNDOWN_CONTROL_FILTER = "/control/load";
+    static const QString DEFAULT_PAUSE_RUNDOWN_CONTROL_FILTER = "/control/pause";
+    static const QString DEFAULT_NEXT_RUNDOWN_CONTROL_FILTER = "/control/next";
+    static const QString DEFAULT_UPDATE_RUNDOWN_CONTROL_FILTER = "/control/update";
+    static const QString DEFAULT_INVOKE_RUNDOWN_CONTROL_FILTER = "/control/invoke";
+    static const QString DEFAULT_PREVIEW_RUNDOWN_CONTROL_FILTER = "/control/preview";
+    static const QString DEFAULT_CLEAR_RUNDOWN_CONTROL_FILTER = "/control/clear";
+    static const QString DEFAULT_CLEAR_VIDEOLAYER_RUNDOWN_CONTROL_FILTER = "/control/clearvideolayer";
+    static const QString DEFAULT_CLEAR_CHANNEL_RUNDOWN_CONTROL_FILTER = "/control/clearchannel";
+    static const QString DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER = "/control/down";
+    static const QString DEFAULT_UP_RUNDOWN_CONTROL_FILTER = "/control/up";
 }
 
 namespace GpiOutput

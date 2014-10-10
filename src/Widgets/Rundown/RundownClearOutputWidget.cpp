@@ -61,8 +61,6 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
-
-    configureOscSubscriptions();
 }
 
 void RundownClearOutputWidget::labelChanged(const LabelChangedEvent& event)
@@ -366,7 +364,7 @@ void RundownClearOutputWidget::checkDeviceConnection()
 
 void RundownClearOutputWidget::configureOscSubscriptions()
 {
-    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+    if (!this->command.getAllowRemoteTriggering())
         return;
 
     if (this->stopControlSubscription != NULL)

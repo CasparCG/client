@@ -173,7 +173,8 @@ HEADERS += \
     Events/Rundown/RepositoryRundownEvent.h \
     Models/RepositoryChangeModel.h \
     Events/Rundown/InsertRepositoryChangesEvent.h \
-    Events/Rundown/ReloadRundownMenuEvent.h
+    Events/Rundown/ReloadRundownMenuEvent.h \
+    Events/CountdownChangedEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -336,7 +337,8 @@ SOURCES += \
     Events/Rundown/RepositoryRundownEvent.cpp \
     Models/RepositoryChangeModel.cpp \
     Events/Rundown/InsertRepositoryChangesEvent.cpp \
-    Events/Rundown/ReloadRundownMenuEvent.cpp
+    Events/Rundown/ReloadRundownMenuEvent.cpp \
+    Events/CountdownChangedEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
