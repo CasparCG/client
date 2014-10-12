@@ -209,6 +209,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
         }
 
         QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+        //QTreeWidget::setCurrentItem(parentItem);
 
         if (parentWidget->isGroup())
         {

@@ -423,6 +423,7 @@ void RundownTreeWidget::addRudnownItem(const AddRudnownItemEvent& event)
         dynamic_cast<QWidget*>(widget)->setFixedHeight(Rundown::DEFAULT_ITEM_HEIGHT);
 
     this->treeWidgetRundown->doItemsLayout(); // Refresh.
+    this->treeWidgetRundown->repaint();
 
     this->treeWidgetRundown->checkEmptyRundown();
 }
