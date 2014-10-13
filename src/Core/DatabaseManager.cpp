@@ -113,7 +113,7 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevelsPanel', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowPreviewPanel', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowLivePanel', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowCountdownPanel', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowDurationPanel', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableAudioInStream', 'true')");

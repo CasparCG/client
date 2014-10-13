@@ -86,8 +86,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxShowLive->setChecked(showLivePanel);
     bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
     this->checkBoxShowAudioLevels->setChecked(showAudioLevelsPanel);
-    bool showCountdownPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowCountdownPanel").getValue() == "true") ? true : false;
-    this->checkBoxCountdown->setChecked(showCountdownPanel);
+    bool showDurationPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowDurationPanel").getValue() == "true") ? true : false;
+    this->checkBoxDuration->setChecked(showDurationPanel);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
@@ -905,8 +905,8 @@ void SettingsDialog::streamQualityChanged(int quality)
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamQuality", QString("%1").arg(100 - quality)));
 }
 
-void SettingsDialog::showCountdownChanged(int state)
+void SettingsDialog::showDurationChanged(int state)
 {
-    QString showCountdownPanel = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowCountdownPanel", showCountdownPanel));
+    QString showDurationPanel = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowDurationPanel", showDurationPanel));
 }

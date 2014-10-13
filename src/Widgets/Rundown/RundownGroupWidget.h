@@ -81,6 +81,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         void configureOscSubscriptions();
         bool executeOscCommand(Playout::PlayoutType::Type type);
 
+        Q_SLOT void durationChanged(int);
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void autoStepChanged(bool);

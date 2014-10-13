@@ -179,7 +179,7 @@
 {
     font-size: 13px;
 }
-#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelRemoteTriggerId, #labelGpiOutputPort
+#labelChannel, #labelVideolayer, #labelDelay, #labelFlashlayer, #labelDevice, #labelRemoteTriggerId, #labelGpiOutputPort, #labelItemDuration
 {
     color: rgba(190, 190, 190, 255);
 }
@@ -437,7 +437,7 @@
 }
 
 /*
- * CountdownWidget
+ * DurationWidget
  */
 #lcdNumber
 {
@@ -460,18 +460,18 @@
     color: rgba(55, 55, 55, 255);
 }
 
-#progressBarCountdown
+#progressBarDuration
 {
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-width: 1px;
 }
-#progressBarCountdown::chunk
+#progressBarDuration::chunk
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 green, stop: 1 lime);
 }
 
-#labelZero, #labelCountdown
+#labelZero, #labelDuration
 {
     color: rgba(190, 190, 190, 255);
     font-size: 13px;

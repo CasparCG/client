@@ -180,6 +180,9 @@ LibraryModel* RundownNetworkSourceWidget::getLibraryModel()
 
 void RundownNetworkSourceWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();

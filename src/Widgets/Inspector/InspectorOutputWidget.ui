@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
+    <width>331</width>
     <height>280</height>
    </rect>
   </property>
@@ -287,7 +287,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDuration">
+      <widget class="QLabel" name="labelItemDuration">
        <property name="text">
         <string>Duration</string>
        </property>

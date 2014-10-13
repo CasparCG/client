@@ -139,7 +139,7 @@ HEADERS += \
     LiveDialog.h \
     Rundown/RundownFadeToBlackWidget.h \
     Inspector/InspectorFadeToBlackWidget.h \
-    CountdownWidget.h
+    DurationWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -267,7 +267,7 @@ SOURCES += \
     LiveDialog.cpp \
     Rundown/RundownFadeToBlackWidget.cpp \
     Inspector/InspectorFadeToBlackWidget.cpp \
-    CountdownWidget.cpp
+    DurationWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -384,7 +384,7 @@ FORMS += \
     LiveDialog.ui \
     Rundown/RundownFadeToBlackWidget.ui \
     Inspector/InspectorFadeToBlackWidget.ui \
-    CountdownWidget.ui
+    DurationWidget.ui
 
 RESOURCES += \
     Widgets.qrc \

@@ -830,7 +830,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxCountdown">
+    <widget class="QCheckBox" name="checkBoxDuration">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -843,7 +843,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Show countdown panel (Depends on the iNews backend)</string>
+      <string>Show duration panel (iNews backend only)</string>
      </property>
     </widget>
    </widget>
@@ -4733,18 +4733,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCountdown</sender>
+   <sender>checkBoxDuration</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>showCountdownChanged(int)</slot>
+   <slot>showDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>241</x>
-     <y>560</y>
+     <x>215</x>
+     <y>565</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
-     <y>499</y>
+     <y>558</y>
     </hint>
    </hints>
   </connection>
@@ -4810,6 +4810,6 @@
   <slot>streamQualityChanged(int)</slot>
   <slot>autoUpdateChanged(int)</slot>
   <slot>repositoryPortChanged()</slot>
-  <slot>showCountdownChanged(int)</slot>
+  <slot>showDurationChanged(int)</slot>
  </slots>
 </ui>

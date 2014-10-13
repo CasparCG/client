@@ -198,7 +198,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<OscOutputCommand*>(event.getCommand()) ||

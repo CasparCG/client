@@ -3,6 +3,7 @@
 #include "Global.h"
 
 #include "DatabaseManager.h"
+#include "Timecode.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QTimer>
@@ -64,7 +65,7 @@ void OscTimeWidget::setTime(int currentFrame)
 
     double currentTime = currentFrame * (1.0 / this->fps);
 
-    this->labelOscTime->setText(convertToTimecode(currentTime));
+    this->labelOscTime->setText(Timecode::fromTime(currentTime, this->fps));
 
     if (this->timestamp == 0) // First time.
         QTimer::singleShot(500, this, SLOT(checkState()));
@@ -97,8 +98,8 @@ void OscTimeWidget::setInOutTime(int seek, int length)
     double inTime = seek * (1.0 / this->fps);
     double outTime = (seek + length) * (1.0 / this->fps);
 
-    this->labelOscInTime->setText(convertToTimecode(inTime));
-    this->labelOscOutTime->setText(convertToTimecode(outTime));
+    this->labelOscInTime->setText(Timecode::fromTime(inTime, this->fps));
+    this->labelOscOutTime->setText(Timecode::fromTime(outTime, this->fps));
 
     this->progressBarOscTime->setRange(seek, seek + length);
 }
@@ -134,23 +135,6 @@ void OscTimeWidget::setPaused(bool paused)
 void OscTimeWidget::setLoop(bool loop)
 {
     // Indicate loop state.
-}
-
-QString OscTimeWidget::convertToTimecode(double time)
-{
-    int hour;
-    int minutes;
-    int seconds;
-    int frames;
-
-    QString smpteFormat;
-
-    hour = time / 3600;
-    minutes = (time - hour * 3600) / 60;
-    seconds = time - hour * 3600 - minutes * 60;
-    frames = (time - hour * 3600 - minutes * 60 - seconds) * this->fps;
-
-    return smpteFormat.sprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
 }
 
 void OscTimeWidget::checkState()

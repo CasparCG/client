@@ -59,7 +59,7 @@
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
-      previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), activeItem(NULL), currentPlayingAutoStepItem(NULL),
+      previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
       upControlSubscription(NULL), downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
@@ -503,33 +503,8 @@ void RundownTreeWidget::setActive(bool active)
 
     if (this->active)
     {
-        if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
-        {
-            this->treeWidgetRundown->setCurrentItem(this->activeItem);
-
-            if (this->treeWidgetRundown->currentItem() != NULL)
-            {
-                QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-                QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
-
-                dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
-            }
-        }
-
         EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(this->allowRemoteRundownTriggering));
         EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(this->repositoryRundown));
-    }
-    else
-    {
-        if (this->treeWidgetRundown->currentItem() != NULL)
-        {
-            this->activeItem = this->treeWidgetRundown->currentItem();
-
-            QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
-            QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
-
-            dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
-        }
     }
 
     EventManager::getInstance().fireActiveRundownChangedEvent(ActiveRundownChangedEvent(this->activeRundown));

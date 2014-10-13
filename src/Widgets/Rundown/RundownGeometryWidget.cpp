@@ -190,6 +190,9 @@ LibraryModel* RundownGeometryWidget::getLibraryModel()
 
 void RundownGeometryWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();

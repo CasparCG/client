@@ -1,5 +1,7 @@
 #include "CasparDevice.h"
 
+#include "Timecode.h"
+
 #include <QtCore/QStringList>
 
 #include <QtNetwork/QHostInfo>
@@ -576,18 +578,6 @@ void CasparDevice::setClipping(int channel, int videolayer, float positionX, flo
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
-QString CasparDevice::convertToTimecode(double time, int fps)
-{
-    QString smpteFormat;
-
-    int hour = (int)(time / 3600);
-    int minutes = (int)((time - hour * 3600) / 60);
-    int seconds = (int)(time - hour * 3600 - minutes * 60);
-    int frames = (int)((time - hour * 3600 - minutes * 60 - seconds) * fps);
-
-    return smpteFormat.sprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
-}
-
 void CasparDevice::sendNotification()
 {
     switch (AmcpDevice::command)
@@ -626,7 +616,7 @@ void CasparDevice::sendNotification()
                     int fps = timebase.split("/").at(1).toInt();
 
                     double time = frames * (1.0 / fps);
-                    timecode = convertToTimecode(time, fps);
+                    timecode = Timecode::fromTime(time, fps);
                 }
 
                 items.push_back(CasparMedia(name, type, timecode));

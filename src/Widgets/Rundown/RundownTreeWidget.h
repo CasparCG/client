@@ -96,7 +96,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
 
         QTreeWidgetItem* copyItem;
-        QTreeWidgetItem* activeItem;
         QTreeWidgetItem* currentPlayingAutoStepItem;
 
         OscSubscription* upControlSubscription;

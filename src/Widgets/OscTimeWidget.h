@@ -30,7 +30,5 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         QString startTime;
         bool reverseOscTime;
 
-        QString convertToTimecode(double time);
-
         Q_SLOT void checkState();
 };

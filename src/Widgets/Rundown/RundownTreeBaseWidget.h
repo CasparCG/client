@@ -84,12 +84,12 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool lock;
 
         QPoint dragStartPosition;
-
         QList<RepositoryChangeModel> repositoryChanges;
 
         QString currentItemStoryId();
         void removeRepositoryItem(const QString& storyId);
         bool containsStoryId(const QString& storyId, const QString& data);
         void addRepositoryItem(const QString& storyId, const QString& data);
+
         Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

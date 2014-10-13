@@ -4,8 +4,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "DatabaseManager.h"
+#include "Timecode.h"
 
-#include "Events/CountdownChangedEvent.h"
+#include "Events/DurationChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 
 #include <QtCore/QDebug>
@@ -40,6 +41,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     this->labelLabel->setText(this->model.getLabel());
 
+    QObject::connect(&this->command, SIGNAL(durationChanged(int)), this, SLOT(durationChanged(int)));
     QObject::connect(&this->command, SIGNAL(notesChanged(const QString&)), this, SLOT(notesChanged(const QString&)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
@@ -154,6 +156,9 @@ void RundownGroupWidget::setColor(const QString& color)
 
 void RundownGroupWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
@@ -187,7 +192,7 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
 
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
     {
-        EventManager::getInstance().fireCountdownChangedEvent(CountdownChangedEvent(this->command.getCountdown()));
+        EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
 
         if (this->markUsedItems)
             setUsed(true);
@@ -212,7 +217,7 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
 
             if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
             {
-                EventManager::getInstance().fireCountdownChangedEvent(CountdownChangedEvent(this->command.getCountdown()));
+                EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
 
                 if (this->markUsedItems)
                     setUsed(true);
@@ -329,6 +334,11 @@ void RundownGroupWidget::configureOscSubscriptions()
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+}
+
+void RundownGroupWidget::durationChanged(int duration)
+{
+    this->labelItemDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)

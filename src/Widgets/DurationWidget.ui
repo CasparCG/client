@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CountdownWidget</class>
- <widget class="QWidget" name="CountdownWidget">
+ <class>DurationWidget</class>
+ <widget class="QWidget" name="DurationWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -49,7 +49,7 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QFrame" name="frameCountdown">
+      <widget class="QFrame" name="frameDuration">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -244,7 +244,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QProgressBar" name="progressBarCountdown">
+        <widget class="QProgressBar" name="progressBarDuration">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -285,7 +285,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="labelCountdown">
+        <widget class="QLabel" name="labelDuration">
          <property name="text">
           <string>00:00:00:00</string>
          </property>

@@ -58,8 +58,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
     this->widgetAudioLevels->setVisible(showAudioLevelsPanel);
 
-    bool showCountdownPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowCountdownPanel").getValue() == "true") ? true : false;
-    this->widgetCountdown->setVisible(showCountdownPanel);
+    bool showDurationPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowDurationPanel").getValue() == "true") ? true : false;
+    this->widgetDuration->setVisible(showDurationPanel);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));

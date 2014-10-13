@@ -180,6 +180,9 @@ LibraryModel* RundownFadeToBlackWidget::getLibraryModel()
 
 void RundownFadeToBlackWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
