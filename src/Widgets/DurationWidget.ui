@@ -285,7 +285,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="labelDuration">
+        <widget class="QLabel" name="labelCountdownDuration">
          <property name="text">
           <string>00:00:00:00</string>
          </property>

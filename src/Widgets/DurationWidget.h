@@ -8,6 +8,7 @@
 
 #include <QtCore/QTime>
 #include <QtCore/QTimer>
+#include <QtCore/QDateTime>
 
 #include <QtGui/QWidget>
 
@@ -21,6 +22,7 @@ class WIDGETS_EXPORT DurationWidget : public QWidget, Ui::DurationWidget
     private:
         int duration;
         QTime time;
+        QTime timeSinceStart;
         QTimer updateTimer;
 
         void resetDuration();

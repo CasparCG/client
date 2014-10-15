@@ -215,6 +215,9 @@
         <file>Images/FadeToBlack.png</file>
         <file>Images/FadeToBlackSmall.png</file>
         <file>Images/FadeToBlackSmallHover.png</file>
+        <file>Images/Panasonic/PanasonicPreset.png</file>
+        <file>Images/Panasonic/PanasonicPresetSmall.png</file>
+        <file>Images/Panasonic/PanasonicPresetSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

@@ -14,9 +14,8 @@ DurationWidget::DurationWidget(QWidget* parent)
 {
     setupUi(this);
 
-    this->lcdNumber->display("00:00:00:00");
-
     this->updateTimer.setInterval(50);
+    this->lcdNumber->display("00:00:00:00");
 
     QObject::connect(&this->updateTimer, SIGNAL(timeout()), this, SLOT(updateTime()));
     QObject::connect(&EventManager::getInstance(), SIGNAL(durationChanged(const DurationChangedEvent&)), this, SLOT(durationChanged(const DurationChangedEvent&)));
@@ -48,34 +47,33 @@ void DurationWidget::durationChanged(const DurationChangedEvent& event)
 
     this->time = QTime::fromString("00:00:00:00").addMSecs(this->duration);
 
-    this->labelDuration->setText(Timecode::fromTime(this->time));
+    this->labelCountdownDuration->setText(Timecode::fromTime(this->time));
 
-    this->updateTimer.start(this->updateTimer.interval());
+    this->updateTimer.start();
+    this->timeSinceStart.restart();
 }
 
 void DurationWidget::updateTime()
 {
-    this->duration = this->duration - this->updateTimer.interval();
-    if (this->duration <= 0)
+    if (this->timeSinceStart.elapsed() > this->duration)
     {
         resetDuration();
 
         return;
     }
 
-    this->time = this->time.addMSecs(-this->updateTimer.interval());
+    QTime currentTime = this->time.addMSecs(-this->timeSinceStart.elapsed());
+    QString timecode = Timecode::fromTime(currentTime);
 
-    QString text = Timecode::fromTime(this->time);
-
-    this->lcdNumber->display(text);
-    this->progressBarDuration->setValue(this->duration);
+    this->lcdNumber->display(timecode);
+    this->progressBarDuration->setValue(this->duration - this->timeSinceStart.elapsed());
 }
 
 void DurationWidget::resetDuration()
 {
     this->updateTimer.stop();
 
-    this->lcdNumber->display("00:00:00:00");
     this->progressBarDuration->setValue(0);
-    this->labelDuration->setText("00:00:00:00");
+    this->lcdNumber->display("00:00:00:00");
+    this->labelCountdownDuration->setText("00:00:00:00");
 }

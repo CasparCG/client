@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>814</height>
+    <height>745</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -58,7 +58,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>752</height>
+        <height>683</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -93,8 +93,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>287</width>
-            <height>750</height>
+            <width>285</width>
+            <height>679</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1121,6 +1121,29 @@
              <item>
               <property name="text">
                <string>Fade to Black</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Camera Preset</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

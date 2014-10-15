@@ -44,6 +44,7 @@
 #include "TriCaster/RundownPresetWidget.h"
 #include "TriCaster/RundownNetworkSourceWidget.h"
 #include "TriCaster/RundownMacroWidget.h"
+#include "Panasonic/RundownPanasonicPresetWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -97,6 +98,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
     else if (model.getType() == Rundown::PLAYOUTCOMMAND) return new RundownPlayoutCommandWidget(model, this);
     else if (model.getType() == Rundown::FADETOBLACK) return new RundownFadeToBlackWidget(model, this);
+    else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);
 
     return NULL;
 }

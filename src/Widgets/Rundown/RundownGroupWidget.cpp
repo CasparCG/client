@@ -338,7 +338,7 @@ void RundownGroupWidget::configureOscSubscriptions()
 
 void RundownGroupWidget::durationChanged(int duration)
 {
-    this->labelItemDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
+    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)

@@ -139,7 +139,9 @@ HEADERS += \
     LiveDialog.h \
     Rundown/RundownFadeToBlackWidget.h \
     Inspector/InspectorFadeToBlackWidget.h \
-    DurationWidget.h
+    DurationWidget.h \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.h \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -267,7 +269,9 @@ SOURCES += \
     LiveDialog.cpp \
     Rundown/RundownFadeToBlackWidget.cpp \
     Inspector/InspectorFadeToBlackWidget.cpp \
-    DurationWidget.cpp
+    DurationWidget.cpp \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.cpp \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -384,7 +388,9 @@ FORMS += \
     LiveDialog.ui \
     Rundown/RundownFadeToBlackWidget.ui \
     Inspector/InspectorFadeToBlackWidget.ui \
-    DurationWidget.ui
+    DurationWidget.ui \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.ui \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -623,7 +629,10 @@ OTHER_FILES += \
     Images/PauseProgressBarOverlay.png \
     Images/FadeToBlackSmallHover.png \
     Images/FadeToBlackSmall.png \
-    Images/FadeToBlack.png
+    Images/FadeToBlack.png \
+    Images/Panasonic/PanasonicPresetSmallHover.png \
+    Images/Panasonic/PanasonicPresetSmall.png \
+    Images/Panasonic/PanasonicPreset.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -678,6 +687,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
 else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+
+DEPENDPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+INCLUDEPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -lpanasonic
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
+else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc

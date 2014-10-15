@@ -174,7 +174,8 @@ HEADERS += \
     Models/RepositoryChangeModel.h \
     Events/Rundown/InsertRepositoryChangesEvent.h \
     Events/Rundown/ReloadRundownMenuEvent.h \
-    Events/DurationChangedEvent.h
+    Events/DurationChangedEvent.h \
+    Commands/Panasonic/PanasonicPresetCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -338,7 +339,8 @@ SOURCES += \
     Models/RepositoryChangeModel.cpp \
     Events/Rundown/InsertRepositoryChangesEvent.cpp \
     Events/Rundown/ReloadRundownMenuEvent.cpp \
-    Events/DurationChangedEvent.cpp
+    Events/DurationChangedEvent.cpp \
+    Commands/Panasonic/PanasonicPresetCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

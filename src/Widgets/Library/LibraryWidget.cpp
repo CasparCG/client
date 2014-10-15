@@ -499,6 +499,15 @@ void LibraryWidget::setupTools()
     widgetAtemCut->setText(4, Rundown::ATEMCUT);
     widgetAtemCut->setText(5, "0");
 
+    QTreeWidgetItem* widgetCameraPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
+    widgetCameraPreset->setIcon(0, QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"));
+    widgetCameraPreset->setText(0, "Camera Preset");
+    widgetCameraPreset->setText(1, "0");
+    widgetCameraPreset->setText(2, "Camera Preset");
+    widgetCameraPreset->setText(3, "");
+    widgetCameraPreset->setText(4, Rundown::PANASONICPRESET);
+    widgetCameraPreset->setText(5, "0");
+
     this->treeWidgetTool->expandAll();
 }
 

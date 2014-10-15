@@ -145,7 +145,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelChannel">
+      <widget class="QLabel" name="labelChannelField">
        <property name="text">
         <string>Channel</string>
        </property>
@@ -188,7 +188,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelVideolayer">
+      <widget class="QLabel" name="labelVideolayerField">
        <property name="text">
         <string>Video layer</string>
        </property>
@@ -231,7 +231,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDelay">
+      <widget class="QLabel" name="labelDelayField">
        <property name="text">
         <string>Delay</string>
        </property>
@@ -287,7 +287,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelItemDuration">
+      <widget class="QLabel" name="labelDurationField">
        <property name="text">
         <string>Duration</string>
        </property>

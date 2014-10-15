@@ -5,6 +5,7 @@ SUBDIRS += \
     Atem \
     Caspar \
     TriCaster \
+    Panasonic \
     Gpi \
     Osc \
     Repository \

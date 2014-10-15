@@ -89,6 +89,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
         QMenu* contextMenuAtem;
+        QMenu* contextMenuPanasonic;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
@@ -167,6 +168,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addAtemAudioInputStateItem();
         Q_SLOT void addAtemAudioInputGainItem();
         Q_SLOT void addAtemAudioInputBalanceItem();
+        Q_SLOT void addPanasonicPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);

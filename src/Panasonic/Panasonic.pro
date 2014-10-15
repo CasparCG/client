@@ -1,21 +1,19 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-04-12T13:07:49
+# Project created by QtCreator 2014-10-12T13:07:49
 #
 #-------------------------------------------------
 QT -= gui
 QT += network
 
-TARGET = tricaster
+TARGET = panasonic
 TEMPLATE = lib
 
-DEFINES += TRICASTER_LIBRARY
+DEFINES += PANASONIC_LIBRARY
 
 HEADERS += \
-    TriCasterDevice.h \
     Shared.h \
-    NtfcDevice.h
+    CameraDevice.h
 	
 SOURCES += \
-    TriCasterDevice.cpp \
-    NtfcDevice.cpp
+    CameraDevice.cpp

@@ -93,6 +93,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ 
 else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 
+DEPENDPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+INCLUDEPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -lpanasonic
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
+else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Osc/release/ -losc

@@ -4,8 +4,11 @@
 
 #include <stdexcept>
 
+#include <QtCore/QByteArray>
+#include <QtCore/QDebug>
 #include <QtCore/QEvent>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QList>
 
 namespace Atem
@@ -22,6 +25,13 @@ namespace Atem
     static const QString DEFAULT_AUDIO_INPUT_STATE = "0";
     static const float DEFAULT_AUDIO_INPUT_BALANCE = 0.0f;
     static const float DEFAULT_AUDIO_GAIN = 0.0f;
+}
+
+namespace Panasonic
+{
+    static const QString DEFAULT_ADDRESS = "";
+    static const QString DEFAULT_PRESET = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Stream
@@ -171,6 +181,7 @@ namespace Color
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_TRICASTER_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_ATEM_COLOR = "DarkOliveGreen";
+    static const QString DEFAULT_PANASONIC_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
@@ -379,6 +390,7 @@ namespace Rundown
     static const QString ATEMAUDIOGAIN = "ATEMAUDIOGAIN";
     static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
+    static const QString PANASONICPRESET = "PANASONICPRESET";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

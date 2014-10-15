@@ -172,6 +172,12 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
 
+    this->contextMenuPanasonic = new QMenu(this);
+    this->contextMenuPanasonic->setObjectName("contextMenuPanasonic");
+    this->contextMenuPanasonic->setTitle("Panasonic");
+    //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Panasonic.png"));
+    this->contextMenuPanasonic->addAction(QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"), "Camera Preset", this, SLOT(addPanasonicPresetItem()));
+
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
     //this->contextMenuTools->setIcon(QIcon(":/Graphics/Images/New.png"));
@@ -180,6 +186,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTools->addMenu(this->contextMenuOther);
     this->contextMenuTools->addMenu(this->contextMenuTriCaster);
     this->contextMenuTools->addMenu(this->contextMenuAtem);
+    this->contextMenuTools->addMenu(this->contextMenuPanasonic);
 
     this->contextMenuMark = new QMenu(this);
     this->contextMenuMark->setTitle("Mark Item");
@@ -625,6 +632,9 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     EventManager::getInstance().fireSaveAsMenuEvent(SaveAsMenuEvent(false));
     EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(true));
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
+
+    reply->deleteLater();
+    this->networkManager->deleteLater();
 }
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
@@ -658,19 +668,13 @@ void RundownTreeWidget::reloadRundown()
     if (this->activeRundown == Rundown::DEFAULT_NAME)
         return;
 
-    int itemRow = 0;
-    int groupRow = 0;
-    bool inGroup = false;
+    delete this->copyItem;
+    delete this->currentAutoPlayWidget;
+    delete this->currentPlayingAutoStepItem;
 
-    if (this->treeWidgetRundown->currentItem() != NULL)
-    {
-        itemRow = this->treeWidgetRundown->currentIndex().row();
-        if (this->treeWidgetRundown->currentItem()->parent() != NULL)
-        {
-            inGroup = true;
-            groupRow = this->treeWidgetRundown->invisibleRootItem()->indexOfChild(this->treeWidgetRundown->currentItem()->parent());
-        }
-    }
+    this->copyItem = NULL;
+    this->currentAutoPlayWidget = NULL;
+    this->currentPlayingAutoStepItem = NULL;
 
     this->treeWidgetRundown->removeAllItems();
 
@@ -679,11 +683,8 @@ void RundownTreeWidget::reloadRundown()
     else
         openRundown(this->activeRundown);
 
-    this->treeWidgetRundown->clearSelection();
-    if (inGroup)
-       this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(groupRow)->child(itemRow));
-    else
-        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(itemRow));
+    if (this->treeWidgetRundown->invisibleRootItem()->childCount() > 0)
+        this->treeWidgetRundown->setCurrentItem(this->treeWidgetRundown->invisibleRootItem()->child(0));
 }
 
 void RundownTreeWidget::saveRundown(bool saveAs)
@@ -1475,6 +1476,11 @@ void RundownTreeWidget::addAtemAudioInputGainItem()
 void RundownTreeWidget::addAtemAudioInputBalanceItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUDIOINPUTBALANCE);
+}
+
+void RundownTreeWidget::addPanasonicPresetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PANASONICPRESET);
 }
 
 void RundownTreeWidget::saveAsPreset()
