@@ -168,6 +168,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addAtemAudioInputStateItem();
         Q_SLOT void addAtemAudioInputGainItem();
         Q_SLOT void addAtemAudioInputBalanceItem();
+        Q_SLOT void addFreeTransformItem();
         Q_SLOT void addPanasonicPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);

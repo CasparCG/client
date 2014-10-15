@@ -129,6 +129,14 @@ namespace GpiOutput
 
 namespace Mixer
 {
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_Y = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
     static const float DEFAULT_GRID = 2.0f;
     static const float DEFAULT_BRIGHTNESS = 1.0f;
     static const float DEFAULT_CONTRAST = 1.0f;
@@ -391,6 +399,7 @@ namespace Rundown
     static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const QString PANASONICPRESET = "PANASONICPRESET";
+    static const QString PERSPECTIVE = "FREETRANSFORM";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

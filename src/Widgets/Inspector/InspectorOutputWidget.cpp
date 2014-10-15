@@ -32,6 +32,7 @@
 #include "Commands/ChromaCommand.h"
 #include "Commands/PlayoutCommand.h"
 #include "Commands/OscOutputCommand.h"
+#include "Commands/PerspectiveCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -108,7 +109,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     this->spinBoxDuration->setEnabled(true);
     this->checkBoxAllowGpi->setEnabled(true);
     this->checkBoxAllowRemoteTriggering->setEnabled(true);
-    this->labelRemoteTriggerId->setEnabled(true);
+    this->labelRemoteTriggerIdField->setEnabled(true);
     this->lineEditRemoteTriggerId->setEnabled(true);
 
     this->labelDelayMillisecond->setVisible(true);
@@ -150,7 +151,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
         if (!this->checkBoxAllowRemoteTriggering->isChecked())
         {
-            this->labelRemoteTriggerId->setEnabled(false);
+            this->labelRemoteTriggerIdField->setEnabled(false);
             this->lineEditRemoteTriggerId->setEnabled(false);
         }
 
@@ -228,7 +229,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxDuration->setEnabled(false);
             this->checkBoxAllowGpi->setEnabled(false);
             this->checkBoxAllowRemoteTriggering->setEnabled(false);
-            this->labelRemoteTriggerId->setEnabled(false);
+            this->labelRemoteTriggerIdField->setEnabled(false);
             this->lineEditRemoteTriggerId->setEnabled(false);
 
             this->comboBoxDevice->setCurrentIndex(-1);
@@ -264,6 +265,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<ContrastCommand*>(event.getCommand()) ||
                  dynamic_cast<CropCommand*>(event.getCommand()) ||
                  dynamic_cast<GeometryCommand*>(event.getCommand()) ||
+                 dynamic_cast<PerspectiveCommand*>(event.getCommand()) ||
                  dynamic_cast<KeyerCommand*>(event.getCommand()) ||
                  dynamic_cast<LevelsCommand*>(event.getCommand()) ||
                  dynamic_cast<OpacityCommand*>(event.getCommand()) ||
@@ -357,7 +359,7 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
-    this->labelRemoteTriggerId->setEnabled(false);
+    this->labelRemoteTriggerIdField->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
     this->labelDelayMillisecond->setText("");
@@ -400,7 +402,7 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
-    this->labelRemoteTriggerId->setEnabled(false);
+    this->labelRemoteTriggerIdField->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
     this->labelDelayMillisecond->setText("");
@@ -644,7 +646,7 @@ void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 {
     this->command->setAllowRemoteTriggering((state == Qt::Checked) ? true : false);
 
-    this->labelRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
+    this->labelRemoteTriggerIdField->setEnabled(this->command->getAllowRemoteTriggering());
     this->lineEditRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
 }
 

@@ -265,6 +265,15 @@ void LibraryWidget::setupTools()
     widgetVolume->setText(4, Rundown::VOLUME);
     widgetVolume->setText(5, "0");
 
+    QTreeWidgetItem* widgetFreeTransform = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetFreeTransform->setIcon(0, QIcon(":/Graphics/Images/PerspectiveSmall.png"));
+    widgetFreeTransform->setText(0, "Free Transform");
+    widgetFreeTransform->setText(1, "0");
+    widgetFreeTransform->setText(2, "Free Transform");
+    widgetFreeTransform->setText(3, "");
+    widgetFreeTransform->setText(4, Rundown::PERSPECTIVE);
+    widgetFreeTransform->setText(5, "0");
+
     QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
     widgetCommit->setText(0, "Commit");

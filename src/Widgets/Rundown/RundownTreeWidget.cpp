@@ -118,6 +118,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/PerspectiveSmall.png"), "Free Transform", this, SLOT(addFreeTransformItem()));
     this->contextMenuMixer->addSeparator();
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitItem()));
 
@@ -1381,6 +1382,11 @@ void RundownTreeWidget::addChromaKeyItem()
 void RundownTreeWidget::addSolidColorItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SOLIDCOLOR);
+}
+
+void RundownTreeWidget::addFreeTransformItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PERSPECTIVE);
 }
 
 void RundownTreeWidget::addFadeToBlackItem()

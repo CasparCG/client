@@ -129,6 +129,10 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
                          bool defer = false);
         void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          int duration, const QString& easing, bool defer = false);
+        void setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
+                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer = false);
+        void setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
+                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer = false);
 
         Q_SIGNAL void connectionStateChanged(CasparDevice&);
         Q_SIGNAL void infoChanged(const QList<QString>&, CasparDevice&);

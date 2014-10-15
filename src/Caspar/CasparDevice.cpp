@@ -578,6 +578,27 @@ void CasparDevice::setClipping(int channel, int videolayer, float positionX, flo
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
+void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
+                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 PERSPECTIVE %3 %4 %5 %6 %7 %8 %9 %10 %11")
+                 .arg(channel).arg(videolayer)
+                 .arg(upperLeftX).arg(upperLeftY).arg(upperRightX).arg(upperRightY)
+                 .arg(lowerRightX).arg(lowerRightY).arg(lowerLeftX).arg(lowerLeftY)
+                 .arg((defer == true) ? "DEFER" : ""));
+}
+
+void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
+                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 PERSPECTIVE %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13")
+                 .arg(channel).arg(videolayer)
+                 .arg(upperLeftX).arg(upperLeftY).arg(upperRightX).arg(upperRightY)
+                 .arg(lowerRightX).arg(lowerRightY).arg(lowerLeftX).arg(lowerLeftY)
+                 .arg(duration).arg(easing)
+                 .arg((defer == true) ? "DEFER" : ""));
+}
+
 void CasparDevice::sendNotification()
 {
     switch (AmcpDevice::command)

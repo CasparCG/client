@@ -420,7 +420,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelRemoteTriggerId">
+      <widget class="QLabel" name="labelRemoteTriggerIdField">
        <property name="text">
         <string>UID</string>
        </property>

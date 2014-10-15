@@ -141,7 +141,9 @@ HEADERS += \
     Inspector/InspectorFadeToBlackWidget.h \
     DurationWidget.h \
     Rundown/Panasonic/RundownPanasonicPresetWidget.h \
-    Inspector/Panasonic/InspectorPanasonicPresetWidget.h
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.h \
+    Rundown/RundownPerspectiveWidget.h \
+    Inspector/InspectorPerspectiveWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -271,7 +273,9 @@ SOURCES += \
     Inspector/InspectorFadeToBlackWidget.cpp \
     DurationWidget.cpp \
     Rundown/Panasonic/RundownPanasonicPresetWidget.cpp \
-    Inspector/Panasonic/InspectorPanasonicPresetWidget.cpp
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.cpp \
+    Rundown/RundownPerspectiveWidget.cpp \
+    Inspector/InspectorPerspectiveWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -390,7 +394,9 @@ FORMS += \
     Inspector/InspectorFadeToBlackWidget.ui \
     DurationWidget.ui \
     Rundown/Panasonic/RundownPanasonicPresetWidget.ui \
-    Inspector/Panasonic/InspectorPanasonicPresetWidget.ui
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.ui \
+    Rundown/RundownPerspectiveWidget.ui \
+    Inspector/InspectorPerspectiveWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -632,7 +638,10 @@ OTHER_FILES += \
     Images/FadeToBlack.png \
     Images/Panasonic/PanasonicPresetSmallHover.png \
     Images/Panasonic/PanasonicPresetSmall.png \
-    Images/Panasonic/PanasonicPreset.png
+    Images/Panasonic/PanasonicPreset.png \
+    Images/PerspectiveSmallHover.png \
+    Images/PerspectiveSmall.png \
+    Images/Perspective.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

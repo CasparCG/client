@@ -218,6 +218,9 @@
         <file>Images/Panasonic/PanasonicPreset.png</file>
         <file>Images/Panasonic/PanasonicPresetSmall.png</file>
         <file>Images/Panasonic/PanasonicPresetSmallHover.png</file>
+        <file>Images/Perspective.png</file>
+        <file>Images/PerspectiveSmall.png</file>
+        <file>Images/PerspectiveSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>
