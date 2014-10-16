@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>582</width>
-    <height>364</height>
+    <height>392</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>22</width>
+         <width>31</width>
          <height>20</height>
         </size>
        </property>
@@ -66,7 +66,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>22</width>
+         <width>31</width>
          <height>20</height>
         </size>
        </property>
@@ -103,7 +103,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>15</width>
+         <width>24</width>
          <height>20</height>
         </size>
        </property>
@@ -140,7 +140,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>15</width>
+         <width>24</width>
          <height>20</height>
         </size>
        </property>
@@ -177,7 +177,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>15</width>
+         <width>24</width>
          <height>20</height>
         </size>
        </property>
@@ -214,7 +214,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>15</width>
+         <width>24</width>
          <height>20</height>
         </size>
        </property>
@@ -251,7 +251,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>21</width>
+         <width>31</width>
          <height>20</height>
         </size>
        </property>
@@ -288,7 +288,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>21</width>
+         <width>31</width>
          <height>20</height>
         </size>
        </property>
@@ -325,7 +325,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>41</width>
+         <width>50</width>
          <height>20</height>
         </size>
        </property>
@@ -375,7 +375,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>54</width>
+         <width>63</width>
          <height>20</height>
         </size>
        </property>
@@ -412,7 +412,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>2</width>
+         <width>11</width>
          <height>20</height>
         </size>
        </property>
@@ -454,6 +454,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutUseMipmap">
+     <item>
+      <spacer name="horizontalSpacerUseMipmap1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelUseMipmap">
+       <property name="text">
+        <string>Use Mipmapping</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUseMipmap">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerUseMipmap2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutDefer">
      <item>
       <spacer name="horizontalSpacerDefer1">
@@ -465,7 +518,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>53</width>
+         <width>62</width>
          <height>20</height>
         </size>
        </property>
@@ -565,8 +618,8 @@
    <slot>deferChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>333</y>
+     <x>123</x>
+     <y>361</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
@@ -713,7 +766,7 @@
      <y>215</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-1</x>
+     <x>0</x>
      <y>233</y>
     </hint>
    </hints>
@@ -729,7 +782,7 @@
      <y>17</y>
     </hint>
     <hint type="destinationlabel">
-     <x>588</x>
+     <x>581</x>
      <y>21</y>
     </hint>
    </hints>
@@ -745,7 +798,7 @@
      <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>586</x>
+     <x>581</x>
      <y>50</y>
     </hint>
    </hints>
@@ -761,7 +814,7 @@
      <y>76</y>
     </hint>
     <hint type="destinationlabel">
-     <x>588</x>
+     <x>581</x>
      <y>77</y>
     </hint>
    </hints>
@@ -777,7 +830,7 @@
      <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>589</x>
+     <x>581</x>
      <y>102</y>
     </hint>
    </hints>
@@ -793,7 +846,7 @@
      <y>132</y>
     </hint>
     <hint type="destinationlabel">
-     <x>590</x>
+     <x>581</x>
      <y>131</y>
     </hint>
    </hints>
@@ -809,7 +862,7 @@
      <y>155</y>
     </hint>
     <hint type="destinationlabel">
-     <x>587</x>
+     <x>581</x>
      <y>156</y>
     </hint>
    </hints>
@@ -825,7 +878,7 @@
      <y>186</y>
     </hint>
     <hint type="destinationlabel">
-     <x>590</x>
+     <x>581</x>
      <y>187</y>
     </hint>
    </hints>
@@ -841,8 +894,24 @@
      <y>219</y>
     </hint>
     <hint type="destinationlabel">
-     <x>585</x>
+     <x>581</x>
      <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseMipmap</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorPerspectiveWidget</receiver>
+   <slot>useMipmapChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>113</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
@@ -869,5 +938,6 @@
   <slot>spinBoxLowerRightXChanged(int)</slot>
   <slot>spinBoxLowerLeftYChanged(int)</slot>
   <slot>spinBoxLowerLeftXChanged(int)</slot>
+  <slot>useMipmapChanged(int)</slot>
  </slots>
 </ui>

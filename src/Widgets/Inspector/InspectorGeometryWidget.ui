@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>246</width>
-    <height>304</height>
+    <width>548</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>35</width>
+         <width>44</width>
          <height>20</height>
         </size>
        </property>
@@ -66,7 +66,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>35</width>
+         <width>44</width>
          <height>20</height>
         </size>
        </property>
@@ -103,7 +103,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>52</width>
+         <width>67</width>
          <height>20</height>
         </size>
        </property>
@@ -140,7 +140,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>52</width>
+         <width>67</width>
          <height>20</height>
         </size>
        </property>
@@ -177,7 +177,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>41</width>
+         <width>50</width>
          <height>20</height>
         </size>
        </property>
@@ -227,7 +227,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>54</width>
+         <width>63</width>
          <height>20</height>
         </size>
        </property>
@@ -264,7 +264,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>2</width>
+         <width>11</width>
          <height>20</height>
         </size>
        </property>
@@ -306,6 +306,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutUseMipmap">
+     <item>
+      <spacer name="horizontalSpacerUseMipmap1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelUseMipmap">
+       <property name="text">
+        <string>Use Mipmapping</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUseMipmap">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerUseMipmap2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutDefer">
      <item>
       <spacer name="horizontalSpacerDefer1">
@@ -317,7 +370,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>53</width>
+         <width>62</width>
          <height>20</height>
         </size>
        </property>
@@ -433,7 +486,7 @@
    <slot>spinBoxPositionXChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
+     <x>537</x>
      <y>29</y>
     </hint>
     <hint type="destinationlabel">
@@ -449,8 +502,8 @@
    <slot>sliderPositionYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>56</y>
+     <x>290</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -465,7 +518,7 @@
    <slot>spinBoxPositionYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
+     <x>537</x>
      <y>57</y>
     </hint>
     <hint type="destinationlabel">
@@ -497,7 +550,7 @@
    <slot>spinBoxScaleXChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
+     <x>537</x>
      <y>85</y>
     </hint>
     <hint type="destinationlabel">
@@ -513,8 +566,8 @@
    <slot>sliderScaleYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>112</y>
+     <x>289</x>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -529,7 +582,7 @@
    <slot>spinBoxScaleYChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
+     <x>537</x>
      <y>113</y>
     </hint>
     <hint type="destinationlabel">
@@ -546,7 +599,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>221</y>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
@@ -570,6 +623,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxUseMipmap</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorGeometryWidget</receiver>
+   <slot>useMipmapChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>scaleXChanged(int)</slot>
@@ -587,5 +656,6 @@
   <slot>resetDefer(QString)</slot>
   <slot>deferChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>useMipmapChanged(int)</slot>
  </slots>
 </ui>

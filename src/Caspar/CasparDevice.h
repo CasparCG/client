@@ -122,17 +122,17 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
                        int duration, const QString& easing, bool defer = false);
         void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
-                         bool defer = false);
+                         bool defer = false, bool useMipmap = false);
         void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
-                         int duration, const QString& easing, bool defer = false);
+                         int duration, const QString& easing, bool defer = false, bool useMipmap = false);
         void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          bool defer = false);
         void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          int duration, const QString& easing, bool defer = false);
         void setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
-                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer = false);
+                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer = false, bool useMipmap = false);
         void setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
-                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer = false);
+                            float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer = false, bool useMipmap = false);
 
         Q_SIGNAL void connectionStateChanged(CasparDevice&);
         Q_SIGNAL void infoChanged(const QList<QString>&, CasparDevice&);

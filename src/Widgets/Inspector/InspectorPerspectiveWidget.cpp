@@ -49,6 +49,7 @@ void InspectorPerspectiveWidget::rundownItemSelected(const RundownItemSelectedEv
             this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
             this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
             this->checkBoxDefer->setChecked(this->command->getDefer());
+            this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
         }
     }
     else
@@ -126,6 +127,7 @@ void InspectorPerspectiveWidget::blockAllSignals(bool block)
     this->comboBoxTween->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
+    this->checkBoxUseMipmap->blockSignals(block);
 }
 
 void InspectorPerspectiveWidget::loadTween()
@@ -390,4 +392,9 @@ void InspectorPerspectiveWidget::triggerOnNextChanged(int state)
 void InspectorPerspectiveWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
+}
+
+void InspectorPerspectiveWidget::useMipmapChanged(int state)
+{
+    this->command->setUseMipmap((state == Qt::Checked) ? true : false);
 }

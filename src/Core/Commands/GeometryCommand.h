@@ -30,6 +30,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         const QString& getTween() const;
         bool getTriggerOnNext() const;
         bool getDefer() const;
+        bool getUseMipmap() const;
 
         void setPositionX(float positionX);
         void setPositionY(float positionY);
@@ -39,6 +40,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
+        void setUseMipmap(bool useMipmap);
 
     private:
         float positionX;
@@ -49,6 +51,7 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         QString tween;
         bool triggerOnNext;
         bool defer;
+        bool useMipmap;
 
         Q_SIGNAL void positionXChanged(float);
         Q_SIGNAL void positionYChanged(float);
@@ -58,4 +61,5 @@ class CORE_EXPORT GeometryCommand : public AbstractCommand
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);
+        Q_SIGNAL void useMipmapChanged(bool);
 };

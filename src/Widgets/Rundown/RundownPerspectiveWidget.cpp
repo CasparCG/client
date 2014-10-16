@@ -140,6 +140,7 @@ AbstractRundownWidget* RundownPerspectiveWidget::clone()
     command->setTween(this->command.getTween());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
     command->setDefer(this->command.getDefer());
+    command->setUseMipmap(this->command.getUseMipmap());
 
     return widget;
 }
@@ -335,7 +336,8 @@ void RundownPerspectiveWidget::executePlay()
         device->setPerspective(this->command.getChannel(), this->command.getVideolayer(), this->command.getUpperLeftX(),
                                this->command.getUpperLeftY(), this->command.getUpperRightX(), this->command.getUpperRightY(),
                                this->command.getLowerRightX(), this->command.getLowerRightY(), this->command.getLowerLeftX(),
-                               this->command.getLowerLeftY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                               this->command.getLowerLeftY(), this->command.getTransitionDuration(), this->command.getTween(),
+                               this->command.getDefer(), this->command.getUseMipmap());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -347,7 +349,8 @@ void RundownPerspectiveWidget::executePlay()
             deviceShadow->setPerspective(this->command.getChannel(), this->command.getVideolayer(), this->command.getUpperLeftX(),
                                          this->command.getUpperLeftY(), this->command.getUpperRightX(), this->command.getUpperRightY(),
                                          this->command.getLowerRightX(), this->command.getLowerRightY(), this->command.getLowerLeftX(),
-                                         this->command.getLowerLeftY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                                         this->command.getLowerLeftY(), this->command.getTransitionDuration(), this->command.getTween(),
+                                         this->command.getDefer(), this->command.getUseMipmap());
     }
 
     if (this->markUsedItems)

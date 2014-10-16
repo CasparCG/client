@@ -6,7 +6,7 @@ GeometryCommand::GeometryCommand(QObject* parent)
     : AbstractCommand(parent),
       positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS), scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE),
       scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT),
-      defer(Mixer::DEFAULT_DEFER)
+      defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
 {
 }
 
@@ -48,6 +48,11 @@ bool GeometryCommand::getTriggerOnNext() const
 bool GeometryCommand::getDefer() const
 {
     return this->defer;
+}
+
+bool GeometryCommand::getUseMipmap() const
+{
+    return this->useMipmap;
 }
 
 void GeometryCommand::setPositionX(float positionX)
@@ -98,6 +103,12 @@ void GeometryCommand::setDefer(bool defer)
     emit deferChanged(this->defer);
 }
 
+void GeometryCommand::setUseMipmap(bool useMipmap)
+{
+    this->useMipmap = useMipmap;
+    emit useMipmapChanged(this->useMipmap);
+}
+
 void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -110,6 +121,7 @@ void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
+    setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }
 
 void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
@@ -124,4 +136,5 @@ void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer->writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
 }

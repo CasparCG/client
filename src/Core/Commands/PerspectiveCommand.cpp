@@ -7,7 +7,7 @@ PerspectiveCommand::PerspectiveCommand(QObject* parent)
       upperLeftX(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_X), upperLeftY(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_Y), upperRightX(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_X),
       upperRightY(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_Y), lowerRightX(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_X), lowerRightY(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y),
       lowerLeftX(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X), lowerLeftY(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER)
+      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
 {
 }
 
@@ -69,6 +69,11 @@ bool PerspectiveCommand::getTriggerOnNext() const
 bool PerspectiveCommand::getDefer() const
 {
     return this->defer;
+}
+
+bool PerspectiveCommand::getUseMipmap() const
+{
+    return this->useMipmap;
 }
 
 void PerspectiveCommand::setUpperLeftX(float upperLeftX)
@@ -143,6 +148,12 @@ void PerspectiveCommand::setDefer(bool defer)
     emit deferChanged(this->defer);
 }
 
+void PerspectiveCommand::setUseMipmap(bool useMipmap)
+{
+    this->useMipmap = useMipmap;
+    emit useMipmapChanged(this->useMipmap);
+}
+
 void PerspectiveCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -159,6 +170,7 @@ void PerspectiveCommand::readProperties(boost::property_tree::wptree& pt)
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
+    setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }
 
 void PerspectiveCommand::writeProperties(QXmlStreamWriter* writer)
@@ -177,4 +189,5 @@ void PerspectiveCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer->writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
 }

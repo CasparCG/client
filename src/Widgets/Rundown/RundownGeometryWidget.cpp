@@ -136,6 +136,7 @@ AbstractRundownWidget* RundownGeometryWidget::clone()
     command->setTween(this->command.getTween());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
     command->setDefer(this->command.getDefer());
+    command->setUseMipmap(this->command.getUseMipmap());
 
     return widget;
 }
@@ -330,7 +331,8 @@ void RundownGeometryWidget::executePlay()
     if (device != NULL && device->isConnected())
         device->setGeometry(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
                             this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
-                            this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                            this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                            this->command.getUseMipmap());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -341,7 +343,8 @@ void RundownGeometryWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setGeometry(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
                                       this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
-                                      this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                                      this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                                      this->command.getUseMipmap());
     }
 
     if (this->markUsedItems)

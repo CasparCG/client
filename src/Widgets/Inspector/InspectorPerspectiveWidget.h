@@ -51,6 +51,7 @@ class WIDGETS_EXPORT InspectorPerspectiveWidget : public QWidget, Ui::InspectorP
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void deferChanged(int);
+        Q_SLOT void useMipmapChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
         Q_SLOT void channelChanged(const ChannelChangedEvent&);

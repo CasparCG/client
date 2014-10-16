@@ -545,16 +545,18 @@ void CasparDevice::setLevels(int channel, int videolayer, float minIn, float max
 }
 
 void CasparDevice::setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
-                               bool defer)
+                               bool defer, bool useMipmap)
 {
+    writeMessage(QString("MIXER %1-%2 MIPMAP %3").arg(channel).arg(videolayer).arg((useMipmap == true) ? "1" : "0"));
     writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7")
                  .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
-                               int duration, const QString& easing, bool defer)
+                               int duration, const QString& easing, bool defer, bool useMipmap)
 {
+    writeMessage(QString("MIXER %1-%2 MIPMAP %3").arg(channel).arg(videolayer).arg((useMipmap == true) ? "1" : "0"));
     writeMessage(QString("MIXER %1-%2 FILL %3 %4 %5 %6 %7 %8 %9")
                  .arg(channel).arg(videolayer).arg(positionX).arg(positionY).arg(scaleX).arg(scaleY)
                  .arg(duration).arg(easing)
@@ -579,8 +581,9 @@ void CasparDevice::setClipping(int channel, int videolayer, float positionX, flo
 }
 
 void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
-                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer)
+                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer, bool useMipmap)
 {
+    writeMessage(QString("MIXER %1-%2 MIPMAP %3").arg(channel).arg(videolayer).arg((useMipmap == true) ? "1" : "0"));
     writeMessage(QString("MIXER %1-%2 PERSPECTIVE %3 %4 %5 %6 %7 %8 %9 %10 %11")
                  .arg(channel).arg(videolayer)
                  .arg(upperLeftX).arg(upperLeftY).arg(upperRightX).arg(upperRightY)
@@ -589,8 +592,9 @@ void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX,
 }
 
 void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
-                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer)
+                                  float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer, bool useMipmap)
 {
+    writeMessage(QString("MIXER %1-%2 MIPMAP %3").arg(channel).arg(videolayer).arg((useMipmap == true) ? "1" : "0"));
     writeMessage(QString("MIXER %1-%2 PERSPECTIVE %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13")
                  .arg(channel).arg(videolayer)
                  .arg(upperLeftX).arg(upperLeftY).arg(upperRightX).arg(upperRightY)
