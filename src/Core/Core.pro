@@ -176,7 +176,8 @@ HEADERS += \
     Events/Rundown/ReloadRundownMenuEvent.h \
     Events/DurationChangedEvent.h \
     Commands/Panasonic/PanasonicPresetCommand.h \
-    Commands/PerspectiveCommand.h
+    Commands/PerspectiveCommand.h \
+    Commands/RotationCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -342,7 +343,8 @@ SOURCES += \
     Events/Rundown/ReloadRundownMenuEvent.cpp \
     Events/DurationChangedEvent.cpp \
     Commands/Panasonic/PanasonicPresetCommand.cpp \
-    Commands/PerspectiveCommand.cpp
+    Commands/PerspectiveCommand.cpp \
+    Commands/RotationCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

@@ -31,6 +31,7 @@
 #include "RundownFadeToBlackWidget.h"
 #include "RundownOscOutputWidget.h"
 #include "RundownPerspectiveWidget.h"
+#include "RundownRotationWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -101,6 +102,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::FADETOBLACK) return new RundownFadeToBlackWidget(model, this);
     else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);
     else if (model.getType() == Rundown::PERSPECTIVE) return new RundownPerspectiveWidget(model, this);
+    else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
 
     return NULL;
 }

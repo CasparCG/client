@@ -424,4 +424,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Camera Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Free Transformation", "", "", Rundown::PERSPECTIVE, 0, "")));
+    else if (type ==  Rundown::ROTATION)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Rotation", "", "", Rundown::ROTATION, 0, "")));
 }

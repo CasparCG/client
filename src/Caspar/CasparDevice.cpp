@@ -603,6 +603,20 @@ void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX,
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
+void CasparDevice::setRotation(int channel, int videolayer, float rotation, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 ROTATION %3 %4")
+                 .arg(channel).arg(videolayer).arg(rotation)
+                 .arg((defer == true) ? "DEFER" : ""));
+}
+
+void CasparDevice::setRotation(int channel, int videolayer, float rotation, int duration, const QString& easing, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 ROTATION %3 %4 %5 %6")
+                .arg(channel).arg(videolayer).arg(rotation).arg(duration).arg(easing)
+                .arg((defer == true) ? "DEFER" : ""));
+}
+
 void CasparDevice::sendNotification()
 {
     switch (AmcpDevice::command)

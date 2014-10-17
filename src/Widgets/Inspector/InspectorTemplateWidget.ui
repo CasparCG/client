@@ -42,7 +42,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelFlashlayer">
+      <widget class="QLabel" name="labelFlashlayerField">
        <property name="text">
         <string>Flash layer</string>
        </property>

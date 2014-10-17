@@ -143,7 +143,9 @@ HEADERS += \
     Rundown/Panasonic/RundownPanasonicPresetWidget.h \
     Inspector/Panasonic/InspectorPanasonicPresetWidget.h \
     Rundown/RundownPerspectiveWidget.h \
-    Inspector/InspectorPerspectiveWidget.h
+    Inspector/InspectorPerspectiveWidget.h \
+    Rundown/RundownRotationWidget.h \
+    Inspector/InspectorRotationWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -275,7 +277,9 @@ SOURCES += \
     Rundown/Panasonic/RundownPanasonicPresetWidget.cpp \
     Inspector/Panasonic/InspectorPanasonicPresetWidget.cpp \
     Rundown/RundownPerspectiveWidget.cpp \
-    Inspector/InspectorPerspectiveWidget.cpp
+    Inspector/InspectorPerspectiveWidget.cpp \
+    Rundown/RundownRotationWidget.cpp \
+    Inspector/InspectorRotationWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -396,7 +400,9 @@ FORMS += \
     Rundown/Panasonic/RundownPanasonicPresetWidget.ui \
     Inspector/Panasonic/InspectorPanasonicPresetWidget.ui \
     Rundown/RundownPerspectiveWidget.ui \
-    Inspector/InspectorPerspectiveWidget.ui
+    Inspector/InspectorPerspectiveWidget.ui \
+    Rundown/RundownRotationWidget.ui \
+    Inspector/InspectorRotationWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -641,7 +647,10 @@ OTHER_FILES += \
     Images/Panasonic/PanasonicPreset.png \
     Images/PerspectiveSmallHover.png \
     Images/PerspectiveSmall.png \
-    Images/Perspective.png
+    Images/Perspective.png \
+    Images/RotationSmallHover.png \
+    Images/RotationSmall.png \
+    Images/Rotation.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

@@ -221,6 +221,9 @@
         <file>Images/Perspective.png</file>
         <file>Images/PerspectiveSmall.png</file>
         <file>Images/PerspectiveSmallHover.png</file>
+        <file>Images/Rotation.png</file>
+        <file>Images/RotationSmall.png</file>
+        <file>Images/RotationSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

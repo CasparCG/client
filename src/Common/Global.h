@@ -138,6 +138,7 @@ namespace Mixer
     static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
     static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
     static const float DEFAULT_GRID = 2.0f;
+    static const float DEFAULT_ROTATION = 0.0f;
     static const float DEFAULT_BRIGHTNESS = 1.0f;
     static const float DEFAULT_CONTRAST = 1.0f;
     static const float DEFAULT_CROP_LEFT = 0.0f;
@@ -401,6 +402,7 @@ namespace Rundown
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const QString PANASONICPRESET = "PANASONICPRESET";
     static const QString PERSPECTIVE = "FREETRANSFORM";
+    static const QString ROTATION = "ROTATION";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

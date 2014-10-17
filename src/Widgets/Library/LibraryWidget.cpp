@@ -274,6 +274,15 @@ void LibraryWidget::setupTools()
     widgetFreeTransform->setText(4, Rundown::PERSPECTIVE);
     widgetFreeTransform->setText(5, "0");
 
+    QTreeWidgetItem* widgetRotation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetRotation->setIcon(0, QIcon(":/Graphics/Images/RotationSmall.png"));
+    widgetRotation->setText(0, "Rotation");
+    widgetRotation->setText(1, "0");
+    widgetRotation->setText(2, "Rotation");
+    widgetRotation->setText(3, "");
+    widgetRotation->setText(4, Rundown::ROTATION);
+    widgetRotation->setText(5, "0");
+
     QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
     widgetCommit->setText(0, "Commit");

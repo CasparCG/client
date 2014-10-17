@@ -31,6 +31,7 @@
 #include "Commands/VolumeCommand.h"
 #include "Commands/ChromaCommand.h"
 #include "Commands/PlayoutCommand.h"
+#include "Commands/RotationCommand.h"
 #include "Commands/OscOutputCommand.h"
 #include "Commands/PerspectiveCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
@@ -266,6 +267,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<CropCommand*>(event.getCommand()) ||
                  dynamic_cast<GeometryCommand*>(event.getCommand()) ||
                  dynamic_cast<PerspectiveCommand*>(event.getCommand()) ||
+                 dynamic_cast<RotationCommand*>(event.getCommand()) ||
                  dynamic_cast<KeyerCommand*>(event.getCommand()) ||
                  dynamic_cast<LevelsCommand*>(event.getCommand()) ||
                  dynamic_cast<OpacityCommand*>(event.getCommand()) ||
