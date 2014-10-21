@@ -12,12 +12,12 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT GeometryCommand : public AbstractCommand
+class CORE_EXPORT FillCommand : public AbstractCommand
 {
     Q_OBJECT
 
     public:
-        explicit GeometryCommand(QObject* parent = 0);
+        explicit FillCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);

@@ -356,8 +356,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
     else if (type == Rundown::CLEAROUTPUT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
-    else if (type == Rundown::GEOMETRY)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
+    else if (type == Rundown::FILL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transform", "", "", Rundown::FILL, 0, "")));
     else if (type == Rundown::GPIOUTPUT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
     else if (type == Rundown::FILERECORDER)
@@ -382,12 +382,12 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
     else if (type == Rundown::AUDIO)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
-    else if (type == Rundown::IMAGE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
+    else if (type == Rundown::STILL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::STILL, 0, "")));
     else if (type == Rundown::TEMPLATE)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
-    else if (type == Rundown::VIDEO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
+    else if (type == Rundown::MOVIE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::MOVIE, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
     else if (type ==  Rundown::TRICASTERINPUT)
@@ -423,7 +423,9 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
     else if (type ==  Rundown::PANASONICPRESET)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Camera Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Free Transformation", "", "", Rundown::PERSPECTIVE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Free Transform", "", "", Rundown::PERSPECTIVE, 0, "")));
     else if (type ==  Rundown::ROTATION)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Rotation", "", "", Rundown::ROTATION, 0, "")));
+    else if (type ==  Rundown::ANCHOR)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Anchor Point", "", "", Rundown::ANCHOR, 0, "")));
 }

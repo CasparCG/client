@@ -1,130 +1,130 @@
-#include "GeometryCommand.h"
+#include "FillCommand.h"
 
 #include "Global.h"
 
-GeometryCommand::GeometryCommand(QObject* parent)
+FillCommand::FillCommand(QObject* parent)
     : AbstractCommand(parent),
-      positionX(Mixer::DEFAULT_GEOMETRY_XPOS), positionY(Mixer::DEFAULT_GEOMETRY_YPOS), scaleX(Mixer::DEFAULT_GEOMETRY_XSCALE),
-      scaleY(Mixer::DEFAULT_GEOMETRY_YSCALE), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT),
+      positionX(Mixer::DEFAULT_FILL_XPOS), positionY(Mixer::DEFAULT_FILL_YPOS), scaleX(Mixer::DEFAULT_FILL_XSCALE),
+      scaleY(Mixer::DEFAULT_FILL_YSCALE), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Fill::DEFAULT_TRIGGER_ON_NEXT),
       defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
 {
 }
 
-float GeometryCommand::getPositionX() const
+float FillCommand::getPositionX() const
 {
     return this->positionX;
 }
 
-float GeometryCommand::getPositionY() const
+float FillCommand::getPositionY() const
 {
     return this->positionY;
 }
 
-float GeometryCommand::getScaleX() const
+float FillCommand::getScaleX() const
 {
     return this->scaleX;
 }
 
-float GeometryCommand::getScaleY() const
+float FillCommand::getScaleY() const
 {
     return this->scaleY;
 }
 
-int GeometryCommand::getTransitionDuration() const
+int FillCommand::getTransitionDuration() const
 {
     return this->transtitionDuration;
 }
 
-const QString& GeometryCommand::getTween() const
+const QString& FillCommand::getTween() const
 {
     return this->tween;
 }
 
-bool GeometryCommand::getTriggerOnNext() const
+bool FillCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-bool GeometryCommand::getDefer() const
+bool FillCommand::getDefer() const
 {
     return this->defer;
 }
 
-bool GeometryCommand::getUseMipmap() const
+bool FillCommand::getUseMipmap() const
 {
     return this->useMipmap;
 }
 
-void GeometryCommand::setPositionX(float positionX)
+void FillCommand::setPositionX(float positionX)
 {
     this->positionX = positionX;
     emit positionXChanged(this->positionX);
 }
 
-void GeometryCommand::setPositionY(float positionY)
+void FillCommand::setPositionY(float positionY)
 {
     this->positionY = positionY;
     emit positionYChanged(this->positionY);
 }
 
-void GeometryCommand::setScaleX(float scaleX)
+void FillCommand::setScaleX(float scaleX)
 {
     this->scaleX = scaleX;
     emit scaleXChanged(this->scaleX);
 }
 
-void GeometryCommand::setScaleY(float scaleY)
+void FillCommand::setScaleY(float scaleY)
 {
     this->scaleY = scaleY;
     emit scaleYChanged(this->scaleY);
 }
 
-void GeometryCommand::setTransitionDuration(int transtitionDuration)
+void FillCommand::setTransitionDuration(int transtitionDuration)
 {
     this->transtitionDuration = transtitionDuration;
     emit transtitionDurationChanged(this->transtitionDuration);
 }
 
-void GeometryCommand::setTween(const QString& tween)
+void FillCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void GeometryCommand::setTriggerOnNext(bool triggerOnNext)
+void FillCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void GeometryCommand::setDefer(bool defer)
+void FillCommand::setDefer(bool defer)
 {
     this->defer = defer;
     emit deferChanged(this->defer);
 }
 
-void GeometryCommand::setUseMipmap(bool useMipmap)
+void FillCommand::setUseMipmap(bool useMipmap)
 {
     this->useMipmap = useMipmap;
     emit useMipmapChanged(this->useMipmap);
 }
 
-void GeometryCommand::readProperties(boost::property_tree::wptree& pt)
+void FillCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setPositionX(pt.get(L"positionx", Mixer::DEFAULT_GEOMETRY_XPOS));
-    setPositionY(pt.get(L"positiony", Mixer::DEFAULT_GEOMETRY_YPOS));
-    setScaleX(pt.get(L"scalex", Mixer::DEFAULT_GEOMETRY_XSCALE));
-    setScaleY(pt.get(L"scaley", Mixer::DEFAULT_GEOMETRY_YSCALE));
+    setPositionX(pt.get(L"positionx", Mixer::DEFAULT_FILL_XPOS));
+    setPositionY(pt.get(L"positiony", Mixer::DEFAULT_FILL_YPOS));
+    setScaleX(pt.get(L"scalex", Mixer::DEFAULT_FILL_XSCALE));
+    setScaleY(pt.get(L"scaley", Mixer::DEFAULT_FILL_YSCALE));
     setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
-    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Fill::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
     setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }
 
-void GeometryCommand::writeProperties(QXmlStreamWriter* writer)
+void FillCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 

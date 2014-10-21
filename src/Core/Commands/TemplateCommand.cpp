@@ -125,7 +125,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     setInvoke(QString::fromStdWString(pt.get(L"invoke", Template::DEFAULT_INVOKE.toStdWString())));
     setUseStoredData(pt.get(L"usestoreddata", Template::DEFAULT_USE_STORED_DATA));
     setUseUppercaseData(pt.get(L"useuppercasedata", Template::DEFAULT_USE_UPPERCASE_DATA));
-    setTriggerOnNext(pt.get(L"triggeronnext", Video::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Template::DEFAULT_TRIGGER_ON_NEXT));
 
     if (pt.count(L"templatedata") > 0)
     {

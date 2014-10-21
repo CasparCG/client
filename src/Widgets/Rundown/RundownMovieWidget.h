@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownVideoWidget.h"
+#include "ui_RundownMovieWidget.h"
 
 #include "Global.h"
 
@@ -14,7 +14,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/VideoCommand.h"
+#include "Commands/MovieCommand.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
@@ -28,12 +28,12 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownVideoWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+        explicit RundownMovieWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
                                     bool active = false, bool loaded = false, bool paused = false, bool playing = false,
                                     bool inGroup = false, bool compactView = false);
 
@@ -72,7 +72,7 @@ class WIDGETS_EXPORT RundownVideoWidget : public QWidget, Ui::RundownVideoWidget
         bool compactView;
         QString color;
         LibraryModel model;
-        VideoCommand command;
+        MovieCommand command;
         ActiveAnimation* animation;
         bool reverseOscTime;
         bool sendAutoPlay;

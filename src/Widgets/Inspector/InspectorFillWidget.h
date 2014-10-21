@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorGeometryWidget.h"
+#include "ui_InspectorFillWidget.h"
 
-#include "Commands/GeometryCommand.h"
+#include "Commands/FillCommand.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -14,16 +14,16 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorGeometryWidget : public QWidget, Ui::InspectorGeometryWidget
+class WIDGETS_EXPORT InspectorFillWidget : public QWidget, Ui::InspectorFillWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorGeometryWidget(QWidget* parent = 0);
+        explicit InspectorFillWidget(QWidget* parent = 0);
 
     private:
         LibraryModel* model;
-        GeometryCommand* command;
+        FillCommand* command;
         int resolutionWidth;
         int resolutionHeight;
 

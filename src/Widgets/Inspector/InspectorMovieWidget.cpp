@@ -1,4 +1,4 @@
-#include "InspectorVideoWidget.h"
+#include "InspectorMovieWidget.h"
 #include "Rundown/AbstractRundownWidget.h"
 #include "Rundown/RundownGroupWidget.h"
 
@@ -11,7 +11,7 @@
 #include "Models/TransitionModel.h"
 #include "Models/TweenModel.h"
 
-InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
+InspectorMovieWidget::InspectorMovieWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL), enableOscInput(false)
 {
@@ -26,15 +26,15 @@ InspectorVideoWidget::InspectorVideoWidget(QWidget* parent)
     loadTween();
 }
 
-void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+void InspectorMovieWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
 
-    if (dynamic_cast<VideoCommand*>(event.getCommand()))
+    if (dynamic_cast<MovieCommand*>(event.getCommand()))
     {
-        this->command = dynamic_cast<VideoCommand*>(event.getCommand());
+        this->command = dynamic_cast<MovieCommand*>(event.getCommand());
 
         this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findText(this->command->getTransition()));
         this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
@@ -67,7 +67,7 @@ void InspectorVideoWidget::rundownItemSelected(const RundownItemSelectedEvent& e
     blockAllSignals(false);
 }
 
-void InspectorVideoWidget::blockAllSignals(bool block)
+void InspectorMovieWidget::blockAllSignals(bool block)
 {
     this->comboBoxTransition->blockSignals(block);
     this->spinBoxTransitionDuration->blockSignals(block);
@@ -81,7 +81,7 @@ void InspectorVideoWidget::blockAllSignals(bool block)
     this->checkBoxAutoPlay->blockSignals(block);
 }
 
-void InspectorVideoWidget::loadDirection()
+void InspectorMovieWidget::loadDirection()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -94,7 +94,7 @@ void InspectorVideoWidget::loadDirection()
     this->comboBoxDirection->blockSignals(false);
 }
 
-void InspectorVideoWidget::loadTransition()
+void InspectorMovieWidget::loadTransition()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -107,7 +107,7 @@ void InspectorVideoWidget::loadTransition()
     this->comboBoxTransition->blockSignals(false);
 }
 
-void InspectorVideoWidget::loadTween()
+void InspectorMovieWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -120,52 +120,52 @@ void InspectorVideoWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorVideoWidget::transitionChanged(QString transition)
+void InspectorMovieWidget::transitionChanged(QString transition)
 {
     this->command->setTransition(transition);
 }
 
-void InspectorVideoWidget::transitionDurationChanged(int transitionDuration)
+void InspectorMovieWidget::transitionDurationChanged(int transitionDuration)
 {
     this->command->setTransitionDuration(transitionDuration);
 }
 
-void InspectorVideoWidget::directionChanged(QString direction)
+void InspectorMovieWidget::directionChanged(QString direction)
 {
     this->command->setDirection(direction);
 }
 
-void InspectorVideoWidget::tweenChanged(QString tween)
+void InspectorMovieWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorVideoWidget::loopChanged(int state)
+void InspectorMovieWidget::loopChanged(int state)
 {
     this->command->setLoop((state == Qt::Checked) ? true : false);
 }
 
-void InspectorVideoWidget::freezeOnLoadChanged(int state)
+void InspectorMovieWidget::freezeOnLoadChanged(int state)
 {
     this->command->setFreezeOnLoad((state == Qt::Checked) ? true : false);
 }
 
-void InspectorVideoWidget::triggerOnNextChanged(int state)
+void InspectorMovieWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
-void InspectorVideoWidget::seekChanged(int seek)
+void InspectorMovieWidget::seekChanged(int seek)
 {
     this->command->setSeek(seek);
 }
 
-void InspectorVideoWidget::lengthChanged(int length)
+void InspectorMovieWidget::lengthChanged(int length)
 {
     this->command->setLength(length);
 }
 
-void InspectorVideoWidget::autoPlayChanged(int state)
+void InspectorMovieWidget::autoPlayChanged(int state)
 {
     this->command->setAutoPlay((state == Qt::Checked) ? true : false);
 }

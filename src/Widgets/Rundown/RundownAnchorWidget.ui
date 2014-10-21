@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownGeometryWidget</class>
- <widget class="QWidget" name="RundownGeometryWidget">
+ <class>RundownAnchorWidget</class>
+ <widget class="QWidget" name="RundownAnchorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -44,7 +44,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Geometry.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Anchor.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -73,7 +73,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Transformation</string>
+       <string>Anchor Point</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelVideolayer">

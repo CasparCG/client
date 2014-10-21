@@ -1,4 +1,4 @@
-#include "InspectorGeometryWidget.h"
+#include "InspectorFillWidget.h"
 
 #include "Global.h"
 
@@ -11,7 +11,7 @@
 
 #include <QtGui/QApplication>
 
-InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
+InspectorFillWidget::InspectorFillWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL), resolutionWidth(0), resolutionHeight(0)
 {
@@ -24,15 +24,15 @@ InspectorGeometryWidget::InspectorGeometryWidget(QWidget* parent)
     loadTween();
 }
 
-void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+void InspectorFillWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
 
-    if (dynamic_cast<GeometryCommand*>(event.getCommand()))
+    if (dynamic_cast<FillCommand*>(event.getCommand()))
     {
-        this->command = dynamic_cast<GeometryCommand*>(event.getCommand());
+        this->command = dynamic_cast<FillCommand*>(event.getCommand());
 
         const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (!model.getName().isEmpty())
@@ -44,13 +44,13 @@ void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent
             this->resolutionHeight = formatModel.getHeight();
 
             setScaleAndPositionValues();
-
-            this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-            this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
     else
         this->command = NULL;
@@ -58,7 +58,7 @@ void InspectorGeometryWidget::rundownItemSelected(const RundownItemSelectedEvent
     blockAllSignals(false);
 }
 
-void InspectorGeometryWidget::deviceChanged(const DeviceChangedEvent& event)
+void InspectorFillWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     blockAllSignals(true);
 
@@ -75,12 +75,18 @@ void InspectorGeometryWidget::deviceChanged(const DeviceChangedEvent& event)
 
             setScaleAndPositionValues();
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
 
     blockAllSignals(false);
 }
 
-void InspectorGeometryWidget::channelChanged(const ChannelChangedEvent& event)
+void InspectorFillWidget::channelChanged(const ChannelChangedEvent& event)
 {
     blockAllSignals(true);
 
@@ -100,12 +106,18 @@ void InspectorGeometryWidget::channelChanged(const ChannelChangedEvent& event)
                 setScaleAndPositionValues();
             }
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
 
     blockAllSignals(false);
 }
 
-void InspectorGeometryWidget::blockAllSignals(bool block)
+void InspectorFillWidget::blockAllSignals(bool block)
 {
     this->sliderPositionX->blockSignals(block);
     this->sliderPositionY->blockSignals(block);
@@ -122,7 +134,7 @@ void InspectorGeometryWidget::blockAllSignals(bool block)
     this->checkBoxUseMipmap->blockSignals(block);
 }
 
-void InspectorGeometryWidget::loadTween()
+void InspectorFillWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -135,7 +147,7 @@ void InspectorGeometryWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorGeometryWidget::setScaleAndPositionValues()
+void InspectorFillWidget::setScaleAndPositionValues()
 {
     this->sliderPositionX->setMinimum(-this->resolutionWidth);
     this->sliderPositionX->setMaximum(this->resolutionWidth);
@@ -165,7 +177,7 @@ void InspectorGeometryWidget::setScaleAndPositionValues()
     this->spinBoxScaleY->setValue(QString("%1").arg(this->command->getScaleY() * this->resolutionHeight).toFloat());
 }
 
-void InspectorGeometryWidget::sliderPositionXChanged(int positionX)
+void InspectorFillWidget::sliderPositionXChanged(int positionX)
 {
     this->command->setPositionX(static_cast<float>(positionX) / this->resolutionWidth);
 
@@ -176,7 +188,7 @@ void InspectorGeometryWidget::sliderPositionXChanged(int positionX)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::spinBoxPositionXChanged(int positionX)
+void InspectorFillWidget::spinBoxPositionXChanged(int positionX)
 {
     this->command->setPositionX(static_cast<float>(positionX) / this->resolutionWidth);
 
@@ -187,7 +199,7 @@ void InspectorGeometryWidget::spinBoxPositionXChanged(int positionX)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::sliderPositionYChanged(int positionY)
+void InspectorFillWidget::sliderPositionYChanged(int positionY)
 {
     this->command->setPositionY(static_cast<float>(positionY) / this->resolutionHeight);
 
@@ -198,7 +210,7 @@ void InspectorGeometryWidget::sliderPositionYChanged(int positionY)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::spinBoxPositionYChanged(int positionY)
+void InspectorFillWidget::spinBoxPositionYChanged(int positionY)
 {
     this->command->setPositionY(static_cast<float>(positionY) / this->resolutionHeight);
 
@@ -209,7 +221,7 @@ void InspectorGeometryWidget::spinBoxPositionYChanged(int positionY)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::sliderScaleXChanged(int scaleX)
+void InspectorFillWidget::sliderScaleXChanged(int scaleX)
 {
     this->command->setScaleX(static_cast<float>(scaleX) / this->resolutionWidth);
 
@@ -220,7 +232,7 @@ void InspectorGeometryWidget::sliderScaleXChanged(int scaleX)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::spinBoxScaleXChanged(int scaleX)
+void InspectorFillWidget::spinBoxScaleXChanged(int scaleX)
 {
     this->command->setScaleX(static_cast<float>(scaleX) / this->resolutionWidth);
 
@@ -231,7 +243,7 @@ void InspectorGeometryWidget::spinBoxScaleXChanged(int scaleX)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::sliderScaleYChanged(int scaleY)
+void InspectorFillWidget::sliderScaleYChanged(int scaleY)
 {
     this->command->setScaleY(static_cast<float>(scaleY) / this->resolutionHeight);
 
@@ -242,7 +254,7 @@ void InspectorGeometryWidget::sliderScaleYChanged(int scaleY)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)
+void InspectorFillWidget::spinBoxScaleYChanged(int scaleY)
 {
     this->command->setScaleY(static_cast<float>(scaleY) / this->resolutionHeight);
 
@@ -253,27 +265,27 @@ void InspectorGeometryWidget::spinBoxScaleYChanged(int scaleY)
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorGeometryWidget::transitionDurationChanged(int transitionDuration)
+void InspectorFillWidget::transitionDurationChanged(int transitionDuration)
 {
     this->command->setTransitionDuration(transitionDuration);
 }
 
-void InspectorGeometryWidget::tweenChanged(QString tween)
+void InspectorFillWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorGeometryWidget::triggerOnNextChanged(int state)
+void InspectorFillWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
-void InspectorGeometryWidget::deferChanged(int state)
+void InspectorFillWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
 }
 
-void InspectorGeometryWidget::useMipmapChanged(int state)
+void InspectorFillWidget::useMipmapChanged(int state)
 {
     this->command->setUseMipmap((state == Qt::Checked) ? true : false);
 }

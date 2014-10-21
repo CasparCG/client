@@ -44,13 +44,13 @@ void InspectorPerspectiveWidget::rundownItemSelected(const RundownItemSelectedEv
             this->resolutionHeight = formatModel.getHeight();
 
             setPositionValues();
-
-            this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
-            this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
-            this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
-            this->checkBoxDefer->setChecked(this->command->getDefer());
-            this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
     else
         this->command = NULL;
@@ -75,6 +75,12 @@ void InspectorPerspectiveWidget::deviceChanged(const DeviceChangedEvent& event)
 
             setPositionValues();
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
 
     blockAllSignals(false);
@@ -100,6 +106,12 @@ void InspectorPerspectiveWidget::channelChanged(const ChannelChangedEvent& event
                 setPositionValues();
             }
         }
+
+        this->spinBoxTransitionDuration->setValue(this->command->getTransitionDuration());
+        this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
+        this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxDefer->setChecked(this->command->getDefer());
+        this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
 
     blockAllSignals(false);

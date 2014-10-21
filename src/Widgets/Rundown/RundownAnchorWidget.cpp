@@ -1,9 +1,9 @@
-#include "RundownImageWidget.h"
+#include "RundownAnchorWidget.h"
 
 #include "Global.h"
 
-#include "DatabaseManager.h"
 #include "DeviceManager.h"
+#include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -15,14 +15,12 @@
 
 #include <QtGui/QGraphicsOpacityEffect>
 
-RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                       bool active, bool loaded, bool paused, bool playing, bool inGroup,
-                                       bool compactView)
+RundownAnchorWidget::RundownAnchorWidget(const LibraryModel& model, QWidget* parent, const QString& color,
+                                         bool active, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup),
-      compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
-      playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL),
-      nextControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
+      playControlSubscription(NULL), playNowControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -31,16 +29,13 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
     this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
 
-    setThumbnail();
     setColor(this->color);
     setActive(this->active);
     setCompactView(this->compactView);
 
-    this->command.setImageName(this->model.getName());
-
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_STILL_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
@@ -56,8 +51,8 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(preview(const PreviewEvent&)), this, SLOT(preview(const PreviewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
@@ -72,7 +67,16 @@ RundownImageWidget::RundownImageWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 }
 
-void RundownImageWidget::labelChanged(const LabelChangedEvent& event)
+void RundownAnchorWidget::preview(const PreviewEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    executePlay();
+}
+
+void RundownAnchorWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -83,19 +87,7 @@ void RundownImageWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-void RundownImageWidget::targetChanged(const TargetChangedEvent& event)
-{
-    // This event is not for us.
-    if (!this->active)
-        return;
-
-    this->model.setName(event.getTarget());
-    this->command.setImageName(event.getTarget());
-
-    setThumbnail();
-}
-
-void RundownImageWidget::deviceChanged(const DeviceChangedEvent& event)
+void RundownAnchorWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -123,13 +115,12 @@ void RundownImageWidget::deviceChanged(const DeviceChangedEvent& event)
     checkDeviceConnection();
 }
 
-AbstractRundownWidget* RundownImageWidget::clone()
+AbstractRundownWidget* RundownAnchorWidget::clone()
 {
-    RundownImageWidget* widget = new RundownImageWidget(this->model, this->parentWidget(), this->color,
-                                                                        this->active, this->loaded, this->paused, this->playing,
-                                                                        this->inGroup, this->compactView);
+    RundownAnchorWidget* widget = new RundownAnchorWidget(this->model, this->parentWidget(), this->color,
+                                                          this->active, this->inGroup, this->compactView);
 
-    ImageCommand* command = dynamic_cast<ImageCommand*>(widget->getCommand());
+    AnchorCommand* command = dynamic_cast<AnchorCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -137,87 +128,65 @@ AbstractRundownWidget* RundownImageWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setImageName(this->command.getImageName());
-    command->setTransition(this->command.getTransition());
+    command->setPositionX(this->command.getPositionX());
+    command->setPositionY(this->command.getPositionY());
     command->setTransitionDuration(this->command.getTransitionDuration());
     command->setTween(this->command.getTween());
-    command->setDirection(this->command.getDirection());
-    command->setUseAuto(this->command.getUseAuto());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setDefer(this->command.getDefer());
 
     return widget;
 }
 
-void RundownImageWidget::setCompactView(bool compactView)
+void RundownAnchorWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
         this->labelIcon->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Rundown::COMPACT_ICON_WIDTH, Rundown::COMPACT_ICON_HEIGHT);
-        this->labelThumbnail->setFixedSize(Rundown::COMPACT_THUMBNAIL_WIDTH, Rundown::COMPACT_THUMBNAIL_HEIGHT);
     }
     else
     {
         this->labelIcon->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelGpiConnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
         this->labelDisconnected->setFixedSize(Rundown::DEFAULT_ICON_WIDTH, Rundown::DEFAULT_ICON_HEIGHT);
-        this->labelThumbnail->setFixedSize(Rundown::DEFAULT_THUMBNAIL_WIDTH, Rundown::DEFAULT_THUMBNAIL_HEIGHT);
     }
 
     this->compactView = compactView;
 }
 
-void RundownImageWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownAnchorWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownImageWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownAnchorWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownImageWidget::isGroup() const
+bool RundownAnchorWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownImageWidget::isInGroup() const
+bool RundownAnchorWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownImageWidget::getCommand()
+AbstractCommand* RundownAnchorWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownImageWidget::getLibraryModel()
+LibraryModel* RundownAnchorWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownImageWidget::setThumbnail()
-{
-    QString data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
-
-    /*
-    QString data = DatabaseManager::getInstance().getThumbnailById(this->model.getThumbnailId()).getData();
-    if (data.isEmpty())
-        data = DatabaseManager::getInstance().getThumbnailByNameAndDeviceName(this->model.getName(), this->model.getDeviceName()).getData();
-    */
-
-    QImage image;
-    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
-    this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
-
-    bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
-    if (displayThumbnailTooltip)
-        this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
-}
-
-void RundownImageWidget::setActive(bool active)
+void RundownAnchorWidget::setActive(bool active)
 {
     if (this->active == active)
         return;
@@ -232,24 +201,24 @@ void RundownImageWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownImageWidget::setInGroup(bool inGroup)
+void RundownAnchorWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-QString RundownImageWidget::getColor() const
+QString RundownAnchorWidget::getColor() const
 {
     return this->color;
 }
 
-void RundownImageWidget::setColor(const QString& color)
+void RundownAnchorWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
-void RundownImageWidget::checkEmptyDevice()
+void RundownAnchorWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: firebrick;");
@@ -257,16 +226,12 @@ void RundownImageWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-void RundownImageWidget::clearDelayedCommands()
+void RundownAnchorWidget::clearDelayedCommands()
 {
     this->executeTimer.stop();
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
 }
 
-void RundownImageWidget::setUsed(bool used)
+void RundownAnchorWidget::setUsed(bool used)
 {
     if (used)
     {
@@ -282,11 +247,11 @@ void RundownImageWidget::setUsed(bool used)
         this->setGraphicsEffect(NULL);
 }
 
-bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownAnchorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update || type == Playout::PlayoutType::Load)
     {
         if (this->command.getDelay() < 0)
             return true;
@@ -323,14 +288,10 @@ bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
-    else if (type == Playout::PlayoutType::PauseResume)
-        executePause();
-    else if (type == Playout::PlayoutType::Load)
-        executeLoad();
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
     else if (type == Playout::PlayoutType::Clear)
-        executeClearVideolayer();
+        executeStop();
     else if (type == Playout::PlayoutType::ClearVideoLayer)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
@@ -342,13 +303,13 @@ bool RundownImageWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownImageWidget::executeStop()
+void RundownAnchorWidget::executeStop()
 {
     this->executeTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopImage(this->command.getChannel(), this->command.getVideolayer());
+        device->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -357,26 +318,16 @@ void RundownImageWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopImage(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1);
     }
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
 }
 
-void RundownImageWidget::executePlay()
+void RundownAnchorWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-    {
-        if (this->loaded)
-            device->playImage(this->command.getChannel(), this->command.getVideolayer());
-        else
-            device->playImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getUseAuto());
-    }
+        device->setAnchor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                            this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -385,92 +336,21 @@ void RundownImageWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            if (this->loaded)
-                deviceShadow->playImage(this->command.getChannel(), this->command.getVideolayer());
-            else
-                deviceShadow->playImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getUseAuto());
-        }
+            deviceShadow->setAnchor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                                      this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
 
     if (this->markUsedItems)
         setUsed(true);
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = true;
 }
 
-void RundownImageWidget::executePause()
-{
-    if (!this->playing)
-        return;
-
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-    {
-        if (this->paused)
-            device->playImage(this->command.getChannel(), this->command.getVideolayer());
-        else
-            device->pauseImage(this->command.getChannel(), this->command.getVideolayer());
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            if (this->paused)
-                deviceShadow->playImage(this->command.getChannel(), this->command.getVideolayer());
-            else
-                deviceShadow->pauseImage(this->command.getChannel(), this->command.getVideolayer());
-        }
-    }
-
-    this->paused = !this->paused;
-}
-
-void RundownImageWidget::executeLoad()
-{
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
-    if (device != NULL && device->isConnected())
-    {
-        device->loadImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                          this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                          this->command.getDirection(), this->command.getUseAuto());
-    }
-
-    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
-    {
-        if (model.getShadow() == "No")
-            continue;
-
-        const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
-        if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            deviceShadow->loadImage(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
-                                    this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                    this->command.getDirection(), this->command.getUseAuto());
-        }
-    }
-
-    this->loaded = true;
-    this->paused = false;
-    this->playing = false;
-}
-
-void RundownImageWidget::executeClearVideolayer()
+void RundownAnchorWidget::executeClearVideolayer()
 {
     this->executeTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+        device->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -479,15 +359,11 @@ void RundownImageWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
     }
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
 }
 
-void RundownImageWidget::executeClearChannel()
+void RundownAnchorWidget::executeClearChannel()
 {
     this->executeTimer.stop();
 
@@ -510,28 +386,24 @@ void RundownImageWidget::executeClearChannel()
             deviceShadow->clearMixerChannel(this->command.getChannel());
         }
     }
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
 }
 
-void RundownImageWidget::channelChanged(int channel)
+void RundownAnchorWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownImageWidget::videolayerChanged(int videolayer)
+void RundownAnchorWidget::videolayerChanged(int videolayer)
 {
     this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
 }
 
-void RundownImageWidget::delayChanged(int delay)
+void RundownAnchorWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownImageWidget::checkGpiConnection()
+void RundownAnchorWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -541,7 +413,7 @@ void RundownImageWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownImageWidget::checkDeviceConnection()
+void RundownAnchorWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -550,7 +422,7 @@ void RundownImageWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownImageWidget::configureOscSubscriptions()
+void RundownAnchorWidget::configureOscSubscriptions()
 {
     if (!this->command.getAllowRemoteTriggering())
         return;
@@ -564,14 +436,11 @@ void RundownImageWidget::configureOscSubscriptions()
     if (this->playNowControlSubscription != NULL)
         this->playNowControlSubscription->disconnect(); // Disconnect all events.
 
-    if (this->loadControlSubscription != NULL)
-        this->loadControlSubscription->disconnect(); // Disconnect all events.
-
-    if (this->pauseControlSubscription != NULL)
-        this->pauseControlSubscription->disconnect(); // Disconnect all events.
-
     if (this->nextControlSubscription != NULL)
         this->nextControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
@@ -600,23 +469,17 @@ void RundownImageWidget::configureOscSubscriptions()
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
-    loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
-    this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
-    QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString pauseControlFilter = Osc::DEFAULT_PAUSE_CONTROL_FILTER;
-    pauseControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
-    this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
-    QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
     QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
     nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
     QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
@@ -637,29 +500,29 @@ void RundownImageWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownImageWidget::allowGpiChanged(bool allowGpi)
+void RundownAnchorWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownImageWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownAnchorWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }
 
-void RundownImageWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+void RundownAnchorWidget::deviceConnectionStateChanged(CasparDevice& device)
+{
+    checkDeviceConnection();
+}
+
+void RundownAnchorWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 {
     configureOscSubscriptions();
 
     this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
-void RundownImageWidget::deviceConnectionStateChanged(CasparDevice& device)
-{
-    checkDeviceConnection();
-}
-
-void RundownImageWidget::deviceAdded(CasparDevice& device)
+void RundownAnchorWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
@@ -667,55 +530,49 @@ void RundownImageWidget::deviceAdded(CasparDevice& device)
     checkDeviceConnection();
 }
 
-void RundownImageWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownImageWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownImageWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
-void RundownImageWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Load);
-}
-
-void RundownImageWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::PauseResume);
-}
-
-void RundownImageWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Next);
 }
 
-void RundownImageWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Update);
+}
+
+void RundownAnchorWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownImageWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
-void RundownImageWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownAnchorWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);

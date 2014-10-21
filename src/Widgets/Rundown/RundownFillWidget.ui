@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownVideoWidget</class>
- <widget class="QWidget" name="RundownVideoWidget">
+ <class>RundownFillWidget</class>
+ <widget class="QWidget" name="RundownFillWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
+    <width>825</width>
     <height>36</height>
    </rect>
   </property>
@@ -44,23 +44,10 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Movie.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Fill.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelLabel">
-      <property name="geometry">
-       <rect>
-        <x>62</x>
-        <y>2</y>
-        <width>533</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Video</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">
@@ -74,6 +61,19 @@
       </property>
       <property name="text">
        <string>Channel:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelLabel">
+      <property name="geometry">
+       <rect>
+        <x>62</x>
+        <y>2</y>
+        <width>561</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Transform</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelVideolayer">
@@ -141,28 +141,6 @@
        <string>Delay:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelLoopOverlay">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>1</y>
-        <width>32</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/LoopIconOverlay.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelRemoteTriggerId">
       <property name="geometry">
        <rect>
@@ -182,20 +160,20 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>399</width>
+       <width>77</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>399</width>
+       <width>77</width>
        <height>16777215</height>
       </size>
      </property>
      <widget class="QLabel" name="labelGpiConnected">
       <property name="geometry">
        <rect>
-        <x>291</x>
+        <x>1</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -229,7 +207,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>355</x>
+        <x>32</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -260,7 +238,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>391</x>
+        <x>69</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -282,96 +260,10 @@
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="labelThumbnail">
-      <property name="geometry">
-       <rect>
-        <x>229</x>
-        <y>2</y>
-        <width>57</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>57</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>57</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="lineWidth">
-       <number>0</number>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="OscTimeWidget" name="widgetOscTime" native="true">
-      <property name="geometry">
-       <rect>
-        <x>3</x>
-        <y>3</y>
-        <width>220</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelAutoPlay">
-      <property name="geometry">
-       <rect>
-        <x>323</x>
-        <y>2</y>
-        <width>32</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="lineWidth">
-       <number>0</number>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/AutoPlayItem.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="margin">
-       <number>0</number>
-      </property>
-     </widget>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>OscTimeWidget</class>
-   <extends>QWidget</extends>
-   <header>OscTimeWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../Widgets.qrc"/>
  </resources>

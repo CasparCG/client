@@ -16,7 +16,6 @@ HEADERS += \
     DeviceManager.h \
     Shared.h \
     Commands/CropCommand.h \
-    Commands/GeometryCommand.h \
     Commands/TemplateCommand.h \
     Events/Rundown/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
@@ -73,8 +72,6 @@ HEADERS += \
     ThumbnailWorker.h \
     Commands/AudioCommand.h \
     Commands/SolidColorCommand.h \
-    Commands/ImageCommand.h \
-    Commands/VideoCommand.h \
     Events/Inspector/DeviceChangedEvent.h \
     Events/Inspector/LabelChangedEvent.h \
     Events/Inspector/TargetChangedEvent.h \
@@ -177,13 +174,16 @@ HEADERS += \
     Events/DurationChangedEvent.h \
     Commands/Panasonic/PanasonicPresetCommand.h \
     Commands/PerspectiveCommand.h \
-    Commands/RotationCommand.h
+    Commands/RotationCommand.h \
+    Commands/AnchorCommand.h \
+    Commands/MovieCommand.h \
+    Commands/StillCommand.h \
+    Commands/FillCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
     DeviceManager.cpp \
     Commands/CropCommand.cpp \
-    Commands/GeometryCommand.cpp \
     Commands/TemplateCommand.cpp \
     Events/Rundown/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
@@ -240,8 +240,6 @@ SOURCES += \
     ThumbnailWorker.cpp \
     Commands/AudioCommand.cpp \
     Commands/SolidColorCommand.cpp \
-    Commands/ImageCommand.cpp \
-    Commands/VideoCommand.cpp \
     Events/Inspector/DeviceChangedEvent.cpp \
     Events/Inspector/LabelChangedEvent.cpp \
     Events/Inspector/TargetChangedEvent.cpp \
@@ -344,7 +342,11 @@ SOURCES += \
     Events/DurationChangedEvent.cpp \
     Commands/Panasonic/PanasonicPresetCommand.cpp \
     Commands/PerspectiveCommand.cpp \
-    Commands/RotationCommand.cpp
+    Commands/RotationCommand.cpp \
+    Commands/AnchorCommand.cpp \
+    Commands/MovieCommand.cpp \
+    Commands/StillCommand.cpp \
+    Commands/FillCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

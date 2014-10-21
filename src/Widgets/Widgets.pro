@@ -23,7 +23,6 @@ HEADERS += \
     Inspector/InspectorOutputWidget.h \
     Inspector/InspectorMetadataWidget.h \
     Inspector/InspectorLevelsWidget.h \
-    Inspector/InspectorGeometryWidget.h \
     Library/LibraryWidget.h \
     Rundown/RundownGroupWidget.h \
     Rundown/RundownTemplateWidget.h \
@@ -31,7 +30,6 @@ HEADERS += \
     Rundown/AbstractRundownWidget.h \
     Rundown/RundownCropWidget.h \
     Inspector/InspectorCropWidget.h \
-    Rundown/RundownGeometryWidget.h \
     Inspector/InspectorBrightnessWidget.h \
     Rundown/RundownBrightnessWidget.h \
     Inspector/InspectorSaturationWidget.h \
@@ -68,10 +66,6 @@ HEADERS += \
     Inspector/InspectorDeckLinkInputWidget.h \
     Rundown/RundownSolidColorWidget.h \
     Inspector/InspectorSolidColorWidget.h \
-    Rundown/RundownImageWidget.h \
-    Inspector/InspectorImageWidget.h \
-    Inspector/InspectorVideoWidget.h \
-    Rundown/RundownVideoWidget.h \
     Rundown/RundownTreeWidget.h \
     Rundown/RundownItemFactory.h \
     DeviceDialog.h \
@@ -145,7 +139,15 @@ HEADERS += \
     Rundown/RundownPerspectiveWidget.h \
     Inspector/InspectorPerspectiveWidget.h \
     Rundown/RundownRotationWidget.h \
-    Inspector/InspectorRotationWidget.h
+    Inspector/InspectorRotationWidget.h \
+    Rundown/RundownAnchorWidget.h \
+    Inspector/InspectorAnchorWidget.h \
+    Rundown/RundownMovieWidget.h \
+    Rundown/RundownStillWidget.h \
+    Rundown/RundownFillWidget.h \
+    Inspector/InspectorMovieWidget.h \
+    Inspector/InspectorStillWidget.h \
+    Inspector/InspectorFillWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -158,7 +160,6 @@ SOURCES += \
     Inspector/InspectorOutputWidget.cpp \
     Inspector/InspectorMetadataWidget.cpp \
     Inspector/InspectorLevelsWidget.cpp \
-    Inspector/InspectorGeometryWidget.cpp \
     Inspector/InspectorImageScrollerWidget.cpp \
     Inspector/InspectorCropWidget.cpp \
     Inspector/InspectorBrightnessWidget.cpp \
@@ -174,7 +175,6 @@ SOURCES += \
     Rundown/RundownGroupWidget.cpp \
     Rundown/RundownTemplateWidget.cpp \
     Rundown/RundownWidget.cpp \
-    Rundown/RundownGeometryWidget.cpp \
     Rundown/RundownBrightnessWidget.cpp \
     Rundown/RundownSaturationWidget.cpp \
     Rundown/RundownOpacityWidget.cpp \
@@ -202,10 +202,6 @@ SOURCES += \
     Rundown/RundownDeckLinkInputWidget.cpp \
     Rundown/RundownSolidColorWidget.cpp \
     Inspector/InspectorSolidColorWidget.cpp \
-    Rundown/RundownImageWidget.cpp \
-    Inspector/InspectorImageWidget.cpp \
-    Rundown/RundownVideoWidget.cpp \
-    Inspector/InspectorVideoWidget.cpp \
     Rundown/RundownTreeWidget.cpp \
     Rundown/RundownItemFactory.cpp \
     DeviceDialog.cpp \
@@ -279,7 +275,15 @@ SOURCES += \
     Rundown/RundownPerspectiveWidget.cpp \
     Inspector/InspectorPerspectiveWidget.cpp \
     Rundown/RundownRotationWidget.cpp \
-    Inspector/InspectorRotationWidget.cpp
+    Inspector/InspectorRotationWidget.cpp \
+    Rundown/RundownAnchorWidget.cpp \
+    Inspector/InspectorAnchorWidget.cpp \
+    Rundown/RundownMovieWidget.cpp \
+    Rundown/RundownStillWidget.cpp \
+    Rundown/RundownFillWidget.cpp \
+    Inspector/InspectorMovieWidget.cpp \
+    Inspector/InspectorStillWidget.cpp \
+    Inspector/InspectorFillWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -292,7 +296,6 @@ FORMS += \
     Inspector/InspectorTemplateWidget.ui \
     Inspector/InspectorOutputWidget.ui \
     Inspector/InspectorMetadataWidget.ui \
-    Inspector/InspectorGeometryWidget.ui \
     Inspector/InspectorGridWidget.ui \
     Inspector/InspectorDeckLinkInputWidget.ui \
     Inspector/InspectorGpiOutputWidget.ui \
@@ -306,7 +309,6 @@ FORMS += \
     Inspector/InspectorCropWidget.ui \
     Rundown/RundownCropWidget.ui \
     Inspector/InspectorBrightnessWidget.ui \
-    Rundown/RundownGeometryWidget.ui \
     Rundown/RundownBrightnessWidget.ui \
     Inspector/InspectorSaturationWidget.ui \
     Rundown/RundownSaturationWidget.ui \
@@ -336,10 +338,6 @@ FORMS += \
     Rundown/RundownDeckLinkInputWidget.ui \
     Rundown/RundownSolidColorWidget.ui \
     Inspector/InspectorSolidColorWidget.ui \
-    Rundown/RundownImageWidget.ui \
-    Inspector/InspectorImageWidget.ui \
-    Rundown/RundownVideoWidget.ui \
-    Inspector/InspectorVideoWidget.ui \
     Rundown/RundownTreeWidget.ui \
     DeviceDialog.ui \
     PresetDialog.ui \
@@ -402,7 +400,15 @@ FORMS += \
     Rundown/RundownPerspectiveWidget.ui \
     Inspector/InspectorPerspectiveWidget.ui \
     Rundown/RundownRotationWidget.ui \
-    Inspector/InspectorRotationWidget.ui
+    Inspector/InspectorRotationWidget.ui \
+    Rundown/RundownAnchorWidget.ui \
+    Inspector/InspectorAnchorWidget.ui \
+    Rundown/RundownMovieWidget.ui \
+    Rundown/RundownStillWidget.ui \
+    Rundown/RundownFillWidget.ui \
+    Inspector/InspectorMovieWidget.ui \
+    Inspector/InspectorStillWidget.ui \
+    Inspector/InspectorFillWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -513,8 +519,6 @@ OTHER_FILES += \
     Images/Snapshot.png \
     Images/SnapshotSmallHover.png \
     Images/SnapshotSmall.png \
-    Images/GeometrySmallHover.png \
-    Images/GeometrySmall.png \
     Images/FileRecorder.png \
     Images/FileRecorderSmallHover.png \
     Images/FileRecorderSmall.png \
@@ -532,7 +536,6 @@ OTHER_FILES += \
     Images/BlendModeSmallHover.png \
     Images/BlendModeSmall.png \
     Images/Grid.png \
-    Images/Geometry.png \
     Images/Crop.png \
     Images/SolidColorSmallHover.png \
     Images/SolidColorSmall.png \
@@ -650,7 +653,13 @@ OTHER_FILES += \
     Images/Perspective.png \
     Images/RotationSmallHover.png \
     Images/RotationSmall.png \
-    Images/Rotation.png
+    Images/Rotation.png \
+    Images/Anchor.png \
+    Images/AnchorSmall.png \
+    Images/AnchorSmallHover.png \
+    Images/Fill.png \
+    Images/FillSmall.png \
+    Images/FillSmallHover.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

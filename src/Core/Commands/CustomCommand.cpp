@@ -157,7 +157,7 @@ void CustomCommand::readProperties(boost::property_tree::wptree& pt)
     setClearCommand(QString::fromStdWString(pt.get(L"clearCommand", L"")));
     setClearVideolayerCommand(QString::fromStdWString(pt.get(L"clearVideolayerCommand", L"")));
     setClearChannelCommand(QString::fromStdWString(pt.get(L"clearChannelCommand", L"")));
-    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Custom::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void CustomCommand::writeProperties(QXmlStreamWriter* writer)

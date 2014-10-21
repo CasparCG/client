@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownGeometryWidget.h"
+#include "ui_RundownStillWidget.h"
 
 #include "Global.h"
 
@@ -14,10 +14,10 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/GeometryCommand.h"
-#include "Events/PreviewEvent.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Commands/StillCommand.h"
+#include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
+#include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
@@ -25,13 +25,14 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometryWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownStillWidget : public QWidget, Ui::RundownStillWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
-    public:  
-        explicit RundownGeometryWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                       bool active = false, bool inGroup = false, bool compactView = false);
+    public:
+        explicit RundownStillWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                    bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                    bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -61,11 +62,14 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
 
     private:
         bool active;
+        bool loaded;
+        bool paused;
+        bool playing;
         bool inGroup;
         bool compactView;
         QString color;
         LibraryModel model;
-        GeometryCommand command;
+        StillCommand command;
         ActiveAnimation* animation;
         QString delayType;
         bool markUsedItems;
@@ -73,40 +77,45 @@ class WIDGETS_EXPORT RundownGeometryWidget : public QWidget, Ui::RundownGeometry
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
+        OscSubscription* loadControlSubscription;
+        OscSubscription* pauseControlSubscription;
         OscSubscription* nextControlSubscription;
-        OscSubscription* updateControlSubscription;
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
 
+        void setThumbnail();
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
 
-        Q_SLOT void channelChanged(int);
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
+        Q_SLOT void channelChanged(int);
+        Q_SLOT void executeLoad();
         Q_SLOT void executePlay();
+        Q_SLOT void executePause();
         Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
-        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
+        Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void deviceAdded(CasparDevice&);   
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void preview(const PreviewEvent&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
+        Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

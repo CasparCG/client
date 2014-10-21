@@ -1,138 +1,138 @@
-#include "VideoCommand.h"
+#include "MovieCommand.h"
 
 #include "Global.h"
 
-VideoCommand::VideoCommand(QObject* parent)
+MovieCommand::MovieCommand(QObject* parent)
     : AbstractCommand(parent),
-      videoName(Video::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Video::DEFAULT_LOOP),
-      freezeOnLoad(Video::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Video::DEFAULT_TRIGGER_ON_NEXT), seek(Video::DEFAULT_SEEK),
-      length(Video::DEFAULT_LENGTH), autoPlay(Video::DEFAULT_AUTO_PLAY)
+      videoName(Movie::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
+      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Movie::DEFAULT_LOOP),
+      freezeOnLoad(Movie::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Movie::DEFAULT_TRIGGER_ON_NEXT), seek(Movie::DEFAULT_SEEK),
+      length(Movie::DEFAULT_LENGTH), autoPlay(Movie::DEFAULT_AUTO_PLAY)
 {
 }
 
-const QString& VideoCommand::getVideoName() const
+const QString& MovieCommand::getVideoName() const
 {
     return this->videoName;
 }
 
-const QString& VideoCommand::getTransition() const
+const QString& MovieCommand::getTransition() const
 {
     return this->transition;
 }
 
-int VideoCommand::getTransitionDuration() const
+int MovieCommand::getTransitionDuration() const
 {
     return this->transitionDuration;
 }
 
-const QString& VideoCommand::getDirection() const
+const QString& MovieCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& VideoCommand::getTween() const
+const QString& MovieCommand::getTween() const
 {
     return this->tween;
 }
 
-bool VideoCommand::getLoop() const
+bool MovieCommand::getLoop() const
 {
     return this->loop;
 }
 
-bool VideoCommand::getFreezeOnLoad() const
+bool MovieCommand::getFreezeOnLoad() const
 {
     return this->freezeOnLoad;
 }
 
-bool VideoCommand::getTriggerOnNext() const
+bool MovieCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-int VideoCommand::getSeek() const
+int MovieCommand::getSeek() const
 {
     return this->seek;
 }
 
-int VideoCommand::getLength() const
+int MovieCommand::getLength() const
 {
     return this->length;
 }
 
-bool VideoCommand::getAutoPlay() const
+bool MovieCommand::getAutoPlay() const
 {
     return this->autoPlay;
 }
 
-void VideoCommand::setVideoName(const QString& videoName)
+void MovieCommand::setVideoName(const QString& videoName)
 {
     this->videoName = videoName;
     emit videoNameChanged(this->videoName);
 }
 
-void VideoCommand::setTransition(const QString& transition)
+void MovieCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void VideoCommand::setTransitionDuration(int transitionDuration)
+void MovieCommand::setTransitionDuration(int transitionDuration)
 {
     this->transitionDuration = transitionDuration;
     emit transitionDurationChanged(this->transitionDuration);
 }
 
-void VideoCommand::setDirection(const QString& direction)
+void MovieCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void VideoCommand::setTween(const QString& tween)
+void MovieCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void VideoCommand::setLoop(bool loop)
+void MovieCommand::setLoop(bool loop)
 {
     this->loop = loop;
     emit loopChanged(this->loop);
 }
 
-void VideoCommand::setFreezeOnLoad(bool freezeOnLoad)
+void MovieCommand::setFreezeOnLoad(bool freezeOnLoad)
 {
     this->freezeOnLoad = freezeOnLoad;
     emit freezeOnLoadChanged(this->freezeOnLoad);
 }
 
-void VideoCommand::setTriggerOnNext(bool triggerOnNext)
+void MovieCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void VideoCommand::setSeek(int seek)
+void MovieCommand::setSeek(int seek)
 {
     this->seek = seek;
     emit seekChanged(this->seek);
 }
 
-void VideoCommand::setLength(int length)
+void MovieCommand::setLength(int length)
 {
     this->length = length;
     emit lengthChanged(this->length);
 }
 
-void VideoCommand::setAutoPlay(bool autoPlay)
+void MovieCommand::setAutoPlay(bool autoPlay)
 {
     this->autoPlay = autoPlay;
     emit autoPlayChanged(this->autoPlay);
 }
 
-void VideoCommand::readProperties(boost::property_tree::wptree& pt)
+void MovieCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -140,15 +140,15 @@ void VideoCommand::readProperties(boost::property_tree::wptree& pt)
     setTransitionDuration(pt.get(L"transitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
-    setSeek(pt.get<int>(L"seek", Video::DEFAULT_SEEK));
-    setLength(pt.get(L"length", Video::DEFAULT_LENGTH));
-    setLoop(pt.get(L"loop", Video::DEFAULT_LOOP));
-    setFreezeOnLoad(pt.get(L"freezeonload", Video::DEFAULT_FREEZE_ON_LOAD));
-    setTriggerOnNext(pt.get(L"triggeronnext", Video::DEFAULT_TRIGGER_ON_NEXT));
-    setAutoPlay(pt.get(L"autoplay", Video::DEFAULT_AUTO_PLAY));
+    setSeek(pt.get<int>(L"seek", Movie::DEFAULT_SEEK));
+    setLength(pt.get(L"length", Movie::DEFAULT_LENGTH));
+    setLoop(pt.get(L"loop", Movie::DEFAULT_LOOP));
+    setFreezeOnLoad(pt.get(L"freezeonload", Movie::DEFAULT_FREEZE_ON_LOAD));
+    setTriggerOnNext(pt.get(L"triggeronnext", Movie::DEFAULT_TRIGGER_ON_NEXT));
+    setAutoPlay(pt.get(L"autoplay", Movie::DEFAULT_AUTO_PLAY));
 }
 
-void VideoCommand::writeProperties(QXmlStreamWriter* writer)
+void MovieCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 

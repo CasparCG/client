@@ -1,93 +1,93 @@
-#include "ImageCommand.h"
+#include "StillCommand.h"
 
 #include "Global.h"
 
-ImageCommand::ImageCommand(QObject* parent)
+StillCommand::StillCommand(QObject* parent)
     : AbstractCommand(parent),
-      imageName(Image::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
+      imageName(Still::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
       transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      triggerOnNext(Image::DEFAULT_TRIGGER_ON_NEXT), useAuto(Image::DEFAULT_USE_AUTO)
+      triggerOnNext(Still::DEFAULT_TRIGGER_ON_NEXT), useAuto(Still::DEFAULT_USE_AUTO)
 {
 }
 
-const QString& ImageCommand::getImageName() const
+const QString& StillCommand::getImageName() const
 {
     return this->imageName;
 }
 
-const QString& ImageCommand::getTransition() const
+const QString& StillCommand::getTransition() const
 {
     return this->transition;
 }
 
-int ImageCommand::getTransitionDuration() const
+int StillCommand::getTransitionDuration() const
 {
     return this->transitionDuration;
 }
 
-const QString& ImageCommand::getDirection() const
+const QString& StillCommand::getDirection() const
 {
     return this->direction;
 }
 
-const QString& ImageCommand::getTween() const
+const QString& StillCommand::getTween() const
 {
     return this->tween;
 }
 
-bool ImageCommand::getTriggerOnNext() const
+bool StillCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
 }
 
-bool ImageCommand::getUseAuto() const
+bool StillCommand::getUseAuto() const
 {
     return this->useAuto;
 }
 
-void ImageCommand::setImageName(const QString& imageName)
+void StillCommand::setImageName(const QString& imageName)
 {
     this->imageName = imageName;
     emit imageNameChanged(this->imageName);
 }
 
-void ImageCommand::setTransition(const QString& transition)
+void StillCommand::setTransition(const QString& transition)
 {
     this->transition = transition;
     emit transitionChanged(this->transition);
 }
 
-void ImageCommand::setTransitionDuration(int transitionDuration)
+void StillCommand::setTransitionDuration(int transitionDuration)
 {
     this->transitionDuration = transitionDuration;
     emit transitionDurationChanged(this->transitionDuration);
 }
 
-void ImageCommand::setDirection(const QString& direction)
+void StillCommand::setDirection(const QString& direction)
 {
     this->direction = direction;
     emit directionChanged(this->direction);
 }
 
-void ImageCommand::setTween(const QString& tween)
+void StillCommand::setTween(const QString& tween)
 {
     this->tween = tween;
     emit tweenChanged(this->tween);
 }
 
-void ImageCommand::setTriggerOnNext(bool triggerOnNext)
+void StillCommand::setTriggerOnNext(bool triggerOnNext)
 {
     this->triggerOnNext = triggerOnNext;
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
-void ImageCommand::setUseAuto(bool useAuto)
+void StillCommand::setUseAuto(bool useAuto)
 {
     this->useAuto = useAuto;
     emit useAutoChanged(this->useAuto);
 }
 
-void ImageCommand::readProperties(boost::property_tree::wptree& pt)
+void StillCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
@@ -95,11 +95,11 @@ void ImageCommand::readProperties(boost::property_tree::wptree& pt)
     setTransitionDuration(pt.get(L"transitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
-    setUseAuto(pt.get(L"useauto", Image::DEFAULT_USE_AUTO));
-    setTriggerOnNext(pt.get(L"triggeronnext", Image::DEFAULT_TRIGGER_ON_NEXT));
+    setUseAuto(pt.get(L"useauto", Still::DEFAULT_USE_AUTO));
+    setTriggerOnNext(pt.get(L"triggeronnext", Still::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void ImageCommand::writeProperties(QXmlStreamWriter* writer)
+void StillCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 

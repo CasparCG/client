@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorImageWidget.h"
+#include "ui_InspectorMovieWidget.h"
 
-#include "Commands/ImageCommand.h"
+#include "Commands/MovieCommand.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -13,16 +13,17 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorImageWidget : public QWidget, Ui::InspectorImageWidget
+class WIDGETS_EXPORT InspectorMovieWidget : public QWidget, Ui::InspectorMovieWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorImageWidget(QWidget* parent = 0);
+        explicit InspectorMovieWidget(QWidget* parent = 0);
 
     private:
         LibraryModel* model;
-        ImageCommand* command;
+        MovieCommand* command;
+        bool enableOscInput;
 
         void loadDirection();
         void loadTransition();
@@ -33,7 +34,11 @@ class WIDGETS_EXPORT InspectorImageWidget : public QWidget, Ui::InspectorImageWi
         Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void directionChanged(QString);
         Q_SLOT void tweenChanged(QString);
-        Q_SLOT void useAutoChanged(int);
+        Q_SLOT void loopChanged(int);
+        Q_SLOT void freezeOnLoadChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void seekChanged(int);
+        Q_SLOT void lengthChanged(int);
+        Q_SLOT void autoPlayChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

@@ -7,7 +7,7 @@ PerspectiveCommand::PerspectiveCommand(QObject* parent)
       upperLeftX(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_X), upperLeftY(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_Y), upperRightX(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_X),
       upperRightY(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_Y), lowerRightX(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_X), lowerRightY(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y),
       lowerLeftX(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X), lowerLeftY(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Geometry::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
+      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Fill::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
 {
 }
 
@@ -168,7 +168,7 @@ void PerspectiveCommand::readProperties(boost::property_tree::wptree& pt)
     setLowerLeftY(pt.get(L"lowerlefty", Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y));
     setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
-    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Fill::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
     setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }

@@ -16,7 +16,7 @@
 #include "Commands/CustomCommand.h"
 #include "Commands/CropCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
-#include "Commands/GeometryCommand.h"
+#include "Commands/FillCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
 #include "Commands/FileRecorderCommand.h"
@@ -34,6 +34,7 @@
 #include "Commands/RotationCommand.h"
 #include "Commands/OscOutputCommand.h"
 #include "Commands/PerspectiveCommand.h"
+#include "Commands/AnchorCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -265,9 +266,10 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<BrightnessCommand*>(event.getCommand()) ||
                  dynamic_cast<ContrastCommand*>(event.getCommand()) ||
                  dynamic_cast<CropCommand*>(event.getCommand()) ||
-                 dynamic_cast<GeometryCommand*>(event.getCommand()) ||
+                 dynamic_cast<FillCommand*>(event.getCommand()) ||
                  dynamic_cast<PerspectiveCommand*>(event.getCommand()) ||
                  dynamic_cast<RotationCommand*>(event.getCommand()) ||
+                 dynamic_cast<AnchorCommand*>(event.getCommand()) ||
                  dynamic_cast<KeyerCommand*>(event.getCommand()) ||
                  dynamic_cast<LevelsCommand*>(event.getCommand()) ||
                  dynamic_cast<OpacityCommand*>(event.getCommand()) ||
@@ -525,7 +527,7 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
                 this->comboBoxTarget->addItem(model.getName());
             else if (type == Rundown::TEMPLATE && model.getType() == Rundown::TEMPLATE)
                 this->comboBoxTarget->addItem(model.getName());
-            else if ((type == Rundown::IMAGE || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
+            else if ((type == Rundown::STILL || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
                 this->comboBoxTarget->addItem(model.getName());
         }
 

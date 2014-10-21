@@ -1953,23 +1953,6 @@ void DatabaseManager::deleteLibrary(int deviceId)
     QSqlDatabase::database().commit();
 }
 
-ThumbnailModel DatabaseManager::getThumbnailById(int id)
-{
-    QMutexLocker locker(&mutex);
-
-    QString query = QString("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
-                            "WHERE t.Id = %1 AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id").arg(id);
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    sql.first();
-
-    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                          sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString());
-}
-
 QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString& address)
 {
     QMutexLocker locker(&mutex);

@@ -137,6 +137,8 @@ namespace Mixer
     static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_Y = 1.0f;
     static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
     static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
+    static const float DEFAULT_ANCHOR_XPOS = 0.0f;
+    static const float DEFAULT_ANCHOR_YPOS = 0.0f;
     static const float DEFAULT_GRID = 2.0f;
     static const float DEFAULT_ROTATION = 0.0f;
     static const float DEFAULT_BRIGHTNESS = 1.0f;
@@ -145,10 +147,10 @@ namespace Mixer
     static const float DEFAULT_CROP_RIGHT = 0.0f;
     static const float DEFAULT_CROP_TOP = 1.0f;
     static const float DEFAULT_CROP_BOTTOM = 1.0f;
-    static const float DEFAULT_GEOMETRY_XPOS = 0.0f;
-    static const float DEFAULT_GEOMETRY_YPOS = 0.0f;
-    static const float DEFAULT_GEOMETRY_XSCALE = 1.0f;
-    static const float DEFAULT_GEOMETRY_YSCALE = 1.0f;
+    static const float DEFAULT_FILL_XPOS = 0.0f;
+    static const float DEFAULT_FILL_YPOS = 0.0f;
+    static const float DEFAULT_FILL_XSCALE = 1.0f;
+    static const float DEFAULT_FILL_YSCALE = 1.0f;
     static const float DEFAULT_LEVELS_MIN_IN = 0.0f;
     static const float DEFAULT_LEVELS_MAX_IN = 1.0f;
     static const float DEFAULT_LEVELS_MIN_OUT = 0.0f;
@@ -243,7 +245,7 @@ namespace Audio
     static const bool DEFAULT_USE_AUTO = false;
 }
 
-namespace Video
+namespace Movie
 {
     static const QString DEFAULT_NAME = "";
     static const int DEFAULT_SEEK = 0;
@@ -254,7 +256,7 @@ namespace Video
     static const bool DEFAULT_AUTO_PLAY = false;
 }
 
-namespace Image
+namespace Still
 {
     static const QString DEFAULT_NAME = "";
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
@@ -275,12 +277,22 @@ namespace Opacity
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
-namespace Geometry
+namespace Fill
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Custom
+{
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
+namespace Rotation
+{
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
+namespace Anchor
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
@@ -363,24 +375,24 @@ namespace Rundown
     static const QString CROP = "CROP";
     static const QString IMAGESCROLLER = "IMAGESCROLLER";
     static const QString DECKLINKINPUT = "DECKLINKINPUT";
-    static const QString PRINT = "CHANNELSNAPSHOT";
+    static const QString PRINT = "PRINT";
     static const QString CLEAROUTPUT = "CLEAROUTPUT";
-    static const QString GEOMETRY = "TRANSFORMATION";
+    static const QString FILL = "FILL";
     static const QString GPIOUTPUT = "GPIOUTPUT";
     static const QString FILERECORDER = "FILERECORDER";
     static const QString SEPARATOR = "SEPARATOR";
     static const QString GRID = "GRID";
     static const QString SOLIDCOLOR = "SOLIDCOLOR";
-    static const QString KEYER = "MASK";
+    static const QString KEYER = "KEYER";
     static const QString LEVELS = "LEVELS";
     static const QString OPACITY = "OPACITY";
     static const QString SATURATION = "SATURATION";
     static const QString VOLUME = "VOLUME";
     static const QString COMMIT = "COMMIT";
     static const QString AUDIO = "AUDIO";
-    static const QString IMAGE = "STILL";
+    static const QString STILL = "STILL";
     static const QString TEMPLATE = "TEMPLATE";
-    static const QString VIDEO = "MOVIE";
+    static const QString MOVIE = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const QString PLAYOUTCOMMAND = "PLAYOUTCOMMAND";
     static const QString FADETOBLACK = "FADETOBLACK";
@@ -401,8 +413,9 @@ namespace Rundown
     static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const QString PANASONICPRESET = "PANASONICPRESET";
-    static const QString PERSPECTIVE = "FREETRANSFORM";
+    static const QString PERSPECTIVE = "PERSPECTIVE";
     static const QString ROTATION = "ROTATION";
+    static const QString ANCHOR = "ANCHOR";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

@@ -99,8 +99,8 @@
         <file>Images/GridSmallHover.png</file>
         <file>Images/KeyerSmall.png</file>
         <file>Images/KeyerSmallHover.png</file>
-        <file>Images/GeometrySmall.png</file>
-        <file>Images/GeometrySmallHover.png</file>
+        <file>Images/FillSmall.png</file>
+        <file>Images/FillSmallHover.png</file>
         <file>Images/FileRecorder.png</file>
         <file>Images/FileRecorderSmall.png</file>
         <file>Images/FileRecorderSmallHover.png</file>
@@ -116,7 +116,7 @@
         <file>Images/Brightness.png</file>
         <file>Images/Contrast.png</file>
         <file>Images/Opacity.png</file>
-        <file>Images/Geometry.png</file>
+        <file>Images/Fill.png</file>
         <file>Images/Grid.png</file>
         <file>Images/Crop.png</file>
         <file>Images/SolidColorSmall.png</file>
@@ -224,6 +224,9 @@
         <file>Images/Rotation.png</file>
         <file>Images/RotationSmall.png</file>
         <file>Images/RotationSmallHover.png</file>
+        <file>Images/Anchor.png</file>
+        <file>Images/AnchorSmall.png</file>
+        <file>Images/AnchorSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

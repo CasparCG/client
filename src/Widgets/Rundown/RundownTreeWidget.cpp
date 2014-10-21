@@ -7,13 +7,13 @@
 #include "RundownDeckLinkInputWidget.h"
 #include "RundownFileRecorderWidget.h"
 #include "RundownImageScrollerWidget.h"
-#include "RundownGeometryWidget.h"
+#include "RundownFillWidget.h"
 #include "RundownGpiOutputWidget.h"
 #include "RundownGridWidget.h"
 #include "RundownGroupWidget.h"
 #include "RundownKeyerWidget.h"
 #include "RundownLevelsWidget.h"
-#include "RundownVideoWidget.h"
+#include "RundownMovieWidget.h"
 #include "RundownOpacityWidget.h"
 #include "RundownSaturationWidget.h"
 #include "RundownTemplateWidget.h"
@@ -23,7 +23,7 @@
 #include "RundownClearOutputWidget.h"
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
-#include "RundownImageWidget.h"
+#include "RundownStillWidget.h"
 #include "RundownItemFactory.h"
 #include "PresetDialog.h"
 
@@ -106,20 +106,21 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer->setObjectName("contextMenuMixer");
     this->contextMenuMixer->setTitle("Mixer");
     //this->contextMenuMixer->setIcon(QIcon(":/Graphics/Images/Mixer.png"));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/AnchorSmall.png"), "Anchor Point", this, SLOT(addAnchorItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GeometrySmall.png"), "Transformation", this, SLOT(addGeometryItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/PerspectiveSmall.png"), "Free Transform", this, SLOT(addFreeTransformItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerItem())); 
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/RotationSmall.png"), "Rotation", this, SLOT(addRotationItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/FillSmall.png"), "Transform", this, SLOT(addFillItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeItem()));
     this->contextMenuMixer->addSeparator();
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitItem()));
 
@@ -447,8 +448,8 @@ void RundownTreeWidget::autoPlayChanged(const AutoPlayChangedEvent& event)
         QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem()->child(i), 0);
         AbstractRundownWidget* childRundownWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
 
-        if (dynamic_cast<VideoCommand*>(childRundownWidget->getCommand()))
-            dynamic_cast<VideoCommand*>(childRundownWidget->getCommand())->setAutoPlay(event.getAutoPlay());
+        if (dynamic_cast<MovieCommand*>(childRundownWidget->getCommand()))
+            dynamic_cast<MovieCommand*>(childRundownWidget->getCommand())->setAutoPlay(event.getAutoPlay());
     }
 }
 
@@ -1146,10 +1147,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             {
                 QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->child(i), 0);
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
-                if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
+                if (dynamic_cast<MovieCommand*>(rundownChildWidget->getCommand()))
                 {
                     // Skip video items without AutoPlay.
-                    if (!dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
+                    if (!dynamic_cast<MovieCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
                         continue;
 
                     // Only execute the first child in the group, add the rest to the AutoPlay queue.
@@ -1238,10 +1239,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             {
                 QWidget* childWidget = this->treeWidgetRundown->itemWidget(currentItem->parent()->child(i), 0);
                 AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(childWidget);
-                if (dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand()))
+                if (dynamic_cast<MovieCommand*>(rundownChildWidget->getCommand()))
                 {
                     // Skip video items without AutoPlay.
-                    if (!dynamic_cast<VideoCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
+                    if (!dynamic_cast<MovieCommand*>(rundownChildWidget->getCommand())->getAutoPlay())
                         continue;
 
                     autoPlayQueue->push_back(rundownChildWidget); // Add our widget to the execution queue.
@@ -1305,9 +1306,9 @@ void RundownTreeWidget::addClearOutputItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CLEAROUTPUT);
 }
 
-void RundownTreeWidget::addGeometryItem()
+void RundownTreeWidget::addFillItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GEOMETRY);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::FILL);
 }
 
 void RundownTreeWidget::addGpiOutputItem()
@@ -1395,6 +1396,11 @@ void RundownTreeWidget::addRotationItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ROTATION);
 }
 
+void RundownTreeWidget::addAnchorItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ANCHOR);
+}
+
 void RundownTreeWidget::addFadeToBlackItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::FADETOBLACK);
@@ -1437,7 +1443,7 @@ void RundownTreeWidget::addAudioItem()
 
 void RundownTreeWidget::addImageItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::IMAGE);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::STILL);
 }
 
 void RundownTreeWidget::addTemplateItem()
@@ -1447,7 +1453,7 @@ void RundownTreeWidget::addTemplateItem()
 
 void RundownTreeWidget::addVideoItem()
 {
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::VIDEO);
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::MOVIE);
 }
 
 void RundownTreeWidget::addAtemKeyerStateItem()

@@ -1,9 +1,9 @@
-#include "RundownFileRecorderWidget.h"
+#include "RundownFillWidget.h"
 
 #include "Global.h"
 
-#include "DatabaseManager.h"
 #include "DeviceManager.h"
+#include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -15,12 +15,12 @@
 
 #include <QtGui/QGraphicsOpacityEffect>
 
-RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, QWidget* parent, const QString& color,
-                                                     bool active, bool inGroup, bool compactView)
+RundownFillWidget::RundownFillWidget(const LibraryModel& model, QWidget* parent, const QString& color,
+                                     bool active, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
-      playControlSubscription(NULL), playNowControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
-      clearChannelControlSubscription(NULL)
+      playControlSubscription(NULL), playNowControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
+      clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -35,10 +35,11 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -46,11 +47,12 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(preview(const PreviewEvent&)), this, SLOT(preview(const PreviewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
@@ -65,7 +67,16 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     checkDeviceConnection();
 }
 
-void RundownFileRecorderWidget::labelChanged(const LabelChangedEvent& event)
+void RundownFillWidget::preview(const PreviewEvent& event)
+{
+    // This event is not for us.
+    if (!this->active)
+        return;
+
+    executePlay();
+}
+
+void RundownFillWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -76,16 +87,7 @@ void RundownFileRecorderWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-void RundownFileRecorderWidget::targetChanged(const TargetChangedEvent& event)
-{
-    // This event is not for us.
-    if (!this->active)
-        return;
-
-    this->model.setName(event.getTarget());
-}
-
-void RundownFileRecorderWidget::deviceChanged(const DeviceChangedEvent& event)
+void RundownFillWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -113,12 +115,12 @@ void RundownFileRecorderWidget::deviceChanged(const DeviceChangedEvent& event)
     checkDeviceConnection();
 }
 
-AbstractRundownWidget* RundownFileRecorderWidget::clone()
+AbstractRundownWidget* RundownFillWidget::clone()
 {
-    RundownFileRecorderWidget* widget = new RundownFileRecorderWidget(this->model, this->parentWidget(), this->color,
-                                                                      this->active, this->inGroup, this->compactView);
+    RundownFillWidget* widget = new RundownFillWidget(this->model, this->parentWidget(), this->color,
+                                                      this->active, this->inGroup, this->compactView);
 
-    FileRecorderCommand* command = dynamic_cast<FileRecorderCommand*>(widget->getCommand());
+    FillCommand* command = dynamic_cast<FillCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -126,16 +128,20 @@ AbstractRundownWidget* RundownFileRecorderWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setOutput(this->command.getOutput());
-    command->setCodec(this->command.getCodec());
-    command->setPreset(this->command.getPreset());
-    command->setTune(this->command.getTune());
-    command->setWithAlpha(this->command.getWithAlpha());
+    command->setPositionX(this->command.getPositionX());
+    command->setPositionY(this->command.getPositionY());
+    command->setScaleX(this->command.getScaleX());
+    command->setScaleY(this->command.getScaleY());
+    command->setTransitionDuration(this->command.getTransitionDuration());
+    command->setTween(this->command.getTween());
+    command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setDefer(this->command.getDefer());
+    command->setUseMipmap(this->command.getUseMipmap());
 
     return widget;
 }
 
-void RundownFileRecorderWidget::setCompactView(bool compactView)
+void RundownFillWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -153,37 +159,37 @@ void RundownFileRecorderWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownFileRecorderWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownFillWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownFillWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownFileRecorderWidget::isGroup() const
+bool RundownFillWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownFileRecorderWidget::isInGroup() const
+bool RundownFillWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownFileRecorderWidget::getCommand()
+AbstractCommand* RundownFillWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownFileRecorderWidget::getLibraryModel()
+LibraryModel* RundownFillWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownFileRecorderWidget::setActive(bool active)
+void RundownFillWidget::setActive(bool active)
 {
     if (this->active == active)
         return;
@@ -198,24 +204,24 @@ void RundownFileRecorderWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownFileRecorderWidget::setInGroup(bool inGroup)
+void RundownFillWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-QString RundownFileRecorderWidget::getColor() const
+QString RundownFillWidget::getColor() const
 {
     return this->color;
 }
 
-void RundownFileRecorderWidget::setColor(const QString& color)
+void RundownFillWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
-void RundownFileRecorderWidget::checkEmptyDevice()
+void RundownFillWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: firebrick;");
@@ -223,12 +229,12 @@ void RundownFileRecorderWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-void RundownFileRecorderWidget::clearDelayedCommands()
+void RundownFillWidget::clearDelayedCommands()
 {
     this->executeTimer.stop();
 }
 
-void RundownFileRecorderWidget::setUsed(bool used)
+void RundownFillWidget::setUsed(bool used)
 {
     if (used)
     {
@@ -244,11 +250,11 @@ void RundownFileRecorderWidget::setUsed(bool used)
         this->setGraphicsEffect(NULL);
 }
 
-bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownFillWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if (type == Playout::PlayoutType::Play)
+    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update || type == Playout::PlayoutType::Load)
     {
         if (this->command.getDelay() < 0)
             return true;
@@ -285,12 +291,14 @@ bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType::Type type)
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();
+    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
+        executePlay();
     else if (type == Playout::PlayoutType::Clear)
         executeStop();
     else if (type == Playout::PlayoutType::ClearVideoLayer)
-        executeStop();
+        executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
-        executeStop();
+        executeClearChannel();
 
     if (this->active)
         this->animation->start(1);
@@ -298,13 +306,13 @@ bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownFileRecorderWidget::executeStop()
+void RundownFillWidget::executeStop()
 {
     this->executeTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopFileRecorder(this->command.getChannel());
+        device->setFill(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -313,16 +321,18 @@ void RundownFileRecorderWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopFileRecorder(this->command.getChannel());
+            deviceShadow->setFill(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
     }
 }
 
-void RundownFileRecorderWidget::executePlay()
+void RundownFillWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->startFileRecorder(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
-                                  this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
+        device->setFill(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                        this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
+                        this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                        this->command.getUseMipmap());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -331,25 +341,76 @@ void RundownFileRecorderWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->startFileRecorder(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
-                                            this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
+            deviceShadow->setFill(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                                  this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
+                                  this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                                  this->command.getUseMipmap());
     }
 
     if (this->markUsedItems)
         setUsed(true);
 }
 
-void RundownFileRecorderWidget::channelChanged(int channel)
+void RundownFillWidget::executeClearVideolayer()
+{
+    this->executeTimer.stop();
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+        device->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+        if (deviceShadow != NULL && deviceShadow->isConnected())
+            deviceShadow->clearMixerVideolayer(this->command.getChannel(), this->command.getVideolayer());
+    }
+}
+
+void RundownFillWidget::executeClearChannel()
+{
+    this->executeTimer.stop();
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+    if (device != NULL && device->isConnected())
+    {
+        device->clearChannel(this->command.getChannel());
+        device->clearMixerChannel(this->command.getChannel());
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+        if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
+            deviceShadow->clearChannel(this->command.getChannel());
+            deviceShadow->clearMixerChannel(this->command.getChannel());
+        }
+    }
+}
+
+void RundownFillWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
 }
 
-void RundownFileRecorderWidget::delayChanged(int delay)
+void RundownFillWidget::videolayerChanged(int videolayer)
+{
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
+}
+
+void RundownFillWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownFileRecorderWidget::checkGpiConnection()
+void RundownFillWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -359,7 +420,7 @@ void RundownFileRecorderWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownFileRecorderWidget::checkDeviceConnection()
+void RundownFillWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -368,7 +429,7 @@ void RundownFileRecorderWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownFileRecorderWidget::configureOscSubscriptions()
+void RundownFillWidget::configureOscSubscriptions()
 {
     if (!this->command.getAllowRemoteTriggering())
         return;
@@ -381,6 +442,12 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
 
     if (this->playNowControlSubscription != NULL)
         this->playNowControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->nextControlSubscription != NULL)
+        this->nextControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->updateControlSubscription != NULL)
+        this->updateControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
@@ -409,6 +476,18 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
+    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
+    nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
+    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
+    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
@@ -428,22 +507,29 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownFileRecorderWidget::allowGpiChanged(bool allowGpi)
+void RundownFillWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownFileRecorderWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownFillWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }
 
-void RundownFileRecorderWidget::deviceConnectionStateChanged(CasparDevice& device)
+void RundownFillWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
     checkDeviceConnection();
 }
 
-void RundownFileRecorderWidget::deviceAdded(CasparDevice& device)
+void RundownFillWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+{
+    configureOscSubscriptions();
+
+    this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
+}
+
+void RundownFillWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
@@ -451,44 +537,49 @@ void RundownFileRecorderWidget::deviceAdded(CasparDevice& device)
     checkDeviceConnection();
 }
 
-void RundownFileRecorderWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
-{
-    configureOscSubscriptions();
-
-    this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
-}
-
-void RundownFileRecorderWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownFileRecorderWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownFileRecorderWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
-void RundownFileRecorderWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Next);
+}
+
+void RundownFillWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+        executeCommand(Playout::PlayoutType::Update);
+}
+
+void RundownFillWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownFileRecorderWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
-void RundownFileRecorderWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownFillWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);

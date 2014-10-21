@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Commands/VideoCommand.h"
+#include "Commands/MovieCommand.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"

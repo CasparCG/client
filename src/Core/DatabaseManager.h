@@ -140,7 +140,6 @@ class CORE_EXPORT DatabaseManager
         void updateLibraryData(const QString& address, const QList<LibraryModel>& deleteModels, const QList<LibraryModel>& insertModels);
         void deleteLibrary(int deviceId);
 
-        ThumbnailModel getThumbnailById(int id);
         QList<ThumbnailModel> getThumbnailByDeviceAddress(const QString& address);
         ThumbnailModel getThumbnailByNameAndDeviceName(const QString& name, const QString& deviceName);
         void updateThumbnail(const ThumbnailModel& model);

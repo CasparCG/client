@@ -117,15 +117,15 @@ void LibraryWidget::setupTools()
     widgetAudio->setText(5, "0");
     widgetAudio->setText(6, "");
 
-    QTreeWidgetItem* widgetImage = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
-    widgetImage->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
-    widgetImage->setText(0, "Image");
-    widgetImage->setText(1, "0");
-    widgetImage->setText(2, "Image");
-    widgetImage->setText(3, "");
-    widgetImage->setText(4, Rundown::IMAGE);
-    widgetImage->setText(5, "0");
-    widgetImage->setText(6, "");
+    QTreeWidgetItem* widgetStill = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
+    widgetStill->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
+    widgetStill->setText(0, "Image");
+    widgetStill->setText(1, "0");
+    widgetStill->setText(2, "Image");
+    widgetStill->setText(3, "");
+    widgetStill->setText(4, Rundown::STILL);
+    widgetStill->setText(5, "0");
+    widgetStill->setText(6, "");
 
     QTreeWidgetItem* widgetImageScroller = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImageScroller->setIcon(0, QIcon(":/Graphics/Images/ImageScrollerSmall.png"));
@@ -147,15 +147,24 @@ void LibraryWidget::setupTools()
     widgetTemplate->setText(5, "0");
     widgetTemplate->setText(6, "");
 
-    QTreeWidgetItem* widgetVideo = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
-    widgetVideo->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
-    widgetVideo->setText(0, "Video");
-    widgetVideo->setText(1, "0");
-    widgetVideo->setText(2, "Video");
-    widgetVideo->setText(3, "");
-    widgetVideo->setText(4, Rundown::VIDEO);
-    widgetVideo->setText(5, "0");
-    widgetVideo->setText(6, "");
+    QTreeWidgetItem* widgetMovie = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
+    widgetMovie->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
+    widgetMovie->setText(0, "Video");
+    widgetMovie->setText(1, "0");
+    widgetMovie->setText(2, "Video");
+    widgetMovie->setText(3, "");
+    widgetMovie->setText(4, Rundown::MOVIE);
+    widgetMovie->setText(5, "0");
+    widgetMovie->setText(6, "");
+
+    QTreeWidgetItem* widgetAnchor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetAnchor->setIcon(0, QIcon(":/Graphics/Images/AnchorSmall.png"));
+    widgetAnchor->setText(0, "Anchor Point");
+    widgetAnchor->setText(1, "0");
+    widgetAnchor->setText(2, "Anchor Point");
+    widgetAnchor->setText(3, "");
+    widgetAnchor->setText(4, Rundown::ANCHOR);
+    widgetAnchor->setText(5, "0");
 
     QTreeWidgetItem* widgetBlendMode = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetBlendMode->setIcon(0, QIcon(":/Graphics/Images/BlendModeSmall.png"));
@@ -202,6 +211,15 @@ void LibraryWidget::setupTools()
     widgetCrop->setText(4, Rundown::CROP);
     widgetCrop->setText(5, "0");
 
+    QTreeWidgetItem* widgetPerspective = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetPerspective->setIcon(0, QIcon(":/Graphics/Images/PerspectiveSmall.png"));
+    widgetPerspective->setText(0, "Free Transform");
+    widgetPerspective->setText(1, "0");
+    widgetPerspective->setText(2, "Free Transform");
+    widgetPerspective->setText(3, "");
+    widgetPerspective->setText(4, Rundown::PERSPECTIVE);
+    widgetPerspective->setText(5, "0");
+
     QTreeWidgetItem* widgetGrid = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetGrid->setIcon(0, QIcon(":/Graphics/Images/GridSmall.png"));
     widgetGrid->setText(0, "Grid");
@@ -238,6 +256,15 @@ void LibraryWidget::setupTools()
     widgetOpacity->setText(4, Rundown::OPACITY);
     widgetOpacity->setText(5, "0");
 
+    QTreeWidgetItem* widgetRotation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetRotation->setIcon(0, QIcon(":/Graphics/Images/RotationSmall.png"));
+    widgetRotation->setText(0, "Rotation");
+    widgetRotation->setText(1, "0");
+    widgetRotation->setText(2, "Rotation");
+    widgetRotation->setText(3, "");
+    widgetRotation->setText(4, Rundown::ROTATION);
+    widgetRotation->setText(5, "0");
+
     QTreeWidgetItem* widgetSaturation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetSaturation->setIcon(0, QIcon(":/Graphics/Images/SaturationSmall.png"));
     widgetSaturation->setText(0, "Saturation");
@@ -247,14 +274,14 @@ void LibraryWidget::setupTools()
     widgetSaturation->setText(4, Rundown::SATURATION);
     widgetSaturation->setText(5, "0");
 
-    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetGeometry->setIcon(0, QIcon(":/Graphics/Images/GeometrySmall.png"));
-    widgetGeometry->setText(0, "Transformation");
-    widgetGeometry->setText(1, "0");
-    widgetGeometry->setText(2, "Transformation");
-    widgetGeometry->setText(3, "");
-    widgetGeometry->setText(4, Rundown::GEOMETRY);
-    widgetGeometry->setText(5, "0");
+    QTreeWidgetItem* widgetFill = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetFill->setIcon(0, QIcon(":/Graphics/Images/FillSmall.png"));
+    widgetFill->setText(0, "Transform");
+    widgetFill->setText(1, "0");
+    widgetFill->setText(2, "Transform");
+    widgetFill->setText(3, "");
+    widgetFill->setText(4, Rundown::FILL);
+    widgetFill->setText(5, "0");
 
     QTreeWidgetItem* widgetVolume = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetVolume->setIcon(0, QIcon(":/Graphics/Images/VolumeSmall.png"));
@@ -264,24 +291,6 @@ void LibraryWidget::setupTools()
     widgetVolume->setText(3, "");
     widgetVolume->setText(4, Rundown::VOLUME);
     widgetVolume->setText(5, "0");
-
-    QTreeWidgetItem* widgetFreeTransform = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetFreeTransform->setIcon(0, QIcon(":/Graphics/Images/PerspectiveSmall.png"));
-    widgetFreeTransform->setText(0, "Free Transform");
-    widgetFreeTransform->setText(1, "0");
-    widgetFreeTransform->setText(2, "Free Transform");
-    widgetFreeTransform->setText(3, "");
-    widgetFreeTransform->setText(4, Rundown::PERSPECTIVE);
-    widgetFreeTransform->setText(5, "0");
-
-    QTreeWidgetItem* widgetRotation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetRotation->setIcon(0, QIcon(":/Graphics/Images/RotationSmall.png"));
-    widgetRotation->setText(0, "Rotation");
-    widgetRotation->setText(1, "0");
-    widgetRotation->setText(2, "Rotation");
-    widgetRotation->setText(3, "");
-    widgetRotation->setText(4, Rundown::ROTATION);
-    widgetRotation->setText(5, "0");
 
     QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));

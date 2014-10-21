@@ -12,46 +12,62 @@
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
 
-class CORE_EXPORT ImageCommand : public AbstractCommand
+class CORE_EXPORT MovieCommand : public AbstractCommand
 {
     Q_OBJECT
 
     public:
-        explicit ImageCommand(QObject* parent = 0);
+        explicit MovieCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        const QString& getImageName() const;
+        const QString& getVideoName() const;
         const QString& getTransition() const;
         int getTransitionDuration() const;
         const QString& getTween() const;
         const QString& getDirection() const;
+        bool getLoop() const;
+        bool getFreezeOnLoad() const;
         bool getTriggerOnNext() const;
-        bool getUseAuto() const;
+        int getSeek() const;
+        int getLength() const;
+        bool getAutoPlay() const;
 
-        void setImageName(const QString& imageName);
+        void setVideoName(const QString& videoName);
         void setTransition(const QString& transition);
         void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
+        void setFreezeOnLoad(bool freezeOnLoad);
         void setTriggerOnNext(bool triggerOnNext);
-        void setUseAuto(bool useAuto);
+        void setLoop(bool loop);
+        void setSeek(int seek);
+        void setLength(int length);
+        void setAutoPlay(bool autoPlay);
 
     private:
-        QString imageName;
+        QString videoName;
         QString transition;
         int transitionDuration;
         QString tween;
         QString direction;
+        bool loop;
+        bool freezeOnLoad;
         bool triggerOnNext;
-        bool useAuto;
+        int seek;
+        int length;
+        bool autoPlay;
 
-        Q_SIGNAL void imageNameChanged(const QString&);
+        Q_SIGNAL void videoNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
+        Q_SIGNAL void loopChanged(bool);
+        Q_SIGNAL void freezeOnLoadChanged(bool);
         Q_SIGNAL void triggerOnNextChanged(bool);
-        Q_SIGNAL void useAutoChanged(bool);
+        Q_SIGNAL void seekChanged(int);
+        Q_SIGNAL void lengthChanged(int);
+        Q_SIGNAL void autoPlayChanged(bool);
 };

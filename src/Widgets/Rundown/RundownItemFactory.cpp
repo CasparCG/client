@@ -8,13 +8,13 @@
 #include "RundownDeckLinkInputWidget.h"
 #include "RundownFileRecorderWidget.h"
 #include "RundownImageScrollerWidget.h"
-#include "RundownGeometryWidget.h"
+#include "RundownFillWidget.h"
 #include "RundownGpiOutputWidget.h"
 #include "RundownGridWidget.h"
 #include "RundownGroupWidget.h"
 #include "RundownKeyerWidget.h"
 #include "RundownLevelsWidget.h"
-#include "RundownVideoWidget.h"
+#include "RundownMovieWidget.h"
 #include "RundownOpacityWidget.h"
 #include "RundownSaturationWidget.h"
 #include "RundownTemplateWidget.h"
@@ -24,7 +24,7 @@
 #include "RundownClearOutputWidget.h"
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
-#include "RundownImageWidget.h"
+#include "RundownStillWidget.h"
 #include "RundownCustomCommandWidget.h"
 #include "RundownPlayoutCommandWidget.h"
 #include "RundownChromaWidget.h"
@@ -32,6 +32,7 @@
 #include "RundownOscOutputWidget.h"
 #include "RundownPerspectiveWidget.h"
 #include "RundownRotationWidget.h"
+#include "RundownAnchorWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -64,14 +65,14 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::CHROMAKEY) return new RundownChromaWidget(model, this);
     else if (model.getType() == Rundown::DECKLINKINPUT) return new RundownDeckLinkInputWidget(model, this);
     else if (model.getType() == Rundown::FILERECORDER) return new RundownFileRecorderWidget(model, this);
-    else if (model.getType() == Rundown::GEOMETRY) return new RundownGeometryWidget(model, this);
+    else if (model.getType() == Rundown::FILL) return new RundownFillWidget(model, this);
     else if (model.getType() == Rundown::GRID) return new RundownGridWidget(model, this);
     else if (model.getType() == Rundown::GPIOUTPUT) return new RundownGpiOutputWidget(model, this);
     else if (model.getType() == Rundown::KEYER) return new RundownKeyerWidget(model, this);
     else if (model.getType() == Rundown::LEVELS) return new RundownLevelsWidget(model, this);
     else if (model.getType() == Rundown::AUDIO) return new RundownAudioWidget(model, this);
-    else if (model.getType() == Rundown::VIDEO) return new RundownVideoWidget(model, this);
-    else if (model.getType() == Rundown::IMAGE) return new RundownImageWidget(model, this);
+    else if (model.getType() == Rundown::MOVIE) return new RundownMovieWidget(model, this);
+    else if (model.getType() == Rundown::STILL) return new RundownStillWidget(model, this);
     else if (model.getType() == Rundown::OPACITY) return new RundownOpacityWidget(model, this);
     else if (model.getType() == Rundown::SATURATION) return new RundownSaturationWidget(model, this);
     else if (model.getType() == Rundown::TEMPLATE) return new RundownTemplateWidget(model, this);
@@ -103,6 +104,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);
     else if (model.getType() == Rundown::PERSPECTIVE) return new RundownPerspectiveWidget(model, this);
     else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
+    else if (model.getType() == Rundown::ANCHOR) return new RundownAnchorWidget(model, this);
 
     return NULL;
 }

@@ -49,14 +49,14 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void stopTemplate(int channel, int videolayer, int flashlayer);
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
 
-        void pauseVideo(int channel, int videolayer);
-        void resumeVideo(int channel, int videolayer);
-        void playVideo(int channel, int videolayer);
-        void playVideo(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void pauseMovie(int channel, int videolayer);
+        void resumeMovie(int channel, int videolayer);
+        void playMovie(int channel, int videolayer);
+        void playMovie(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool useAuto);
-        void loadVideo(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void loadMovie(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, int seek, int length, bool loop, bool freezeOnLoad, bool useAuto);
-        void stopVideo(int channel, int videolayer);
+        void stopMovie(int channel, int videolayer);
 
         void pauseAudio(int channel, int videolayer);
         void playAudio(int channel, int videolayer);
@@ -74,16 +74,16 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
                        const QString& easing, const QString& direction, bool useAuto);
         void stopColor(int channel, int videolayer);
 
-        void pauseImage(int channel, int videolayer);
-        void playImage(int channel, int videolayer);
-        void playImage(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void pauseStill(int channel, int videolayer);
+        void playStill(int channel, int videolayer);
+        void playStill(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, bool useAuto);
-        void loadImage(int channel, int videolayer, const QString& name, const QString& transition, int duration,
+        void loadStill(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, bool useAuto);
-        void stopImage(int channel, int videolayer);
+        void stopStill(int channel, int videolayer);
 
-        void startRecording(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
-        void stopRecording(int channel);
+        void startFileRecorder(int channel, const QString& filename, const QString& codec, const QString& preset, const QString& tune, bool withAlpha);
+        void stopFileRecorder(int channel);
 
         void startStream(int channel, int port, int quality = 23, bool key = false, int width = 0, int height = 0);
         void stopStream(int channel, int port);
@@ -121,9 +121,9 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
                        bool defer = false);
         void setLevels(int channel, int videolayer, float minIn, float maxIn, float gamma, float minOut, float maxOut,
                        int duration, const QString& easing, bool defer = false);
-        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+        void setFill(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          bool defer = false, bool useMipmap = false);
-        void setGeometry(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
+        void setFill(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          int duration, const QString& easing, bool defer = false, bool useMipmap = false);
         void setClipping(int channel, int videolayer, float positionX, float positionY, float scaleX, float scaleY,
                          bool defer = false);
@@ -135,6 +135,8 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
                             float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, int duration, const QString& easing, bool defer = false, bool useMipmap = false);
         void setRotation(int channel, int videolayer, float rotation, bool defer = false);
         void setRotation(int channel, int videolayer, float rotation, int duration, const QString& easing, bool defer = false);
+        void setAnchor(int channel, int videolayer, float positionX, float positionY, bool defer = false);
+        void setAnchor(int channel, int videolayer, float positionX, float positionY, int duration, const QString& easing, bool defer = false);
 
         Q_SIGNAL void connectionStateChanged(CasparDevice&);
         Q_SIGNAL void infoChanged(const QList<QString>&, CasparDevice&);
