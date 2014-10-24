@@ -143,6 +143,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addBrightnessItem();
         Q_SLOT void addCommitItem();
         Q_SLOT void addContrastItem();
+        Q_SLOT void addClipItem();
         Q_SLOT void addCropItem();
         Q_SLOT void addDeckLinkInputItem();
         Q_SLOT void addFillItem();
@@ -168,7 +169,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addAtemAudioInputStateItem();
         Q_SLOT void addAtemAudioInputGainItem();
         Q_SLOT void addAtemAudioInputBalanceItem();
-        Q_SLOT void addFreeTransformItem();
+        Q_SLOT void addPerspectiveItem();
         Q_SLOT void addRotationItem();
         Q_SLOT void addAnchorItem();
         Q_SLOT void addPanasonicPresetItem();

@@ -15,7 +15,6 @@ HEADERS += \
     DatabaseManager.h \
     DeviceManager.h \
     Shared.h \
-    Commands/CropCommand.h \
     Commands/TemplateCommand.h \
     Events/Rundown/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
@@ -178,12 +177,13 @@ HEADERS += \
     Commands/AnchorCommand.h \
     Commands/MovieCommand.h \
     Commands/StillCommand.h \
-    Commands/FillCommand.h
+    Commands/FillCommand.h \
+    Commands/ClipCommand.h \
+    Commands/CropCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
     DeviceManager.cpp \
-    Commands/CropCommand.cpp \
     Commands/TemplateCommand.cpp \
     Events/Rundown/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
@@ -346,7 +346,9 @@ SOURCES += \
     Commands/AnchorCommand.cpp \
     Commands/MovieCommand.cpp \
     Commands/StillCommand.cpp \
-    Commands/FillCommand.cpp
+    Commands/FillCommand.cpp \
+    Commands/ClipCommand.cpp \
+    Commands/CropCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

@@ -193,6 +193,15 @@ void LibraryWidget::setupTools()
     widgetChroma->setText(4, Rundown::CHROMAKEY);
     widgetChroma->setText(5, "0");
 
+    QTreeWidgetItem* widgetClip = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetClip->setIcon(0, QIcon(":/Graphics/Images/ClipSmall.png"));
+    widgetClip->setText(0, "Clipping");
+    widgetClip->setText(1, "0");
+    widgetClip->setText(2, "Clipping");
+    widgetClip->setText(3, "");
+    widgetClip->setText(4, Rundown::CLIP);
+    widgetClip->setText(5, "0");
+
     QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetContrast->setIcon(0, QIcon(":/Graphics/Images/ContrastSmall.png"));
     widgetContrast->setText(0, "Contrast");
@@ -213,9 +222,9 @@ void LibraryWidget::setupTools()
 
     QTreeWidgetItem* widgetPerspective = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetPerspective->setIcon(0, QIcon(":/Graphics/Images/PerspectiveSmall.png"));
-    widgetPerspective->setText(0, "Free Transform");
+    widgetPerspective->setText(0, "Distort");
     widgetPerspective->setText(1, "0");
-    widgetPerspective->setText(2, "Free Transform");
+    widgetPerspective->setText(2, "Distort");
     widgetPerspective->setText(3, "");
     widgetPerspective->setText(4, Rundown::PERSPECTIVE);
     widgetPerspective->setText(5, "0");

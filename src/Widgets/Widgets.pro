@@ -28,8 +28,6 @@ HEADERS += \
     Rundown/RundownTemplateWidget.h \
     Rundown/RundownWidget.h \
     Rundown/AbstractRundownWidget.h \
-    Rundown/RundownCropWidget.h \
-    Inspector/InspectorCropWidget.h \
     Inspector/InspectorBrightnessWidget.h \
     Rundown/RundownBrightnessWidget.h \
     Inspector/InspectorSaturationWidget.h \
@@ -147,7 +145,11 @@ HEADERS += \
     Rundown/RundownFillWidget.h \
     Inspector/InspectorMovieWidget.h \
     Inspector/InspectorStillWidget.h \
-    Inspector/InspectorFillWidget.h
+    Inspector/InspectorFillWidget.h \
+    Rundown/RundownClipWidget.h \
+    Inspector/InspectorClipWidget.h \
+    Rundown/RundownCropWidget.h \
+    Inspector/InspectorCropWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -161,7 +163,6 @@ SOURCES += \
     Inspector/InspectorMetadataWidget.cpp \
     Inspector/InspectorLevelsWidget.cpp \
     Inspector/InspectorImageScrollerWidget.cpp \
-    Inspector/InspectorCropWidget.cpp \
     Inspector/InspectorBrightnessWidget.cpp \
     Inspector/InspectorOpacityWidget.cpp \
     Inspector/InspectorSaturationWidget.cpp \
@@ -171,7 +172,6 @@ SOURCES += \
     Inspector/InspectorGpiOutputWidget.cpp \
     Inspector/InspectorFileRecorderWidget.cpp \
     Library/LibraryWidget.cpp \
-    Rundown/RundownCropWidget.cpp \
     Rundown/RundownGroupWidget.cpp \
     Rundown/RundownTemplateWidget.cpp \
     Rundown/RundownWidget.cpp \
@@ -283,7 +283,11 @@ SOURCES += \
     Rundown/RundownFillWidget.cpp \
     Inspector/InspectorMovieWidget.cpp \
     Inspector/InspectorStillWidget.cpp \
-    Inspector/InspectorFillWidget.cpp
+    Inspector/InspectorFillWidget.cpp \
+    Rundown/RundownClipWidget.cpp \
+    Inspector/InspectorClipWidget.cpp \
+    Rundown/RundownCropWidget.cpp \
+    Inspector/InspectorCropWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -306,8 +310,6 @@ FORMS += \
     Rundown/RundownTemplateWidget.ui \
     Rundown/RundownGroupWidget.ui \
     Inspector/InspectorLevelsWidget.ui \
-    Inspector/InspectorCropWidget.ui \
-    Rundown/RundownCropWidget.ui \
     Inspector/InspectorBrightnessWidget.ui \
     Rundown/RundownBrightnessWidget.ui \
     Inspector/InspectorSaturationWidget.ui \
@@ -408,7 +410,11 @@ FORMS += \
     Rundown/RundownFillWidget.ui \
     Inspector/InspectorMovieWidget.ui \
     Inspector/InspectorStillWidget.ui \
-    Inspector/InspectorFillWidget.ui
+    Inspector/InspectorFillWidget.ui \
+    Rundown/RundownClipWidget.ui \
+    Inspector/InspectorClipWidget.ui \
+    Rundown/RundownCropWidget.ui \
+    Inspector/InspectorCropWidget.ui
 
 RESOURCES += \
     Widgets.qrc \
@@ -659,7 +665,10 @@ OTHER_FILES += \
     Images/AnchorSmallHover.png \
     Images/Fill.png \
     Images/FillSmall.png \
-    Images/FillSmallHover.png
+    Images/FillSmallHover.png \
+    Images/ClipSmallHover.png \
+    Images/ClipSmall.png \
+    Images/Clip.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

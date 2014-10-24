@@ -4,7 +4,7 @@
 #include "RundownBrightnessWidget.h"
 #include "RundownCommitWidget.h"
 #include "RundownContrastWidget.h"
-#include "RundownCropWidget.h"
+#include "RundownClipWidget.h"
 #include "RundownDeckLinkInputWidget.h"
 #include "RundownFileRecorderWidget.h"
 #include "RundownImageScrollerWidget.h"
@@ -33,6 +33,7 @@
 #include "RundownPerspectiveWidget.h"
 #include "RundownRotationWidget.h"
 #include "RundownAnchorWidget.h"
+#include "RundownCropWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -61,7 +62,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     if (model.getType() == Rundown::BLENDMODE) return new RundownBlendModeWidget(model, this);
     else if (model.getType() == Rundown::BRIGHTNESS) return new RundownBrightnessWidget(model, this);
     else if (model.getType() == Rundown::CONTRAST) return new RundownContrastWidget(model, this);
-    else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
+    else if (model.getType() == Rundown::CLIP) return new RundownClipWidget(model, this);
     else if (model.getType() == Rundown::CHROMAKEY) return new RundownChromaWidget(model, this);
     else if (model.getType() == Rundown::DECKLINKINPUT) return new RundownDeckLinkInputWidget(model, this);
     else if (model.getType() == Rundown::FILERECORDER) return new RundownFileRecorderWidget(model, this);
@@ -105,6 +106,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::PERSPECTIVE) return new RundownPerspectiveWidget(model, this);
     else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
     else if (model.getType() == Rundown::ANCHOR) return new RundownAnchorWidget(model, this);
+    else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
 
     return NULL;
 }

@@ -2,7 +2,7 @@
 #include "Inspector/InspectorBlendModeWidget.h"
 #include "Inspector/InspectorBrightnessWidget.h"
 #include "Inspector/InspectorContrastWidget.h"
-#include "Inspector/InspectorCropWidget.h"
+#include "Inspector/InspectorClipWidget.h"
 #include "Inspector/InspectorFileRecorderWidget.h"
 #include "Inspector/InspectorStillWidget.h"
 #include "Inspector/InspectorGpiOutputWidget.h"
@@ -33,6 +33,7 @@
 #include "Inspector/InspectorRotationWidget.h"
 #include "Inspector/InspectorAnchorWidget.h"
 #include "Inspector/InspectorFillWidget.h"
+#include "Inspector/InspectorCropWidget.h"
 #include "Inspector/Atem/InspectorAtemInputWidget.h"
 #include "Inspector/Atem/InspectorAtemCutWidget.h"
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
@@ -60,7 +61,7 @@
 #include "Commands/ContrastCommand.h"
 #include "Commands/SolidColorCommand.h"
 #include "Commands/FadeToBlackCommand.h"
-#include "Commands/CropCommand.h"
+#include "Commands/ClipCommand.h"
 #include "Commands/FillCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GridCommand.h"
@@ -81,6 +82,7 @@
 #include "Commands/PerspectiveCommand.h"
 #include "Commands/RotationCommand.h"
 #include "Commands/AnchorCommand.h"
+#include "Commands/CropCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
 #include "Commands/Atem/AtemAutoCommand.h"
@@ -110,7 +112,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(4)), 0, new InspectorBlendModeWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(5)), 0, new InspectorBrightnessWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(6)), 0, new InspectorContrastWidget(this));
-    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(7)), 0, new InspectorCropWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(7)), 0, new InspectorClipWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(8)), 0, new InspectorFillWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(9)), 0, new InspectorGridWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(10)), 0, new InspectorLevelsWidget(this));
@@ -151,6 +153,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(45)), 0, new InspectorPerspectiveWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(46)), 0, new InspectorRotationWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(47)), 0, new InspectorAnchorWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(48)), 0, new InspectorCropWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -191,7 +194,7 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(5)->setHidden(false);
     else if (dynamic_cast<ContrastCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(6)->setHidden(false);
-    else if (dynamic_cast<CropCommand*>(event.getCommand()))
+    else if (dynamic_cast<ClipCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(7)->setHidden(false);
     else if (dynamic_cast<FillCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(8)->setHidden(false);
@@ -271,6 +274,8 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(46)->setHidden(false);
     else if (dynamic_cast<AnchorCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(47)->setHidden(false);
+    else if (dynamic_cast<CropCommand*>(event.getCommand()))
+        this->treeWidgetInspector->topLevelItem(48)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -323,6 +328,7 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(45)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(46)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(47)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(48)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)

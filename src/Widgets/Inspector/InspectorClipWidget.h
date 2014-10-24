@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorCropWidget.h"
+#include "ui_InspectorClipWidget.h"
 
-#include "Commands/CropCommand.h"
+#include "Commands/ClipCommand.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
@@ -14,16 +14,16 @@
 
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorCropWidget : public QWidget, Ui::InspectorCropWidget
+class WIDGETS_EXPORT InspectorClipWidget : public QWidget, Ui::InspectorClipWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorCropWidget(QWidget* parent = 0);
+        explicit InspectorClipWidget(QWidget* parent = 0);
 
     private:
         LibraryModel* model;
-        CropCommand* command;
+        ClipCommand* command;
         int resolutionWidth;
         int resolutionHeight;
 
@@ -32,13 +32,13 @@ class WIDGETS_EXPORT InspectorCropWidget : public QWidget, Ui::InspectorCropWidg
         void setPositionValues();
 
         Q_SLOT void sliderLeftChanged(int);
+        Q_SLOT void sliderWidthChanged(int);
         Q_SLOT void sliderTopChanged(int);
-        Q_SLOT void sliderRightChanged(int);
-        Q_SLOT void sliderBottomChanged(int);
+        Q_SLOT void sliderHeightChanged(int);
         Q_SLOT void spinBoxLeftChanged(int);
+        Q_SLOT void spinBoxWidthChanged(int);
         Q_SLOT void spinBoxTopChanged(int);
-        Q_SLOT void spinBoxRightChanged(int);
-        Q_SLOT void spinBoxBottomChanged(int);
+        Q_SLOT void spinBoxHeightChanged(int);
         Q_SLOT void transitionDurationChanged(int);
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void deferChanged(int);

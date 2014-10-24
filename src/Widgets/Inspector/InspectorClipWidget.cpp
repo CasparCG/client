@@ -1,4 +1,4 @@
-#include "InspectorCropWidget.h"
+#include "InspectorClipWidget.h"
 
 #include "Global.h"
 
@@ -9,7 +9,7 @@
 
 #include <QtGui/QApplication>
 
-InspectorCropWidget::InspectorCropWidget(QWidget* parent)
+InspectorClipWidget::InspectorClipWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL), resolutionWidth(0), resolutionHeight(0)
 {
@@ -22,15 +22,15 @@ InspectorCropWidget::InspectorCropWidget(QWidget* parent)
     loadTween();
 }
 
-void InspectorCropWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
+void InspectorClipWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
 
-    if (dynamic_cast<CropCommand*>(event.getCommand()))
+    if (dynamic_cast<ClipCommand*>(event.getCommand()))
     {
-        this->command = dynamic_cast<CropCommand*>(event.getCommand());
+        this->command = dynamic_cast<ClipCommand*>(event.getCommand());
 
         const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (!model.getName().isEmpty())
@@ -52,7 +52,7 @@ void InspectorCropWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
     blockAllSignals(false);
 }
 
-void InspectorCropWidget::deviceChanged(const DeviceChangedEvent& event)
+void InspectorClipWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     blockAllSignals(true);
 
@@ -78,7 +78,7 @@ void InspectorCropWidget::deviceChanged(const DeviceChangedEvent& event)
     blockAllSignals(false);
 }
 
-void InspectorCropWidget::channelChanged(const ChannelChangedEvent& event)
+void InspectorClipWidget::channelChanged(const ChannelChangedEvent& event)
 {
     blockAllSignals(true);
 
@@ -107,22 +107,45 @@ void InspectorCropWidget::channelChanged(const ChannelChangedEvent& event)
     blockAllSignals(false);
 }
 
-void InspectorCropWidget::blockAllSignals(bool block)
+void InspectorClipWidget::blockAllSignals(bool block)
 {
-    this->sliderRight->blockSignals(block);
+    this->sliderLeft->blockSignals(block);
+    this->sliderWidth->blockSignals(block);
     this->sliderTop->blockSignals(block);
-    this->sliderRight->blockSignals(block);
-    this->sliderBottom->blockSignals(block);
-    this->spinBoxRight->blockSignals(block);
+    this->sliderHeight->blockSignals(block);
+    this->spinBoxLeft->blockSignals(block);
+    this->spinBoxWidth->blockSignals(block);
     this->spinBoxTop->blockSignals(block);
-    this->spinBoxRight->blockSignals(block);
-    this->spinBoxBottom->blockSignals(block);
+    this->spinBoxHeight->blockSignals(block);
     this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
 }
 
-void InspectorCropWidget::loadTween()
+void InspectorClipWidget::setPositionValues()
+{
+    this->sliderLeft->setMaximum(this->resolutionWidth);
+    this->sliderWidth->setMaximum(this->resolutionWidth);
+    this->sliderTop->setMaximum(this->resolutionHeight);
+    this->sliderHeight->setMaximum(this->resolutionHeight);
+
+    this->spinBoxLeft->setMaximum(this->resolutionWidth);
+    this->spinBoxWidth->setMaximum(this->resolutionWidth);
+    this->spinBoxTop->setMaximum(this->resolutionHeight);
+    this->spinBoxHeight->setMaximum(this->resolutionHeight);
+
+    this->sliderLeft->setValue(QString("%1").arg(this->command->getLeft() * this->resolutionWidth).toFloat());
+    this->sliderWidth->setValue(QString("%1").arg(this->command->getWidth() * this->resolutionWidth).toFloat());
+    this->sliderTop->setValue(QString("%1").arg(this->command->getTop() * this->resolutionHeight).toFloat());
+    this->sliderHeight->setValue(QString("%1").arg(this->command->getHeight() * this->resolutionHeight).toFloat());
+
+    this->spinBoxLeft->setValue(QString("%1").arg(this->command->getLeft() * this->resolutionWidth).toFloat());
+    this->spinBoxWidth->setValue(QString("%1").arg(this->command->getWidth() * this->resolutionWidth).toFloat());
+    this->spinBoxTop->setValue(QString("%1").arg(this->command->getTop() * this->resolutionHeight).toFloat());
+    this->spinBoxHeight->setValue(QString("%1").arg(this->command->getHeight() * this->resolutionHeight).toFloat());
+}
+
+void InspectorClipWidget::loadTween()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
@@ -135,128 +158,105 @@ void InspectorCropWidget::loadTween()
     this->comboBoxTween->blockSignals(false);
 }
 
-void InspectorCropWidget::setPositionValues()
+void InspectorClipWidget::sliderLeftChanged(int clipLeft)
 {
-    this->sliderLeft->setMaximum(this->resolutionWidth);
-    this->sliderTop->setMaximum(this->resolutionHeight);
-    this->sliderRight->setMaximum(this->resolutionWidth);
-    this->sliderBottom->setMaximum(this->resolutionHeight);
-
-    this->spinBoxLeft->setMaximum(this->resolutionWidth);
-    this->spinBoxTop->setMaximum(this->resolutionHeight);
-    this->spinBoxRight->setMaximum(this->resolutionWidth);
-    this->spinBoxBottom->setMaximum(this->resolutionHeight);
-
-    this->sliderLeft->setValue(QString("%1").arg(this->command->getLeft() * this->resolutionWidth).toFloat());
-    this->sliderTop->setValue(QString("%1").arg(this->command->getTop() * this->resolutionHeight).toFloat());
-    this->sliderRight->setValue(QString("%1").arg(this->command->getRight() * this->resolutionWidth).toFloat());
-    this->sliderBottom->setValue(QString("%1").arg(this->command->getBottom() * this->resolutionHeight).toFloat());
-
-    this->spinBoxLeft->setValue(QString("%1").arg(this->command->getLeft() * this->resolutionWidth).toFloat());
-    this->spinBoxTop->setValue(QString("%1").arg(this->command->getTop() * this->resolutionHeight).toFloat());
-    this->spinBoxRight->setValue(QString("%1").arg(this->command->getRight() * this->resolutionWidth).toFloat());
-    this->spinBoxBottom->setValue(QString("%1").arg(this->command->getBottom() * this->resolutionHeight).toFloat());
-}
-
-void InspectorCropWidget::sliderLeftChanged(int left)
-{
-    this->command->setLeft(static_cast<float>(left) / this->resolutionWidth);
+    this->command->setLeft(static_cast<float>(clipLeft) / this->resolutionWidth);
 
     this->spinBoxLeft->blockSignals(true);
-    this->spinBoxLeft->setValue(left);
+    this->spinBoxLeft->setValue(clipLeft);
     this->spinBoxLeft->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorCropWidget::sliderTopChanged(int top)
+void InspectorClipWidget::spinBoxLeftChanged(int clipLeft)
 {
-    this->command->setTop(static_cast<float>(top) / this->resolutionHeight);
-
-    this->spinBoxTop->blockSignals(true);
-    this->spinBoxTop->setValue(top);
-    this->spinBoxTop->blockSignals(false);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::sliderRightChanged(int right)
-{
-    this->command->setRight(static_cast<float>(right) / this->resolutionWidth);
-
-    this->spinBoxRight->blockSignals(true);
-    this->spinBoxRight->setValue(right);
-    this->spinBoxRight->blockSignals(false);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::sliderBottomChanged(int bottom)
-{
-    this->command->setBottom(static_cast<float>(bottom) / this->resolutionHeight);
-
-    this->spinBoxBottom->blockSignals(true);
-    this->spinBoxBottom->setValue(bottom);
-    this->spinBoxBottom->blockSignals(false);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorCropWidget::spinBoxLeftChanged(int left)
-{
-    this->command->setLeft(static_cast<float>(left) / this->resolutionWidth);
+    this->command->setLeft(static_cast<float>(clipLeft) / this->resolutionWidth);
 
     this->sliderLeft->blockSignals(true);
-    this->sliderLeft->setValue(left);
+    this->sliderLeft->setValue(clipLeft);
     this->sliderLeft->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorCropWidget::spinBoxTopChanged(int top)
+void InspectorClipWidget::sliderWidthChanged(int clipRight)
 {
-    this->command->setTop(static_cast<float>(top) / this->resolutionHeight);
+    this->command->setWidth(static_cast<float>(clipRight) / this->resolutionWidth);
+
+    this->spinBoxWidth->blockSignals(true);
+    this->spinBoxWidth->setValue(clipRight);
+    this->spinBoxWidth->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
+}
+
+void InspectorClipWidget::spinBoxWidthChanged(int clipRight)
+{
+    this->command->setWidth(static_cast<float>(clipRight) / this->resolutionWidth);
+
+    this->sliderWidth->blockSignals(true);
+    this->sliderWidth->setValue(clipRight);
+    this->sliderWidth->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
+}
+
+void InspectorClipWidget::sliderTopChanged(int clipTop)
+{
+    this->command->setTop(static_cast<float>(clipTop) / this->resolutionHeight);
+
+    this->spinBoxTop->blockSignals(true);
+    this->spinBoxTop->setValue(clipTop);
+    this->spinBoxTop->blockSignals(false);
+
+    EventManager::getInstance().firePreviewEvent(PreviewEvent());
+}
+
+void InspectorClipWidget::spinBoxTopChanged(int clipTop)
+{
+    this->command->setTop(static_cast<float>(clipTop) / this->resolutionHeight);
 
     this->sliderTop->blockSignals(true);
-    this->sliderTop->setValue(top);
+    this->sliderTop->setValue(clipTop);
     this->sliderTop->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorCropWidget::spinBoxRightChanged(int right)
+void InspectorClipWidget::sliderHeightChanged(int clipBottom)
 {
-    this->command->setRight(static_cast<float>(right) / this->resolutionWidth);
+    this->command->setHeight(static_cast<float>(clipBottom) / this->resolutionHeight);
 
-    this->sliderRight->blockSignals(true);
-    this->sliderRight->setValue(right);
-    this->sliderRight->blockSignals(false);
+    this->spinBoxHeight->blockSignals(true);
+    this->spinBoxHeight->setValue(clipBottom);
+    this->spinBoxHeight->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorCropWidget::spinBoxBottomChanged(int bottom)
+void InspectorClipWidget::spinBoxHeightChanged(int clipBottom)
 {
-    this->command->setBottom(static_cast<float>(bottom) / this->resolutionHeight);
+    this->command->setHeight(static_cast<float>(clipBottom) / this->resolutionHeight);
 
-    this->sliderBottom->blockSignals(true);
-    this->sliderBottom->setValue(bottom);
-    this->sliderBottom->blockSignals(false);
+    this->sliderHeight->blockSignals(true);
+    this->sliderHeight->setValue(clipBottom);
+    this->sliderHeight->blockSignals(false);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }
 
-void InspectorCropWidget::transitionDurationChanged(int transitionDuration)
+void InspectorClipWidget::transitionDurationChanged(int transitionDuration)
 {
     this->command->setTransitionDuration(transitionDuration);
 }
 
-void InspectorCropWidget::tweenChanged(QString tween)
+void InspectorClipWidget::tweenChanged(QString tween)
 {
     this->command->setTween(tween);
 }
 
-void InspectorCropWidget::deferChanged(int state)
+void InspectorClipWidget::deferChanged(int state)
 {
     this->command->setDefer((state == Qt::Checked) ? true : false);
 }

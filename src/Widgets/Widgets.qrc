@@ -227,6 +227,9 @@
         <file>Images/Anchor.png</file>
         <file>Images/AnchorSmall.png</file>
         <file>Images/AnchorSmallHover.png</file>
+        <file>Images/Clip.png</file>
+        <file>Images/ClipSmall.png</file>
+        <file>Images/ClipSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

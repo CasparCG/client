@@ -3,7 +3,7 @@
 #include "RundownBrightnessWidget.h"
 #include "RundownCommitWidget.h"
 #include "RundownContrastWidget.h"
-#include "RundownCropWidget.h"
+#include "RundownClipWidget.h"
 #include "RundownDeckLinkInputWidget.h"
 #include "RundownFileRecorderWidget.h"
 #include "RundownImageScrollerWidget.h"
@@ -110,9 +110,10 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BlendModeSmall.png"), "Blend Mode", this, SLOT(addBlendModeItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ClipSmall.png"), "Clipping", this, SLOT(addClipItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropItem()));
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/PerspectiveSmall.png"), "Free Transform", this, SLOT(addFreeTransformItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/PerspectiveSmall.png"), "Distort", this, SLOT(addPerspectiveItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/GridSmall.png"), "Grid", this, SLOT(addGridItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerItem())); 
@@ -1281,6 +1282,11 @@ void RundownTreeWidget::addContrastItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CONTRAST);
 }
 
+void RundownTreeWidget::addClipItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CLIP);
+}
+
 void RundownTreeWidget::addCropItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::CROP);
@@ -1386,7 +1392,7 @@ void RundownTreeWidget::addSolidColorItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SOLIDCOLOR);
 }
 
-void RundownTreeWidget::addFreeTransformItem()
+void RundownTreeWidget::addPerspectiveItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PERSPECTIVE);
 }

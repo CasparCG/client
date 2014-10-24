@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RundownPerspectiveWidget</class>
- <widget class="QWidget" name="RundownPerspectiveWidget">
+ <class>RundownClipWidget</class>
+ <widget class="QWidget" name="RundownClipWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -44,7 +44,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Perspective.png</pixmap>
+       <pixmap resource="../Widgets.qrc">:/Graphics/Images/Clip.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -73,7 +73,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Distort</string>
+       <string>Clipping</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelVideolayer">

@@ -4,29 +4,29 @@
 
 CropCommand::CropCommand(QObject* parent)
     : AbstractCommand(parent),
-      cropLeft(Mixer::DEFAULT_CROP_LEFT), cropRight(Mixer::DEFAULT_CROP_RIGHT), cropTop(Mixer::DEFAULT_CROP_TOP),
-      cropBottom(Mixer::DEFAULT_CROP_BOTTOM), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+      left(Mixer::DEFAULT_CROP_LEFT), top(Mixer::DEFAULT_CROP_TOP), right(Mixer::DEFAULT_CROP_RIGHT),
+      bottom(Mixer::DEFAULT_CROP_BOTTOM), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
 {
 }
 
-float CropCommand::getCropLeft() const
+float CropCommand::getLeft() const
 {
-    return this->cropLeft;
+    return this->left;
 }
 
-float CropCommand::getCropRight() const
+float CropCommand::getTop() const
 {
-    return this->cropRight;
+    return this->top;
 }
 
-float CropCommand::getCropTop() const
+float CropCommand::getRight() const
 {
-    return this->cropTop;
+    return this->right;
 }
 
-float CropCommand::getCropBottom() const
+float CropCommand::getBottom() const
 {
-    return this->cropBottom;
+    return this->bottom;
 }
 
 int CropCommand::getTransitionDuration() const
@@ -44,28 +44,28 @@ bool CropCommand::getDefer() const
     return this->defer;
 }
 
-void CropCommand::setCropLeft(float cropLeft)
+void CropCommand::setLeft(float left)
 {
-    this->cropLeft = cropLeft;
-    emit cropLeftChanged(this->cropLeft);
+    this->left = left;
+    emit leftChanged(this->left);
 }
 
-void CropCommand::setCropRight(float cropRight)
+void CropCommand::setTop(float top)
 {
-    this->cropRight = cropRight;
-    emit cropRightChanged(this->cropRight);
+    this->top = top;
+    emit topChanged(this->top);
 }
 
-void CropCommand::setCropTop(float cropTop)
+void CropCommand::setRight(float right)
 {
-    this->cropTop = cropTop;
-    emit cropTopChanged(this->cropTop);
+    this->right = right;
+    emit rightChanged(this->right);
 }
 
-void CropCommand::setCropBottom(float cropBottom)
+void CropCommand::setBottom(float bottom)
 {
-    this->cropBottom = cropBottom;
-    emit cropBottomChanged(this->cropBottom);
+    this->bottom = bottom;
+    emit bottomChanged(this->bottom);
 }
 
 void CropCommand::setTransitionDuration(int transtitionDuration)
@@ -90,10 +90,10 @@ void CropCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
-    setCropLeft(pt.get(L"cropleft", Mixer::DEFAULT_CROP_LEFT));
-    setCropRight(pt.get(L"cropright", Mixer::DEFAULT_CROP_RIGHT));
-    setCropTop(pt.get(L"croptop", Mixer::DEFAULT_CROP_TOP));
-    setCropBottom(pt.get(L"cropbottom", Mixer::DEFAULT_CROP_BOTTOM));
+    setLeft(pt.get(L"left", Mixer::DEFAULT_CROP_LEFT));
+    setTop(pt.get(L"top", Mixer::DEFAULT_CROP_TOP));
+    setRight(pt.get(L"right", Mixer::DEFAULT_CROP_RIGHT));
+    setBottom(pt.get(L"bottom", Mixer::DEFAULT_CROP_BOTTOM));
     setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
@@ -103,10 +103,10 @@ void CropCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("cropleft", QString::number(getCropLeft()));
-    writer->writeTextElement("cropright", QString::number(getCropRight()));
-    writer->writeTextElement("croptop", QString::number(getCropTop()));
-    writer->writeTextElement("cropbottom", QString::number(getCropBottom()));
+    writer->writeTextElement("left", QString::number(getLeft()));
+    writer->writeTextElement("top", QString::number(getTop()));
+    writer->writeTextElement("right", QString::number(getRight()));
+    writer->writeTextElement("bottom", QString::number(getBottom()));
     writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");

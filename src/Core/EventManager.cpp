@@ -344,8 +344,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
     else if (type == Rundown::CONTRAST)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
-    else if (type == Rundown::CROP)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+    else if (type == Rundown::CLIP)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clipping", "", "", Rundown::CLIP, 0, "")));
     else if (type == Rundown::CHROMAKEY)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
     else if (type == Rundown::IMAGESCROLLER)
@@ -423,9 +423,11 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
     else if (type ==  Rundown::PANASONICPRESET)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Camera Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Free Transform", "", "", Rundown::PERSPECTIVE, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Distort", "", "", Rundown::PERSPECTIVE, 0, "")));
     else if (type ==  Rundown::ROTATION)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Rotation", "", "", Rundown::ROTATION, 0, "")));
     else if (type ==  Rundown::ANCHOR)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Anchor Point", "", "", Rundown::ANCHOR, 0, "")));
+    else if (type ==  Rundown::CROP)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
 }

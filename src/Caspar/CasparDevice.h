@@ -137,6 +137,10 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void setRotation(int channel, int videolayer, float rotation, int duration, const QString& easing, bool defer = false);
         void setAnchor(int channel, int videolayer, float positionX, float positionY, bool defer = false);
         void setAnchor(int channel, int videolayer, float positionX, float positionY, int duration, const QString& easing, bool defer = false);
+        void setCrop(int channel, int videolayer, float upperLeftX, float upperLeftY, float lowerRightX, float lowerRightY,
+                     bool defer = false);
+        void setCrop(int channel, int videolayer, float upperLeftX, float upperLeftY, float lowerRightX, float lowerRightY,
+                     int duration, const QString& easing, bool defer = false);
 
         Q_SIGNAL void connectionStateChanged(CasparDevice&);
         Q_SIGNAL void infoChanged(const QList<QString>&, CasparDevice&);

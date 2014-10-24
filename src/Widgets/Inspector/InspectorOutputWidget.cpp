@@ -14,7 +14,7 @@
 #include "Commands/CommitCommand.h"
 #include "Commands/ContrastCommand.h"
 #include "Commands/CustomCommand.h"
-#include "Commands/CropCommand.h"
+#include "Commands/ClipCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
 #include "Commands/FillCommand.h"
 #include "Commands/GpiOutputCommand.h"
@@ -35,6 +35,7 @@
 #include "Commands/OscOutputCommand.h"
 #include "Commands/PerspectiveCommand.h"
 #include "Commands/AnchorCommand.h"
+#include "Commands/CropCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -265,6 +266,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<BlendModeCommand*>(event.getCommand()) ||
                  dynamic_cast<BrightnessCommand*>(event.getCommand()) ||
                  dynamic_cast<ContrastCommand*>(event.getCommand()) ||
+                 dynamic_cast<ClipCommand*>(event.getCommand()) ||
                  dynamic_cast<CropCommand*>(event.getCommand()) ||
                  dynamic_cast<FillCommand*>(event.getCommand()) ||
                  dynamic_cast<PerspectiveCommand*>(event.getCommand()) ||

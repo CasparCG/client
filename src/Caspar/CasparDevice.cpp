@@ -580,6 +580,21 @@ void CasparDevice::setClipping(int channel, int videolayer, float positionX, flo
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
+void CasparDevice::setCrop(int channel, int videolayer, float upperLeftX, float upperLeftY, float lowerRightX, float lowerRightY, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 CROP %3 %4 %5 %6 %7")
+                 .arg(channel).arg(videolayer).arg(upperLeftX).arg(upperLeftY).arg(lowerRightX).arg(lowerRightY)
+                 .arg((defer == true) ? "DEFER" : ""));
+}
+
+void CasparDevice::setCrop(int channel, int videolayer, float upperLeftX, float upperLeftY, float lowerRightX, float lowerRightY, int duration, const QString& easing, bool defer)
+{
+    writeMessage(QString("MIXER %1-%2 CROP %3 %4 %5 %6 %7 %8 %9")
+                 .arg(channel).arg(videolayer).arg(upperLeftX).arg(upperLeftY).arg(lowerRightX).arg(lowerRightY)
+                 .arg(duration).arg(easing)
+                 .arg((defer == true) ? "DEFER" : ""));
+}
+
 void CasparDevice::setPerspective(int channel, int videolayer, float upperLeftX, float upperLeftY, float upperRightX, float upperRightY,
                                   float lowerRightX, float lowerRightY, float lowerLeftX, float lowerLeftY, bool defer, bool useMipmap)
 {

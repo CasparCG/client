@@ -129,24 +129,16 @@ namespace GpiOutput
 
 namespace Mixer
 {
-    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_X = 0.0f;
-    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_Y = 0.0f;
-    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_X = 1.0f;
-    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_Y = 0.0f;
-    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_X = 1.0f;
-    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_Y = 1.0f;
-    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
-    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
     static const float DEFAULT_ANCHOR_XPOS = 0.0f;
     static const float DEFAULT_ANCHOR_YPOS = 0.0f;
     static const float DEFAULT_GRID = 2.0f;
     static const float DEFAULT_ROTATION = 0.0f;
     static const float DEFAULT_BRIGHTNESS = 1.0f;
     static const float DEFAULT_CONTRAST = 1.0f;
-    static const float DEFAULT_CROP_LEFT = 0.0f;
-    static const float DEFAULT_CROP_RIGHT = 0.0f;
-    static const float DEFAULT_CROP_TOP = 1.0f;
-    static const float DEFAULT_CROP_BOTTOM = 1.0f;
+    static const float DEFAULT_CLIP_LEFT = 0.0f;
+    static const float DEFAULT_CLIP_WIDTH = 1.0f;
+    static const float DEFAULT_CLIP_TOP = 0.0f;
+    static const float DEFAULT_CLIP_HEIGHT = 1.0f;
     static const float DEFAULT_FILL_XPOS = 0.0f;
     static const float DEFAULT_FILL_YPOS = 0.0f;
     static const float DEFAULT_FILL_XSCALE = 1.0f;
@@ -162,7 +154,19 @@ namespace Mixer
     static const float DEFAULT_CHROMABLUR = 0.0f;
     static const float DEFAULT_CHROMABLENDSTART = 0.340f;
     static const float DEFAULT_CHROMABLENDSTOP = 0.440f;
-    static const float DEFAULT_CHROMASPILL = 1.0f;
+    static const float DEFAULT_CHROMASPILL = 1.0f; 
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_Y = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
+    static const float DEFAULT_CROP_LEFT = 0.0f;
+    static const float DEFAULT_CROP_TOP = 0.0f;
+    static const float DEFAULT_CROP_RIGHT = 1.0f;
+    static const float DEFAULT_CROP_BOTTOM = 1.0f;
     static const int DEFAULT_DURATION = 1;
     static const bool DEFAULT_DEFER = false;
     static const bool DEFAULT_MIPMAP = false;
@@ -372,6 +376,7 @@ namespace Rundown
     static const QString BLENDMODE = "BLENDMODE";
     static const QString BRIGHTNESS = "BRIGHTNESS";
     static const QString CONTRAST = "CONTRAST";
+    static const QString CLIP = "CLIP";
     static const QString CROP = "CROP";
     static const QString IMAGESCROLLER = "IMAGESCROLLER";
     static const QString DECKLINKINPUT = "DECKLINKINPUT";
