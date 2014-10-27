@@ -10,14 +10,13 @@ CameraDevice::CameraDevice(QObject* parent)
 
 void CameraDevice::selectPreset(const QString& address, const QString& preset)
 {
-    QString url = QString("http://%1/cgi-bin/aw_ptz").arg(address);
-    QString data = QString("#R%1&res=1").arg(preset);
+    QUrl request(QString("http://%1/cgi-bin/aw_ptz?%2").arg(address).arg(preset));
 
-    qDebug() << QString("CameraDevice::selectPreset: %1?%2").arg(url).arg(data);
+    qDebug() << QString("CameraDevice::selectPreset: %1").arg(request.toString());
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(selectPresetFinished(QNetworkReply*)));
-    this->networkManager->post(QNetworkRequest(QUrl(url)), data.toUtf8());
+    this->networkManager->get(QNetworkRequest(request));
 }
 
 void CameraDevice::selectPresetFinished(QNetworkReply* reply)

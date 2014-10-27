@@ -47,7 +47,7 @@ void PanasonicPresetCommand::readProperties(boost::property_tree::wptree& pt)
 
     setAddress(QString::fromStdWString(pt.get(L"address", Panasonic::DEFAULT_ADDRESS.toStdWString())));
     setPreset(QString::fromStdWString(pt.get(L"preset", Panasonic::DEFAULT_PRESET.toStdWString())));
-    setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Panasonic::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void PanasonicPresetCommand::writeProperties(QXmlStreamWriter* writer)

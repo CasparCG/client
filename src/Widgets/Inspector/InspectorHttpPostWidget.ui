@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InspectorTemplateWidget</class>
- <widget class="QWidget" name="InspectorTemplateWidget">
+ <class>InspectorHttpPostWidget</class>
+ <widget class="QWidget" name="InspectorHttpPostWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,9 +24,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutFlashlayer">
+    <layout class="QHBoxLayout" name="horizontalLayoutUrl">
      <item>
-      <spacer name="horizontalSpacerFlashlayer">
+      <spacer name="horizontalSpacerUrl">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -35,16 +35,16 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>34</width>
+         <width>43</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelFlashlayerField">
+      <widget class="QLabel" name="labelUrl">
        <property name="text">
-        <string>Flash layer</string>
+        <string>URL</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -52,159 +52,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBoxFlashlayer">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximum">
-        <number>99</number>
-       </property>
-       <property name="value">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutInvoke">
-     <item>
-      <spacer name="horizontalSpacerInvoke">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>55</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelInvoke">
-       <property name="text">
-        <string>Invoke</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditInvoke"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLoop">
-     <item>
-      <spacer name="horizontalSpacerUseStoredData1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>22</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUseStoredData">
-       <property name="text">
-        <string>Use stored data</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUseStoredData">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerUseStoredData2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLoop_2">
-     <item>
-      <spacer name="horizontalSpacerUseUppercaseData1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUseUppercaseData">
-       <property name="text">
-        <string>Use uppercase data</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUseUppercaseData">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerUseUppercaseData2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <widget class="QLineEdit" name="lineEditUrl"/>
      </item>
     </layout>
    </item>
@@ -220,7 +68,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>24</width>
+         <width>20</width>
          <height>20</height>
         </size>
        </property>
@@ -284,7 +132,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QToolButton" name="toolButtonAddTemplateData">
+          <widget class="QToolButton" name="toolButtonAddHttpData">
            <property name="minimumSize">
             <size>
              <width>33</width>
@@ -309,7 +157,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="toolButtonRemoveTemplateData">
+          <widget class="QToolButton" name="toolButtonRemoveHttpData">
            <property name="minimumSize">
             <size>
              <width>33</width>
@@ -352,7 +200,7 @@
         </layout>
        </item>
        <item>
-        <widget class="HttpDataTreeBaseWidget" name="treeWidgetTemplateData">
+        <widget class="HttpDataTreeBaseWidget" name="treeWidgetHttpData">
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>
          </property>
@@ -391,7 +239,7 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacerTemplate">
+    <spacer name="verticalSpacerHttpGet">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -418,25 +266,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>spinBoxFlashlayer</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>flashlayerChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>201</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>211</x>
-     <y>48</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonAddTemplateData</sender>
+   <sender>toolButtonAddHttpData</sender>
    <signal>clicked()</signal>
-   <receiver>InspectorTemplateWidget</receiver>
+   <receiver>InspectorHttpPostWidget</receiver>
    <slot>addRow()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -450,9 +282,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolButtonRemoveTemplateData</sender>
+   <sender>toolButtonRemoveHttpData</sender>
    <signal>clicked()</signal>
-   <receiver>InspectorTemplateWidget</receiver>
+   <receiver>InspectorHttpPostWidget</receiver>
    <slot>removeRow()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -466,41 +298,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditInvoke</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>invokeChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>167</x>
-     <y>50</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>41</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxUseStoredData</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>useStoredDataChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>81</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>236</x>
-     <y>73</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetTemplateData</sender>
+   <sender>treeWidgetHttpData</sender>
    <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
+   <receiver>InspectorHttpPostWidget</receiver>
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -514,9 +314,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>treeWidgetTemplateData</sender>
+   <sender>treeWidgetHttpData</sender>
    <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
+   <receiver>InspectorHttpPostWidget</receiver>
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -530,25 +330,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxUseUppercaseData</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
-   <slot>useUppercaseDataChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>130</x>
-     <y>102</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>263</x>
-     <y>115</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxTriggerOnNext</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>InspectorTemplateWidget</receiver>
+   <receiver>InspectorHttpPostWidget</receiver>
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -561,16 +345,30 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditUrl</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorHttpPostWidget</receiver>
+   <slot>urlChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>41</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>flashlayerChanged(int)</slot>
   <slot>addRow()</slot>
   <slot>removeRow()</slot>
-  <slot>invokeChanged(QString)</slot>
-  <slot>useStoredDataChanged(int)</slot>
+  <slot>urlChanged(QString)</slot>
   <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
-  <slot>useUppercaseDataChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

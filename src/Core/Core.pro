@@ -26,7 +26,6 @@ HEADERS += \
     Models/DeviceModel.h \
     Models/LibraryModel.h \
     Models/RundownModel.h \
-    Models/TemplateDataModel.h \
     Models/TypeModel.h \
     Events/Library/LibraryItemSelectedEvent.h \
     Commands/BrightnessCommand.h \
@@ -179,7 +178,12 @@ HEADERS += \
     Commands/StillCommand.h \
     Commands/FillCommand.h \
     Commands/ClipCommand.h \
-    Commands/CropCommand.h
+    Commands/CropCommand.h \
+    Commands/HttpGetCommand.h \
+    Models/KeyValueModel.h \
+    Events/Inspector/ShowAddHttpGetDataDialogEvent.h \
+    Commands/HttpPostCommand.h \
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -197,7 +201,6 @@ SOURCES += \
     Models/RundownModel.cpp \
     Models/TypeModel.cpp \
     Events/Library/LibraryItemSelectedEvent.cpp \
-    Models/TemplateDataModel.cpp \
     Commands/BrightnessCommand.cpp \
     Commands/SaturationCommand.cpp \
     Commands/OpacityCommand.cpp \
@@ -348,7 +351,12 @@ SOURCES += \
     Commands/StillCommand.cpp \
     Commands/FillCommand.cpp \
     Commands/ClipCommand.cpp \
-    Commands/CropCommand.cpp
+    Commands/CropCommand.cpp \
+    Commands/HttpGetCommand.cpp \
+    Models/KeyValueModel.cpp \
+    Events/Inspector/ShowAddHttpGetDataDialogEvent.cpp \
+    Commands/HttpPostCommand.cpp \
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

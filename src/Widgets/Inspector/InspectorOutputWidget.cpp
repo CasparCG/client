@@ -36,6 +36,8 @@
 #include "Commands/PerspectiveCommand.h"
 #include "Commands/AnchorCommand.h"
 #include "Commands/CropCommand.h"
+#include "Commands/HttpGetCommand.h"
+#include "Commands/HttpPostCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -205,6 +207,8 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         }
         else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<OscOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<HttpGetCommand*>(event.getCommand()) ||
+                 dynamic_cast<HttpPostCommand*>(event.getCommand()) ||
                  dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {
             this->comboBoxDevice->setEnabled(false);

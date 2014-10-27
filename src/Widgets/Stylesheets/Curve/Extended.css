@@ -30,19 +30,19 @@
 {
     background-color: rgba(42, 42, 42, 255);
 }
-#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddAtemDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData
+#toolButtonAddDevice, #toolButtonAddTriCasterDevice, #toolButtonAddAtemDevice, #toolButtonAddOscOutput, #toolButtonAddTemplateData, #toolButtonAddHttpData
 {
     image: url(:/Graphics/Images/Add.png);
 }
-#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddAtemDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover
+#toolButtonAddDevice:hover, #toolButtonAddTriCasterDevice:hover, #toolButtonAddAtemDevice:hover, #toolButtonAddOscOutput:hover, #toolButtonAddTemplateData:hover, #toolButtonAddHttpData:hover
 {
     image: url(:/Graphics/Images/AddHover.png);
 }
-#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveAtemDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData
+#toolButtonRemoveDevice, #toolButtonRemoveTriCasterDevice, #toolButtonRemoveAtemDevice, #toolButtonRemoveOscOutput, #toolButtonRemoveTemplateData, #toolButtonRemoveHttpData
 {
     image: url(:/Graphics/Images/Remove.png);
 }
-#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveAtemDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover
+#toolButtonRemoveDevice:hover, #toolButtonRemoveTriCasterDevice:hover, #toolButtonRemoveAtemDevice:hover, #toolButtonRemoveOscOutput:hover, #toolButtonRemoveTemplateData:hover, #toolButtonRemoveHttpData:hover
 {
     image: url(:/Graphics/Images/RemoveHover.png);
 }
@@ -475,4 +475,12 @@
 {
     color: rgba(190, 190, 190, 255);
     font-size: 13px;
+}
+
+/*
+ * InspectorHttpGetWidget / InspectorHttpPostWidget
+ */
+#treeWidgetHttpData
+{
+    alternate-background-color: rgba(35, 35, 35, 255);
 }

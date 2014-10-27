@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TemplateDataDialog</class>
- <widget class="QDialog" name="TemplateDataDialog">
+ <class>KeyValueDialog</class>
+ <widget class="QDialog" name="KeyValueDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,16 +10,13 @@
     <height>239</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>New Template Data</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <spacer name="verticalSpacer_3">
+        <spacer name="verticalSpacerTop">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -35,9 +32,9 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="labelDataName">
+        <widget class="QLabel" name="labelKey">
          <property name="text">
-          <string>Name</string>
+          <string>Key</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -45,7 +42,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="verticalSpacerMiddle">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -61,7 +58,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="labelDataValue">
+        <widget class="QLabel" name="labelValue">
          <property name="text">
           <string>Value</string>
          </property>
@@ -71,7 +68,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
+        <spacer name="verticalSpacerBottom">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -90,7 +87,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLineEdit" name="lineEditName"/>
+          <widget class="QLineEdit" name="lineEditKey"/>
          </item>
          <item>
           <widget class="QTextEdit" name="textEditValue">
@@ -141,14 +138,14 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEditName</tabstop>
+  <tabstop>lineEditKey</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
    <sender>pushButtonOK</sender>
    <signal>clicked()</signal>
-   <receiver>TemplateDataDialog</receiver>
+   <receiver>KeyValueDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">

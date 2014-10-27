@@ -1,24 +1,18 @@
-#include "TemplateDataDialog.h"
-
-#include "DatabaseManager.h"
-
-#include <QtCore/QDebug>
+#include "KeyValueDialog.h"
 
 #include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMessageBox>
 
-TemplateDataDialog::TemplateDataDialog(QWidget* parent)
+KeyValueDialog::KeyValueDialog(QWidget* parent)
     : QDialog(parent)
 {
     setupUi(this);
 
-    this->textEditValue->setFocus();
-
     this->textEditValue->installEventFilter(this);
 }
 
-bool TemplateDataDialog::eventFilter(QObject* target, QEvent* event)
+bool KeyValueDialog::eventFilter(QObject* target, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress)
     {
@@ -33,33 +27,38 @@ bool TemplateDataDialog::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
-void TemplateDataDialog::accept()
+void KeyValueDialog::accept()
 {
-    if (this->lineEditName->text().isEmpty())
+    if (this->lineEditKey->text().isEmpty())
         return;
 
     QDialog::accept();
 }
 
-const QString TemplateDataDialog::getName() const
+const QString KeyValueDialog::getKey() const
 {
-    return this->lineEditName->text();
+    return this->lineEditKey->text();
 }
 
-const QString TemplateDataDialog::getValue() const
+const QString KeyValueDialog::getValue() const
 {
     return this->textEditValue->toPlainText();
 }
 
-void TemplateDataDialog::setName(const QString& name)
+void KeyValueDialog::setKey(const QString& key)
 {
-    this->lineEditName->setText(name);
+    this->lineEditKey->setText(key);
+
+    this->textEditValue->setFocus();
 }
 
-void TemplateDataDialog::setValue(const QString& value)
+void KeyValueDialog::setValue(const QString& value)
 {
-    this->setWindowTitle("Edit Template Data");
-
     this->textEditValue->setPlainText(value);
     this->textEditValue->selectAll();
+}
+
+void KeyValueDialog::setTitle(const QString& title)
+{
+    this->setWindowTitle(title);
 }

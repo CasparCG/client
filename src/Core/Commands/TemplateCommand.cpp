@@ -48,7 +48,7 @@ const QString TemplateCommand::getTemplateData() const
     else
     {
         templateData.append("<templateData>");
-        foreach (TemplateDataModel model, this->models)
+        foreach (KeyValueModel model, this->models)
         {
             QString componentData = TemplateData::DEFAULT_COMPONENT_DATA_XML;
             componentData.replace("#KEY", model.getKey());
@@ -65,7 +65,7 @@ const QString TemplateCommand::getTemplateData() const
     return templateData;
 }
 
-const QList<TemplateDataModel>& TemplateCommand::getTemplateDataModels() const
+const QList<KeyValueModel>& TemplateCommand::getTemplateDataModels() const
 {
     return this->models;
 }
@@ -105,7 +105,7 @@ void TemplateCommand::setTemplateName(const QString& templateName)
     emit templateNameChanged(this->templateName);
 }
 
-void TemplateCommand::setTemplateDataModels(const QList<TemplateDataModel>& models)
+void TemplateCommand::setTemplateDataModels(const QList<KeyValueModel>& models)
 {
     this->models = models;
     emit templateDataChanged(this->models);
@@ -131,8 +131,8 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     {
         BOOST_FOREACH(const boost::property_tree::wptree::value_type& value, pt.get_child(L"templatedata"))
         {
-            this->models.push_back(TemplateDataModel(QString::fromStdWString(value.second.get<std::wstring>(L"id")),
-                                                     QString::fromStdWString(value.second.get<std::wstring>(L"value"))));
+            this->models.push_back(KeyValueModel(QString::fromStdWString(value.second.get<std::wstring>(L"key")),
+                                                 QString::fromStdWString(value.second.get<std::wstring>(L"value"))));
         }
     }
 }
@@ -150,10 +150,10 @@ void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
     if (this->models.count() > 0)
     {
         writer->writeStartElement("templatedata");
-        foreach (TemplateDataModel model, this->models)
+        foreach (KeyValueModel model, this->models)
         {
             writer->writeStartElement("componentdata");
-            writer->writeTextElement("id", model.getKey());
+            writer->writeTextElement("key", model.getKey());
             writer->writeTextElement("value", model.getValue());
             writer->writeEndElement();
         }

@@ -34,6 +34,8 @@
 #include "Inspector/InspectorAnchorWidget.h"
 #include "Inspector/InspectorFillWidget.h"
 #include "Inspector/InspectorCropWidget.h"
+#include "Inspector/InspectorHttpGetWidget.h"
+#include "Inspector/InspectorHttpPostWidget.h"
 #include "Inspector/Atem/InspectorAtemInputWidget.h"
 #include "Inspector/Atem/InspectorAtemCutWidget.h"
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
@@ -83,6 +85,8 @@
 #include "Commands/RotationCommand.h"
 #include "Commands/AnchorCommand.h"
 #include "Commands/CropCommand.h"
+#include "Commands/HttpGetCommand.h"
+#include "Commands/HttpPostCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
 #include "Commands/Atem/AtemAutoCommand.h"
@@ -154,6 +158,8 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(46)), 0, new InspectorRotationWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(47)), 0, new InspectorAnchorWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(48)), 0, new InspectorCropWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(49)), 0, new InspectorHttpGetWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(50)), 0, new InspectorHttpPostWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -276,6 +282,10 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(47)->setHidden(false);
     else if (dynamic_cast<CropCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(48)->setHidden(false);
+    else if (dynamic_cast<HttpGetCommand*>(event.getCommand()))
+        this->treeWidgetInspector->topLevelItem(49)->setHidden(false);
+    else if (dynamic_cast<HttpPostCommand*>(event.getCommand()))
+        this->treeWidgetInspector->topLevelItem(50)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -329,6 +339,8 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(46)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(47)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(48)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(49)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(50)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)

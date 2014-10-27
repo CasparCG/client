@@ -373,6 +373,24 @@ void LibraryWidget::setupTools()
     widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
     widgetGpiOutput->setText(5, "0");
 
+    QTreeWidgetItem* widgetHttpGet = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHttpGet->setIcon(0, QIcon(":/Graphics/Images/HttpGetSmall.png"));
+    widgetHttpGet->setText(0, "HTTP GET Request");
+    widgetHttpGet->setText(1, "0");
+    widgetHttpGet->setText(2, "HTTP GET Request");
+    widgetHttpGet->setText(3, "");
+    widgetHttpGet->setText(4, Rundown::HTTPGET);
+    widgetHttpGet->setText(5, "0");
+
+    QTreeWidgetItem* widgetHttpPost = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHttpPost->setIcon(0, QIcon(":/Graphics/Images/HttpPostSmall.png"));
+    widgetHttpPost->setText(0, "HTTP POST Request");
+    widgetHttpPost->setText(1, "0");
+    widgetHttpPost->setText(2, "HTTP POST Request");
+    widgetHttpPost->setText(3, "");
+    widgetHttpPost->setText(4, Rundown::HTTPPOST);
+    widgetHttpPost->setText(5, "0");
+
     QTreeWidgetItem* widgetOscOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetOscOutput->setIcon(0, QIcon(":/Graphics/Images/OscOutputSmall.png"));
     widgetOscOutput->setText(0, "OSC Output");

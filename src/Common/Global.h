@@ -34,6 +34,12 @@ namespace Panasonic
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
+namespace Http
+{
+    static const QString DEFAULT_URL = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
 namespace Stream
 {
     static const int COMPACT_WIDTH = 288;
@@ -384,6 +390,8 @@ namespace Rundown
     static const QString CLEAROUTPUT = "CLEAROUTPUT";
     static const QString FILL = "FILL";
     static const QString GPIOUTPUT = "GPIOUTPUT";
+    static const QString HTTPGET = "HTTPGET";
+    static const QString HTTPPOST = "HTTPPOST";
     static const QString FILERECORDER = "FILERECORDER";
     static const QString SEPARATOR = "SEPARATOR";
     static const QString GRID = "GRID";

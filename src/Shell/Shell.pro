@@ -100,6 +100,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ 
 else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 
+DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
+INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Web/debug/ -lweb
+else:macx:LIBS += -L$$OUT_PWD/../Web/ -lweb
+else:unix:LIBS += -L$$OUT_PWD/../Web/ -lweb
+
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Osc/release/ -losc

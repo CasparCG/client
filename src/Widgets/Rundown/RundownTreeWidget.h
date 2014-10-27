@@ -172,6 +172,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addPerspectiveItem();
         Q_SLOT void addRotationItem();
         Q_SLOT void addAnchorItem();
+        Q_SLOT void addHttpGetItem();
+        Q_SLOT void addHttpPostItem();
         Q_SLOT void addPanasonicPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);

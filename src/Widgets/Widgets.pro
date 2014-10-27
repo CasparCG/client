@@ -94,7 +94,6 @@ HEADERS += \
     Inspector/TriCaster/InspectorInputWidget.h \
     Rundown/TriCaster/RundownInputWidget.h \
     TriCasterDeviceDialog.h \
-    Inspector/TemplateDataDialog.h \
     ImportDeviceDialog.h \
     ImportTriCasterDeviceDialog.h \
     Rundown/TriCaster/RundownNetworkSourceWidget.h \
@@ -149,7 +148,13 @@ HEADERS += \
     Rundown/RundownClipWidget.h \
     Inspector/InspectorClipWidget.h \
     Rundown/RundownCropWidget.h \
-    Inspector/InspectorCropWidget.h
+    Inspector/InspectorCropWidget.h \
+    Rundown/RundownHttpGetWidget.h \
+    Inspector/KeyValueDialog.h \
+    Inspector/InspectorHttpGetWidget.h \
+    Inspector/HttpDataTreeBaseWidget.h \
+    Rundown/RundownHttpPostWidget.h \
+    Inspector/InspectorHttpPostWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -232,7 +237,6 @@ SOURCES += \
     Inspector/TriCaster/InspectorInputWidget.cpp \
     Rundown/TriCaster/RundownInputWidget.cpp \
     TriCasterDeviceDialog.cpp \
-    Inspector/TemplateDataDialog.cpp \
     ImportDeviceDialog.cpp \
     ImportTriCasterDeviceDialog.cpp \
     Rundown/TriCaster/RundownNetworkSourceWidget.cpp \
@@ -287,7 +291,13 @@ SOURCES += \
     Rundown/RundownClipWidget.cpp \
     Inspector/InspectorClipWidget.cpp \
     Rundown/RundownCropWidget.cpp \
-    Inspector/InspectorCropWidget.cpp
+    Inspector/InspectorCropWidget.cpp \
+    Rundown/RundownHttpGetWidget.cpp \
+    Inspector/KeyValueDialog.cpp \
+    Inspector/InspectorHttpGetWidget.cpp \
+    Inspector/HttpDataTreeBaseWidget.cpp \
+    Rundown/RundownHttpPostWidget.cpp \
+    Inspector/InspectorHttpPostWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -359,7 +369,6 @@ FORMS += \
     Inspector/TriCaster/InspectorInputWidget.ui \
     Rundown/TriCaster/RundownInputWidget.ui \
     TriCasterDeviceDialog.ui \
-    Inspector/TemplateDataDialog.ui \
     ImportDeviceDialog.ui \
     ImportTriCasterDeviceDialog.ui \
     Rundown/TriCaster/RundownNetworkSourceWidget.ui \
@@ -414,10 +423,15 @@ FORMS += \
     Rundown/RundownClipWidget.ui \
     Inspector/InspectorClipWidget.ui \
     Rundown/RundownCropWidget.ui \
-    Inspector/InspectorCropWidget.ui
+    Inspector/InspectorCropWidget.ui \
+    Rundown/RundownHttpGetWidget.ui \
+    Inspector/KeyValueDialog.ui \
+    Inspector/InspectorHttpGetWidget.ui \
+    Rundown/RundownHttpPostWidget.ui \
+    Inspector/InspectorHttpPostWidget.ui
 
 RESOURCES += \
-    Widgets.qrc \
+    Widgets.qrc
 
 OTHER_FILES += \
     Images/ArrowUpDisabled.png \
@@ -668,7 +682,13 @@ OTHER_FILES += \
     Images/FillSmallHover.png \
     Images/ClipSmallHover.png \
     Images/ClipSmall.png \
-    Images/Clip.png
+    Images/Clip.png \
+    Images/HttpGetSmallHover.png \
+    Images/HttpGetSmall.png \
+    Images/HttpGet.png \
+    Images/HttpPostSmallHover.png \
+    Images/HttpPostSmall.png \
+    Images/HttpPost.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -730,6 +750,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
 else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
+DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
+INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Web/debug/ -lweb
+else:macx:LIBS += -L$$OUT_PWD/../Web/ -lweb
+else:unix:LIBS += -L$$OUT_PWD/../Web/ -lweb
 
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc

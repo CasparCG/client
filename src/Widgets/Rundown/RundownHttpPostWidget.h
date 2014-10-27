@@ -2,11 +2,11 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownTemplateWidget.h"
+#include "ui_RundownHttpPostWidget.h"
 
 #include "Global.h"
 
-#include "CasparDevice.h"
+#include "HttpRequest.h"
 
 #include "GpiDevice.h"
 
@@ -14,27 +14,22 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/TemplateCommand.h"
-#include "Events/Inspector/DeviceChangedEvent.h"
+#include "Commands/HttpPostCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
-#include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
-#include <QtGui/QDragEnterEvent>
-#include <QtGui/QDropEvent>
 
-class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownHttpPostWidget : public QWidget, Ui::RundownHttpPostWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownTemplateWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                       bool active = false, bool loaded = false, bool inGroup = false, bool compactView = false);
+        explicit RundownHttpPostWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                       bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -64,75 +59,44 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
-        void dragEnterEvent(QDragEnterEvent* event);
-        void dropEvent(QDropEvent* event);
 
     private:
         bool active;
-        bool loaded;
         bool inGroup;
         bool compactView;
         QString color;
         LibraryModel model;
-        TemplateCommand command;
+        HttpPostCommand command;
         ActiveAnimation* animation;
-        QString delayType;
         bool markUsedItems;
 
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
-        OscSubscription* loadControlSubscription;
-        OscSubscription* nextControlSubscription;
         OscSubscription* updateControlSubscription;
-        OscSubscription* invokeControlSubscription;
-        OscSubscription* previewControlSubscription;
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeStartTimer;
-        QTimer executeStopTimer;
-        QTimer executeStartPreviewTimer;
-        QTimer executeStopPreviewTimer;
+        QTimer executeTimer;
+        HttpRequest request;
 
-        void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
 
-        Q_SLOT void channelChanged(int);
         Q_SLOT void executeStop();
         Q_SLOT void executePlay();
-        Q_SLOT void executeLoad();
-        Q_SLOT void executeNext();
-        Q_SLOT void executeUpdate();
-        Q_SLOT void executeInvoke();
-        Q_SLOT void executeClear();
-        Q_SLOT void executeClearVideolayer();
-        Q_SLOT void executeClearChannel();
-        Q_SLOT void executePlayPreview();
-        Q_SLOT void executeStopPreview();
-        Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
-        Q_SLOT void flashlayerChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
-        Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
-        Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
-        Q_SLOT void targetChanged(const TargetChangedEvent&);
-        Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

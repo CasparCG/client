@@ -1,11 +1,10 @@
 #pragma once
 
 #include "../Shared.h"
-#include "ui_InspectorTemplateWidget.h"
+#include "ui_InspectorHttpPostWidget.h"
 
-#include "Commands/TemplateCommand.h"
-#include "Events/Inspector/AddTemplateDataEvent.h"
-#include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
+#include "Commands/HttpPostCommand.h"
+#include "Events/Inspector/ShowAddHttpPostDataDialogEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -15,12 +14,12 @@
 #include <QtGui/QTreeWidgetItem>
 #include <QtGui/QWidget>
 
-class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemplateWidget
+class WIDGETS_EXPORT InspectorHttpPostWidget : public QWidget, Ui::InspectorHttpPostWidget
 {
     Q_OBJECT
 
     public:
-        explicit InspectorTemplateWidget(QWidget* parent = 0);
+        explicit InspectorHttpPostWidget(QWidget* parent = 0);
 
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
@@ -28,9 +27,10 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
     private:
         int fieldCounter;
         LibraryModel* model;
-        TemplateCommand* command;
+        HttpPostCommand* command;
 
-        void updateTemplateDataModels();
+        void checkEmptyUrl();
+        void updateHttpDataModels();
         void blockAllSignals(bool block);
 
         Q_SLOT bool addRow();
@@ -39,14 +39,10 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT bool duplicateSelectedItem();
         Q_SLOT bool copySelectedItem();
         Q_SLOT bool pasteSelectedItem();
-        Q_SLOT void invokeChanged(QString);
-        Q_SLOT void flashlayerChanged(int);
-        Q_SLOT void useStoredDataChanged(int);
-        Q_SLOT void useUppercaseDataChanged(int);
+        Q_SLOT void urlChanged(QString);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
-        Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
-        Q_SLOT void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
+        Q_SLOT void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
         Q_SLOT void triggerOnNextChanged(int);
 };

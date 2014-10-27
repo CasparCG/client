@@ -230,6 +230,12 @@
         <file>Images/Clip.png</file>
         <file>Images/ClipSmall.png</file>
         <file>Images/ClipSmallHover.png</file>
+        <file>Images/HttpGet.png</file>
+        <file>Images/HttpGetSmall.png</file>
+        <file>Images/HttpGetSmallHover.png</file>
+        <file>Images/HttpPost.png</file>
+        <file>Images/HttpPostSmall.png</file>
+        <file>Images/HttpPostSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

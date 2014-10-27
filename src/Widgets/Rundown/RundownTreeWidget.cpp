@@ -146,6 +146,8 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/HttpGetSmall.png"), "HTTP GET Request", this, SLOT(addHttpGetItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/HttpGetSmall.png"), "HTTP POST Request", this, SLOT(addHttpPostItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/OscOutputSmall.png"), "OSC Output", this, SLOT(addOscOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
@@ -1320,6 +1322,16 @@ void RundownTreeWidget::addFillItem()
 void RundownTreeWidget::addGpiOutputItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::GPIOUTPUT);
+}
+
+void RundownTreeWidget::addHttpGetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::HTTPGET);
+}
+
+void RundownTreeWidget::addHttpPostItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::HTTPPOST);
 }
 
 void RundownTreeWidget::addOscOutputItem()

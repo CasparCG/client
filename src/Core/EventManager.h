@@ -30,6 +30,8 @@
 #include "Events/Inspector/TemplateChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
+#include "Events/Inspector/ShowAddHttpGetDataDialogEvent.h"
+#include "Events/Inspector/ShowAddHttpPostDataDialogEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
@@ -151,7 +153,11 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void repositoryRundown(const RepositoryRundownEvent&);
         Q_SIGNAL void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
         Q_SIGNAL void reloadRundownMenu(const ReloadRundownMenuEvent&);
+        Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
+        Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
+        void fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent&);
         void fireDurationChangedEvent(const DurationChangedEvent&);
         void fireReloadRundownMenuEvent(const ReloadRundownMenuEvent&);
         void fireRepositoryRundownEvent(const RepositoryRundownEvent&);

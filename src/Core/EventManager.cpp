@@ -126,6 +126,16 @@ void EventManager::fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataD
     emit showAddTemplateDataDialog(event);
 }
 
+void EventManager::fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent& event)
+{
+    emit showAddHttpGetDataDialog(event);
+}
+
+void EventManager::fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent& event)
+{
+    emit showAddHttpPostDataDialog(event);
+}
+
 void EventManager::fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent& event)
 {
     emit markItemAsUsed(event);
@@ -430,4 +440,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Anchor Point", "", "", Rundown::ANCHOR, 0, "")));
     else if (type ==  Rundown::CROP)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+    else if (type ==  Rundown::HTTPGET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP GET Request", "", "", Rundown::HTTPGET, 0, "")));
+    else if (type ==  Rundown::HTTPPOST)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP POST Request", "", "", Rundown::HTTPPOST, 0, "")));
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>805</height>
+    <height>835</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -58,7 +58,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>743</height>
+        <height>773</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -94,7 +94,7 @@
             <x>0</x>
             <y>0</y>
             <width>285</width>
-            <height>739</height>
+            <height>769</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1236,6 +1236,52 @@
              <item>
               <property name="text">
                <string>Crop</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>HTTP GET Request</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>HTTP POST Request</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

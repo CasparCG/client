@@ -34,6 +34,8 @@
 #include "RundownRotationWidget.h"
 #include "RundownAnchorWidget.h"
 #include "RundownCropWidget.h"
+#include "RundownHttpGetWidget.h"
+#include "RundownHttpPostWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -107,6 +109,8 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
     else if (model.getType() == Rundown::ANCHOR) return new RundownAnchorWidget(model, this);
     else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
+    else if (model.getType() == Rundown::HTTPGET) return new RundownHttpGetWidget(model, this);
+    else if (model.getType() == Rundown::HTTPPOST) return new RundownHttpPostWidget(model, this);
 
     return NULL;
 }
