@@ -12,6 +12,7 @@
 #include "Commands/BrightnessCommand.h"
 #include "Commands/ClearOutputCommand.h"
 #include "Commands/CommitCommand.h"
+#include "Commands/ResetCommand.h"
 #include "Commands/ContrastCommand.h"
 #include "Commands/CustomCommand.h"
 #include "Commands/ClipCommand.h"
@@ -166,10 +167,9 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
-            //this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
                  dynamic_cast<PrintCommand*>(event.getCommand()))
@@ -178,7 +178,9 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GridCommand*>(event.getCommand()))
         {
@@ -255,15 +257,17 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
 
-            this->comboBoxTarget->clear();
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
         }
-        else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()))
+        else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<ResetCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()) ||
@@ -286,6 +290,8 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
+
+            this->comboBoxTarget->setCurrentIndex(-1);
         }
         else if (dynamic_cast<InputCommand*>(event.getCommand()) ||
                  dynamic_cast<PresetCommand*>(event.getCommand()) ||
@@ -294,21 +300,22 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<NetworkSourceCommand*>(event.getCommand()) ||
                  dynamic_cast<MacroCommand*>(event.getCommand()))
         {
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(false);
-            this->comboBoxTriCasterDevice->setVisible(true);
 
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxAtemDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxDevice->setVisible(false);
+            this->comboBoxAtemDevice->setVisible(false);
+            this->comboBoxTriCasterDevice->setVisible(true);
+
             this->labelDelayMillisecond->setText("ms");
             this->labelDurationMillisecond->setText("ms");
 
-            this->comboBoxTarget->clear();
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->comboBoxAtemDevice->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
@@ -322,21 +329,21 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<AtemAudioGainCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand()))
         {
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(true);
-            this->comboBoxTriCasterDevice->setVisible(false);
-
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxTriCasterDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxDevice->setVisible(false);
+            this->comboBoxAtemDevice->setVisible(true);
+            this->comboBoxTriCasterDevice->setVisible(false);
+
             this->labelDelayMillisecond->setText("ms");
             this->labelDurationMillisecond->setText("ms");
 
-            this->comboBoxTarget->clear();
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->comboBoxTriCasterDevice->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);

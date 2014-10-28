@@ -154,7 +154,8 @@ HEADERS += \
     Inspector/InspectorHttpGetWidget.h \
     Inspector/HttpDataTreeBaseWidget.h \
     Rundown/RundownHttpPostWidget.h \
-    Inspector/InspectorHttpPostWidget.h
+    Inspector/InspectorHttpPostWidget.h \
+    Rundown/RundownResetWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -297,7 +298,8 @@ SOURCES += \
     Inspector/InspectorHttpGetWidget.cpp \
     Inspector/HttpDataTreeBaseWidget.cpp \
     Rundown/RundownHttpPostWidget.cpp \
-    Inspector/InspectorHttpPostWidget.cpp
+    Inspector/InspectorHttpPostWidget.cpp \
+    Rundown/RundownResetWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -428,7 +430,8 @@ FORMS += \
     Inspector/KeyValueDialog.ui \
     Inspector/InspectorHttpGetWidget.ui \
     Rundown/RundownHttpPostWidget.ui \
-    Inspector/InspectorHttpPostWidget.ui
+    Inspector/InspectorHttpPostWidget.ui \
+    Rundown/RundownResetWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -688,7 +691,10 @@ OTHER_FILES += \
     Images/HttpGet.png \
     Images/HttpPostSmallHover.png \
     Images/HttpPostSmall.png \
-    Images/HttpPost.png
+    Images/HttpPost.png \
+    Images/ResetSmallHover.png \
+    Images/ResetSmall.png \
+    Images/Reset.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

@@ -111,6 +111,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/BrightnessSmall.png"), "Brightness", this, SLOT(addBrightnessItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ChromaSmall.png"), "Chroma Key", this, SLOT(addChromaKeyItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ClipSmall.png"), "Clipping", this, SLOT(addClipItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ContrastSmall.png"), "Contrast", this, SLOT(addContrastItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CropSmall.png"), "Crop", this, SLOT(addCropItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/PerspectiveSmall.png"), "Distort", this, SLOT(addPerspectiveItem()));
@@ -118,12 +119,11 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/LevelsSmall.png"), "Levels", this, SLOT(addLevelsItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/KeyerSmall.png"), "Mask", this, SLOT(addKeyerItem())); 
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/OpacitySmall.png"), "Opacity", this, SLOT(addOpacityItem()));
+    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/ResetSmall.png"), "Reset", this, SLOT(addResetItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/RotationSmall.png"), "Rotation", this, SLOT(addRotationItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/SaturationSmall.png"), "Saturation", this, SLOT(addSaturationItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/FillSmall.png"), "Transform", this, SLOT(addFillItem()));
     this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/VolumeSmall.png"), "Volume", this, SLOT(addVolumeItem()));
-    this->contextMenuMixer->addSeparator();
-    this->contextMenuMixer->addAction(QIcon(":/Graphics/Images/CommitSmall.png"), "Commit", this, SLOT(addCommitItem()));
 
     this->contextMenuLibrary = new QMenu(this);
     this->contextMenuLibrary->setObjectName("contextMenuLibrary");
@@ -1437,6 +1437,11 @@ void RundownTreeWidget::addLevelsItem()
 void RundownTreeWidget::addOpacityItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::OPACITY);
+}
+
+void RundownTreeWidget::addResetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::RESET);
 }
 
 void RundownTreeWidget::addSaturationItem()

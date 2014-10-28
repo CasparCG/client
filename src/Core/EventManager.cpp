@@ -444,4 +444,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP GET Request", "", "", Rundown::HTTPGET, 0, "")));
     else if (type ==  Rundown::HTTPPOST)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP POST Request", "", "", Rundown::HTTPPOST, 0, "")));
+    else if (type ==  Rundown::RESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Reset", "", "", Rundown::RESET, 0, "")));
 }

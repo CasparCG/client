@@ -183,7 +183,8 @@ HEADERS += \
     Models/KeyValueModel.h \
     Events/Inspector/ShowAddHttpGetDataDialogEvent.h \
     Commands/HttpPostCommand.h \
-    Events/Inspector/ShowAddHttpPostDataDialogEvent.h
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.h \
+    Commands/ResetCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -356,7 +357,8 @@ SOURCES += \
     Models/KeyValueModel.cpp \
     Events/Inspector/ShowAddHttpGetDataDialogEvent.cpp \
     Commands/HttpPostCommand.cpp \
-    Events/Inspector/ShowAddHttpPostDataDialogEvent.cpp
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.cpp \
+    Commands/ResetCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

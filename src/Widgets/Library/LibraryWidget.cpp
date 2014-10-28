@@ -202,6 +202,15 @@ void LibraryWidget::setupTools()
     widgetClip->setText(4, Rundown::CLIP);
     widgetClip->setText(5, "0");
 
+    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
+    widgetCommit->setText(0, "Commit");
+    widgetCommit->setText(1, "0");
+    widgetCommit->setText(2, "Commit");
+    widgetCommit->setText(3, "");
+    widgetCommit->setText(4, Rundown::COMMIT);
+    widgetCommit->setText(5, "0");
+
     QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetContrast->setIcon(0, QIcon(":/Graphics/Images/ContrastSmall.png"));
     widgetContrast->setText(0, "Contrast");
@@ -265,6 +274,15 @@ void LibraryWidget::setupTools()
     widgetOpacity->setText(4, Rundown::OPACITY);
     widgetOpacity->setText(5, "0");
 
+    QTreeWidgetItem* widgetReset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetReset->setIcon(0, QIcon(":/Graphics/Images/ResetSmall.png"));
+    widgetReset->setText(0, "Reset");
+    widgetReset->setText(1, "0");
+    widgetReset->setText(2, "Reset");
+    widgetReset->setText(3, "");
+    widgetReset->setText(4, Rundown::RESET);
+    widgetReset->setText(5, "0");
+
     QTreeWidgetItem* widgetRotation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetRotation->setIcon(0, QIcon(":/Graphics/Images/RotationSmall.png"));
     widgetRotation->setText(0, "Rotation");
@@ -300,15 +318,6 @@ void LibraryWidget::setupTools()
     widgetVolume->setText(3, "");
     widgetVolume->setText(4, Rundown::VOLUME);
     widgetVolume->setText(5, "0");
-
-    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
-    widgetCommit->setText(0, "Commit");
-    widgetCommit->setText(1, "0");
-    widgetCommit->setText(2, "Commit");
-    widgetCommit->setText(3, "");
-    widgetCommit->setText(4, Rundown::COMMIT);
-    widgetCommit->setText(5, "0");
 
     QTreeWidgetItem* widgetChannelSnapshot = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetChannelSnapshot->setIcon(0, QIcon(":/Graphics/Images/SnapshotSmall.png"));

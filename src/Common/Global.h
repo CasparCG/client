@@ -429,6 +429,7 @@ namespace Rundown
     static const QString PANASONICPRESET = "PANASONICPRESET";
     static const QString PERSPECTIVE = "PERSPECTIVE";
     static const QString ROTATION = "ROTATION";
+    static const QString RESET = "RESET";
     static const QString ANCHOR = "ANCHOR";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";

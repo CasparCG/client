@@ -17,6 +17,7 @@ CasparCG Client 2.0.7 BETA 4
 - NEW: Added support for mipmapped transformations. Requires CasparCG Server 2.0.7 or later.
 - NEW: Added support for rotation. Requires CasparCG Server 2.0.7 or later.
 - NEW: Added support for HTTP GET and HTTP POST requests.
+- NEW: Added reset mixer item.
 - UPDATE: The "Crop" tool is now called "Clipping". A new, correct, "Crop" tool is added. Requires CasparCG Server 2.0.7 or later.
 - UPDATE: Changed the default setting for delay and duration to milliseconds.
 - UPDATE: UI changes, including issue #82. 

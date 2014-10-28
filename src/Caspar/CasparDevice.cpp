@@ -426,6 +426,11 @@ void CasparDevice::stopImageScroll(int channel, int videolayer)
     writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
 }
 
+void CasparDevice::setReset(int channel, int videolayer)
+{
+    writeMessage(QString("MIXER %1-%2 CLEAR").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::setCommit(int channel)
 {
     writeMessage(QString("MIXER %1 COMMIT").arg(channel));

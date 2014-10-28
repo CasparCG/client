@@ -236,6 +236,9 @@
         <file>Images/HttpPost.png</file>
         <file>Images/HttpPostSmall.png</file>
         <file>Images/HttpPostSmallHover.png</file>
+        <file>Images/Reset.png</file>
+        <file>Images/ResetSmall.png</file>
+        <file>Images/ResetSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>
