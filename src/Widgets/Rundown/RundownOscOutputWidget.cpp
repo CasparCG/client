@@ -83,6 +83,7 @@ AbstractRundownWidget* RundownOscOutputWidget::clone()
     command->setMessage(this->command.getMessage());
     command->setType(this->command.getType());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setUseBundle(this->command.getUseBundle());
 
     return widget;
 }
@@ -230,15 +231,15 @@ void RundownOscOutputWidget::executePlay()
     OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(this->command.getOutput());
 
     if (this->command.getType() == "Boolean")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), (this->command.getMessage() == "true") ? true : false);
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), (this->command.getMessage() == "true") ? true : false, this->command.getUseBundle());
     else if (this->command.getType() == "Double")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toDouble());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toDouble(), this->command.getUseBundle());
     else if (this->command.getType() == "Float")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toFloat());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toFloat(), this->command.getUseBundle());
     else if (this->command.getType() == "Integer")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt(), this->command.getUseBundle());
     else if (this->command.getType() == "String")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage(), this->command.getUseBundle());
 
     if (this->markUsedItems)
         setUsed(true);

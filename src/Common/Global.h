@@ -68,6 +68,7 @@ namespace Repository
 
 namespace Osc
 {
+    static const bool DEFAULT_USE_BUNDLE = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const int DEFAULT_PORT = 6250;
     static const QString DEFAULT_OUTPUT = "";

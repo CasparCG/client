@@ -30,4 +30,5 @@ class WIDGETS_EXPORT InspectorOscOutputWidget : public QWidget, Ui::InspectorOsc
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void oscOutputChanged(const OscOutputChangedEvent&);
+        Q_SLOT void useBundleChanged(int);
 };
