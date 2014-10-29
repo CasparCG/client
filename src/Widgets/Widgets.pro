@@ -155,7 +155,9 @@ HEADERS += \
     Inspector/HttpDataTreeBaseWidget.h \
     Rundown/RundownHttpPostWidget.h \
     Inspector/InspectorHttpPostWidget.h \
-    Rundown/RundownResetWidget.h
+    Rundown/RundownResetWidget.h \
+    Rundown/RundownHtmlWidget.h \
+    Inspector/InspectorHtmlWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -299,7 +301,9 @@ SOURCES += \
     Inspector/HttpDataTreeBaseWidget.cpp \
     Rundown/RundownHttpPostWidget.cpp \
     Inspector/InspectorHttpPostWidget.cpp \
-    Rundown/RundownResetWidget.cpp
+    Rundown/RundownResetWidget.cpp \
+    Rundown/RundownHtmlWidget.cpp \
+    Inspector/InspectorHtmlWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -431,7 +435,9 @@ FORMS += \
     Inspector/InspectorHttpGetWidget.ui \
     Rundown/RundownHttpPostWidget.ui \
     Inspector/InspectorHttpPostWidget.ui \
-    Rundown/RundownResetWidget.ui
+    Rundown/RundownResetWidget.ui \
+    Rundown/RundownHtmlWidget.ui \
+    Inspector/InspectorHtmlWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -694,7 +700,10 @@ OTHER_FILES += \
     Images/HttpPost.png \
     Images/ResetSmallHover.png \
     Images/ResetSmall.png \
-    Images/Reset.png
+    Images/Reset.png \
+    Images/Html.png \
+    Images/HtmlSmall.png \
+    Images/HtmlSmallHover.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

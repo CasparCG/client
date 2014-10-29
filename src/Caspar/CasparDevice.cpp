@@ -172,6 +172,47 @@ void CasparDevice::updateTemplate(int channel, int videolayer, int flashlayer, c
                  .arg(channel).arg(videolayer).arg(flashlayer).arg(data));
 }
 
+void CasparDevice::pauseHtml(int channel, int videolayer)
+{
+    writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::resumeHtml(int channel, int videolayer)
+{
+    writeMessage(QString("RESUME %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playHtml(int channel, int videolayer)
+{
+    writeMessage(QString("PLAY %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::playHtml(int channel, int videolayer, const QString& url, const QString& transition, int duration,
+                            const QString& easing, const QString& direction, bool useAuto)
+{
+    if (useAuto)
+        loadHtml(channel, videolayer, url, transition, duration, easing, direction, false, useAuto);
+    else
+        writeMessage(QString("PLAY %1-%2 [HTML] \"%3\" %4 %5 %6 %7")
+                     .arg(channel).arg(videolayer).arg(url).arg(transition).arg(duration).arg(easing)
+                     .arg(direction));
+}
+
+void CasparDevice::loadHtml(int channel, int videolayer, const QString& url, const QString& transition, int duration,
+                            const QString& easing, const QString& direction, bool freezeOnLoad, bool useAuto)
+{
+    writeMessage(QString("%1 %2-%3 [HTML] \"%4\" %5 %6 %7 %8 %9")
+                 .arg((freezeOnLoad == true) ? "LOAD" : "LOADBG")
+                 .arg(channel).arg(videolayer).arg(url).arg(transition).arg(duration).arg(easing)
+                 .arg(direction)
+                 .arg((useAuto == true) ? "AUTO" : ""));
+}
+
+void CasparDevice::stopHtml(int channel, int videolayer)
+{
+    writeMessage(QString("STOP %1-%2").arg(channel).arg(videolayer));
+}
+
 void CasparDevice::pauseMovie(int channel, int videolayer)
 {
     writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
@@ -223,6 +264,11 @@ void CasparDevice::stopMovie(int channel, int videolayer)
 void CasparDevice::pauseAudio(int channel, int videolayer)
 {
     writeMessage(QString("PAUSE %1-%2").arg(channel).arg(videolayer));
+}
+
+void CasparDevice::resumeAudio(int channel, int videolayer)
+{
+    writeMessage(QString("RESUME %1-%2").arg(channel).arg(videolayer));
 }
 
 void CasparDevice::playAudio(int channel, int videolayer)

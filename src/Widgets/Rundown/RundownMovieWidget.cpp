@@ -24,7 +24,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
       loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), animation(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false)
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false)
 {
     setupUi(this);
 

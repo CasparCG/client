@@ -382,6 +382,15 @@ void LibraryWidget::setupTools()
     widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
     widgetGpiOutput->setText(5, "0");
 
+    QTreeWidgetItem* widgetHtml = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHtml->setIcon(0, QIcon(":/Graphics/Images/HtmlSmall.png"));
+    widgetHtml->setText(0, "HTML Page");
+    widgetHtml->setText(1, "0");
+    widgetHtml->setText(2, "HTML Page");
+    widgetHtml->setText(3, "");
+    widgetHtml->setText(4, Rundown::HTML);
+    widgetHtml->setText(5, "0");
+
     QTreeWidgetItem* widgetHttpGet = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetHttpGet->setIcon(0, QIcon(":/Graphics/Images/HttpGetSmall.png"));
     widgetHttpGet->setText(0, "HTTP GET Request");
@@ -418,15 +427,6 @@ void LibraryWidget::setupTools()
     widgetPlayoutCommand->setText(4, Rundown::PLAYOUTCOMMAND);
     widgetPlayoutCommand->setText(5, "0");
 
-    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
-    widgetSolidColor->setText(0, "Solid Color");
-    widgetSolidColor->setText(1, "0");
-    widgetSolidColor->setText(2, "Solid Color");
-    widgetSolidColor->setText(3, "");
-    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
-    widgetSolidColor->setText(5, "0");
-
     QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
     widgetSeparator->setText(0, "Separator");
@@ -435,6 +435,15 @@ void LibraryWidget::setupTools()
     widgetSeparator->setText(3, "");
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");
+
+    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetSolidColor->setText(0, "Solid Color");
+    widgetSolidColor->setText(1, "0");
+    widgetSolidColor->setText(2, "Solid Color");
+    widgetSolidColor->setText(3, "");
+    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
+    widgetSolidColor->setText(5, "0");
 
     QTreeWidgetItem* widgetTriCasterMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterMacro->setIcon(0, QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"));

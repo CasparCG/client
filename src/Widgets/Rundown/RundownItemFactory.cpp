@@ -36,6 +36,7 @@
 #include "RundownCropWidget.h"
 #include "RundownHttpGetWidget.h"
 #include "RundownResetWidget.h"
+#include "RundownHtmlWidget.h"
 #include "RundownHttpPostWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
@@ -113,6 +114,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::HTTPGET) return new RundownHttpGetWidget(model, this);
     else if (model.getType() == Rundown::HTTPPOST) return new RundownHttpPostWidget(model, this);
     else if (model.getType() == Rundown::RESET) return new RundownResetWidget(model, this);
+    else if (model.getType() == Rundown::HTML) return new RundownHtmlWidget(model, this);
 
     return NULL;
 }

@@ -7,7 +7,7 @@ CasparCG Client 2.0.7 BETA 4
 - FIX: Save preset as menu should only be active when a item in the rundown is selected.
 - FIX: Issue with swithing to a empty tab.
 - NEW: Support for fullscreen in the live view when using window mode. 
-- NEW: Support for copy (shift+c) / paste (shift+v) item properties.
+- NEW: Support for copy (Shift+C) / paste (Shift+V) item properties.
 - NEW: Library filter also effect the target combo in the output panel.
 - NEW: Added support for preview the key signal in the live view.
 - NEW: Added support for trigger on next for templates.
@@ -16,8 +16,10 @@ CasparCG Client 2.0.7 BETA 4
 - NEW: Added support for distort. Requires CasparCG Server 2.0.7 or later.
 - NEW: Added support for mipmapped transformations. Requires CasparCG Server 2.0.7 or later.
 - NEW: Added support for rotation. Requires CasparCG Server 2.0.7 or later.
-- NEW: Added support for HTTP GET and HTTP POST requests.
+- NEW: Added support for sending HTTP GET and HTTP POST requests.
 - NEW: Added reset mixer item.
+- NEW: Added support for HTML pages. Requires CasparCG Server 2.0.7 or later.
+- NEW: Added support for pause/resume on audio items.
 - UPDATE: The "Crop" tool is now called "Clipping". A new, correct, "Crop" tool is added. Requires CasparCG Server 2.0.7 or later.
 - UPDATE: Changed the default setting for delay and duration to milliseconds.
 - UPDATE: UI changes, including issue #82. 
@@ -187,7 +189,7 @@ CasparCG Client 2.0 RC 1
 - FIX: Freeze on load did not work as expected.
 - FIX: Defer on Mixer keyer is missing.
 - FIX: The parameters SEEK and LENGTH was sent regardless of whether they were set or not.
-- NEW: Added support for pause/resume on Image scroller and DeckLink input items.
+- NEW: Added support for pause/resume on image scroller and DeckLink input items.
 - NEW: Added trigger on next option for media items.
 - NEW: Added support for CasparCG Server PRINT command.
 - NEW: Added support for naming output using PRINT command. 

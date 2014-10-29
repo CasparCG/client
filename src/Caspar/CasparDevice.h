@@ -49,6 +49,16 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void stopTemplate(int channel, int videolayer, int flashlayer);
         void updateTemplate(int channel, int videolayer, int flashlayer, const QString& data);
 
+
+        void pauseHtml(int channel, int videolayer);
+        void resumeHtml(int channel, int videolayer);
+        void playHtml(int channel, int videolayer);
+        void playHtml(int channel, int videolayer, const QString& url, const QString& transition, int duration,
+                      const QString& easing, const QString& direction, bool useAuto);
+        void loadHtml(int channel, int videolayer, const QString& url, const QString& transition, int duration,
+                      const QString& easing, const QString& direction, bool freezeOnLoad, bool useAuto);
+        void stopHtml(int channel, int videolayer);
+
         void pauseMovie(int channel, int videolayer);
         void resumeMovie(int channel, int videolayer);
         void playMovie(int channel, int videolayer);
@@ -59,6 +69,7 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void stopMovie(int channel, int videolayer);
 
         void pauseAudio(int channel, int videolayer);
+        void resumeAudio(int channel, int videolayer);
         void playAudio(int channel, int videolayer);
         void playAudio(int channel, int videolayer, const QString& name, const QString& transition, int duration,
                        const QString& easing, const QString& direction, bool loop, bool useAuto);

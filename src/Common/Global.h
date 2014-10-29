@@ -267,6 +267,15 @@ namespace Movie
     static const bool DEFAULT_AUTO_PLAY = false;
 }
 
+namespace Html
+{
+    static const QString DEFAULT_URL = "";
+    static const bool DEFAULT_FREEZE_ON_LOAD = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_USE_AUTO = false;
+}
+
+
 namespace Still
 {
     static const QString DEFAULT_NAME = "";
@@ -402,6 +411,7 @@ namespace Rundown
     static const QString OPACITY = "OPACITY";
     static const QString SATURATION = "SATURATION";
     static const QString VOLUME = "VOLUME";
+    static const QString HTML = "HTML";
     static const QString COMMIT = "COMMIT";
     static const QString AUDIO = "AUDIO";
     static const QString STILL = "STILL";

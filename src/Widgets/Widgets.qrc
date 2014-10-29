@@ -239,6 +239,9 @@
         <file>Images/Reset.png</file>
         <file>Images/ResetSmall.png</file>
         <file>Images/ResetSmallHover.png</file>
+        <file>Images/Html.png</file>
+        <file>Images/HtmlSmall.png</file>
+        <file>Images/HtmlSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>
@@ -251,5 +254,8 @@
         <file>Stylesheets/Curve/Linux.css</file>
         <file>Stylesheets/Curve/Mac.css</file>
         <file>Stylesheets/Curve/Windows.css</file>
+        <file>Images/Html.png</file>
+        <file>Images/HtmlSmall.png</file>
+        <file>Images/HtmlSmallHover.png</file>
     </qresource>
 </RCC>

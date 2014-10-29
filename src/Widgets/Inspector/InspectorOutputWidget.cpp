@@ -37,6 +37,7 @@
 #include "Commands/PerspectiveCommand.h"
 #include "Commands/AnchorCommand.h"
 #include "Commands/CropCommand.h"
+#include "Commands/HtmlCommand.h"
 #include "Commands/HttpGetCommand.h"
 #include "Commands/HttpPostCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
@@ -287,6 +288,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<VolumeCommand*>(event.getCommand()) ||
                  dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
                  dynamic_cast<FadeToBlackCommand*>(event.getCommand()) ||
+                 dynamic_cast<HtmlCommand*>(event.getCommand()) ||
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
