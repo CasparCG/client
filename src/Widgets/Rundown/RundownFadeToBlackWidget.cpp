@@ -305,7 +305,7 @@ void RundownFadeToBlackWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopColor(this->command.getChannel(), this->command.getVideolayer());
+        device->stop(this->command.getChannel(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -314,7 +314,7 @@ void RundownFadeToBlackWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopColor(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
     }
 
     this->paused = false;
@@ -329,7 +329,7 @@ void RundownFadeToBlackWidget::executePlay()
     {
         if (this->loaded)
         {
-            device->playColor(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         }
         else
         {
@@ -349,7 +349,7 @@ void RundownFadeToBlackWidget::executePlay()
         {
             if (this->loaded)
             {
-                deviceShadow->playColor(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             }
             else
             {
@@ -377,9 +377,9 @@ void RundownFadeToBlackWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->playColor(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->pauseColor(this->command.getChannel(), this->command.getVideolayer());
+            device->pause(this->command.getChannel(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -391,9 +391,9 @@ void RundownFadeToBlackWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->playColor(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->pauseColor(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.getChannel(), this->command.getVideolayer());
         }
     }
 

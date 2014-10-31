@@ -37,6 +37,8 @@
 #include "RundownHttpGetWidget.h"
 #include "RundownResetWidget.h"
 #include "RundownHtmlWidget.h"
+#include "RundownRouteChannelWidget.h"
+#include "RundownRouteVideolayerWidget.h"
 #include "RundownHttpPostWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
@@ -115,6 +117,8 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::HTTPPOST) return new RundownHttpPostWidget(model, this);
     else if (model.getType() == Rundown::RESET) return new RundownResetWidget(model, this);
     else if (model.getType() == Rundown::HTML) return new RundownHtmlWidget(model, this);
+    else if (model.getType() == Rundown::ROUTECHANNEL) return new RundownRouteChannelWidget(model, this);
+    else if (model.getType() == Rundown::ROUTEVIDEOLAYER) return new RundownRouteVideolayerWidget(model, this);
 
     return NULL;
 }

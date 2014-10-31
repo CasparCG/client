@@ -1,10 +1,9 @@
-#include "RundownAudioWidget.h"
+#include "RundownRouteVideolayerWidget.h"
 
 #include "Global.h"
 
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
-#include "EventManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
@@ -12,17 +11,17 @@
 #include <math.h>
 
 #include <QtCore/QObject>
+#include <QtCore/QTimer>
 
-#include <QtGui/QPixmap>
 #include <QtGui/QGraphicsOpacityEffect>
 
-RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                       bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
+RundownRouteVideolayerWidget::RundownRouteVideolayerWidget(const LibraryModel& model, QWidget* parent, const QString& color,
+                                                           bool active, bool loaded, bool paused, bool playing, bool inGroup,
+                                                           bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color),
       model(model), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
-      pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      pauseControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -35,13 +34,9 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     setActive(this->active);
     setCompactView(this->compactView);
 
-    this->command.setAudioName(this->model.getName());
-
-    this->labelLoopOverlay->setVisible(false);
-
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_AUDIO_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
@@ -49,17 +44,15 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeStartTimer.setSingleShot(true);
-    this->executeStopTimer.setSingleShot(true);
+    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command, SIGNAL(VideolayerChanged(int)), this, SLOT(VideolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
@@ -74,7 +67,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     checkDeviceConnection();
 }
 
-void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
+void RundownRouteVideolayerWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -85,17 +78,7 @@ void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-void RundownAudioWidget::targetChanged(const TargetChangedEvent& event)
-{
-    // This event is not for us.
-    if (!this->active)
-        return;
-
-    this->model.setName(event.getTarget());
-    this->command.setAudioName(event.getTarget());
-}
-
-void RundownAudioWidget::deviceChanged(const DeviceChangedEvent& event)
+void RundownRouteVideolayerWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -123,12 +106,13 @@ void RundownAudioWidget::deviceChanged(const DeviceChangedEvent& event)
     checkDeviceConnection();
 }
 
-AbstractRundownWidget* RundownAudioWidget::clone()
+AbstractRundownWidget* RundownRouteVideolayerWidget::clone()
 {
-    RundownAudioWidget* widget = new RundownAudioWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                        this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
+    RundownRouteVideolayerWidget* widget = new RundownRouteVideolayerWidget(this->model, this->parentWidget(), this->color,
+                                                                            this->active, this->loaded, this->paused, this->playing,
+                                                                            this->inGroup, this->compactView);
 
-    AudioCommand* command = dynamic_cast<AudioCommand*>(widget->getCommand());
+    RouteVideolayerCommand* command = dynamic_cast<RouteVideolayerCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -136,19 +120,13 @@ AbstractRundownWidget* RundownAudioWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setAudioName(this->command.getAudioName());
-    command->setTransition(this->command.getTransition());
-    command->setTransitionDuration(this->command.getTransitionDuration());
-    command->setTween(this->command.getTween());
-    command->setDirection(this->command.getDirection());
-    command->setLoop(this->command.getLoop());
-    command->setUseAuto(this->command.getUseAuto());
-    command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setFromChannel(this->command.getFromChannel());
+    command->setFromVideolayer(this->command.getFromVideolayer());
 
     return widget;
 }
 
-void RundownAudioWidget::setCompactView(bool compactView)
+void RundownRouteVideolayerWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -166,37 +144,37 @@ void RundownAudioWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownAudioWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownRouteVideolayerWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAudioWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownRouteVideolayerWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownAudioWidget::isGroup() const
+bool RundownRouteVideolayerWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownAudioWidget::isInGroup() const
+bool RundownRouteVideolayerWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownAudioWidget::getCommand()
+AbstractCommand* RundownRouteVideolayerWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownAudioWidget::getLibraryModel()
+LibraryModel* RundownRouteVideolayerWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownAudioWidget::setActive(bool active)
+void RundownRouteVideolayerWidget::setActive(bool active)
 {
     if (this->active == active)
         return;
@@ -211,24 +189,24 @@ void RundownAudioWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownAudioWidget::setInGroup(bool inGroup)
+void RundownRouteVideolayerWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-QString RundownAudioWidget::getColor() const
+QString RundownRouteVideolayerWidget::getColor() const
 {
     return this->color;
 }
 
-void RundownAudioWidget::setColor(const QString& color)
+void RundownRouteVideolayerWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
-void RundownAudioWidget::checkEmptyDevice()
+void RundownRouteVideolayerWidget::checkEmptyDevice()
 {
     if (this->labelDevice->text() == "Device: ")
         this->labelDevice->setStyleSheet("color: firebrick;");
@@ -236,17 +214,12 @@ void RundownAudioWidget::checkEmptyDevice()
         this->labelDevice->setStyleSheet("");
 }
 
-void RundownAudioWidget::clearDelayedCommands()
+void RundownRouteVideolayerWidget::clearDelayedCommands()
 {
-    this->executeStartTimer.stop();
-    this->executeStopTimer.stop();
-
-    this->paused = false;
-    this->loaded = false;
-    this->playing = false;
+    this->executeTimer.stop();
 }
 
-void RundownAudioWidget::setUsed(bool used)
+void RundownRouteVideolayerWidget::setUsed(bool used)
 {
     if (used)
     {
@@ -262,21 +235,14 @@ void RundownAudioWidget::setUsed(bool used)
         this->setGraphicsEffect(NULL);
 }
 
-bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownRouteVideolayerWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
-    else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
+    else if (type == Playout::PlayoutType::Play)
     {
         if (this->command.getDelay() < 0)
             return true;
-
-        this->executeStartTimer.setInterval(0);
-        this->executeStopTimer.setInterval(0);
-        this->executeStartTimer.disconnect(); // Disconnect all events.
-        this->executeStopTimer.disconnect(); // Disconnect all events.
-        QObject::connect(&this->executeStartTimer, SIGNAL(timeout()), SLOT(executePlay()));
-        QObject::connect(&this->executeStopTimer, SIGNAL(timeout()), SLOT(executeStop()));
 
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
@@ -289,30 +255,26 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
 
                 int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeStartTimer.setInterval(startDelay);
+                this->executeTimer.setInterval(startDelay);
 
                 if (this->command.getDuration() > 0)
                 {
                     int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    this->executeStopTimer.setInterval(startDelay + stopDelay);
+                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
                 }
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executeStartTimer.setInterval(this->command.getDelay());
+                this->executeTimer.setInterval(this->command.getDelay());
 
                 if (this->command.getDuration() > 0)
-                    this->executeStopTimer.setInterval(this->command.getDelay() + this->command.getDuration());
+                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
             }
 
-            this->executeStartTimer.start();
-            if (this->executeStopTimer.interval() > 0)
-                this->executeStopTimer.start();
+            this->executeTimer.start();
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
-        executePlay();
-    else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
     else if (type == Playout::PlayoutType::PauseResume)
         executePause();
@@ -331,10 +293,9 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-void RundownAudioWidget::executeStop()
+void RundownRouteVideolayerWidget::executeStop()
 {
-    this->executeStartTimer.stop();
-    this->executeStopTimer.stop();
+    this->executeTimer.stop();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -355,21 +316,15 @@ void RundownAudioWidget::executeStop()
     this->playing = false;
 }
 
-void RundownAudioWidget::executePlay()
+void RundownRouteVideolayerWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
-        {
             device->play(this->command.getChannel(), this->command.getVideolayer());
-        }
         else
-        {
-            device->playAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
-                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                              this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
-        }
+            device->playRouteVideolayer(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getFromVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -381,15 +336,9 @@ void RundownAudioWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
-            {
-                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
-            }
+                deviceShadow->play(this->command.getVideolayer(), this->command.getVideolayer());
             else
-            {
-                deviceShadow->playAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
-                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                        this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
-            }
+                deviceShadow->playRouteVideolayer(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getFromVideolayer());
         }
     }
 
@@ -401,7 +350,7 @@ void RundownAudioWidget::executePlay()
     this->playing = true;
 }
 
-void RundownAudioWidget::executePause()
+void RundownRouteVideolayerWidget::executePause()
 {
     if (!this->playing)
         return;
@@ -433,15 +382,11 @@ void RundownAudioWidget::executePause()
     this->paused = !this->paused;
 }
 
-void RundownAudioWidget::executeLoad()
+void RundownRouteVideolayerWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-    {
-        device->loadAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
-                          this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                          this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
-    }
+        device->loadRouteVideolayer(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getFromVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -450,11 +395,7 @@ void RundownAudioWidget::executeLoad()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-        {
-            deviceShadow->loadAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
-                                    this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                    this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
-        }
+            deviceShadow->loadRouteVideolayer(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getFromVideolayer());
     }
 
     this->loaded = true;
@@ -462,11 +403,8 @@ void RundownAudioWidget::executeLoad()
     this->playing = false;
 }
 
-void RundownAudioWidget::executeClearVideolayer()
+void RundownRouteVideolayerWidget::executeClearVideolayer()
 {
-    this->executeStartTimer.stop();
-    this->executeStopTimer.stop();
-
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
@@ -486,11 +424,8 @@ void RundownAudioWidget::executeClearVideolayer()
     this->playing = false;
 }
 
-void RundownAudioWidget::executeClearChannel()
+void RundownRouteVideolayerWidget::executeClearChannel()
 {
-    this->executeStartTimer.stop();
-    this->executeStopTimer.stop();
-
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
@@ -516,7 +451,22 @@ void RundownAudioWidget::executeClearChannel()
     this->playing = false;
 }
 
-void RundownAudioWidget::checkGpiConnection()
+void RundownRouteVideolayerWidget::channelChanged(int channel)
+{
+    this->labelChannel->setText(QString("Channel: %1").arg(channel));
+}
+
+void RundownRouteVideolayerWidget::videolayerChanged(int videolayer)
+{
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
+}
+
+void RundownRouteVideolayerWidget::delayChanged(int delay)
+{
+    this->labelDelay->setText(QString("Delay: %1").arg(delay));
+}
+
+void RundownRouteVideolayerWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -526,7 +476,7 @@ void RundownAudioWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownAudioWidget::checkDeviceConnection()
+void RundownRouteVideolayerWidget::checkDeviceConnection()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device == NULL)
@@ -535,7 +485,7 @@ void RundownAudioWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(!device->isConnected());
 }
 
-void RundownAudioWidget::configureOscSubscriptions()
+void RundownRouteVideolayerWidget::configureOscSubscriptions()
 {
     if (!this->command.getAllowRemoteTriggering())
         return;
@@ -554,12 +504,6 @@ void RundownAudioWidget::configureOscSubscriptions()
 
     if (this->pauseControlSubscription != NULL)
         this->pauseControlSubscription->disconnect(); // Disconnect all events.
-
-    if (this->nextControlSubscription != NULL)
-        this->nextControlSubscription->disconnect(); // Disconnect all events.
-
-    if (this->updateControlSubscription != NULL)
-        this->updateControlSubscription->disconnect(); // Disconnect all events.
 
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
@@ -600,18 +544,6 @@ void RundownAudioWidget::configureOscSubscriptions()
     QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
-    nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
-    this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
-    QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
-    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
-    this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
-    QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
     QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
@@ -631,49 +563,29 @@ void RundownAudioWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownAudioWidget::channelChanged(int channel)
-{
-    this->labelChannel->setText(QString("Channel: %1").arg(channel));
-}
-
-void RundownAudioWidget::videolayerChanged(int videolayer)
-{
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(videolayer));
-}
-
-void RundownAudioWidget::delayChanged(int delay)
-{
-    this->labelDelay->setText(QString("Delay: %1").arg(delay));
-}
-
-void RundownAudioWidget::allowGpiChanged(bool allowGpi)
+void RundownRouteVideolayerWidget::allowGpiChanged(bool allowGpi)
 {
     checkGpiConnection();
 }
 
-void RundownAudioWidget::loopChanged(bool loop)
-{
-    this->labelLoopOverlay->setVisible(loop);
-}
-
-void RundownAudioWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownRouteVideolayerWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     checkGpiConnection();
 }
 
-void RundownAudioWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+void RundownRouteVideolayerWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 {
     configureOscSubscriptions();
 
     this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
-void RundownAudioWidget::deviceConnectionStateChanged(CasparDevice& device)
+void RundownRouteVideolayerWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
     checkDeviceConnection();
 }
 
-void RundownAudioWidget::deviceAdded(CasparDevice& device)
+void RundownRouteVideolayerWidget::deviceAdded(CasparDevice& device)
 {
     if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
@@ -681,61 +593,49 @@ void RundownAudioWidget::deviceAdded(CasparDevice& device)
     checkDeviceConnection();
 }
 
-void RundownAudioWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownAudioWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownAudioWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
-void RundownAudioWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Load);
 }
 
-void RundownAudioWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PauseResume);
 }
 
-void RundownAudioWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Next);
-}
-
-void RundownAudioWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
-        executeCommand(Playout::PlayoutType::Update);
-}
-
-void RundownAudioWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownAudioWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
-void RundownAudioWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownRouteVideolayerWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);

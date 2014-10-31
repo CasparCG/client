@@ -348,7 +348,7 @@ void RundownStillWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopStill(this->command.getChannel(), this->command.getVideolayer());
+        device->stop(this->command.getChannel(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -357,7 +357,7 @@ void RundownStillWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopStill(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
     }
 
     this->paused = false;
@@ -371,7 +371,7 @@ void RundownStillWidget::executePlay()
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
-            device->playStill(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         else
             device->playStill(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
                               this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
@@ -387,7 +387,7 @@ void RundownStillWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
-                deviceShadow->playStill(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             else
                 deviceShadow->playStill(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageName(),
                                         this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
@@ -412,9 +412,9 @@ void RundownStillWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->playStill(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->pauseStill(this->command.getChannel(), this->command.getVideolayer());
+            device->pause(this->command.getChannel(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -426,9 +426,9 @@ void RundownStillWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->playStill(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->pauseStill(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.getChannel(), this->command.getVideolayer());
         }
     }
 

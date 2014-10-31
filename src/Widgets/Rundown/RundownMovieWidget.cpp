@@ -434,12 +434,12 @@ void RundownMovieWidget::executeStop()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->stopMovie(this->command.getChannel(), this->command.getVideolayer());
+        device->stop(this->command.getChannel(), this->command.getVideolayer());
 
         // Stop preview channels item.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->stopMovie(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+            device->stop(deviceModel->getPreviewChannel(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -450,11 +450,11 @@ void RundownMovieWidget::executeStop()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->stopMovie(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
 
             // Stop preview channels item.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->stopMovie(model.getPreviewChannel(), this->command.getVideolayer());
+                deviceShadow->stop(model.getPreviewChannel(), this->command.getVideolayer());
         }
     }
 
@@ -476,7 +476,7 @@ void RundownMovieWidget::executePlay()
     {
         if (this->loaded)
         {
-            device->playMovie(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         }
         else
         {
@@ -507,7 +507,7 @@ void RundownMovieWidget::executePlay()
         {
             if (this->loaded)
             {
-                deviceShadow->playMovie(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             }
             else
             {
@@ -550,9 +550,9 @@ void RundownMovieWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->resumeMovie(this->command.getChannel(), this->command.getVideolayer());
+            device->resume(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->pauseMovie(this->command.getChannel(), this->command.getVideolayer());
+            device->pause(this->command.getChannel(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -564,9 +564,9 @@ void RundownMovieWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->resumeMovie(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->resume(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->pauseMovie(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.getChannel(), this->command.getVideolayer());
         }
     }
 

@@ -448,4 +448,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Reset", "", "", Rundown::RESET, 0, "")));
     else if (type ==  Rundown::HTML)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTML Page", "", "", Rundown::HTML, 0, "")));
+    else if (type ==  Rundown::ROUTECHANNEL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Channel", "", "", Rundown::ROUTECHANNEL, 0, "")));
+    else if (type ==  Rundown::ROUTEVIDEOLAYER)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Videolayer", "", "", Rundown::ROUTEVIDEOLAYER, 0, "")));
 }

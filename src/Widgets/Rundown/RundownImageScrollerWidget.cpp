@@ -350,7 +350,7 @@ void RundownImageScrollerWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
+        device->stop(this->command.getChannel(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -359,7 +359,7 @@ void RundownImageScrollerWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopImageScroll(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
     }
 
     this->paused = false;
@@ -373,7 +373,7 @@ void RundownImageScrollerWidget::executePlay()
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
-            device->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.getChannel(), this->command.getVideolayer());
         else
             device->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                     this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
@@ -389,7 +389,7 @@ void RundownImageScrollerWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
-                deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             else
                 deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer(), this->command.getImageScrollerName(),
                                               this->command.getBlur(), this->command.getSpeed(), this->command.getPremultiply(),
@@ -414,9 +414,9 @@ void RundownImageScrollerWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+            device->resume(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->pauseImageScroll(this->command.getChannel(), this->command.getVideolayer());
+            device->pause(this->command.getChannel(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -428,9 +428,9 @@ void RundownImageScrollerWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->playImageScroll(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->resume(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->pauseImageScroll(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.getChannel(), this->command.getVideolayer());
         }
     }
 

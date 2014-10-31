@@ -37,6 +37,8 @@
 #include "Inspector/InspectorHttpGetWidget.h"
 #include "Inspector/InspectorHttpPostWidget.h"
 #include "Inspector/InspectorHtmlWidget.h"
+#include "Inspector/InspectorRouteChannelWidget.h"
+#include "Inspector/InspectorRouteVideolayerWidget.h"
 #include "Inspector/Atem/InspectorAtemInputWidget.h"
 #include "Inspector/Atem/InspectorAtemCutWidget.h"
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
@@ -89,6 +91,8 @@
 #include "Commands/HttpGetCommand.h"
 #include "Commands/HttpPostCommand.h"
 #include "Commands/HtmlCommand.h"
+#include "Commands/RouteChannelCommand.h"
+#include "Commands/RouteVideolayerCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
 #include "Commands/Atem/AtemAutoCommand.h"
@@ -163,6 +167,8 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(49)), 0, new InspectorHttpGetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(50)), 0, new InspectorHttpPostWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(51)), 0, new InspectorHtmlWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(52)), 0, new InspectorRouteChannelWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(53)), 0, new InspectorRouteVideolayerWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -291,6 +297,10 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(50)->setHidden(false);
     else if (dynamic_cast<HtmlCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(51)->setHidden(false);
+    else if (dynamic_cast<RouteChannelCommand*>(event.getCommand()))
+        this->treeWidgetInspector->topLevelItem(52)->setHidden(false);
+    else if (dynamic_cast<RouteVideolayerCommand*>(event.getCommand()))
+        this->treeWidgetInspector->topLevelItem(53)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -347,6 +357,8 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(49)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(50)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(51)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(52)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(53)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)

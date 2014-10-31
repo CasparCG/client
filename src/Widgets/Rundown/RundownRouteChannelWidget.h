@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractRundownWidget.h"
-#include "ui_RundownTemplateWidget.h"
+#include "ui_RundownRouteChannelWidget.h"
 
 #include "Global.h"
 
@@ -14,27 +14,25 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/TemplateCommand.h"
+#include "Commands/RouteChannelCommand.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
 
-#include <QtCore/QEvent>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
 #include <QtGui/QWidget>
-#include <QtGui/QDragEnterEvent>
-#include <QtGui/QDropEvent>
 
-class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownRouteChannelWidget : public QWidget, Ui::RundownRouteChannelWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownTemplateWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                       bool active = false, bool loaded = false, bool inGroup = false, bool compactView = false);
+        explicit RundownRouteChannelWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                           bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                           bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -62,19 +60,16 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
         virtual void setUsed(bool used);
 
-    protected:
-        virtual bool eventFilter(QObject* target, QEvent* event);
-        void dragEnterEvent(QDragEnterEvent* event);
-        void dropEvent(QDropEvent* event);
-
     private:
         bool active;
         bool loaded;
+        bool paused;
+        bool playing;
         bool inGroup;
         bool compactView;
         QString color;
         LibraryModel model;
-        TemplateCommand command;
+        RouteChannelCommand command;
         ActiveAnimation* animation;
         QString delayType;
         bool markUsedItems;
@@ -83,37 +78,27 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
         OscSubscription* loadControlSubscription;
-        OscSubscription* nextControlSubscription;
-        OscSubscription* updateControlSubscription;
-        OscSubscription* invokeControlSubscription;
-        OscSubscription* previewControlSubscription;
+        OscSubscription* pauseControlSubscription;
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
-        QTimer executePreviewTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
         void configureOscSubscriptions();
 
-        Q_SLOT void channelChanged(int);
-        Q_SLOT void executeStop();
-        Q_SLOT void executePlay();
-        Q_SLOT void executeLoad();
-        Q_SLOT void executeNext();
-        Q_SLOT void executeUpdate();
-        Q_SLOT void executeInvoke();
-        Q_SLOT void executeClear();
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
-        Q_SLOT void executePlayPreview();
-        Q_SLOT void executeStopPreview();
+        Q_SLOT void channelChanged(int);
+        Q_SLOT void executeLoad();
+        Q_SLOT void executePlay();
+        Q_SLOT void executePause();
+        Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
-        Q_SLOT void flashlayerChanged(int);
         Q_SLOT void allowGpiChanged(bool);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
@@ -123,14 +108,10 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
-        Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

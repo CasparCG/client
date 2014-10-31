@@ -427,6 +427,24 @@ void LibraryWidget::setupTools()
     widgetPlayoutCommand->setText(4, Rundown::PLAYOUTCOMMAND);
     widgetPlayoutCommand->setText(5, "0");
 
+    QTreeWidgetItem* widgetRouteChannel = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetRouteChannel->setIcon(0, QIcon(":/Graphics/Images/RouteChannelSmall.png"));
+    widgetRouteChannel->setText(0, "Route Channel");
+    widgetRouteChannel->setText(1, "0");
+    widgetRouteChannel->setText(2, "Route Channel");
+    widgetRouteChannel->setText(3, "");
+    widgetRouteChannel->setText(4, Rundown::ROUTECHANNEL);
+    widgetRouteChannel->setText(5, "0");
+
+    QTreeWidgetItem* widgetRouteVideolayer = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetRouteVideolayer->setIcon(0, QIcon(":/Graphics/Images/RouteVideolayerSmall.png"));
+    widgetRouteVideolayer->setText(0, "Route Video Layer");
+    widgetRouteVideolayer->setText(1, "0");
+    widgetRouteVideolayer->setText(2, "Route Video Layer");
+    widgetRouteVideolayer->setText(3, "");
+    widgetRouteVideolayer->setText(4, Rundown::ROUTEVIDEOLAYER);
+    widgetRouteVideolayer->setText(5, "0");
+
     QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
     widgetSeparator->setText(0, "Separator");

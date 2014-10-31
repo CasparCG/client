@@ -128,6 +128,12 @@ namespace Osc
     static const QString DEFAULT_UP_RUNDOWN_CONTROL_FILTER = "/control/up";
 }
 
+namespace Route
+{
+    static const int DEFAULT_FROM_CHANNEL = 1;
+    static const int DEFAULT_FROM_VIDEOLAYER = 1;
+}
+
 namespace GpiOutput
 {
     static const int DEFAULT_PORT = 0;
@@ -441,6 +447,8 @@ namespace Rundown
     static const QString ROTATION = "ROTATION";
     static const QString RESET = "RESET";
     static const QString ANCHOR = "ANCHOR";
+    static const QString ROUTECHANNEL = "ROUTECHANNEL";
+    static const QString ROUTEVIDEOLAYER = "ROUTEVIDEOLAYER";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const int DEFAULT_ICON_WIDTH = 32;

@@ -157,7 +157,11 @@ HEADERS += \
     Inspector/InspectorHttpPostWidget.h \
     Rundown/RundownResetWidget.h \
     Rundown/RundownHtmlWidget.h \
-    Inspector/InspectorHtmlWidget.h
+    Inspector/InspectorHtmlWidget.h \
+    Rundown/RundownRouteChannelWidget.h \
+    Inspector/InspectorRouteChannelWidget.h \
+    Rundown/RundownRouteVideolayerWidget.h \
+    Inspector/InspectorRouteVideolayerWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -303,7 +307,11 @@ SOURCES += \
     Inspector/InspectorHttpPostWidget.cpp \
     Rundown/RundownResetWidget.cpp \
     Rundown/RundownHtmlWidget.cpp \
-    Inspector/InspectorHtmlWidget.cpp
+    Inspector/InspectorHtmlWidget.cpp \
+    Rundown/RundownRouteChannelWidget.cpp \
+    Inspector/InspectorRouteChannelWidget.cpp \
+    Rundown/RundownRouteVideolayerWidget.cpp \
+    Inspector/InspectorRouteVideolayerWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -437,7 +445,11 @@ FORMS += \
     Inspector/InspectorHttpPostWidget.ui \
     Rundown/RundownResetWidget.ui \
     Rundown/RundownHtmlWidget.ui \
-    Inspector/InspectorHtmlWidget.ui
+    Inspector/InspectorHtmlWidget.ui \
+    Rundown/RundownRouteChannelWidget.ui \
+    Inspector/InspectorRouteChannelWidget.ui \
+    Rundown/RundownRouteVideolayerWidget.ui \
+    Inspector/InspectorRouteVideolayerWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -703,7 +715,13 @@ OTHER_FILES += \
     Images/Reset.png \
     Images/Html.png \
     Images/HtmlSmall.png \
-    Images/HtmlSmallHover.png
+    Images/HtmlSmallHover.png \
+    Images/RouteVideolayerSmallHover.png \
+    Images/RouteVideolayerSmall.png \
+    Images/RouteVideolayer.png \
+    Images/RouteChannelSmallHover.png \
+    Images/RouteChannelSmall.png \
+    Images/RouteChannel.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

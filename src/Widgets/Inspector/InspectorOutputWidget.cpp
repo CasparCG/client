@@ -40,6 +40,8 @@
 #include "Commands/HtmlCommand.h"
 #include "Commands/HttpGetCommand.h"
 #include "Commands/HttpPostCommand.h"
+#include "Commands/RouteChannelCommand.h"
+#include "Commands/RouteVideolayerCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -289,6 +291,8 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
                  dynamic_cast<FadeToBlackCommand*>(event.getCommand()) ||
                  dynamic_cast<HtmlCommand*>(event.getCommand()) ||
+                 dynamic_cast<RouteChannelCommand*>(event.getCommand()) ||
+                 dynamic_cast<RouteVideolayerCommand*>(event.getCommand()) ||
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);

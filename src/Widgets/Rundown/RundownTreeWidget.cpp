@@ -151,6 +151,8 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/HttpGetSmall.png"), "HTTP POST Request", this, SLOT(addHttpPostItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/OscOutputSmall.png"), "OSC Output", this, SLOT(addOscOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/PlayoutCommandSmall.png"), "Playout Command", this, SLOT(addPlayoutCommandItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/RouteChannelSmall.png"), "Route Channel", this, SLOT(addRouteChannelItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/RouteVideolayerSmall.png"), "Route Video Layer", this, SLOT(addRouteVideolayerItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
 
@@ -1342,6 +1344,16 @@ void RundownTreeWidget::addOscOutputItem()
 void RundownTreeWidget::addPlayoutCommandItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PLAYOUTCOMMAND);
+}
+
+void RundownTreeWidget::addRouteChannelItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ROUTECHANNEL);
+}
+
+void RundownTreeWidget::addRouteVideolayerItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ROUTEVIDEOLAYER);
 }
 
 void RundownTreeWidget::addFileRecorderItem()
