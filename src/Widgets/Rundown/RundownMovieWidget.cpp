@@ -24,7 +24,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
       fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
       loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
       pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false)
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false)
 {
     setupUi(this);
 
@@ -32,6 +32,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
 
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
     this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+    this->useFreezeOnLoad = (DatabaseManager::getInstance().getConfigurationByName("UseFreezeOnLoad").getValue() == "true") ? true : false;
 
     setThumbnail();
     setColor(this->color);
@@ -39,6 +40,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
     setCompactView(this->compactView);
 
     this->command.setVideoName(this->model.getName());
+    this->command.setFreezeOnLoad(this->useFreezeOnLoad);
 
     this->labelAutoPlay->setVisible(false);
     this->labelLoopOverlay->setVisible(false);

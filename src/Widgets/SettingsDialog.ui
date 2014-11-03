@@ -359,9 +359,9 @@
     <widget class="QComboBox" name="comboBoxDelayType">
      <property name="geometry">
       <rect>
-       <x>493</x>
-       <y>444</y>
-       <width>112</width>
+       <x>513</x>
+       <y>522</y>
+       <width>120</width>
        <height>20</height>
       </rect>
      </property>
@@ -385,8 +385,8 @@
     <widget class="QLabel" name="labelDelayAndDuration">
      <property name="geometry">
       <rect>
-       <x>343</x>
-       <y>445</y>
+       <x>363</x>
+       <y>523</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -844,6 +844,22 @@
      </property>
      <property name="text">
       <string>Show duration panel (iNews backend only)</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxUseFreezeOnLoad">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>446</y>
+       <width>281</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Use freeze on load for video items</string>
      </property>
     </widget>
    </widget>
@@ -4339,8 +4355,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>495</y>
+     <x>526</x>
+     <y>554</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4748,6 +4764,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxUseFreezeOnLoad</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>useFreezeOnLoadChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>563</x>
+     <y>486</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4811,5 +4843,6 @@
   <slot>autoUpdateChanged(int)</slot>
   <slot>repositoryPortChanged()</slot>
   <slot>showDurationChanged(int)</slot>
+  <slot>useFreezeOnLoadChanged(int)</slot>
  </slots>
 </ui>

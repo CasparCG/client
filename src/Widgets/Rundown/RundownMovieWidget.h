@@ -79,6 +79,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         bool hasSentAutoPlay;
         QString delayType;
         bool markUsedItems;
+        bool useFreezeOnLoad;
 
         OscFileModel* fileModel;
         OscSubscription* timeSubscription;

@@ -88,6 +88,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxShowAudioLevels->setChecked(showAudioLevelsPanel);
     bool showDurationPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowDurationPanel").getValue() == "true") ? true : false;
     this->checkBoxDuration->setChecked(showDurationPanel);
+    bool useFreezeOnLoad = (DatabaseManager::getInstance().getConfigurationByName("UseFreezeOnLoad").getValue() == "true") ? true : false;
+    this->checkBoxUseFreezeOnLoad->setChecked(useFreezeOnLoad);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
@@ -909,4 +911,10 @@ void SettingsDialog::showDurationChanged(int state)
 {
     QString showDurationPanel = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowDurationPanel", showDurationPanel));
+}
+
+void SettingsDialog::useFreezeOnLoadChanged(int state)
+{
+    QString useFreezeOnLoad = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "UseFreezeOnLoad", useFreezeOnLoad));
 }
