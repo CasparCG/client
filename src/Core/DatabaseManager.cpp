@@ -1585,7 +1585,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
@@ -1635,7 +1635,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.

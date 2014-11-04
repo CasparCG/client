@@ -15,7 +15,6 @@
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QPoint>
-#include <QtCore/QTimer>
 
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
@@ -35,15 +34,13 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         QMenu* contextMenuPreset;
         QMenu* contextMenuData;
         QSharedPointer<LibraryModel> model;
-        QTimer filterTimer;
 
         void setupTools();
         void setupUiMenu();
 
         Q_SLOT void loadLibrary();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);
-        Q_SLOT void executeFilterLibrary();
-        Q_SLOT void filterChanged(QString);
+        Q_SLOT void filterLibrary();
         Q_SLOT void contextMenuTriggered(QAction*);
         Q_SLOT void contextMenuImageTriggered(QAction*);
         Q_SLOT void contextMenuPresetTriggered(QAction*);

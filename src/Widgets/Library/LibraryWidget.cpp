@@ -38,9 +38,6 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     setupUiMenu();
     setupTools();
 
-    this->filterTimer.setSingleShot(true);
-    QObject::connect(&this->filterTimer, SIGNAL(timeout()), SLOT(executeFilterLibrary()));
-
     this->treeWidgetTool->setColumnHidden(1, true);
     this->treeWidgetTool->setColumnHidden(2, true);
     this->treeWidgetTool->setColumnHidden(3, true);
@@ -1004,7 +1001,7 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
         this->treeWidgetPreset->removeSelectedPresets();
 }
 
-void LibraryWidget::executeFilterLibrary()
+void LibraryWidget::filterLibrary()
 {
     EventManager::getInstance().fireLibraryFilterChangedEvent(LibraryFilterChangedEvent(this->lineEditFilter->text()));
 
@@ -1012,11 +1009,6 @@ void LibraryWidget::executeFilterLibrary()
     EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
-}
-
-void LibraryWidget::filterChanged(QString filter)
-{
-    this->filterTimer.start(1000);
 }
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
