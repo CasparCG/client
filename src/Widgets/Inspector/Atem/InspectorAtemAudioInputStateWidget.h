@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
     private:
         LibraryModel* model;
         AtemAudioInputStateCommand* command;
+        QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void loadAtemInputState();
         void blockAllSignals(bool block);

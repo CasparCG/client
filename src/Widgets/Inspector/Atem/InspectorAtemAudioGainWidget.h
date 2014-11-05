@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorAtemAudioGainWidget : public QWidget, Ui::Inspecto
     private:
         LibraryModel* model;
         AtemAudioGainCommand* command;
+        QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void blockAllSignals(bool block);
         void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);

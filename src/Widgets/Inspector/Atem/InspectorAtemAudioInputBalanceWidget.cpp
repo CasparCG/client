@@ -32,7 +32,12 @@ void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItem
         this->comboBoxInput->clear();
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
-            loadAtemAudioInput(device->inputInfos());
+        {
+            if (this->inputs.isEmpty())
+                this->inputs = device->inputInfos();
+
+            loadAtemAudioInput(this->inputs);
+        }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->sliderBalance->setValue(this->command->getBalance() * 100);
@@ -51,7 +56,9 @@ void InspectorAtemAudioInputBalanceWidget::atemDeviceChanged(const AtemDeviceCha
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            loadAtemAudioInput(device->inputInfos());
+            this->inputs = device->inputInfos();
+
+            loadAtemAudioInput(this->inputs);
         }
     }
 }

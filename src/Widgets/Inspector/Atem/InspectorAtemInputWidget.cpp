@@ -34,7 +34,12 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
         this->comboBoxInput->clear();
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
-            loadAtemInput(device->inputInfos());
+        {
+            if (this->inputs.isEmpty())
+                this->inputs = device->inputInfos();
+
+            loadAtemInput(this->inputs);
+        }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
@@ -52,7 +57,9 @@ void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            loadAtemInput(device->inputInfos());
+            this->inputs = device->inputInfos();
+
+            loadAtemInput(this->inputs);
         }
     }
 }
@@ -64,7 +71,6 @@ void InspectorAtemInputWidget::loadAtemInput(QMap<quint16, QAtemConnection::Inpu
     this->comboBoxInput->blockSignals(true);
 
     this->comboBoxInput->clear();
-
     foreach (quint16 key, inputs.keys())
         this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
 

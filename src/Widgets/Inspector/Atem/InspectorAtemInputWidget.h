@@ -25,6 +25,7 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
     private:
         LibraryModel* model;
         AtemInputCommand* command;
+        QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void loadAtemSwitcher();
         void blockAllSignals(bool block);

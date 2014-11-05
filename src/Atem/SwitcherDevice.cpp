@@ -27,8 +27,6 @@ void SwitcherDevice::connectDevice()
         return;
 
     this->atemConnection->connectToSwitcher(QHostAddress(this->address));
-
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void SwitcherDevice::disconnectDevice()
