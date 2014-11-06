@@ -15,7 +15,7 @@ namespace Atem
 {
     static const int DEFAULT_SPEED = 12;
     static const QString DEFAULT_TRANSITION = "0";
-    static const QString DEFAULT_INPUT = "1";
+    static const QString DEFAULT_INPUT = "0";
     static const QString DEFAULT_SWITCHER = "prev";
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const QString DEFAULT_KEYER = "0";

@@ -28,7 +28,7 @@ class WIDGETS_EXPORT InspectorAtemAudioInputBalanceWidget : public QWidget, Ui::
         QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void blockAllSignals(bool block);
-        void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemAudioInput();
 
         Q_SLOT void inputChanged(int);
         Q_SLOT void sliderBalanceChanged(int);

@@ -17,8 +17,6 @@ InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
-
-    loadAtemSwitcher();
 }
 
 void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -38,7 +36,8 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
             if (this->inputs.isEmpty())
                 this->inputs = device->inputInfos();
 
-            loadAtemInput(this->inputs);
+            loadAtemSwitcher();
+            loadAtemInput();
         }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
@@ -59,20 +58,26 @@ void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
             this->inputs = device->inputInfos();
 
-            loadAtemInput(this->inputs);
+            loadAtemSwitcher();
+            loadAtemInput();
         }
     }
 }
 
-void InspectorAtemInputWidget::loadAtemInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+void InspectorAtemInputWidget::loadAtemInput()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values
     this->comboBoxInput->blockSignals(true);
 
     this->comboBoxInput->clear();
-    foreach (quint16 key, inputs.keys())
-        this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+    foreach (quint16 key, this->inputs.keys())
+    {
+        if (inputs.value(key).type == 129) // Aux.
+            continue;
+
+        this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
+    }
 
     this->comboBoxInput->blockSignals(false);
 }
@@ -93,6 +98,12 @@ void InspectorAtemInputWidget::loadAtemSwitcher()
     QList<AtemSwitcherModel> models = DatabaseManager::getInstance().getAtemSwitcher();
     foreach (AtemSwitcherModel model, models)
         this->comboBoxSwitcher->addItem(model.getName(), model.getValue());
+
+    foreach (quint16 key, this->inputs.keys())
+    {
+        if (inputs.value(key).type == 129) // Aux.
+            this->comboBoxSwitcher->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
+    }
 
     this->comboBoxSwitcher->blockSignals(false);
 }

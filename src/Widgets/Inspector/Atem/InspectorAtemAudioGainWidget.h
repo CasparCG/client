@@ -28,7 +28,7 @@ class WIDGETS_EXPORT InspectorAtemAudioGainWidget : public QWidget, Ui::Inspecto
         QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void blockAllSignals(bool block);
-        void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemAudioInput();
 
         Q_SLOT void inputChanged(int);
         Q_SLOT void sliderGainChanged(int);

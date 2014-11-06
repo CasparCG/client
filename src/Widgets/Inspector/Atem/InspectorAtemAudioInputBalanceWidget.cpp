@@ -36,7 +36,7 @@ void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItem
             if (this->inputs.isEmpty())
                 this->inputs = device->inputInfos();
 
-            loadAtemAudioInput(this->inputs);
+            loadAtemAudioInput();
         }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
@@ -58,12 +58,12 @@ void InspectorAtemAudioInputBalanceWidget::atemDeviceChanged(const AtemDeviceCha
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
             this->inputs = device->inputInfos();
 
-            loadAtemAudioInput(this->inputs);
+            loadAtemAudioInput();
         }
     }
 }
 
-void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values
@@ -72,10 +72,10 @@ void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput(QMap<quint16, QAte
     this->comboBoxInput->clear();
     this->comboBoxInput->addItem("Master", "0");
 
-    foreach (quint16 key, inputs.keys())
+    foreach (quint16 key, this->inputs.keys())
     {
-        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
-            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+        if (this->inputs.value(key).type == 0 || this->inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
     }
 
     this->comboBoxInput->blockSignals(false);

@@ -266,7 +266,12 @@ void RundownAtemInputWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->selectInput(this->command.getSwitcher(), this->command.getInput());
+    {
+        if (this->command.getSwitcher() == "pgm" || this->command.getSwitcher() == "prev")
+            device->selectInput(this->command.getSwitcher(), this->command.getInput());
+        else // Aux.
+            device->setAuxSource(this->command.getSwitcher(), this->command.getInput());
+    }
 
     if (this->markUsedItems)
         setUsed(true);
@@ -276,7 +281,10 @@ void RundownAtemInputWidget::executePreview()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->selectInput("prev", this->command.getInput());
+    {
+        if (this->command.getSwitcher() == "pgm")
+            device->selectInput("prev", this->command.getInput());
+    }
 }
 
 void RundownAtemInputWidget::delayChanged(int delay)

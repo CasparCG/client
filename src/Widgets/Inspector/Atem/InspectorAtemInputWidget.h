@@ -29,7 +29,7 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
 
         void loadAtemSwitcher();
         void blockAllSignals(bool block);
-        void loadAtemInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemInput();
 
         Q_SLOT void switcherChanged(int);
         Q_SLOT void inputChanged(int);

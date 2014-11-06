@@ -29,7 +29,7 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
 
         void loadAtemInputState();
         void blockAllSignals(bool block);
-        void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemAudioInput();
 
         Q_SLOT void inputChanged(int);
         Q_SLOT void stateChanged(int);

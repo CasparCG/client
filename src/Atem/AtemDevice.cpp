@@ -45,6 +45,12 @@ void AtemDevice::triggerCut()
 
 QMap<quint16, QAtemConnection::InputInfo> AtemDevice::inputInfos()
 {
+    /*
+    QMap<quint16, QAtemConnection::InputInfo> infos = SwitcherDevice::atemConnection->inputInfos();
+    foreach (quint16 key, infos.keys())
+        qDebug() << "LongText: " << infos.value(key).longText << ", ShortText: " << infos.value(key).shortText << " Index: " << infos.value(key).index << ", Type: " << infos.value(key).type;
+    */
+
     return SwitcherDevice::atemConnection->inputInfos();
 }
 
@@ -59,6 +65,11 @@ void AtemDevice::selectInput(const QString& switcher, const QString& input)
         SwitcherDevice::atemConnection->changeProgramInput(input.toInt());
     else if (switcher == "prev")
         SwitcherDevice::atemConnection->changePreviewInput(input.toInt());
+}
+
+void AtemDevice::setAuxSource(const QString& aux, const QString& source)
+{
+    SwitcherDevice::atemConnection->setAuxSource(aux.toInt() - 8001, source.toInt());
 }
 
 void AtemDevice::setKeyerState(const QString& keyer, bool state)

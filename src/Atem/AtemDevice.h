@@ -19,6 +19,7 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
         QMap<quint16, QAtemConnection::InputInfo> inputInfos();
         QHash<quint16, QAtemConnection::AudioInput> audioInputs();
 
+        void setAuxSource(const QString& aux, const QString& source);
         void selectInput(const QString& switcher, const QString& input);
 
         void setKeyerState(const QString& keyer, bool state);
