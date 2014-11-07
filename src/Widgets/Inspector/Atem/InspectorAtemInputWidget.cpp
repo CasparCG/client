@@ -95,6 +95,8 @@ void InspectorAtemInputWidget::loadAtemSwitcher()
     // Events will not be triggered while we update the values.
     this->comboBoxSwitcher->blockSignals(true);
 
+    this->comboBoxSwitcher->clear();
+
     QList<AtemSwitcherModel> models = DatabaseManager::getInstance().getAtemSwitcher();
     foreach (AtemSwitcherModel model, models)
         this->comboBoxSwitcher->addItem(model.getName(), model.getValue());
