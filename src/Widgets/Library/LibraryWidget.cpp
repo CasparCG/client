@@ -72,7 +72,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
     this->treeWidgetVideo->setColumnHidden(5, true);
-    this->treeWidgetVideo->setColumnWidth(6, 65);
+    this->treeWidgetVideo->setColumnWidth(6, 71);
 
     this->treeWidgetData->setColumnHidden(1, true);
     this->treeWidgetData->setColumnHidden(2, true);
