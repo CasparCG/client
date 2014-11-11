@@ -64,7 +64,7 @@ DEPENDPATH += $$PWD/../../lib/libvlc/include
 INCLUDEPATH += $$PWD/../../lib/libvlc/include
 win32:LIBS += -L$$PWD/../../lib/libvlc/lib/win32/ -lvlc -lvlccore
 else:macx:LIBS += -L$$PWD/../../lib/libvlc/lib/macx/ -lvlc -lvlccore
-else:unix:LIBS += -L$$PWD/../../lib/libvlc/lib/linux/ -lvlc -lvlccore
+else:unix:LIBS += -lvlc -lvlccore
 
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include

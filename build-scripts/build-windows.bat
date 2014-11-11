@@ -24,7 +24,7 @@ echo Building...
 mingw32-make || goto :error
 
 :: Create client folder to later zip
-set CLIENT_FOLDER=CasparCG Client
+set CLIENT_FOLDER=%BUILD_ARCHIVE_NAME%
 if exist "%CLIENT_FOLDER%" rmdir "%CLIENT_FOLDER%" /s /q || goto :error
 mkdir "%CLIENT_FOLDER%\%CLIENT_FOLDER%" || goto :error
 

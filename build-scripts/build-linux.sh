@@ -29,7 +29,7 @@ export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
 /usr/bin/time -f 'Build time %E' make || fail "make failed"
 
 # Create client folder to later zip
-export CLIENT_FOLDER="CasparCG Client"
+export CLIENT_FOLDER="$BUILD_ARCHIVE_NAME"
 if [ -f "$CLIENT_FOLDER" ]; then
     rm -Rf "$CLIENT_FOLDER" || fail "Could not delete $CLIENT_FOLDER"
 fi
