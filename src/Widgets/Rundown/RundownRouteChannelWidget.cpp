@@ -594,48 +594,48 @@ void RundownRouteChannelWidget::deviceAdded(CasparDevice& device)
 
 void RundownRouteChannelWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownRouteChannelWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownRouteChannelWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownRouteChannelWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Load);
 }
 
 void RundownRouteChannelWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownRouteChannelWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownRouteChannelWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownRouteChannelWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

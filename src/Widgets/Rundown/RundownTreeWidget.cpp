@@ -1695,7 +1695,7 @@ void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, 
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
     {
         this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemAbove();
@@ -1708,7 +1708,7 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
     {
         this->treeWidgetRundown->blockSignals(true);
         this->treeWidgetRundown->selectItemBelow();
@@ -1727,7 +1727,7 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(selectedWidget)->getCommand();
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 1 && arguments[0] == 1 && command->getChannel() == arguments[1])
+    if (this->allowRemoteRundownTriggering && arguments.count() > 1 && arguments[0].toInt() > 0 && arguments[1].toInt() == command->getChannel())
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1736,7 +1736,7 @@ void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Stop, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1745,7 +1745,7 @@ void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1754,7 +1754,7 @@ void RundownTreeWidget::playNowControlSubscriptionReceived(const QString& predic
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1763,7 +1763,7 @@ void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1772,7 +1772,7 @@ void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicat
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PauseResume, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1781,7 +1781,7 @@ void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1790,7 +1790,7 @@ void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predica
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Update, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1799,7 +1799,7 @@ void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predica
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1808,7 +1808,7 @@ void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicat
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Clear, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1817,7 +1817,7 @@ void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideoLayer, this->treeWidgetRundown->currentItem()));
 }
 
@@ -1826,6 +1826,6 @@ void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& p
     if (!this->active)
         return;
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0] == 1)
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearChannel, this->treeWidgetRundown->currentItem()));
 }

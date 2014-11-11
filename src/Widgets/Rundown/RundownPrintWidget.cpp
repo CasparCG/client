@@ -427,42 +427,42 @@ void RundownPrintWidget::deviceAdded(CasparDevice& device)
 
 void RundownPrintWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownPrintWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownPrintWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownPrintWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownPrintWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownPrintWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownPrintWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

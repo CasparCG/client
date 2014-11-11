@@ -521,42 +521,42 @@ void RundownChromaWidget::deviceAdded(CasparDevice& device)
 
 void RundownChromaWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownChromaWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownChromaWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownChromaWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownChromaWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownChromaWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownChromaWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }
