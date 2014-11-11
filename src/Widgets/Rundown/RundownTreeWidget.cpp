@@ -620,7 +620,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     QString latest = qApp->clipboard()->text();
     QString data = QString::fromUtf8(reply->readAll());
 
-    //qDebug() << data;
+    qDebug() << data;
 
     this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
     qDebug() << QString("RundownTreeWidget::doOpenRundownFromUrl: Md5 hash is %1").arg(this->hexHash);
@@ -1727,7 +1727,7 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(selectedWidget)->getCommand();
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 1 && arguments[0].toInt() > 0 && arguments[1].toInt() == command->getChannel())
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() == command->getChannel())
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
 }
 

@@ -131,7 +131,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     {
         BOOST_FOREACH(const boost::property_tree::wptree::value_type& value, pt.get_child(L"templatedata"))
         {
-            this->models.push_back(KeyValueModel(QString::fromStdWString(value.second.get<std::wstring>(L"key")),
+            this->models.push_back(KeyValueModel(QString::fromStdWString(value.second.get<std::wstring>(L"id")),
                                                  QString::fromStdWString(value.second.get<std::wstring>(L"value"))));
         }
     }
@@ -153,7 +153,7 @@ void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
         foreach (KeyValueModel model, this->models)
         {
             writer->writeStartElement("componentdata");
-            writer->writeTextElement("key", model.getKey());
+            writer->writeTextElement("id", model.getKey());
             writer->writeTextElement("value", model.getValue());
             writer->writeEndElement();
         }
