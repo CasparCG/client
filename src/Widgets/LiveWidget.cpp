@@ -19,6 +19,9 @@ LiveWidget::LiveWidget(QWidget* parent)
     this->liveDialog = new LiveDialog(this);
     QObject::connect(this->liveDialog, SIGNAL(rejected()), this, SLOT(toggleWindowMode()));
 
+    QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
+    this->streamPort = (streamPort.isEmpty() == true) ? Stream::DEFAULT_PORT : streamPort.toInt();
+
     QStringList arguments;
     arguments.append("--no-osd");
     arguments.append("--ignore-config");
@@ -41,7 +44,7 @@ LiveWidget::LiveWidget(QWidget* parent)
     this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
     this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);
 
-    this->vlcMedia = libvlc_media_new_location(this->vlcInstance, "udp://@0.0.0.0:5004");
+    this->vlcMedia = libvlc_media_new_location(this->vlcInstance, QString("udp://@0.0.0.0:%1").arg(this->streamPort).toStdString().c_str());
     libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
 
     setupRenderTarget(this->windowMode);
@@ -199,7 +202,7 @@ void LiveWidget::stopStream(const QString& deviceName, const QString& deviceChan
 
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
         if (device != NULL && device->isConnected())
-            device->stopStream(this->deviceChannel.toInt(), 5004);
+            device->stopStream(this->deviceChannel.toInt(), this->streamPort);
     }
 }
 
@@ -215,9 +218,9 @@ void LiveWidget::startStream(const QString& deviceName, const QString& deviceCha
             int quality = DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt();
 
             if (this->windowMode)
-                device->startStream(this->deviceChannel.toInt(), 5004, quality, this->useKey);
+                device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey);
             else
-                device->startStream(this->deviceChannel.toInt(), 5004, quality, this->useKey, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
+                device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
         }
     }
 }

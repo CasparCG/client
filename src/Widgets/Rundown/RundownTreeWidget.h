@@ -101,6 +101,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         OscSubscription* upControlSubscription;
         OscSubscription* downControlSubscription;
+        OscSubscription* playNowIfChannelControlSubscription;
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
@@ -204,6 +205,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
+        Q_SLOT void playNowIfChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void upControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);

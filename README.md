@@ -9,7 +9,7 @@ This release is considered tested and stable, and is intended for use in
 professional production.
 
 ## System Requirements
-The Windows version has been tested on Windows 7 x64. 
+The Windows version has been tested on Windows 7 x64 and Windows 8.1 x64. 
 No extra installations required.
 
 The Mac version has been tested on Mac OS X 10.9.

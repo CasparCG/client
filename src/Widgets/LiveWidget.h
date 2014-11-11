@@ -25,6 +25,7 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         QString deviceName;
         QString deviceChannel;
         bool useKey;
+        int streamPort;
 
         LiveDialog* liveDialog;
 

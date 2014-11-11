@@ -42,6 +42,7 @@ namespace Http
 
 namespace Stream
 {
+    static const int DEFAULT_PORT = 9250;
     static const int COMPACT_WIDTH = 288;
     static const int COMPACT_HEIGHT = 162;
 }
@@ -126,6 +127,7 @@ namespace Osc
     static const QString DEFAULT_CLEAR_CHANNEL_RUNDOWN_CONTROL_FILTER = "/control/clearchannel";
     static const QString DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER = "/control/down";
     static const QString DEFAULT_UP_RUNDOWN_CONTROL_FILTER = "/control/up";
+    static const QString DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER = "/control/playnowifchannel";
 }
 
 namespace Route

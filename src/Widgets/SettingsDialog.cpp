@@ -96,6 +96,10 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxDisableAudioInStream->setChecked(disableAudioInStream);
     this->spinBoxQuality->setValue(100 - DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt());
     this->spinBoxNetworkCache->setValue(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt());
+    this->lineEditStreamPort->setPlaceholderText(QString("%1").arg(Stream::DEFAULT_PORT));
+    QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
+    if (!streamPort.isEmpty())
+        this->lineEditStreamPort->setText(streamPort);
 
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
     this->checkBoxStoreThumbnailsInDatabase->setChecked(storeThumbnailsInDatabase);
@@ -801,6 +805,15 @@ void SettingsDialog::oscPortChanged()
         oscPort = Osc::DEFAULT_PORT;
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+}
+
+void SettingsDialog::streamPortChanged()
+{
+    QString streamPort = this->lineEditStreamPort->text().trimmed();
+    if (streamPort.isEmpty())
+        streamPort = Stream::DEFAULT_PORT;
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamPort", streamPort));
 }
 
 void SettingsDialog::repositoryPortChanged()

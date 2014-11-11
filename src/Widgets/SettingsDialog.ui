@@ -725,13 +725,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>Live</string>
+      <string>Live Stream</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="Line" name="lineLive">
+    <widget class="Line" name="lineLiveStream">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -782,7 +782,7 @@
       <number>75</number>
      </property>
     </widget>
-    <widget class="QLabel" name="labelMilliseconds_2">
+    <widget class="QLabel" name="labelPercent">
      <property name="geometry">
       <rect>
        <x>288</x>
@@ -800,7 +800,7 @@
       <rect>
        <x>414</x>
        <y>381</y>
-       <width>113</width>
+       <width>120</width>
        <height>20</height>
       </rect>
      </property>
@@ -860,6 +860,41 @@
      </property>
      <property name="text">
       <string>Use freeze on load for video items</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStreamPort">
+     <property name="geometry">
+      <rect>
+       <x>453</x>
+       <y>653</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditStreamPort">
+     <property name="geometry">
+      <rect>
+       <x>513</x>
+       <y>651</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>9250</string>
      </property>
     </widget>
    </widget>
@@ -4780,6 +4815,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditStreamPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>streamPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>589</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>782</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4844,5 +4895,6 @@
   <slot>repositoryPortChanged()</slot>
   <slot>showDurationChanged(int)</slot>
   <slot>useFreezeOnLoadChanged(int)</slot>
+  <slot>streamPortChanged()</slot>
  </slots>
 </ui>

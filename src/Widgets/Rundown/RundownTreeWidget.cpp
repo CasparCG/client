@@ -60,7 +60,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
       previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
-      upControlSubscription(NULL), downControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
+      upControlSubscription(NULL), downControlSubscription(NULL), playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
 {
@@ -1584,6 +1584,9 @@ void RundownTreeWidget::resetOscSubscriptions()
     if (this->downControlSubscription != NULL)
         this->downControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playNowIfChannelControlSubscription != NULL)
+        this->playNowIfChannelControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 
@@ -1630,6 +1633,11 @@ void RundownTreeWidget::configureOscSubscriptions()
     this->downControlSubscription = new OscSubscription(downControlFilter, this);
     QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowIfChannelControlFilter = Osc::DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER;
+    this->playNowIfChannelControlSubscription = new OscSubscription(playNowIfChannelControlFilter, this);
+    QObject::connect(this->playNowIfChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowIfChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString stopControlFilter = Osc::DEFAULT_STOP_RUNDOWN_CONTROL_FILTER;
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
@@ -1706,6 +1714,21 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
         this->treeWidgetRundown->selectItemBelow();
         this->treeWidgetRundown->blockSignals(false);
     }
+}
+
+void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
+    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
+    AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(selectedWidget)->getCommand();
+
+    if (this->allowRemoteRundownTriggering && arguments.count() > 1 && arguments[0] == 1 && command->getChannel() == arguments[1])
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
