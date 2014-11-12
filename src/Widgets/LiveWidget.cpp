@@ -25,8 +25,8 @@ LiveWidget::LiveWidget(QWidget* parent)
     QStringList arguments;
     arguments.append("--no-osd");
     arguments.append("--ignore-config");
-    arguments.append("--verbose=3");
-    arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt()));
+    arguments.append(QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
+    arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue()));
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
     if (disableAudioInStream)

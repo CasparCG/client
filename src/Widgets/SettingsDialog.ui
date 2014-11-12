@@ -897,6 +897,38 @@
       <string>9250</string>
      </property>
     </widget>
+    <widget class="QComboBox" name="comboBoxLogLevel">
+     <property name="geometry">
+      <rect>
+       <x>513</x>
+       <y>578</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelLogLevel">
+     <property name="geometry">
+      <rect>
+       <x>363</x>
+       <y>579</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Log level:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabDevices">
     <attribute name="title">
@@ -4823,11 +4855,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>589</x>
-     <y>621</y>
+     <y>694</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
      <y>782</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxLogLevel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>logLevelChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>616</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>825</y>
     </hint>
    </hints>
   </connection>
@@ -4896,5 +4944,6 @@
   <slot>showDurationChanged(int)</slot>
   <slot>useFreezeOnLoadChanged(int)</slot>
   <slot>streamPortChanged()</slot>
+  <slot>logLevelChanged(int)</slot>
  </slots>
 </ui>

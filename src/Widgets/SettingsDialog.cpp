@@ -39,6 +39,15 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     this->stylesheet = qApp->styleSheet();
 
+    blockAllSignals(true);
+    this->comboBoxLogLevel->clear();
+    this->comboBoxLogLevel->addItem("Disable", "-1");
+    this->comboBoxLogLevel->addItem("Info", "0");
+    this->comboBoxLogLevel->addItem("Error", "1");
+    this->comboBoxLogLevel->addItem("Warning", "2");
+    this->comboBoxLogLevel->addItem("Debug", "3");
+    blockAllSignals(false);
+
     bool startFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
     this->checkBoxFullscreen->setChecked(startFullscreen);
 
@@ -96,6 +105,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxDisableAudioInStream->setChecked(disableAudioInStream);
     this->spinBoxQuality->setValue(100 - DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt());
     this->spinBoxNetworkCache->setValue(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt());
+    this->comboBoxLogLevel->setCurrentIndex(this->comboBoxLogLevel->findData(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
     this->lineEditStreamPort->setPlaceholderText(QString("%1").arg(Stream::DEFAULT_PORT));
     QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
     if (!streamPort.isEmpty())
@@ -121,6 +131,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
 void SettingsDialog::blockAllSignals(bool block)
 {
+    this->comboBoxLogLevel->blockSignals(block);
     this->comboBoxTriCasterProduct->blockSignals(block);
 }
 
@@ -828,6 +839,11 @@ void SettingsDialog::repositoryPortChanged()
 void SettingsDialog::delayTypeChanged(QString delayType)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelayType->currentText()));
+}
+
+void SettingsDialog::logLevelChanged(int index)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "LogLevel", this->comboBoxLogLevel->itemData(index).toString()));
 }
 
 void SettingsDialog::tricasterProductChanged(QString product)
