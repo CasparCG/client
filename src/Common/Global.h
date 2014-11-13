@@ -128,6 +128,8 @@ namespace Osc
     static const QString DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER = "/control/down";
     static const QString DEFAULT_UP_RUNDOWN_CONTROL_FILTER = "/control/up";
     static const QString DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER = "/control/playnowifchannel";
+    static const QString DEFAULT_PLAYANDAUTOSTEP_CONTROL_FILTER = "/control/playandautostep";
+    static const QString DEFAULT_PLAYNOWANDAUTOSTEP_CONTROL_FILTER = "/control/playnowandautostep";
 }
 
 namespace Route

@@ -51,7 +51,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
     public:
         explicit RundownTreeWidget(QWidget* parent = 0);
-        ~RundownTreeWidget();
 
         void setActive(bool active);
         void openRundown(const QString& path);
@@ -101,6 +100,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
         OscSubscription* upControlSubscription;
         OscSubscription* downControlSubscription;
+        OscSubscription* playAndAutoStepControlSubscription;
+        OscSubscription* playNowAndAutoStepControlSubscription;
         OscSubscription* playNowIfChannelControlSubscription;
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
@@ -205,6 +206,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
+        Q_SLOT void playAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playNowIfChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void upControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);

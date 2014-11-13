@@ -30,6 +30,7 @@
 #include "GpiManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
+#include "DeviceManager.h"
 #include "Events/PresetChangedEvent.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
@@ -60,7 +61,8 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
       previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
-      upControlSubscription(NULL), downControlSubscription(NULL), playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
+      upControlSubscription(NULL), downControlSubscription(NULL), playAndAutoStepControlSubscription(NULL), playNowAndAutoStepControlSubscription(NULL),
+      playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
 {
@@ -94,10 +96,6 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
         gpiBindingChanged(port.getPort(), port.getAction());
 
     this->treeWidgetRundown->checkEmptyRundown();
-}
-
-RundownTreeWidget::~RundownTreeWidget()
-{
 }
 
 void RundownTreeWidget::setupMenus()
@@ -1584,6 +1582,12 @@ void RundownTreeWidget::resetOscSubscriptions()
     if (this->downControlSubscription != NULL)
         this->downControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->playAndAutoStepControlSubscription != NULL)
+        this->playAndAutoStepControlSubscription->disconnect(); // Disconnect all events.
+
+    if (this->playNowAndAutoStepControlSubscription != NULL)
+        this->playNowAndAutoStepControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->playNowIfChannelControlSubscription != NULL)
         this->playNowIfChannelControlSubscription->disconnect(); // Disconnect all events.
 
@@ -1633,6 +1637,16 @@ void RundownTreeWidget::configureOscSubscriptions()
     this->downControlSubscription = new OscSubscription(downControlFilter, this);
     QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playAndAutoStepControlFilter = Osc::DEFAULT_PLAYANDAUTOSTEP_CONTROL_FILTER;
+    this->playAndAutoStepControlSubscription = new OscSubscription(playAndAutoStepControlFilter, this);
+    QObject::connect(this->playAndAutoStepControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString playNowAndAutoStepControlFilter = Osc::DEFAULT_PLAYNOWANDAUTOSTEP_CONTROL_FILTER;
+    this->playNowAndAutoStepControlSubscription = new OscSubscription(playNowAndAutoStepControlFilter, this);
+    QObject::connect(this->playNowAndAutoStepControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(playNowAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playNowIfChannelControlFilter = Osc::DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER;
     this->playNowIfChannelControlSubscription = new OscSubscription(playNowIfChannelControlFilter, this);
@@ -1716,6 +1730,39 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
     }
 }
 
+void RundownTreeWidget::playAndAutoStepControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
+    {
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
+
+        this->treeWidgetRundown->blockSignals(true);
+        this->treeWidgetRundown->selectItemBelow();
+        this->treeWidgetRundown->blockSignals(false);
+    }
+}
+
+void RundownTreeWidget::playNowAndAutoStepControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    if (!this->active)
+        return;
+
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
+    {
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
+
+        this->treeWidgetRundown->blockSignals(true);
+        this->treeWidgetRundown->selectItemBelow();
+        this->treeWidgetRundown->blockSignals(false);
+    }
+}
+
 void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
@@ -1724,16 +1771,54 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
     if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
-    QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
-    AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(selectedWidget)->getCommand();
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0)
+    {
+        QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
+        AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(currentItem, 0));
 
-    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() == command->getChannel())
-        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, this->treeWidgetRundown->currentItem()));
+        if (rundownWidget != NULL && rundownWidget->isGroup())
+        {
+            for (int i = 0; i < currentItem->childCount(); i++)
+            {
+                QTreeWidgetItem* childItem = currentItem->child(i);
+                AbstractRundownWidget* rundownChildWidget = dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(childItem, 0));
+
+                LibraryModel* model = rundownChildWidget->getLibraryModel();
+                if (model == NULL)
+                    continue;
+
+                const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model->getDeviceName());
+                if (device == NULL)
+                    continue; // Only CasparCG devices.
+
+                AbstractCommand* command = dynamic_cast<AbstractCommand*>(rundownChildWidget->getCommand());
+                if (arguments[0].toInt() == command->getChannel())
+                    EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, childItem));
+            }
+        }
+        else
+        {
+            LibraryModel* model = rundownWidget->getLibraryModel();
+            if (model == NULL)
+                return;
+
+            const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model->getDeviceName());
+            if (device == NULL)
+                return; // Only CasparCG devices.
+
+            AbstractCommand* command = dynamic_cast<AbstractCommand*>(rundownWidget->getCommand());
+            if (arguments[0].toInt() == command->getChannel())
+                EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, currentItem));
+        }
+    }
 }
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
@@ -1745,6 +1830,9 @@ void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Play, this->treeWidgetRundown->currentItem()));
 }
@@ -1752,6 +1840,9 @@ void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
@@ -1763,6 +1854,9 @@ void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Load, this->treeWidgetRundown->currentItem()));
 }
@@ -1770,6 +1864,9 @@ void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
@@ -1781,6 +1878,9 @@ void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Next, this->treeWidgetRundown->currentItem()));
 }
@@ -1788,6 +1888,9 @@ void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
@@ -1799,6 +1902,9 @@ void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predica
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
 }
@@ -1806,6 +1912,9 @@ void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predica
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
@@ -1817,6 +1926,9 @@ void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString
     if (!this->active)
         return;
 
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::ClearVideoLayer, this->treeWidgetRundown->currentItem()));
 }
@@ -1824,6 +1936,9 @@ void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
