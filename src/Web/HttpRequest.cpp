@@ -12,8 +12,8 @@ void HttpRequest::sendGet(const QString& url, const QUrl& data)
 {
     QUrl request(url);
 
-    typedef QPair<QString, QString> QueryVar;
-    foreach (QueryVar queryItem, data.queryItems())
+    typedef QPair<QString, QString> QueryPair; // Workaround - foreach does not support templates.
+    foreach (QueryPair queryItem, data.queryItems())
         request.addQueryItem(queryItem.first, queryItem.second);
 
     qDebug() << QString("HttpRequest::sendGet: %1").arg(request.toString());
