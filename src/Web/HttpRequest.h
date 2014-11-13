@@ -16,8 +16,8 @@ class WEB_EXPORT HttpRequest : public QObject
     public:
         explicit HttpRequest(QObject* parent = 0);
 
-        void sendGet(const QString& url, const QByteArray& data);
-        void sendPost(const QString& url, const QByteArray& data);
+        void sendGet(const QString& url, const QUrl& data);
+        void sendPost(const QString& url, const QUrl& data);
 
     private:
         QNetworkAccessManager* networkManager;

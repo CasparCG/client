@@ -12,6 +12,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QXmlStreamWriter>
+#include <QtCore/QUrl>
 
 class CORE_EXPORT HttpGetCommand : public AbstractCommand
 {
@@ -24,7 +25,7 @@ class CORE_EXPORT HttpGetCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getUrl() const;
-        const QByteArray getHttpData() const;
+        const QUrl getHttpData() const;
         const QList<KeyValueModel>& getHttpDataModels() const;
         bool getTriggerOnNext() const;
 

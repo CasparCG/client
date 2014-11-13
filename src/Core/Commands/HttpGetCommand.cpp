@@ -2,8 +2,6 @@
 
 #include "Global.h"
 
-#include <QtCore/QUrl>
-
 HttpGetCommand::HttpGetCommand(QObject* parent)
     : AbstractCommand(parent),
       url(Http::DEFAULT_URL), triggerOnNext(Http::DEFAULT_TRIGGER_ON_NEXT)
@@ -20,14 +18,14 @@ const QList<KeyValueModel>& HttpGetCommand::getHttpDataModels() const
     return this->models;
 }
 
-const QByteArray HttpGetCommand::getHttpData() const
+const QUrl HttpGetCommand::getHttpData() const
 {
     QUrl httpData;
 
     foreach (KeyValueModel model, this->models)
         httpData.addQueryItem(model.getKey(), model.getValue());
 
-    return httpData.encodedQuery();
+    return httpData;
 }
 
 bool HttpGetCommand::getTriggerOnNext() const

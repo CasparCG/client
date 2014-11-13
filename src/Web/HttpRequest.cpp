@@ -1,21 +1,26 @@
 #include "HttpRequest.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QPair>
 
 HttpRequest::HttpRequest(QObject* parent)
     : QObject(parent)
 {
 }
 
-void HttpRequest::sendGet(const QString& url, const QByteArray& data)
+void HttpRequest::sendGet(const QString& url, const QUrl& data)
 {
-    QString request = QString("%1?%2").arg(url).arg(QString(data));
+    QUrl request(url);
 
-    qDebug() << QString("HttpRequest::sendGet: %1").arg(request);
+    typedef QPair<QString, QString> QueryVar;
+    foreach (QueryVar queryItem, data.queryItems())
+        request.addQueryItem(queryItem.first, queryItem.second);
+
+    qDebug() << QString("HttpRequest::sendGet: %1").arg(request.toString());
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(sendGetFinished(QNetworkReply*)));
-    this->networkManager->get(QNetworkRequest(QUrl(request)));
+    this->networkManager->get(QNetworkRequest(request));
 }
 
 void HttpRequest::sendGetFinished(QNetworkReply* reply)
@@ -28,13 +33,13 @@ void HttpRequest::sendGetFinished(QNetworkReply* reply)
     this->networkManager->deleteLater();
 }
 
-void HttpRequest::sendPost(const QString& url, const QByteArray& data)
+void HttpRequest::sendPost(const QString& url, const QUrl& data)
 {
-    qDebug() << QString("HttpRequest::sendPost: %1, %2").arg(url).arg(QString(data));
+    qDebug() << QString("HttpRequest::sendPost: %1, %2").arg(url).arg(QString(data.encodedQuery()));
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(sendPostFinished(QNetworkReply*)));
-    this->networkManager->post(QNetworkRequest(QUrl(url)), data);
+    this->networkManager->post(QNetworkRequest(QUrl(url)), data.encodedQuery());
 }
 
 void HttpRequest::sendPostFinished(QNetworkReply* reply)
