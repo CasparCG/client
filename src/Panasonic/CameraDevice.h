@@ -15,7 +15,7 @@ class PANASONIC_EXPORT CameraDevice : public QObject
     public:
         explicit CameraDevice(QObject* parent = 0);
 
-        void selectPreset(const QString& address, const QString& preset);
+        void selectPreset(const QString& address, int preset);
 
     private:
         QNetworkAccessManager* networkManager;

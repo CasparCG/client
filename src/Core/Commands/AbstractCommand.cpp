@@ -104,12 +104,12 @@ void AbstractCommand::setStoryId(const QString& storyId)
 
 void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get<int>(L"channel", Output::DEFAULT_CHANNEL));
-    setVideolayer(pt.get<int>(L"videolayer", Output::DEFAULT_VIDEOLAYER));
-    setDelay(pt.get<int>(L"delay", Output::DEFAULT_DELAY));
-    setDuration(pt.get<int>(L"duration", Output::DEFAULT_DURATION));
-    setAllowGpi(pt.get<bool>(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
-    setAllowRemoteTriggering(pt.get<bool>(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
+    setChannel(pt.get(L"channel", Output::DEFAULT_CHANNEL));
+    setVideolayer(pt.get(L"videolayer", Output::DEFAULT_VIDEOLAYER));
+    setDelay(pt.get(L"delay", Output::DEFAULT_DELAY));
+    setDuration(pt.get(L"duration", Output::DEFAULT_DURATION));
+    setAllowGpi(pt.get(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
+    setAllowRemoteTriggering(pt.get(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
     setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
     setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
 }

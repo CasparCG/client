@@ -23,12 +23,11 @@ void InspectorPanasonicPresetWidget::rundownItemSelected(const RundownItemSelect
         this->command = dynamic_cast<PanasonicPresetCommand*>(event.getCommand());
 
         this->lineEditAddress->setText(this->command->getAddress());
-        this->lineEditPreset->setText(this->command->getPreset());
+        this->spinBoxPreset->setValue(this->command->getPreset());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
     checkEmptyAddress();
-    checkEmptyPreset();
 
     blockAllSignals(false);
 }
@@ -36,7 +35,7 @@ void InspectorPanasonicPresetWidget::rundownItemSelected(const RundownItemSelect
 void InspectorPanasonicPresetWidget::blockAllSignals(bool block)
 {
     this->lineEditAddress->blockSignals(block);
-    this->lineEditPreset->blockSignals(block);
+    this->spinBoxPreset->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
@@ -48,14 +47,6 @@ void InspectorPanasonicPresetWidget::checkEmptyAddress()
         this->lineEditAddress->setStyleSheet("");
 }
 
-void InspectorPanasonicPresetWidget::checkEmptyPreset()
-{
-    if (this->lineEditPreset->text().isEmpty())
-        this->lineEditPreset->setStyleSheet("border-color: firebrick;");
-    else
-        this->lineEditPreset->setStyleSheet("");
-}
-
 void InspectorPanasonicPresetWidget::addressChanged(QString address)
 {
     this->command->setAddress(address);
@@ -63,11 +54,9 @@ void InspectorPanasonicPresetWidget::addressChanged(QString address)
     checkEmptyAddress();
 }
 
-void InspectorPanasonicPresetWidget::presetChanged(QString preset)
+void InspectorPanasonicPresetWidget::presetChanged(int preset)
 {
     this->command->setPreset(preset);
-
-    checkEmptyPreset();
 }
 
 void InspectorPanasonicPresetWidget::triggerOnNextChanged(int state)

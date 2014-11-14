@@ -191,7 +191,7 @@ bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType::Type typ
         if (this->command.getDelay() < 0)
             return true;
 
-        if (!this->command.getAddress().isEmpty() && !this->command.getPreset().isEmpty())
+        if (!this->command.getAddress().isEmpty())
         {
             this->executeTimer.setInterval(this->command.getDelay());
             this->executeTimer.start();

@@ -13,7 +13,7 @@ const QString& PanasonicPresetCommand::getAddress() const
     return this->address;
 }
 
-const QString& PanasonicPresetCommand::getPreset() const
+int PanasonicPresetCommand::getPreset() const
 {
     return this->preset;
 }
@@ -29,7 +29,7 @@ void PanasonicPresetCommand::setAddress(const QString& address)
     emit addressChanged(this->address);
 }
 
-void PanasonicPresetCommand::setPreset(const QString& preset)
+void PanasonicPresetCommand::setPreset(int preset)
 {
     this->preset = preset;
     emit presetChanged(this->preset);
@@ -46,7 +46,7 @@ void PanasonicPresetCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setAddress(QString::fromStdWString(pt.get(L"address", Panasonic::DEFAULT_ADDRESS.toStdWString())));
-    setPreset(QString::fromStdWString(pt.get(L"preset", Panasonic::DEFAULT_PRESET.toStdWString())));
+    setPreset(pt.get(L"preset", Panasonic::DEFAULT_PRESET));
     setTriggerOnNext(pt.get(L"triggeronnext", Panasonic::DEFAULT_TRIGGER_ON_NEXT));
 }
 
@@ -55,6 +55,6 @@ void PanasonicPresetCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("address", getAddress());
-    writer->writeTextElement("preset", getPreset());
+    writer->writeTextElement("preset", QString::number(getPreset()));
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

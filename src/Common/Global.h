@@ -30,7 +30,7 @@ namespace Atem
 namespace Panasonic
 {
     static const QString DEFAULT_ADDRESS = "";
-    static const QString DEFAULT_PRESET = "";
+    static const int DEFAULT_PRESET = 1;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
