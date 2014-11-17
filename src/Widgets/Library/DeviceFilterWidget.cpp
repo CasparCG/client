@@ -123,11 +123,17 @@ void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelInd
     // "All" item is selected, deselect others.
     if (topLeft.row() == 0 && dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(topLeft.row(), 0)->checkState() == Qt::Checked)
     {
+        if (this->sendEvents)
+            this->comboBoxDeviceFilter->setStyleSheet("");
+
         for (int i = 1; i < this->comboBoxDeviceFilter->count(); i++)
             dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
     }
     else
     {
+        if (this->sendEvents)
+            this->comboBoxDeviceFilter->setStyleSheet("border-color: darkorange;");
+
         // Deselect the "All" item.
         dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
     }

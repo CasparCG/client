@@ -1003,12 +1003,22 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
 
 void LibraryWidget::filterLibrary()
 {
+    checkEmptyFilter();
+
     EventManager::getInstance().fireLibraryFilterChangedEvent(LibraryFilterChangedEvent(this->lineEditFilter->text()));
 
     EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
+}
+
+void LibraryWidget::checkEmptyFilter()
+{
+    if (this->lineEditFilter->text().isEmpty())
+        this->lineEditFilter->setStyleSheet("");
+    else
+        this->lineEditFilter->setStyleSheet("border-color: darkorange;");
 }
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)

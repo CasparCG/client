@@ -455,6 +455,11 @@ namespace Rundown
     static const QString ROUTEVIDEOLAYER = "ROUTEVIDEOLAYER";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
+    static const QString DEFAULT_AUDIO_NAME = "Audio";
+    static const QString DEFAULT_IMAGE_NAME = "Image";
+    static const QString DEFAULT_IMAGESCROLLER_NAME = "Image Scroller";
+    static const QString DEFAULT_TEMPLATE_NAME = "Template";
+    static const QString DEFAULT_MOVIE_NAME = "Video";
     static const int DEFAULT_ICON_WIDTH = 32;
     static const int DEFAULT_ICON_HEIGHT = 32;
     static const int COMPACT_ICON_WIDTH = 16;

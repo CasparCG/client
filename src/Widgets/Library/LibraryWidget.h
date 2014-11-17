@@ -37,6 +37,7 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
 
         void setupTools();
         void setupUiMenu();
+        void checkEmptyFilter();
 
         Q_SLOT void loadLibrary();
         Q_SLOT void toggleExpandItem(QTreeWidgetItem*, int);

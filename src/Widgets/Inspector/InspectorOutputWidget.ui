@@ -60,6 +60,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxTriCasterDevice">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -70,6 +73,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxAtemDevice">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -156,6 +162,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxChannel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -199,6 +208,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxVideolayer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -242,6 +254,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxDelay">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -298,6 +313,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -341,6 +359,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAllowGpi">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Allow GPI</string>
        </property>
@@ -381,6 +402,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAllowRemoteTriggering">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Allow Remote Triggering</string>
        </property>
@@ -430,7 +454,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditRemoteTriggerId"/>
+      <widget class="QLineEdit" name="lineEditRemoteTriggerId">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

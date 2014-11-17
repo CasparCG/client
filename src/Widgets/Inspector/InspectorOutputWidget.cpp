@@ -99,6 +99,8 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 void InspectorOutputWidget::libraryFilterChanged(const LibraryFilterChangedEvent& event)
 {
     this->libraryFilter = event.getFilter();
+
+    checkEmptyTarget();
 }
 
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -372,6 +374,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
 
     blockAllSignals(true);
 
+    this->comboBoxTarget->clear();
+
     this->comboBoxDevice->setVisible(true);
     this->comboBoxAtemDevice->setVisible(false);
     this->comboBoxTriCasterDevice->setVisible(false);
@@ -406,6 +410,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
+    this->comboBoxTarget->setStyleSheet("");
+
     blockAllSignals(false);
 }
 
@@ -414,6 +420,8 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     blockAllSignals(true);
 
     this->model = NULL;
+
+    this->comboBoxTarget->clear();
 
     this->comboBoxDevice->setVisible(true);
     this->comboBoxAtemDevice->setVisible(false);
@@ -438,7 +446,6 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->comboBoxDevice->setCurrentIndex(-1);
     this->comboBoxAtemDevice->setCurrentIndex(-1);
     this->comboBoxTriCasterDevice->setCurrentIndex(-1);
-    this->comboBoxTarget->clear();
     this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
     this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
     this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
@@ -451,6 +458,8 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
+
+    this->comboBoxTarget->setStyleSheet("");
 
     blockAllSignals(false);
 }
@@ -514,6 +523,8 @@ void InspectorOutputWidget::blockAllSignals(bool block)
 
 void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceName)
 {
+    this->comboBoxTarget->clear();
+
     if (this->model == NULL)
         return;
 
@@ -539,21 +550,39 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
 
     if (models.count() > 0)
     {
-        this->comboBoxTarget->clear();
         foreach (LibraryModel model, models)
         {
-            if (type == "MOVIE" && model.getType() == "MOVIE")
+            if (type == Rundown::MOVIE && model.getType() == Rundown::MOVIE)
                 this->comboBoxTarget->addItem(model.getName());
             else if (type == Rundown::AUDIO && model.getType() == Rundown::AUDIO)
                 this->comboBoxTarget->addItem(model.getName());
             else if (type == Rundown::TEMPLATE && model.getType() == Rundown::TEMPLATE)
                 this->comboBoxTarget->addItem(model.getName());
-            else if ((type == Rundown::STILL || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
+            else if ((type == Rundown::STILL || type == Rundown::IMAGESCROLLER) && model.getType() == Rundown::STILL)
                 this->comboBoxTarget->addItem(model.getName());
+        }
+
+        if (this->comboBoxTarget->findText(this->model->getName()))
+        {
+            if (!this->model->getName().isEmpty() &&
+                this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
+                this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+                this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+                this->comboBoxTarget->addItem(this->model->getName());
         }
 
         this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
     }
+    else
+    {
+        if (!this->model->getName().isEmpty() &&
+            this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
+            this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+            this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+            this->comboBoxTarget->addItem(this->model->getName());
+    }
+
+    this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
 }
 
 void InspectorOutputWidget::checkEmptyDevice()
@@ -582,10 +611,20 @@ void InspectorOutputWidget::checkEmptyTriCasterDevice()
 
 void InspectorOutputWidget::checkEmptyTarget()
 {
-    if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
-        this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+    if (this->libraryFilter.isEmpty())
+    {
+        if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
+            this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+        else
+            this->comboBoxTarget->setStyleSheet("");
+    }
     else
-        this->comboBoxTarget->setStyleSheet("");
+    {
+        if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
+            this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+        else
+            this->comboBoxTarget->setStyleSheet("border-color: darkorange;");
+    }
 }
 
 void InspectorOutputWidget::deviceRemoved()
