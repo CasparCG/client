@@ -4,22 +4,15 @@
 
 #include <iostream>
 
+#include <QtCore/QDebug>
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QAbstractButton>
-#include <QCloseEvent>
-#include <QKeyEvent>
-#include <QtWidgets/QMessageBox>
-#else
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QMessageBox>
-#endif
 
-#include <QDebug>
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 OpenRundownFromUrlDialog::OpenRundownFromUrlDialog(QWidget* parent)
     : QDialog(parent), repositoryUrl("")

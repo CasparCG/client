@@ -12,19 +12,13 @@
 
 #include <iostream>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QClipboard>
-#include <QPainter>
-#include <QDrag>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtGui/QPainter>
-#endif
-
 #include <QtCore/QTime>
 #include <QtCore/QDebug>
+
+#include <QtGui/QPainter>
+#include <QtGui/QClipboard>
+
+#include <QtWidgets/QApplication>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent), compactView(false), theme(""), lock(false)

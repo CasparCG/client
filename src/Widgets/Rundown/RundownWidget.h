@@ -27,17 +27,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#if QT_VERSION >= 0x050000
+#include <QtGui/QKeyEvent>
+
 #include <QtWidgets/QAction>
-#include <QKeyEvent>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QAction>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 {

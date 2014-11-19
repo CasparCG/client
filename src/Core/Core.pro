@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core sql network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core sql network widgets
 
 TARGET = core
 TEMPLATE = lib

@@ -10,13 +10,8 @@
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT TriCasterDeviceDialog : public QDialog, Ui::TriCasterDeviceDialog
 {

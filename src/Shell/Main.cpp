@@ -21,27 +21,15 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QFontDatabase>
-#include <QDesktopServices>
-#include <QDir>
-#else
-#include <QtGui/QApplication>
 #include <QtGui/QFontDatabase>
-#include <QtGui/QDesktopServices>
-#endif
+
+#include <QtWidgets/QApplication>
 
 #include <QtSql/QSqlDatabase>
 
 void loadDatabase(QApplication& application)
 {
-    //QString path = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#if QT_VERSION >= 0x050000
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
-#else
-    QString path = QString("%1/.CasparCG/Client").arg(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
-#endif
 
     QDir directory;
     if (!directory.exists(path))
