@@ -618,8 +618,6 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     QString latest = qApp->clipboard()->text();
     QString data = QString::fromUtf8(reply->readAll());
 
-    qDebug() << data;
-
     this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
     qDebug() << QString("RundownTreeWidget::doOpenRundownFromUrl: Md5 hash is %1").arg(this->hexHash);
 
