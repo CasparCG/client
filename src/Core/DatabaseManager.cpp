@@ -107,16 +107,21 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('Theme', 'Flat')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RepositoryPort', '8250')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevelsPanel', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowPreviewPanel', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowLivePanel', 'true')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowDurationPanel', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('UseFreezeOnLoad', 'false')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableAudioInStream', 'true')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StreamQuality', '25')");
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('NetworkCache', '1000')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StreamPort', '9250')");
+    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('LogLevel', '-1')");
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
 #else
@@ -1582,7 +1587,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
@@ -1632,7 +1637,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
     if (!filter.isEmpty() && devices.isEmpty()) // Filter on all devices.
     {
         query = QString("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (l.Name LIKE '%%1%' OR d.Name LIKE '%%1%' OR d.Address LIKE '%%1%') "
+                        "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE '%%1%' "
                         "ORDER BY l.Name, l.DeviceId").arg(filter);
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
@@ -1949,23 +1954,6 @@ void DatabaseManager::deleteLibrary(int deviceId)
        qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
-}
-
-ThumbnailModel DatabaseManager::getThumbnailById(int id)
-{
-    QMutexLocker locker(&mutex);
-
-    QString query = QString("SELECT t.Id, t.Data, t.Timestamp, t.Size, l.Name, d.Address FROM Thumbnail t, Library l, Device d "
-                            "WHERE t.Id = %1 AND l.DeviceId = d.Id AND l.ThumbnailId = t.Id").arg(id);
-
-    QSqlQuery sql;
-    if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
-
-    sql.first();
-
-    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                          sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString());
 }
 
 QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString& address)

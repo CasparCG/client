@@ -23,16 +23,7 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>1</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -49,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -251,6 +242,29 @@
            </brush>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Panasonic</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>45</red>
+             <green>45</green>
+             <blue>45</blue>
+            </color>
+           </brush>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -261,7 +275,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -342,7 +356,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -423,7 +437,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -510,7 +524,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -594,7 +608,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -672,7 +686,7 @@
         <x>0</x>
         <y>0</y>
         <width>289</width>
-        <height>414</height>
+        <height>415</height>
        </rect>
       </property>
       <attribute name="label">
@@ -864,8 +878,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>71</y>
+     <x>95</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>227</x>
@@ -880,8 +894,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>71</y>
+     <x>93</x>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>228</x>
@@ -928,8 +942,8 @@
    <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>71</y>
+     <x>93</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -944,8 +958,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>71</y>
+     <x>95</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -992,8 +1006,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>96</x>
-     <y>71</y>
+     <x>94</x>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -1072,8 +1086,8 @@
    <slot>itemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>71</y>
+     <x>95</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
@@ -1099,17 +1113,17 @@
   </connection>
   <connection>
    <sender>lineEditFilter</sender>
-   <signal>textChanged(QString)</signal>
+   <signal>returnPressed()</signal>
    <receiver>LibraryWidget</receiver>
-   <slot>filterChanged(QString)</slot>
+   <slot>filterLibrary()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>587</y>
+     <x>122</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
-     <x>292</x>
-     <y>571</y>
+     <x>-8</x>
+     <y>567</y>
     </hint>
    </hints>
   </connection>

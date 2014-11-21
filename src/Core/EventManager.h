@@ -15,6 +15,7 @@
 #include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
+#include "Events/DurationChangedEvent.h"
 #include "Events/CloseApplicationEvent.h"
 #include "Events/ExportPresetMenuEvent.h"
 #include "Events/SaveAsPresetMenuEvent.h"
@@ -29,6 +30,8 @@
 #include "Events/Inspector/TemplateChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
+#include "Events/Inspector/ShowAddHttpGetDataDialogEvent.h"
+#include "Events/Inspector/ShowAddHttpPostDataDialogEvent.h"
 #include "Events/Library/LibraryItemSelectedEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
@@ -72,13 +75,8 @@
 
 #include <QtCore/QObject>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QTreeWidgetItem>
-#else
-#include <QtGui/QWidget>
-#include <QtGui/QTreeWidgetItem>
-#endif
 
 class CORE_EXPORT EventManager : public QObject
 {
@@ -92,6 +90,7 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void durationChanged(const DurationChangedEvent&);
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
         Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
@@ -154,7 +153,12 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void repositoryRundown(const RepositoryRundownEvent&);
         Q_SIGNAL void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
         Q_SIGNAL void reloadRundownMenu(const ReloadRundownMenuEvent&);
+        Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
+        Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
+        void fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent&);
+        void fireDurationChangedEvent(const DurationChangedEvent&);
         void fireReloadRundownMenuEvent(const ReloadRundownMenuEvent&);
         void fireRepositoryRundownEvent(const RepositoryRundownEvent&);
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);

@@ -14,11 +14,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QGraphicsOpacityEffect>
-#else
-#include <QtGui/QGraphicsOpacityEffect>
-#endif
 
 RundownNetworkSourceWidget::RundownNetworkSourceWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                        bool inGroup, bool compactView)
@@ -184,6 +180,9 @@ LibraryModel* RundownNetworkSourceWidget::getLibraryModel()
 
 void RundownNetworkSourceWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
@@ -360,18 +359,18 @@ void RundownNetworkSourceWidget::deviceAdded(TriCasterDevice& device)
 
 void RundownNetworkSourceWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownNetworkSourceWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownNetworkSourceWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

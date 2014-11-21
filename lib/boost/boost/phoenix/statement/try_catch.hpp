@@ -17,6 +17,11 @@
 #include <boost/phoenix/core/is_nullary.hpp>
 #include <boost/proto/functional/fusion/pop_front.hpp>
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4355) // 'this' : used in base member initializer list
+#endif
+
 namespace boost { namespace phoenix
 {
     template <typename Expr>
@@ -101,6 +106,10 @@ namespace boost { namespace phoenix
     {
         typedef void result_type;
 
+        template <typename Try, typename Context>
+        void operator()(Try const &, Context const &) const
+        {}
+
         // bring in the operator overloads
         #include <boost/phoenix/statement/detail/try_catch_eval.hpp>
     };
@@ -116,31 +125,55 @@ namespace boost { namespace phoenix
             : proto::or_<
                 proto::when<
                     phoenix::rule::catch_all
-                  , evaluator(proto::_child_c<0>, proto::_data, proto::make<int()>)
+                  , proto::call<
+                        evaluator(
+                            proto::_child_c<0>
+                          , proto::_data
+                          , proto::make<proto::empty_env()>
+                        )
+                    >
                 >
               , proto::when<
                     phoenix::rule::catch_
-                  , evaluator(proto::_child_c<1>, proto::_data, proto::make<int()>)
+                  , proto::call<
+                        evaluator(
+                            proto::_child_c<1>
+                          , proto::_data
+                          , proto::make<proto::empty_env()>
+                        )
+                    >
                 >
               , proto::when<
                     phoenix::rule::try_catch
-                  , mpl::and_<
-                        evaluator(proto::_child_c<0>, proto::_data, proto::make<int()>)
-                      , proto::fold<
-                            proto::call<proto::functional::pop_front(proto::_)>
-                          , proto::make<mpl::true_()>
-                          , mpl::and_<
-                                proto::_state
-                              , proto::call<
-                                    try_catch_is_nullary(
-                                        proto::_
-                                      , proto::make<int()>
-                                      , proto::_data
-                                    )
+                  , proto::make<
+                        mpl::and_<
+                            proto::call<
+                                evaluator(
+                                    proto::_child_c<0>
+                                  , proto::_data
+                                  , proto::make<proto::empty_env()>
+                                )
+                            >
+                          , proto::fold<
+                                proto::call<
+                                    proto::functional::pop_front(proto::_)
                                 >
-                            >()
-                        >
-                    >()
+                              , proto::make<mpl::true_()>
+                              , proto::make<
+                                    mpl::and_<
+                                        proto::_state
+                                      , proto::call<
+                                            try_catch_is_nullary(
+                                                proto::_
+                                              , proto::make<proto::empty_env()>
+                                              , proto::_data
+                                            )
+                                        >
+                                    >()
+                                >
+                            >
+                        >()
+                    >
                 >
             >
         {};
@@ -229,13 +262,19 @@ namespace boost { namespace phoenix
 
     template <typename Dummy>
     struct is_nullary::when<rule::try_catch, Dummy>
-        : proto::call<detail::try_catch_is_nullary(proto::_, int(), _context)>
+        : proto::call<
+            detail::try_catch_is_nullary(
+                proto::_
+              , proto::make<proto::empty_env()>
+              , _context
+            )
+        >
     {};
 
     template <typename TryCatch, typename Exception>
     struct catch_gen
     {
-        catch_gen(TryCatch const& try_catch) : try_catch(try_catch) {}
+        catch_gen(TryCatch const& try_catch_) : try_catch(try_catch_) {}
 
         template <typename Expr>
         typename boost::disable_if<
@@ -262,7 +301,7 @@ namespace boost { namespace phoenix
     template <typename TryCatch>
     struct catch_all_gen
     {
-        catch_all_gen(TryCatch const& try_catch) : try_catch(try_catch) {}
+        catch_all_gen(TryCatch const& try_catch_) : try_catch(try_catch_) {}
 
         template <typename Expr>
         typename boost::disable_if<
@@ -327,5 +366,9 @@ namespace boost { namespace phoenix
     try_gen const try_ = {};
 #endif
 }}
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif

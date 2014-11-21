@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +7,7 @@
 #if !defined(FUSION_IS_SEQUENCE_05052005_1002)
 #define FUSION_IS_SEQUENCE_05052005_1002
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/sequence_base.hpp>
 #include <boost/fusion/support/tag_of.hpp>
 #include <boost/mpl/is_sequence.hpp>
@@ -59,9 +60,11 @@ namespace boost { namespace fusion
     {
         template <typename T>
         struct is_sequence
-          : extension::is_sequence_impl<
-                typename fusion::detail::tag_of<T>::type
-            >::template apply<T>
+          : mpl::bool_<
+                (bool)extension::is_sequence_impl<
+                    typename fusion::detail::tag_of<T>::type
+                >::template apply<T>::type::value
+            >
         {};
 
         template <typename Sequence, typename Enable = void>

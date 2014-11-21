@@ -2,7 +2,7 @@
 // detail/resolve_op.hpp
 // ~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2011 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,11 +16,11 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
-#include <boost/utility/addressof.hpp>
 #include <boost/asio/error.hpp>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/basic_resolver_iterator.hpp>
 #include <boost/asio/ip/basic_resolver_query.hpp>
+#include <boost/asio/detail/addressof.hpp>
 #include <boost/asio/detail/bind_handler.hpp>
 #include <boost/asio/detail/fenced_block.hpp>
 #include <boost/asio/detail/handler_alloc_helpers.hpp>
@@ -61,11 +61,12 @@ public:
   }
 
   static void do_complete(io_service_impl* owner, operation* base,
-      boost::system::error_code /*ec*/, std::size_t /*bytes_transferred*/)
+      const boost::system::error_code& /*ec*/,
+      std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the operation object.
     resolve_op* o(static_cast<resolve_op*>(base));
-    ptr p = { boost::addressof(o->handler_), o, o };
+    ptr p = { boost::asio::detail::addressof(o->handler_), o, o };
 
     if (owner && owner != &o->io_service_impl_)
     {
@@ -96,7 +97,7 @@ public:
       // after we have deallocated the memory here.
       detail::binder2<Handler, boost::system::error_code, iterator_type>
         handler(o->handler_, o->ec_, iterator_type());
-      p.h = boost::addressof(handler.handler_);
+      p.h = boost::asio::detail::addressof(handler.handler_);
       if (o->addrinfo_)
       {
         handler.arg2_ = iterator_type::create(o->addrinfo_,
@@ -106,7 +107,7 @@ public:
 
       if (owner)
       {
-        boost::asio::detail::fenced_block b;
+        fenced_block b(fenced_block::half);
         BOOST_ASIO_HANDLER_INVOCATION_BEGIN((handler.arg1_, "..."));
         boost_asio_handler_invoke_helpers::invoke(handler, handler.handler_);
         BOOST_ASIO_HANDLER_INVOCATION_END;

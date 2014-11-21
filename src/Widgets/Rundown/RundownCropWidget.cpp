@@ -13,11 +13,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QGraphicsOpacityEffect>
-#else
-#include <QtGui/QGraphicsOpacityEffect>
-#endif
 
 RundownCropWidget::RundownCropWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
@@ -132,10 +128,10 @@ AbstractRundownWidget* RundownCropWidget::clone()
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
-    command->setCropLeft(this->command.getCropLeft());
-    command->setCropRight(this->command.getCropRight());
-    command->setCropTop(this->command.getCropTop());
-    command->setCropBottom(this->command.getCropBottom());
+    command->setLeft(this->command.getLeft());
+    command->setTop(this->command.getTop());
+    command->setRight(this->command.getRight());
+    command->setBottom(this->command.getBottom());
     command->setTransitionDuration(this->command.getTransitionDuration());
     command->setTween(this->command.getTween());
     command->setDefer(this->command.getDefer());
@@ -193,6 +189,9 @@ LibraryModel* RundownCropWidget::getLibraryModel()
 
 void RundownCropWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
@@ -309,7 +308,7 @@ void RundownCropWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setClipping(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
+        device->setCrop(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -318,7 +317,7 @@ void RundownCropWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setClipping(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
+            deviceShadow->setCrop(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1, 1);
     }
 }
 
@@ -326,9 +325,9 @@ void RundownCropWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setClipping(this->command.getChannel(), this->command.getVideolayer(), this->command.getCropLeft(),
-                            this->command.getCropRight(), this->command.getCropTop(), this->command.getCropBottom(),
-                            this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+        device->setCrop(this->command.getChannel(), this->command.getVideolayer(), this->command.getLeft(),
+                        this->command.getTop(), this->command.getRight(), this->command.getBottom(),
+                        this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -337,9 +336,9 @@ void RundownCropWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setClipping(this->command.getChannel(), this->command.getVideolayer(), this->command.getCropLeft(),
-                                      this->command.getCropRight(), this->command.getCropTop(), this->command.getCropBottom(),
-                                      this->command.getDuration(), this->command.getTween(), this->command.getDefer());
+            deviceShadow->setCrop(this->command.getChannel(), this->command.getVideolayer(), this->command.getLeft(),
+                                  this->command.getTop(), this->command.getRight(), this->command.getBottom(),
+                                  this->command.getDuration(), this->command.getTween(), this->command.getDefer());
     }
 
     if (this->markUsedItems)
@@ -517,7 +516,7 @@ void RundownCropWidget::deviceConnectionStateChanged(CasparDevice& device)
 
 void RundownCropWidget::deviceAdded(CasparDevice& device)
 {
-    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress()).getName() == this->model.getDeviceName())
+    if (DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress())->getName() == this->model.getDeviceName())
         QObject::connect(&device, SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(CasparDevice&)));
 
     checkDeviceConnection();
@@ -525,42 +524,42 @@ void RundownCropWidget::deviceAdded(CasparDevice& device)
 
 void RundownCropWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownCropWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownCropWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownCropWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownCropWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownCropWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownCropWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

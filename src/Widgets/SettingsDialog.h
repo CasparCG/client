@@ -5,13 +5,8 @@
 
 #include "Global.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
 {
@@ -74,8 +69,10 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void gpo7Changed();
         Q_SLOT void gpo8Changed();
         Q_SLOT void serialPortChanged();
+        Q_SLOT void streamPortChanged();
         Q_SLOT void baudRateChanged(QString);
         Q_SLOT void oscPortChanged();
+        Q_SLOT void repositoryPortChanged();
         Q_SLOT void showImportDeviceDialog();
         Q_SLOT void showImportTriCasterDeviceDialog();
         Q_SLOT void showImportAtemDeviceDialog();
@@ -83,6 +80,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void removeOscOutput();
         Q_SLOT void oscOutputItemDoubleClicked(QTreeWidgetItem*, int);
         Q_SLOT void delayTypeChanged(QString);
+        Q_SLOT void logLevelChanged(int);
         Q_SLOT void tricasterProductChanged(QString);
         Q_SLOT void themeChanged(QString);
         Q_SLOT void rundownRepositoryChanged();
@@ -97,4 +95,6 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void disableAudioInStreamChanged(int);
         Q_SLOT void networkCacheChanged(int);
         Q_SLOT void streamQualityChanged(int);
+        Q_SLOT void showDurationChanged(int);
+        Q_SLOT void useFreezeOnLoadChanged(int);
 };

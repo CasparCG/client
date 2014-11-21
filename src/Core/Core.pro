@@ -15,8 +15,6 @@ HEADERS += \
     DatabaseManager.h \
     DeviceManager.h \
     Shared.h \
-    Commands/CropCommand.h \
-    Commands/GeometryCommand.h \
     Commands/TemplateCommand.h \
     Events/Rundown/AddRudnownItemEvent.h \
     Events/DataChangedEvent.h \
@@ -28,7 +26,6 @@ HEADERS += \
     Models/DeviceModel.h \
     Models/LibraryModel.h \
     Models/RundownModel.h \
-    Models/TemplateDataModel.h \
     Models/TypeModel.h \
     Events/Library/LibraryItemSelectedEvent.h \
     Commands/BrightnessCommand.h \
@@ -73,8 +70,6 @@ HEADERS += \
     ThumbnailWorker.h \
     Commands/AudioCommand.h \
     Commands/SolidColorCommand.h \
-    Commands/ImageCommand.h \
-    Commands/VideoCommand.h \
     Events/Inspector/DeviceChangedEvent.h \
     Events/Inspector/LabelChangedEvent.h \
     Events/Inspector/TargetChangedEvent.h \
@@ -173,13 +168,30 @@ HEADERS += \
     Events/Rundown/RepositoryRundownEvent.h \
     Models/RepositoryChangeModel.h \
     Events/Rundown/InsertRepositoryChangesEvent.h \
-    Events/Rundown/ReloadRundownMenuEvent.h
+    Events/Rundown/ReloadRundownMenuEvent.h \
+    Events/DurationChangedEvent.h \
+    Commands/Panasonic/PanasonicPresetCommand.h \
+    Commands/PerspectiveCommand.h \
+    Commands/RotationCommand.h \
+    Commands/AnchorCommand.h \
+    Commands/MovieCommand.h \
+    Commands/StillCommand.h \
+    Commands/FillCommand.h \
+    Commands/ClipCommand.h \
+    Commands/CropCommand.h \
+    Commands/HttpGetCommand.h \
+    Models/KeyValueModel.h \
+    Events/Inspector/ShowAddHttpGetDataDialogEvent.h \
+    Commands/HttpPostCommand.h \
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.h \
+    Commands/ResetCommand.h \
+    Commands/HtmlCommand.h \
+    Commands/RouteChannelCommand.h \
+    Commands/RouteVideolayerCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
     DeviceManager.cpp \
-    Commands/CropCommand.cpp \
-    Commands/GeometryCommand.cpp \
     Commands/TemplateCommand.cpp \
     Events/Rundown/AddRudnownItemEvent.cpp \
     Events/DataChangedEvent.cpp \
@@ -193,7 +205,6 @@ SOURCES += \
     Models/RundownModel.cpp \
     Models/TypeModel.cpp \
     Events/Library/LibraryItemSelectedEvent.cpp \
-    Models/TemplateDataModel.cpp \
     Commands/BrightnessCommand.cpp \
     Commands/SaturationCommand.cpp \
     Commands/OpacityCommand.cpp \
@@ -236,8 +247,6 @@ SOURCES += \
     ThumbnailWorker.cpp \
     Commands/AudioCommand.cpp \
     Commands/SolidColorCommand.cpp \
-    Commands/ImageCommand.cpp \
-    Commands/VideoCommand.cpp \
     Events/Inspector/DeviceChangedEvent.cpp \
     Events/Inspector/LabelChangedEvent.cpp \
     Events/Inspector/TargetChangedEvent.cpp \
@@ -336,7 +345,26 @@ SOURCES += \
     Events/Rundown/RepositoryRundownEvent.cpp \
     Models/RepositoryChangeModel.cpp \
     Events/Rundown/InsertRepositoryChangesEvent.cpp \
-    Events/Rundown/ReloadRundownMenuEvent.cpp
+    Events/Rundown/ReloadRundownMenuEvent.cpp \
+    Events/DurationChangedEvent.cpp \
+    Commands/Panasonic/PanasonicPresetCommand.cpp \
+    Commands/PerspectiveCommand.cpp \
+    Commands/RotationCommand.cpp \
+    Commands/AnchorCommand.cpp \
+    Commands/MovieCommand.cpp \
+    Commands/StillCommand.cpp \
+    Commands/FillCommand.cpp \
+    Commands/ClipCommand.cpp \
+    Commands/CropCommand.cpp \
+    Commands/HttpGetCommand.cpp \
+    Models/KeyValueModel.cpp \
+    Events/Inspector/ShowAddHttpGetDataDialogEvent.cpp \
+    Commands/HttpPostCommand.cpp \
+    Events/Inspector/ShowAddHttpPostDataDialogEvent.cpp \
+    Commands/ResetCommand.cpp \
+    Commands/HtmlCommand.cpp \
+    Commands/RouteChannelCommand.cpp \
+    Commands/RouteVideolayerCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -355,7 +383,7 @@ else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 
 DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
-win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
+win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 

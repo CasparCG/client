@@ -13,9 +13,11 @@ DEFINES += COMMON_LIBRARY
 
 HEADERS += \
     Global.h \
-    Shared.h
+    Shared.h \
+    Timecode.h
 	
-SOURCES +=
+SOURCES += \
+    Timecode.cpp
 
 OTHER_FILES += \
     Version.h.in

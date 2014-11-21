@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
+    <width>331</width>
     <height>280</height>
    </rect>
   </property>
@@ -60,6 +60,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxTriCasterDevice">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -70,6 +73,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxAtemDevice">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -145,7 +151,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelChannel">
+      <widget class="QLabel" name="labelChannelField">
        <property name="text">
         <string>Channel</string>
        </property>
@@ -156,6 +162,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxChannel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -188,7 +197,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelVideolayer">
+      <widget class="QLabel" name="labelVideolayerField">
        <property name="text">
         <string>Video layer</string>
        </property>
@@ -199,6 +208,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxVideolayer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -231,7 +243,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDelay">
+      <widget class="QLabel" name="labelDelayField">
        <property name="text">
         <string>Delay</string>
        </property>
@@ -242,6 +254,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxDelay">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -287,7 +302,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelDuration">
+      <widget class="QLabel" name="labelDurationField">
        <property name="text">
         <string>Duration</string>
        </property>
@@ -298,6 +313,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxDuration">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -341,6 +359,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAllowGpi">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Allow GPI</string>
        </property>
@@ -381,6 +402,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAllowRemoteTriggering">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Allow Remote Triggering</string>
        </property>
@@ -420,7 +444,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelRemoteTriggerId">
+      <widget class="QLabel" name="labelRemoteTriggerIdField">
        <property name="text">
         <string>UID</string>
        </property>
@@ -430,7 +454,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditRemoteTriggerId"/>
+      <widget class="QLineEdit" name="lineEditRemoteTriggerId">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

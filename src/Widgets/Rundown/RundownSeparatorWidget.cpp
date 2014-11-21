@@ -5,12 +5,9 @@
 
 #include "EventManager.h"
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 #include <QtCore/QObject>
+
+#include <QtWidgets/QApplication>
 
 RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
@@ -112,6 +109,9 @@ void RundownSeparatorWidget::setColor(const QString& color)
 
 void RundownSeparatorWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();

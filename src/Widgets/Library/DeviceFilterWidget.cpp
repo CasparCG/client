@@ -12,11 +12,7 @@
 
 #include <QtCore/QEvent>
 
-#if QT_VERSION >= 0x050000
-#include <QStandardItemModel>
-#else
 #include <QtGui/QStandardItemModel>
-#endif
 
 DeviceFilterWidget::DeviceFilterWidget(QWidget* parent)
     : QWidget(parent), sendEvents(false)
@@ -70,7 +66,7 @@ QList<QString> DeviceFilterWidget::getDeviceFilter()
         if (dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->checkState() == Qt::Checked)
         {
             QString name = dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->text();
-            devices.push_back(DeviceManager::getInstance().getDeviceModelByName(name).getAddress());
+            devices.push_back(DeviceManager::getInstance().getDeviceModelByName(name)->getAddress());
         }
     }
 
@@ -108,11 +104,11 @@ void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 {
     this->sendEvents = false;
 
-    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model == NULL || model->getShadow() == "Yes")
         return; // Don't add shadow systems.
 
-    this->comboBoxDeviceFilter->addItem(QString("%1").arg(model.getName()));
+    this->comboBoxDeviceFilter->addItem(QString("%1").arg(model->getName()));
 
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(this->comboBoxDeviceFilter->count() - 1, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
@@ -127,11 +123,17 @@ void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelInd
     // "All" item is selected, deselect others.
     if (topLeft.row() == 0 && dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(topLeft.row(), 0)->checkState() == Qt::Checked)
     {
+        if (this->sendEvents)
+            this->comboBoxDeviceFilter->setStyleSheet("");
+
         for (int i = 1; i < this->comboBoxDeviceFilter->count(); i++)
             dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(i, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
     }
     else
     {
+        if (this->sendEvents)
+            this->comboBoxDeviceFilter->setStyleSheet("border-color: darkorange;");
+
         // Deselect the "All" item.
         dynamic_cast<QStandardItemModel*>(this->comboBoxDeviceFilter->model())->item(0, 0)->setData(Qt::Unchecked, Qt::CheckStateRole);
     }

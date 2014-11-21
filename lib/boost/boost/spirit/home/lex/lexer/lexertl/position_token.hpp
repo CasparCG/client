@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #include <boost/spirit/home/support/utree/utree_traits_fwd.hpp>
+#include <boost/spirit/home/lex/lexer/terminals.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
@@ -34,9 +35,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/range/iterator_range.hpp>
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 #include <boost/static_assert.hpp>
-#endif
 
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <iosfwd>
@@ -173,7 +172,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         iterpair_type& matched() { return matched_; }
         iterpair_type const& matched() const { return matched_; }
 
-        token_value_type& value() { return unused; }
+        token_value_type& value() { static token_value_type u; return u; }
         token_value_type const& value() const { return unused; }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
@@ -386,7 +385,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token_value_type& value() { return value_; }
         token_value_type const& value() const { return value_; }
 
-        bool has_value() const { return value_; }
+        bool has_value() const { return !!value_; }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1600)
         // workaround for MSVC10 which has problems copying a default 
@@ -528,15 +527,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
       : position_token<Iterator, lex::omit, HasState, Idtype>
     {
     private: // precondition assertions
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
         BOOST_STATIC_ASSERT((mpl::is_sequence<AttributeTypes>::value || 
                             is_same<AttributeTypes, lex::omit>::value));
-#endif
         typedef position_token<Iterator, lex::omit, HasState, Idtype> 
             base_type;
 
     protected: 
-        //  If no additional token value types are given, the the token will 
+        //  If no additional token value types are given, the token will 
         //  hold no token value at all as the base class already has the 
         //  iterator pair of the matched range in the underlying input sequence. 
         //  Otherwise the token value is stored as a variant and will 
@@ -554,24 +551,19 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef Iterator iterator_type;
 
         //  default constructed tokens correspond to EOI tokens
-        position_token() 
-          : value_(iterpair_type(iterator_type(), iterator_type())) 
-        {}
+        position_token() {}
 
         //  construct an invalid token
         explicit position_token(int)
-          : base_type(0)
-          , value_(iterpair_type(iterator_type(), iterator_type())) 
-        {}
+          : base_type(0) {}
 
         position_token(id_type id, std::size_t state, token_value_type const& value)
-          : base_type(id, state, value), value_(value) 
-        {}
+          : base_type(id, state, value), value_(value) {}
 
         position_token(id_type id, std::size_t state, Iterator const& first
               , Iterator const& last)
           : base_type(id, state, first, last)
-          , value_(iterpair_type(iterator_type(), iterator_type())) 
+          , value_(iterpair_type(first, last)) 
         {}
 
         token_value_type& value() { return value_; }

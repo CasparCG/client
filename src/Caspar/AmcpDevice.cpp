@@ -178,8 +178,8 @@ void AmcpDevice::parseHeader(const QString& line)
             this->state = AmcpDevice::ExpectingTwoline;
             break;
         default:
-            this->state = AmcpDevice::ExpectingOneline;
-            break;
+            parseOneline(line);
+            return;
     }
 
     this->command = translateCommand(tokens.at(1));

@@ -13,11 +13,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAtemInputWidget
 {
@@ -29,10 +25,11 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
     private:
         LibraryModel* model;
         AtemInputCommand* command;
+        QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void loadAtemSwitcher();
         void blockAllSignals(bool block);
-        void loadAtemInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemInput();
 
         Q_SLOT void switcherChanged(int);
         Q_SLOT void inputChanged(int);

@@ -10,15 +10,9 @@
 #include <QtCore/QEvent>
 #include <QtCore/QList>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QTreeWidgetItem>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QDialog>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
-#endif
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>

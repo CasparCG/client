@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2006 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(FUSION_JOIN_200601222109)
 #define FUSION_JOIN_200601222109
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/view/joint_view.hpp>
 
 namespace boost { namespace fusion {
@@ -22,6 +23,7 @@ namespace boost { namespace fusion {
     }
 
     template<typename LhSequence, typename RhSequence>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::join<LhSequence const, RhSequence const>::type
     join(LhSequence const& lhs, RhSequence const& rhs)
     {

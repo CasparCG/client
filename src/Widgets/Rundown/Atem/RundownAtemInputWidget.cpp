@@ -14,11 +14,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QGraphicsOpacityEffect>
-#else
-#include <QtGui/QGraphicsOpacityEffect>
-#endif
 
 RundownAtemInputWidget::RundownAtemInputWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                bool inGroup, bool compactView)
@@ -184,6 +180,9 @@ LibraryModel* RundownAtemInputWidget::getLibraryModel()
 
 void RundownAtemInputWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
@@ -267,7 +266,12 @@ void RundownAtemInputWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->selectInput(this->command.getSwitcher(), this->command.getInput());
+    {
+        if (this->command.getSwitcher() == "pgm" || this->command.getSwitcher() == "prev")
+            device->selectInput(this->command.getSwitcher(), this->command.getInput());
+        else // Aux.
+            device->setAuxSource(this->command.getSwitcher(), this->command.getInput());
+    }
 
     if (this->markUsedItems)
         setUsed(true);
@@ -277,7 +281,10 @@ void RundownAtemInputWidget::executePreview()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->selectInput("prev", this->command.getInput());
+    {
+        if (this->command.getSwitcher() == "pgm")
+            device->selectInput("prev", this->command.getInput());
+    }
 }
 
 void RundownAtemInputWidget::delayChanged(int delay)
@@ -378,24 +385,24 @@ void RundownAtemInputWidget::deviceAdded(AtemDevice& device)
 
 void RundownAtemInputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownAtemInputWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownAtemInputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownAtemInputWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Preview);
 }

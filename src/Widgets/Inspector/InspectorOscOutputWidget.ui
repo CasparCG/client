@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>207</width>
-    <height>168</height>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -233,6 +233,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutUseBundle">
+     <item>
+      <spacer name="horizontalSpacerUseBundle1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>23</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelUseBundle">
+       <property name="text">
+        <string>Use bundle</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUseBundle">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerUseBundle2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacerOscOutput">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -327,8 +380,24 @@
      <y>132</y>
     </hint>
     <hint type="destinationlabel">
-     <x>210</x>
+     <x>206</x>
      <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseBundle</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorOscOutputWidget</receiver>
+   <slot>useBundleChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -339,5 +408,6 @@
   <slot>outputChanged(QString)</slot>
   <slot>typeChanged(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>useBundleChanged(int)</slot>
  </slots>
 </ui>

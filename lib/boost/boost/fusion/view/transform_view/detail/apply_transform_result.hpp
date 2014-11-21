@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2007 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(BOOST_FUSION_APPLY_TRANSFORM_RESULT_02092006_1936)
 #define BOOST_FUSION_APPLY_TRANSFORM_RESULT_02092006_1936
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/utility/result_of.hpp>
 
 namespace boost { namespace fusion

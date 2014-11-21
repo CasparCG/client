@@ -99,6 +99,14 @@ QLabel
 }
 
 /*
+ * QLCDNumber
+ */
+QLCDNumber
+{
+    background-color: transparent;
+}
+
+/*
  * QDialog
  */
 QDialog
@@ -385,6 +393,10 @@ QTreeView
     border-width: 1px;
     border-color: rgba(65, 65, 65, 255);
 }
+QTreeView::item:hover
+{
+    background-color: transparent;
+}
 QTreeView::item:selected
 {
     background-color: rgba(70, 115, 195, 64);
@@ -415,6 +427,10 @@ QTreeWidget
     background-color: rgba(28, 28, 28, 255);
     border-width: 1px;
     border-color: rgba(65, 65, 65, 255);
+}
+QTreeWidget::item:hover
+{
+    background-color: transparent;
 }
 QTreeWidget::item:selected
 {
@@ -996,6 +1012,7 @@ QHeaderView::section:only-one
 QScrollBar:horizontal
 {
     background-color: rgba(28, 28, 28, 255);
+    background-color: blue;
     height: 16px;
     border-color: rgba(65, 65, 65, 255);
     border-top-width: 1px;
@@ -1024,6 +1041,14 @@ QScrollBar:left-arrow:horizontal
 QScrollBar::right-arrow:horizontal
 {
     image: none;
+}
+QScrollBar::add-page:horizontal
+{
+    background-color: rgba(28, 28, 28, 255);
+}
+QScrollBar::sub-page:horizontal
+{
+    background-color: rgba(28, 28, 28, 255);
 }
 
 QScrollBar:vertical
@@ -1057,6 +1082,14 @@ QScrollBar:up-arrow:vertical
 QScrollBar::down-arrow:vertical
 {
     image: none;
+}
+QScrollBar::add-page:vertical
+{
+    background-color: rgba(28, 28, 28, 255);
+}
+QScrollBar::sub-page:vertical
+{
+    background-color: rgba(28, 28, 28, 255);
 }
 
 /*

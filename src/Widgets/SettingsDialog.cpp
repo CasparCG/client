@@ -27,17 +27,11 @@
 #include <QtCore/QTimer>
 #include <QtCore/QRegExp>
 
-#if QT_VERSION >= 0x050000
+#include <QtGui/QIcon>
+
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFileDialog>
-#include <QIcon>
 #include <QtWidgets/QMessageBox>
-#else
-#include <QtGui/QComboBox>
-#include <QtGui/QFileDialog>
-#include <QtGui/QIcon>
-#include <QtGui/QMessageBox>
-#endif
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
@@ -45,6 +39,15 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     setupUi(this);
 
     this->stylesheet = qApp->styleSheet();
+
+    blockAllSignals(true);
+    this->comboBoxLogLevel->clear();
+    this->comboBoxLogLevel->addItem("Disable", "-1");
+    this->comboBoxLogLevel->addItem("Info", "0");
+    this->comboBoxLogLevel->addItem("Error", "1");
+    this->comboBoxLogLevel->addItem("Warning", "2");
+    this->comboBoxLogLevel->addItem("Debug", "3");
+    blockAllSignals(false);
 
     bool startFullscreen = (DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true") ? true : false;
     this->checkBoxFullscreen->setChecked(startFullscreen);
@@ -73,7 +76,13 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
+
     this->lineEditRundownRepository->setText(DatabaseManager::getInstance().getConfigurationByName("RundownRepository").getValue());
+    this->lineEditRepositoryPort->setPlaceholderText(QString("%1").arg(Repository::DEFAULT_PORT));
+    QString repositoryPort = DatabaseManager::getInstance().getConfigurationByName("RepositoryPort").getValue();
+    if (!repositoryPort.isEmpty())
+        this->lineEditRepositoryPort->setText(repositoryPort);
+
     bool previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
     this->checkBoxPreviewOnAutoStep->setChecked(previewOnAutoStep);
     bool clearDelayedCommandsOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
@@ -87,12 +96,21 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxShowLive->setChecked(showLivePanel);
     bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
     this->checkBoxShowAudioLevels->setChecked(showAudioLevelsPanel);
+    bool showDurationPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowDurationPanel").getValue() == "true") ? true : false;
+    this->checkBoxDuration->setChecked(showDurationPanel);
+    bool useFreezeOnLoad = (DatabaseManager::getInstance().getConfigurationByName("UseFreezeOnLoad").getValue() == "true") ? true : false;
+    this->checkBoxUseFreezeOnLoad->setChecked(useFreezeOnLoad);
     this->comboBoxDelayType->setCurrentIndex(this->comboBoxDelayType->findText(DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue()));
 
     bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
     this->checkBoxDisableAudioInStream->setChecked(disableAudioInStream);
     this->spinBoxQuality->setValue(100 - DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt());
     this->spinBoxNetworkCache->setValue(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue().toInt());
+    this->comboBoxLogLevel->setCurrentIndex(this->comboBoxLogLevel->findData(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
+    this->lineEditStreamPort->setPlaceholderText(QString("%1").arg(Stream::DEFAULT_PORT));
+    QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
+    if (!streamPort.isEmpty())
+        this->lineEditStreamPort->setText(streamPort);
 
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
     this->checkBoxStoreThumbnailsInDatabase->setChecked(storeThumbnailsInDatabase);
@@ -114,6 +132,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
 void SettingsDialog::blockAllSignals(bool block)
 {
+    this->comboBoxLogLevel->blockSignals(block);
     this->comboBoxTriCasterProduct->blockSignals(block);
 }
 
@@ -797,14 +816,35 @@ void SettingsDialog::oscPortChanged()
     if (oscPort.isEmpty())
         oscPort = Osc::DEFAULT_PORT;
 
-    qDebug() << "OSC port: " << oscPort;
-
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+}
+
+void SettingsDialog::streamPortChanged()
+{
+    QString streamPort = this->lineEditStreamPort->text().trimmed();
+    if (streamPort.isEmpty())
+        streamPort = Stream::DEFAULT_PORT;
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamPort", streamPort));
+}
+
+void SettingsDialog::repositoryPortChanged()
+{
+    QString repositoryPort = this->lineEditRepositoryPort->text().trimmed();
+    if (repositoryPort.isEmpty())
+        repositoryPort = Repository::DEFAULT_PORT;
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RepositoryPort", repositoryPort));
 }
 
 void SettingsDialog::delayTypeChanged(QString delayType)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelayType->currentText()));
+}
+
+void SettingsDialog::logLevelChanged(int index)
+{
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "LogLevel", this->comboBoxLogLevel->itemData(index).toString()));
 }
 
 void SettingsDialog::tricasterProductChanged(QString product)
@@ -895,4 +935,16 @@ void SettingsDialog::networkCacheChanged(int value)
 void SettingsDialog::streamQualityChanged(int quality)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamQuality", QString("%1").arg(100 - quality)));
+}
+
+void SettingsDialog::showDurationChanged(int state)
+{
+    QString showDurationPanel = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ShowDurationPanel", showDurationPanel));
+}
+
+void SettingsDialog::useFreezeOnLoadChanged(int state)
+{
+    QString useFreezeOnLoad = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "UseFreezeOnLoad", useFreezeOnLoad));
 }

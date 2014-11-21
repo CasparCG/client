@@ -2,7 +2,7 @@
 
 #include "../Shared.h"
 #include "AbstractCommand.h"
-#include "Models/TemplateDataModel.h"
+#include "Models/KeyValueModel.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -29,7 +29,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         bool getUseUppercaseData() const;
         const QString& getTemplateName() const;
         const QString getTemplateData() const;
-        const QList<TemplateDataModel>& getTemplateDataModels() const;
+        const QList<KeyValueModel>& getTemplateDataModels() const;
         bool getTriggerOnNext() const;
 
         void setFlashlayer(int flashlayer); 
@@ -37,7 +37,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         void setUseStoredData(bool useStoredData);
         void setUseUppercaseData(bool useUppercaseData);
         void setTemplateName(const QString& templateName);
-        void setTemplateDataModels(const QList<TemplateDataModel>& models);
+        void setTemplateDataModels(const QList<KeyValueModel>& models);
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
@@ -46,7 +46,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         bool useStoredData;
         bool useUppercaseData;
         QString templateName;
-        QList<TemplateDataModel> models;
+        QList<KeyValueModel> models;
         bool triggerOnNext;
 
         Q_SIGNAL void flashlayerChanged(int);
@@ -54,6 +54,6 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         Q_SIGNAL void useStoredDataChanged(bool);
         Q_SIGNAL void useUppercaseDataChanged(bool);
         Q_SIGNAL void templateNameChanged(const QString&);
-        Q_SIGNAL void templateDataChanged(const QList<TemplateDataModel>&);
+        Q_SIGNAL void templateDataChanged(const QList<KeyValueModel>&);
         Q_SIGNAL void triggerOnNextChanged(bool);
 };

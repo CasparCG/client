@@ -8,15 +8,9 @@
 
 #include <vlc/vlc.h>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QAction>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
 {
@@ -31,6 +25,7 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         QString deviceName;
         QString deviceChannel;
         bool useKey;
+        int streamPort;
 
         LiveDialog* liveDialog;
 

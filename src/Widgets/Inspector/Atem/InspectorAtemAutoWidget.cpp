@@ -8,11 +8,7 @@
 #include "Models/Atem/AtemAutoSpeedModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorAtemAutoWidget::InspectorAtemAutoWidget(QWidget* parent)
     : QWidget(parent),

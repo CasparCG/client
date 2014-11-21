@@ -23,11 +23,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDeckLinkInputWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -117,6 +113,5 @@ class WIDGETS_EXPORT RundownDeckLinkInputWidget : public QWidget, Ui::RundownDec
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void labelChanged(const LabelChangedEvent&);
-        Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
 };

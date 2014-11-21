@@ -4,17 +4,17 @@
 #include "RundownBrightnessWidget.h"
 #include "RundownCommitWidget.h"
 #include "RundownContrastWidget.h"
-#include "RundownCropWidget.h"
+#include "RundownClipWidget.h"
 #include "RundownDeckLinkInputWidget.h"
 #include "RundownFileRecorderWidget.h"
 #include "RundownImageScrollerWidget.h"
-#include "RundownGeometryWidget.h"
+#include "RundownFillWidget.h"
 #include "RundownGpiOutputWidget.h"
 #include "RundownGridWidget.h"
 #include "RundownGroupWidget.h"
 #include "RundownKeyerWidget.h"
 #include "RundownLevelsWidget.h"
-#include "RundownVideoWidget.h"
+#include "RundownMovieWidget.h"
 #include "RundownOpacityWidget.h"
 #include "RundownSaturationWidget.h"
 #include "RundownTemplateWidget.h"
@@ -24,12 +24,22 @@
 #include "RundownClearOutputWidget.h"
 #include "RundownSolidColorWidget.h"
 #include "RundownAudioWidget.h"
-#include "RundownImageWidget.h"
+#include "RundownStillWidget.h"
 #include "RundownCustomCommandWidget.h"
 #include "RundownPlayoutCommandWidget.h"
 #include "RundownChromaWidget.h"
 #include "RundownFadeToBlackWidget.h"
 #include "RundownOscOutputWidget.h"
+#include "RundownPerspectiveWidget.h"
+#include "RundownRotationWidget.h"
+#include "RundownAnchorWidget.h"
+#include "RundownCropWidget.h"
+#include "RundownHttpGetWidget.h"
+#include "RundownResetWidget.h"
+#include "RundownHtmlWidget.h"
+#include "RundownRouteChannelWidget.h"
+#include "RundownRouteVideolayerWidget.h"
+#include "RundownHttpPostWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -44,6 +54,7 @@
 #include "TriCaster/RundownPresetWidget.h"
 #include "TriCaster/RundownNetworkSourceWidget.h"
 #include "TriCaster/RundownMacroWidget.h"
+#include "Panasonic/RundownPanasonicPresetWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -57,18 +68,18 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     if (model.getType() == Rundown::BLENDMODE) return new RundownBlendModeWidget(model, this);
     else if (model.getType() == Rundown::BRIGHTNESS) return new RundownBrightnessWidget(model, this);
     else if (model.getType() == Rundown::CONTRAST) return new RundownContrastWidget(model, this);
-    else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
+    else if (model.getType() == Rundown::CLIP) return new RundownClipWidget(model, this);
     else if (model.getType() == Rundown::CHROMAKEY) return new RundownChromaWidget(model, this);
     else if (model.getType() == Rundown::DECKLINKINPUT) return new RundownDeckLinkInputWidget(model, this);
     else if (model.getType() == Rundown::FILERECORDER) return new RundownFileRecorderWidget(model, this);
-    else if (model.getType() == Rundown::GEOMETRY) return new RundownGeometryWidget(model, this);
+    else if (model.getType() == Rundown::FILL) return new RundownFillWidget(model, this);
     else if (model.getType() == Rundown::GRID) return new RundownGridWidget(model, this);
     else if (model.getType() == Rundown::GPIOUTPUT) return new RundownGpiOutputWidget(model, this);
     else if (model.getType() == Rundown::KEYER) return new RundownKeyerWidget(model, this);
     else if (model.getType() == Rundown::LEVELS) return new RundownLevelsWidget(model, this);
     else if (model.getType() == Rundown::AUDIO) return new RundownAudioWidget(model, this);
-    else if (model.getType() == Rundown::VIDEO) return new RundownVideoWidget(model, this);
-    else if (model.getType() == Rundown::IMAGE) return new RundownImageWidget(model, this);
+    else if (model.getType() == Rundown::MOVIE) return new RundownMovieWidget(model, this);
+    else if (model.getType() == Rundown::STILL) return new RundownStillWidget(model, this);
     else if (model.getType() == Rundown::OPACITY) return new RundownOpacityWidget(model, this);
     else if (model.getType() == Rundown::SATURATION) return new RundownSaturationWidget(model, this);
     else if (model.getType() == Rundown::TEMPLATE) return new RundownTemplateWidget(model, this);
@@ -97,6 +108,17 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
     else if (model.getType() == Rundown::PLAYOUTCOMMAND) return new RundownPlayoutCommandWidget(model, this);
     else if (model.getType() == Rundown::FADETOBLACK) return new RundownFadeToBlackWidget(model, this);
+    else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);
+    else if (model.getType() == Rundown::PERSPECTIVE) return new RundownPerspectiveWidget(model, this);
+    else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
+    else if (model.getType() == Rundown::ANCHOR) return new RundownAnchorWidget(model, this);
+    else if (model.getType() == Rundown::CROP) return new RundownCropWidget(model, this);
+    else if (model.getType() == Rundown::HTTPGET) return new RundownHttpGetWidget(model, this);
+    else if (model.getType() == Rundown::HTTPPOST) return new RundownHttpPostWidget(model, this);
+    else if (model.getType() == Rundown::RESET) return new RundownResetWidget(model, this);
+    else if (model.getType() == Rundown::HTML) return new RundownHtmlWidget(model, this);
+    else if (model.getType() == Rundown::ROUTECHANNEL) return new RundownRouteChannelWidget(model, this);
+    else if (model.getType() == Rundown::ROUTEVIDEOLAYER) return new RundownRouteVideolayerWidget(model, this);
 
     return NULL;
 }

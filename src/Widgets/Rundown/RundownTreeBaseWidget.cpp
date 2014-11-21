@@ -4,7 +4,7 @@
 
 #include "DatabaseManager.h"
 #include "EventManager.h"
-#include "Commands/VideoCommand.h"
+#include "Commands/MovieCommand.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
@@ -15,6 +15,7 @@
 #include <QtCore/QTime>
 #include <QtCore/QDebug>
 
+#include <QtGui/QDrag>
 #include <QtGui/QPainter>
 #include <QtGui/QClipboard>
 
@@ -210,11 +211,13 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
         }
 
         QTreeWidget::setItemWidget(parentItem, 0, dynamic_cast<QWidget*>(parentWidget));
+        //QTreeWidget::setCurrentItem(parentItem);
 
         if (parentWidget->isGroup())
         {
             bool expanded = parentValue.second.get(L"expanded", false);
             parentItem->setExpanded(expanded);
+            parentWidget->setExpanded(expanded);
 
             BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
             {

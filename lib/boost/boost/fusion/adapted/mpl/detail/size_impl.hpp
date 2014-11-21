@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2005-2006 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(BOOST_FUSION_SIZE_IMPL_31122005_1508)
 #define BOOST_FUSION_SIZE_IMPL_31122005_1508
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/size.hpp>
 
 namespace boost { namespace fusion 

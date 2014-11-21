@@ -2,15 +2,9 @@
 
 #include "Global.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QListWidgetItem>
 #include <QtWidgets/QPushButton>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QListWidgetItem>
-#include <QtGui/QPushButton>
-#endif
 
 ActionWidget::ActionWidget(QWidget* parent)
     : QWidget(parent)

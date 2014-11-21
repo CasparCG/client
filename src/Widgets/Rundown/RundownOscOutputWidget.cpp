@@ -13,11 +13,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QGraphicsOpacityEffect>
-#else
-#include <QtGui/QGraphicsOpacityEffect>
-#endif
 
 RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
@@ -87,6 +83,7 @@ AbstractRundownWidget* RundownOscOutputWidget::clone()
     command->setMessage(this->command.getMessage());
     command->setType(this->command.getType());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setUseBundle(this->command.getUseBundle());
 
     return widget;
 }
@@ -141,6 +138,9 @@ LibraryModel* RundownOscOutputWidget::getLibraryModel()
 
 void RundownOscOutputWidget::setActive(bool active)
 {
+    if (this->active == active)
+        return;
+
     this->active = active;
 
     this->animation->stop();
@@ -231,15 +231,15 @@ void RundownOscOutputWidget::executePlay()
     OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(this->command.getOutput());
 
     if (this->command.getType() == "Boolean")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), (this->command.getMessage() == "true") ? true : false);
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), (this->command.getMessage() == "true") ? true : false, this->command.getUseBundle());
     else if (this->command.getType() == "Double")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toDouble());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toDouble(), this->command.getUseBundle());
     else if (this->command.getType() == "Float")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toFloat());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toFloat(), this->command.getUseBundle());
     else if (this->command.getType() == "Integer")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage().toInt(), this->command.getUseBundle());
     else if (this->command.getType() == "String")
-        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage());
+        OscDeviceManager::getInstance().getOscSender()->send(model.getAddress(), model.getPort(), this->command.getPath(), this->command.getMessage(), this->command.getUseBundle());
 
     if (this->markUsedItems)
         setUsed(true);
@@ -349,42 +349,42 @@ void RundownOscOutputWidget::remoteTriggerIdChanged(const QString& remoteTrigger
 
 void RundownOscOutputWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownOscOutputWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownOscOutputWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownOscOutputWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownOscOutputWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownOscOutputWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownOscOutputWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

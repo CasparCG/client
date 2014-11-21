@@ -5,15 +5,10 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QAbstractButton>
-#include <QCloseEvent>
-#include <QtWidgets/QMessageBox>
-#else
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
-#endif
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 ImportAtemDeviceDialog::ImportAtemDeviceDialog(QWidget* parent)
     : QDialog(parent)

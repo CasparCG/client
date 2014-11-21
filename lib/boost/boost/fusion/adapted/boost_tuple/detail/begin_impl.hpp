@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +7,7 @@
 #if !defined(BOOST_FUSION_BEGIN_IMPL_09272006_0719)
 #define BOOST_FUSION_BEGIN_IMPL_09272006_0719
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/adapted/boost_tuple/boost_tuple_iterator.hpp>
 
 namespace boost { namespace fusion 
@@ -26,6 +27,7 @@ namespace boost { namespace fusion
             {
                 typedef boost_tuple_iterator<Sequence> type;
     
+                BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence& v)
                 {

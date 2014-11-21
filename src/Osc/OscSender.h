@@ -18,5 +18,8 @@ class OSC_EXPORT OscSender : public QObject
         explicit OscSender(QObject* parent = 0);
         ~OscSender();
 
-        void send(const QString& address, int port, const QString& path, const QVariant& message);
+        void send(const QString& address, int port, const QString& path, const QVariant& message, bool useBundle);
+
+    private:
+        bool useBundle;
 };

@@ -6,11 +6,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemKeyerModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorAtemKeyerStateWidget::InspectorAtemKeyerStateWidget(QWidget* parent)
     : QWidget(parent),

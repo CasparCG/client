@@ -3,11 +3,7 @@
 #include "Shared.h"
 #include "ui_OscTimeWidget.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
 {
@@ -33,8 +29,6 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         qint64 timestamp;
         QString startTime;
         bool reverseOscTime;
-
-        QString convertToTimecode(double time);
 
         Q_SLOT void checkState();
 };

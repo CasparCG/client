@@ -11,11 +11,7 @@
 
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 ThumbnailWorker::ThumbnailWorker(const QList<ThumbnailModel>& thumbnailModels, QObject* parent)
     : QObject(parent),
@@ -45,11 +41,11 @@ void ThumbnailWorker::process()
     this->currentTimestamp= this->thumbnailModels.at(0).getTimestamp();
     this->currentSize= this->thumbnailModels.at(0).getSize();
 
-    const DeviceModel& model = DeviceManager::getInstance().getDeviceModelByAddress(this->currentAddress);
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(this->currentAddress);
+    if (model == NULL || model->getShadow() == "Yes")
         return;
 
-    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model.getName());
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(model->getName());
     if (!device->isConnected())
     {
         this->thumbnailTimer.stop();

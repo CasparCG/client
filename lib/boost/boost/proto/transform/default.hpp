@@ -173,8 +173,8 @@ namespace boost { namespace proto
                 typename uncvref<
                     typename Grammar::template impl<
                         typename result_of::child_c<Expr, 1>::type
-                        , State
-                        , Data
+                      , State
+                      , Data
                     >::result_type
                 >::type
             >
@@ -543,9 +543,9 @@ namespace boost { namespace proto
             ) const
             {
                 BOOST_PROTO_USE_GET_POINTER();
-                typedef typename detail::classtypeof<function_type>::type class_type;
+                typedef typename detail::class_member_traits<function_type>::class_type class_type;
                 return (
-                    BOOST_PROTO_GET_POINTER(class_type, BOOST_PROTO_DEFAULT_EVAL(~, 1, e)) ->* 
+                    BOOST_PROTO_GET_POINTER(class_type, (BOOST_PROTO_DEFAULT_EVAL(~, 1, e))) ->* 
                     BOOST_PROTO_DEFAULT_EVAL(~, 0, e)
                 )();
             }
@@ -559,9 +559,9 @@ namespace boost { namespace proto
             ) const
             {
                 BOOST_PROTO_USE_GET_POINTER();
-                typedef typename detail::classtypeof<function_type>::type class_type;
+                typedef typename detail::class_member_traits<function_type>::class_type class_type;
                 return (
-                    BOOST_PROTO_GET_POINTER(class_type, BOOST_PROTO_DEFAULT_EVAL(~, 1, e)) ->*
+                    BOOST_PROTO_GET_POINTER(class_type, (BOOST_PROTO_DEFAULT_EVAL(~, 1, e))) ->*
                     BOOST_PROTO_DEFAULT_EVAL(~, 0, e)
                 );
             }

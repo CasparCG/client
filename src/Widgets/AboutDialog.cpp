@@ -10,7 +10,7 @@ AboutDialog::AboutDialog(QWidget* parent)
 {
     setupUi(this);
 
-    this->labelApplicationVersion->setText(QString("CasparCG Client %1.%2.%3 BETA 4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
+    this->labelApplicationVersion->setText(QString("CasparCG Client %1.%2.%3").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION));
 
 #if QT_POINTER_SIZE == 4
     this->labelQtVersion->setText(QString("Based on Qt %1 (32 bit)").arg(QT_VERSION_STR));

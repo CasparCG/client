@@ -24,15 +24,10 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QWidget>
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#else
-#include <QtGui/QWidget>
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
-#endif
+
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -68,8 +63,6 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
 
         virtual void setUsed(bool used);
 
-
-
     protected:
         virtual bool eventFilter(QObject* target, QEvent* event);
         void dragEnterEvent(QDragEnterEvent* event);
@@ -99,10 +92,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeStartTimer;
-        QTimer executeStopTimer;
-        QTimer executeStartPreviewTimer;
-        QTimer executeStopPreviewTimer;
+        QTimer executeTimer;
+        QTimer executePreviewTimer;
 
         void checkEmptyDevice();
         void checkGpiConnection();

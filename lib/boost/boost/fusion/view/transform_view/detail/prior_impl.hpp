@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2005-2006 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(FUSION_PREV_IMPL_13122005_2110)
 #define FUSION_PREV_IMPL_13122005_2110
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/prior.hpp>
 
 namespace boost { namespace fusion 
@@ -38,6 +39,7 @@ namespace boost { namespace fusion
                 typedef typename Iterator::transform_type transform_type;
                 typedef transform_view_iterator<prior_type, transform_type> type;
 
+                BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Iterator const& i)
                 {
@@ -60,6 +62,7 @@ namespace boost { namespace fusion
                 typedef typename Iterator::transform_type transform_type;
                 typedef transform_view_iterator2<prior1_type, prior2_type, transform_type> type;
 
+                BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Iterator const& i)
                 {

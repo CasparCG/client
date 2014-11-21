@@ -29,21 +29,12 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QDesktopServices>
-#include <QIcon>
-#include <QtWidgets/QMessageBox>
-#include <QMouseEvent>
-#include <QtWidgets/QToolButton>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
-#include <QtGui/QMessageBox>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QToolButton>
-#endif
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolButton>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
@@ -59,16 +50,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     this->splitterVertical->setSizes(QList<int>() << 289 << 860 << 289);
 
     bool showPreviewPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowPreviewPanel").getValue() == "true") ? true : false;
-    if (!showPreviewPanel)
-        this->widgetPreview->setVisible(false);
+    this->widgetPreview->setVisible(showPreviewPanel);
 
     bool showLivePanel = (DatabaseManager::getInstance().getConfigurationByName("ShowLivePanel").getValue() == "true") ? true : false;
-    if (!showLivePanel)
-        this->widgetLive->setVisible(false);
+    this->widgetLive->setVisible(showLivePanel);
 
     bool showAudioLevelsPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowAudioLevelsPanel").getValue() == "true") ? true : false;
-    if (!showAudioLevelsPanel)
-        this->widgetAudioLevels->setVisible(false);
+    this->widgetAudioLevels->setVisible(showAudioLevelsPanel);
+
+    bool showDurationPanel = (DatabaseManager::getInstance().getConfigurationByName("ShowDurationPanel").getValue() == "true") ? true : false;
+    this->widgetDuration->setVisible(showDurationPanel);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(statusbar(const StatusbarEvent&)), this, SLOT(statusbar(const StatusbarEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(emptyRundown(const EmptyRundownEvent&)), this, SLOT(emptyRundown(const EmptyRundownEvent&)));

@@ -7,11 +7,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorAtemAudioInputBalanceWidget::InspectorAtemAudioInputBalanceWidget(QWidget* parent)
     : QWidget(parent),
@@ -36,7 +32,12 @@ void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItem
         this->comboBoxInput->clear();
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
-            loadAtemAudioInput(device->inputInfos());
+        {
+            if (this->inputs.isEmpty())
+                this->inputs = device->inputInfos();
+
+            loadAtemAudioInput();
+        }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->sliderBalance->setValue(this->command->getBalance() * 100);
@@ -55,12 +56,14 @@ void InspectorAtemAudioInputBalanceWidget::atemDeviceChanged(const AtemDeviceCha
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            loadAtemAudioInput(device->inputInfos());
+            this->inputs = device->inputInfos();
+
+            loadAtemAudioInput();
         }
     }
 }
 
-void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values
@@ -69,10 +72,10 @@ void InspectorAtemAudioInputBalanceWidget::loadAtemAudioInput(QMap<quint16, QAte
     this->comboBoxInput->clear();
     this->comboBoxInput->addItem("Master", "0");
 
-    foreach (quint16 key, inputs.keys())
+    foreach (quint16 key, this->inputs.keys())
     {
-        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
-            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+        if (this->inputs.value(key).type == 0 || this->inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
     }
 
     this->comboBoxInput->blockSignals(false);

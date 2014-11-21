@@ -38,15 +38,9 @@
 #include <QtCore/QXmlStreamWriter>
 #include <QtCore/QSharedPointer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QTreeWidgetItem>
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QMenu>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
-#endif
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
@@ -57,7 +51,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
 
     public:
         explicit RundownTreeWidget(QWidget* parent = 0);
-        ~RundownTreeWidget();
 
         void setActive(bool active);
         void openRundown(const QString& path);
@@ -79,6 +72,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool enterPressed;
         bool allowRemoteRundownTriggering;
         bool repositoryRundown;
+        bool previewOnAutoStep;
+        bool clearDelayedCommands;
 
         QString page;
         QString activeRundown;
@@ -93,6 +88,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
         QMenu* contextMenuAtem;
+        QMenu* contextMenuPanasonic;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
@@ -100,13 +96,16 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
 
         QTreeWidgetItem* copyItem;
-        QTreeWidgetItem* activeItem;
         QTreeWidgetItem* currentPlayingAutoStepItem;
 
         OscSubscription* upControlSubscription;
         OscSubscription* downControlSubscription;
+        OscSubscription* playAndAutoStepControlSubscription;
+        OscSubscription* playNowAndAutoStepControlSubscription;
+        OscSubscription* playNowIfChannelControlSubscription;
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
+        OscSubscription* playNowControlSubscription;
         OscSubscription* loadControlSubscription;
         OscSubscription* pauseControlSubscription;
         OscSubscription* nextControlSubscription;
@@ -146,9 +145,10 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addBrightnessItem();
         Q_SLOT void addCommitItem();
         Q_SLOT void addContrastItem();
+        Q_SLOT void addClipItem();
         Q_SLOT void addCropItem();
         Q_SLOT void addDeckLinkInputItem();
-        Q_SLOT void addGeometryItem();
+        Q_SLOT void addFillItem();
         Q_SLOT void addGpiOutputItem();
         Q_SLOT void addGridItem();
         Q_SLOT void addClearOutputItem();
@@ -171,6 +171,16 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addAtemAudioInputStateItem();
         Q_SLOT void addAtemAudioInputGainItem();
         Q_SLOT void addAtemAudioInputBalanceItem();
+        Q_SLOT void addPerspectiveItem();
+        Q_SLOT void addRotationItem();
+        Q_SLOT void addAnchorItem();
+        Q_SLOT void addHttpGetItem();
+        Q_SLOT void addHttpPostItem();
+        Q_SLOT void addResetItem();
+        Q_SLOT void addHtmlItem();
+        Q_SLOT void addRouteChannelItem();
+        Q_SLOT void addRouteVideolayerItem();
+        Q_SLOT void addPanasonicPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);
@@ -196,10 +206,14 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
         Q_SLOT void autoPlayChanged(const AutoPlayChangedEvent&);
         Q_SLOT void autoPlayNextRundownItem(const AutoPlayNextRundownItemEvent&);
+        Q_SLOT void playAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowIfChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void upControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void downControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loadControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);

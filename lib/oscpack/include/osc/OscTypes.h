@@ -47,6 +47,11 @@ namespace osc{
 typedef __int64 int64;
 typedef unsigned __int64 uint64;
 
+#elif defined(__MINGW64__)
+
+typedef long long int64;
+typedef unsigned long long uint64;
+
 #elif defined(__x86_64__) || defined(_M_X64)
 
 typedef long int64;
@@ -61,7 +66,7 @@ typedef unsigned long long uint64;
 
 
 
-#if defined(__x86_64__) || defined(_M_X64)
+#if defined(__x86_64__) || defined(_M_X64) || defined(__MINGW64__)
 
 typedef signed int int32;
 typedef unsigned int uint32;

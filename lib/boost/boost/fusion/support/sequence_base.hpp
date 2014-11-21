@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2007 Tobias Schwinger
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -8,6 +8,7 @@
 #if !defined(FUSION_SEQUENCE_BASE_04182005_0737)
 #define FUSION_SEQUENCE_BASE_04182005_0737
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/begin_end_fwd.hpp>
 
 namespace boost { namespace fusion
@@ -21,18 +22,21 @@ namespace boost { namespace fusion
     template <typename Sequence>
     struct sequence_base
     {
+        BOOST_FUSION_GPU_ENABLED
         Sequence const&
         derived() const
         {
             return static_cast<Sequence const&>(*this);
         }
 
+        BOOST_FUSION_GPU_ENABLED
         Sequence&
         derived()
         {
             return static_cast<Sequence&>(*this);
         }
 
+        BOOST_FUSION_GPU_ENABLED
         operator detail::from_sequence_convertible_type()const
         {
             return detail::from_sequence_convertible_type();

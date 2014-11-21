@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2009. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2012. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -10,6 +10,10 @@
 
 #ifndef BOOST_INTERPROCESS_CREATION_TAGS_HPP
 #define BOOST_INTERPROCESS_CREATION_TAGS_HPP
+
+#if defined(_MSC_VER)
+#  pragma once
+#endif
 
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
@@ -61,12 +65,12 @@ static const open_or_create_t open_or_create = open_or_create_t();
 //!be only opened for reading
 static const open_copy_on_write_t open_copy_on_write = open_copy_on_write_t();
 
-namespace detail {
+namespace ipcdetail {
 
 enum create_enum_t
 {  DoCreate, DoOpen, DoOpenOrCreate   };
 
-}  //namespace detail {
+}  //namespace ipcdetail {
 
 }  //namespace interprocess {
 }  //namespace boost {

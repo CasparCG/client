@@ -35,7 +35,7 @@ void ClearOutputCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setClearChannel(pt.get(L"clearchannel", ClearOutput::DEFAULT_CLEAR_CHANNEL));
-    setTriggerOnNext(pt.get(L"triggeronnext", Geometry::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", ClearOutput::DEFAULT_TRIGGER_ON_NEXT));
 }
 
 void ClearOutputCommand::writeProperties(QXmlStreamWriter* writer)

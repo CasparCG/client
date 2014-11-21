@@ -24,11 +24,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT RundownAtemKeyerStateWidget : public QWidget, Ui::RundownAtemKeyerStateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {

@@ -23,8 +23,8 @@ class CORE_EXPORT DeviceManager : public QObject
         void refresh();
 
         QList<DeviceModel> getDeviceModels() const;
-        const DeviceModel getDeviceModelByName(const QString& name) const;
-        const DeviceModel getDeviceModelByAddress(const QString& address) const;
+        const QSharedPointer<DeviceModel> getDeviceModelByName(const QString& name) const;
+        const QSharedPointer<DeviceModel> getDeviceModelByAddress(const QString& address) const;
 
         const int getDeviceCount() const;
         const QSharedPointer<CasparDevice> getDeviceByName(const QString& name) const;

@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>700</width>
-    <height>880</height>
+    <height>906</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <x>11</x>
      <y>11</y>
      <width>678</width>
-     <height>826</height>
+     <height>852</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -359,9 +359,9 @@
     <widget class="QComboBox" name="comboBoxDelayType">
      <property name="geometry">
       <rect>
-       <x>493</x>
-       <y>444</y>
-       <width>112</width>
+       <x>513</x>
+       <y>522</y>
+       <width>120</width>
        <height>20</height>
       </rect>
      </property>
@@ -385,8 +385,8 @@
     <widget class="QLabel" name="labelDelayAndDuration">
      <property name="geometry">
       <rect>
-       <x>343</x>
-       <y>445</y>
+       <x>363</x>
+       <y>523</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -511,7 +511,7 @@
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>668</y>
+       <y>694</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -524,7 +524,7 @@
      <property name="geometry">
       <rect>
        <x>67</x>
-       <y>725</y>
+       <y>751</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -540,7 +540,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>660</y>
+       <y>686</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -556,7 +556,7 @@
      <property name="geometry">
       <rect>
        <x>217</x>
-       <y>724</y>
+       <y>750</y>
        <width>112</width>
        <height>22</height>
       </rect>
@@ -572,7 +572,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>688</y>
+       <y>714</y>
        <width>291</width>
        <height>17</height>
       </rect>
@@ -652,7 +652,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>554</y>
+       <y>580</y>
        <width>171</width>
        <height>17</height>
       </rect>
@@ -668,7 +668,7 @@
      <property name="geometry">
       <rect>
        <x>287</x>
-       <y>629</y>
+       <y>655</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -681,7 +681,7 @@
      <property name="geometry">
       <rect>
        <x>199</x>
-       <y>625</y>
+       <y>651</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -703,7 +703,7 @@
      <property name="geometry">
       <rect>
        <x>79</x>
-       <y>627</y>
+       <y>653</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -719,23 +719,23 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>526</y>
+       <y>552</y>
        <width>81</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Live</string>
+      <string>Live Stream</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="Line" name="lineLive">
+    <widget class="Line" name="lineLiveStream">
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>534</y>
+       <y>560</y>
        <width>555</width>
        <height>1</height>
       </rect>
@@ -748,7 +748,7 @@
      <property name="geometry">
       <rect>
        <x>79</x>
-       <y>592</y>
+       <y>618</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -764,7 +764,7 @@
      <property name="geometry">
       <rect>
        <x>199</x>
-       <y>590</y>
+       <y>616</y>
        <width>81</width>
        <height>22</height>
       </rect>
@@ -782,17 +782,151 @@
       <number>75</number>
      </property>
     </widget>
-    <widget class="QLabel" name="labelMilliseconds_2">
+    <widget class="QLabel" name="labelPercent">
      <property name="geometry">
       <rect>
        <x>288</x>
-       <y>594</y>
+       <y>620</y>
        <width>31</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
       <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditRepositoryPort">
+     <property name="geometry">
+      <rect>
+       <x>414</x>
+       <y>381</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>8250</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelRepositoryPort">
+     <property name="geometry">
+      <rect>
+       <x>354</x>
+       <y>383</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxDuration">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>524</y>
+       <width>331</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Show duration panel (iNews backend only)</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxUseFreezeOnLoad">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>446</y>
+       <width>281</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Use freeze on load for video items</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStreamPort">
+     <property name="geometry">
+      <rect>
+       <x>453</x>
+       <y>653</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditStreamPort">
+     <property name="geometry">
+      <rect>
+       <x>513</x>
+       <y>651</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>9250</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxLogLevel">
+     <property name="geometry">
+      <rect>
+       <x>513</x>
+       <y>578</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelLogLevel">
+     <property name="geometry">
+      <rect>
+       <x>363</x>
+       <y>579</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Log level:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -3413,7 +3547,7 @@
    <property name="geometry">
     <rect>
      <x>614</x>
-     <y>847</y>
+     <y>873</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -3429,7 +3563,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>839</y>
+     <y>865</y>
      <width>591</width>
      <height>16</height>
     </rect>
@@ -3600,8 +3734,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>185</y>
+     <x>213</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3616,8 +3750,8 @@
    <slot>gpi2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
-     <y>220</y>
+     <x>213</x>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3632,8 +3766,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>238</x>
-     <y>254</y>
+     <x>213</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3648,8 +3782,8 @@
    <slot>gpi4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>281</y>
+     <x>213</x>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3664,8 +3798,8 @@
    <slot>gpi5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>237</x>
-     <y>309</y>
+     <x>213</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3680,8 +3814,8 @@
    <slot>gpi6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>360</y>
+     <x>213</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3696,8 +3830,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>388</y>
+     <x>213</x>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3712,8 +3846,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>416</y>
+     <x>213</x>
+     <y>411</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3729,7 +3863,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>89</y>
+     <y>70</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3744,8 +3878,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>185</y>
+     <x>371</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3761,7 +3895,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>220</y>
+     <y>201</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3776,8 +3910,8 @@
    <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>372</x>
-     <y>256</y>
+     <x>371</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -3793,7 +3927,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>291</y>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>634</x>
@@ -3809,7 +3943,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>326</y>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>602</x>
@@ -3825,7 +3959,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>360</y>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>551</x>
@@ -3841,7 +3975,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>388</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
@@ -3857,7 +3991,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>416</y>
+     <y>411</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3873,7 +4007,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>491</y>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3889,7 +4023,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>492</y>
+     <y>471</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3905,7 +4039,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>519</y>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3921,7 +4055,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>520</y>
+     <y>506</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3937,7 +4071,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>547</y>
+     <y>542</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3953,7 +4087,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>445</x>
-     <y>548</y>
+     <y>541</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3968,8 +4102,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>597</y>
+     <x>213</x>
+     <y>577</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3984,8 +4118,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>598</y>
+     <x>445</x>
+     <y>576</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4000,8 +4134,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>632</y>
+     <x>213</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4016,8 +4150,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>633</y>
+     <x>445</x>
+     <y>611</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4032,8 +4166,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>667</y>
+     <x>213</x>
+     <y>647</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4048,8 +4182,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>668</y>
+     <x>445</x>
+     <y>646</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4064,8 +4198,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>702</y>
+     <x>213</x>
+     <y>682</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4080,8 +4214,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>703</y>
+     <x>445</x>
+     <y>681</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4096,8 +4230,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>737</y>
+     <x>213</x>
+     <y>717</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4112,8 +4246,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>738</y>
+     <x>445</x>
+     <y>716</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4129,7 +4263,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>125</y>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4224,8 +4358,8 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>127</y>
+     <x>177</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -4240,8 +4374,8 @@
    <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>569</x>
-     <y>212</y>
+     <x>571</x>
+     <y>334</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -4256,8 +4390,8 @@
    <slot>removeOscOutput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>192</x>
-     <y>454</y>
+     <x>162</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4272,8 +4406,8 @@
    <slot>showAddOscOutputDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>454</y>
+     <x>123</x>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -4288,8 +4422,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>495</y>
+     <x>526</x>
+     <y>554</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4304,8 +4438,8 @@
    <slot>enableOscInputChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>231</x>
-     <y>81</y>
+     <x>123</x>
+     <y>72</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4464,8 +4598,8 @@
    <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
-     <y>433</y>
+     <x>309</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4512,8 +4646,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>295</x>
-     <y>778</y>
+     <x>230</x>
+     <y>782</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4528,8 +4662,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>296</x>
-     <y>737</y>
+     <x>123</x>
+     <y>746</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4608,8 +4742,8 @@
    <slot>networkCacheChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>663</y>
+     <x>212</x>
+     <y>683</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -4624,8 +4758,8 @@
    <slot>disableAudioInStreamChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>190</x>
-     <y>596</y>
+     <x>123</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>706</x>
@@ -4640,12 +4774,108 @@
    <slot>streamQualityChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>263</x>
-     <y>632</y>
+     <x>212</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
      <x>708</x>
      <y>791</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditRepositoryPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>repositoryPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>701</x>
+     <y>700</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTriCasterProduct</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>tricasterProductChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>58</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDuration</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showDurationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>565</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseFreezeOnLoad</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>useFreezeOnLoadChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>563</x>
+     <y>486</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditStreamPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>streamPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>589</x>
+     <y>694</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>782</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxLogLevel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>logLevelChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>616</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>825</y>
     </hint>
    </hints>
   </connection>
@@ -4710,5 +4940,10 @@
   <slot>networkCacheChanged(int)</slot>
   <slot>streamQualityChanged(int)</slot>
   <slot>autoUpdateChanged(int)</slot>
+  <slot>repositoryPortChanged()</slot>
+  <slot>showDurationChanged(int)</slot>
+  <slot>useFreezeOnLoadChanged(int)</slot>
+  <slot>streamPortChanged()</slot>
+  <slot>logLevelChanged(int)</slot>
  </slots>
 </ui>

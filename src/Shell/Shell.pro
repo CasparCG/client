@@ -56,7 +56,7 @@ else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 
 DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
-win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
+win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 
@@ -64,7 +64,7 @@ DEPENDPATH += $$PWD/../../lib/libvlc/include
 INCLUDEPATH += $$PWD/../../lib/libvlc/include
 win32:LIBS += -L$$PWD/../../lib/libvlc/lib/win32/ -lvlc -lvlccore
 else:macx:LIBS += -L$$PWD/../../lib/libvlc/lib/macx/ -lvlc -lvlccore
-else:unix:LIBS += -L$$PWD/../../lib/libvlc/lib/linux/ -lvlc -lvlccore
+else:unix:LIBS += -lvlc -lvlccore
 
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include
@@ -92,6 +92,20 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
 else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+
+DEPENDPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+INCLUDEPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -lpanasonic
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
+else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
+DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
+INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Web/debug/ -lweb
+else:macx:LIBS += -L$$OUT_PWD/../Web/ -lweb
+else:unix:LIBS += -L$$OUT_PWD/../Web/ -lweb
 
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc

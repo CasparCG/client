@@ -30,6 +30,7 @@ void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEven
         this->lineEditMessage->setText(this->command->getMessage());
         this->comboBoxType->setCurrentIndex(this->comboBoxType->findText(this->command->getType()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxUseBundle->setChecked(this->command->getUseBundle());
     }
 
     checkEmptyOutput();
@@ -40,7 +41,6 @@ void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEven
 
 void InspectorOscOutputWidget::oscOutputChanged(const OscOutputChangedEvent& event)
 {
-
     blockAllSignals(true);
 
     loadOscOutput();
@@ -72,6 +72,7 @@ void InspectorOscOutputWidget::blockAllSignals(bool block)
     this->lineEditMessage->blockSignals(block);
     this->comboBoxType->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxUseBundle->blockSignals(block);
 }
 
 void InspectorOscOutputWidget::checkEmptyOutput()
@@ -117,4 +118,9 @@ void InspectorOscOutputWidget::typeChanged(QString type)
 void InspectorOscOutputWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorOscOutputWidget::useBundleChanged(int state)
+{
+    this->command->setUseBundle((state == Qt::Checked) ? true : false);
 }

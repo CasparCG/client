@@ -7,11 +7,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorAtemAudioInputStateWidget::InspectorAtemAudioInputStateWidget(QWidget* parent)
     : QWidget(parent),
@@ -21,8 +17,6 @@ InspectorAtemAudioInputStateWidget::InspectorAtemAudioInputStateWidget(QWidget* 
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
-
-    loadAtemInputState();
 }
 
 void InspectorAtemAudioInputStateWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -38,7 +32,13 @@ void InspectorAtemAudioInputStateWidget::rundownItemSelected(const RundownItemSe
         this->comboBoxInput->clear();
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
-            loadAtemAudioInput(device->inputInfos());
+        {
+            if (this->inputs.isEmpty())
+                this->inputs = device->inputInfos();
+
+            loadAtemInputState();
+            loadAtemAudioInput();
+        }
 
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->comboBoxState->setCurrentIndex(this->comboBoxState->findData(this->command->getState()));
@@ -56,12 +56,15 @@ void InspectorAtemAudioInputStateWidget::atemDeviceChanged(const AtemDeviceChang
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            loadAtemAudioInput(device->inputInfos());
+            this->inputs = device->inputInfos();
+
+            loadAtemInputState();
+            loadAtemAudioInput();
         }
     }
 }
 
-void InspectorAtemAudioInputStateWidget::loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs)
+void InspectorAtemAudioInputStateWidget::loadAtemAudioInput()
 {
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values
@@ -69,11 +72,10 @@ void InspectorAtemAudioInputStateWidget::loadAtemAudioInput(QMap<quint16, QAtemC
 
     this->comboBoxInput->clear();
     this->comboBoxInput->addItem("Master", "0");
-
-    foreach (quint16 key, inputs.keys())
+    foreach (quint16 key, this->inputs.keys())
     {
-        if (inputs.value(key).type == 0 || inputs.value(key).type == 4)
-            this->comboBoxInput->addItem(inputs.value(key).longText, inputs.value(key).index);
+        if (this->inputs.value(key).type == 0 || this->inputs.value(key).type == 4)
+            this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
     }
 
     this->comboBoxInput->blockSignals(false);

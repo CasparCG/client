@@ -6,11 +6,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QToolButton>
-#else
-#include <QtGui/QToolButton>
-#endif
 
 AudioLevelsWidget::AudioLevelsWidget(QWidget* parent)
     : QWidget(parent),

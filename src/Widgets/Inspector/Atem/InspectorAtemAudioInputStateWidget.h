@@ -13,11 +13,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QWidget>
-#else
-#include <QtGui/QWidget>
-#endif
 
 class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::InspectorAtemAudioInputStateWidget
 {
@@ -29,10 +25,11 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
     private:
         LibraryModel* model;
         AtemAudioInputStateCommand* command;
+        QMap<quint16, QAtemConnection::InputInfo> inputs;
 
         void loadAtemInputState();
         void blockAllSignals(bool block);
-        void loadAtemAudioInput(QMap<quint16, QAtemConnection::InputInfo> inputs);
+        void loadAtemAudioInput();
 
         Q_SLOT void inputChanged(int);
         Q_SLOT void stateChanged(int);

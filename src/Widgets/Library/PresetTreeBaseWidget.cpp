@@ -6,16 +6,10 @@
 
 #include <QtCore/QMimeData>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QClipboard>
-#include <QtWidgets/QTreeWidgetItem>
-#include <QDrag>
-#else
-#include <QtGui/QApplication>
+#include <QtGui/QDrag>
 #include <QtGui/QClipboard>
-#include <QtGui/QTreeWidgetItem>
-#endif
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
 
 PresetTreeBaseWidget::PresetTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent),

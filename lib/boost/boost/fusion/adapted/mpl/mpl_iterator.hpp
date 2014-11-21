@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +7,7 @@
 #if !defined(FUSION_MPL_ITERATOR_05052005_0731)
 #define FUSION_MPL_ITERATOR_05052005_0731
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/detail/mpl_iterator_category.hpp>
 #include <boost/fusion/iterator/iterator_facade.hpp>
 #include <boost/type_traits/remove_const.hpp>
@@ -37,6 +38,7 @@ namespace boost { namespace fusion
                 typename Iterator::iterator_type>::type
             type;
 
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator)
             {
@@ -51,6 +53,7 @@ namespace boost { namespace fusion
                 typename mpl::next<typename Iterator::iterator_type>::type> 
             type;
 
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator)
             {
@@ -65,6 +68,7 @@ namespace boost { namespace fusion
                 typename mpl::prior<typename Iterator::iterator_type>::type> 
             type;
 
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator)
             {
@@ -79,6 +83,7 @@ namespace boost { namespace fusion
                 typename mpl::advance<typename Iterator::iterator_type, N>::type>
             type;
 
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator const& /*i*/)
             {
@@ -99,6 +104,7 @@ namespace boost { namespace fusion
                 >::type
             type;
             
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(I1 const&, I2 const&)
             {

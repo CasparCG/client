@@ -207,7 +207,6 @@ QSplitter::handle:horizontal
 QLCDNumber
 {
     background-color: transparent;
-    color: rgba(255, 255, 255, 255);
 }
 
 /*
@@ -351,6 +350,10 @@ QTreeView
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
+QTreeView::item:hover
+{
+    background-color: transparent;
+}
 QTreeView::item:selected
 {
     background-color: rgba(80, 80, 80, 255);
@@ -380,6 +383,10 @@ QTreeWidget
 {
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
+}
+QTreeView::item:hover
+{
+    background-color: transparent;
 }
 QTreeWidget::item:selected
 {
@@ -537,6 +544,7 @@ QToolBox::tab:selected
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     border-bottom-width: 1px;
+    font-weight: normal;
 }
 QToolBox::tab:selected:disabled
 {
@@ -1079,16 +1087,19 @@ QScrollBar::right-arrow:horizontal
 }
 QScrollBar::add-page:horizontal
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 255), stop:1 rgba(42, 42, 42, 255));
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-top-width: 1px;
 }
 QScrollBar::sub-page:horizontal
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 255), stop:1 rgba(42, 42, 42, 255));
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-top-width: 1px;
 }
+
 QScrollBar:vertical
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
@@ -1123,12 +1134,14 @@ QScrollBar::down-arrow:vertical
 }
 QScrollBar::add-page:vertical
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
     border-color: rgba(42, 42, 42, 255);
     border-left-width: 1px;
     border-style: solid;
 }
 QScrollBar::sub-page:vertical
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
     border-color: rgba(42, 42, 42, 255);
     border-left-width: 1px;
     border-style: solid;

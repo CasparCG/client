@@ -42,7 +42,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="labelFlashlayer">
+      <widget class="QLabel" name="labelFlashlayerField">
        <property name="text">
         <string>Flash layer</string>
        </property>
@@ -352,7 +352,7 @@
         </layout>
        </item>
        <item>
-        <widget class="TemplateDataTreeBaseWidget" name="treeWidgetTemplateData">
+        <widget class="HttpDataTreeBaseWidget" name="treeWidgetTemplateData">
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>
          </property>
@@ -376,7 +376,7 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Name</string>
+           <string>Key</string>
           </property>
          </column>
          <column>
@@ -410,9 +410,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TemplateDataTreeBaseWidget</class>
+   <class>HttpDataTreeBaseWidget</class>
    <extends>QTreeWidget</extends>
-   <header>Inspector/TemplateDataTreeBaseWidget.h</header>
+   <header>Inspector/HttpDataTreeBaseWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

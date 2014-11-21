@@ -1,10 +1,6 @@
 #include "EventManager.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 Q_GLOBAL_STATIC(EventManager, eventManager)
 
@@ -65,6 +61,11 @@ void EventManager::fireOpenRundownMenuEvent(const OpenRundownMenuEvent& event)
     emit openRundownMenu(event);
 }
 
+void EventManager::fireDurationChangedEvent(const DurationChangedEvent& event)
+{
+    emit durationChanged(event);
+}
+
 void EventManager::fireReloadRundownMenuEvent(const ReloadRundownMenuEvent& event)
 {
     emit reloadRundownMenu(event);
@@ -123,6 +124,16 @@ void EventManager::fireAddTemplateDataEvent(const AddTemplateDataEvent& event)
 void EventManager::fireShowAddTemplateDataDialogEvent(const ShowAddTemplateDataDialogEvent& event)
 {
     emit showAddTemplateDataDialog(event);
+}
+
+void EventManager::fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent& event)
+{
+    emit showAddHttpGetDataDialog(event);
+}
+
+void EventManager::fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent& event)
+{
+    emit showAddHttpPostDataDialog(event);
 }
 
 void EventManager::fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent& event)
@@ -343,8 +354,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Brightness", "", "", Rundown::BRIGHTNESS, 0, "")));
     else if (type == Rundown::CONTRAST)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Contrast", "", "", Rundown::CONTRAST, 0, "")));
-    else if (type == Rundown::CROP)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+    else if (type == Rundown::CLIP)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clipping", "", "", Rundown::CLIP, 0, "")));
     else if (type == Rundown::CHROMAKEY)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Chroma Key", "", "", Rundown::CHROMAKEY, 0, "")));
     else if (type == Rundown::IMAGESCROLLER)
@@ -355,8 +366,8 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Channel Snapshot", "", "", Rundown::PRINT, 0, "")));
     else if (type == Rundown::CLEAROUTPUT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Clear Output", "", "", Rundown::CLEAROUTPUT, 0, "")));
-    else if (type == Rundown::GEOMETRY)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transformation", "", "", Rundown::GEOMETRY, 0, "")));
+    else if (type == Rundown::FILL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Transform", "", "", Rundown::FILL, 0, "")));
     else if (type == Rundown::GPIOUTPUT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "GPI Output", "", "", Rundown::GPIOUTPUT, 0, "")));
     else if (type == Rundown::FILERECORDER)
@@ -381,12 +392,12 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Commit", "", "", Rundown::COMMIT, 0, "")));
     else if (type == Rundown::AUDIO)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Audio", "", "", Rundown::AUDIO, 0, "")));
-    else if (type == Rundown::IMAGE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::IMAGE, 0, "")));
+    else if (type == Rundown::STILL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Image", "", "", Rundown::STILL, 0, "")));
     else if (type == Rundown::TEMPLATE)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Template", "", "", Rundown::TEMPLATE, 0, "")));
-    else if (type == Rundown::VIDEO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::VIDEO, 0, "")));
+    else if (type == Rundown::MOVIE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::MOVIE, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
     else if (type ==  Rundown::TRICASTERINPUT)
@@ -419,4 +430,26 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Playout Command", "", "", Rundown::PLAYOUTCOMMAND, 0, "")));
     else if (type ==  Rundown::FADETOBLACK)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade to Black", "", "", Rundown::FADETOBLACK, 0, "")));
+    else if (type ==  Rundown::PANASONICPRESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Camera Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
+    else if (type ==  Rundown::PERSPECTIVE)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Distort", "", "", Rundown::PERSPECTIVE, 0, "")));
+    else if (type ==  Rundown::ROTATION)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Rotation", "", "", Rundown::ROTATION, 0, "")));
+    else if (type ==  Rundown::ANCHOR)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Anchor Point", "", "", Rundown::ANCHOR, 0, "")));
+    else if (type ==  Rundown::CROP)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crop", "", "", Rundown::CROP, 0, "")));
+    else if (type ==  Rundown::HTTPGET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP GET Request", "", "", Rundown::HTTPGET, 0, "")));
+    else if (type ==  Rundown::HTTPPOST)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTTP POST Request", "", "", Rundown::HTTPPOST, 0, "")));
+    else if (type ==  Rundown::RESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Reset", "", "", Rundown::RESET, 0, "")));
+    else if (type ==  Rundown::HTML)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "HTML Page", "", "", Rundown::HTML, 0, "")));
+    else if (type ==  Rundown::ROUTECHANNEL)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Channel", "", "", Rundown::ROUTECHANNEL, 0, "")));
+    else if (type ==  Rundown::ROUTEVIDEOLAYER)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Videolayer", "", "", Rundown::ROUTEVIDEOLAYER, 0, "")));
 }

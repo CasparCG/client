@@ -7,11 +7,7 @@
 #include "Models/LibraryModel.h"
 #include "Models/ThumbnailModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QToolButton>
-#else
-#include <QtGui/QToolButton>
-#endif
 
 PreviewWidget::PreviewWidget(QWidget* parent)
     : QWidget(parent),

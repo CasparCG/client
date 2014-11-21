@@ -23,15 +23,11 @@ HEADERS += \
     Inspector/InspectorOutputWidget.h \
     Inspector/InspectorMetadataWidget.h \
     Inspector/InspectorLevelsWidget.h \
-    Inspector/InspectorGeometryWidget.h \
     Library/LibraryWidget.h \
     Rundown/RundownGroupWidget.h \
     Rundown/RundownTemplateWidget.h \
     Rundown/RundownWidget.h \
     Rundown/AbstractRundownWidget.h \
-    Rundown/RundownCropWidget.h \
-    Inspector/InspectorCropWidget.h \
-    Rundown/RundownGeometryWidget.h \
     Inspector/InspectorBrightnessWidget.h \
     Rundown/RundownBrightnessWidget.h \
     Inspector/InspectorSaturationWidget.h \
@@ -68,10 +64,6 @@ HEADERS += \
     Inspector/InspectorDeckLinkInputWidget.h \
     Rundown/RundownSolidColorWidget.h \
     Inspector/InspectorSolidColorWidget.h \
-    Rundown/RundownImageWidget.h \
-    Inspector/InspectorImageWidget.h \
-    Inspector/InspectorVideoWidget.h \
-    Rundown/RundownVideoWidget.h \
     Rundown/RundownTreeWidget.h \
     Rundown/RundownItemFactory.h \
     DeviceDialog.h \
@@ -102,7 +94,6 @@ HEADERS += \
     Inspector/TriCaster/InspectorInputWidget.h \
     Rundown/TriCaster/RundownInputWidget.h \
     TriCasterDeviceDialog.h \
-    Inspector/TemplateDataDialog.h \
     ImportDeviceDialog.h \
     ImportTriCasterDeviceDialog.h \
     Rundown/TriCaster/RundownNetworkSourceWidget.h \
@@ -138,7 +129,39 @@ HEADERS += \
     Inspector/InspectorPlayoutCommandWidget.h \
     LiveDialog.h \
     Rundown/RundownFadeToBlackWidget.h \
-    Inspector/InspectorFadeToBlackWidget.h
+    Inspector/InspectorFadeToBlackWidget.h \
+    DurationWidget.h \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.h \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.h \
+    Rundown/RundownPerspectiveWidget.h \
+    Inspector/InspectorPerspectiveWidget.h \
+    Rundown/RundownRotationWidget.h \
+    Inspector/InspectorRotationWidget.h \
+    Rundown/RundownAnchorWidget.h \
+    Inspector/InspectorAnchorWidget.h \
+    Rundown/RundownMovieWidget.h \
+    Rundown/RundownStillWidget.h \
+    Rundown/RundownFillWidget.h \
+    Inspector/InspectorMovieWidget.h \
+    Inspector/InspectorStillWidget.h \
+    Inspector/InspectorFillWidget.h \
+    Rundown/RundownClipWidget.h \
+    Inspector/InspectorClipWidget.h \
+    Rundown/RundownCropWidget.h \
+    Inspector/InspectorCropWidget.h \
+    Rundown/RundownHttpGetWidget.h \
+    Inspector/KeyValueDialog.h \
+    Inspector/InspectorHttpGetWidget.h \
+    Inspector/HttpDataTreeBaseWidget.h \
+    Rundown/RundownHttpPostWidget.h \
+    Inspector/InspectorHttpPostWidget.h \
+    Rundown/RundownResetWidget.h \
+    Rundown/RundownHtmlWidget.h \
+    Inspector/InspectorHtmlWidget.h \
+    Rundown/RundownRouteChannelWidget.h \
+    Inspector/InspectorRouteChannelWidget.h \
+    Rundown/RundownRouteVideolayerWidget.h \
+    Inspector/InspectorRouteVideolayerWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -151,9 +174,7 @@ SOURCES += \
     Inspector/InspectorOutputWidget.cpp \
     Inspector/InspectorMetadataWidget.cpp \
     Inspector/InspectorLevelsWidget.cpp \
-    Inspector/InspectorGeometryWidget.cpp \
     Inspector/InspectorImageScrollerWidget.cpp \
-    Inspector/InspectorCropWidget.cpp \
     Inspector/InspectorBrightnessWidget.cpp \
     Inspector/InspectorOpacityWidget.cpp \
     Inspector/InspectorSaturationWidget.cpp \
@@ -163,11 +184,9 @@ SOURCES += \
     Inspector/InspectorGpiOutputWidget.cpp \
     Inspector/InspectorFileRecorderWidget.cpp \
     Library/LibraryWidget.cpp \
-    Rundown/RundownCropWidget.cpp \
     Rundown/RundownGroupWidget.cpp \
     Rundown/RundownTemplateWidget.cpp \
     Rundown/RundownWidget.cpp \
-    Rundown/RundownGeometryWidget.cpp \
     Rundown/RundownBrightnessWidget.cpp \
     Rundown/RundownSaturationWidget.cpp \
     Rundown/RundownOpacityWidget.cpp \
@@ -195,10 +214,6 @@ SOURCES += \
     Rundown/RundownDeckLinkInputWidget.cpp \
     Rundown/RundownSolidColorWidget.cpp \
     Inspector/InspectorSolidColorWidget.cpp \
-    Rundown/RundownImageWidget.cpp \
-    Inspector/InspectorImageWidget.cpp \
-    Rundown/RundownVideoWidget.cpp \
-    Inspector/InspectorVideoWidget.cpp \
     Rundown/RundownTreeWidget.cpp \
     Rundown/RundownItemFactory.cpp \
     DeviceDialog.cpp \
@@ -229,7 +244,6 @@ SOURCES += \
     Inspector/TriCaster/InspectorInputWidget.cpp \
     Rundown/TriCaster/RundownInputWidget.cpp \
     TriCasterDeviceDialog.cpp \
-    Inspector/TemplateDataDialog.cpp \
     ImportDeviceDialog.cpp \
     ImportTriCasterDeviceDialog.cpp \
     Rundown/TriCaster/RundownNetworkSourceWidget.cpp \
@@ -265,7 +279,39 @@ SOURCES += \
     Inspector/InspectorPlayoutCommandWidget.cpp \
     LiveDialog.cpp \
     Rundown/RundownFadeToBlackWidget.cpp \
-    Inspector/InspectorFadeToBlackWidget.cpp
+    Inspector/InspectorFadeToBlackWidget.cpp \
+    DurationWidget.cpp \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.cpp \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.cpp \
+    Rundown/RundownPerspectiveWidget.cpp \
+    Inspector/InspectorPerspectiveWidget.cpp \
+    Rundown/RundownRotationWidget.cpp \
+    Inspector/InspectorRotationWidget.cpp \
+    Rundown/RundownAnchorWidget.cpp \
+    Inspector/InspectorAnchorWidget.cpp \
+    Rundown/RundownMovieWidget.cpp \
+    Rundown/RundownStillWidget.cpp \
+    Rundown/RundownFillWidget.cpp \
+    Inspector/InspectorMovieWidget.cpp \
+    Inspector/InspectorStillWidget.cpp \
+    Inspector/InspectorFillWidget.cpp \
+    Rundown/RundownClipWidget.cpp \
+    Inspector/InspectorClipWidget.cpp \
+    Rundown/RundownCropWidget.cpp \
+    Inspector/InspectorCropWidget.cpp \
+    Rundown/RundownHttpGetWidget.cpp \
+    Inspector/KeyValueDialog.cpp \
+    Inspector/InspectorHttpGetWidget.cpp \
+    Inspector/HttpDataTreeBaseWidget.cpp \
+    Rundown/RundownHttpPostWidget.cpp \
+    Inspector/InspectorHttpPostWidget.cpp \
+    Rundown/RundownResetWidget.cpp \
+    Rundown/RundownHtmlWidget.cpp \
+    Inspector/InspectorHtmlWidget.cpp \
+    Rundown/RundownRouteChannelWidget.cpp \
+    Inspector/InspectorRouteChannelWidget.cpp \
+    Rundown/RundownRouteVideolayerWidget.cpp \
+    Inspector/InspectorRouteVideolayerWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -278,7 +324,6 @@ FORMS += \
     Inspector/InspectorTemplateWidget.ui \
     Inspector/InspectorOutputWidget.ui \
     Inspector/InspectorMetadataWidget.ui \
-    Inspector/InspectorGeometryWidget.ui \
     Inspector/InspectorGridWidget.ui \
     Inspector/InspectorDeckLinkInputWidget.ui \
     Inspector/InspectorGpiOutputWidget.ui \
@@ -289,10 +334,7 @@ FORMS += \
     Rundown/RundownTemplateWidget.ui \
     Rundown/RundownGroupWidget.ui \
     Inspector/InspectorLevelsWidget.ui \
-    Inspector/InspectorCropWidget.ui \
-    Rundown/RundownCropWidget.ui \
     Inspector/InspectorBrightnessWidget.ui \
-    Rundown/RundownGeometryWidget.ui \
     Rundown/RundownBrightnessWidget.ui \
     Inspector/InspectorSaturationWidget.ui \
     Rundown/RundownSaturationWidget.ui \
@@ -322,10 +364,6 @@ FORMS += \
     Rundown/RundownDeckLinkInputWidget.ui \
     Rundown/RundownSolidColorWidget.ui \
     Inspector/InspectorSolidColorWidget.ui \
-    Rundown/RundownImageWidget.ui \
-    Inspector/InspectorImageWidget.ui \
-    Rundown/RundownVideoWidget.ui \
-    Inspector/InspectorVideoWidget.ui \
     Rundown/RundownTreeWidget.ui \
     DeviceDialog.ui \
     PresetDialog.ui \
@@ -345,7 +383,6 @@ FORMS += \
     Inspector/TriCaster/InspectorInputWidget.ui \
     Rundown/TriCaster/RundownInputWidget.ui \
     TriCasterDeviceDialog.ui \
-    Inspector/TemplateDataDialog.ui \
     ImportDeviceDialog.ui \
     ImportTriCasterDeviceDialog.ui \
     Rundown/TriCaster/RundownNetworkSourceWidget.ui \
@@ -381,10 +418,41 @@ FORMS += \
     Inspector/InspectorPlayoutCommandWidget.ui \
     LiveDialog.ui \
     Rundown/RundownFadeToBlackWidget.ui \
-    Inspector/InspectorFadeToBlackWidget.ui
+    Inspector/InspectorFadeToBlackWidget.ui \
+    DurationWidget.ui \
+    Rundown/Panasonic/RundownPanasonicPresetWidget.ui \
+    Inspector/Panasonic/InspectorPanasonicPresetWidget.ui \
+    Rundown/RundownPerspectiveWidget.ui \
+    Inspector/InspectorPerspectiveWidget.ui \
+    Rundown/RundownRotationWidget.ui \
+    Inspector/InspectorRotationWidget.ui \
+    Rundown/RundownAnchorWidget.ui \
+    Inspector/InspectorAnchorWidget.ui \
+    Rundown/RundownMovieWidget.ui \
+    Rundown/RundownStillWidget.ui \
+    Rundown/RundownFillWidget.ui \
+    Inspector/InspectorMovieWidget.ui \
+    Inspector/InspectorStillWidget.ui \
+    Inspector/InspectorFillWidget.ui \
+    Rundown/RundownClipWidget.ui \
+    Inspector/InspectorClipWidget.ui \
+    Rundown/RundownCropWidget.ui \
+    Inspector/InspectorCropWidget.ui \
+    Rundown/RundownHttpGetWidget.ui \
+    Inspector/KeyValueDialog.ui \
+    Inspector/InspectorHttpGetWidget.ui \
+    Rundown/RundownHttpPostWidget.ui \
+    Inspector/InspectorHttpPostWidget.ui \
+    Rundown/RundownResetWidget.ui \
+    Rundown/RundownHtmlWidget.ui \
+    Inspector/InspectorHtmlWidget.ui \
+    Rundown/RundownRouteChannelWidget.ui \
+    Inspector/InspectorRouteChannelWidget.ui \
+    Rundown/RundownRouteVideolayerWidget.ui \
+    Inspector/InspectorRouteVideolayerWidget.ui
 
 RESOURCES += \
-    Widgets.qrc \
+    Widgets.qrc
 
 OTHER_FILES += \
     Images/ArrowUpDisabled.png \
@@ -492,8 +560,6 @@ OTHER_FILES += \
     Images/Snapshot.png \
     Images/SnapshotSmallHover.png \
     Images/SnapshotSmall.png \
-    Images/GeometrySmallHover.png \
-    Images/GeometrySmall.png \
     Images/FileRecorder.png \
     Images/FileRecorderSmallHover.png \
     Images/FileRecorderSmall.png \
@@ -511,7 +577,6 @@ OTHER_FILES += \
     Images/BlendModeSmallHover.png \
     Images/BlendModeSmall.png \
     Images/Grid.png \
-    Images/Geometry.png \
     Images/Crop.png \
     Images/SolidColorSmallHover.png \
     Images/SolidColorSmall.png \
@@ -614,7 +679,49 @@ OTHER_FILES += \
     Images/MaroonLight.png \
     Images/DarkKhaki.png \
     Images/RoyalBlue.png \
-    Images/StreamNotAvailable.png
+    Images/StreamNotAvailable.png \
+    Images/PlayoutCommandSmallHover.png \
+    Images/PlayoutCommandSmall.png \
+    Images/PauseProgressBarOverlay.png \
+    Images/FadeToBlackSmallHover.png \
+    Images/FadeToBlackSmall.png \
+    Images/FadeToBlack.png \
+    Images/Panasonic/PanasonicPresetSmallHover.png \
+    Images/Panasonic/PanasonicPresetSmall.png \
+    Images/Panasonic/PanasonicPreset.png \
+    Images/PerspectiveSmallHover.png \
+    Images/PerspectiveSmall.png \
+    Images/Perspective.png \
+    Images/RotationSmallHover.png \
+    Images/RotationSmall.png \
+    Images/Rotation.png \
+    Images/Anchor.png \
+    Images/AnchorSmall.png \
+    Images/AnchorSmallHover.png \
+    Images/Fill.png \
+    Images/FillSmall.png \
+    Images/FillSmallHover.png \
+    Images/ClipSmallHover.png \
+    Images/ClipSmall.png \
+    Images/Clip.png \
+    Images/HttpGetSmallHover.png \
+    Images/HttpGetSmall.png \
+    Images/HttpGet.png \
+    Images/HttpPostSmallHover.png \
+    Images/HttpPostSmall.png \
+    Images/HttpPost.png \
+    Images/ResetSmallHover.png \
+    Images/ResetSmall.png \
+    Images/Reset.png \
+    Images/Html.png \
+    Images/HtmlSmall.png \
+    Images/HtmlSmallHover.png \
+    Images/RouteVideolayerSmallHover.png \
+    Images/RouteVideolayerSmall.png \
+    Images/RouteVideolayer.png \
+    Images/RouteChannelSmallHover.png \
+    Images/RouteChannelSmall.png \
+    Images/RouteChannel.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -633,7 +740,7 @@ else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 
 DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
-win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
+win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 
@@ -641,7 +748,7 @@ DEPENDPATH += $$PWD/../../lib/libvlc/include
 INCLUDEPATH += $$PWD/../../lib/libvlc/include
 win32:LIBS += -L$$PWD/../../lib/libvlc/lib/win32/ -lvlc -lvlccore
 else:macx:LIBS += -L$$PWD/../../lib/libvlc/lib/macx/ -lvlc -lvlccore
-else:unix:LIBS += -L$$PWD/../../lib/libvlc/lib/linux/ -lvlc -lvlccore
+else:unix:LIBS += -lvlc -lvlccore
 
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include
@@ -669,6 +776,20 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../TriCaster/debug/ -ltricaster
 else:macx:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
 else:unix:LIBS += -L$$OUT_PWD/../TriCaster/ -ltricaster
+
+DEPENDPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+INCLUDEPATH += $$OUT_PWD/../Panasonic $$PWD/../Panasonic
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -lpanasonic
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
+else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
+DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
+INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Web/debug/ -lweb
+else:macx:LIBS += -L$$OUT_PWD/../Web/ -lweb
+else:unix:LIBS += -L$$OUT_PWD/../Web/ -lweb
 
 DEPENDPATH += $$OUT_PWD/../Osc $$PWD/../Osc
 INCLUDEPATH += $$OUT_PWD/../Osc $$PWD/../Osc

@@ -99,8 +99,8 @@
         <file>Images/GridSmallHover.png</file>
         <file>Images/KeyerSmall.png</file>
         <file>Images/KeyerSmallHover.png</file>
-        <file>Images/GeometrySmall.png</file>
-        <file>Images/GeometrySmallHover.png</file>
+        <file>Images/FillSmall.png</file>
+        <file>Images/FillSmallHover.png</file>
         <file>Images/FileRecorder.png</file>
         <file>Images/FileRecorderSmall.png</file>
         <file>Images/FileRecorderSmallHover.png</file>
@@ -116,7 +116,7 @@
         <file>Images/Brightness.png</file>
         <file>Images/Contrast.png</file>
         <file>Images/Opacity.png</file>
-        <file>Images/Geometry.png</file>
+        <file>Images/Fill.png</file>
         <file>Images/Grid.png</file>
         <file>Images/Crop.png</file>
         <file>Images/SolidColorSmall.png</file>
@@ -209,6 +209,45 @@
         <file>Images/SteelBlue.png</file>
         <file>Images/DarkSlateGray.png</file>
         <file>Images/StreamNotAvailable.png</file>
+        <file>Images/PlayoutCommand.png</file>
+        <file>Images/PlayoutCommandSmall.png</file>
+        <file>Images/PlayoutCommandSmallHover.png</file>
+        <file>Images/FadeToBlack.png</file>
+        <file>Images/FadeToBlackSmall.png</file>
+        <file>Images/FadeToBlackSmallHover.png</file>
+        <file>Images/Panasonic/PanasonicPreset.png</file>
+        <file>Images/Panasonic/PanasonicPresetSmall.png</file>
+        <file>Images/Panasonic/PanasonicPresetSmallHover.png</file>
+        <file>Images/Perspective.png</file>
+        <file>Images/PerspectiveSmall.png</file>
+        <file>Images/PerspectiveSmallHover.png</file>
+        <file>Images/Rotation.png</file>
+        <file>Images/RotationSmall.png</file>
+        <file>Images/RotationSmallHover.png</file>
+        <file>Images/Anchor.png</file>
+        <file>Images/AnchorSmall.png</file>
+        <file>Images/AnchorSmallHover.png</file>
+        <file>Images/Clip.png</file>
+        <file>Images/ClipSmall.png</file>
+        <file>Images/ClipSmallHover.png</file>
+        <file>Images/HttpGet.png</file>
+        <file>Images/HttpGetSmall.png</file>
+        <file>Images/HttpGetSmallHover.png</file>
+        <file>Images/HttpPost.png</file>
+        <file>Images/HttpPostSmall.png</file>
+        <file>Images/HttpPostSmallHover.png</file>
+        <file>Images/Reset.png</file>
+        <file>Images/ResetSmall.png</file>
+        <file>Images/ResetSmallHover.png</file>
+        <file>Images/Html.png</file>
+        <file>Images/HtmlSmall.png</file>
+        <file>Images/HtmlSmallHover.png</file>
+        <file>Images/RouteChannel.png</file>
+        <file>Images/RouteChannelSmall.png</file>
+        <file>Images/RouteChannelSmallHover.png</file>
+        <file>Images/RouteVideolayer.png</file>
+        <file>Images/RouteVideolayerSmall.png</file>
+        <file>Images/RouteVideolayerSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>
@@ -221,5 +260,8 @@
         <file>Stylesheets/Curve/Linux.css</file>
         <file>Stylesheets/Curve/Mac.css</file>
         <file>Stylesheets/Curve/Windows.css</file>
+        <file>Images/Html.png</file>
+        <file>Images/HtmlSmall.png</file>
+        <file>Images/HtmlSmallHover.png</file>
     </qresource>
 </RCC>

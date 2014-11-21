@@ -22,35 +22,35 @@ class CORE_EXPORT CropCommand : public AbstractCommand
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
 
-        float getCropLeft() const;
-        float getCropRight() const;
-        float getCropTop() const;
-        float getCropBottom() const;
+        float getLeft() const;
+        float getTop() const;
+        float getRight() const;
+        float getBottom() const;
         int getTransitionDuration() const;
         const QString& getTween() const;
         bool getDefer() const;
 
-        void setCropLeft(float cropLeft);
-        void setCropRight(float cropRight);
-        void setCropTop(float cropTop);
-        void setCropBottom(float cropBottom);
+        void setLeft(float left);
+        void setTop(float top);
+        void setRight(float right);
+        void setBottom(float bottom);
         void setTransitionDuration(int transtitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private:
-        float cropLeft;
-        float cropRight;
-        float cropTop;
-        float cropBottom;
+        float left;
+        float top;
+        float right;
+        float bottom;
         int transtitionDuration;
         QString tween;
         bool defer;
 
-        Q_SIGNAL void cropLeftChanged(float);
-        Q_SIGNAL void cropRightChanged(float);
-        Q_SIGNAL void cropTopChanged(float);
-        Q_SIGNAL void cropBottomChanged(float);
+        Q_SIGNAL void leftChanged(float);
+        Q_SIGNAL void topChanged(float);
+        Q_SIGNAL void rightChanged(float);
+        Q_SIGNAL void bottomChanged(float);
         Q_SIGNAL void transtitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);

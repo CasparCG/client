@@ -1,24 +1,44 @@
 /*=============================================================================
-    Copyright (c) 2005-2007 Joel de Guzman
+    Copyright (c) 2005-2012 Joel de Guzman
     Copyright (c) 2005-2007 Dan Marsden
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #if !defined(FUSION_DEQUE_FORWARD_02092007_0749)
 #define FUSION_DEQUE_FORWARD_02092007_0749
 
-#include <boost/fusion/container/deque/limits.hpp>
-#include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+#include <boost/fusion/support/config.hpp>
+#include <boost/config.hpp>
 
+#if (defined(BOOST_NO_CXX11_DECLTYPE)             \
+  || defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)   \
+  || defined(BOOST_NO_CXX11_RVALUE_REFERENCES))   \
+  || (defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES))
+# if defined(BOOST_FUSION_HAS_VARIADIC_DEQUE)
+#   undef BOOST_FUSION_HAS_VARIADIC_DEQUE
+# endif
+#else
+# if !defined(BOOST_FUSION_HAS_VARIADIC_DEQUE)
+#   define BOOST_FUSION_HAS_VARIADIC_DEQUE
+# endif
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+// With no decltype and variadics, we will use the C++03 version
+///////////////////////////////////////////////////////////////////////////////
+#if !defined(BOOST_FUSION_HAS_VARIADIC_DEQUE)
+# include <boost/fusion/container/deque/detail/cpp03/deque_fwd.hpp>
+#else
+
+///////////////////////////////////////////////////////////////////////////////
+// C++11 interface
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace fusion
 {
-    struct void_;
-
-    template<
-        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-            FUSION_MAX_DEQUE_SIZE, typename T, void_)>
+    template <typename ...T>
     struct deque;
 }}
 
+#endif
 #endif

@@ -13,19 +13,12 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
-#if QT_VERSION >= 0x050000
+#include <QtGui/QIcon>
+
 #include <QtWidgets/QApplication>
-#include <QIcon>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QToolButton>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QIcon>
-#include <QtGui/QFileDialog>
-#include <QtGui/QMessageBox>
-#include <QtGui/QToolButton>
-#endif
 
 RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent)
@@ -292,38 +285,22 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
 
 void RundownWidget::markItemAsUsed(const MarkItemAsUsedEvent& event)
 {
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark Item as Used..."));
-
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(true);
-
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownWidget::markItemAsUnused(const MarkItemAsUnusedEvent& event)
 {
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark Item as Unused..."));
-
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(false);
-
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownWidget::markAllItemsAsUsed(const MarkAllItemsAsUsedEvent& event)
 {
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark All Items as Used..."));
-
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(true);
-
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownWidget::markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent& event)
 {
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Mark All Items as Unused..."));
-
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(false);
-
-    EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
 }
 
 void RundownWidget::reloadRundown(const ReloadRundownEvent& event)

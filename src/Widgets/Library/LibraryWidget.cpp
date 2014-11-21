@@ -22,26 +22,15 @@
 #include <QtCore/QTimer>
 #include <QtCore/QModelIndex>
 
-
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QClipboard>
-#include <QColor>
-#include <QIcon>
-#include <QtWidgets/QFileDialog>
-#include <QKeyEvent>
-#include <QtWidgets/QTreeWidgetItem>
-#include <QStandardItemModel>
-#else
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
-#include <QtGui/QFileDialog>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QTreeWidgetItem>
 #include <QtGui/QStandardItemModel>
-#endif
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QFileDialog>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
     : QWidget(parent)
@@ -49,9 +38,6 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     setupUi(this);
     setupUiMenu();
     setupTools();
-
-    this->filterTimer.setSingleShot(true);
-    QObject::connect(&this->filterTimer, SIGNAL(timeout()), SLOT(executeFilterLibrary()));
 
     this->treeWidgetTool->setColumnHidden(1, true);
     this->treeWidgetTool->setColumnHidden(2, true);
@@ -81,17 +67,13 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetTemplate->setColumnHidden(5, true);
     this->treeWidgetTemplate->setColumnHidden(6, true);
 
-#if QT_VERSION >= 0x050000
     this->treeWidgetVideo->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-#else
-    this->treeWidgetVideo->header()->setResizeMode(0, QHeaderView::Stretch);
-#endif
     this->treeWidgetVideo->setColumnHidden(1, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
     this->treeWidgetVideo->setColumnHidden(4, true);
     this->treeWidgetVideo->setColumnHidden(5, true);
-    this->treeWidgetVideo->setColumnWidth(6, 65);
+    this->treeWidgetVideo->setColumnWidth(6, 71);
 
     this->treeWidgetData->setColumnHidden(1, true);
     this->treeWidgetData->setColumnHidden(2, true);
@@ -133,15 +115,15 @@ void LibraryWidget::setupTools()
     widgetAudio->setText(5, "0");
     widgetAudio->setText(6, "");
 
-    QTreeWidgetItem* widgetImage = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
-    widgetImage->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
-    widgetImage->setText(0, "Image");
-    widgetImage->setText(1, "0");
-    widgetImage->setText(2, "Image");
-    widgetImage->setText(3, "");
-    widgetImage->setText(4, Rundown::IMAGE);
-    widgetImage->setText(5, "0");
-    widgetImage->setText(6, "");
+    QTreeWidgetItem* widgetStill = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
+    widgetStill->setIcon(0, QIcon(":/Graphics/Images/StillSmall.png"));
+    widgetStill->setText(0, "Image");
+    widgetStill->setText(1, "0");
+    widgetStill->setText(2, "Image");
+    widgetStill->setText(3, "");
+    widgetStill->setText(4, Rundown::STILL);
+    widgetStill->setText(5, "0");
+    widgetStill->setText(6, "");
 
     QTreeWidgetItem* widgetImageScroller = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
     widgetImageScroller->setIcon(0, QIcon(":/Graphics/Images/ImageScrollerSmall.png"));
@@ -163,15 +145,24 @@ void LibraryWidget::setupTools()
     widgetTemplate->setText(5, "0");
     widgetTemplate->setText(6, "");
 
-    QTreeWidgetItem* widgetVideo = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
-    widgetVideo->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
-    widgetVideo->setText(0, "Video");
-    widgetVideo->setText(1, "0");
-    widgetVideo->setText(2, "Video");
-    widgetVideo->setText(3, "");
-    widgetVideo->setText(4, Rundown::VIDEO);
-    widgetVideo->setText(5, "0");
-    widgetVideo->setText(6, "");
+    QTreeWidgetItem* widgetMovie = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(0));
+    widgetMovie->setIcon(0, QIcon(":/Graphics/Images/MovieSmall.png"));
+    widgetMovie->setText(0, "Video");
+    widgetMovie->setText(1, "0");
+    widgetMovie->setText(2, "Video");
+    widgetMovie->setText(3, "");
+    widgetMovie->setText(4, Rundown::MOVIE);
+    widgetMovie->setText(5, "0");
+    widgetMovie->setText(6, "");
+
+    QTreeWidgetItem* widgetAnchor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetAnchor->setIcon(0, QIcon(":/Graphics/Images/AnchorSmall.png"));
+    widgetAnchor->setText(0, "Anchor Point");
+    widgetAnchor->setText(1, "0");
+    widgetAnchor->setText(2, "Anchor Point");
+    widgetAnchor->setText(3, "");
+    widgetAnchor->setText(4, Rundown::ANCHOR);
+    widgetAnchor->setText(5, "0");
 
     QTreeWidgetItem* widgetBlendMode = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetBlendMode->setIcon(0, QIcon(":/Graphics/Images/BlendModeSmall.png"));
@@ -200,6 +191,24 @@ void LibraryWidget::setupTools()
     widgetChroma->setText(4, Rundown::CHROMAKEY);
     widgetChroma->setText(5, "0");
 
+    QTreeWidgetItem* widgetClip = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetClip->setIcon(0, QIcon(":/Graphics/Images/ClipSmall.png"));
+    widgetClip->setText(0, "Clipping");
+    widgetClip->setText(1, "0");
+    widgetClip->setText(2, "Clipping");
+    widgetClip->setText(3, "");
+    widgetClip->setText(4, Rundown::CLIP);
+    widgetClip->setText(5, "0");
+
+    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
+    widgetCommit->setText(0, "Commit");
+    widgetCommit->setText(1, "0");
+    widgetCommit->setText(2, "Commit");
+    widgetCommit->setText(3, "");
+    widgetCommit->setText(4, Rundown::COMMIT);
+    widgetCommit->setText(5, "0");
+
     QTreeWidgetItem* widgetContrast = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetContrast->setIcon(0, QIcon(":/Graphics/Images/ContrastSmall.png"));
     widgetContrast->setText(0, "Contrast");
@@ -217,6 +226,15 @@ void LibraryWidget::setupTools()
     widgetCrop->setText(3, "");
     widgetCrop->setText(4, Rundown::CROP);
     widgetCrop->setText(5, "0");
+
+    QTreeWidgetItem* widgetPerspective = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetPerspective->setIcon(0, QIcon(":/Graphics/Images/PerspectiveSmall.png"));
+    widgetPerspective->setText(0, "Distort");
+    widgetPerspective->setText(1, "0");
+    widgetPerspective->setText(2, "Distort");
+    widgetPerspective->setText(3, "");
+    widgetPerspective->setText(4, Rundown::PERSPECTIVE);
+    widgetPerspective->setText(5, "0");
 
     QTreeWidgetItem* widgetGrid = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetGrid->setIcon(0, QIcon(":/Graphics/Images/GridSmall.png"));
@@ -254,6 +272,24 @@ void LibraryWidget::setupTools()
     widgetOpacity->setText(4, Rundown::OPACITY);
     widgetOpacity->setText(5, "0");
 
+    QTreeWidgetItem* widgetReset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetReset->setIcon(0, QIcon(":/Graphics/Images/ResetSmall.png"));
+    widgetReset->setText(0, "Reset");
+    widgetReset->setText(1, "0");
+    widgetReset->setText(2, "Reset");
+    widgetReset->setText(3, "");
+    widgetReset->setText(4, Rundown::RESET);
+    widgetReset->setText(5, "0");
+
+    QTreeWidgetItem* widgetRotation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetRotation->setIcon(0, QIcon(":/Graphics/Images/RotationSmall.png"));
+    widgetRotation->setText(0, "Rotation");
+    widgetRotation->setText(1, "0");
+    widgetRotation->setText(2, "Rotation");
+    widgetRotation->setText(3, "");
+    widgetRotation->setText(4, Rundown::ROTATION);
+    widgetRotation->setText(5, "0");
+
     QTreeWidgetItem* widgetSaturation = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetSaturation->setIcon(0, QIcon(":/Graphics/Images/SaturationSmall.png"));
     widgetSaturation->setText(0, "Saturation");
@@ -263,14 +299,14 @@ void LibraryWidget::setupTools()
     widgetSaturation->setText(4, Rundown::SATURATION);
     widgetSaturation->setText(5, "0");
 
-    QTreeWidgetItem* widgetGeometry = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetGeometry->setIcon(0, QIcon(":/Graphics/Images/GeometrySmall.png"));
-    widgetGeometry->setText(0, "Transformation");
-    widgetGeometry->setText(1, "0");
-    widgetGeometry->setText(2, "Transformation");
-    widgetGeometry->setText(3, "");
-    widgetGeometry->setText(4, Rundown::GEOMETRY);
-    widgetGeometry->setText(5, "0");
+    QTreeWidgetItem* widgetFill = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
+    widgetFill->setIcon(0, QIcon(":/Graphics/Images/FillSmall.png"));
+    widgetFill->setText(0, "Transform");
+    widgetFill->setText(1, "0");
+    widgetFill->setText(2, "Transform");
+    widgetFill->setText(3, "");
+    widgetFill->setText(4, Rundown::FILL);
+    widgetFill->setText(5, "0");
 
     QTreeWidgetItem* widgetVolume = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
     widgetVolume->setIcon(0, QIcon(":/Graphics/Images/VolumeSmall.png"));
@@ -280,15 +316,6 @@ void LibraryWidget::setupTools()
     widgetVolume->setText(3, "");
     widgetVolume->setText(4, Rundown::VOLUME);
     widgetVolume->setText(5, "0");
-
-    QTreeWidgetItem* widgetCommit = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(1));
-    widgetCommit->setIcon(0, QIcon(":/Graphics/Images/CommitSmall.png"));
-    widgetCommit->setText(0, "Commit");
-    widgetCommit->setText(1, "0");
-    widgetCommit->setText(2, "Commit");
-    widgetCommit->setText(3, "");
-    widgetCommit->setText(4, Rundown::COMMIT);
-    widgetCommit->setText(5, "0");
 
     QTreeWidgetItem* widgetChannelSnapshot = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetChannelSnapshot->setIcon(0, QIcon(":/Graphics/Images/SnapshotSmall.png"));
@@ -327,7 +354,7 @@ void LibraryWidget::setupTools()
     widgetDeckLinkInput->setText(5, "0");
 
     QTreeWidgetItem* widgetFadeToBlack = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/FadeToBlackSmall.png"));
     widgetFadeToBlack->setText(0, "Fade to Black");
     widgetFadeToBlack->setText(1, "0");
     widgetFadeToBlack->setText(2, "Fade to Black");
@@ -353,6 +380,33 @@ void LibraryWidget::setupTools()
     widgetGpiOutput->setText(4, Rundown::GPIOUTPUT);
     widgetGpiOutput->setText(5, "0");
 
+    QTreeWidgetItem* widgetHtml = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHtml->setIcon(0, QIcon(":/Graphics/Images/HtmlSmall.png"));
+    widgetHtml->setText(0, "HTML Page");
+    widgetHtml->setText(1, "0");
+    widgetHtml->setText(2, "HTML Page");
+    widgetHtml->setText(3, "");
+    widgetHtml->setText(4, Rundown::HTML);
+    widgetHtml->setText(5, "0");
+
+    QTreeWidgetItem* widgetHttpGet = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHttpGet->setIcon(0, QIcon(":/Graphics/Images/HttpGetSmall.png"));
+    widgetHttpGet->setText(0, "HTTP GET Request");
+    widgetHttpGet->setText(1, "0");
+    widgetHttpGet->setText(2, "HTTP GET Request");
+    widgetHttpGet->setText(3, "");
+    widgetHttpGet->setText(4, Rundown::HTTPGET);
+    widgetHttpGet->setText(5, "0");
+
+    QTreeWidgetItem* widgetHttpPost = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetHttpPost->setIcon(0, QIcon(":/Graphics/Images/HttpPostSmall.png"));
+    widgetHttpPost->setText(0, "HTTP POST Request");
+    widgetHttpPost->setText(1, "0");
+    widgetHttpPost->setText(2, "HTTP POST Request");
+    widgetHttpPost->setText(3, "");
+    widgetHttpPost->setText(4, Rundown::HTTPPOST);
+    widgetHttpPost->setText(5, "0");
+
     QTreeWidgetItem* widgetOscOutput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetOscOutput->setIcon(0, QIcon(":/Graphics/Images/OscOutputSmall.png"));
     widgetOscOutput->setText(0, "OSC Output");
@@ -363,7 +417,7 @@ void LibraryWidget::setupTools()
     widgetOscOutput->setText(5, "0");
 
     QTreeWidgetItem* widgetPlayoutCommand = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetPlayoutCommand->setIcon(0, QIcon(":/Graphics/Images/CustomCommandSmall.png"));
+    widgetPlayoutCommand->setIcon(0, QIcon(":/Graphics/Images/PlayoutCommandSmall.png"));
     widgetPlayoutCommand->setText(0, "Playout Command");
     widgetPlayoutCommand->setText(1, "0");
     widgetPlayoutCommand->setText(2, "Playout Command");
@@ -371,14 +425,23 @@ void LibraryWidget::setupTools()
     widgetPlayoutCommand->setText(4, Rundown::PLAYOUTCOMMAND);
     widgetPlayoutCommand->setText(5, "0");
 
-    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
-    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
-    widgetSolidColor->setText(0, "Solid Color");
-    widgetSolidColor->setText(1, "0");
-    widgetSolidColor->setText(2, "Solid Color");
-    widgetSolidColor->setText(3, "");
-    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
-    widgetSolidColor->setText(5, "0");
+    QTreeWidgetItem* widgetRouteChannel = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetRouteChannel->setIcon(0, QIcon(":/Graphics/Images/RouteChannelSmall.png"));
+    widgetRouteChannel->setText(0, "Route Channel");
+    widgetRouteChannel->setText(1, "0");
+    widgetRouteChannel->setText(2, "Route Channel");
+    widgetRouteChannel->setText(3, "");
+    widgetRouteChannel->setText(4, Rundown::ROUTECHANNEL);
+    widgetRouteChannel->setText(5, "0");
+
+    QTreeWidgetItem* widgetRouteVideolayer = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetRouteVideolayer->setIcon(0, QIcon(":/Graphics/Images/RouteVideolayerSmall.png"));
+    widgetRouteVideolayer->setText(0, "Route Video Layer");
+    widgetRouteVideolayer->setText(1, "0");
+    widgetRouteVideolayer->setText(2, "Route Video Layer");
+    widgetRouteVideolayer->setText(3, "");
+    widgetRouteVideolayer->setText(4, Rundown::ROUTEVIDEOLAYER);
+    widgetRouteVideolayer->setText(5, "0");
 
     QTreeWidgetItem* widgetSeparator = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetSeparator->setIcon(0, QIcon(":/Graphics/Images/SeparatorSmall.png"));
@@ -388,6 +451,15 @@ void LibraryWidget::setupTools()
     widgetSeparator->setText(3, "");
     widgetSeparator->setText(4, Rundown::SEPARATOR);
     widgetSeparator->setText(5, "0");
+
+    QTreeWidgetItem* widgetSolidColor = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
+    widgetSolidColor->setIcon(0, QIcon(":/Graphics/Images/SolidColorSmall.png"));
+    widgetSolidColor->setText(0, "Solid Color");
+    widgetSolidColor->setText(1, "0");
+    widgetSolidColor->setText(2, "Solid Color");
+    widgetSolidColor->setText(3, "");
+    widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
+    widgetSolidColor->setText(5, "0");
 
     QTreeWidgetItem* widgetTriCasterMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetTriCasterMacro->setIcon(0, QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"));
@@ -514,6 +586,15 @@ void LibraryWidget::setupTools()
     widgetAtemCut->setText(3, "");
     widgetAtemCut->setText(4, Rundown::ATEMCUT);
     widgetAtemCut->setText(5, "0");
+
+    QTreeWidgetItem* widgetCameraPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
+    widgetCameraPreset->setIcon(0, QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"));
+    widgetCameraPreset->setText(0, "Camera Preset");
+    widgetCameraPreset->setText(1, "0");
+    widgetCameraPreset->setText(2, "Camera Preset");
+    widgetCameraPreset->setText(3, "");
+    widgetCameraPreset->setText(4, Rundown::PANASONICPRESET);
+    widgetCameraPreset->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }
@@ -921,8 +1002,10 @@ void LibraryWidget::contextMenuPresetTriggered(QAction* action)
         this->treeWidgetPreset->removeSelectedPresets();
 }
 
-void LibraryWidget::executeFilterLibrary()
+void LibraryWidget::filterLibrary()
 {
+    checkEmptyFilter();
+
     EventManager::getInstance().fireLibraryFilterChangedEvent(LibraryFilterChangedEvent(this->lineEditFilter->text()));
 
     EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
@@ -931,9 +1014,12 @@ void LibraryWidget::executeFilterLibrary()
     EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
 }
 
-void LibraryWidget::filterChanged(QString filter)
+void LibraryWidget::checkEmptyFilter()
 {
-    this->filterTimer.start(1000);
+    if (this->lineEditFilter->text().isEmpty())
+        this->lineEditFilter->setStyleSheet("");
+    else
+        this->lineEditFilter->setStyleSheet("border-color: darkorange;");
 }
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)

@@ -150,11 +150,10 @@ int main(int argc, char* argv[])
 
     //Application::setOrganizationName("CasparCG");
     //Application::setApplicationName("CasparCG Client");
-#if QT_VERSION < 0x050000
-    Application::setGraphicsSystem("raster");
-#endif
+
     Application application(argc, argv);
     application.setStyle("plastique");
+    //application.setStyle("fusion");
 
     loadDatabase(application);
     DatabaseManager::getInstance().initialize();

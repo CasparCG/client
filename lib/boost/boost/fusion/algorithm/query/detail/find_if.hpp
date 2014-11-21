@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2007 Dan Marsden
     Copyright (c) 2009 Christopher Schmidt
 
@@ -9,19 +9,19 @@
 #if !defined(FUSION_FIND_IF_05052005_1107)
 #define FUSION_FIND_IF_05052005_1107
 
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/lambda.hpp>
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/lambda.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/fusion/iterator/advance.hpp>
+#include <boost/fusion/iterator/distance.hpp>
 #include <boost/fusion/iterator/equal_to.hpp>
 #include <boost/fusion/iterator/next.hpp>
 #include <boost/fusion/sequence/intrinsic/begin.hpp>
-#include <boost/fusion/iterator/advance.hpp>
-#include <boost/fusion/iterator/distance.hpp>
+#include <boost/fusion/sequence/intrinsic/end.hpp>
 #include <boost/fusion/support/category_of.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
 
 namespace boost { namespace fusion { 
     struct random_access_traversal_tag;
@@ -184,6 +184,7 @@ namespace detail
         type;
 
         template <typename Iterator>
+        BOOST_FUSION_GPU_ENABLED
         static type
         recursive_call(Iterator const& iter, mpl::true_)
         {
@@ -191,6 +192,7 @@ namespace detail
         }
 
         template <typename Iterator>
+        BOOST_FUSION_GPU_ENABLED
         static type
         recursive_call(Iterator const& iter, mpl::false_)
         {
@@ -198,6 +200,7 @@ namespace detail
         }
 
         template <typename Iterator>
+        BOOST_FUSION_GPU_ENABLED
         static type
         recursive_call(Iterator const& iter)
         {
@@ -206,6 +209,7 @@ namespace detail
         }
 
         template <typename Iterator, typename Tag>
+        BOOST_FUSION_GPU_ENABLED
         static type
         choose_call(Iterator const& iter, Tag)
         {
@@ -213,6 +217,7 @@ namespace detail
         }
 
         template <typename Iterator>
+        BOOST_FUSION_GPU_ENABLED
         static type
         choose_call(Iterator const& iter, random_access_traversal_tag)
         {
@@ -221,11 +226,34 @@ namespace detail
         }
 
         template <typename Iterator>
+        BOOST_FUSION_GPU_ENABLED
         static type
-        call(Iterator const& iter)
+        iter_call(Iterator const& iter)
         {
             return choose_call(iter, typename traits::category_of<Iterator>::type());
         }
+
+        template <typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
+        static type
+        call(Sequence& seq)
+        {
+            return iter_call(fusion::begin(seq));
+        }
+    };
+
+    template <typename Sequence, typename Pred>
+    struct result_of_find_if
+    {
+        typedef
+            static_find_if<
+                typename result_of::begin<Sequence>::type
+              , typename result_of::end<Sequence>::type
+              , Pred
+            >
+        filter;
+
+        typedef typename filter::type type;
     };
 }}}
 

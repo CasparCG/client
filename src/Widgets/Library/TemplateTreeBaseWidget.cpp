@@ -4,14 +4,10 @@
 
 #include <QtCore/QMimeData>
 
-#if QT_VERSION >= 0x050000
+#include <QtGui/QDrag>
+
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QTreeWidgetItem>
-#include <QDrag>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QTreeWidgetItem>
-#endif
 
 TemplateTreeBaseWidget::TemplateTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent),

@@ -19,28 +19,15 @@
 #include <QtCore/QRect>
 #include <QtCore/QXmlStreamWriter>
 
-#if QT_VERSION >= 0x050000
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#include <QKeyEvent>
-#include <QMouseEvent>
-#include <QPixmap>
-#include <QtWidgets/QTreeWidget>
-#include <QtWidgets/QTreeWidgetItem>
-#include <QtWidgets/QWidget>
-#else
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPixmap>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
-#endif
 
-typedef QPair<QRect, QModelIndex> QItemViewPaintPair;
-typedef QList<QItemViewPaintPair> QItemViewPaintPairs;
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
 {
@@ -95,12 +82,12 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool lock;
 
         QPoint dragStartPosition;
-
         QList<RepositoryChangeModel> repositoryChanges;
 
         QString currentItemStoryId();
         void removeRepositoryItem(const QString& storyId);
         bool containsStoryId(const QString& storyId, const QString& data);
         void addRepositoryItem(const QString& storyId, const QString& data);
+
         Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

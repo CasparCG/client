@@ -4,15 +4,10 @@
 
 #include <QtCore/QDebug>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QAbstractButton>
-#include <QCloseEvent>
-#include <QtWidgets/QMessageBox>
-#else
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
-#endif
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 OscOutputDialog::OscOutputDialog(QWidget* parent)
     : QDialog(parent),

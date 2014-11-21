@@ -12,11 +12,12 @@
 #include "Commands/BrightnessCommand.h"
 #include "Commands/ClearOutputCommand.h"
 #include "Commands/CommitCommand.h"
+#include "Commands/ResetCommand.h"
 #include "Commands/ContrastCommand.h"
 #include "Commands/CustomCommand.h"
-#include "Commands/CropCommand.h"
+#include "Commands/ClipCommand.h"
 #include "Commands/DeckLinkInputCommand.h"
-#include "Commands/GeometryCommand.h"
+#include "Commands/FillCommand.h"
 #include "Commands/GpiOutputCommand.h"
 #include "Commands/GroupCommand.h"
 #include "Commands/FileRecorderCommand.h"
@@ -31,7 +32,17 @@
 #include "Commands/VolumeCommand.h"
 #include "Commands/ChromaCommand.h"
 #include "Commands/PlayoutCommand.h"
+#include "Commands/RotationCommand.h"
 #include "Commands/OscOutputCommand.h"
+#include "Commands/PerspectiveCommand.h"
+#include "Commands/AnchorCommand.h"
+#include "Commands/CropCommand.h"
+#include "Commands/HtmlCommand.h"
+#include "Commands/HttpGetCommand.h"
+#include "Commands/HttpPostCommand.h"
+#include "Commands/RouteChannelCommand.h"
+#include "Commands/RouteVideolayerCommand.h"
+#include "Commands/Panasonic/PanasonicPresetCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -51,13 +62,8 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLineEdit>
-#else
-#include <QtGui/QApplication>
-#include <QtGui/QLineEdit>
-#endif
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     : QWidget(parent),
@@ -93,6 +99,8 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 void InspectorOutputWidget::libraryFilterChanged(const LibraryFilterChangedEvent& event)
 {
     this->libraryFilter = event.getFilter();
+
+    checkEmptyTarget();
 }
 
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
@@ -113,7 +121,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     this->spinBoxDuration->setEnabled(true);
     this->checkBoxAllowGpi->setEnabled(true);
     this->checkBoxAllowRemoteTriggering->setEnabled(true);
-    this->labelRemoteTriggerId->setEnabled(true);
+    this->labelRemoteTriggerIdField->setEnabled(true);
     this->lineEditRemoteTriggerId->setEnabled(true);
 
     this->labelDelayMillisecond->setVisible(true);
@@ -155,7 +163,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
         if (!this->checkBoxAllowRemoteTriggering->isChecked())
         {
-            this->labelRemoteTriggerId->setEnabled(false);
+            this->labelRemoteTriggerIdField->setEnabled(false);
             this->lineEditRemoteTriggerId->setEnabled(false);
         }
 
@@ -165,10 +173,9 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
-            //this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<CommitCommand*>(event.getCommand()) ||
                  dynamic_cast<PrintCommand*>(event.getCommand()))
@@ -177,7 +184,9 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
+            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GridCommand*>(event.getCommand()))
         {
@@ -203,10 +212,12 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<GpiOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<OscOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<HttpGetCommand*>(event.getCommand()) ||
+                 dynamic_cast<HttpPostCommand*>(event.getCommand()) ||
+                 dynamic_cast<PanasonicPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {
             this->comboBoxDevice->setEnabled(false);
@@ -234,7 +245,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxDuration->setEnabled(false);
             this->checkBoxAllowGpi->setEnabled(false);
             this->checkBoxAllowRemoteTriggering->setEnabled(false);
-            this->labelRemoteTriggerId->setEnabled(false);
+            this->labelRemoteTriggerIdField->setEnabled(false);
             this->lineEditRemoteTriggerId->setEnabled(false);
 
             this->comboBoxDevice->setCurrentIndex(-1);
@@ -253,23 +264,29 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
 
-            this->comboBoxTarget->clear();
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
         }
-        else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()))
+        else if (dynamic_cast<ClearOutputCommand*>(event.getCommand()) ||
+                 dynamic_cast<ResetCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxTarget->setCurrentIndex(-1);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
         else if (dynamic_cast<DeckLinkInputCommand*>(event.getCommand()) ||
                  dynamic_cast<BlendModeCommand*>(event.getCommand()) ||
                  dynamic_cast<BrightnessCommand*>(event.getCommand()) ||
                  dynamic_cast<ContrastCommand*>(event.getCommand()) ||
+                 dynamic_cast<ClipCommand*>(event.getCommand()) ||
                  dynamic_cast<CropCommand*>(event.getCommand()) ||
-                 dynamic_cast<GeometryCommand*>(event.getCommand()) ||
+                 dynamic_cast<FillCommand*>(event.getCommand()) ||
+                 dynamic_cast<PerspectiveCommand*>(event.getCommand()) ||
+                 dynamic_cast<RotationCommand*>(event.getCommand()) ||
+                 dynamic_cast<AnchorCommand*>(event.getCommand()) ||
                  dynamic_cast<KeyerCommand*>(event.getCommand()) ||
                  dynamic_cast<LevelsCommand*>(event.getCommand()) ||
                  dynamic_cast<OpacityCommand*>(event.getCommand()) ||
@@ -277,9 +294,14 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<VolumeCommand*>(event.getCommand()) ||
                  dynamic_cast<SolidColorCommand*>(event.getCommand()) ||
                  dynamic_cast<FadeToBlackCommand*>(event.getCommand()) ||
+                 dynamic_cast<HtmlCommand*>(event.getCommand()) ||
+                 dynamic_cast<RouteChannelCommand*>(event.getCommand()) ||
+                 dynamic_cast<RouteVideolayerCommand*>(event.getCommand()) ||
                  dynamic_cast<ChromaCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);
+
+            this->comboBoxTarget->setCurrentIndex(-1);
         }
         else if (dynamic_cast<InputCommand*>(event.getCommand()) ||
                  dynamic_cast<PresetCommand*>(event.getCommand()) ||
@@ -288,21 +310,22 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<NetworkSourceCommand*>(event.getCommand()) ||
                  dynamic_cast<MacroCommand*>(event.getCommand()))
         {
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(false);
-            this->comboBoxTriCasterDevice->setVisible(true);
 
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxAtemDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxDevice->setVisible(false);
+            this->comboBoxAtemDevice->setVisible(false);
+            this->comboBoxTriCasterDevice->setVisible(true);
+
             this->labelDelayMillisecond->setText("ms");
             this->labelDurationMillisecond->setText("ms");
 
-            this->comboBoxTarget->clear();
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->comboBoxAtemDevice->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
@@ -316,21 +339,21 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<AtemAudioGainCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand()))
         {
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(true);
-            this->comboBoxTriCasterDevice->setVisible(false);
-
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxTriCasterDevice->setCurrentIndex(-1);
             this->comboBoxTarget->setEnabled(false);
             this->spinBoxChannel->setEnabled(false);
             this->spinBoxVideolayer->setEnabled(false);
             this->spinBoxDuration->setEnabled(false);
 
+            this->comboBoxDevice->setVisible(false);
+            this->comboBoxAtemDevice->setVisible(true);
+            this->comboBoxTriCasterDevice->setVisible(false);
+
             this->labelDelayMillisecond->setText("ms");
             this->labelDurationMillisecond->setText("ms");
 
-            this->comboBoxTarget->clear();
+            this->comboBoxDevice->setCurrentIndex(-1);
+            this->comboBoxTarget->setCurrentIndex(-1);
+            this->comboBoxTriCasterDevice->setCurrentIndex(-1);
             this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
@@ -351,6 +374,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
 
     blockAllSignals(true);
 
+    this->comboBoxTarget->clear();
+
     this->comboBoxDevice->setVisible(true);
     this->comboBoxAtemDevice->setVisible(false);
     this->comboBoxTriCasterDevice->setVisible(false);
@@ -363,7 +388,7 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
-    this->labelRemoteTriggerId->setEnabled(false);
+    this->labelRemoteTriggerIdField->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
     this->labelDelayMillisecond->setText("");
@@ -385,6 +410,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
+    this->comboBoxTarget->setStyleSheet("");
+
     blockAllSignals(false);
 }
 
@@ -393,6 +420,8 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     blockAllSignals(true);
 
     this->model = NULL;
+
+    this->comboBoxTarget->clear();
 
     this->comboBoxDevice->setVisible(true);
     this->comboBoxAtemDevice->setVisible(false);
@@ -406,7 +435,7 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->spinBoxDuration->setEnabled(false);
     this->checkBoxAllowGpi->setEnabled(false);
     this->checkBoxAllowRemoteTriggering->setEnabled(false);
-    this->labelRemoteTriggerId->setEnabled(false);
+    this->labelRemoteTriggerIdField->setEnabled(false);
     this->lineEditRemoteTriggerId->setEnabled(false);
 
     this->labelDelayMillisecond->setText("");
@@ -417,7 +446,6 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->comboBoxDevice->setCurrentIndex(-1);
     this->comboBoxAtemDevice->setCurrentIndex(-1);
     this->comboBoxTriCasterDevice->setCurrentIndex(-1);
-    this->comboBoxTarget->clear();
     this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
     this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
     this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
@@ -430,6 +458,8 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();
     checkEmptyTarget();
+
+    this->comboBoxTarget->setStyleSheet("");
 
     blockAllSignals(false);
 }
@@ -493,6 +523,8 @@ void InspectorOutputWidget::blockAllSignals(bool block)
 
 void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceName)
 {
+    this->comboBoxTarget->clear();
+
     if (this->model == NULL)
         return;
 
@@ -506,31 +538,51 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
     if (device == NULL)
         return;
 
-    const DeviceModel deviceModel = DeviceManager::getInstance().getDeviceModelByName(deviceName);
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(deviceName);
+    if (deviceModel == NULL)
+        return;
 
     QList<LibraryModel> models;
     if (this->libraryFilter.isEmpty())
-        models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel.getId());
+        models = DatabaseManager::getInstance().getLibraryByDeviceId(deviceModel->getId());
     else
-        models = DatabaseManager::getInstance().getLibraryByDeviceIdAndFilter(deviceModel.getId(), this->libraryFilter);
+        models = DatabaseManager::getInstance().getLibraryByDeviceIdAndFilter(deviceModel->getId(), this->libraryFilter);
 
     if (models.count() > 0)
     {
-        this->comboBoxTarget->clear();
         foreach (LibraryModel model, models)
         {
-            if (type == "MOVIE" && model.getType() == "MOVIE")
+            if (type == Rundown::MOVIE && model.getType() == Rundown::MOVIE)
                 this->comboBoxTarget->addItem(model.getName());
             else if (type == Rundown::AUDIO && model.getType() == Rundown::AUDIO)
                 this->comboBoxTarget->addItem(model.getName());
             else if (type == Rundown::TEMPLATE && model.getType() == Rundown::TEMPLATE)
                 this->comboBoxTarget->addItem(model.getName());
-            else if ((type == Rundown::IMAGE || type == Rundown::IMAGESCROLLER) && model.getType() == "STILL")
+            else if ((type == Rundown::STILL || type == Rundown::IMAGESCROLLER) && model.getType() == Rundown::STILL)
                 this->comboBoxTarget->addItem(model.getName());
+        }
+
+        if (this->comboBoxTarget->findText(this->model->getName()))
+        {
+            if (!this->model->getName().isEmpty() &&
+                this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
+                this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+                this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+                this->comboBoxTarget->addItem(this->model->getName());
         }
 
         this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
     }
+    else
+    {
+        if (!this->model->getName().isEmpty() &&
+            this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
+            this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+            this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+            this->comboBoxTarget->addItem(this->model->getName());
+    }
+
+    this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
 }
 
 void InspectorOutputWidget::checkEmptyDevice()
@@ -559,10 +611,20 @@ void InspectorOutputWidget::checkEmptyTriCasterDevice()
 
 void InspectorOutputWidget::checkEmptyTarget()
 {
-    if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
-        this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+    if (this->libraryFilter.isEmpty())
+    {
+        if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
+            this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+        else
+            this->comboBoxTarget->setStyleSheet("");
+    }
     else
-        this->comboBoxTarget->setStyleSheet("");
+    {
+        if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
+            this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
+        else
+            this->comboBoxTarget->setStyleSheet("border-color: darkorange;");
+    }
 }
 
 void InspectorOutputWidget::deviceRemoved()
@@ -578,13 +640,13 @@ void InspectorOutputWidget::deviceRemoved()
 
 void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 {
-    DeviceModel model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-    if (model.getShadow() == "Yes")
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
+    if (model == NULL || model->getShadow() == "Yes")
         return; // Don't add shadow systems.
 
     int index = this->comboBoxDevice->currentIndex();
 
-    this->comboBoxDevice->addItem(model.getName());
+    this->comboBoxDevice->addItem(model->getName());
 
     if (index == -1)
         this->comboBoxDevice->setCurrentIndex(index);
@@ -648,7 +710,7 @@ void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 {
     this->command->setAllowRemoteTriggering((state == Qt::Checked) ? true : false);
 
-    this->labelRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
+    this->labelRemoteTriggerIdField->setEnabled(this->command->getAllowRemoteTriggering());
     this->lineEditRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
 }
 

@@ -4,15 +4,18 @@
 
 #include <stdexcept>
 
+#include <QtCore/QByteArray>
+#include <QtCore/QDebug>
 #include <QtCore/QEvent>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 #include <QtCore/QList>
 
 namespace Atem
 {
     static const int DEFAULT_SPEED = 12;
     static const QString DEFAULT_TRANSITION = "0";
-    static const QString DEFAULT_INPUT = "1";
+    static const QString DEFAULT_INPUT = "0";
     static const QString DEFAULT_SWITCHER = "prev";
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const QString DEFAULT_KEYER = "0";
@@ -24,8 +27,22 @@ namespace Atem
     static const float DEFAULT_AUDIO_GAIN = 0.0f;
 }
 
+namespace Panasonic
+{
+    static const QString DEFAULT_ADDRESS = "";
+    static const int DEFAULT_PRESET = 1;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
+namespace Http
+{
+    static const QString DEFAULT_URL = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
 namespace Stream
 {
+    static const int DEFAULT_PORT = 9250;
     static const int COMPACT_WIDTH = 288;
     static const int COMPACT_HEIGHT = 162;
 }
@@ -45,8 +62,14 @@ namespace TriCaster
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
+namespace Repository
+{
+    static const int DEFAULT_PORT = 8250;
+}
+
 namespace Osc
 {
+    static const bool DEFAULT_USE_BUNDLE = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const int DEFAULT_PORT = 6250;
     static const QString DEFAULT_OUTPUT = "";
@@ -104,6 +127,15 @@ namespace Osc
     static const QString DEFAULT_CLEAR_CHANNEL_RUNDOWN_CONTROL_FILTER = "/control/clearchannel";
     static const QString DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER = "/control/down";
     static const QString DEFAULT_UP_RUNDOWN_CONTROL_FILTER = "/control/up";
+    static const QString DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER = "/control/playnowifchannel";
+    static const QString DEFAULT_PLAYANDAUTOSTEP_CONTROL_FILTER = "/control/playandautostep";
+    static const QString DEFAULT_PLAYNOWANDAUTOSTEP_CONTROL_FILTER = "/control/playnowandautostep";
+}
+
+namespace Route
+{
+    static const int DEFAULT_FROM_CHANNEL = 1;
+    static const int DEFAULT_FROM_VIDEOLAYER = 1;
 }
 
 namespace GpiOutput
@@ -114,17 +146,20 @@ namespace GpiOutput
 
 namespace Mixer
 {
+    static const float DEFAULT_ANCHOR_XPOS = 0.0f;
+    static const float DEFAULT_ANCHOR_YPOS = 0.0f;
     static const float DEFAULT_GRID = 2.0f;
+    static const float DEFAULT_ROTATION = 0.0f;
     static const float DEFAULT_BRIGHTNESS = 1.0f;
     static const float DEFAULT_CONTRAST = 1.0f;
-    static const float DEFAULT_CROP_LEFT = 0.0f;
-    static const float DEFAULT_CROP_RIGHT = 0.0f;
-    static const float DEFAULT_CROP_TOP = 1.0f;
-    static const float DEFAULT_CROP_BOTTOM = 1.0f;
-    static const float DEFAULT_GEOMETRY_XPOS = 0.0f;
-    static const float DEFAULT_GEOMETRY_YPOS = 0.0f;
-    static const float DEFAULT_GEOMETRY_XSCALE = 1.0f;
-    static const float DEFAULT_GEOMETRY_YSCALE = 1.0f;
+    static const float DEFAULT_CLIP_LEFT = 0.0f;
+    static const float DEFAULT_CLIP_WIDTH = 1.0f;
+    static const float DEFAULT_CLIP_TOP = 0.0f;
+    static const float DEFAULT_CLIP_HEIGHT = 1.0f;
+    static const float DEFAULT_FILL_XPOS = 0.0f;
+    static const float DEFAULT_FILL_YPOS = 0.0f;
+    static const float DEFAULT_FILL_XSCALE = 1.0f;
+    static const float DEFAULT_FILL_YSCALE = 1.0f;
     static const float DEFAULT_LEVELS_MIN_IN = 0.0f;
     static const float DEFAULT_LEVELS_MAX_IN = 1.0f;
     static const float DEFAULT_LEVELS_MIN_OUT = 0.0f;
@@ -136,9 +171,22 @@ namespace Mixer
     static const float DEFAULT_CHROMABLUR = 0.0f;
     static const float DEFAULT_CHROMABLENDSTART = 0.340f;
     static const float DEFAULT_CHROMABLENDSTOP = 0.440f;
-    static const float DEFAULT_CHROMASPILL = 1.0f;
+    static const float DEFAULT_CHROMASPILL = 1.0f; 
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERLEFT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_Y = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_X = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERRIGHT_Y = 1.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_X = 0.0f;
+    static const float DEFAULT_PERSPECTIVE_LOWERLEFT_Y = 1.0f;
+    static const float DEFAULT_CROP_LEFT = 0.0f;
+    static const float DEFAULT_CROP_TOP = 0.0f;
+    static const float DEFAULT_CROP_RIGHT = 1.0f;
+    static const float DEFAULT_CROP_BOTTOM = 1.0f;
     static const int DEFAULT_DURATION = 1;
     static const bool DEFAULT_DEFER = false;
+    static const bool DEFAULT_MIPMAP = false;
     static const QString DEFAULT_BLENDMODE = "Normal";
     static const QString DEFAULT_TWEEN = "Linear";
     static const QString DEFAULT_DIRECTION = "RIGHT";
@@ -166,6 +214,7 @@ namespace Color
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
     static const QString DEFAULT_TRICASTER_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_ATEM_COLOR = "DarkOliveGreen";
+    static const QString DEFAULT_PANASONIC_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
@@ -217,7 +266,7 @@ namespace Audio
     static const bool DEFAULT_USE_AUTO = false;
 }
 
-namespace Video
+namespace Movie
 {
     static const QString DEFAULT_NAME = "";
     static const int DEFAULT_SEEK = 0;
@@ -228,7 +277,16 @@ namespace Video
     static const bool DEFAULT_AUTO_PLAY = false;
 }
 
-namespace Image
+namespace Html
+{
+    static const QString DEFAULT_URL = "";
+    static const bool DEFAULT_FREEZE_ON_LOAD = false;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_USE_AUTO = false;
+}
+
+
+namespace Still
 {
     static const QString DEFAULT_NAME = "";
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
@@ -249,12 +307,22 @@ namespace Opacity
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
-namespace Geometry
+namespace Fill
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Custom
+{
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
+namespace Rotation
+{
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
+namespace Anchor
 {
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
@@ -334,27 +402,31 @@ namespace Rundown
     static const QString BLENDMODE = "BLENDMODE";
     static const QString BRIGHTNESS = "BRIGHTNESS";
     static const QString CONTRAST = "CONTRAST";
+    static const QString CLIP = "CLIP";
     static const QString CROP = "CROP";
     static const QString IMAGESCROLLER = "IMAGESCROLLER";
     static const QString DECKLINKINPUT = "DECKLINKINPUT";
-    static const QString PRINT = "CHANNELSNAPSHOT";
+    static const QString PRINT = "PRINT";
     static const QString CLEAROUTPUT = "CLEAROUTPUT";
-    static const QString GEOMETRY = "TRANSFORMATION";
+    static const QString FILL = "FILL";
     static const QString GPIOUTPUT = "GPIOUTPUT";
+    static const QString HTTPGET = "HTTPGET";
+    static const QString HTTPPOST = "HTTPPOST";
     static const QString FILERECORDER = "FILERECORDER";
     static const QString SEPARATOR = "SEPARATOR";
     static const QString GRID = "GRID";
     static const QString SOLIDCOLOR = "SOLIDCOLOR";
-    static const QString KEYER = "MASK";
+    static const QString KEYER = "KEYER";
     static const QString LEVELS = "LEVELS";
     static const QString OPACITY = "OPACITY";
     static const QString SATURATION = "SATURATION";
     static const QString VOLUME = "VOLUME";
+    static const QString HTML = "HTML";
     static const QString COMMIT = "COMMIT";
     static const QString AUDIO = "AUDIO";
-    static const QString IMAGE = "STILL";
+    static const QString STILL = "STILL";
     static const QString TEMPLATE = "TEMPLATE";
-    static const QString VIDEO = "MOVIE";
+    static const QString MOVIE = "MOVIE";
     static const QString CUSTOMCOMMAND = "CUSTOMCOMMAND";
     static const QString PLAYOUTCOMMAND = "PLAYOUTCOMMAND";
     static const QString FADETOBLACK = "FADETOBLACK";
@@ -374,8 +446,20 @@ namespace Rundown
     static const QString ATEMAUDIOGAIN = "ATEMAUDIOGAIN";
     static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
+    static const QString PANASONICPRESET = "PANASONICPRESET";
+    static const QString PERSPECTIVE = "PERSPECTIVE";
+    static const QString ROTATION = "ROTATION";
+    static const QString RESET = "RESET";
+    static const QString ANCHOR = "ANCHOR";
+    static const QString ROUTECHANNEL = "ROUTECHANNEL";
+    static const QString ROUTEVIDEOLAYER = "ROUTEVIDEOLAYER";
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
+    static const QString DEFAULT_AUDIO_NAME = "Audio";
+    static const QString DEFAULT_IMAGE_NAME = "Image";
+    static const QString DEFAULT_IMAGESCROLLER_NAME = "Image Scroller";
+    static const QString DEFAULT_TEMPLATE_NAME = "Template";
+    static const QString DEFAULT_MOVIE_NAME = "Video";
     static const int DEFAULT_ICON_WIDTH = 32;
     static const int DEFAULT_ICON_HEIGHT = 32;
     static const int COMPACT_ICON_WIDTH = 16;

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2006 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(FUSION_ZIP_VIEW_ITERATOR_FWD)
 #define FUSION_ZIP_VIEW_ITERATOR_FWD
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/view/detail/strictest_traversal.hpp>
 
 namespace boost { namespace fusion {

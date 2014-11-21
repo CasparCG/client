@@ -1,25 +1,19 @@
 #include "InspectorTemplateWidget.h"
-#include "TemplateDataDialog.h"
+#include "KeyValueDialog.h"
 
 #include "Global.h"
 
 #include "EventManager.h"
+#include "Models/KeyValueModel.h"
 
 #include <QtCore/QDebug>
 
-#if QT_VERSION >= 0x050000
-#include <QtWidgets/QApplication>
-#include <QClipboard>
-#include <QCursor>
-#include <QKeyEvent>
-#include <QResizeEvent>
-#else
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCursor>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QResizeEvent>
-#endif
+
+#include <QtWidgets/QApplication>
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     : QWidget(parent),
@@ -64,12 +58,13 @@ void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDat
     int index = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetTemplateData->setCurrentItem(this->treeWidgetTemplateData->invisibleRootItem()->child(index));
 
-    TemplateDataDialog* dialog = new TemplateDataDialog(this);
-    dialog->setName(QString("f%1").arg(this->fieldCounter));
+    KeyValueDialog* dialog = new KeyValueDialog(this);
+    dialog->setTitle("New Template Data");
+    dialog->setKey(QString("f%1").arg(this->fieldCounter));
     if (dialog->exec() == QDialog::Accepted)
     {
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-        treeItem->setText(0, dialog->getName());
+        treeItem->setText(0, dialog->getKey());
         treeItem->setText(1, dialog->getValue());
 
         this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
@@ -116,7 +111,7 @@ void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent
             delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
 
         this->fieldCounter = 0;
-        foreach (TemplateDataModel model, this->command->getTemplateDataModels())
+        foreach (KeyValueModel model, this->command->getTemplateDataModels())
         {
             QTreeWidgetItem* treeItem = new QTreeWidgetItem();
             treeItem->setText(0, model.getKey());
@@ -141,25 +136,26 @@ void InspectorTemplateWidget::blockAllSignals(bool block)
     this->treeWidgetTemplateData->blockSignals(block);
 }
 
-void InspectorTemplateWidget::updateDataTemplateModels()
+void InspectorTemplateWidget::updateTemplateDataModels()
 {
-    QList<TemplateDataModel> models;
+    QList<KeyValueModel> models;
     for (int i = 0; i < this->treeWidgetTemplateData->invisibleRootItem()->childCount(); i++)
-        models.push_back(TemplateDataModel(this->treeWidgetTemplateData->invisibleRootItem()->child(i)->text(0),
-                                           this->treeWidgetTemplateData->invisibleRootItem()->child(i)->text(1)));
+        models.push_back(KeyValueModel(this->treeWidgetTemplateData->invisibleRootItem()->child(i)->text(0),
+                                       this->treeWidgetTemplateData->invisibleRootItem()->child(i)->text(1)));
 
     this->command->setTemplateDataModels(models);
 }
 
 bool InspectorTemplateWidget::addRow()
 {
-    TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    KeyValueDialog* dialog = new KeyValueDialog(this);
     dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
-    dialog->setName(QString("f%1").arg(this->fieldCounter));
+    dialog->setTitle("New Template Data");
+    dialog->setKey(QString("f%1").arg(this->fieldCounter));
     if (dialog->exec() == QDialog::Accepted)
     {
         QTreeWidgetItem* treeItem = new QTreeWidgetItem();
-        treeItem->setText(0, dialog->getName());
+        treeItem->setText(0, dialog->getKey());
         treeItem->setText(1, dialog->getValue());
 
         this->treeWidgetTemplateData->invisibleRootItem()->insertChild(this->treeWidgetTemplateData->currentIndex().row() + 1, treeItem);
@@ -176,16 +172,17 @@ bool InspectorTemplateWidget::editRow()
     if (this->treeWidgetTemplateData->currentItem() == NULL)
         return true;
 
-    TemplateDataDialog* dialog = new TemplateDataDialog(this);
+    KeyValueDialog* dialog = new KeyValueDialog(this);
     dialog->move(QPoint(QCursor::pos().x() - dialog->width() + 40, QCursor::pos().y() - dialog->height() - 10));
-    dialog->setName(this->treeWidgetTemplateData->currentItem()->text(0));
+    dialog->setTitle("Edit Template Data");
+    dialog->setKey(this->treeWidgetTemplateData->currentItem()->text(0));
     dialog->setValue(this->treeWidgetTemplateData->currentItem()->text(1));
     if (dialog->exec() == QDialog::Accepted)
     {
-        this->treeWidgetTemplateData->currentItem()->setText(0, dialog->getName());
+        this->treeWidgetTemplateData->currentItem()->setText(0, dialog->getKey());
         this->treeWidgetTemplateData->currentItem()->setText(1, dialog->getValue());
 
-        updateDataTemplateModels();
+        updateTemplateDataModels();
     }
 }
 
@@ -195,7 +192,7 @@ bool InspectorTemplateWidget::removeRow()
         return true;
 
     delete this->treeWidgetTemplateData->currentItem();
-    updateDataTemplateModels();
+    updateTemplateDataModels();
 
     if (this->treeWidgetTemplateData->invisibleRootItem()->childCount() == 0)
         this->fieldCounter = 0;
@@ -281,5 +278,5 @@ void InspectorTemplateWidget::currentItemChanged(QTreeWidgetItem* current, QTree
     if (current == NULL)
         return;
 
-    updateDataTemplateModels();
+    updateTemplateDataModels();
 }

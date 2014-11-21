@@ -6,11 +6,7 @@
 #include "EventManager.h"
 #include "Models/TriCaster/TriCasterPresetModel.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorPresetWidget::InspectorPresetWidget(QWidget* parent)
     : QWidget(parent),

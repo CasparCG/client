@@ -22,11 +22,12 @@ namespace boost { namespace phoenix
         struct visit_each_impl
         {
             Visitor& visitor;
-            visit_each_impl(Visitor& visitor ) : visitor(visitor) {}
+            visit_each_impl(Visitor& visitor_ ) : visitor(visitor_) {}
 
             template <typename T>
             void operator()(T const& t) const
             {
+                using boost::visit_each;
                 visit_each(visitor, t);
             }
         };
@@ -34,6 +35,12 @@ namespace boost { namespace phoenix
 
     template <typename Visitor, typename Expr>
     inline void visit_each(Visitor& visitor, actor<Expr> const& a, long)
+    {
+        fusion::for_each(a, detail::visit_each_impl<Visitor>(visitor));
+    }
+
+    template <typename Visitor, typename Expr>
+    inline void visit_each(Visitor& visitor, actor<Expr> const& a)
     {
         fusion::for_each(a, detail::visit_each_impl<Visitor>(visitor));
     }

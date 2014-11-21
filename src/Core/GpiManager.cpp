@@ -4,11 +4,7 @@
 
 #include <QtCore/QDebug>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 Q_GLOBAL_STATIC(GpiManager, gpiManager)
 

@@ -10,11 +10,7 @@
 
 #include <QtCore/QDebug>
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets/QApplication>
-#else
-#include <QtGui/QApplication>
-#endif
 
 InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
     : QWidget(parent),
