@@ -133,7 +133,7 @@ const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByAddress(const Q
     return QSharedPointer<DeviceModel>();
 }
 
-const int DeviceManager::getDeviceCount() const
+int DeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }

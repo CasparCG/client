@@ -4,7 +4,7 @@
 
 #include "Global.h"
 
-#include "Events/Rundown/RepositoryRundownEvent.h"^M 
+#include "Events/Rundown/RepositoryRundownEvent.h"
 
 #include <QtGui/QMouseEvent>
 

@@ -126,7 +126,7 @@ const AtemDeviceModel AtemDeviceManager::getDeviceModelByAddress(const QString& 
     qCritical() << "No TriCasterDeviceModel found for specified address";
 }
 
-const int AtemDeviceManager::getDeviceCount() const
+int AtemDeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }

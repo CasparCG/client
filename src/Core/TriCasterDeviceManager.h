@@ -26,7 +26,7 @@ class CORE_EXPORT TriCasterDeviceManager : public QObject
         const TriCasterDeviceModel getDeviceModelByName(const QString& name) const;
         const TriCasterDeviceModel getDeviceModelByAddress(const QString& address) const;
 
-        const int getDeviceCount() const;
+        int getDeviceCount() const;
         const QSharedPointer<TriCasterDevice> getDeviceByName(const QString& name) const;
 
         const QSharedPointer<TriCasterDevice> getDevice() const;

@@ -717,6 +717,8 @@ void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 
 void LibraryWidget::templateChanged(const TemplateChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetTemplate->clear();
     this->treeWidgetTemplate->clearSelection();
@@ -748,6 +750,8 @@ void LibraryWidget::templateChanged(const TemplateChangedEvent& event)
 
 void LibraryWidget::dataChanged(const DataChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetData->clear();
     this->treeWidgetData->clearSelection();

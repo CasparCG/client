@@ -21,9 +21,11 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 
+#include <QtGui/QPixmap>
 #include <QtGui/QFontDatabase>
 
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QSplashScreen>
 
 #include <QtSql/QSqlDatabase>
 
@@ -152,8 +154,11 @@ int main(int argc, char* argv[])
     //Application::setApplicationName("CasparCG Client");
 
     Application application(argc, argv);
+
+    QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
+    splashScreen.show();
+
     application.setStyle("plastique");
-    //application.setStyle("fusion");
 
     loadDatabase(application);
     DatabaseManager::getInstance().initialize();
@@ -165,6 +170,7 @@ int main(int argc, char* argv[])
     GpiManager::getInstance().initialize();
 
     MainWindow window;
+    splashScreen.finish(&window);
 
     loadConfiguration(application, window);
 

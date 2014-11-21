@@ -126,7 +126,7 @@ const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByAddress(const
     qCritical() << "No TriCasterDeviceModel found for specified address";
 }
 
-const int TriCasterDeviceManager::getDeviceCount() const
+int TriCasterDeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }

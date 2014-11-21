@@ -248,6 +248,7 @@
         <file>Images/RouteVideolayer.png</file>
         <file>Images/RouteVideolayerSmall.png</file>
         <file>Images/RouteVideolayerSmallHover.png</file>
+        <file>Images/SplashScreen.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

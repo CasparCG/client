@@ -721,7 +721,8 @@ OTHER_FILES += \
     Images/RouteVideolayer.png \
     Images/RouteChannelSmallHover.png \
     Images/RouteChannelSmall.png \
-    Images/RouteChannel.png
+    Images/RouteChannel.png \
+    Images/SplashScreen.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
