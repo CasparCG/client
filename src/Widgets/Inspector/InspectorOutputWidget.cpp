@@ -565,10 +565,16 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
         if (this->comboBoxTarget->findText(this->model->getName()))
         {
             if (!this->model->getName().isEmpty() &&
-                this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
-                this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+                (this->model->getType() == Rundown::AUDIO || this->model->getType() == Rundown::STILL ||
+                 this->model->getType() == Rundown::IMAGESCROLLER || this->model->getType() == Rundown::TEMPLATE || this->model->getType() == Rundown::MOVIE) &&
+                this->model->getName() != Rundown::DEFAULT_AUDIO_NAME &&
+                this->model->getName() != Rundown::DEFAULT_STILL_NAME &&
+                this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME &&
+                this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
                 this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+            {
                 this->comboBoxTarget->addItem(this->model->getName());
+            }
         }
 
         this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
@@ -576,10 +582,16 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
     else
     {
         if (!this->model->getName().isEmpty() &&
-            this->model->getName() != Rundown::DEFAULT_AUDIO_NAME && this->model->getName() != Rundown::DEFAULT_IMAGE_NAME &&
-            this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME && this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
+            (this->model->getType() == Rundown::AUDIO || this->model->getType() == Rundown::STILL ||
+             this->model->getType() == Rundown::IMAGESCROLLER || this->model->getType() == Rundown::TEMPLATE || this->model->getType() == Rundown::MOVIE) &&
+            this->model->getName() != Rundown::DEFAULT_AUDIO_NAME &&
+            this->model->getName() != Rundown::DEFAULT_STILL_NAME &&
+            this->model->getName() != Rundown::DEFAULT_IMAGESCROLLER_NAME &&
+            this->model->getName() != Rundown::DEFAULT_TEMPLATE_NAME &&
             this->model->getName() != Rundown::DEFAULT_MOVIE_NAME)
+        {
             this->comboBoxTarget->addItem(this->model->getName());
+        }
     }
 
     this->comboBoxTarget->setCurrentIndex(this->comboBoxTarget->findText(this->model->getName()));
