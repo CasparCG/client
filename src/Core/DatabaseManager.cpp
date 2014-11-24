@@ -501,7 +501,7 @@ QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT p.Id, p.Name, p.Value "
+    QString query = QString("SELECT p.Id, p.Name, p.Value FROM Preset p "
                             "WHERE p.Name LIKE '%%1%' OR p.Value LIKE '%%1%' "
                             "ORDER BY p.Name, p.Id").arg(filter);
 

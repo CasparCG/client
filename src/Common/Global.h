@@ -456,7 +456,7 @@ namespace Rundown
     static const int MAX_NUMBER_OF_RUNDONWS = 5;
     static const QString DEFAULT_NAME = "New Rundown";
     static const QString DEFAULT_AUDIO_NAME = "Audio";
-    static const QString DEFAULT_IMAGE_NAME = "Image";
+    static const QString DEFAULT_STILL_NAME = "Image";
     static const QString DEFAULT_IMAGESCROLLER_NAME = "Image Scroller";
     static const QString DEFAULT_TEMPLATE_NAME = "Template";
     static const QString DEFAULT_MOVIE_NAME = "Video";
