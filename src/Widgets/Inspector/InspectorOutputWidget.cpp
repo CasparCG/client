@@ -634,7 +634,7 @@ void InspectorOutputWidget::checkEmptyTarget()
     {
         if (this->comboBoxTarget->isEnabled() && this->comboBoxTarget->currentText() == "")
             this->comboBoxTarget->setStyleSheet("border-color: firebrick;");
-        else
+        else if (this->comboBoxTarget->isEnabled())
             this->comboBoxTarget->setStyleSheet("border-color: darkorange;");
     }
 }
