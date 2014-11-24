@@ -111,6 +111,10 @@
 {
     background-color: rgba(35, 35, 35, 255);
 }
+#lineEditFilter QToolButton
+{
+    background-color: transparent;
+}
 
 #treeWidgetTool, #treeWidgetAudio, #treeWidgetImage, #treeWidgetTemplate, #treeWidgetVideo, #treeWidgetData, #treeWidgetPreset
 {
