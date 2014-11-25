@@ -866,7 +866,6 @@ void LibraryWidget::loadLibrary()
     EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
 }
 
-
 void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
