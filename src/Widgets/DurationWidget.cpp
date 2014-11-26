@@ -67,6 +67,7 @@ void DurationWidget::updateTime()
 
     this->lcdNumber->display(timecode);
     this->progressBarDuration->setValue(this->duration - this->timeSinceStart.elapsed());
+    this->progressBarDuration->update();
 }
 
 void DurationWidget::resetDuration()
