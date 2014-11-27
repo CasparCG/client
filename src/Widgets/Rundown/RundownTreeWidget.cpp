@@ -834,8 +834,13 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
 
     if (this->repositoryRundown)
     {
+        this->contextMenuRundown->actions().at(0)->setEnabled(false); // Tools.
+        this->contextMenuRundown->actions().at(2)->setEnabled(false); // Group.
+        this->contextMenuRundown->actions().at(3)->setEnabled(false); // Ungroup.
+        this->contextMenuRundown->actions().at(8)->setEnabled(false); // Paste Properties.
         this->contextMenuRundown->actions().at(10)->setEnabled(false); // Colorize Item.
         this->contextMenuRundown->actions().at(12)->setEnabled(false); // Save as Preset.
+        this->contextMenuRundown->actions().at(14)->setEnabled(false); // Remove.
     }
 
     if (this->treeWidgetRundown->selectedItems().count() > 0)
