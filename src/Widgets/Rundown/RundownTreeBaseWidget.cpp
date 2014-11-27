@@ -690,41 +690,58 @@ void RundownTreeBaseWidget::setExpanded(bool expanded)
 
 void RundownTreeBaseWidget::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Delete)
-        removeSelectedItems();
-    else if (event->key() == Qt::Key_Insert)
-        applyRepositoryChanges(); 
-    else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
-        duplicateSelectedItems();
-    else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
-        copySelectedItems();
-    else if (event->key() == Qt::Key_V && event->modifiers() == Qt::ControlModifier)
-        pasteSelectedItems();
-    else if (event->key() == Qt::Key_G && event->modifiers() == Qt::ControlModifier)
-        groupItems();
-    else if (event->key() == Qt::Key_U && event->modifiers() == Qt::ControlModifier)
-        ungroupItems();
-    else if (event->key() == Qt::Key_X && event->modifiers() == Qt::ControlModifier)
+    if (this->lock)
     {
-        copySelectedItems();
-        removeSelectedItems();
+        if (event->key() == Qt::Key_Insert)
+            applyRepositoryChanges();
+        else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
+            copySelectedItems();
+        else
+        {
+            if (event->key() == Qt::Key_Left)
+                setExpanded(false);
+            else if (event->key() == Qt::Key_Right)
+                setExpanded(true);
+
+            QTreeWidget::keyPressEvent(event);
+        }
     }
-    else if (event->key() == Qt::Key_Up && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
-        moveItemUp();
-    else if (event->key() == Qt::Key_Down && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
-        moveItemDown();
-    else if (event->key() == Qt::Key_Left && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
-        moveItemOutOfGroup();
-    else if (event->key() == Qt::Key_Right && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
-        moveItemIntoGroup();
     else
     {
-        if (event->key() == Qt::Key_Left)
-            setExpanded(false);
-        else if (event->key() == Qt::Key_Right)
-            setExpanded(true);
+        if (event->key() == Qt::Key_Delete)
+            removeSelectedItems();
+        else if (event->key() == Qt::Key_D && event->modifiers() == Qt::ControlModifier)
+            duplicateSelectedItems();
+        else if (event->key() == Qt::Key_C && event->modifiers() == Qt::ControlModifier)
+            copySelectedItems();
+        else if (event->key() == Qt::Key_V && event->modifiers() == Qt::ControlModifier)
+            pasteSelectedItems();
+        else if (event->key() == Qt::Key_G && event->modifiers() == Qt::ControlModifier)
+            groupItems();
+        else if (event->key() == Qt::Key_U && event->modifiers() == Qt::ControlModifier)
+            ungroupItems();
+        else if (event->key() == Qt::Key_X && event->modifiers() == Qt::ControlModifier)
+        {
+            copySelectedItems();
+            removeSelectedItems();
+        }
+        else if (event->key() == Qt::Key_Up && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+            moveItemUp();
+        else if (event->key() == Qt::Key_Down && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+            moveItemDown();
+        else if (event->key() == Qt::Key_Left && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+            moveItemOutOfGroup();
+        else if (event->key() == Qt::Key_Right && (event->modifiers() == Qt::ControlModifier || (event->modifiers() & Qt::ControlModifier && event->modifiers() & Qt::KeypadModifier)))
+            moveItemIntoGroup();
+        else
+        {
+            if (event->key() == Qt::Key_Left)
+                setExpanded(false);
+            else if (event->key() == Qt::Key_Right)
+                setExpanded(true);
 
-        QTreeWidget::keyPressEvent(event);   
+            QTreeWidget::keyPressEvent(event);
+        }
     }
 }
 
