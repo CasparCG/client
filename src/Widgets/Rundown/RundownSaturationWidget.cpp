@@ -519,42 +519,56 @@ void RundownSaturationWidget::deviceAdded(CasparDevice& device)
 
 void RundownSaturationWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownSaturationWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownSaturationWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownSaturationWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownSaturationWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownSaturationWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownSaturationWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

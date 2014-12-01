@@ -933,11 +933,15 @@ void RundownTemplateWidget::configureOscSubscriptions()
 
 void RundownTemplateWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownTemplateWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+
     checkGpiConnection();
 }
 
@@ -950,6 +954,8 @@ void RundownTemplateWidget::remoteTriggerIdChanged(const QString& remoteTriggerI
 
 void RundownTemplateWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -963,66 +969,88 @@ void RundownTemplateWidget::deviceAdded(CasparDevice& device)
 
 void RundownTemplateWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownTemplateWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownTemplateWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownTemplateWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Load);
 }
 
 void RundownTemplateWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Invoke);
 }
 
 void RundownTemplateWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Preview);
 }
 
 void RundownTemplateWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Next);
 }
 
 void RundownTemplateWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownTemplateWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownTemplateWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownTemplateWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }
