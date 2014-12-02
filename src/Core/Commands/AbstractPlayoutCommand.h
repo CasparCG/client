@@ -3,6 +3,7 @@
 #include "../Shared.h"
 
 #include "Global.h"
+#include "Playout.h"
 
 class CORE_EXPORT AbstractPlayoutCommand
 {

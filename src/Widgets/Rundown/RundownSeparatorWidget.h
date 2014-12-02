@@ -42,7 +42,7 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 
@@ -53,7 +53,7 @@ class WIDGETS_EXPORT RundownSeparatorWidget : public QWidget, Ui::RundownSeparat
 
         virtual void clearDelayedCommands() {}
 
-        virtual void setUsed(bool used) {}
+        virtual void setUsed(bool /* used */) {}
 
     private:
         bool active;

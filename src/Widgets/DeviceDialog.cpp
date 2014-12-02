@@ -158,6 +158,8 @@ void DeviceDialog::testConnection()
 
 void DeviceDialog::nameChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditDeviceName->text().isEmpty())
         this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
@@ -166,6 +168,8 @@ void DeviceDialog::nameChanged(QString name)
 
 void DeviceDialog::addressChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditAddress->text().isEmpty())
         this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else

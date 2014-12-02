@@ -73,6 +73,9 @@ void TemplateDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
 
 bool TemplateDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
+    Q_UNUSED(index);
+    Q_UNUSED(action);
+
     if (!mimeData->hasFormat("application/library-dataitem") && !mimeData->hasFormat("application/inspector-templatedataitem"))
         return false;
 

@@ -363,16 +363,22 @@ void InspectorWidget::setDefaultVisibleWidgets()
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     setDefaultVisibleWidgets();
 }
 
 void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
 {
+    Q_UNUSED(event);
+
     setDefaultVisibleWidgets();
 }
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
+    Q_UNUSED(index);
+
     item->setExpanded(!item->isExpanded());
 }
 

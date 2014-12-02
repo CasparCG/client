@@ -64,6 +64,8 @@ RundownMacroWidget::RundownMacroWidget(const LibraryModel& model, QWidget* paren
 
 void RundownMacroWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -328,11 +330,16 @@ void RundownMacroWidget::configureOscSubscriptions()
 
 void RundownMacroWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownMacroWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -345,6 +352,8 @@ void RundownMacroWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 
 void RundownMacroWidget::deviceConnectionStateChanged(TriCasterDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -358,18 +367,24 @@ void RundownMacroWidget::deviceAdded(TriCasterDevice& device)
 
 void RundownMacroWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownMacroWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownMacroWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

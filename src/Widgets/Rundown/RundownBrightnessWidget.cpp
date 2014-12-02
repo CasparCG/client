@@ -499,6 +499,7 @@ void RundownBrightnessWidget::allowGpiChanged(bool allowGpi)
 void RundownBrightnessWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     Q_UNUSED(connected);
+    Q_UNUSED(device);
 
     checkGpiConnection();
 }

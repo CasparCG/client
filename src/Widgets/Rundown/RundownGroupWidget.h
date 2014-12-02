@@ -39,7 +39,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual LibraryModel* getLibraryModel();
 
         virtual void setActive(bool active);
-        virtual void setInGroup(bool inGroup) {}
+        virtual void setInGroup(bool /* inGroup */) {}
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 

@@ -41,6 +41,8 @@ void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEven
 
 void InspectorOscOutputWidget::oscOutputChanged(const OscOutputChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     blockAllSignals(true);
 
     loadOscOutput();

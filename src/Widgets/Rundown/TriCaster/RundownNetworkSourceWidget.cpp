@@ -64,6 +64,8 @@ RundownNetworkSourceWidget::RundownNetworkSourceWidget(const LibraryModel& model
 
 void RundownNetworkSourceWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -329,11 +331,16 @@ void RundownNetworkSourceWidget::configureOscSubscriptions()
 
 void RundownNetworkSourceWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownNetworkSourceWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -346,6 +353,8 @@ void RundownNetworkSourceWidget::remoteTriggerIdChanged(const QString& remoteTri
 
 void RundownNetworkSourceWidget::deviceConnectionStateChanged(TriCasterDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -359,18 +368,24 @@ void RundownNetworkSourceWidget::deviceAdded(TriCasterDevice& device)
 
 void RundownNetworkSourceWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownNetworkSourceWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownNetworkSourceWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

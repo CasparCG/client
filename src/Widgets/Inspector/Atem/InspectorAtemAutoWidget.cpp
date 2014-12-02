@@ -90,6 +90,8 @@ void InspectorAtemAutoWidget::stepChanged(int index)
 
 void InspectorAtemAutoWidget::speedChanged(int value)
 {
+    Q_UNUSED(value);
+
     this->command->setSpeed(this->spinBoxSpeed->value());
 }
 

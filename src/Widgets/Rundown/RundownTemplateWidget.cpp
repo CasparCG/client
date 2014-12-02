@@ -941,6 +941,7 @@ void RundownTemplateWidget::allowGpiChanged(bool allowGpi)
 void RundownTemplateWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
     Q_UNUSED(connected);
+    Q_UNUSED(device);
 
     checkGpiConnection();
 }

@@ -49,8 +49,8 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         void setupAudioTrackMenu();
         void setupStreamMenu();
         void setupRenderTarget(bool windowMode);
-        void startStream(const QString& deviceName, const QString& deviceChannel);
-        void stopStream(const QString& deviceName, const QString& deviceChannel);
+        void startStream();
+        void stopStream();
 
         Q_SLOT void toggleWindowMode();
         Q_SLOT void disconnectStream();

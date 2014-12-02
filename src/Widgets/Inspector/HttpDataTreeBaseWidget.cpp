@@ -71,6 +71,9 @@ void HttpDataTreeBaseWidget::dragLeaveEvent(QDragLeaveEvent* event)
 
 bool HttpDataTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
+    Q_UNUSED(index);
+    Q_UNUSED(action);
+
     if (!mimeData->hasFormat("application/inspector-httpdataitem"))
         return false;
 

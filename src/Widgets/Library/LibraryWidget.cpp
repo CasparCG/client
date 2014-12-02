@@ -653,6 +653,8 @@ void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetAudio->clear();
     this->treeWidgetImage->clear();
@@ -783,6 +785,8 @@ void LibraryWidget::dataChanged(const DataChangedEvent& event)
 
 void LibraryWidget::presetChanged(const PresetChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetPreset->clear();
     this->treeWidgetPreset->clearSelection();
@@ -812,6 +816,8 @@ void LibraryWidget::presetChanged(const PresetChangedEvent& event)
 
 void LibraryWidget::importPreset(const ImportPresetEvent& event)
 {
+    Q_UNUSED(event);
+
     QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
     if (!path.isEmpty())
     {
@@ -834,6 +840,8 @@ void LibraryWidget::importPreset(const ImportPresetEvent& event)
 
 void LibraryWidget::exportPreset(const ExportPresetEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->treeWidgetPreset->selectedItems().count() == 0)
         return;
 
@@ -937,6 +945,8 @@ void LibraryWidget::customContextMenuDataRequested(const QPoint& point)
 
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
+    Q_UNUSED(action);
+
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTool->selectedItems())
@@ -1027,6 +1037,8 @@ void LibraryWidget::checkEmptyFilter()
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     if (current == NULL)
         return;
 
@@ -1058,6 +1070,8 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+    Q_UNUSED(previous);
+
     if (current == NULL)
         return;
 
@@ -1079,6 +1093,8 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
 
 void LibraryWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
+    Q_UNUSED(index);
+
     if (item->parent() != NULL) // The item is not a top level item.
         return;
 

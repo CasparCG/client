@@ -69,6 +69,8 @@ RundownContrastWidget::RundownContrastWidget(const LibraryModel& model, QWidget*
 
 void RundownContrastWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -489,11 +491,16 @@ void RundownContrastWidget::configureOscSubscriptions()
 
 void RundownContrastWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownContrastWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -506,6 +513,8 @@ void RundownContrastWidget::remoteTriggerIdChanged(const QString& remoteTriggerI
 
 void RundownContrastWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 

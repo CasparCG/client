@@ -84,5 +84,8 @@ QString OpenRundownFromUrlDialog::getPath() const
 
 void OpenRundownFromUrlDialog::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     QDialog::accept();
 }

@@ -48,6 +48,8 @@ void InspectorKeyerWidget::deferChanged(int state)
 
 void InspectorKeyerWidget::resetDefer(QString defer)
 {
+    Q_UNUSED(defer);
+
     this->checkBoxDefer->setChecked(Mixer::DEFAULT_DEFER);
     this->command->setDefer(this->checkBoxDefer->isChecked());
 }

@@ -417,6 +417,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
 
 void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     blockAllSignals(true);
 
     this->model = NULL;
@@ -484,6 +486,8 @@ void InspectorOutputWidget::deviceChanged(const DeviceChangedEvent& event)
 
 void InspectorOutputWidget::mediaChanged(const MediaChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->model == NULL)
         return;
 
@@ -496,6 +500,8 @@ void InspectorOutputWidget::mediaChanged(const MediaChangedEvent& event)
 
 void InspectorOutputWidget::templateChanged(const TemplateChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->model == NULL)
         return;
 
@@ -676,6 +682,8 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 
 void InspectorOutputWidget::targetChanged(QString name)
 {
+    Q_UNUSED(name);
+
     checkEmptyTarget();
 
     EventManager::getInstance().fireTargetChangedEvent(TargetChangedEvent(this->comboBoxTarget->currentText()));
@@ -750,6 +758,8 @@ void InspectorOutputWidget::tricasterDeviceAdded(TriCasterDevice& device)
 
 void InspectorOutputWidget::tricasterDeviceNameChanged(QString deviceName)
 {
+    Q_UNUSED(deviceName);
+
     checkEmptyDevice();
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();
@@ -783,6 +793,8 @@ void InspectorOutputWidget::atemDeviceAdded(AtemDevice& device)
 
 void InspectorOutputWidget::atemDeviceNameChanged(QString deviceName)
 {
+    Q_UNUSED(deviceName);
+
     checkEmptyDevice();
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();

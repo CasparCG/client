@@ -47,7 +47,7 @@ class WIDGETS_EXPORT RundownStillWidget : public QWidget, Ui::RundownStillWidget
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 

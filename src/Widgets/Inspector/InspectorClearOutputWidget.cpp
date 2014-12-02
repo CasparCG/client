@@ -55,12 +55,16 @@ void InspectorClearOutputWidget::triggerOnNextChanged(int state)
 
 void InspectorClearOutputWidget::resetClearChannel(QString clearChannel)
 {
+    Q_UNUSED(clearChannel);
+
     this->checkBoxClearChannel->setChecked(ClearOutput::DEFAULT_CLEAR_CHANNEL);
     this->command->setClearChannel(this->checkBoxClearChannel->isChecked());
 }
 
 void InspectorClearOutputWidget::resetTriggerOnNext(QString triggerOnNext)
 {
+    Q_UNUSED(triggerOnNext);
+
     this->checkBoxTriggerOnNext->setChecked(ClearOutput::DEFAULT_TRIGGER_ON_NEXT);
     this->command->setTriggerOnNext(this->checkBoxTriggerOnNext->isChecked());
 }

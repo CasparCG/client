@@ -62,24 +62,32 @@ void InspectorImageScrollerWidget::progressiveChanged(int state)
 
 void InspectorImageScrollerWidget::resetSpeed(QString speed)
 {
+    Q_UNUSED(speed);
+
     this->spinBoxSpeed->setValue(ImageScroller::DEFAULT_SPEED);
     this->command->setSpeed(this->spinBoxSpeed->value());
 }
 
 void InspectorImageScrollerWidget::resetBlur(QString blur)
 {
+    Q_UNUSED(blur);
+
     this->spinBoxBlur->setValue(ImageScroller::DEFAULT_BLUR);
     this->command->setBlur(this->spinBoxBlur->value());
 }
 
 void InspectorImageScrollerWidget::resetPremultiply(QString premultiply)
 {
+    Q_UNUSED(premultiply);
+
     this->checkBoxPremultiply->setChecked(false);
     this->command->setPremultiply(this->checkBoxPremultiply->isChecked());
 }
 
 void InspectorImageScrollerWidget::resetProgressive(QString progressive)
 {
+    Q_UNUSED(progressive);
+
     this->checkBoxProgressive->setChecked(false);
     this->command->setProgressive(this->checkBoxProgressive->isChecked());
 }

@@ -63,6 +63,8 @@ void InspectorBlendModeWidget::blendModeChanged(QString blendMode)
 
 void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
 {
+    Q_UNUSED(blendMode);
+
     this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText("Normal"));
     this->command->setBlendMode(this->comboBoxBlendMode->currentText());
 

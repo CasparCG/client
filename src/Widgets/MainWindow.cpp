@@ -169,6 +169,8 @@ void MainWindow::reloadRundownMenu(const ReloadRundownMenuEvent& event)
 
 void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     this->saveAsPresetAction->setEnabled(false);
 }
 

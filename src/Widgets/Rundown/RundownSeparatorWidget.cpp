@@ -130,6 +130,8 @@ void RundownSeparatorWidget::setInGroup(bool inGroup)
 
 bool RundownSeparatorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
+    Q_UNUSED(type);
+
     if (this->active)
         this->animation->start(1);
 

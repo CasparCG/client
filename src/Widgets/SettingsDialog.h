@@ -4,6 +4,7 @@
 #include "ui_SettingsDialog.h"
 
 #include "Global.h"
+#include "Playout.h"
 
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QWidget>

@@ -69,6 +69,8 @@ RundownVolumeWidget::RundownVolumeWidget(const LibraryModel& model, QWidget* par
 
 void RundownVolumeWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -492,11 +494,16 @@ void RundownVolumeWidget::configureOscSubscriptions()
 
 void RundownVolumeWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownVolumeWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -509,6 +516,8 @@ void RundownVolumeWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 
 void RundownVolumeWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 

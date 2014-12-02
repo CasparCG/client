@@ -338,16 +338,22 @@ void RundownGroupWidget::configureOscSubscriptions()
 
 void RundownGroupWidget::durationChanged(int duration)
 {
+    Q_UNUSED(duration);
+
     this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)
 {
+    Q_UNUSED(note);
+
     this->labelNoteField->setText(this->command.getNotes());
 }
 
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
@@ -358,6 +364,9 @@ void RundownGroupWidget::autoStepChanged(bool autoStep)
 
 void RundownGroupWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -407,6 +416,8 @@ void RundownGroupWidget::pauseControlSubscriptionReceived(const QString& predica
 
 void RundownGroupWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Invoke);
 }

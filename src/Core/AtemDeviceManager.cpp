@@ -113,6 +113,8 @@ const AtemDeviceModel AtemDeviceManager::getDeviceModelByName(const QString& nam
     }
 
     qCritical() << "No AtemDeviceModel found for specified name";
+
+    return AtemDeviceModel();
 }
 
 const AtemDeviceModel AtemDeviceManager::getDeviceModelByAddress(const QString& address) const
@@ -124,6 +126,8 @@ const AtemDeviceModel AtemDeviceManager::getDeviceModelByAddress(const QString& 
     }
 
     qCritical() << "No TriCasterDeviceModel found for specified address";
+
+    return AtemDeviceModel();
 }
 
 int AtemDeviceManager::getDeviceCount() const

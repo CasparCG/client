@@ -64,6 +64,8 @@ RundownAtemAudioInputStateWidget::RundownAtemAudioInputStateWidget(const Library
 
 void RundownAtemAudioInputStateWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -329,11 +331,16 @@ void RundownAtemAudioInputStateWidget::configureOscSubscriptions()
 
 void RundownAtemAudioInputStateWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownAtemAudioInputStateWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -346,6 +353,8 @@ void RundownAtemAudioInputStateWidget::remoteTriggerIdChanged(const QString& rem
 
 void RundownAtemAudioInputStateWidget::deviceConnectionStateChanged(AtemDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -359,18 +368,24 @@ void RundownAtemAudioInputStateWidget::deviceAdded(AtemDevice& device)
 
 void RundownAtemAudioInputStateWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownAtemAudioInputStateWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownAtemAudioInputStateWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

@@ -42,7 +42,7 @@ class WIDGETS_EXPORT RundownPlayoutCommandWidget : public QWidget, Ui::RundownPl
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 

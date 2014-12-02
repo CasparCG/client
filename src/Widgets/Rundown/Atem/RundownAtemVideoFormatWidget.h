@@ -47,7 +47,7 @@ class WIDGETS_EXPORT RundownAtemVideoFormatWidget : public QWidget, Ui::RundownA
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 

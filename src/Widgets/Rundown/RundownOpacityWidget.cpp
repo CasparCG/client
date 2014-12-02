@@ -69,6 +69,8 @@ RundownOpacityWidget::RundownOpacityWidget(const LibraryModel& model, QWidget* p
 
 void RundownOpacityWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -501,11 +503,16 @@ void RundownOpacityWidget::configureOscSubscriptions()
 
 void RundownOpacityWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownOpacityWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 

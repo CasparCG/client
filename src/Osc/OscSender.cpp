@@ -19,9 +19,6 @@ void OscSender::send(const QString& address, int port, const QString& path, cons
     char buffer[256];
     osc::OutboundPacketStream stream(buffer, 256);
 
-    bool isInt = false;
-    int val = message.toInt(&isInt);
-
     if (useBundle)
         stream << osc::BeginBundleImmediate;
 

@@ -55,6 +55,8 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent& event)
 {
+    Q_UNUSED(event);
+
     int index = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetTemplateData->setCurrentItem(this->treeWidgetTemplateData->invisibleRootItem()->child(index));
 
@@ -184,6 +186,8 @@ bool InspectorTemplateWidget::editRow()
 
         updateTemplateDataModels();
     }
+
+    return true;
 }
 
 bool InspectorTemplateWidget::removeRow()
@@ -245,6 +249,9 @@ bool InspectorTemplateWidget::pasteSelectedItem()
 
 void InspectorTemplateWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     editRow();
 }
 
@@ -275,6 +282,8 @@ void InspectorTemplateWidget::triggerOnNextChanged(int state)
 
 void InspectorTemplateWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+    Q_UNUSED(previous);
+
     if (current == NULL)
         return;
 

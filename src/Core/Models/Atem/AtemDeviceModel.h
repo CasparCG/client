@@ -7,6 +7,7 @@
 class CORE_EXPORT AtemDeviceModel
 {
     public:
+        explicit AtemDeviceModel() {}
         explicit AtemDeviceModel(int id, const QString& name, const QString& address, const QString& description);
 
         int getId() const;

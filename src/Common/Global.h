@@ -2,8 +2,6 @@
 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
-#include <stdexcept>
-
 #include <QtCore/QByteArray>
 #include <QtCore/QDebug>
 #include <QtCore/QEvent>
@@ -489,55 +487,6 @@ namespace Panel
 #endif
 }
 
-namespace Xml
-{
-    static QString encode(const QString& data)
-    {
-        QString temp;
-
-        for (int index = 0; index < data.size(); index++)
-        {
-            QChar character(data.at(index));
-            switch (character.unicode())
-            {
-                case '&':
-                    temp += "&amp;";
-                    break;
-                case '\'':
-                    temp += "&apos;";
-                    break;
-                case '"':
-                    temp += "&quot;";
-                    break;
-                case '<':
-                    temp += "&lt;";
-                    break;
-                case '>':
-                    temp += "&gt;";
-                    break;
-                default:
-                    temp += character;
-                    break;
-            }
-        }
-
-        return temp;
-     }
-
-    static QString decode(const QString& data)
-    {
-        QString temp(data);
-
-        temp.replace("&amp;", "&");
-        temp.replace("&apos;", "'");
-        temp.replace("&quot;", "\"");
-        temp.replace("&lt;", "<");
-        temp.replace("&gt;", ">");
-
-        return temp;
-    }
-}
-
 namespace Action
 {
     struct ActionType
@@ -548,116 +497,4 @@ namespace Action
             GpiPulse
         };
     };
-}
-
-namespace Playout
-{
-    struct PlayoutType
-    {
-        enum Type
-        {
-            Stop = QEvent::User + 110,
-            Play = QEvent::User + 120,
-            PlayNow = QEvent::User + 130,
-            PauseResume = QEvent::User + 140,
-            Load = QEvent::User + 150,
-            Next = QEvent::User + 160,
-            Update = QEvent::User + 170,
-            Invoke = QEvent::User + 180,
-            Preview = QEvent::User + 190,
-            Clear = QEvent::User + 200,
-            ClearVideoLayer = QEvent::User + 210,
-            ClearChannel = QEvent::User + 220
-        };
-    };
-
-    static PlayoutType::Type fromString(const QString& value)
-    {
-        if (value == "Stop")
-            return PlayoutType::Stop;
-        else if (value == "Play")
-            return PlayoutType::Play;
-        else if (value == "Play Now")
-            return PlayoutType::PlayNow;
-        else if (value == "Pause / Resume")
-            return PlayoutType::PauseResume;
-        else if (value == "Load")
-            return PlayoutType::Load;
-        else if (value == "Next")
-            return PlayoutType::Next;
-        else if (value == "Update")
-            return PlayoutType::Update;
-        else if (value == "Invoke")
-            return PlayoutType::Invoke;
-        else if (value == "Preview")
-            return PlayoutType::Preview;
-        else if (value == "Clear")
-            return PlayoutType::Clear;
-        else if (value == "Clear Video Layer")
-            return PlayoutType::ClearVideoLayer;
-        else if (value == "Clear Channel")
-            return PlayoutType::ClearChannel;
-        else
-            throw std::invalid_argument(value.toStdString());
-    }
-
-    static QString toString(PlayoutType::Type value)
-    {
-        switch (value)
-        {
-        case PlayoutType::Stop:
-            return "Stop";
-        case PlayoutType::Play:
-            return "Play";
-        case PlayoutType::PlayNow:
-            return "Play Now";
-        case PlayoutType::PauseResume:
-            return "Pause / Resume";
-        case PlayoutType::Load:
-            return "Load";
-        case PlayoutType::Next:
-            return "Next";
-        case PlayoutType::Update:
-            return "Update";
-        case PlayoutType::Invoke:
-            return "Invoke";
-        case PlayoutType::Preview:
-            return "Preview";
-        case PlayoutType::Clear:
-            return "Clear";
-        case PlayoutType::ClearVideoLayer:
-            return "Clear Video Layer";
-        case PlayoutType::ClearChannel:
-            return "Clear Channel";
-        default:
-            throw std::invalid_argument("Invalid enum constant");
-        }
-    }
-
-    static QList<PlayoutType::Type> createConstantList()
-    {
-        QList<PlayoutType::Type> result;
-
-        result.push_back(PlayoutType::Stop);
-        result.push_back(PlayoutType::Play);
-        result.push_back(PlayoutType::PlayNow);
-        result.push_back(PlayoutType::PauseResume);
-        result.push_back(PlayoutType::Load);
-        result.push_back(PlayoutType::Next);
-        result.push_back(PlayoutType::Update);
-        result.push_back(PlayoutType::Invoke);
-        result.push_back(PlayoutType::Preview);
-        result.push_back(PlayoutType::Clear);
-        result.push_back(PlayoutType::ClearVideoLayer);
-        result.push_back(PlayoutType::ClearChannel);
-
-        return result;
-    }
-
-    static const QList<PlayoutType::Type>& enumConstants()
-    {
-        static QList<PlayoutType::Type> result(createConstantList());
-
-        return result;
-    }
 }

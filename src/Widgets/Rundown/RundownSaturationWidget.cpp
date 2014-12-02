@@ -69,6 +69,8 @@ RundownSaturationWidget::RundownSaturationWidget(const LibraryModel& model, QWid
 
 void RundownSaturationWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -489,11 +491,16 @@ void RundownSaturationWidget::configureOscSubscriptions()
 
 void RundownSaturationWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownSaturationWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -506,6 +513,8 @@ void RundownSaturationWidget::remoteTriggerIdChanged(const QString& remoteTrigge
 
 void RundownSaturationWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 

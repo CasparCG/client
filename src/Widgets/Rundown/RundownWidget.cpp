@@ -147,6 +147,8 @@ void RundownWidget::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& ev
 
 void RundownWidget::newRundown(const NewRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     RundownTreeWidget* widget = new RundownTreeWidget(this);
     int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);

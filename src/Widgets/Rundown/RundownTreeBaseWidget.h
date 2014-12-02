@@ -50,7 +50,6 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool pasteItemProperties();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
-        bool copyItemProperties() const;
         bool hasItemBelow() const;
 
         void moveItemUp();
@@ -66,6 +65,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void checkEmptyRundown();
         void checRepositoryChanges();
         void applyRepositoryChanges();
+        void copyItemProperties() const;
         void addRepositoryChange(const RepositoryChangeModel& model);
         void setExpanded(bool expanded);
 

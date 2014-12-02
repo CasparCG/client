@@ -14,6 +14,8 @@ LiveDialog::LiveDialog(QWidget* parent)
 
 void LiveDialog::toggleFullscreen(const ToggleFullscreenEvent& event)
 {
+    Q_UNUSED(event);
+
     this->applicationFullscreen = !this->applicationFullscreen;
 
     (!isHidden() && isFullScreen()) ? setWindowState(Qt::WindowNoState) : setWindowState(Qt::WindowFullScreen);

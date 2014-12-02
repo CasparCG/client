@@ -4,6 +4,7 @@
 #include "ui_RundownWidget.h"
 
 #include "Global.h"
+#include "Playout.h"
 
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"

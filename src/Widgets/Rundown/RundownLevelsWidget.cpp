@@ -69,6 +69,8 @@ RundownLevelsWidget::RundownLevelsWidget(const LibraryModel& model, QWidget* par
 
 void RundownLevelsWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -495,11 +497,16 @@ void RundownLevelsWidget::configureOscSubscriptions()
 
 void RundownLevelsWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownLevelsWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -512,6 +519,8 @@ void RundownLevelsWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 
 void RundownLevelsWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
