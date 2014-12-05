@@ -6,7 +6,7 @@
 
 #include "Global.h"
 
-#include "CameraDevice.h"
+#include "PanasonicDevice.h"
 
 #include "GpiDevice.h"
 
@@ -76,7 +76,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
-        CameraDevice device;
+        PanasonicDevice device;
 
         void checkGpiConnection();
         void checkDeviceConnection();

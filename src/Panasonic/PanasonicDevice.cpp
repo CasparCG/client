@@ -1,16 +1,16 @@
-#include "CameraDevice.h"
+#include "PanasonicDevice.h"
 
 #include <QtCore/QByteArray>
 #include <QtCore/QDebug>
 #include <QtCore/QUrl>
 #include <QtCore/QUrlQuery>
 
-CameraDevice::CameraDevice(QObject* parent)
+PanasonicDevice::PanasonicDevice(QObject* parent)
     : QObject(parent)
 {
 }
 
-void CameraDevice::selectPreset(const QString& address, int preset)
+void PanasonicDevice::selectPreset(const QString& address, int preset)
 {
     QUrl request(QString("http://%1/cgi-bin/aw_ptz").arg(address));
 
@@ -27,7 +27,7 @@ void CameraDevice::selectPreset(const QString& address, int preset)
     this->networkManager->get(QNetworkRequest(request));
 }
 
-void CameraDevice::selectPresetFinished(QNetworkReply* reply)
+void PanasonicDevice::selectPresetFinished(QNetworkReply* reply)
 {
     QString data = QString::fromUtf8(reply->readAll());
 

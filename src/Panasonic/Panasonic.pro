@@ -13,7 +13,7 @@ DEFINES += PANASONIC_LIBRARY
 
 HEADERS += \
     Shared.h \
-    CameraDevice.h
+    PanasonicDevice.h
 	
 SOURCES += \
-    CameraDevice.cpp
+    PanasonicDevice.cpp

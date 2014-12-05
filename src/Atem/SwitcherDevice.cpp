@@ -1,5 +1,7 @@
 #include "SwitcherDevice.h"
 
+#include "qatemconnection.h"
+
 #include <QtNetwork/QHostAddress>
 
 #include <QtCore/QDebug>

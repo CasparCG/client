@@ -262,7 +262,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Panasonic</string>
+           <string>Panasonic PTZ</string>
           </property>
           <property name="background">
            <brush brushstyle="SolidPattern">

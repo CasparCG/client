@@ -4,8 +4,8 @@
 
 #include <QtCore/QObject>
 
-#include <QtNetwork/QTcpSocket>
-#include <QtNetwork/QAbstractSocket>
+class QTcpSocket;
+class QTextDecoder;
 
 class CASPAR_EXPORT AmcpDevice : public QObject
 {
