@@ -10,6 +10,8 @@ CameraDevice::CameraDevice(QObject* parent)
 
 void CameraDevice::selectPreset(const QString& address, int preset)
 {
+    preset = (preset > 0) ? preset - 1 : 0;
+
     QUrl request(QString("http://%1/cgi-bin/aw_ptz").arg(address));
     request.addQueryItem("cmd", QString("#R%1").arg(QString(preset).sprintf("%02d", preset)));
     request.addQueryItem("res", "1");
