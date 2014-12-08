@@ -12,6 +12,8 @@ PanasonicDevice::PanasonicDevice(QObject* parent)
 
 void PanasonicDevice::selectPreset(const QString& address, int preset)
 {
+    preset = (preset > 0) ? preset - 1 : 0;
+
     QUrl request(QString("http://%1/cgi-bin/aw_ptz").arg(address));
 
     QUrlQuery query;
