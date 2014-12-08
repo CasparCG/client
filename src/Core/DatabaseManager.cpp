@@ -173,6 +173,12 @@ void DatabaseManager::initialize()
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2500', 3840, 2160, '25')");
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2997', 3840, 2160, '29.97')");
     sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p3000', 3840, 2160, '30')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2398', 2048, 1080, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2400', 2048, 1080, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2500', 2048, 1080, '25')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2398', 4096, 2160, '23.98')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2400', 4096, 2160, '24')");
+    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2500', 4096, 2160, '25')");
 
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
     sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
