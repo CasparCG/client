@@ -161,7 +161,9 @@ HEADERS += \
     Rundown/RundownRouteChannelWidget.h \
     Inspector/InspectorRouteChannelWidget.h \
     Rundown/RundownRouteVideolayerWidget.h \
-    Inspector/InspectorRouteVideolayerWidget.h
+    Inspector/InspectorRouteVideolayerWidget.h \
+    Inspector/Sony/InspectorSonyPresetWidget.h \
+    Rundown/Sony/RundownSonyPresetWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -311,7 +313,9 @@ SOURCES += \
     Rundown/RundownRouteChannelWidget.cpp \
     Inspector/InspectorRouteChannelWidget.cpp \
     Rundown/RundownRouteVideolayerWidget.cpp \
-    Inspector/InspectorRouteVideolayerWidget.cpp
+    Inspector/InspectorRouteVideolayerWidget.cpp \
+    Inspector/Sony/InspectorSonyPresetWidget.cpp \
+    Rundown/Sony/RundownSonyPresetWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -449,7 +453,9 @@ FORMS += \
     Rundown/RundownRouteChannelWidget.ui \
     Inspector/InspectorRouteChannelWidget.ui \
     Rundown/RundownRouteVideolayerWidget.ui \
-    Inspector/InspectorRouteVideolayerWidget.ui
+    Inspector/InspectorRouteVideolayerWidget.ui \
+    Inspector/Sony/InspectorSonyPresetWidget.ui \
+    Rundown/Sony/RundownSonyPresetWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -722,7 +728,10 @@ OTHER_FILES += \
     Images/RouteChannelSmallHover.png \
     Images/RouteChannelSmall.png \
     Images/RouteChannel.png \
-    Images/SplashScreen.png
+    Images/SplashScreen.png \
+    Images/Sony/SonyPreset.png \
+    Images/Sony/SonyPresetSmall.png \
+    Images/Sony/SonyPresetSmallHover.png
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -784,6 +793,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
 else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
+DEPENDPATH += $$OUT_PWD/../Sony $$PWD/../Sony
+INCLUDEPATH += $$OUT_PWD/../Sony $$PWD/../Sony
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Sony/release/ -lsony
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Sony/debug/ -lsony
+else:macx:LIBS += -L$$OUT_PWD/../Sony/ -lsony
+else:unix:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 
 DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
 INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web

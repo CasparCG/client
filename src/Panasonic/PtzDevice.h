@@ -8,12 +8,12 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
 
-class PANASONIC_EXPORT PanasonicDevice : public QObject
+class PANASONIC_EXPORT PtzDevice : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit PanasonicDevice(QObject* parent = 0);
+        explicit PtzDevice(QObject* parent = 0);
 
         void selectPreset(const QString& address, int preset);
 

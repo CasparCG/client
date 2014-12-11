@@ -2,11 +2,11 @@
 
 #include "../../Shared.h"
 #include "../AbstractRundownWidget.h"
-#include "ui_RundownPanasonicPresetWidget.h"
+#include "ui_RundownSonyPresetWidget.h"
 
 #include "Global.h"
 
-#include "PtzDevice.h"
+#include "ViscaDevice.h"
 
 #include "GpiDevice.h"
 
@@ -14,7 +14,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/Panasonic/PanasonicPresetCommand.h"
+#include "Commands/Sony/SonyPresetCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -23,13 +23,13 @@
 
 #include <QtWidgets/QWidget>
 
-class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownPanasonicPresetWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownSonyPresetWidget : public QWidget, Ui::RundownSonyPresetWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownPanasonicPresetWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                              bool active = false, bool inGroup = false, bool compactView = false);
+        explicit RundownSonyPresetWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                         bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -44,7 +44,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool /* expanded */) {}
+        virtual void setExpanded(bool expanded) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 
@@ -63,7 +63,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         bool compactView;
         QString color;
         LibraryModel model;
-        PanasonicPresetCommand command;
+        SonyPresetCommand command;
         ActiveAnimation* animation;
         bool markUsedItems;
 
@@ -76,7 +76,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
-        PtzDevice device;
+        ViscaDevice device;
 
         void checkGpiConnection();
         void checkDeviceConnection();

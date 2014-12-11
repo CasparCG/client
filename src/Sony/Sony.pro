@@ -6,14 +6,14 @@
 QT -= gui
 QT += network
 
-TARGET = panasonic
+TARGET = sony
 TEMPLATE = lib
 
-DEFINES += PANASONIC_LIBRARY
+DEFINES += SONY_LIBRARY
 
 HEADERS += \
     Shared.h \
-    PtzDevice.h
+    ViscaDevice.h
 	
 SOURCES += \
-    PtzDevice.cpp
+    ViscaDevice.cpp

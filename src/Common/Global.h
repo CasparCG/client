@@ -32,6 +32,13 @@ namespace Panasonic
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
+namespace Sony
+{
+    static const QString DEFAULT_ADDRESS = "";
+    static const QString DEFAULT_PRESET = "";
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
 namespace Http
 {
     static const QString DEFAULT_URL = "";
@@ -445,6 +452,7 @@ namespace Rundown
     static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const QString PANASONICPRESET = "PANASONICPRESET";
+    static const QString SONYPRESET = "SONYPRESET";
     static const QString PERSPECTIVE = "PERSPECTIVE";
     static const QString ROTATION = "ROTATION";
     static const QString RESET = "RESET";

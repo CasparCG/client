@@ -1,16 +1,16 @@
-#include "PanasonicDevice.h"
+#include "PtzDevice.h"
 
 #include <QtCore/QByteArray>
 #include <QtCore/QDebug>
 #include <QtCore/QUrl>
 #include <QtCore/QUrlQuery>
 
-PanasonicDevice::PanasonicDevice(QObject* parent)
+PtzDevice::PtzDevice(QObject* parent)
     : QObject(parent)
 {
 }
 
-void PanasonicDevice::selectPreset(const QString& address, int preset)
+void PtzDevice::selectPreset(const QString& address, int preset)
 {
     preset = (preset > 0) ? preset - 1 : 0;
 
@@ -22,18 +22,18 @@ void PanasonicDevice::selectPreset(const QString& address, int preset)
 
     request.setQuery(query);
 
-    qDebug() << QString("CameraDevice::selectPreset: %1").arg(request.toString());
+    qDebug() << QString("PtzDevice::selectPreset: %1").arg(request.toString());
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(selectPresetFinished(QNetworkReply*)));
     this->networkManager->get(QNetworkRequest(request));
 }
 
-void PanasonicDevice::selectPresetFinished(QNetworkReply* reply)
+void PtzDevice::selectPresetFinished(QNetworkReply* reply)
 {
     QString data = QString::fromUtf8(reply->readAll());
 
-    qDebug() << QString("CameraDevice::selectPresetFinished: %1").arg(data);
+    qDebug() << QString("PtzDevice::selectPresetFinished: %1").arg(data);
 
     reply->deleteLater();
     this->networkManager->deleteLater();

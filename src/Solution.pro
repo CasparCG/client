@@ -6,6 +6,7 @@ SUBDIRS += \
     Caspar \
     TriCaster \
     Panasonic \
+    Sony \
     Web \
     Gpi \
     Osc \

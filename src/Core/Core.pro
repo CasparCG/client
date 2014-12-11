@@ -187,7 +187,8 @@ HEADERS += \
     Commands/ResetCommand.h \
     Commands/HtmlCommand.h \
     Commands/RouteChannelCommand.h \
-    Commands/RouteVideolayerCommand.h
+    Commands/RouteVideolayerCommand.h \
+    Commands/Sony/SonyPresetCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -364,7 +365,8 @@ SOURCES += \
     Commands/ResetCommand.cpp \
     Commands/HtmlCommand.cpp \
     Commands/RouteChannelCommand.cpp \
-    Commands/RouteVideolayerCommand.cpp
+    Commands/RouteVideolayerCommand.cpp \
+    Commands/Sony/SonyPresetCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
