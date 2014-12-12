@@ -1,12 +1,13 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #if !defined(FUSION_EQUAL_TO_05052005_1208)
 #define FUSION_EQUAL_TO_05052005_1208
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/fusion/support/tag_of.hpp>
 #include <boost/type_traits/add_const.hpp>
@@ -37,8 +38,18 @@ namespace boost { namespace fusion
         template <>
         struct equal_to_impl<iterator_facade_tag>
         {
-            template <typename I1, typename I2>
-            struct apply : I1::template equal_to<I1, I2> {};
+            template <typename It1, typename It2, typename Tag1, typename Tag2>
+            struct dispatch : mpl::false_ {};
+
+            template <typename It1, typename It2, typename Tag>
+            struct dispatch<It1, It2, Tag, Tag> // same tag
+              : It1::template equal_to<It1, It2>
+            {};
+
+            template<typename It1, typename It2>
+            struct apply : dispatch<It1, It2,
+                typename It1::fusion_tag, typename It2::fusion_tag>
+            {};
         };
 
         template <>
@@ -63,8 +74,9 @@ namespace boost { namespace fusion
     namespace iterator_operators
     {
         template <typename Iter1, typename Iter2>
-        inline typename 
-        enable_if<
+        BOOST_FUSION_GPU_ENABLED
+        inline typename
+        boost::enable_if<
             mpl::and_<is_fusion_iterator<Iter1>, is_fusion_iterator<Iter2> >
             , bool
             >::type
@@ -74,8 +86,9 @@ namespace boost { namespace fusion
         }
 
         template <typename Iter1, typename Iter2>
-        inline typename 
-        enable_if<
+        BOOST_FUSION_GPU_ENABLED
+        inline typename
+        boost::enable_if<
             mpl::and_<is_fusion_iterator<Iter1>, is_fusion_iterator<Iter2> >
             , bool
             >::type

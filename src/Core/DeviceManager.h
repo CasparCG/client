@@ -26,7 +26,7 @@ class CORE_EXPORT DeviceManager : public QObject
         const QSharedPointer<DeviceModel> getDeviceModelByName(const QString& name) const;
         const QSharedPointer<DeviceModel> getDeviceModelByAddress(const QString& address) const;
 
-        const int getDeviceCount() const;
+        int getDeviceCount() const;
         const QSharedPointer<CasparDevice> getDeviceByName(const QString& name) const;
 
         Q_SIGNAL void deviceRemoved();

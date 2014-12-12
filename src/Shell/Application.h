@@ -1,6 +1,8 @@
 #pragma once
 
-#include <QtGui/QApplication>
+#include <QtGlobal>
+
+#include <QtWidgets/QApplication>
 
 class Application : public QApplication
 {

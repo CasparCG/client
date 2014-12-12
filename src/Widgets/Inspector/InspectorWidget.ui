@@ -74,7 +74,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -93,15 +102,24 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>285</width>
-            <height>815</height>
+            <width>287</width>
+            <height>817</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
             <number>0</number>
            </property>
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -1143,7 +1161,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Camera Preset</string>
+               <string>Panasonic PTZ  Preset</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">
@@ -1351,6 +1369,29 @@
              <item>
               <property name="text">
                <string>Route Video Layer</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Sony VISCA Preset</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

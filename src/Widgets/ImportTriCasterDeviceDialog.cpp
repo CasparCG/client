@@ -5,9 +5,10 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 ImportTriCasterDeviceDialog::ImportTriCasterDeviceDialog(QWidget* parent)
     : QDialog(parent)

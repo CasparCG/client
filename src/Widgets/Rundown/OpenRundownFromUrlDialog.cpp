@@ -4,15 +4,15 @@
 
 #include <iostream>
 
+#include <QtCore/QDebug>
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QMessageBox>
 
-#include <QDebug>
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 OpenRundownFromUrlDialog::OpenRundownFromUrlDialog(QWidget* parent)
     : QDialog(parent), repositoryUrl("")
@@ -84,5 +84,8 @@ QString OpenRundownFromUrlDialog::getPath() const
 
 void OpenRundownFromUrlDialog::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     QDialog::accept();
 }

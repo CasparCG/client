@@ -14,7 +14,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#include <QtGui/QGraphicsOpacityEffect>
+#include <QtWidgets/QGraphicsOpacityEffect>
 
 RundownAtemCutWidget::RundownAtemCutWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                      bool inGroup, bool compactView)
@@ -64,6 +64,8 @@ RundownAtemCutWidget::RundownAtemCutWidget(const LibraryModel& model, QWidget* p
 
 void RundownAtemCutWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -328,11 +330,16 @@ void RundownAtemCutWidget::configureOscSubscriptions()
 
 void RundownAtemCutWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownAtemCutWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -345,6 +352,8 @@ void RundownAtemCutWidget::remoteTriggerIdChanged(const QString& remoteTriggerId
 
 void RundownAtemCutWidget::deviceConnectionStateChanged(AtemDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -358,18 +367,24 @@ void RundownAtemCutWidget::deviceAdded(AtemDevice& device)
 
 void RundownAtemCutWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownAtemCutWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownAtemCutWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

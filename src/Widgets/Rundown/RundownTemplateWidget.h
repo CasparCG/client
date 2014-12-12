@@ -24,9 +24,10 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#include <QtGui/QWidget>
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
+
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplateWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -49,7 +50,7 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 

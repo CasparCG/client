@@ -9,7 +9,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorPerspectiveWidget::InspectorPerspectiveWidget(QWidget* parent)
     : QWidget(parent),

@@ -8,11 +8,12 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCursor>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QResizeEvent>
+
+#include <QtWidgets/QApplication>
 
 InspectorHttpPostWidget::InspectorHttpPostWidget(QWidget* parent)
     : QWidget(parent),
@@ -53,6 +54,8 @@ bool InspectorHttpPostWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorHttpPostWidget::showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent& event)
 {
+    Q_UNUSED(event);
+
     int index = this->treeWidgetHttpData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetHttpData->setCurrentItem(this->treeWidgetHttpData->invisibleRootItem()->child(index));
 
@@ -160,6 +163,8 @@ bool InspectorHttpPostWidget::editRow()
 
         updateHttpDataModels();
     }
+
+    return true;
 }
 
 bool InspectorHttpPostWidget::removeRow()
@@ -218,6 +223,9 @@ bool InspectorHttpPostWidget::pasteSelectedItem()
 
 void InspectorHttpPostWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     editRow();
 }
 
@@ -235,6 +243,8 @@ void InspectorHttpPostWidget::triggerOnNextChanged(int state)
 
 void InspectorHttpPostWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+    Q_UNUSED(previous);
+
     if (current == NULL)
         return;
 

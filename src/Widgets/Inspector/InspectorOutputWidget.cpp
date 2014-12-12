@@ -43,6 +43,7 @@
 #include "Commands/RouteChannelCommand.h"
 #include "Commands/RouteVideolayerCommand.h"
 #include "Commands/Panasonic/PanasonicPresetCommand.h"
+#include "Commands/Sony/SonyPresetCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -62,8 +63,8 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/VideolayerChangedEvent.h"
 
-#include <QtGui/QApplication>
-#include <QtGui/QLineEdit>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QLineEdit>
 
 InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
     : QWidget(parent),
@@ -217,6 +218,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<OscOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<HttpGetCommand*>(event.getCommand()) ||
                  dynamic_cast<HttpPostCommand*>(event.getCommand()) ||
+                 dynamic_cast<SonyPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PanasonicPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {
@@ -417,6 +419,8 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
 
 void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     blockAllSignals(true);
 
     this->model = NULL;
@@ -484,6 +488,8 @@ void InspectorOutputWidget::deviceChanged(const DeviceChangedEvent& event)
 
 void InspectorOutputWidget::mediaChanged(const MediaChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->model == NULL)
         return;
 
@@ -496,6 +502,8 @@ void InspectorOutputWidget::mediaChanged(const MediaChangedEvent& event)
 
 void InspectorOutputWidget::templateChanged(const TemplateChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->model == NULL)
         return;
 
@@ -682,6 +690,8 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
 
 void InspectorOutputWidget::targetChanged(QString name)
 {
+    Q_UNUSED(name);
+
     checkEmptyTarget();
 
     EventManager::getInstance().fireTargetChangedEvent(TargetChangedEvent(this->comboBoxTarget->currentText()));
@@ -756,6 +766,8 @@ void InspectorOutputWidget::tricasterDeviceAdded(TriCasterDevice& device)
 
 void InspectorOutputWidget::tricasterDeviceNameChanged(QString deviceName)
 {
+    Q_UNUSED(deviceName);
+
     checkEmptyDevice();
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();
@@ -789,6 +801,8 @@ void InspectorOutputWidget::atemDeviceAdded(AtemDevice& device)
 
 void InspectorOutputWidget::atemDeviceNameChanged(QString deviceName)
 {
+    Q_UNUSED(deviceName);
+
     checkEmptyDevice();
     checkEmptyAtemDevice();
     checkEmptyTriCasterDevice();

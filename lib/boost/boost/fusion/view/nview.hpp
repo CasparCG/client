@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2006 Dan Marsden
     Copyright (c) 2009 Hartmut Kaiser
 
@@ -9,6 +9,7 @@
 #if !defined(FUSION_NVIEW_SEP_23_2009_1107PM)
 #define FUSION_NVIEW_SEP_23_2009_1107PM
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/view/nview/nview.hpp>
 #include <boost/fusion/view/nview/nview_iterator.hpp>
 

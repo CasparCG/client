@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,15 +20,16 @@ namespace boost { namespace fusion
         template <typename Tag, typename Sequence>
         struct convert
         {
-            typedef typename extension::convert_impl<Tag> gen;
-
             typedef typename
-                gen::template apply<Sequence>::type
-            type;
+                extension::convert_impl<Tag>::template apply<Sequence>
+            gen;
+
+            typedef typename gen::type type;
         };
     }
 
     template <typename Tag, typename Sequence>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::convert<Tag, Sequence>::type
     convert(Sequence& seq)
     {
@@ -37,6 +38,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Tag, typename Sequence>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::convert<Tag, Sequence const>::type
     convert(Sequence const& seq)
     {

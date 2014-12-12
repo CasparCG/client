@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorMacroWidget::InspectorMacroWidget(QWidget* parent)
     : QWidget(parent),

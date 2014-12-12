@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemKeyerModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemKeyerStateWidget::InspectorAtemKeyerStateWidget(QWidget* parent)
     : QWidget(parent),

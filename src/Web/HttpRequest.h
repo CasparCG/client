@@ -5,6 +5,7 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QUrlQuery>
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
@@ -16,8 +17,8 @@ class WEB_EXPORT HttpRequest : public QObject
     public:
         explicit HttpRequest(QObject* parent = 0);
 
-        void sendGet(const QString& url, const QUrl& data);
-        void sendPost(const QString& url, const QUrl& data);
+        void sendGet(const QString& url, const QUrlQuery& query);
+        void sendPost(const QString& url, const QUrlQuery& query);
 
     private:
         QNetworkAccessManager* networkManager;

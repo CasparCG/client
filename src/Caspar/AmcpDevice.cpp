@@ -5,6 +5,8 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTimer>
 
+#include <QtNetwork/QTcpSocket>
+
 AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
       command(AmcpDevice::NONE), port(port), state(AmcpDevice::ExpectingHeader), connected(false), address(address), disableCommands(false)

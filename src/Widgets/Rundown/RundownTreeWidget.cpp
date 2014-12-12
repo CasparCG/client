@@ -49,18 +49,19 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QCryptographicHash>
 
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
-#include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QTreeWidgetItem>
+
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QTreeWidgetItem>
 
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
-      activeRundown(Rundown::DEFAULT_NAME), active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false),
-      previewOnAutoStep(false), clearDelayedCommands(false), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
+      active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false), previewOnAutoStep(false),
+      clearDelayedCommands(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
       upControlSubscription(NULL), downControlSubscription(NULL), playAndAutoStepControlSubscription(NULL), playNowAndAutoStepControlSubscription(NULL),
       playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -182,7 +183,13 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuPanasonic->setObjectName("contextMenuPanasonic");
     this->contextMenuPanasonic->setTitle("Panasonic");
     //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Panasonic.png"));
-    this->contextMenuPanasonic->addAction(QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"), "Camera Preset", this, SLOT(addPanasonicPresetItem()));
+    this->contextMenuPanasonic->addAction(QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"), "Panasonic PTZ Preset", this, SLOT(addPanasonicPresetItem()));
+
+    this->contextMenuSony = new QMenu(this);
+    this->contextMenuSony->setObjectName("contextMenuSony");
+    this->contextMenuSony->setTitle("Sony");
+    //this->contextMenuSony->setIcon(QIcon(":/Graphics/Images/Sony.png"));
+    this->contextMenuSony->addAction(QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"), "Camera Preset", this, SLOT(addSonyPresetItem()));
 
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
@@ -279,6 +286,8 @@ void RundownTreeWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& 
 
 void RundownTreeWidget::saveAsPreset(const SaveAsPresetEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -297,6 +306,8 @@ void RundownTreeWidget::pasteItemProperties()
 
 void RundownTreeWidget::copyItemProperties(const CopyItemPropertiesEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -308,6 +319,8 @@ void RundownTreeWidget::copyItemProperties(const CopyItemPropertiesEvent& event)
 
 void RundownTreeWidget::pasteItemProperties(const PasteItemPropertiesEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -353,6 +366,8 @@ void RundownTreeWidget::addPresetItem(const AddPresetItemEvent& event)
 
 void RundownTreeWidget::toggleCompactView(const CompactViewEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -654,12 +669,16 @@ void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& devic
 
 void RundownTreeWidget::repositoryChanged(const RepositoryChangeModel& model, RepositoryDevice& device)
 {
+    Q_UNUSED(device);
+
     this->treeWidgetRundown->addRepositoryChange(model);
     this->treeWidgetRundown->applyRepositoryChanges();
 }
 
 void RundownTreeWidget::insertRepositoryChanges(const InsertRepositoryChangesEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -783,6 +802,8 @@ void RundownTreeWidget::colorizeItems(const QString& color)
 
 void RundownTreeWidget::gpiPortTriggered(int gpiPort, GpiDevice* device)
 {
+    Q_UNUSED(device);
+
     executeCommand(gpiBindings[gpiPort], Action::ActionType::GpiPulse);
 }
 
@@ -875,6 +896,7 @@ void RundownTreeWidget::customContextMenuRequested(const QPoint& point)
 
 void RundownTreeWidget::contextMenuNewTriggered(QAction* action)
 {
+    Q_UNUSED(action);
 }
 
 QString RundownTreeWidget::colorLookup(const QString& color, bool reverse) const
@@ -953,8 +975,11 @@ void RundownTreeWidget::itemSelectionChanged()
     EventManager::getInstance().fireSaveAsPresetMenuEvent(SaveAsPresetMenuEvent(true));
 }
 
-void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int i)
+void RundownTreeWidget::itemClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     if (this->treeWidgetRundown->currentItem() == NULL)
         return;
 
@@ -1018,6 +1043,8 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
 
 void RundownTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int index)
 {
+    Q_UNUSED(index);
+
     QWidget* selectedWidget = this->treeWidgetRundown->itemWidget(this->treeWidgetRundown->currentItem(), 0);
     AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 
@@ -1542,6 +1569,11 @@ void RundownTreeWidget::addPanasonicPresetItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PANASONICPRESET);
 }
 
+void RundownTreeWidget::addSonyPresetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SONYPRESET);
+}
+
 void RundownTreeWidget::saveAsPreset()
 {
     if (!copySelectedItems())
@@ -1709,6 +1741,8 @@ void RundownTreeWidget::configureOscSubscriptions()
 
 void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1722,6 +1756,8 @@ void RundownTreeWidget::upControlSubscriptionReceived(const QString& predicate, 
 
 void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1735,6 +1771,8 @@ void RundownTreeWidget::downControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::playAndAutoStepControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1753,6 +1791,8 @@ void RundownTreeWidget::playAndAutoStepControlSubscriptionReceived(const QString
 
 void RundownTreeWidget::playNowAndAutoStepControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1768,6 +1808,8 @@ void RundownTreeWidget::playNowAndAutoStepControlSubscriptionReceived(const QStr
 
 void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1818,6 +1860,8 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
 
 void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1830,6 +1874,8 @@ void RundownTreeWidget::stopControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1842,6 +1888,8 @@ void RundownTreeWidget::playControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1854,6 +1902,8 @@ void RundownTreeWidget::playNowControlSubscriptionReceived(const QString& predic
 
 void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1866,6 +1916,8 @@ void RundownTreeWidget::loadControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1878,6 +1930,8 @@ void RundownTreeWidget::pauseControlSubscriptionReceived(const QString& predicat
 
 void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1890,6 +1944,8 @@ void RundownTreeWidget::nextControlSubscriptionReceived(const QString& predicate
 
 void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1902,6 +1958,8 @@ void RundownTreeWidget::updateControlSubscriptionReceived(const QString& predica
 
 void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1914,6 +1972,8 @@ void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predica
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1926,6 +1986,8 @@ void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicat
 
 void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 
@@ -1938,6 +2000,8 @@ void RundownTreeWidget::clearVideolayerControlSubscriptionReceived(const QString
 
 void RundownTreeWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (!this->active)
         return;
 

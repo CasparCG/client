@@ -48,10 +48,12 @@ struct convert_to_internal_row
 };
 // explicit + fork + entry point + exit point grammar
 struct BuildEntry
-    : proto::when<
+    : proto::or_<
+        proto::when<
                     proto::function<proto::terminal<proto::_>,proto::terminal<state_tag>,proto::terminal<state_tag> >,
-                    get_fct<proto::_child_c<0>,proto::_child_c<1>,proto::_child_c<2> >()
+                    get_fct<proto::_child_c<0>,get_state_name<proto::_child_c<1>() >(),get_state_name<proto::_child_c<2>() >() >()
         >
+    >
 {};
 
 // row grammar
@@ -59,7 +61,7 @@ struct BuildNextStates
    : proto::or_<
         proto::when<
                     proto::terminal<state_tag>,
-                    proto::_
+                    get_state_name<proto::_>()
         >,
         proto::when<
                       BuildEntry,
@@ -118,7 +120,7 @@ struct BuildSourceState
    : proto::or_<
         proto::when<
                     proto::terminal<state_tag>,
-                    proto::_
+                    get_state_name<proto::_>()
         >,
         proto::when<
                     BuildEntry,
@@ -237,7 +239,7 @@ typename ::boost::mpl::eval_if<
     typename proto::matches<Expr,BuildStt>::type,
     boost::result_of<BuildStt(Expr)>,
     make_invalid_type>::type
-build_stt(Expr const& expr)
+build_stt(Expr const&)
 {
     return typename boost::result_of<BuildStt(Expr)>::type();
 }
@@ -268,7 +270,7 @@ typename ::boost::mpl::eval_if<
     typename proto::matches<Expr,BuildInternalStt>::type,
     boost::result_of<BuildInternalStt(Expr)>,
     make_invalid_type>::type
-build_internal_stt(Expr const& expr)
+build_internal_stt(Expr const&)
 {
     return typename boost::result_of<BuildInternalStt(Expr)>::type();
 }

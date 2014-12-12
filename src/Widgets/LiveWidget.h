@@ -8,9 +8,9 @@
 
 #include <vlc/vlc.h>
 
-#include <QtGui/QAction>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
 {
@@ -49,8 +49,8 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         void setupAudioTrackMenu();
         void setupStreamMenu();
         void setupRenderTarget(bool windowMode);
-        void startStream(const QString& deviceName, const QString& deviceChannel);
-        void stopStream(const QString& deviceName, const QString& deviceChannel);
+        void startStream();
+        void stopStream();
 
         Q_SLOT void toggleWindowMode();
         Q_SLOT void disconnectStream();

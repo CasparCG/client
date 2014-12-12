@@ -4,7 +4,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 Q_GLOBAL_STATIC(GpiManager, gpiManager)
 

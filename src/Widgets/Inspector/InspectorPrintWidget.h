@@ -11,7 +11,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT InspectorPrintWidget : public QWidget, Ui::InspectorPrintWidget
 {

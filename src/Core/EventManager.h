@@ -75,8 +75,8 @@
 
 #include <QtCore/QObject>
 
-#include <QtGui/QWidget>
-#include <QtGui/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidgetItem>
 
 class CORE_EXPORT EventManager : public QObject
 {

@@ -2,7 +2,7 @@
 // detail/reactive_socket_accept_op.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2011 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
-#include <boost/utility/addressof.hpp>
+#include <boost/asio/detail/addressof.hpp>
 #include <boost/asio/detail/bind_handler.hpp>
 #include <boost/asio/detail/buffer_sequence_adapter.hpp>
 #include <boost/asio/detail/fenced_block.hpp>
@@ -58,7 +58,7 @@ public:
           o->peer_endpoint_ ? &addrlen : 0, o->ec_, new_socket);
 
     // On success, assign new connection to peer socket object.
-    if (new_socket >= 0)
+    if (new_socket != invalid_socket)
     {
       socket_holder new_socket_holder(new_socket);
       if (o->peer_endpoint_)
@@ -95,11 +95,12 @@ public:
   }
 
   static void do_complete(io_service_impl* owner, operation* base,
-      boost::system::error_code /*ec*/, std::size_t /*bytes_transferred*/)
+      const boost::system::error_code& /*ec*/,
+      std::size_t /*bytes_transferred*/)
   {
     // Take ownership of the handler object.
     reactive_socket_accept_op* o(static_cast<reactive_socket_accept_op*>(base));
-    ptr p = { boost::addressof(o->handler_), o, o };
+    ptr p = { boost::asio::detail::addressof(o->handler_), o, o };
 
     BOOST_ASIO_HANDLER_COMPLETION((o));
 
@@ -111,13 +112,13 @@ public:
     // deallocated the memory here.
     detail::binder1<Handler, boost::system::error_code>
       handler(o->handler_, o->ec_);
-    p.h = boost::addressof(handler.handler_);
+    p.h = boost::asio::detail::addressof(handler.handler_);
     p.reset();
 
     // Make the upcall if required.
     if (owner)
     {
-      boost::asio::detail::fenced_block b;
+      fenced_block b(fenced_block::half);
       BOOST_ASIO_HANDLER_INVOCATION_BEGIN((handler.arg1_));
       boost_asio_handler_invoke_helpers::invoke(handler, handler.handler_);
       BOOST_ASIO_HANDLER_INVOCATION_END;

@@ -4,9 +4,10 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 OscOutputDialog::OscOutputDialog(QWidget* parent)
     : QDialog(parent),
@@ -121,6 +122,8 @@ void OscOutputDialog::accept()
 
 void OscOutputDialog::nameChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditDeviceName->text().isEmpty())
         this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
@@ -129,6 +132,8 @@ void OscOutputDialog::nameChanged(QString name)
 
 void OscOutputDialog::addressChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditAddress->text().isEmpty())
         this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else

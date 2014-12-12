@@ -6,7 +6,7 @@
 
 #include <QtCore/QSharedPointer>
 
-#include <QtGui/QTreeWidgetItem>
+#include <QtWidgets/QTreeWidgetItem>
 
 class CORE_EXPORT RemoveItemFromAutoPlayQueueEvent
 {

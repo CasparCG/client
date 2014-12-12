@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorGridWidget::InspectorGridWidget(QWidget* parent)
     : QWidget(parent), model(NULL), command(NULL)

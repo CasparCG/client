@@ -8,7 +8,7 @@
 #include "Models/Atem/AtemAutoSpeedModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemAutoWidget::InspectorAtemAutoWidget(QWidget* parent)
     : QWidget(parent),
@@ -90,6 +90,8 @@ void InspectorAtemAutoWidget::stepChanged(int index)
 
 void InspectorAtemAutoWidget::speedChanged(int value)
 {
+    Q_UNUSED(value);
+
     this->command->setSpeed(this->spinBoxSpeed->value());
 }
 

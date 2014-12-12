@@ -16,10 +16,11 @@
 
 #include <QtCore/QPoint>
 
-#include <QtGui/QAction>
-#include <QtGui/QMenu>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QWidget>
+
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
 {

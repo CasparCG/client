@@ -1,12 +1,13 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #if !defined(FUSION_ADVANCE_09172005_1146)
 #define FUSION_ADVANCE_09172005_1146
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/detail/advance.hpp>
 #include <boost/fusion/support/category_of.hpp>
 
@@ -18,7 +19,7 @@
 namespace boost { namespace fusion
 {
     struct random_access_traversal_tag;
-        
+
     // Special tags:
     struct iterator_facade_tag; // iterator facade tag
     struct boost_array_iterator_tag; // boost::array iterator tag
@@ -59,7 +60,7 @@ namespace boost { namespace fusion
         template <>
         struct advance_impl<std_pair_iterator_tag>;
     }
-    
+
     namespace result_of
     {
         template <typename Iterator, int N>
@@ -74,6 +75,7 @@ namespace boost { namespace fusion
     }
 
     template <int N, typename Iterator>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::advance_c<Iterator, N>::type const
     advance_c(Iterator const& i)
     {
@@ -81,6 +83,7 @@ namespace boost { namespace fusion
     }
 
     template<typename N, typename Iterator>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::advance<Iterator, N>::type const
     advance(Iterator const& i)
     {

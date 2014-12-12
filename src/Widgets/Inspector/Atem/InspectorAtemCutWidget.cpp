@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemStepModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemCutWidget::InspectorAtemCutWidget(QWidget* parent)
     : QWidget(parent),

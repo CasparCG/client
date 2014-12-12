@@ -7,7 +7,7 @@
 #include "Models/TriCaster/TriCasterSwitcherModel.h"
 #include "Models/TriCaster/TriCasterInputModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorInputWidget::InspectorInputWidget(QWidget* parent)
     : QWidget(parent),

@@ -13,11 +13,12 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
-#include <QtGui/QApplication>
 #include <QtGui/QIcon>
-#include <QtGui/QFileDialog>
-#include <QtGui/QMessageBox>
-#include <QtGui/QToolButton>
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolButton>
 
 RundownWidget::RundownWidget(QWidget* parent)
     : QWidget(parent)
@@ -146,6 +147,8 @@ void RundownWidget::openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent& ev
 
 void RundownWidget::newRundown(const NewRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     RundownTreeWidget* widget = new RundownTreeWidget(this);
     int index = this->tabWidgetRundown->addTab(widget/*, QIcon(":/Graphics/Images/TabSplitter.png")*/, Rundown::DEFAULT_NAME);
     this->tabWidgetRundown->setCurrentIndex(index);
@@ -181,6 +184,8 @@ void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)
 
 void RundownWidget::closeRundown(const CloseRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->tabWidgetRundown->count() > 1)
         EventManager::getInstance().fireDeleteRundownEvent(DeleteRundownEvent(this->tabWidgetRundown->currentIndex()));
 }
@@ -284,26 +289,36 @@ void RundownWidget::openRundownFromUrl(const OpenRundownFromUrlEvent& event)
 
 void RundownWidget::markItemAsUsed(const MarkItemAsUsedEvent& event)
 {
+    Q_UNUSED(event);
+
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(true);
 }
 
 void RundownWidget::markItemAsUnused(const MarkItemAsUnusedEvent& event)
 {
+    Q_UNUSED(event);
+
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setUsed(false);
 }
 
 void RundownWidget::markAllItemsAsUsed(const MarkAllItemsAsUsedEvent& event)
 {
+    Q_UNUSED(event);
+
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(true);
 }
 
 void RundownWidget::markAllItemsAsUnused(const MarkAllItemsAsUnusedEvent& event)
 {
+    Q_UNUSED(event);
+
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->setAllUsed(false);
 }
 
 void RundownWidget::reloadRundown(const ReloadRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Reloading rundown..."));
 
     dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->currentWidget())->reloadRundown();

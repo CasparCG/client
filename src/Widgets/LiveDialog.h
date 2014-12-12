@@ -5,8 +5,8 @@
 
 #include "Events/ToggleFullscreenEvent.h"
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT LiveDialog : public QDialog, Ui::LiveDialog
 {

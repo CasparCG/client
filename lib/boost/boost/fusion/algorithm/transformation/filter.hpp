@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2005-2006 Dan Marsden
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -8,6 +8,7 @@
 #if !defined(FUSION_FILTER_02122005_1839)
 #define FUSION_FILTER_02122005_1839
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/view/filter_view/filter_view.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -23,6 +24,7 @@ namespace boost { namespace fusion
     }
     
     template <typename T, typename Sequence>
+    BOOST_FUSION_GPU_ENABLED
     inline typename result_of::filter<Sequence const, T>::type
     filter(Sequence const& seq)
     {

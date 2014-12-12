@@ -5,8 +5,8 @@
 
 #include <QtCore/QEvent>
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT KeyValueDialog : public QDialog, Ui::KeyValueDialog
 {

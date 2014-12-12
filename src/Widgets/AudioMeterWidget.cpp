@@ -52,15 +52,20 @@ void AudioMeterWidget::deviceChanged(const DeviceChangedEvent& event)
 
 void AudioMeterWidget::channelChanged(const ChannelChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     configureOscSubscriptions();
 }
 
 void AudioMeterWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->audioSubscription != NULL)
         this->audioSubscription->disconnect(); // Disconnect all events.
 
-    this->model == NULL;
+    this->model = NULL;
+
     this->progressBarAudioMeter->setValue(-61);
     this->progressBarAudioMeter->update();
 }
@@ -95,6 +100,8 @@ void AudioMeterWidget::configureOscSubscriptions()
 
 void AudioMeterWidget::audioSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     //qDebug() << predicate << " " << arguments;
 
     int value = arguments.at(0).toInt();

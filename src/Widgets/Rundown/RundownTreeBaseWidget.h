@@ -24,12 +24,10 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPixmap>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
 
-typedef QPair<QRect, QModelIndex> QItemViewPaintPair;
-typedef QList<QItemViewPaintPair> QItemViewPaintPairs;
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
 {
@@ -52,7 +50,6 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool pasteItemProperties();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
-        bool copyItemProperties() const;
         bool hasItemBelow() const;
 
         void moveItemUp();
@@ -68,6 +65,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void checkEmptyRundown();
         void checRepositoryChanges();
         void applyRepositoryChanges();
+        void copyItemProperties() const;
         void addRepositoryChange(const RepositoryChangeModel& model);
         void setExpanded(bool expanded);
 

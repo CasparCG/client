@@ -118,6 +118,8 @@ void DeviceFilterWidget::deviceAdded(CasparDevice& device)
 
 void DeviceFilterWidget::dataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
+    Q_UNUSED(bottomRight);
+
     blockAllSignals(true);
 
     // "All" item is selected, deselect others.

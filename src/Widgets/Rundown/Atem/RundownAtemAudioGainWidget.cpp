@@ -14,7 +14,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
 
-#include <QtGui/QGraphicsOpacityEffect>
+#include <QtWidgets/QGraphicsOpacityEffect>
 
 RundownAtemAudioGainWidget::RundownAtemAudioGainWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                                        bool inGroup, bool compactView)
@@ -64,6 +64,8 @@ RundownAtemAudioGainWidget::RundownAtemAudioGainWidget(const LibraryModel& model
 
 void RundownAtemAudioGainWidget::preview(const PreviewEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -329,11 +331,16 @@ void RundownAtemAudioGainWidget::configureOscSubscriptions()
 
 void RundownAtemAudioGainWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownAtemAudioGainWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -346,6 +353,8 @@ void RundownAtemAudioGainWidget::remoteTriggerIdChanged(const QString& remoteTri
 
 void RundownAtemAudioGainWidget::deviceConnectionStateChanged(AtemDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -359,18 +368,24 @@ void RundownAtemAudioGainWidget::deviceAdded(AtemDevice& device)
 
 void RundownAtemAudioGainWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownAtemAudioGainWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownAtemAudioGainWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

@@ -15,16 +15,17 @@
 #include <QtCore/QFileInfo>
 
 #include <QtGui/QPixmap>
-#include <QtGui/QGraphicsOpacityEffect>
+
+#include <QtWidgets/QGraphicsOpacityEffect>
 
 RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
-      fileModel(NULL), timeSubscription(NULL), frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL),
-      loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL),
-      pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL),
-      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false)
+      reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false), fileModel(NULL), timeSubscription(NULL),
+      frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL), loopSubscription(NULL), stopControlSubscription(NULL),
+      playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL),
+      updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -91,6 +92,8 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
 
 void RundownMovieWidget::videolayerChanged(const VideolayerChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     if (!this->active)
         return;
 
@@ -99,6 +102,8 @@ void RundownMovieWidget::videolayerChanged(const VideolayerChangedEvent& event)
 
 void RundownMovieWidget::channelChanged(const ChannelChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // This event is not for us.
     if (!this->active)
         return;
@@ -261,7 +266,7 @@ void RundownMovieWidget::setThumbnail()
     */
 
     QImage image;
-    image.loadFromData(QByteArray::fromBase64(data.toAscii()), "PNG");
+    image.loadFromData(QByteArray::fromBase64(data.toLatin1()), "PNG");
     this->labelThumbnail->setPixmap(QPixmap::fromImage(image));
 
     bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
@@ -992,6 +997,8 @@ void RundownMovieWidget::delayChanged(int delay)
 
 void RundownMovieWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
@@ -1002,6 +1009,9 @@ void RundownMovieWidget::loopChanged(bool loop)
 
 void RundownMovieWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -1014,6 +1024,8 @@ void RundownMovieWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 
 void RundownMovieWidget::deviceConnectionStateChanged(CasparDevice& device)
 {
+    Q_UNUSED(device);
+
     checkDeviceConnection();
 }
 
@@ -1028,6 +1040,8 @@ void RundownMovieWidget::deviceAdded(CasparDevice& device)
 
 void RundownMovieWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     //qDebug() << predicate << " " << arguments;
 
     if (this->fileModel != NULL)
@@ -1043,6 +1057,8 @@ void RundownMovieWidget::timeSubscriptionReceived(const QString& predicate, cons
 
 void RundownMovieWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     //qDebug() << predicate << " " << arguments;
 
     if (this->fileModel == NULL)
@@ -1054,6 +1070,8 @@ void RundownMovieWidget::frameSubscriptionReceived(const QString& predicate, con
 
 void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     //qDebug() << predicate << " " << arguments;
 
     if (this->fileModel == NULL)
@@ -1064,6 +1082,8 @@ void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const
 
 void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     //qDebug() << predicate << " " << arguments << "\n";
 
     QString name = arguments.at(0).toString();
@@ -1106,11 +1126,15 @@ void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, cons
 
 void RundownMovieWidget::pausedSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     this->widgetOscTime->setPaused(arguments.at(0).toBool());
 }
 
 void RundownMovieWidget::loopSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     this->widgetOscTime->setLoop(arguments.at(0).toBool());
 }
 
@@ -1121,66 +1145,88 @@ void RundownMovieWidget::autoPlayChanged(bool autoPlay)
 
 void RundownMovieWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownMovieWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownMovieWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownMovieWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Load);
 }
 
 void RundownMovieWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownMovieWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Next);
 }
 
 void RundownMovieWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownMovieWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Preview);
 }
 
 void RundownMovieWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownMovieWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownMovieWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

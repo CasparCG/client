@@ -4,8 +4,9 @@
 
 #include <QtCore/QObject>
 
-#include <QtGui/QComboBox>
 #include <QtGui/QMouseEvent>
+
+#include <QtWidgets/QComboBox>
 
 class WIDGETS_EXPORT TargetComboBaseWidget : public QComboBox
 {

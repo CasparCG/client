@@ -26,6 +26,8 @@ const QString PresetDialog::getName() const
 
 void PresetDialog::nameChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditName->text().isEmpty())
         this->lineEditName->setStyleSheet("border-color: firebrick;");
     else

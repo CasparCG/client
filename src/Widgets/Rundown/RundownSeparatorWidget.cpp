@@ -5,8 +5,9 @@
 
 #include "EventManager.h"
 
-#include <QtGui/QApplication>
 #include <QtCore/QObject>
+
+#include <QtWidgets/QApplication>
 
 RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                bool active, bool inGroup, bool compactView)
@@ -129,6 +130,8 @@ void RundownSeparatorWidget::setInGroup(bool inGroup)
 
 bool RundownSeparatorWidget::executeCommand(Playout::PlayoutType::Type type)
 {
+    Q_UNUSED(type);
+
     if (this->active)
         this->animation->start(1);
 

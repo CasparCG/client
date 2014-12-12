@@ -4,9 +4,10 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 DeviceDialog::DeviceDialog(QWidget* parent)
     : QDialog(parent),
@@ -157,6 +158,8 @@ void DeviceDialog::testConnection()
 
 void DeviceDialog::nameChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditDeviceName->text().isEmpty())
         this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
@@ -165,6 +168,8 @@ void DeviceDialog::nameChanged(QString name)
 
 void DeviceDialog::addressChanged(QString name)
 {
+    Q_UNUSED(name);
+
     if (this->lineEditAddress->text().isEmpty())
         this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else

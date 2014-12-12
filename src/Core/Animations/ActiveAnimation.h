@@ -5,7 +5,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QPropertyAnimation>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class CORE_EXPORT ActiveAnimation : public QObject
 {

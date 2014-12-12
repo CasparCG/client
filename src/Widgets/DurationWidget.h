@@ -10,7 +10,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QDateTime>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT DurationWidget : public QWidget, Ui::DurationWidget
 {

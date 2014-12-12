@@ -4,7 +4,7 @@
 
 #include <QtCore/QSharedPointer>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class CORE_EXPORT AutoPlayRundownItemEvent
 {

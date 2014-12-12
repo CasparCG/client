@@ -4,9 +4,10 @@
 #include "ui_SettingsDialog.h"
 
 #include "Global.h"
+#include "Playout.h"
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
 {

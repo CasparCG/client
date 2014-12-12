@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,16 +9,19 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_SELF_TURN_POINTS_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_SELF_TURN_POINTS_HPP
 
+
 #include <cstddef>
 
 #include <boost/range.hpp>
 
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
+#include <boost/geometry/core/tags.hpp>
 
 #include <boost/geometry/geometries/concepts/check.hpp>
 
-#include <boost/geometry/algorithms/detail/disjoint.hpp>
+#include <boost/geometry/algorithms/detail/disjoint/box_box.hpp>
+#include <boost/geometry/algorithms/detail/partition.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
 
 #include <boost/geometry/geometries/box.hpp>
@@ -31,63 +34,123 @@ namespace boost { namespace geometry
 namespace detail { namespace self_get_turn_points
 {
 
+struct no_interrupt_policy
+{
+    static bool const enabled = false;
+    static bool const has_intersections = false;
+
+
+    template <typename Range>
+    static inline bool apply(Range const&)
+    {
+        return false;
+    }
+};
+
+
+
+
+class self_ip_exception : public geometry::exception {};
+
 template
 <
     typename Geometry,
     typename Turns,
     typename TurnPolicy,
+    typename RobustPolicy,
     typename InterruptPolicy
 >
+struct self_section_visitor
+{
+    Geometry const& m_geometry;
+    RobustPolicy const& m_rescale_policy;
+    Turns& m_turns;
+    InterruptPolicy& m_interrupt_policy;
+
+    inline self_section_visitor(Geometry const& g,
+            RobustPolicy const& rp,
+            Turns& turns, InterruptPolicy& ip)
+        : m_geometry(g)
+        , m_rescale_policy(rp)
+        , m_turns(turns)
+        , m_interrupt_policy(ip)
+    {}
+
+    template <typename Section>
+    inline bool apply(Section const& sec1, Section const& sec2)
+    {
+        if (! detail::disjoint::disjoint_box_box(sec1.bounding_box, sec2.bounding_box)
+                && ! sec1.duplicate
+                && ! sec2.duplicate)
+        {
+            detail::get_turns::get_turns_in_sections
+                    <
+                        Geometry, Geometry,
+                        false, false,
+                        Section, Section,
+                        TurnPolicy
+                    >::apply(
+                            0, m_geometry, sec1,
+                            0, m_geometry, sec2,
+                            false,
+                            m_rescale_policy,
+                            m_turns, m_interrupt_policy);
+        }
+        if (m_interrupt_policy.has_intersections)
+        {
+            // TODO: we should give partition an interrupt policy.
+            // Now we throw, and catch below, to stop the partition loop.
+            throw self_ip_exception();
+        }
+        return true;
+    }
+
+};
+
+
+
+template<typename TurnPolicy>
 struct get_turns
 {
+    template <typename Geometry, typename RobustPolicy, typename Turns, typename InterruptPolicy>
     static inline bool apply(
             Geometry const& geometry,
+            RobustPolicy const& robust_policy,
             Turns& turns,
             InterruptPolicy& interrupt_policy)
     {
+        typedef model::box
+            <
+                typename geometry::point_type<Geometry>::type
+            > box_type;
         typedef typename geometry::sections
             <
-                model::box <typename geometry::point_type<Geometry>::type>,
-                1
+                box_type, 1
             > sections_type;
 
         sections_type sec;
-        geometry::sectionalize<false>(geometry, sec);
+        geometry::sectionalize<false>(geometry, robust_policy, false, sec);
 
-        for (typename boost::range_iterator<sections_type const>::type
-                    it1 = sec.begin();
-            it1 != sec.end();
-            ++it1)
+        self_section_visitor
+            <
+                Geometry,
+                Turns, TurnPolicy, RobustPolicy, InterruptPolicy
+            > visitor(geometry, robust_policy, turns, interrupt_policy);
+
+        try
         {
-            for (typename boost::range_iterator<sections_type const>::type
-                        it2 = sec.begin();
-                it2 != sec.end();
-                ++it2)
-            {
-                if (! geometry::detail::disjoint::disjoint_box_box(
-                                it1->bounding_box, it2->bounding_box)
-                    && ! it1->duplicate
-                    && ! it2->duplicate
-                    )
-                {
-                    if (! geometry::detail::get_turns::get_turns_in_sections
-                        <
-                            Geometry, Geometry,
-                            false, false,
-                            typename boost::range_value<sections_type>::type,
-                            typename boost::range_value<sections_type>::type,
-                            Turns, TurnPolicy,
-                            InterruptPolicy
-                        >::apply(
-                                0, geometry, *it1,
-                                0, geometry, *it2,
-                                turns, interrupt_policy))
-                    {
-                        return false;
-                    }
-                }
-            }
+            geometry::partition
+                <
+                    box_type,
+                    detail::get_turns::get_section_box,
+                    detail::get_turns::ovelaps_section_box
+                >::apply(sec, visitor);
         }
+        catch(self_ip_exception const& )
+        {
+            return false;
+        }
+
         return true;
     }
 };
@@ -105,9 +168,7 @@ template
 <
     typename GeometryTag,
     typename Geometry,
-    typename Turns,
-    typename TurnPolicy,
-    typename InterruptPolicy
+    typename TurnPolicy
 >
 struct self_get_turn_points
 {
@@ -117,44 +178,32 @@ struct self_get_turn_points
 template
 <
     typename Ring,
-    typename Turns,
-    typename TurnPolicy,
-    typename InterruptPolicy
+    typename TurnPolicy
 >
 struct self_get_turn_points
     <
         ring_tag, Ring,
-        Turns,
-        TurnPolicy,
-        InterruptPolicy
+        TurnPolicy
     >
-    : detail::self_get_turn_points::get_turns
-        <
-            Ring,
-            Turns,
-            TurnPolicy,
-            InterruptPolicy
-        >
+    : detail::self_get_turn_points::get_turns<TurnPolicy>
 {};
 
 
 template
 <
     typename Box,
-    typename Turns,
-    typename TurnPolicy,
-    typename InterruptPolicy
+    typename TurnPolicy
 >
 struct self_get_turn_points
     <
         box_tag, Box,
-        Turns,
-        TurnPolicy,
-        InterruptPolicy
+        TurnPolicy
     >
 {
+    template <typename RobustPolicy, typename Turns, typename InterruptPolicy>
     static inline bool apply(
             Box const& ,
+            RobustPolicy const& ,
             Turns& ,
             InterruptPolicy& )
     {
@@ -166,24 +215,28 @@ struct self_get_turn_points
 template
 <
     typename Polygon,
-    typename Turns,
-    typename TurnPolicy,
-    typename InterruptPolicy
+    typename TurnPolicy
 >
 struct self_get_turn_points
     <
         polygon_tag, Polygon,
-        Turns,
-        TurnPolicy,
-        InterruptPolicy
+        TurnPolicy
     >
-    : detail::self_get_turn_points::get_turns
-        <
-            Polygon,
-            Turns,
-            TurnPolicy,
-            InterruptPolicy
-        >
+    : detail::self_get_turn_points::get_turns<TurnPolicy>
+{};
+
+
+template
+<
+    typename MultiPolygon,
+    typename TurnPolicy
+>
+struct self_get_turn_points
+    <
+        multi_polygon_tag, MultiPolygon,
+        TurnPolicy
+    >
+    : detail::self_get_turn_points::get_turns<TurnPolicy>
 {};
 
 
@@ -198,6 +251,7 @@ struct self_get_turn_points
     \tparam Turns type of intersection container
                 (e.g. vector of "intersection/turn point"'s)
     \param geometry geometry
+    \param robust_policy policy to handle robustness issues
     \param turns container which will contain intersection points
     \param interrupt_policy policy determining if process is stopped
         when intersection is found
@@ -206,38 +260,24 @@ template
 <
     typename AssignPolicy,
     typename Geometry,
+    typename RobustPolicy,
     typename Turns,
     typename InterruptPolicy
 >
 inline void self_turns(Geometry const& geometry,
+            RobustPolicy const& robust_policy,
             Turns& turns, InterruptPolicy& interrupt_policy)
 {
     concept::check<Geometry const>();
 
-    typedef typename strategy_intersection
-        <
-            typename cs_tag<Geometry>::type,
-            Geometry,
-            Geometry,
-            typename boost::range_value<Turns>::type
-        >::segment_intersection_strategy_type strategy_type;
-
-    typedef detail::overlay::get_turn_info
-                        <
-                            typename point_type<Geometry>::type,
-                            typename point_type<Geometry>::type,
-                            typename boost::range_value<Turns>::type,
-                            detail::overlay::assign_null_policy
-                        > TurnPolicy;
+    typedef detail::overlay::get_turn_info<detail::overlay::assign_null_policy> turn_policy;
 
     dispatch::self_get_turn_points
             <
                 typename tag<Geometry>::type,
                 Geometry,
-                Turns,
-                TurnPolicy,
-                InterruptPolicy
-            >::apply(geometry, turns, interrupt_policy);
+                turn_policy
+            >::apply(geometry, robust_policy, turns, interrupt_policy);
 }
 
 

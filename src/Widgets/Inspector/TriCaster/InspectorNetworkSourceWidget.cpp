@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/TriCaster/TriCasterNetworkTargetModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorNetworkSourceWidget::InspectorNetworkSourceWidget(QWidget* parent)
     : QWidget(parent),

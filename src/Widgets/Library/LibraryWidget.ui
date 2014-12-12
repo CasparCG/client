@@ -23,7 +23,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -50,7 +59,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -244,7 +262,30 @@
          </item>
          <item>
           <property name="text">
-           <string>Panasonic</string>
+           <string>Panasonic PTZ</string>
+          </property>
+          <property name="background">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>45</red>
+             <green>45</green>
+             <blue>45</blue>
+            </color>
+           </brush>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Sony VISCA</string>
           </property>
           <property name="background">
            <brush brushstyle="SolidPattern">
@@ -274,15 +315,24 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Audio</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -355,15 +405,24 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Images</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -436,8 +495,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -447,7 +506,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -523,15 +591,24 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Videos</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -607,15 +684,24 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Stored Data</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -685,8 +771,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>289</width>
-        <height>415</height>
+        <width>98</width>
+        <height>71</height>
        </rect>
       </property>
       <attribute name="label">
@@ -696,7 +782,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -774,6 +869,9 @@
        </property>
        <property name="placeholderText">
         <string>Filter the Library</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

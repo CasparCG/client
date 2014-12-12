@@ -7,7 +7,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemAudioInputModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemAudioInputStateWidget::InspectorAtemAudioInputStateWidget(QWidget* parent)
     : QWidget(parent),

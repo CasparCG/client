@@ -12,9 +12,9 @@
 #include <QtCore/QDebug>
 #include <QtCore/QObject>
 
-#include <QtGui/QApplication>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QGraphicsOpacityEffect>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QGraphicsOpacityEffect>
 
 RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active, bool compactView)
     : QWidget(parent),
@@ -338,16 +338,22 @@ void RundownGroupWidget::configureOscSubscriptions()
 
 void RundownGroupWidget::durationChanged(int duration)
 {
+    Q_UNUSED(duration);
+
     this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)
 {
+    Q_UNUSED(note);
+
     this->labelNoteField->setText(this->command.getNotes());
 }
 
 void RundownGroupWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
@@ -358,6 +364,9 @@ void RundownGroupWidget::autoStepChanged(bool autoStep)
 
 void RundownGroupWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -375,60 +384,80 @@ void RundownGroupWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 
 void RundownGroupWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownGroupWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Play);
 }
 
 void RundownGroupWidget::loadControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Load);
 }
 
 void RundownGroupWidget::pauseControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::PauseResume);
 }
 
 void RundownGroupWidget::invokeControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Invoke);
 }
 
 void RundownGroupWidget::nextControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Next);
 }
 
 void RundownGroupWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Update);
 }
 
 void RundownGroupWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownGroupWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownGroupWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeOscCommand(Playout::PlayoutType::ClearChannel);
 }

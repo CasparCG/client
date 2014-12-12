@@ -5,9 +5,10 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 ImportDeviceDialog::ImportDeviceDialog(QWidget* parent)
     : QDialog(parent)

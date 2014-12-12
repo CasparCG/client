@@ -27,10 +27,11 @@
 #include <QtCore/QTimer>
 #include <QtCore/QRegExp>
 
-#include <QtGui/QComboBox>
-#include <QtGui/QFileDialog>
 #include <QtGui/QIcon>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
@@ -537,6 +538,8 @@ void SettingsDialog::removeOscOutput()
 
 void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     DeviceModel model = DatabaseManager::getInstance().getDeviceByAddress(current->text(3));
 
     DeviceDialog* dialog = new DeviceDialog(this);
@@ -558,6 +561,8 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 
 void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(current->text(3));
 
     TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
@@ -575,6 +580,8 @@ void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, 
 
 void SettingsDialog::atemDeviceItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     AtemDeviceModel model = DatabaseManager::getInstance().getAtemDeviceByAddress(current->text(3));
 
     AtemDeviceDialog* dialog = new AtemDeviceDialog(this);
@@ -592,6 +599,8 @@ void SettingsDialog::atemDeviceItemDoubleClicked(QTreeWidgetItem* current, int i
 
 void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     OscOutputModel model = DatabaseManager::getInstance().getOscOutputByAddress(current->text(3));
 
     OscOutputDialog* dialog = new OscOutputDialog(this);
@@ -806,6 +815,8 @@ void SettingsDialog::serialPortChanged()
 
 void SettingsDialog::baudRateChanged(QString baudRate)
 {
+    Q_UNUSED(baudRate);
+
     updateGpiDevice();
 }
 
@@ -813,7 +824,7 @@ void SettingsDialog::oscPortChanged()
 {
     QString oscPort = this->lineEditOscInputPort->text().trimmed();
     if (oscPort.isEmpty())
-        oscPort = Osc::DEFAULT_PORT;
+        oscPort = QString("%1").arg(Osc::DEFAULT_PORT);
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
 }
@@ -822,7 +833,7 @@ void SettingsDialog::streamPortChanged()
 {
     QString streamPort = this->lineEditStreamPort->text().trimmed();
     if (streamPort.isEmpty())
-        streamPort = Stream::DEFAULT_PORT;
+        streamPort = QString("%1").arg(Stream::DEFAULT_PORT);
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "StreamPort", streamPort));
 }
@@ -831,13 +842,15 @@ void SettingsDialog::repositoryPortChanged()
 {
     QString repositoryPort = this->lineEditRepositoryPort->text().trimmed();
     if (repositoryPort.isEmpty())
-        repositoryPort = Repository::DEFAULT_PORT;
+        repositoryPort = QString("%1").arg(Repository::DEFAULT_PORT);
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "RepositoryPort", repositoryPort));
 }
 
 void SettingsDialog::delayTypeChanged(QString delayType)
 {
+    Q_UNUSED(delayType);
+
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "DelayType", this->comboBoxDelayType->currentText()));
 }
 
@@ -848,11 +861,15 @@ void SettingsDialog::logLevelChanged(int index)
 
 void SettingsDialog::tricasterProductChanged(QString product)
 {
+    Q_UNUSED(product);
+
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "TriCasterProduct", this->comboBoxTriCasterProduct->currentText()));
 }
 
 void SettingsDialog::themeChanged(QString theme)
 {
+    Q_UNUSED(theme);
+
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "Theme", this->comboBoxTheme->currentText()));
 }
 

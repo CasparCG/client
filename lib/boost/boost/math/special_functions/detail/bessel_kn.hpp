@@ -22,6 +22,7 @@ namespace boost { namespace math { namespace detail{
 template <typename T, typename Policy>
 T bessel_kn(int n, T x, const Policy& pol)
 {
+    BOOST_MATH_STD_USING
     T value, current, prev;
 
     using namespace boost::math::tools;
@@ -56,14 +57,25 @@ T bessel_kn(int n, T x, const Policy& pol)
        current = bessel_k1(x, pol);
        int k = 1;
        BOOST_ASSERT(k < n);
+       T scale = 1;
        do
        {
-           value = 2 * k * current / x + prev;
+           T fact = 2 * k / x;
+           if((tools::max_value<T>() - fabs(prev)) / fact < fabs(current))
+           {
+              scale /= current;
+              prev /= current;
+              current = 1;
+           }
+           value = fact * current + prev;
            prev = current;
            current = value;
            ++k;
        }
        while(k < n);
+       if(tools::max_value<T>() * scale < fabs(value))
+          return sign(scale) * sign(value) * policies::raise_overflow_error<T>(function, 0, pol);
+       value /= scale;
     }
     return value;
 }

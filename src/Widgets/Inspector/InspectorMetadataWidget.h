@@ -13,7 +13,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT InspectorMetadataWidget : public QWidget, Ui::InspectorMetadataWidget
 {

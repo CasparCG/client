@@ -38,9 +38,9 @@
 #include <QtCore/QXmlStreamWriter>
 #include <QtCore/QSharedPointer>
 
-#include <QtGui/QMenu>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>
@@ -89,6 +89,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuRundown;
         QMenu* contextMenuAtem;
         QMenu* contextMenuPanasonic;
+        QMenu* contextMenuSony;
 
         QMap<int, Playout::PlayoutType::Type> gpiBindings;
 
@@ -181,6 +182,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addRouteChannelItem();
         Q_SLOT void addRouteVideolayerItem();
         Q_SLOT void addPanasonicPresetItem();
+        Q_SLOT void addSonyPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);

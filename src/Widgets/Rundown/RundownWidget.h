@@ -4,6 +4,7 @@
 #include "ui_RundownWidget.h"
 
 #include "Global.h"
+#include "Playout.h"
 
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
@@ -27,10 +28,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtGui/QAction>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
+
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
 {

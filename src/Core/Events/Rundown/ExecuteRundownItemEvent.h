@@ -3,10 +3,11 @@
 #include "../../Shared.h"
 
 #include "Global.h"
+#include "Playout.h"
 
 #include <QtCore/QString>
 
-#include <QtGui/QTreeWidgetItem>
+#include <QtWidgets/QTreeWidgetItem>
 
 class CORE_EXPORT ExecuteRundownItemEvent
 {

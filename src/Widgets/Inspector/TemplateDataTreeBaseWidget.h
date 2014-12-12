@@ -6,10 +6,11 @@
 
 #include <QtCore/QMimeData>
 
-#include <QtGui/QWidget>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QTreeWidgetItem>
 #include <QtGui/QDragEnterEvent>
+
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QTreeWidgetItem>
 
 class WIDGETS_EXPORT TemplateDataTreeBaseWidget : public QTreeWidget
 {

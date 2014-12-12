@@ -1,8 +1,9 @@
 #include "KeyValueDialog.h"
 
-#include <QtGui/QAbstractButton>
 #include <QtGui/QCloseEvent>
-#include <QtGui/QMessageBox>
+
+#include <QtWidgets/QAbstractButton>
+#include <QtWidgets/QMessageBox>
 
 KeyValueDialog::KeyValueDialog(QWidget* parent)
     : QDialog(parent)

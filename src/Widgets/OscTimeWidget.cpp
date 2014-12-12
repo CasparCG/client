@@ -134,7 +134,7 @@ void OscTimeWidget::setPaused(bool paused)
 
 void OscTimeWidget::setLoop(bool loop)
 {
-    // Indicate loop state.
+    Q_UNUSED(loop);
 }
 
 void OscTimeWidget::checkState()

@@ -12,7 +12,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT InspectorClipWidget : public QWidget, Ui::InspectorClipWidget
 {

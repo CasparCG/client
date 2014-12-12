@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorBrightnessWidget::InspectorBrightnessWidget(QWidget* parent)
     : QWidget(parent),

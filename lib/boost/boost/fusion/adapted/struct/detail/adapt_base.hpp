@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2009 Joel de Guzman
     Copyright (c) 2005-2006 Dan Marsden
-    Copyright (c) 2009-2010 Christopher Schmidt
+    Copyright (c) 2009-2011 Christopher Schmidt
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,6 +10,7 @@
 #ifndef BOOST_FUSION_ADAPTED_STRUCT_DETAIL_ADAPT_BASE_HPP
 #define BOOST_FUSION_ADAPTED_STRUCT_DETAIL_ADAPT_BASE_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/config.hpp>
 #include <boost/fusion/support/tag_of_fwd.hpp>
 
@@ -23,6 +24,7 @@
 #include <boost/preprocessor/seq/seq.hpp>
 #include <boost/preprocessor/tuple/eat.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/arithmetic/dec.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -136,6 +138,7 @@
                 >::type                                                         \
             type;                                                               \
                                                                                 \
+            BOOST_FUSION_GPU_ENABLED                                            \
             static type                                                         \
             call(Seq& seq)                                                      \
             {                                                                   \
@@ -155,6 +158,7 @@
     {                                                                           \
         typedef char const* type;                                               \
                                                                                 \
+        BOOST_FUSION_GPU_ENABLED                                                \
         static type                                                             \
         call()                                                                  \
         {                                                                       \
@@ -185,18 +189,21 @@ namespace boost                                                                 
                                                                                 \
         namespace extension                                                     \
         {                                                                       \
-            BOOST_PP_SEQ_FOR_EACH_I_R(                                          \
-                1,                                                              \
-                BOOST_FUSION_ADAPT_STRUCT_BASE_UNPACK_AND_CALL,                 \
-                (ATTRIBUTES_CALLBACK,TEMPLATE_PARAMS_SEQ,NAME_SEQ),             \
-                ATTRIBUTES_SEQ)                                                 \
+            BOOST_PP_IF(                                                        \
+                BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(ATTRIBUTES_SEQ)),                \
+                BOOST_PP_SEQ_FOR_EACH_I_R,                                      \
+                BOOST_PP_TUPLE_EAT(4))(                                         \
+                    1,                                                          \
+                    BOOST_FUSION_ADAPT_STRUCT_BASE_UNPACK_AND_CALL,             \
+                    (ATTRIBUTES_CALLBACK,TEMPLATE_PARAMS_SEQ,NAME_SEQ),         \
+                    BOOST_PP_SEQ_TAIL(ATTRIBUTES_SEQ))                          \
                                                                                 \
             template<                                                           \
                 BOOST_FUSION_ADAPT_STRUCT_UNPACK_TEMPLATE_PARAMS(               \
                     TEMPLATE_PARAMS_SEQ)                                        \
             >                                                                   \
             struct struct_size<BOOST_FUSION_ADAPT_STRUCT_UNPACK_NAME(NAME_SEQ)> \
-              : mpl::int_<BOOST_PP_SEQ_SIZE(ATTRIBUTES_SEQ)>                    \
+              : mpl::int_<BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(ATTRIBUTES_SEQ))>      \
             {};                                                                 \
                                                                                 \
             template<                                                           \

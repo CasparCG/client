@@ -11,8 +11,8 @@
 
 #include <QtCore/QList>
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT ImportAtemDeviceDialog : public QDialog, Ui::ImportAtemDeviceDialog
 {

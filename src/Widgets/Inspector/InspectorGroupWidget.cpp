@@ -10,7 +10,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
     : QWidget(parent),
@@ -67,6 +67,8 @@ void InspectorGroupWidget::notesChanged()
 
 void InspectorGroupWidget::resetNotes(QString note)
 {
+    Q_UNUSED(note);
+
     this->plainTextEditNotes->setPlainText(Group::DEFAULT_NOTE);
     this->command->setNotes(this->plainTextEditNotes->toPlainText());
 }
@@ -78,6 +80,8 @@ void InspectorGroupWidget::autoStepChanged(int state)
 
 void InspectorGroupWidget::resetAutoStep(QString note)
 {
+    Q_UNUSED(note);
+
     this->checkBoxAutoStep->setChecked(Group::DEFAULT_AUTO_STEP);
     this->command->setAutoStep(this->checkBoxAutoStep->isChecked());
 }

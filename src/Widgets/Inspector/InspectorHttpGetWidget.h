@@ -11,8 +11,8 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT InspectorHttpGetWidget : public QWidget, Ui::InspectorHttpGetWidget
 {

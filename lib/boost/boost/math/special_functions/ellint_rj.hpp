@@ -91,7 +91,7 @@ T ellint_rj_imp(T x, T y, T z, T p, const Policy& pol)
 
        BOOST_ASSERT(pmy >= 0);
 
-       T p = pmy + y;
+       p = pmy + y;
        value = boost::math::ellint_rj(x, y, z, p, pol);
        value *= pmy;
        value -= 3 * boost::math::ellint_rf(x, y, z, pol);
@@ -134,7 +134,7 @@ T ellint_rj_imp(T x, T y, T z, T p, const Policy& pol)
     while(k < policies::get_max_series_iterations<Policy>());
 
     // Check to see if we gave up too soon:
-    policies::check_series_iterations(function, k, pol);
+    policies::check_series_iterations<T>(function, k, pol);
 
     // Taylor series expansion to the 5th order
     EA = X * Y + Y * Z + Z * X;

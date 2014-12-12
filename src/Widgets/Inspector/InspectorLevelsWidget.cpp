@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorLevelsWidget::InspectorLevelsWidget(QWidget* parent)
     : QWidget(parent),

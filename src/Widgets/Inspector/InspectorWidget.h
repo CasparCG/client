@@ -11,7 +11,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT InspectorWidget : public QWidget, Ui::InspectorWidget
 {

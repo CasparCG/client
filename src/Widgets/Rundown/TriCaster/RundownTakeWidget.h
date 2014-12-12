@@ -24,7 +24,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTimer>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -47,7 +47,7 @@ class WIDGETS_EXPORT RundownTakeWidget : public QWidget, Ui::RundownTakeWidget, 
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
-        virtual void setExpanded(bool expanded) {}
+        virtual void setExpanded(bool /* expanded */) {}
 
         virtual bool executeCommand(Playout::PlayoutType::Type type);
 

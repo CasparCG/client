@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2005-2006 Dan Marsden
     Copyright (c) 2010 Christopher Schmidt
 
@@ -10,6 +10,7 @@
 #ifndef BOOST_FUSION_ADAPTED_ADT_HPP
 #define BOOST_FUSION_ADAPTED_ADT_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/adapted/adt/adapt_assoc_adt_named.hpp>
 #include <boost/fusion/adapted/adt/adapt_assoc_adt.hpp>
 #include <boost/fusion/adapted/adt/adapt_adt_named.hpp>

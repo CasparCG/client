@@ -8,8 +8,9 @@
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QWidget>
-#include <QtGui/QTreeWidget>
+
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidget>
 
 class WIDGETS_EXPORT PresetTreeBaseWidget : public QTreeWidget
 {

@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemVideoFormatModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemVideoFormatWidget::InspectorAtemVideoFormatWidget(QWidget* parent)
     : QWidget(parent),

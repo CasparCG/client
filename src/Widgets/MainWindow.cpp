@@ -29,12 +29,12 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopServices>
 #include <QtGui/QIcon>
-#include <QtGui/QMessageBox>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QToolButton>
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolButton>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
@@ -169,6 +169,8 @@ void MainWindow::reloadRundownMenu(const ReloadRundownMenuEvent& event)
 
 void MainWindow::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     this->saveAsPresetAction->setEnabled(false);
 }
 

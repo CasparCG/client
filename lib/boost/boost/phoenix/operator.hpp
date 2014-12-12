@@ -12,11 +12,12 @@
 #include <boost/phoenix/version.hpp>
 #include <boost/phoenix/operator/arithmetic.hpp>
 #include <boost/phoenix/operator/bitwise.hpp>
-#include <boost/phoenix/operator/comparision.hpp>
+#include <boost/phoenix/operator/comparison.hpp>
 #include <boost/phoenix/operator/if_else.hpp>
 #include <boost/phoenix/operator/self.hpp>
 #include <boost/phoenix/operator/logical.hpp>
 #include <boost/phoenix/operator/io.hpp>
 #include <boost/phoenix/operator/member.hpp>
+#include <boost/phoenix/scope/local_variable.hpp> // to fix 5824
 
 #endif

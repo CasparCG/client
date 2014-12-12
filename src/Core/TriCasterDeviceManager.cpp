@@ -10,7 +10,7 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 Q_GLOBAL_STATIC(TriCasterDeviceManager, deviceManager)
 
@@ -113,6 +113,8 @@ const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByName(const QS
     }
 
     qCritical() << "No TriCasterDeviceModel found for specified name";
+
+    return TriCasterDeviceModel();
 }
 
 const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByAddress(const QString& address) const
@@ -124,9 +126,11 @@ const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByAddress(const
     }
 
     qCritical() << "No TriCasterDeviceModel found for specified address";
+
+    return TriCasterDeviceModel();
 }
 
-const int TriCasterDeviceManager::getDeviceCount() const
+int TriCasterDeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }

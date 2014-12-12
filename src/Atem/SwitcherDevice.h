@@ -2,9 +2,9 @@
 
 #include "Shared.h"
 
-#include "qatemconnection.h"
-
 #include <QtCore/QObject>
+
+class QAtemConnection;
 
 class ATEM_EXPORT SwitcherDevice : public QObject
 {

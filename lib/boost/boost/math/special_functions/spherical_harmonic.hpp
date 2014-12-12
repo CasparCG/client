@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/tools/workaround.hpp>
 #include <complex>
@@ -36,7 +37,7 @@ inline T spherical_harmonic_prefix(unsigned n, unsigned m, T theta, const Policy
    T sin_theta = sin(theta);
    T x = cos(theta);
 
-   T leg = detail::legendre_p_imp(n, m, x, pow(fabs(sin_theta), T(m)), pol);
+   T leg = detail::legendre_p_imp(n, m, x, static_cast<T>(pow(fabs(sin_theta), T(m))), pol);
    
    T prefix = boost::math::tgamma_delta_ratio(static_cast<T>(n - m + 1), static_cast<T>(2 * m), pol);
    prefix *= (2 * n + 1) / (4 * constants::pi<T>());
@@ -119,7 +120,7 @@ std::complex<T> spherical_harmonic(unsigned n, int m, U theta, U phi, const Poli
    if(m&1)
    {
       // Check phase if theta is outside [0, PI]:
-      U mod = boost::math::tools::fmod_workaround(theta, 2 * constants::pi<U>());
+      U mod = boost::math::tools::fmod_workaround(theta, U(2 * constants::pi<U>()));
       if(mod < 0)
          mod += 2 * constants::pi<U>();
       if(mod > constants::pi<U>())

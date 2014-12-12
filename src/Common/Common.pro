@@ -14,10 +14,14 @@ DEFINES += COMMON_LIBRARY
 HEADERS += \
     Global.h \
     Shared.h \
-    Timecode.h
+    Timecode.h \
+    Xml.h \
+    Playout.h
 	
 SOURCES += \
-    Timecode.cpp
+    Timecode.cpp \
+    Xml.cpp \
+    Playout.cpp
 
 OTHER_FILES += \
     Version.h.in

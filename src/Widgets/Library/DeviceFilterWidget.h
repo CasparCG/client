@@ -5,7 +5,7 @@
 
 #include "CasparDevice.h"
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT DeviceFilterWidget : public QWidget, Ui::DeviceFilterWidget
 {

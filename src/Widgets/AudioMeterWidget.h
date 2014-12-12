@@ -11,7 +11,8 @@
 #include "Models/LibraryModel.h"
 
 #include <QtGui/QImage>
-#include <QtGui/QWidget>
+
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT AudioMeterWidget : public QWidget, Ui::AudioMeterWidget
 {

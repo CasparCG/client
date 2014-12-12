@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/BlendModeModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorBlendModeWidget::InspectorBlendModeWidget(QWidget* parent)
     : QWidget(parent),
@@ -63,6 +63,8 @@ void InspectorBlendModeWidget::blendModeChanged(QString blendMode)
 
 void InspectorBlendModeWidget::resetBlendMode(QString blendMode)
 {
+    Q_UNUSED(blendMode);
+
     this->comboBoxBlendMode->setCurrentIndex(this->comboBoxBlendMode->findText("Normal"));
     this->command->setBlendMode(this->comboBoxBlendMode->currentText());
 

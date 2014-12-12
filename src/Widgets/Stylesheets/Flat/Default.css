@@ -393,6 +393,10 @@ QTreeView
     border-width: 1px;
     border-color: rgba(65, 65, 65, 255);
 }
+QTreeView::item:hover
+{
+    background-color: transparent;
+}
 QTreeView::item:selected
 {
     background-color: rgba(70, 115, 195, 64);
@@ -423,6 +427,10 @@ QTreeWidget
     background-color: rgba(28, 28, 28, 255);
     border-width: 1px;
     border-color: rgba(65, 65, 65, 255);
+}
+QTreeWidget::item:hover
+{
+    background-color: transparent;
 }
 QTreeWidget::item:selected
 {
@@ -488,6 +496,7 @@ QMenuBar
     border-color: rgba(65, 65, 65, 255);
     border-bottom-width: 0px;
     border-radius: 0px;
+    min-height: 17px;
 }
 QMenuBar::item
 {
@@ -500,7 +509,9 @@ QMenuBar::item:selected
     background-color: rgba(35, 35, 35, 255);
     border-color: rgba(70, 115, 195, 255);
     border-style: solid;
-    border-width: 1px;
+    border-top-width: 1px;
+    border-top-color: transparent;
+    border-bottom-width: 1px;
 }
 QMenuBar::item:pressed
 {
@@ -517,7 +528,7 @@ QMenuBar::item:disabled
 QMenu
 {
     background-color: rgba(35, 35, 35, 255);
-    border-width: 1px;
+    border-width: 0px;
 }
 QMenu::icon
 {
@@ -546,6 +557,11 @@ QMenu::indicator
     border-width: 0px;
     padding-left: 7px;
 }
+QMenu::separator
+{
+    height: 2px;
+}
+
 
 /*
  * QToolBox
@@ -925,9 +941,9 @@ QTabBar::tab
     padding-bottom: 3px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 3px;
+    padding-top: 2px;
     margin-left: -1px;
-    min-height: 16px;
+    min-height: 17px;
 }
 QTabBar::tab:only-one
 {
@@ -946,6 +962,7 @@ QTabBar::tab:selected
 QTabBar::tab:!selected
 {
     color: rgba(190, 190, 190, 255);
+    padding-bottom: 4px;
 }
 QTabBar::tab:selected:disabled
 {
@@ -1004,6 +1021,7 @@ QHeaderView::section:only-one
 QScrollBar:horizontal
 {
     background-color: rgba(28, 28, 28, 255);
+    background-color: blue;
     height: 16px;
     border-color: rgba(65, 65, 65, 255);
     border-top-width: 1px;
@@ -1032,6 +1050,14 @@ QScrollBar:left-arrow:horizontal
 QScrollBar::right-arrow:horizontal
 {
     image: none;
+}
+QScrollBar::add-page:horizontal
+{
+    background-color: rgba(28, 28, 28, 255);
+}
+QScrollBar::sub-page:horizontal
+{
+    background-color: rgba(28, 28, 28, 255);
 }
 
 QScrollBar:vertical
@@ -1065,6 +1091,14 @@ QScrollBar:up-arrow:vertical
 QScrollBar::down-arrow:vertical
 {
     image: none;
+}
+QScrollBar::add-page:vertical
+{
+    background-color: rgba(28, 28, 28, 255);
+}
+QScrollBar::sub-page:vertical
+{
+    background-color: rgba(28, 28, 28, 255);
 }
 
 /*

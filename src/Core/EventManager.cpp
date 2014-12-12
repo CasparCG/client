@@ -1,6 +1,6 @@
 #include "EventManager.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 Q_GLOBAL_STATIC(EventManager, eventManager)
 
@@ -431,7 +431,7 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
     else if (type ==  Rundown::FADETOBLACK)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade to Black", "", "", Rundown::FADETOBLACK, 0, "")));
     else if (type ==  Rundown::PANASONICPRESET)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Camera Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Panasonic PTZ Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Distort", "", "", Rundown::PERSPECTIVE, 0, "")));
     else if (type ==  Rundown::ROTATION)
@@ -452,4 +452,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Channel", "", "", Rundown::ROUTECHANNEL, 0, "")));
     else if (type ==  Rundown::ROUTEVIDEOLAYER)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Videolayer", "", "", Rundown::ROUTEVIDEOLAYER, 0, "")));
+    else if (type ==  Rundown::SONYPRESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Sony VISCA Preset", "", "", Rundown::SONYPRESET, 0, "")));
 }

@@ -7,7 +7,7 @@
 #include "EventManager.h"
 #include "Models/Atem/AtemSwitcherModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
     : QWidget(parent),

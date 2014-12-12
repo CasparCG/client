@@ -9,7 +9,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorAnchorWidget::InspectorAnchorWidget(QWidget* parent)
     : QWidget(parent),

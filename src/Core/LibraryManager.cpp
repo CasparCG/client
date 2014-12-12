@@ -15,7 +15,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QStringList>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 Q_GLOBAL_STATIC(LibraryManager, libraryManager)
 

@@ -22,14 +22,15 @@
 #include <QtCore/QTimer>
 #include <QtCore/QModelIndex>
 
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
-#include <QtGui/QFileDialog>
 #include <QtGui/QKeyEvent>
-#include <QtGui/QTreeWidgetItem>
 #include <QtGui/QStandardItemModel>
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QFileDialog>
 
 LibraryWidget::LibraryWidget(QWidget* parent)
     : QWidget(parent)
@@ -66,7 +67,7 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetTemplate->setColumnHidden(5, true);
     this->treeWidgetTemplate->setColumnHidden(6, true);
 
-    this->treeWidgetVideo->header()->setResizeMode(0, QHeaderView::Stretch);
+    this->treeWidgetVideo->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     this->treeWidgetVideo->setColumnHidden(1, true);
     this->treeWidgetVideo->setColumnHidden(2, true);
     this->treeWidgetVideo->setColumnHidden(3, true);
@@ -586,14 +587,23 @@ void LibraryWidget::setupTools()
     widgetAtemCut->setText(4, Rundown::ATEMCUT);
     widgetAtemCut->setText(5, "0");
 
-    QTreeWidgetItem* widgetCameraPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
-    widgetCameraPreset->setIcon(0, QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"));
-    widgetCameraPreset->setText(0, "Camera Preset");
-    widgetCameraPreset->setText(1, "0");
-    widgetCameraPreset->setText(2, "Camera Preset");
-    widgetCameraPreset->setText(3, "");
-    widgetCameraPreset->setText(4, Rundown::PANASONICPRESET);
-    widgetCameraPreset->setText(5, "0");
+    QTreeWidgetItem* widgetPanasonicPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
+    widgetPanasonicPreset->setIcon(0, QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"));
+    widgetPanasonicPreset->setText(0, "Panasonic PTZ Preset");
+    widgetPanasonicPreset->setText(1, "0");
+    widgetPanasonicPreset->setText(2, "Panasonic PTZ Preset");
+    widgetPanasonicPreset->setText(3, "");
+    widgetPanasonicPreset->setText(4, Rundown::PANASONICPRESET);
+    widgetPanasonicPreset->setText(5, "0");
+
+    QTreeWidgetItem* widgetSonyPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(6));
+    widgetSonyPreset->setIcon(0, QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"));
+    widgetSonyPreset->setText(0, "Sony VISCA Preset");
+    widgetSonyPreset->setText(1, "0");
+    widgetSonyPreset->setText(2, "Sony VISCA Preset");
+    widgetSonyPreset->setText(3, "");
+    widgetSonyPreset->setText(4, Rundown::SONYPRESET);
+    widgetSonyPreset->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }
@@ -652,6 +662,8 @@ void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetAudio->clear();
     this->treeWidgetImage->clear();
@@ -716,6 +728,8 @@ void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
 
 void LibraryWidget::templateChanged(const TemplateChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetTemplate->clear();
     this->treeWidgetTemplate->clearSelection();
@@ -747,6 +761,8 @@ void LibraryWidget::templateChanged(const TemplateChangedEvent& event)
 
 void LibraryWidget::dataChanged(const DataChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetData->clear();
     this->treeWidgetData->clearSelection();
@@ -778,6 +794,8 @@ void LibraryWidget::dataChanged(const DataChangedEvent& event)
 
 void LibraryWidget::presetChanged(const PresetChangedEvent& event)
 {
+    Q_UNUSED(event);
+
     // TODO: Only add / remove necessary items.
     this->treeWidgetPreset->clear();
     this->treeWidgetPreset->clearSelection();
@@ -807,6 +825,8 @@ void LibraryWidget::presetChanged(const PresetChangedEvent& event)
 
 void LibraryWidget::importPreset(const ImportPresetEvent& event)
 {
+    Q_UNUSED(event);
+
     QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
     if (!path.isEmpty())
     {
@@ -829,6 +849,8 @@ void LibraryWidget::importPreset(const ImportPresetEvent& event)
 
 void LibraryWidget::exportPreset(const ExportPresetEvent& event)
 {
+    Q_UNUSED(event);
+
     if (this->treeWidgetPreset->selectedItems().count() == 0)
         return;
 
@@ -860,7 +882,6 @@ void LibraryWidget::loadLibrary()
     EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     EventManager::getInstance().firePresetChangedEvent(PresetChangedEvent());
 }
-
 
 void LibraryWidget::customContextMenuRequested(const QPoint& point)
 {
@@ -933,6 +954,8 @@ void LibraryWidget::customContextMenuDataRequested(const QPoint& point)
 
 void LibraryWidget::contextMenuTriggered(QAction* action)
 {
+    Q_UNUSED(action);
+
     if (this->toolBoxLibrary->currentIndex() == Library::TOOLS_PAGE_INDEX)
     {
         foreach (QTreeWidgetItem* item, this->treeWidgetTool->selectedItems())
@@ -1023,6 +1046,8 @@ void LibraryWidget::checkEmptyFilter()
 
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(index);
+
     if (current == NULL)
         return;
 
@@ -1054,6 +1079,8 @@ void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 
 void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+    Q_UNUSED(previous);
+
     if (current == NULL)
         return;
 
@@ -1075,6 +1102,8 @@ void LibraryWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem
 
 void LibraryWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
+    Q_UNUSED(index);
+
     if (item->parent() != NULL) // The item is not a top level item.
         return;
 

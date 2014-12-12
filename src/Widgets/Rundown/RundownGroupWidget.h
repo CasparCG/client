@@ -20,7 +20,7 @@
 
 #include <QtCore/QString>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
@@ -39,7 +39,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual LibraryModel* getLibraryModel();
 
         virtual void setActive(bool active);
-        virtual void setInGroup(bool inGroup) {}
+        virtual void setInGroup(bool /* inGroup */) {}
         virtual void setColor(const QString& color);
         virtual QString getColor() const;
 

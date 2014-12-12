@@ -9,7 +9,7 @@
 #include "DatabaseManager.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorMetadataWidget::InspectorMetadataWidget(QWidget* parent)
     : QWidget(parent),
@@ -49,6 +49,8 @@ void InspectorMetadataWidget::libraryItemSelected(const LibraryItemSelectedEvent
 
 void InspectorMetadataWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     blockAllSignals(true);
 
     this->lineEditLabel->setEnabled(false);
@@ -64,5 +66,7 @@ void InspectorMetadataWidget::blockAllSignals(bool block)
 
 void InspectorMetadataWidget::labelChanged(QString name)
 {
+    Q_UNUSED(name);
+
     EventManager::getInstance().fireLabelChangedEvent(LabelChangedEvent(this->lineEditLabel->text()));
 }

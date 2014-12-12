@@ -5,7 +5,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorPlayoutCommandWidget::InspectorPlayoutCommandWidget(QWidget* parent)
     : QWidget(parent),

@@ -1,6 +1,7 @@
 #include "TemplateCommand.h"
 
 #include "Global.h"
+#include "Xml.h"
 
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent),

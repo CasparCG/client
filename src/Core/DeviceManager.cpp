@@ -13,7 +13,7 @@
 #include <QtCore/QSharedPointer>
 #include <QtCore/QStringList>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 Q_GLOBAL_STATIC(DeviceManager, deviceManager)
 
@@ -133,7 +133,7 @@ const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByAddress(const Q
     return QSharedPointer<DeviceModel>();
 }
 
-const int DeviceManager::getDeviceCount() const
+int DeviceManager::getDeviceCount() const
 {
     return this->devices.count();
 }

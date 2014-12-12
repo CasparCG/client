@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/ChromaModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorChromaWidget::InspectorChromaWidget(QWidget* parent)
     : QWidget(parent),

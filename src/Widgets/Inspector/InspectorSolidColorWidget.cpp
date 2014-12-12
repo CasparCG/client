@@ -10,7 +10,7 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QColorDialog>
+#include <QtWidgets/QColorDialog>
 
 InspectorSolidColorWidget::InspectorSolidColorWidget(QWidget* parent)
     : QWidget(parent),

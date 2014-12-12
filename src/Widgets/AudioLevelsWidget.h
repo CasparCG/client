@@ -4,8 +4,9 @@
 #include "ui_AudioLevelsWidget.h"
 
 #include <QtGui/QImage>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
+
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT AudioLevelsWidget : public QWidget, Ui::AudioLevelsWidget
 {

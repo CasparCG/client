@@ -8,8 +8,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // $Source$
-// $Date: 2011-04-25 08:26:48 -0400 (Mon, 25 Apr 2011) $
-// $Revision: 71481 $
+// $Date$
+// $Revision$
 
 #include <boost/type_traits/detail/template_arity_spec.hpp>
 #include <boost/type_traits/integral_constant.hpp>
@@ -45,14 +45,6 @@
     enum { value = type::value }; \
     /**/
 #   define BOOST_TT_AUX_BOOL_C_BASE(C)
-
-#elif defined(BOOST_MSVC) && BOOST_MSVC < 1300
-
-#   define BOOST_TT_AUX_BOOL_TRAIT_VALUE_DECL(C) \
-    typedef ::boost::integral_constant<bool,C> base_; \
-    using base_::value; \
-    /**/
-
 #endif
 
 #ifndef BOOST_TT_AUX_BOOL_TRAIT_VALUE_DECL
@@ -87,6 +79,18 @@ public:\
 }; \
 \
 BOOST_TT_AUX_TEMPLATE_ARITY_SPEC(2,trait) \
+/**/
+
+#define BOOST_TT_AUX_BOOL_TRAIT_DEF3(trait,T1,T2,T3,C) \
+template< typename T1, typename T2, typename T3 > struct trait \
+    BOOST_TT_AUX_BOOL_C_BASE(C) \
+{ \
+public:\
+    BOOST_TT_AUX_BOOL_TRAIT_VALUE_DECL(C) \
+    BOOST_MPL_AUX_LAMBDA_SUPPORT(3,trait,(T1,T2,T3)) \
+}; \
+\
+BOOST_TT_AUX_TEMPLATE_ARITY_SPEC(3,trait) \
 /**/
 
 #define BOOST_TT_AUX_BOOL_TRAIT_SPEC1(trait,sp,C) \

@@ -2,9 +2,9 @@
 
 #include "Global.h"
 
-#include <QtGui/QApplication>
-#include <QtGui/QListWidgetItem>
-#include <QtGui/QPushButton>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QListWidgetItem>
+#include <QtWidgets/QPushButton>
 
 ActionWidget::ActionWidget(QWidget* parent)
     : QWidget(parent)

@@ -54,6 +54,7 @@
 #include "Inspector/TriCaster/InspectorNetworkSourceWidget.h"
 #include "Inspector/TriCaster/InspectorMacroWidget.h"
 #include "Inspector/Panasonic/InspectorPanasonicPresetWidget.h"
+#include "Inspector/Sony/InspectorSonyPresetWidget.h"
 
 #include "Global.h"
 
@@ -108,6 +109,7 @@
 #include "Commands/TriCaster/NetworkSourceCommand.h"
 #include "Commands/TriCaster/MacroCommand.h"
 #include "Commands/Panasonic/PanasonicPresetCommand.h"
+#include "Commands/Sony/SonyPresetCommand.h"
 
 InspectorWidget::InspectorWidget(QWidget* parent)
     : QWidget(parent),
@@ -169,6 +171,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(51)), 0, new InspectorHtmlWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(52)), 0, new InspectorRouteChannelWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(53)), 0, new InspectorRouteVideolayerWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(54)), 0, new InspectorSonyPresetWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -301,6 +304,8 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
         this->treeWidgetInspector->topLevelItem(52)->setHidden(false);
     else if (dynamic_cast<RouteVideolayerCommand*>(event.getCommand()))
         this->treeWidgetInspector->topLevelItem(53)->setHidden(false);
+    else if (dynamic_cast<SonyPresetCommand*>(event.getCommand()))
+            this->treeWidgetInspector->topLevelItem(54)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -359,20 +364,27 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(51)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(52)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(53)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(54)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
 {
+    Q_UNUSED(event);
+
     setDefaultVisibleWidgets();
 }
 
 void InspectorWidget::libraryItemSelected(const LibraryItemSelectedEvent& event)
 {
+    Q_UNUSED(event);
+
     setDefaultVisibleWidgets();
 }
 
 void InspectorWidget::toggleExpandItem(QTreeWidgetItem* item, int index)
 {
+    Q_UNUSED(index);
+
     item->setExpanded(!item->isExpanded());
 }
 

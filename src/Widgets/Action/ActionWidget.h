@@ -6,7 +6,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT ActionWidget : public QWidget, Ui::ActionWidget
 {

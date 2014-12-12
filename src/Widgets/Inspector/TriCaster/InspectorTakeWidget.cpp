@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/TriCaster/TriCasterStepModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorTakeWidget::InspectorTakeWidget(QWidget* parent)
     : QWidget(parent),

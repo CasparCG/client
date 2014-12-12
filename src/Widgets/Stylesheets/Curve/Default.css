@@ -350,6 +350,10 @@ QTreeView
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
 }
+QTreeView::item:hover
+{
+    background-color: transparent;
+}
 QTreeView::item:selected
 {
     background-color: rgba(80, 80, 80, 255);
@@ -379,6 +383,10 @@ QTreeWidget
 {
     background-color: rgba(55, 55, 55, 255);
     border-width: 1px;
+}
+QTreeView::item:hover
+{
+    background-color: transparent;
 }
 QTreeWidget::item:selected
 {
@@ -443,6 +451,7 @@ QMenuBar
     background-color: rgba(64, 64, 64, 255);
     border-bottom-width: 1px;
     border-radius: 0px;
+    min-height: 17px;
 }
 QMenuBar::item
 {
@@ -489,6 +498,10 @@ QMenu::indicator
     background-color: transparent;
     border-width: 0px;
     padding-left: 7px;
+}
+QMenu::separator
+{
+    height: 2px;
 }
 
 /*
@@ -958,9 +971,9 @@ QTabBar::tab
     padding-bottom: 3px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 3px;
+    padding-top: 2px;
     margin-left: -1px;
-    min-height: 16px;
+    min-height: 17px;
 }
 QTabBar::tab:only-one
 {
@@ -974,6 +987,10 @@ QTabBar::tab:selected
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(90, 90, 90, 255));
     border-bottom-width: 0px;
+    padding-bottom: 5px;
+}
+QTabBar::tab:!selected
+{
     padding-bottom: 4px;
 }
 QTabBar::tab:selected:disabled
@@ -1079,16 +1096,19 @@ QScrollBar::right-arrow:horizontal
 }
 QScrollBar::add-page:horizontal
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 255), stop:1 rgba(42, 42, 42, 255));
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-top-width: 1px;
 }
 QScrollBar::sub-page:horizontal
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 255), stop:1 rgba(42, 42, 42, 255));
     border-color: rgba(42, 42, 42, 255);
     border-style: solid;
     border-top-width: 1px;
 }
+
 QScrollBar:vertical
 {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
@@ -1123,12 +1143,14 @@ QScrollBar::down-arrow:vertical
 }
 QScrollBar::add-page:vertical
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
     border-color: rgba(42, 42, 42, 255);
     border-left-width: 1px;
     border-style: solid;
 }
 QScrollBar::sub-page:vertical
 {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(42, 42, 42, 255), stop:1 rgba(55, 55, 55, 255));
     border-color: rgba(42, 42, 42, 255);
     border-left-width: 1px;
     border-style: solid;

@@ -3,7 +3,7 @@
 #include "Shared.h"
 #include "ui_OscTimeWidget.h"
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
 {

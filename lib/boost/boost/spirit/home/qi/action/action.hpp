@@ -41,8 +41,8 @@ namespace boost { namespace spirit { namespace qi
           : traits::attribute_of<Subject, Context, Iterator>
         {};
 
-        action(Subject const& subject, Action f)
-          : subject(subject), f(f) {}
+        action(Subject const& subject_, Action f_)
+          : subject(subject_), f(f_) {}
 
 #ifndef BOOST_SPIRIT_ACTIONS_ALLOW_ATTR_COMPAT
         template <typename Iterator, typename Context
@@ -66,8 +66,13 @@ namespace boost { namespace spirit { namespace qi
             {
                 // call the function, passing the attribute, the context.
                 // The client can return false to fail parsing.
-                if (traits::action_dispatch<Subject>()(f, attr, context))
+                if (traits::action_dispatch<Subject>()(f, attr, context)) 
+                {
+                    // Do up-stream transformation, this integrates the results
+                    // back into the original attribute value, if appropriate.
+                    traits::post_transform(attr_, attr);
                     return true;
+                }
 
                 // reset iterators if semantic action failed the match
                 // retrospectively

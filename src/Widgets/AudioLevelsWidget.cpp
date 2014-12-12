@@ -6,7 +6,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 
-#include <QtGui/QToolButton>
+#include <QtWidgets/QToolButton>
 
 AudioLevelsWidget::AudioLevelsWidget(QWidget* parent)
     : QWidget(parent),

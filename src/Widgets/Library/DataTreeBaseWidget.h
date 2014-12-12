@@ -7,8 +7,9 @@
 #include "Events/Rundown/RepositoryRundownEvent.h"
 
 #include <QtGui/QMouseEvent>
-#include <QtGui/QWidget>
-#include <QtGui/QTreeWidget>
+
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QTreeWidget>
 
 class WIDGETS_EXPORT DataTreeBaseWidget : public QTreeWidget
 {

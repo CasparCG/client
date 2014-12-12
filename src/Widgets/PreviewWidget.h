@@ -8,10 +8,11 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
-#include <QtGui/QAction>
 #include <QtGui/QImage>
-#include <QtGui/QMenu>
-#include <QtGui/QWidget>
+
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT PreviewWidget : public QWidget, Ui::PreviewWidget
 {

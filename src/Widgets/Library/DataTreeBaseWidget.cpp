@@ -4,8 +4,10 @@
 
 #include <QtCore/QMimeData>
 
-#include <QtGui/QApplication>
-#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QDrag>
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QTreeWidgetItem>
 
 DataTreeBaseWidget::DataTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent),

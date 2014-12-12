@@ -8,11 +8,12 @@
 
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QCursor>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QResizeEvent>
+
+#include <QtWidgets/QApplication>
 
 InspectorHttpGetWidget::InspectorHttpGetWidget(QWidget* parent)
     : QWidget(parent),
@@ -53,6 +54,8 @@ bool InspectorHttpGetWidget::eventFilter(QObject* target, QEvent* event)
 
 void InspectorHttpGetWidget::showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent& event)
 {
+    Q_UNUSED(event);
+
     int index = this->treeWidgetHttpData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetHttpData->setCurrentItem(this->treeWidgetHttpData->invisibleRootItem()->child(index));
 
@@ -160,6 +163,8 @@ bool InspectorHttpGetWidget::editRow()
 
         updateHttpDataModels();
     }
+
+    return true;
 }
 
 bool InspectorHttpGetWidget::removeRow()
@@ -218,6 +223,9 @@ bool InspectorHttpGetWidget::pasteSelectedItem()
 
 void InspectorHttpGetWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
+    Q_UNUSED(current);
+    Q_UNUSED(index);
+
     editRow();
 }
 
@@ -235,6 +243,8 @@ void InspectorHttpGetWidget::triggerOnNextChanged(int state)
 
 void InspectorHttpGetWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+    Q_UNUSED(previous);
+
     if (current == NULL)
         return;
 

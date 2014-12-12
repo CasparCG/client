@@ -7,6 +7,7 @@
 class CORE_EXPORT TriCasterDeviceModel
 {
     public:
+        explicit TriCasterDeviceModel() {}
         explicit TriCasterDeviceModel(int id, const QString& name, const QString& address, int port, const QString& description);
 
         int getId() const;

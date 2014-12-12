@@ -10,9 +10,9 @@
 #include <QtCore/QEvent>
 #include <QtCore/QList>
 
-#include <QtGui/QDialog>
-#include <QtGui/QTreeWidgetItem>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QTreeWidgetItem>
+#include <QtWidgets/QWidget>
 
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkAccessManager>

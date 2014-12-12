@@ -2,19 +2,17 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QPair>
+#include <QtCore/QUrl>
 
 HttpRequest::HttpRequest(QObject* parent)
     : QObject(parent)
 {
 }
 
-void HttpRequest::sendGet(const QString& url, const QUrl& data)
+void HttpRequest::sendGet(const QString& url, const QUrlQuery& query)
 {
     QUrl request(url);
-
-    typedef QPair<QString, QString> QueryPair; // Workaround - foreach does not support templates.
-    foreach (QueryPair queryItem, data.queryItems())
-        request.addQueryItem(queryItem.first, queryItem.second);
+    request.setQuery(query);
 
     qDebug() << QString("HttpRequest::sendGet: %1").arg(request.toString());
 
@@ -33,13 +31,13 @@ void HttpRequest::sendGetFinished(QNetworkReply* reply)
     this->networkManager->deleteLater();
 }
 
-void HttpRequest::sendPost(const QString& url, const QUrl& data)
+void HttpRequest::sendPost(const QString& url, const QUrlQuery& query)
 {
-    qDebug() << QString("HttpRequest::sendPost: %1, %2").arg(url).arg(QString(data.encodedQuery()));
+    qDebug() << QString("HttpRequest::sendPost: %1, %2").arg(url).arg(query.toString(QUrl::FullyEncoded));
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(sendPostFinished(QNetworkReply*)));
-    this->networkManager->post(QNetworkRequest(QUrl(url)), data.encodedQuery());
+    this->networkManager->post(QNetworkRequest(QUrl(url)), query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void HttpRequest::sendPostFinished(QNetworkReply* reply)

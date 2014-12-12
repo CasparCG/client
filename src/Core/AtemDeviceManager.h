@@ -26,7 +26,7 @@ class CORE_EXPORT AtemDeviceManager : public QObject
         const AtemDeviceModel getDeviceModelByName(const QString& name) const;
         const AtemDeviceModel getDeviceModelByAddress(const QString& address) const;
 
-        const int getDeviceCount() const;
+        int getDeviceCount() const;
         const QSharedPointer<AtemDevice> getDeviceByName(const QString& name) const;
 
         const QSharedPointer<AtemDevice> getDevice() const;

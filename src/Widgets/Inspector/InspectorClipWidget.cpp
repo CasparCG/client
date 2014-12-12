@@ -7,7 +7,7 @@
 #include "Events/PreviewEvent.h"
 #include "Models/TweenModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorClipWidget::InspectorClipWidget(QWidget* parent)
     : QWidget(parent),

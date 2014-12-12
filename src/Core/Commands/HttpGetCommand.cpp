@@ -18,9 +18,9 @@ const QList<KeyValueModel>& HttpGetCommand::getHttpDataModels() const
     return this->models;
 }
 
-const QUrl HttpGetCommand::getHttpData() const
+const QUrlQuery HttpGetCommand::getHttpData() const
 {
-    QUrl httpData;
+    QUrlQuery httpData;
 
     foreach (KeyValueModel model, this->models)
         httpData.addQueryItem(model.getKey(), model.getValue());

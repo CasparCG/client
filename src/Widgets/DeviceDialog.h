@@ -10,8 +10,8 @@
 #include <QtCore/QList>
 #include <QtCore/QSharedPointer>
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
 {

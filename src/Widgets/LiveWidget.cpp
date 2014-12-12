@@ -7,7 +7,7 @@
 #include "EventManager.h"
 #include "Models/DeviceModel.h"
 
-#include <QtGui/QToolButton>
+#include <QtWidgets/QToolButton>
 
 LiveWidget::LiveWidget(QWidget* parent)
     : QWidget(parent),
@@ -55,7 +55,9 @@ LiveWidget::LiveWidget(QWidget* parent)
 
 void LiveWidget::closeApplication(const CloseApplicationEvent& event)
 {
-    stopStream(this->deviceName, this->deviceChannel);
+    Q_UNUSED(event);
+
+    stopStream();
 
     libvlc_media_player_release(this->vlcMediaPlayer);
     libvlc_release(this->vlcInstance);
@@ -108,7 +110,7 @@ void LiveWidget::setupMenus()
 void LiveWidget::setupRenderTarget(bool windowMode)
 {
 #if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
 #elif defined(Q_OS_MAC)
     libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
 #elif defined(Q_OS_LINUX)
@@ -178,24 +180,24 @@ void LiveWidget::streamMenuActionTriggered(QAction* action)
     if (!action->text().contains(',') && !action->text().contains(':'))
         return;
 
-    stopStream(this->deviceName, this->deviceChannel);
+    stopStream();
 
     this->useKey = action->text().contains("(Key)");
     this->deviceName = action->text().split(',').at(0).split(':').at(1).trimmed();
     this->deviceChannel = action->text().split(',').at(1).split(':').at(1).trimmed().split(' ').at(0).trimmed();
 
-    startStream(this->deviceName, this->deviceChannel);
+    startStream();
 }
 
 void LiveWidget::disconnectStream()
 {
-    stopStream(this->deviceName, this->deviceChannel);
+    stopStream();
 
     this->deviceName.clear();
     this->deviceChannel.clear();
 }
 
-void LiveWidget::stopStream(const QString& deviceName, const QString& deviceChannel)
+void LiveWidget::stopStream()
 {
     if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
     {
@@ -207,7 +209,7 @@ void LiveWidget::stopStream(const QString& deviceName, const QString& deviceChan
     }
 }
 
-void LiveWidget::startStream(const QString& deviceName, const QString& deviceChannel)
+void LiveWidget::startStream()
 {
     if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
     {
@@ -241,7 +243,7 @@ void LiveWidget::toggleExpandCollapse()
 
 void LiveWidget::toggleWindowMode()
 {
-    stopStream(this->deviceName, this->deviceChannel);
+    stopStream();
 
     if (this->windowMode)
     {
@@ -258,5 +260,5 @@ void LiveWidget::toggleWindowMode()
 
     this->windowMode = !this->windowMode;
     setupRenderTarget(this->windowMode);
-    startStream(this->deviceName, this->deviceChannel);
+    startStream();
 }

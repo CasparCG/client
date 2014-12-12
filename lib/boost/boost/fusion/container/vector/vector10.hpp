@@ -1,12 +1,14 @@
 /*=============================================================================
-    Copyright (c) 2001-2006 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #if !defined(FUSION_VECTOR10_05042005_0257)
 #define FUSION_VECTOR10_05042005_0257
 
+#include <boost/fusion/support/config.hpp>
+#include <boost/fusion/container/vector/vector10_fwd.hpp>
 #include <boost/fusion/support/sequence_base.hpp>
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/fusion/iterator/next.hpp>
@@ -39,7 +41,7 @@ namespace boost { namespace fusion
     struct fusion_sequence_tag;
     struct random_access_traversal_tag;
 
-    template <typename Dummy = void>
+    template <typename Dummy>
     struct vector0 : sequence_base<vector0<Dummy> >
     {
         typedef mpl::vector0<> types;
@@ -49,19 +51,54 @@ namespace boost { namespace fusion
         typedef random_access_traversal_tag category;
         typedef mpl::int_<0> size;
 
+        BOOST_FUSION_GPU_ENABLED
         vector0() {}
 
         template<typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
         vector0(Sequence const& /*seq*/)
         {}
     };
+}}
 
+#if !defined(BOOST_FUSION_DONT_USE_PREPROCESSED_FILES)
+#include <boost/fusion/container/vector/detail/preprocessed/vector10.hpp>
+#else
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/vector10.hpp")
+#endif
+
+/*=============================================================================
+    Copyright (c) 2001-2011 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+    This is an auto-generated file. Do not edit!
+==============================================================================*/
+
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 1)
+#endif
+
+namespace boost { namespace fusion
+{
+    struct vector_tag;
+    struct fusion_sequence_tag;
+    struct random_access_traversal_tag;
+
+#define FUSION_HASH #
 // expand vector1 to vector10
 #define BOOST_PP_FILENAME_1 <boost/fusion/container/vector/detail/vector_n.hpp>
 #define BOOST_PP_ITERATION_LIMITS (1, 10)
 #include BOOST_PP_ITERATE()
-
+#undef FUSION_HASH
 }}
 
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+#pragma wave option(output: null)
 #endif
 
+#endif // BOOST_FUSION_DONT_USE_PREPROCESSED_FILES
+
+#endif

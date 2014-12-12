@@ -21,16 +21,17 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 
-#include <QtGui/QApplication>
+#include <QtGui/QPixmap>
 #include <QtGui/QFontDatabase>
-#include <QtGui/QDesktopServices>
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QSplashScreen>
 
 #include <QtSql/QSqlDatabase>
 
 void loadDatabase(QApplication& application)
 {
-    //QString path = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-    QString path = QString("%1/.CasparCG/Client").arg(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
+    QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
     QDir directory;
     if (!directory.exists(path))
@@ -151,8 +152,12 @@ int main(int argc, char* argv[])
 
     //Application::setOrganizationName("CasparCG");
     //Application::setApplicationName("CasparCG Client");
-    Application::setGraphicsSystem("raster");
+
     Application application(argc, argv);
+
+    QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
+    splashScreen.show();
+
     application.setStyle("plastique");
 
     loadDatabase(application);
@@ -165,6 +170,7 @@ int main(int argc, char* argv[])
     GpiManager::getInstance().initialize();
 
     MainWindow window;
+    splashScreen.finish(&window);
 
     loadConfiguration(application, window);
 

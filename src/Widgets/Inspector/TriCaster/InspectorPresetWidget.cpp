@@ -6,7 +6,7 @@
 #include "EventManager.h"
 #include "Models/TriCaster/TriCasterPresetModel.h"
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 InspectorPresetWidget::InspectorPresetWidget(QWidget* parent)
     : QWidget(parent),

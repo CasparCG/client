@@ -3,8 +3,8 @@
 #include "Shared.h"
 #include "ui_PresetDialog.h"
 
-#include <QtGui/QDialog>
-#include <QtGui/QWidget>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT PresetDialog : public QDialog, Ui::PresetDialog
 {

@@ -11,7 +11,7 @@
 
 #include <QtCore/QTimer>
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 
 ThumbnailWorker::ThumbnailWorker(const QList<ThumbnailModel>& thumbnailModels, QObject* parent)
     : QObject(parent),

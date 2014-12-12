@@ -19,6 +19,7 @@
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #include <boost/spirit/home/support/utree/utree_traits_fwd.hpp>
+#include <boost/spirit/home/lex/lexer/terminals.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
@@ -34,9 +35,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/range/iterator_range.hpp>
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 #include <boost/static_assert.hpp>
-#endif
 
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <iosfwd>
@@ -140,7 +139,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token(id_type id, std::size_t, token_value_type)
           : id_(id) {}
 
-        token_value_type& value() { return unused; }
+        token_value_type& value() { static token_value_type u; return u; }
         token_value_type const& value() const { return unused; }
 
 #if defined(BOOST_SPIRIT_DEBUG)
@@ -329,14 +328,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     struct token : token<Iterator, lex::omit, HasState, Idtype>
     {
     private: // precondition assertions
-#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
         BOOST_STATIC_ASSERT((mpl::is_sequence<AttributeTypes>::value || 
                             is_same<AttributeTypes, lex::omit>::value));
-#endif
         typedef token<Iterator, lex::omit, HasState, Idtype> base_type;
 
     protected: 
-        //  If no additional token value types are given, the the token will 
+        //  If no additional token value types are given, the token will 
         //  hold the plain pair of iterators pointing to the matched range
         //  in the underlying input sequence. Otherwise the token value is 
         //  stored as a variant and will again hold the pair of iterators but
@@ -446,7 +443,7 @@ namespace boost { namespace spirit { namespace traits
             if (0 == t.value().which()) {
             //  first access to the token value
                 typedef iterator_range<Iterator> iterpair_type;
-                iterpair_type const& ip = get<iterpair_type>(t.value());
+                iterpair_type const& ip = boost::get<iterpair_type>(t.value());
 
             // Interestingly enough we use the assign_to() framework defined in 
             // Spirit.Qi allowing to convert the pair of iterators to almost any 
@@ -489,7 +486,7 @@ namespace boost { namespace spirit { namespace traits
             }
             else {
             // reuse the already assigned value
-                spirit::traits::assign_to(get<Attribute>(t.value()), attr);
+                spirit::traits::assign_to(boost::get<Attribute>(t.value()), attr);
             }
         }
     };
@@ -499,6 +496,14 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_container_from_value<Attribute
           , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
       : assign_to_attribute_from_value<Attribute
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+    {};
+
+    template <typename Iterator, typename AttributeTypes
+      , typename HasState, typename Idtype>
+    struct assign_to_container_from_value<utree
+          , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
+      : assign_to_attribute_from_value<utree
           , lex::lexertl::token<Iterator, AttributeTypes, HasState, Idtype> >
     {};
 
@@ -607,7 +612,7 @@ namespace boost { namespace spirit { namespace traits
             typedef fusion::vector2<Idtype_, iterator_range<Iterator> > 
                 attribute_type;
 
-            iterpair_type const& ip = get<iterpair_type>(t.value());
+            iterpair_type const& ip = boost::get<iterpair_type>(t.value());
             attr = attribute_type(t.id(), ip);
         }
     };

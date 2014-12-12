@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui sql network
+QT += core gui sql network widgets
 
 TARGET = shell
 TEMPLATE = app
@@ -56,7 +56,7 @@ else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 
 DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
-win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw44-mt-1_47 -lboost_system-mgw44-mt-1_47 -lboost_thread-mgw44-mt-1_47 -lboost_filesystem-mgw44-mt-1_47 -lboost_chrono-mgw44-mt-1_47 -lws2_32
+win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 
@@ -99,6 +99,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/release/ -
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Panasonic/debug/ -lpanasonic
 else:macx:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
 else:unix:LIBS += -L$$OUT_PWD/../Panasonic/ -lpanasonic
+
+DEPENDPATH += $$OUT_PWD/../Sony $$PWD/../Sony
+INCLUDEPATH += $$OUT_PWD/../Sony $$PWD/../Sony
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Sony/release/ -lsony
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Sony/debug/ -lsony
+else:macx:LIBS += -L$$OUT_PWD/../Sony/ -lsony
+else:unix:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 
 DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
 INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web

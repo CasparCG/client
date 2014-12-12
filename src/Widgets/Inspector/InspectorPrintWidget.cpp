@@ -43,6 +43,8 @@ void InspectorPrintWidget::outputChanged(QString output)
 
 void InspectorPrintWidget::resetOutput(QString output)
 {
+    Q_UNUSED(output);
+
     this->lineEditOutput->setText(Print::DEFAULT_OUTPUT);
     this->command->setOutput(this->lineEditOutput->text());
 }

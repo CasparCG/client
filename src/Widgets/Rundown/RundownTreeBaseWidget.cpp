@@ -15,9 +15,11 @@
 #include <QtCore/QTime>
 #include <QtCore/QDebug>
 
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
+#include <QtGui/QDrag>
 #include <QtGui/QPainter>
+#include <QtGui/QClipboard>
+
+#include <QtWidgets/QApplication>
 
 RundownTreeBaseWidget::RundownTreeBaseWidget(QWidget* parent)
     : QTreeWidget(parent), compactView(false), theme(""), lock(false)
@@ -130,7 +132,7 @@ bool RundownTreeBaseWidget::copySelectedItems() const
     return true;
 }
 
-bool RundownTreeBaseWidget::copyItemProperties() const
+void RundownTreeBaseWidget::copyItemProperties() const
 {
     copySelectedItems();
 }
@@ -330,7 +332,6 @@ void RundownTreeBaseWidget::groupItems()
         return;
 
     bool isGroup = false;
-    bool isTopItem = false;
     bool isGroupItem = false;
     foreach (QTreeWidgetItem* item, QTreeWidget::selectedItems())
     {
@@ -340,8 +341,6 @@ void RundownTreeBaseWidget::groupItems()
             isGroupItem = true;
         else if (dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Group
             isGroup = true;
-        else if (item->parent() == NULL && !dynamic_cast<AbstractRundownWidget*>(widget)->isGroup()) // Top level item.
-            isTopItem = true;
     }
 
     if (isGroup || isGroupItem)
@@ -796,6 +795,9 @@ void RundownTreeBaseWidget::dragEnterEvent(QDragEnterEvent* event)
 
 bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, const QMimeData* mimeData, Qt::DropAction action)
 {
+    Q_UNUSED(index);
+    Q_UNUSED(action);
+
     if (!mimeData->hasFormat("application/library-item") && !mimeData->hasFormat("application/rundown-item"))
         return false;
 
