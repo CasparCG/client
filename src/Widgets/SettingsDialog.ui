@@ -653,7 +653,7 @@
       <rect>
        <x>110</x>
        <y>580</y>
-       <width>171</width>
+       <width>211</width>
        <height>17</height>
       </rect>
      </property>
@@ -661,7 +661,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Disable audio in stream</string>
+      <string>Disable audio in live stream</string>
      </property>
     </widget>
     <widget class="QLabel" name="labelMilliseconds">
