@@ -335,6 +335,8 @@ bool RundownStillWidget::executeCommand(Playout::PlayoutType::Type type)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
+    else if (type == Playout::PlayoutType::Preview)
+        executePlayPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -348,7 +350,14 @@ void RundownStillWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->stop(this->command.getChannel(), this->command.getVideolayer());
+
+        // Stop preview channels item.
+        const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+            device->stop(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -357,7 +366,13 @@ void RundownStillWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
+
+            // Stop preview channels item.
+            if (model.getPreviewChannel() > 0)
+                deviceShadow->stop(model.getPreviewChannel(), this->command.getVideolayer());
+        }
     }
 
     this->paused = false;
@@ -401,6 +416,38 @@ void RundownStillWidget::executePlay()
     this->paused = false;
     this->loaded = false;
     this->playing = true;
+}
+
+void RundownStillWidget::executePlayPreview()
+{
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+    if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+        {
+            device->playStill(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getImageName(),
+                              this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                              this->command.getDirection(), false);
+        }
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        if (model.getPreviewChannel() > 0)
+        {
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+            {
+                deviceShadow->playStill(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getImageName(),
+                                        this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                        this->command.getDirection(), false);
+            }
+        }
+    }
 }
 
 void RundownStillWidget::executePause()
@@ -470,7 +517,14 @@ void RundownStillWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
+    {
         device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+
+        // Clear preview channels videolayer.
+        const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+            device->clearVideolayer(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+    }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -479,7 +533,13 @@ void RundownStillWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
+        {
             deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+
+            // Clear preview channels videolayer.
+            if (model.getPreviewChannel() > 0)
+                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.getVideolayer());
+        }
     }
 
     this->paused = false;
@@ -496,6 +556,14 @@ void RundownStillWidget::executeClearChannel()
     {
         device->clearChannel(this->command.getChannel());
         device->clearMixerChannel(this->command.getChannel());
+
+        // Clear preview channel.
+        const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+        if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+        {
+            device->clearChannel(deviceModel->getPreviewChannel());
+            device->clearMixerChannel(deviceModel->getPreviewChannel());
+        }
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -508,6 +576,13 @@ void RundownStillWidget::executeClearChannel()
         {
             deviceShadow->clearChannel(this->command.getChannel());
             deviceShadow->clearMixerChannel(this->command.getChannel());
+
+            // Clear preview channel.
+            if (model.getPreviewChannel() > 0)
+            {
+                deviceShadow->clearChannel(model.getPreviewChannel());
+                deviceShadow->clearMixerChannel(model.getPreviewChannel());
+            }
         }
     }
 

@@ -3,6 +3,7 @@ CasparCG Client 2.0.8
 - NEW: 64-bit support for Windows.
 - NEW: Upgraded to Qt 5. (krzyc)
 - NEW: Added support for trigger preset on Sony VISCA over IP cameras.
+- NEW: Added support for preview images on the preview channel.
 
 
 

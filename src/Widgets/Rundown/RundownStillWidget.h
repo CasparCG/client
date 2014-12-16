@@ -99,6 +99,7 @@ class WIDGETS_EXPORT RundownStillWidget : public QWidget, Ui::RundownStillWidget
         Q_SLOT void executePlay();
         Q_SLOT void executePause();
         Q_SLOT void executeStop();
+        Q_SLOT void executePlayPreview();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
