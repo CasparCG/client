@@ -7,12 +7,14 @@
 #include <QtNetwork/QUdpSocket>
 
 ViscaDevice::ViscaDevice(QObject* parent)
-    : QObject(parent), preset(""), address("")
+    : QObject(parent), address("")
 {
 }
 
-void ViscaDevice::selectPreset(const QString& address, const QString& preset)
+void ViscaDevice::selectPreset(const QString& address, int preset)
 {
+    preset = (preset > 0) ? preset - 1 : 0;
+
     this->preset = preset;
     this->address = address;
 
@@ -57,7 +59,7 @@ void ViscaDevice::sendRecallPreset()
     data[10] = 0x04;                    // Command packet
     data[11] = 0x3F;                    // Command packet
     data[12] = 0x02;                    // Command packet
-    data[13] = this->preset.toInt();    // Command packet (Our preset)
+    data[13] = this->preset;            // Command packet (Our preset)
     data[14] = VISCA_TERMINATOR;
 
     QUdpSocket socket;

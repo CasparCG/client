@@ -13,7 +13,7 @@ const QString& SonyPresetCommand::getAddress() const
     return this->address;
 }
 
-const QString& SonyPresetCommand::getPreset() const
+int SonyPresetCommand::getPreset() const
 {
     return this->preset;
 }
@@ -29,7 +29,7 @@ void SonyPresetCommand::setAddress(const QString& address)
     emit addressChanged(this->address);
 }
 
-void SonyPresetCommand::setPreset(const QString& preset)
+void SonyPresetCommand::setPreset(int preset)
 {
     this->preset = preset;
     emit presetChanged(this->preset);
@@ -46,7 +46,7 @@ void SonyPresetCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setAddress(QString::fromStdWString(pt.get(L"address", Sony::DEFAULT_ADDRESS.toStdWString())));
-    setPreset(QString::fromStdWString(pt.get(L"preset", Sony::DEFAULT_PRESET.toStdWString())));
+    setPreset(pt.get(L"preset", Sony::DEFAULT_PRESET));
     setTriggerOnNext(pt.get(L"triggeronnext", Sony::DEFAULT_TRIGGER_ON_NEXT));
 }
 
@@ -55,6 +55,6 @@ void SonyPresetCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("address", getAddress());
-    writer->writeTextElement("preset", getPreset());
+    writer->writeTextElement("preset", QString::number(getPreset()));
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

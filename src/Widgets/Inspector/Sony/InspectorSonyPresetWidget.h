@@ -18,11 +18,10 @@ class WIDGETS_EXPORT InspectorSonyPresetWidget : public QWidget, Ui::InspectorSo
         SonyPresetCommand* command;
 
         void checkEmptyAddress();
-        void checkEmptyPreset();
         void blockAllSignals(bool block);
 
         Q_SLOT void addressChanged(QString);
-        Q_SLOT void presetChanged(QString);
+        Q_SLOT void presetChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

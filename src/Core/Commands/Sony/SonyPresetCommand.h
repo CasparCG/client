@@ -23,19 +23,19 @@ class CORE_EXPORT SonyPresetCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getAddress() const;
-        const QString& getPreset() const;
+        int getPreset() const;
         bool getTriggerOnNext() const;
 
         void setAddress(const QString& address);
-        void setPreset(const QString& preset);
+        void setPreset(int preset);
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString address;
-        QString preset;
+        int preset;
         bool triggerOnNext;
 
         Q_SIGNAL void addressChanged(const QString&);
-        Q_SIGNAL void presetChanged(const QString&);
+        Q_SIGNAL void presetChanged(int);
         Q_SIGNAL void triggerOnNextChanged(bool);
 };

@@ -19,10 +19,10 @@ class SONY_EXPORT ViscaDevice : public QObject
     public:
         explicit ViscaDevice(QObject* parent = 0);
 
-        void selectPreset(const QString& address, const QString& preset);
+        void selectPreset(const QString& address, int preset);
 
     private:
-        QString preset;
+        int preset;
         QString address;
 
         Q_SLOT void sendClearSequence();

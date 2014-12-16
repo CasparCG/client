@@ -80,7 +80,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditPreset"/>
+      <widget class="QSpinBox" name="spinBoxPreset">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>16</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -164,28 +177,12 @@
    <slot>addressChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>117</x>
-     <y>42</y>
+     <x>196</x>
+     <y>29</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
      <y>45</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditPreset</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>InspectorSonyPresetWidget</receiver>
-   <slot>presetChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>182</x>
-     <y>79</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>206</x>
-     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -196,8 +193,8 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>132</y>
+     <x>110</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
@@ -205,10 +202,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>spinBoxPreset</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorSonyPresetWidget</receiver>
+   <slot>presetChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-5</x>
+     <y>41</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addressChanged(QString)</slot>
-  <slot>presetChanged(QString)</slot>
+  <slot>presetChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
  </slots>
 </ui>

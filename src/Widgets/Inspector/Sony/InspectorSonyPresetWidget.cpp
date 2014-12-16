@@ -23,12 +23,11 @@ void InspectorSonyPresetWidget::rundownItemSelected(const RundownItemSelectedEve
         this->command = dynamic_cast<SonyPresetCommand*>(event.getCommand());
 
         this->lineEditAddress->setText(this->command->getAddress());
-        this->lineEditPreset->setText(this->command->getPreset());
+        this->spinBoxPreset->setValue(this->command->getPreset());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
     checkEmptyAddress();
-    checkEmptyPreset();
 
     blockAllSignals(false);
 }
@@ -36,7 +35,7 @@ void InspectorSonyPresetWidget::rundownItemSelected(const RundownItemSelectedEve
 void InspectorSonyPresetWidget::blockAllSignals(bool block)
 {
     this->lineEditAddress->blockSignals(block);
-    this->lineEditPreset->blockSignals(block);
+    this->spinBoxPreset->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
@@ -48,14 +47,6 @@ void InspectorSonyPresetWidget::checkEmptyAddress()
         this->lineEditAddress->setStyleSheet("");
 }
 
-void InspectorSonyPresetWidget::checkEmptyPreset()
-{
-    if (this->lineEditPreset->text().isEmpty())
-        this->lineEditPreset->setStyleSheet("border-color: firebrick;");
-    else
-        this->lineEditPreset->setStyleSheet("");
-}
-
 void InspectorSonyPresetWidget::addressChanged(QString address)
 {
     this->command->setAddress(address);
@@ -63,11 +54,9 @@ void InspectorSonyPresetWidget::addressChanged(QString address)
     checkEmptyAddress();
 }
 
-void InspectorSonyPresetWidget::presetChanged(QString preset)
+void InspectorSonyPresetWidget::presetChanged(int preset)
 {
     this->command->setPreset(preset);
-
-    checkEmptyPreset();
 }
 
 void InspectorSonyPresetWidget::triggerOnNextChanged(int state)
