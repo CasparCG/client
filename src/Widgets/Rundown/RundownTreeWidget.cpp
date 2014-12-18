@@ -189,7 +189,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuSony->setObjectName("contextMenuSony");
     this->contextMenuSony->setTitle("Sony");
     //this->contextMenuSony->setIcon(QIcon(":/Graphics/Images/Sony.png"));
-    this->contextMenuSony->addAction(QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"), "Camera Preset", this, SLOT(addSonyPresetItem()));
+    this->contextMenuSony->addAction(QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"), "Sony VISCA Preset", this, SLOT(addSonyPresetItem()));
 
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
@@ -200,6 +200,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuTools->addMenu(this->contextMenuTriCaster);
     this->contextMenuTools->addMenu(this->contextMenuAtem);
     this->contextMenuTools->addMenu(this->contextMenuPanasonic);
+    this->contextMenuTools->addMenu(this->contextMenuSony);
 
     this->contextMenuMark = new QMenu(this);
     this->contextMenuMark->setTitle("Mark Item");
