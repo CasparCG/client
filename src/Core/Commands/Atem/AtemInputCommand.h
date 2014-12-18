@@ -25,17 +25,21 @@ class CORE_EXPORT AtemInputCommand: public AbstractCommand
         const QString& getSwitcher() const;
         const QString& getInput() const;
         bool getTriggerOnNext() const;
+        const QString& getMixerStep() const;
 
         void setSwitcher(const QString& switcher);
         void setInput(const QString& input);
         void setTriggerOnNext(bool triggerOnNext);
+        void setMixerStep(const QString& mixerStep);
 
     private:
         QString switcher;
         QString input;
         bool triggerOnNext;
+        QString mixerStep;
 
         Q_SIGNAL void switcherChanged(const QString&);
         Q_SIGNAL void inputChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
+        Q_SIGNAL void mixerStepChanged(const QString&);
 };

@@ -10,7 +10,7 @@ AtemDevice::AtemDevice(const QString& address, QObject* parent)
 {
 }
 
-void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition)
+void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition, const QString& mixerStep)
 {
     SwitcherDevice::atemConnection->setTransitionType(transition.toInt());
 
@@ -28,7 +28,7 @@ void AtemDevice::triggerAuto(const QString& target, int speed, const QString& tr
                 SwitcherDevice::atemConnection->setDVERate(speed);
         }
 
-        SwitcherDevice::atemConnection->doAuto();
+        SwitcherDevice::atemConnection->doAuto(mixerStep.toInt());
     }
     else
     {
@@ -38,9 +38,9 @@ void AtemDevice::triggerAuto(const QString& target, int speed, const QString& tr
     }
 }
 
-void AtemDevice::triggerCut()
+void AtemDevice::triggerCut(const QString& mixerStep)
 {
-    SwitcherDevice::atemConnection->doCut();
+    SwitcherDevice::atemConnection->doCut(mixerStep.toInt());
 }
 
 QMap<quint16, QAtemConnection::InputInfo> AtemDevice::inputInfos()
@@ -59,12 +59,12 @@ QHash<quint16, QAtemConnection::AudioInput> AtemDevice::audioInputs()
     return SwitcherDevice::atemConnection->audioInputs();
 }
 
-void AtemDevice::selectInput(const QString& switcher, const QString& input)
+void AtemDevice::selectInput(const QString& switcher, const QString& input, const QString& mixerStep)
 {
     if (switcher == "pgm")
-        SwitcherDevice::atemConnection->changeProgramInput(input.toInt());
+        SwitcherDevice::atemConnection->changeProgramInput(input.toInt(), mixerStep.toInt());
     else if (switcher == "prev")
-        SwitcherDevice::atemConnection->changePreviewInput(input.toInt());
+        SwitcherDevice::atemConnection->changePreviewInput(input.toInt(), mixerStep.toInt());
 }
 
 void AtemDevice::setAuxSource(const QString& aux, const QString& source)

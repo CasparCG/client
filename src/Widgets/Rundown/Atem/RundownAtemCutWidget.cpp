@@ -127,6 +127,7 @@ AbstractRundownWidget* RundownAtemCutWidget::clone()
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setStep(this->command.getStep());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setMixerStep(this->command.getMixerStep());
 
     return widget;
 }
@@ -265,7 +266,7 @@ void RundownAtemCutWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->triggerCut();
+        device->triggerCut(this->command.getMixerStep());
 
     if (this->markUsedItems)
         setUsed(true);

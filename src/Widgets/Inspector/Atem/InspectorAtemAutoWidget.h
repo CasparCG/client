@@ -24,6 +24,7 @@ class WIDGETS_EXPORT InspectorAtemAutoWidget : public QWidget, Ui::InspectorAtem
         AtemAutoCommand* command;
 
         void checkEmptyStep();
+        void loadAtemMixerStep();
         void loadAtemStep();
         void loadAtemAutoTransition();
         void blockAllSignals(bool block);
@@ -33,4 +34,5 @@ class WIDGETS_EXPORT InspectorAtemAutoWidget : public QWidget, Ui::InspectorAtem
         Q_SLOT void transitionChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void mixerStepChanged(int);
 };

@@ -6,6 +6,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemSwitcherModel.h"
+#include "Models/Atem/AtemMixerStepModel.h"
 
 #include <QtWidgets/QApplication>
 
@@ -14,6 +15,8 @@ InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
       model(NULL), command(NULL)
 {
     setupUi(this);
+
+    loadAtemMixerStep();
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
@@ -40,6 +43,7 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
             loadAtemInput();
         }
 
+        this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->comboBoxInput->setCurrentIndex(this->comboBoxInput->findData(this->command->getInput()));
         this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -64,6 +68,19 @@ void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
     }
 }
 
+void InspectorAtemInputWidget::loadAtemMixerStep()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxMixerStep->blockSignals(true);
+
+    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
+    foreach (AtemMixerStepModel model, models)
+        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+
+    this->comboBoxMixerStep->blockSignals(false);
+}
+
 void InspectorAtemInputWidget::loadAtemInput()
 {
     // We do not have a command object, block the signals.
@@ -84,6 +101,7 @@ void InspectorAtemInputWidget::loadAtemInput()
 
 void InspectorAtemInputWidget::blockAllSignals(bool block)
 {
+    this->comboBoxMixerStep->blockSignals(block);
     this->comboBoxSwitcher->blockSignals(block);
     this->comboBoxInput->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
@@ -123,4 +141,9 @@ void InspectorAtemInputWidget::inputChanged(int index)
 void InspectorAtemInputWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAtemInputWidget::mixerStepChanged(int index)
+{
+    this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
 }

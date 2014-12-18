@@ -13,14 +13,14 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
     public:
         explicit AtemDevice(const QString& address, QObject* parent = 0);
 
-        void triggerAuto(const QString& target, int speed, const QString& transition);
-        void triggerCut();
+        void triggerAuto(const QString& target, int speed, const QString& transition, const QString& mixerStep);
+        void triggerCut(const QString& mixerStep);
 
         QMap<quint16, QAtemConnection::InputInfo> inputInfos();
         QHash<quint16, QAtemConnection::AudioInput> audioInputs();
 
         void setAuxSource(const QString& aux, const QString& source);
-        void selectInput(const QString& switcher, const QString& input);
+        void selectInput(const QString& switcher, const QString& input, const QString& mixerStep);
 
         void setKeyerState(const QString& keyer, bool state);
         void setVideoFormat(const QString& format);

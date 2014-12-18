@@ -26,20 +26,24 @@ class CORE_EXPORT AtemAutoCommand : public AbstractCommand
         double getSpeed() const;
         const QString& getTransition() const;
         bool getTriggerOnNext() const;
+        const QString& getMixerStep() const;
 
         void setStep(const QString& step);
         void setSpeed(double speed);
         void setTransition(const QString& transition);
         void setTriggerOnNext(bool triggerOnNext);
+        void setMixerStep(const QString& mixerStep);
 
     private:
         QString step;
         double speed;
         QString transition;
         bool triggerOnNext;
+        QString mixerStep;
 
         Q_SIGNAL void stepChanged(const QString&);
         Q_SIGNAL void speedChanged(double);
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
+        Q_SIGNAL void mixerStepChanged(const QString&);
 };

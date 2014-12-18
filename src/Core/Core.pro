@@ -188,7 +188,8 @@ HEADERS += \
     Commands/HtmlCommand.h \
     Commands/RouteChannelCommand.h \
     Commands/RouteVideolayerCommand.h \
-    Commands/Sony/SonyPresetCommand.h
+    Commands/Sony/SonyPresetCommand.h \
+    Models/Atem/AtemMixerStepModel.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -366,7 +367,8 @@ SOURCES += \
     Commands/HtmlCommand.cpp \
     Commands/RouteChannelCommand.cpp \
     Commands/RouteVideolayerCommand.cpp \
-    Commands/Sony/SonyPresetCommand.cpp
+    Commands/Sony/SonyPresetCommand.cpp \
+    Models/Atem/AtemMixerStepModel.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
@@ -436,3 +438,10 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Common/release/ -lco
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Common/debug/ -lcommon
 else:macx:LIBS += -L$$OUT_PWD/../Common/ -lcommon
 else:unix:LIBS += -L$$OUT_PWD/../Common/ -lcommon
+
+DISTFILES += \
+    Sql/ChangeScript-208.sql \
+    Sql/Schema.sql
+
+RESOURCES += \
+    Core.qrc

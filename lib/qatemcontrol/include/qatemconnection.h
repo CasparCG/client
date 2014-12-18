@@ -472,11 +472,11 @@ public:
     static QByteArray prepImageForSwitcher(QImage &image, const int width, const int height);
 
 public slots:
-    void changeProgramInput(quint16 index);
-    void changePreviewInput(quint16 index);
+    void changeProgramInput(quint16 index, quint16 me);
+    void changePreviewInput(quint16 index, quint16 me);
 
-    void doCut();
-    void doAuto();
+    void doCut(quint16 me);
+    void doAuto(quint16 me);
     void toggleFadeToBlack();
     void setFadeToBlackFrameRate(quint8 frames);
     void setTransitionPosition(quint16 position);

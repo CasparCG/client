@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/Scripts">
+        <file>Sql/ChangeScript-208.sql</file>
+        <file>Sql/Schema.sql</file>
+    </qresource>
+</RCC>

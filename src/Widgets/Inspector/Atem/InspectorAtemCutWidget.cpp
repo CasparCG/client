@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemStepModel.h"
+#include "Models/Atem/AtemMixerStepModel.h"
 
 #include <QtWidgets/QApplication>
 
@@ -16,6 +17,7 @@ InspectorAtemCutWidget::InspectorAtemCutWidget(QWidget* parent)
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
+    loadAtemMixerStep();
     loadAtemStep();
 }
 
@@ -29,6 +31,7 @@ void InspectorAtemCutWidget::rundownItemSelected(const RundownItemSelectedEvent&
     {
         this->command = dynamic_cast<AtemCutCommand*>(event.getCommand());
 
+        this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
@@ -40,8 +43,22 @@ void InspectorAtemCutWidget::rundownItemSelected(const RundownItemSelectedEvent&
 
 void InspectorAtemCutWidget::blockAllSignals(bool block)
 {
+    this->comboBoxMixerStep->blockSignals(block);
     this->comboBoxStep->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+}
+
+void InspectorAtemCutWidget::loadAtemMixerStep()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxMixerStep->blockSignals(true);
+
+    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
+    foreach (AtemMixerStepModel model, models)
+        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+
+    this->comboBoxMixerStep->blockSignals(false);
 }
 
 void InspectorAtemCutWidget::loadAtemStep()
@@ -78,4 +95,9 @@ void InspectorAtemCutWidget::stepChanged(int index)
 void InspectorAtemCutWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAtemCutWidget::mixerStepChanged(int index)
+{
+    this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
 }

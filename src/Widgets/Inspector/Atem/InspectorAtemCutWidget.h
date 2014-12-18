@@ -24,10 +24,12 @@ class WIDGETS_EXPORT InspectorAtemCutWidget : public QWidget, Ui::InspectorAtemC
         AtemCutCommand* command;
 
         void checkEmptyStep();
+        void loadAtemMixerStep();
         void loadAtemStep();
         void blockAllSignals(bool block);
 
         Q_SLOT void stepChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void mixerStepChanged(int);
 };

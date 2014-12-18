@@ -4,7 +4,7 @@
 
 AtemAutoCommand::AtemAutoCommand(QObject* parent)
     : AbstractCommand(parent),
-      step(""), speed(Atem::DEFAULT_SPEED), transition(Atem::DEFAULT_TRANSITION), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+      step(""), speed(Atem::DEFAULT_SPEED), transition(Atem::DEFAULT_TRANSITION), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT), mixerStep(Atem::DEFAULT_MIXER_STEP)
 {
 }
 
@@ -26,6 +26,11 @@ const QString& AtemAutoCommand::getTransition() const
 bool AtemAutoCommand::getTriggerOnNext() const
 {
     return this->triggerOnNext;
+}
+
+const QString& AtemAutoCommand::getMixerStep() const
+{
+    return this->mixerStep;
 }
 
 void AtemAutoCommand::setStep(const QString& step)
@@ -52,6 +57,12 @@ void AtemAutoCommand::setTriggerOnNext(bool triggerOnNext)
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
+void AtemAutoCommand::setMixerStep(const QString& mixerStep)
+{
+    this->mixerStep = mixerStep;
+    emit mixerStepChanged(this->mixerStep);
+}
+
 void AtemAutoCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -60,6 +71,7 @@ void AtemAutoCommand::readProperties(boost::property_tree::wptree& pt)
     setSpeed(pt.get(L"speed", Atem::DEFAULT_SPEED));
     setTransition(QString::fromStdWString(pt.get(L"transition", Atem::DEFAULT_TRANSITION.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Atem::DEFAULT_TRIGGER_ON_NEXT));
+    setMixerStep(QString::fromStdWString(pt.get(L"mixerstep", Atem::DEFAULT_MIXER_STEP.toStdWString())));
 }
 
 void AtemAutoCommand::writeProperties(QXmlStreamWriter* writer)
@@ -70,4 +82,5 @@ void AtemAutoCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("speed", QString::number(this->getSpeed()));
     writer->writeTextElement("transition", this->getTransition());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer->writeTextElement("mixerstep", this->getMixerStep());
 }

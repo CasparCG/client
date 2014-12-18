@@ -24,6 +24,7 @@
 #include "Models/Atem/AtemAudioInputStateModel.h"
 #include "Models/Atem/AtemSwitcherModel.h"
 #include "Models/Atem/AtemStepModel.h"
+#include "Models/Atem/AtemMixerStepModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
 #include "Models/Atem/AtemKeyerModel.h"
 #include "Models/Atem/AtemVideoFormatModel.h"
@@ -49,7 +50,7 @@ class CORE_EXPORT DatabaseManager
         static DatabaseManager& getInstance();
 
         void initialize();
-        void uninitialize();
+        void uninitialize() {}
 
         ConfigurationModel getConfigurationByName(const QString& name);
         void updateConfiguration(const ConfigurationModel& model);
@@ -77,6 +78,7 @@ class CORE_EXPORT DatabaseManager
         void deleteOscOutput(int id);
 
         QList<AtemStepModel> getAtemStep();
+        QList<AtemMixerStepModel> getAtemMixerStep();
         QList<AtemAudioInputStateModel> getAtemAudioInputState();
         QList<AtemKeyerModel> getAtemKeyer();
         QList<AtemSwitcherModel> getAtemSwitcher();
@@ -147,4 +149,7 @@ class CORE_EXPORT DatabaseManager
 
     private:
         QMutex mutex;
+
+        void createDatabase();
+        void upgradeDatabase();
 };

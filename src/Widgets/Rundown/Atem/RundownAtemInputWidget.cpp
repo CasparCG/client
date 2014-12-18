@@ -128,6 +128,7 @@ AbstractRundownWidget* RundownAtemInputWidget::clone()
     command->setSwitcher(this->command.getSwitcher());
     command->setInput(this->command.getInput());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setMixerStep(this->command.getMixerStep());
 
     return widget;
 }
@@ -270,7 +271,7 @@ void RundownAtemInputWidget::executePlay()
     if (device != NULL && device->isConnected())
     {
         if (this->command.getSwitcher() == "pgm" || this->command.getSwitcher() == "prev")
-            device->selectInput(this->command.getSwitcher(), this->command.getInput());
+            device->selectInput(this->command.getSwitcher(), this->command.getInput(), this->command.getMixerStep());
         else // Aux.
             device->setAuxSource(this->command.getSwitcher(), this->command.getInput());
     }
@@ -285,7 +286,7 @@ void RundownAtemInputWidget::executePreview()
     if (device != NULL && device->isConnected())
     {
         if (this->command.getSwitcher() == "pgm")
-            device->selectInput("prev", this->command.getInput());
+            device->selectInput("prev", this->command.getInput(), this->command.getMixerStep());
     }
 }
 

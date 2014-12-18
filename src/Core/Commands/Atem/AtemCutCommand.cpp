@@ -4,7 +4,7 @@
 
 AtemCutCommand::AtemCutCommand(QObject* parent)
     : AbstractCommand(parent),
-      step("background"), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+      step("background"), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT), mixerStep(Atem::DEFAULT_MIXER_STEP)
 {
 }
 
@@ -18,6 +18,12 @@ bool AtemCutCommand::getTriggerOnNext() const
     return this->triggerOnNext;
 }
 
+const QString& AtemCutCommand::getMixerStep() const
+{
+    return this->mixerStep;
+}
+
+
 void AtemCutCommand::setStep(const QString& step)
 {
     this->step = step;
@@ -30,12 +36,19 @@ void AtemCutCommand::setTriggerOnNext(bool triggerOnNext)
     emit triggerOnNextChanged(this->triggerOnNext);
 }
 
+void AtemCutCommand::setMixerStep(const QString& mixerStep)
+{
+    this->mixerStep = mixerStep;
+    emit mixerStepChanged(this->mixerStep);
+}
+
 void AtemCutCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
     setStep(QString::fromStdWString(pt.get(L"step", L"")));
-    setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
+    setTriggerOnNext(pt.get(L"triggeronnext", Atem::DEFAULT_TRIGGER_ON_NEXT));
+    setMixerStep(QString::fromStdWString(pt.get(L"mixerstep", Atem::DEFAULT_MIXER_STEP.toStdWString())));
 }
 
 void AtemCutCommand::writeProperties(QXmlStreamWriter* writer)
@@ -44,4 +57,5 @@ void AtemCutCommand::writeProperties(QXmlStreamWriter* writer)
 
     writer->writeTextElement("step", this->getStep());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer->writeTextElement("mixerstep", this->getMixerStep());
 }

@@ -5,6 +5,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemStepModel.h"
+#include "Models/Atem/AtemMixerStepModel.h"
 #include "Models/Atem/AtemAutoSpeedModel.h"
 #include "Models/Atem/AtemAutoTransitionModel.h"
 
@@ -18,6 +19,7 @@ InspectorAtemAutoWidget::InspectorAtemAutoWidget(QWidget* parent)
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
+    loadAtemMixerStep();
     loadAtemStep();
     loadAtemAutoTransition();
 }
@@ -32,6 +34,7 @@ void InspectorAtemAutoWidget::rundownItemSelected(const RundownItemSelectedEvent
     {
         this->command = dynamic_cast<AtemAutoCommand*>(event.getCommand());
 
+        this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         this->spinBoxSpeed->setValue(this->command->getSpeed());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -44,9 +47,23 @@ void InspectorAtemAutoWidget::rundownItemSelected(const RundownItemSelectedEvent
 
 void InspectorAtemAutoWidget::blockAllSignals(bool block)
 {
+    this->comboBoxMixerStep->blockSignals(block);
     this->comboBoxStep->blockSignals(block);
     this->spinBoxSpeed->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+}
+
+void InspectorAtemAutoWidget::loadAtemMixerStep()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxMixerStep->blockSignals(true);
+
+    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
+    foreach (AtemMixerStepModel model, models)
+        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+
+    this->comboBoxMixerStep->blockSignals(false);
 }
 
 void InspectorAtemAutoWidget::loadAtemStep()
@@ -86,6 +103,8 @@ void InspectorAtemAutoWidget::checkEmptyStep()
 void InspectorAtemAutoWidget::stepChanged(int index)
 {
     this->command->setStep(this->comboBoxStep->itemData(index).toString());
+
+    checkEmptyStep();
 }
 
 void InspectorAtemAutoWidget::speedChanged(int value)
@@ -103,4 +122,9 @@ void InspectorAtemAutoWidget::transitionChanged(int index)
 void InspectorAtemAutoWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAtemAutoWidget::mixerStepChanged(int index)
+{
+    this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
 }

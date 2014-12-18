@@ -1,5 +1,7 @@
 #include "DatabaseManager.h"
 
+#include "Version.h"
+
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
 #include <QtCore/QMutexLocker>
@@ -25,384 +27,85 @@ void DatabaseManager::initialize()
 {
     QMutexLocker locker(&mutex);
 
-    if (QSqlDatabase::database().tables().count() > 0)
-        return;
+    if (QSqlDatabase::database().tables().count() == 0)
+        createDatabase();
+    else
+        upgradeDatabase();
+}
 
-    QSqlQuery sql;
-    sql.exec("CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE Chroma (Id INTEGR PRIMARY KEY, Key TEXT)");
-    sql.exec("CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT, PreviewChannel INTEGER)");
-    sql.exec("CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT)");
-    sql.exec("CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT)");
-    sql.exec("CREATE TABLE GpoPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, PulseLengthMillis INTEGER)");
-    sql.exec("CREATE TABLE Library (Id INTEGER PRIMARY KEY, Name TEXT, DeviceId INTEGER, TypeId INTEGER, ThumbnailId INTEGER, Timecode TEXT)");
-    sql.exec("CREATE TABLE Preset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE Thumbnail (Id INTEGER PRIMARY KEY, Data TEXT, Timestamp TEXT, Size TEXT)");
-    sql.exec("CREATE TABLE Transition (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE Tween (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE Type (Id INTEGER PRIMARY KEY, Value TEXT)");
-    sql.exec("CREATE TABLE OscOutput (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
-    sql.exec("CREATE TABLE AtemDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Description TEXT)");
-    sql.exec("CREATE TABLE AtemSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemKeyer (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemVideoFormat (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE AtemAudioInputState (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT)");
-    sql.exec("CREATE TABLE TriCasterProduct (Id INTEGER PRIMARY KEY, Name TEXT)");
-    sql.exec("CREATE TABLE TriCasterDevice (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Description TEXT)");
-    sql.exec("CREATE TABLE TriCasterStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterInput (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterAutoSpeed (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterAutoTransition (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterPreset (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterSource (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterSwitcher (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
-    sql.exec("CREATE TABLE TriCasterNetworkTarget (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT, Products TEXT)");
+void DatabaseManager::createDatabase()
+{
+    QFile file(":/Scripts/Sql/Schema.sql");
+    if (file.open(QFile::ReadOnly))
+    {
+        QStringList queries = QString(file.readAll()).split(";");
 
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Normal')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Lighten')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Darken')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Multiply')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Average')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Add')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Subtract')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Difference')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Negation')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Exclusion')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Screen')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Overlay')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Soft_Light')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Hard_Light')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Color_Dodge ')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Color_Burn')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Linear_Dodge')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Linear_Burn')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Linear_Light')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Vivid_Light')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Pin_Light ')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Hard_Mix')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Reflect')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Glow')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Phoenix')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Contrast')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Saturation')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Color')");
-    sql.exec("INSERT INTO BlendMode (Value) VALUES('Luminosity')");
+        file.close();
 
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltip', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ReverseOscTime', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('EnableOscInput', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableInAndOutPoints', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RefreshLibraryInterval', '60')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiSerialPort', 'COM1')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('GpiBaudRate', '115200')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('OscPort', '6250')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterPort', '5950')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DelayType', 'Milliseconds')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('TriCasterProduct', 'TriCaster 8000')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('Theme', 'Flat')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RundownRepository', '')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('RepositoryPort', '8250')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('PreviewOnAutoStep', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ClearDelayedCommandsOnAutoStep', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowAudioLevelsPanel', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowPreviewPanel', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowLivePanel', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('ShowDurationPanel', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StoreThumbnailsInDatabase', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('MarkUsedItems', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('UseFreezeOnLoad', 'false')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('DisableAudioInStream', 'true')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StreamQuality', '25')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('NetworkCache', '1000')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('StreamPort', '9250')");
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('LogLevel', '-1')");
+        QSqlQuery sql;
+        foreach (const QString& query, queries)
+        {
+             if (query.trimmed().isEmpty())
+                 continue;
+
+             if (!sql.exec(query))
+                qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+        }
+
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
+    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0)");
 #else
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #endif
 
-    sql.exec("INSERT INTO Chroma (Key) VALUES('None')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Red')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Yellow')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Green')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Torquise')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Blue')");
-    sql.exec("INSERT INTO Chroma (Key) VALUES('Magenta')");
+        if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
+            qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
 
-#if defined(Q_OS_WIN)
-    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0)");
-#endif
-
-    sql.exec("INSERT INTO Direction (Value) VALUES('RIGHT')");
-    sql.exec("INSERT INTO Direction (Value) VALUES('LEFT')");
-
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('PAL', 720, 576, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('NTSC', 720, 486, '29.97')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('576p2500', 1024, 576, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2398', 1280, 720, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2400', 1280, 720, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2500', 1280, 720, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p5000', 1280, 720, '50')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p2997', 1280, 720, '29.97')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p5994', 1280, 720, '59.94')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p3000', 1280, 720, '30')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('720p6000', 1280, 720, '60')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2398', 1920, 1080, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2400', 1920, 1080, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i5000', 1920, 1080, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i5994', 1920, 1080, '59.94')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080i6000', 1920, 1080, '30')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2500', 1920, 1080, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p2997', 1920, 1080, '29.97')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p3000', 1920, 1080, '30')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5000', 1920, 1080, '50')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p5994', 1920, 1080, '59.94')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1080p6000', 1920, 1080, '60')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2398', 2048, 1556, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2400', 2048, 1556, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('1556p2500', 2048, 1556, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2398', 3840, 2160, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2400', 3840, 2160, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2500', 3840, 2160, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p2997', 3840, 2160, '29.97')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p3000', 3840, 2160, '30')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2398', 2048, 1080, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2400', 2048, 1080, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci1080p2500', 2048, 1080, '25')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2398', 4096, 2160, '23.98')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2400', 4096, 2160, '24')");
-    sql.exec("INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('dci2160p2500', 4096, 2160, '25')");
-
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(0, 1, 'Stop')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(1, 1, 'Play')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(2, 1, 'Play Now')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(3, 1, 'Pause / Resume')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(4, 1, 'Load')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(5, 1, 'Next')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(6, 1, 'Update')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(7, 1, 'Invoke')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(8, 1, 'Preview')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(9, 1, 'Clear')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(10, 1, 'Clear Video Layer')");
-    sql.exec("INSERT INTO GpiPort (Id, RisingEdge, Action) VALUES(11, 1, 'Clear Channel')");
-
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(0, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(1, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(2, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(3, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(4, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(5, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(6, 1, 100)");
-    sql.exec("INSERT INTO GpoPort (Id, RisingEdge, PulseLengthMillis) VALUES(7, 1, 100)");
-
-    sql.exec("INSERT INTO Transition (Value) VALUES('CUT')");
-    sql.exec("INSERT INTO Transition (Value) VALUES('MIX')");
-    sql.exec("INSERT INTO Transition (Value) VALUES('PUSH')");
-    sql.exec("INSERT INTO Transition (Value) VALUES('SLIDE')");
-    sql.exec("INSERT INTO Transition (Value) VALUES('WIPE')");
-
-    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('Off', '0')");
-    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('On', '1')");
-    sql.exec("INSERT INTO AtemAudioInputState (Name, Value) VALUES('AFV', '2')");
-
-    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('Background', 'background')");
-    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('DSK 1', '0')");
-    sql.exec("INSERT INTO AtemStep (Name, Value) VALUES('DSK 2', '1')");
-
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 1', '0')");
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 2', '1')");
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 1', '2')");
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 2', '3')");
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 3', '4')");
-    sql.exec("INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 4', '5')");
-
-    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('MIX', '0')");
-    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('DIP', '1')");
-    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('WIPE', '2')");
-    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('STING', '3')");
-    sql.exec("INSERT INTO AtemAutoTransition (Name, Value) VALUES('DVE', '4')");
-
-    sql.exec("INSERT INTO AtemSwitcher (Name, Value) VALUES('Program', 'pgm')");
-    sql.exec("INSERT INTO AtemSwitcher (Name, Value) VALUES('Preview', 'prev')");
-
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('525 59.94i NTSC', '0')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('625 50i PAL', '1')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('525 59.94i 16:9', '2')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('625 50i 16:9', '3')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('720 50p', '4')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('720 59.94p', '5')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 50i', '6')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 59.94i', '7')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 23.98p', '8')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 24p', '9')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 25p', '10')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 29.97p', '11')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 50p', '12')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('1080 59.94p', '13')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 23.98p', '14')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 24p', '15')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 25p', '16')");
-    sql.exec("INSERT INTO AtemVideoFormat (Name, Value) VALUES('Ultra HD 29.97p', '17')");
-
-    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 410')");
-    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 460')");
-    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 850')");
-    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 860')");
-    sql.exec("INSERT INTO TriCasterProduct (Name) VALUES('TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('Background', 'background', 'TriCaster 850')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('Background', 'main_background', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 1', 'overlay0', 'TriCaster 850')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 2', 'overlay1', 'TriCaster 850')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 1', 'main_dsk1', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 2', 'main_dsk2', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 3', 'main_dsk3', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterStep (Name, Value, Products) VALUES('DSK 4', 'main_dsk4', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('DDR 1', 'ddr', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('DDR 2', 'ddr2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Net 1', 'net', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Net 2', 'net2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Still', 'stills', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Title', 'titles', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Frame Buffer', 'frm bfr', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Black', 'black', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 1', 'input1', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 2', 'input2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 3', 'input3', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 4', 'input4', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 5', 'input5', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 6', 'input6', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 7', 'input7', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Input 8', 'input8', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 1', 'v1', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 2', 'v2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 3', 'v3', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 4', 'v4', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 5', 'v5', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 6', 'v6', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 7', 'v7', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterInput (Name, Value, Products) VALUES('Virtual Input 8', 'v8', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Default', '', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Slow', 'slow', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Medium', 'medium', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoSpeed (Name, Value, Products) VALUES('Fast', 'fast', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Default', '', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 1', '0', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 2', '1', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 3', '2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 4', '3', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 5', '4', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 6', '5', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterAutoTransition (Name, Value, Products) VALUES('Preset 7', '6', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 1', '0', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 2', '1', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 3', '2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 4', '3', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 5', '4', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 6', '5', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 7', '6', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 8', '7', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 9', '8', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 10', '9', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 11', '10', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 12', '11', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 13', '12', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 14', '13', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterPreset (Name, Value, Products) VALUES('Preset 15', '14', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Switcher', 'main', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('DDR 1', 'ddr', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('DDR 2', 'ddr2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Still', 'stills', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Title', 'titles', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Sound', 'sound', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Audiomixer', 'audiomixer', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 1', 'v1', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 2', 'v2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 3', 'v3', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 4', 'v4', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 5', 'v5', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 6', 'v6', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 7', 'v7', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('Virtual Input 8', 'v8', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 1', 'ptz_input1', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 2', 'ptz_input2', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 3', 'ptz_input3', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 4', 'ptz_input4', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 5', 'ptz_input5', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 6', 'ptz_input6', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 7', 'ptz_input7', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSource (Name, Value, Products) VALUES('PTZ 8', 'ptz_input8', 'TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value, Products) VALUES('Program', 'pgm', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterSwitcher (Name, Value, Products) VALUES('Preview', 'prev', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value, Products) VALUES('Net 1', 'net', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-    sql.exec("INSERT INTO TriCasterNetworkTarget (Name, Value, Products) VALUES('Net 2', 'net2', 'TriCaster 850, TriCaster 410, TriCaster 460, TriCaster 860, TriCaster 8000')");
-
-    sql.exec("INSERT INTO Tween (Value) VALUES('Linear')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseNone')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInQuad')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutQuad')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutQuad')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInQuad')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInCubic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutCubic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutCubic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInCubic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInQuart')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutQuart')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutQuart')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInQuart')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInQuint')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutQuint')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutQuint')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInQuint')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInSine')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutSine')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutSine')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInSine')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInExpo')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutExpo')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutExpo')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInExpo')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInCirc')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutCirc')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutCirc')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInCirc')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInElastic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutElastic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutElastic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInElastic')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInBack')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutBack')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutBack')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInBack')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutBounce')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInBounce')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseInOutBounce')");
-    sql.exec("INSERT INTO Tween (Value) VALUES('EaseOutInBounce')");
-
-    sql.exec("INSERT INTO Type (Value) VALUES('AUDIO')");
-    sql.exec("INSERT INTO Type (Value) VALUES('DATA')");
-    sql.exec("INSERT INTO Type (Value) VALUES('MOVIE')");
-    sql.exec("INSERT INTO Type (Value) VALUES('STILL')");
-    sql.exec("INSERT INTO Type (Value) VALUES('TEMPLATE')");
+        qDebug() << QString("DatabaseManager::createDatabase(): Created version: %1").arg(DATABASE_VERSION);
+    }
 }
 
-void DatabaseManager::uninitialize()
+void DatabaseManager::upgradeDatabase()
 {
+    qDebug() << QString("DatabaseManager::upgradeDatabase(): Required version: %1").arg(DATABASE_VERSION);
+
+    QSqlQuery sql;
+    if (!sql.exec("PRAGMA user_version"))
+       qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    sql.first();
+
+    int version = sql.value(0).toInt();
+
+    qDebug() << QString("DatabaseManager::upgradeDatabase(): Current version: %1").arg(version);
+
+    while (version + 1 <= QString("%1").arg(DATABASE_VERSION).toInt())
+    {
+        QFile file(QString(":/Scripts/Sql/ChangeScript-%1.sql").arg(version + 1));
+        if (file.open(QFile::ReadOnly))
+        {
+            QStringList queries = QString(file.readAll()).split(";");
+
+            file.close();
+
+            foreach(const QString& query, queries)
+            {
+                 if (query.trimmed().isEmpty())
+                     continue;
+
+                 if (!sql.exec(query))
+                    qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+            }
+
+            if (!sql.exec(QString("PRAGMA user_version = %1").arg(version + 1)))
+                qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+            qDebug() << QString("DatabaseManager::upgradeDatabase(): ChangeScript-%1 executed").arg(version + 1);
+        }
+
+        version++;
+    }
 }
 
 void DatabaseManager::updateConfiguration(const ConfigurationModel& model)
@@ -416,7 +119,7 @@ void DatabaseManager::updateConfiguration(const ConfigurationModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -430,7 +133,7 @@ ConfigurationModel DatabaseManager::getConfigurationByName(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -445,7 +148,7 @@ QList<FormatModel> DatabaseManager::getFormat()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<FormatModel> models;
     while (sql.next())
@@ -463,7 +166,7 @@ FormatModel DatabaseManager::getFormat(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -478,7 +181,7 @@ QList<PresetModel> DatabaseManager::getPreset()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<PresetModel> models;
     while (sql.next())
@@ -496,7 +199,7 @@ PresetModel DatabaseManager::getPreset(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -513,7 +216,7 @@ QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<PresetModel> models;
     while (sql.next())
@@ -533,7 +236,7 @@ void DatabaseManager::insertPreset(const PresetModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -548,7 +251,7 @@ void DatabaseManager::deletePreset(int id)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -561,7 +264,7 @@ QList<BlendModeModel> DatabaseManager::getBlendMode()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<BlendModeModel> models;
     while (sql.next())
@@ -578,7 +281,7 @@ QList<ChromaModel> DatabaseManager::getChroma()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<ChromaModel> models;
     while (sql.next())
@@ -595,7 +298,7 @@ QList<DirectionModel> DatabaseManager::getDirection()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<DirectionModel> models;
     while (sql.next())
@@ -612,7 +315,7 @@ QList<TransitionModel> DatabaseManager::getTransition()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TransitionModel> models;
     while (sql.next())
@@ -629,7 +332,7 @@ QList<TweenModel> DatabaseManager::getTween()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TweenModel> models;
     while (sql.next())
@@ -645,7 +348,7 @@ QList<OscOutputModel> DatabaseManager::getOscOutput()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<OscOutputModel> models;
     while (sql.next())
@@ -667,7 +370,7 @@ void DatabaseManager::insertOscOutput(const OscOutputModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -681,7 +384,7 @@ OscOutputModel DatabaseManager::getOscOutputByName(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -698,7 +401,7 @@ OscOutputModel DatabaseManager::getOscOutputByAddress(const QString& address)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -717,7 +420,7 @@ void DatabaseManager::updateOscOutput(const OscOutputModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -732,7 +435,7 @@ void DatabaseManager::deleteOscOutput(int id)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -745,11 +448,28 @@ QList<AtemStepModel> DatabaseManager::getAtemStep()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemStepModel> models;
     while (sql.next())
         models.push_back(AtemStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+
+    return models;
+}
+
+QList<AtemMixerStepModel> DatabaseManager::getAtemMixerStep()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT t.Id, t.Name, t.Value FROM AtemMixerStep t");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    QList<AtemMixerStepModel> models;
+    while (sql.next())
+        models.push_back(AtemMixerStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
 
     return models;
 }
@@ -762,7 +482,7 @@ QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemAudioInputStateModel> models;
     while (sql.next())
@@ -779,7 +499,7 @@ QList<AtemKeyerModel> DatabaseManager::getAtemKeyer()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemKeyerModel> models;
     while (sql.next())
@@ -796,7 +516,7 @@ QList<AtemSwitcherModel> DatabaseManager::getAtemSwitcher()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemSwitcherModel> models;
     while (sql.next())
@@ -813,7 +533,7 @@ QList<AtemVideoFormatModel> DatabaseManager::getAtemVideoFormat()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemVideoFormatModel> models;
     while (sql.next())
@@ -830,7 +550,7 @@ QList<AtemAutoTransitionModel> DatabaseManager::getAtemAutoTransition()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemAutoTransitionModel> models;
     while (sql.next())
@@ -846,7 +566,7 @@ QList<AtemDeviceModel> DatabaseManager::getAtemDevice()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemDeviceModel> models;
     while (sql.next())
@@ -864,7 +584,7 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByName(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -880,7 +600,7 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByAddress(const QString& address)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -899,7 +619,7 @@ void DatabaseManager::insertAtemDevice(const AtemDeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -915,7 +635,7 @@ void DatabaseManager::updateAtemDevice(const AtemDeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -930,7 +650,7 @@ void DatabaseManager::deleteAtemDevice(int id)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -943,7 +663,7 @@ QList<TriCasterProductModel> DatabaseManager::getTriCasterProduct()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterProductModel> models;
     while (sql.next())
@@ -962,7 +682,7 @@ QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterInputModel> models;
     while (sql.next())
@@ -981,7 +701,7 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterStepModel> models;
     while (sql.next())
@@ -1000,7 +720,7 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterAutoSpeedModel> models;
     while (sql.next())
@@ -1019,7 +739,7 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
@@ -1038,7 +758,7 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterPresetModel> models;
     while (sql.next())
@@ -1057,7 +777,7 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterSourceModel> models;
     while (sql.next())
@@ -1076,7 +796,7 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterSwitcherModel> models;
     while (sql.next())
@@ -1095,7 +815,7 @@ QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterNetworkTargetModel> models;
     while (sql.next())
@@ -1113,7 +833,7 @@ QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterDeviceModel> models;
     while (sql.next())
@@ -1132,7 +852,7 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByName(const QString& na
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1149,7 +869,7 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByAddress(const QString&
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1169,7 +889,7 @@ void DatabaseManager::insertTriCasterDevice(const TriCasterDeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1185,7 +905,7 @@ void DatabaseManager::updateTriCasterDevice(const TriCasterDeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1200,7 +920,7 @@ void DatabaseManager::deleteTriCasterDevice(int id)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1213,7 +933,7 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<GpiPortModel> models;
     while (sql.next())
@@ -1233,7 +953,7 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1247,7 +967,7 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<GpoPortModel> models;
     while (sql.next())
@@ -1267,7 +987,7 @@ void DatabaseManager::updateGpoPort(const GpoPortModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1280,7 +1000,7 @@ QList<TypeModel> DatabaseManager::getType()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TypeModel> models;
     while (sql.next())
@@ -1298,7 +1018,7 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1312,7 +1032,7 @@ QList<DeviceModel> DatabaseManager::getDevice()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<DeviceModel> models;
     while (sql.next())
@@ -1332,7 +1052,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1350,7 +1070,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1373,7 +1093,7 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1393,7 +1113,7 @@ void DatabaseManager::updateDevice(const DeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1409,7 +1129,7 @@ void DatabaseManager::updateDeviceVersion(const DeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1425,7 +1145,7 @@ void DatabaseManager::updateDeviceChannels(const DeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1441,7 +1161,7 @@ void DatabaseManager::updateDeviceChannelFormats(const DeviceModel& model)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1456,17 +1176,17 @@ void DatabaseManager::deleteDevice(int id)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     query = QString("DELETE FROM Thumbnail WHERE Id IN (SELECT l.ThumbnailId FROM Library l WHERE DeviceId = %1)").arg(id);
 
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     query = QString("DELETE FROM Library WHERE DeviceId = %1").arg(id);
 
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1481,7 +1201,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1502,7 +1222,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1523,7 +1243,7 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1573,7 +1293,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1623,7 +1343,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1673,7 +1393,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1694,7 +1414,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1726,7 +1446,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceIdAndFilter(int deviceId,
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1747,7 +1467,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1768,7 +1488,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1789,7 +1509,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1810,7 +1530,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1838,7 +1558,7 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
             QString query = QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1858,7 +1578,7 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
                                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1883,7 +1603,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
             QString query = QString("DELETE FROM Library WHERE Id = %1").arg(deleteModels.at(i).getId());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1895,7 +1615,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
                                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1919,12 +1639,12 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
             QString query = QString("DELETE FROM Thumbnail WHERE Id = %1").arg(deleteModels.at(i).getThumbnailId());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
             query = QString("DELETE FROM Library WHERE Id = %1 AND TypeId = 2").arg(deleteModels.at(i).getId());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1940,7 +1660,7 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
                                     .arg(insertModels.at(i).getName()).arg(deviceId).arg(typeId).arg(insertModels.at(i).getThumbnailId()).arg(insertModels.at(i).getTimecode());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1957,7 +1677,7 @@ void DatabaseManager::deleteLibrary(int deviceId)
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1971,7 +1691,7 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<ThumbnailModel> models;
     while (sql.next())
@@ -1990,7 +1710,7 @@ ThumbnailModel DatabaseManager::getThumbnailByNameAndDeviceName(const QString& n
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -2019,19 +1739,19 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                                         .arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize()).arg(libraryModel.getThumbnailId());
 
                 if (!sql.exec(query))
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
             }
             else
             {
                 QString query = QString("INSERT INTO Thumbnail (Data, Timestamp, Size) VALUES('%1', '%2', '%3')").arg(model.getData()).arg(model.getTimestamp()).arg(model.getSize());
 
                 if (!sql.exec(query))
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
                 query = QString("UPDATE Library SET ThumbnailId = %1 WHERE Id = %2").arg(sql.lastInsertId().toInt()).arg(libraryModel.getId());
 
                 if (!sql.exec(query))
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
             }
         }
     }
@@ -2049,7 +1769,7 @@ void DatabaseManager::deleteThumbnails()
 
     QSqlQuery sql;
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     const QList<LibraryModel>& models = this->getLibraryMedia();
     for (int i = 0; i < models.count(); i++)
@@ -2060,7 +1780,7 @@ void DatabaseManager::deleteThumbnails()
             QString query = QString("UPDATE Library SET ThumbnailId = 0 WHERE Id = %1").arg(model.getId());
 
             if (!sql.exec(query))
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -2069,5 +1789,5 @@ void DatabaseManager::deleteThumbnails()
     // Shrink file on disk.
     query = QString("VACUUM Thumbnail");
     if (!sql.exec(query))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(query).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 }

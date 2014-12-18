@@ -129,6 +129,7 @@ AbstractRundownWidget* RundownAtemAutoWidget::clone()
     command->setSpeed(this->command.getSpeed());
     command->setTransition(this->command.getTransition());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setMixerStep(this->command.getMixerStep());
 
     return widget;
 }
@@ -267,7 +268,7 @@ void RundownAtemAutoWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition());
+        device->triggerAuto(this->command.getStep(), this->command.getSpeed(), this->command.getTransition(), this->command.getMixerStep());
 
     if (this->markUsedItems)
         setUsed(true);

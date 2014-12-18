@@ -30,10 +30,12 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
         void loadAtemSwitcher();
         void blockAllSignals(bool block);
         void loadAtemInput();
+        void loadAtemMixerStep();
 
         Q_SLOT void switcherChanged(int);
         Q_SLOT void inputChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void atemDeviceChanged(const AtemDeviceChangedEvent&);
+        Q_SLOT void mixerStepChanged(int);
 };
