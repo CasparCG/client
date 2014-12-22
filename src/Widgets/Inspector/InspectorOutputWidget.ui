@@ -47,9 +47,6 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxDevice">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -60,9 +57,6 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxTriCasterDevice">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -73,9 +67,6 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBoxAtemDevice">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
