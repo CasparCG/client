@@ -34,6 +34,9 @@ Please see the Help menu item inside the Client.
 ## Changes and updates
 See CHANGES.TXT for details.
 
+## Development
+Pre-built Qt 5.* binaries for Windows 64-bit (MinGW) can be found here: http://tver-soft.org/qt64
+
 ## License
 CasparCG Client is distributed under the GNU General Public License GPLv3 or
 higher, see LICENSE.TXT for details.
