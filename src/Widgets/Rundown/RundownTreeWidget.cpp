@@ -551,6 +551,8 @@ void RundownTreeWidget::setActive(bool active)
 
     if (currentItem != NULL && currentItemWidget != NULL)
     {
+        dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
 

@@ -173,8 +173,11 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-    bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
-    EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
+    if (pt.count(L"items.allowremotetriggering") > 0)
+    {
+        bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
+        EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
+    }
 
     EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(repositoryRundown));
 
