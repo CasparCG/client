@@ -18,7 +18,7 @@ echo Running qmake...
 "%BUILD_QMAKE%" ..\src\Solution.pro -r -spec win32-g++ "CONFIG+=release" || goto :error
 
 :: Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
-set PATH=%PATH%;%BUILD_MINGW_BIN%
+set PATH=%BUILD_MINGW_BIN%;%PATH%
 set MAKE_COMMAND=mingw32-make -j%BUILD_PARALLEL_THREADS%
 echo Building...
 mingw32-make || goto :error
