@@ -37,7 +37,7 @@ See CHANGES.TXT for details.
 ## Development
 Pre-built Qt 5.* binaries for Windows 64-bit (MinGW SEH exception handling) can be found here: http://tver-soft.org/qt64
 
-VLC need to be installed on Linux: sudo apt-get install vlc libvlc-dev libvlccore-dev and the plugin cache may need to be refreshed / updated on Linux: sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
+VLC need to be installed on Linux: sudo apt-get install vlc libvlc-dev libvlccore-dev. The plugin cache may need to be refreshed: sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
 
 ## License
 CasparCG Client is distributed under the GNU General Public License GPLv3 or
