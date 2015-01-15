@@ -244,10 +244,6 @@
 {
     border-bottom-width: 0px;
 }
-#tabWidgetRundown QTabBar::tab:selected
-{
-    padding-bottom: 3px;
-}
 
 #treeWidgetRundown
 {
