@@ -42,6 +42,7 @@ echo Copying binary dependencies...
 copy ..\deploy\win32\* "%CLIENT_FOLDER%\%CLIENT_FOLDER%" || goto :error
 xcopy ..\deploy\win32\sqldrivers "%CLIENT_FOLDER%\%CLIENT_FOLDER%\sqldrivers" /E /I /Y || goto :error
 xcopy ..\deploy\win32\plugins "%CLIENT_FOLDER%\%CLIENT_FOLDER%\plugins" /E /I /Y || goto :error
+xcopy ..\deploy\win32\platforms "%CLIENT_FOLDER%\%CLIENT_FOLDER%\platforms" /E /I /Y || goto :error
 
 :: Copy documentation
 echo Copying documentation...
