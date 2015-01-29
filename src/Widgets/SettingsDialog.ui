@@ -1020,6 +1020,11 @@
        <string>Preview Channel</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Locked Channel</string>
+      </property>
+     </column>
     </widget>
     <widget class="QToolButton" name="toolButtonRemoveDevice">
      <property name="geometry">

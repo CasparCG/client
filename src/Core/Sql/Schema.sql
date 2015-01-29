@@ -1,7 +1,7 @@
 CREATE TABLE BlendMode (Id INTEGER PRIMARY KEY, Value TEXT);
 CREATE TABLE Configuration (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT);
 CREATE TABLE Chroma (Id INTEGR PRIMARY KEY, Key TEXT);
-CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT, PreviewChannel INTEGER);
+CREATE TABLE Device (Id INTEGER PRIMARY KEY, Name TEXT, Address TEXT, Port INTEGER, Username TEXT, Password TEXT, Description TEXT, Version TEXT, Shadow TEXT, Channels INTEGER, ChannelFormats TEXT, PreviewChannel INTEGER, LockedChannel INTEGER);
 CREATE TABLE Direction (Id INTEGER PRIMARY KEY, Value TEXT);
 CREATE TABLE Format (Id INTEGER PRIMARY KEY, Name TEXT, Width INTEGER, Height INTEGER, FramesPerSecond TEXT);
 CREATE TABLE GpiPort (Id INTEGER PRIMARY KEY, RisingEdge INTEGER, Action TEXT);
@@ -186,7 +186,6 @@ INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 1', '2');
 INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 2', '3');
 INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 3', '4');
 INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 4', '5');
-
 INSERT INTO AtemAutoTransition (Name, Value) VALUES('MIX', '0');
 INSERT INTO AtemAutoTransition (Name, Value) VALUES('DIP', '1');
 INSERT INTO AtemAutoTransition (Name, Value) VALUES('WIPE', '2');

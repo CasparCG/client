@@ -50,7 +50,11 @@ void DeviceDialog::setDeviceModel(const DeviceModel& model)
     this->lineEditDescription->setText(model.getDescription());
     this->checkBoxShadow->setChecked((model.getShadow() == "Yes") ? true : false);
     this->checkBoxPreview->setChecked((model.getPreviewChannel() > 0) ? true : false);
+    this->checkBoxLocked->setChecked((model.getLockedChannel() > 0) ? true : false);
+    this->spinBoxPreviewChannel->setValue((model.getPreviewChannel() > 0) ? model.getPreviewChannel() : 2);
+    this->spinBoxLockedChannel->setValue((model.getLockedChannel() > 0) ? model.getLockedChannel() : 1);
     this->spinBoxPreviewChannel->setEnabled(this->checkBoxPreview->isChecked());
+    this->spinBoxLockedChannel->setEnabled(this->checkBoxLocked->isChecked());
 }
 
 const QString DeviceDialog::getName() const
@@ -94,6 +98,11 @@ const QString DeviceDialog::getShadow() const
 int DeviceDialog::getPreviewChannel() const
 {
     return (this->checkBoxPreview->isChecked() == true) ? this->spinBoxPreviewChannel->value() : 0;
+}
+
+int DeviceDialog::getLockedChannel() const
+{
+    return (this->checkBoxLocked->isChecked() == true) ? this->spinBoxLockedChannel->value() : 0;
 }
 
 void DeviceDialog::accept()
@@ -194,7 +203,16 @@ void DeviceDialog::connectionStateChanged(CasparDevice& device)
     this->device->disconnectDevice();
 }
 
-void DeviceDialog::previewChanged(int state)
+void DeviceDialog::previewChannelChanged(int state)
 {
     this->spinBoxPreviewChannel->setEnabled(state == Qt::Checked);
+    if (state == Qt::Unchecked)
+        this->spinBoxPreviewChannel->setValue(2);
+}
+
+void DeviceDialog::lockedChannelChanged(int state)
+{
+    this->spinBoxLockedChannel->setEnabled(state == Qt::Checked);
+    if (state == Qt::Unchecked)
+        this->spinBoxLockedChannel->setValue(1);
 }

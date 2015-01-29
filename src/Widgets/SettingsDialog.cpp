@@ -169,6 +169,9 @@ void SettingsDialog::loadDevice()
 
         if (model.getPreviewChannel() > 0)
             treeItem->setText(12, QString("%1").arg(model.getPreviewChannel()));
+
+        if (model.getLockedChannel() > 0)
+            treeItem->setText(13, QString("%1").arg(model.getLockedChannel()));
     }
 
     checkEmptyDeviceList();
@@ -360,7 +363,8 @@ void SettingsDialog::showImportDeviceDialog()
                 DatabaseManager::getInstance().insertDevice(DeviceModel(0, model.getName(), model.getAddress(),
                                                                         model.getPort(), model.getUsername(),
                                                                         model.getPassword(), model.getDescription(),
-                                                                        "", model.getShadow(), 0, "", model.getPreviewChannel()));
+                                                                        "", model.getShadow(), 0, "", model.getPreviewChannel(),
+                                                                        model.getLockedChannel()));
             }
 
             loadDevice();
@@ -434,7 +438,8 @@ void SettingsDialog::showAddDeviceDialog()
         DatabaseManager::getInstance().insertDevice(DeviceModel(0, dialog->getName(), dialog->getAddress(),
                                                                 dialog->getPort().toInt(), dialog->getUsername(),
                                                                 dialog->getPassword(), dialog->getDescription(),
-                                                                "", dialog->getShadow(), 0, "", dialog->getPreviewChannel()));
+                                                                "", dialog->getShadow(), 0, "", dialog->getPreviewChannel(),
+                                                                dialog->getLockedChannel()));
 
         loadDevice();
 
@@ -551,7 +556,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
                                                                 dialog->getPassword(), dialog->getDescription(),
                                                                 model.getVersion(), dialog->getShadow(),
                                                                 model.getChannels(), model.getChannelFormats(),
-                                                                dialog->getPreviewChannel()));
+                                                                dialog->getPreviewChannel(), dialog->getLockedChannel()));
 
         loadDevice();
 

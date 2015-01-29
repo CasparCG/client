@@ -72,6 +72,8 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 {
     setupUi(this);
 
+    this->comboBoxDevice->setEnabled(false);
+
     this->comboBoxAtemDevice->setVisible(false);
     this->comboBoxTriCasterDevice->setVisible(false);
 
@@ -107,6 +109,8 @@ void InspectorOutputWidget::libraryFilterChanged(const LibraryFilterChangedEvent
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
     this->model = event.getLibraryModel();
+
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model->getDeviceName());
 
     blockAllSignals(true);
 
@@ -147,8 +151,11 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxChannel->setMaximum(1);
         else
         {
-            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName()).getChannelFormats().split(",");
-            this->spinBoxChannel->setMaximum(channelFormats.count());
+            if (deviceModel != NULL)
+            {
+                const QStringList& channelFormats = deviceModel->getChannelFormats().split(",");
+                this->spinBoxChannel->setMaximum(channelFormats.count());
+            }
         }
 
         this->comboBoxDevice->setCurrentIndex(index);
@@ -360,6 +367,12 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
             this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
             this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
         }
+    }
+
+    if (deviceModel != NULL && deviceModel->getLockedChannel() > 0 && deviceModel->getLockedChannel() <= this->spinBoxChannel->maximum())
+    {
+        this->spinBoxChannel->setEnabled(false);
+        this->spinBoxChannel->setValue(deviceModel->getLockedChannel());
     }
 
     checkEmptyDevice();
@@ -677,8 +690,20 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
     if (deviceName.isEmpty())
         return;
 
-    const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceName).getChannelFormats().split(",");
+    const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByName(deviceName);
+    const QStringList& channelFormats = model->getChannelFormats().split(",");
     this->spinBoxChannel->setMaximum(channelFormats.count());
+
+    if (model->getLockedChannel() > 0 && model->getLockedChannel() <= this->spinBoxChannel->maximum())
+    {
+        this->spinBoxChannel->setEnabled(false);
+        this->spinBoxChannel->setValue(model->getLockedChannel());
+    }
+    else
+    {
+        this->spinBoxChannel->setEnabled(true);
+        this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
+    }
 
     checkEmptyDevice();
     checkEmptyAtemDevice();
@@ -701,6 +726,9 @@ void InspectorOutputWidget::targetChanged(QString name)
 
 void InspectorOutputWidget::channelChanged(int channel)
 {
+    if (this->command == NULL)
+        return;
+
     this->command->setChannel(channel);
 
     EventManager::getInstance().fireChannelChangedEvent(ChannelChangedEvent(channel));

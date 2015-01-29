@@ -54,7 +54,7 @@ void DatabaseManager::createDatabase()
 
 #if defined(Q_OS_WIN)
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
-    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0)");
+    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)");
 #else
     sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
 #endif
@@ -1027,7 +1027,7 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
 
 QList<DeviceModel> DatabaseManager::getDevice()
 {
-    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
+    QString query("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d "
                   "ORDER BY d.Name");
 
     QSqlQuery sql;
@@ -1038,7 +1038,7 @@ QList<DeviceModel> DatabaseManager::getDevice()
     while (sql.next())
         models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                                      sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt()));
+                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt()));
 
     return models;
 }
@@ -1047,7 +1047,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d "
                             "WHERE d.Name = '%1'").arg(name);
 
     QSqlQuery sql;
@@ -1058,14 +1058,14 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                        sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt());
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 {
     QMutexLocker locker(&mutex);
 
-    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel FROM Device d "
+    QString query = QString("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d "
                             "WHERE d.Address = '%1'").arg(address);
 
     QSqlQuery sql;
@@ -1076,7 +1076,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
                        sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt());
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
 }
 
 void DatabaseManager::insertDevice(const DeviceModel& model)
@@ -1085,11 +1085,11 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) "
-                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9, '%10', %11)")
+    QString query = QString("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel, LockedChannel) "
+                            "VALUES('%1', '%2', %3, '%4', '%5', '%6', '%7', '%8', %9, '%10', %11, %12)")
                             .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
                             .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
-                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel());
+                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel()).arg(model.getLockedChannel());
 
     QSqlQuery sql;
     if (!sql.exec(query))
@@ -1104,11 +1104,11 @@ void DatabaseManager::updateDevice(const DeviceModel& model)
 
     QSqlDatabase::database().transaction();
 
-    QString query = QString("UPDATE Device SET Name = '%1', Address = '%2', Port = %3, Username = '%4', Password = '%5', Description = '%6', Version = '%7', Shadow = '%8', Channels = %9, ChannelFormats = '%10', PreviewChannel = %11 "
-                            "WHERE Id = %12")
+    QString query = QString("UPDATE Device SET Name = '%1', Address = '%2', Port = %3, Username = '%4', Password = '%5', Description = '%6', Version = '%7', Shadow = '%8', Channels = %9, ChannelFormats = '%10', PreviewChannel = %11, LockedChannel = %12 "
+                            "WHERE Id = %13")
                             .arg(model.getName()).arg(model.getAddress()).arg(model.getPort()).arg(model.getUsername())
                             .arg(model.getPassword()).arg(model.getDescription()).arg(model.getVersion()).arg(model.getShadow())
-                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel())
+                            .arg(model.getChannels()).arg(model.getChannelFormats()).arg(model.getPreviewChannel()).arg(model.getLockedChannel())
                             .arg(model.getId());
 
     QSqlQuery sql;

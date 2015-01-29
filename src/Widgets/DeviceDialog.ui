@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>234</height>
+    <height>260</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>450</width>
-    <height>234</height>
+    <height>260</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>450</width>
-    <height>234</height>
+    <height>260</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,7 @@
    <property name="geometry">
     <rect>
      <x>364</x>
-     <y>201</y>
+     <y>227</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -199,7 +199,7 @@
    <property name="geometry">
     <rect>
      <x>138</x>
-     <y>174</y>
+     <y>200</y>
      <width>151</width>
      <height>17</height>
     </rect>
@@ -310,6 +310,44 @@
     <string>Preview on channel</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="checkBoxLocked">
+   <property name="geometry">
+    <rect>
+     <x>138</x>
+     <y>174</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Locked on channel</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxLockedChannel">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>272</x>
+     <y>171</y>
+     <width>74</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>1</number>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>lineEditDeviceName</tabstop>
@@ -394,7 +432,7 @@
    <sender>checkBoxPreview</sender>
    <signal>stateChanged(int)</signal>
    <receiver>DeviceDialog</receiver>
-   <slot>previewChanged(int)</slot>
+   <slot>previewChannelChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>152</x>
@@ -406,6 +444,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxLocked</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>DeviceDialog</receiver>
+   <slot>lockedChannelChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addressFinished()</slot>
@@ -414,6 +468,7 @@
   <slot>okClicked()</slot>
   <slot>nameChanged(QString)</slot>
   <slot>addressChanged(QString)</slot>
-  <slot>previewChanged(int)</slot>
+  <slot>previewChannelChanged(int)</slot>
+  <slot>lockedChannelChanged(int)</slot>
  </slots>
 </ui>
