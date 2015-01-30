@@ -461,61 +461,7 @@ void LibraryWidget::setupTools()
     widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
     widgetSolidColor->setText(5, "0");
 
-    QTreeWidgetItem* widgetTriCasterMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterMacro->setIcon(0, QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"));
-    widgetTriCasterMacro->setText(0, "Play Macro");
-    widgetTriCasterMacro->setText(1, "0");
-    widgetTriCasterMacro->setText(2, "Play Macro");
-    widgetTriCasterMacro->setText(3, "");
-    widgetTriCasterMacro->setText(4, Rundown::TRICASTERMACRO);
-    widgetTriCasterMacro->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterInput->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"));
-    widgetTriCasterInput->setText(0, "Select Input");
-    widgetTriCasterInput->setText(1, "0");
-    widgetTriCasterInput->setText(2, "Select Input");
-    widgetTriCasterInput->setText(3, "");
-    widgetTriCasterInput->setText(4, Rundown::TRICASTERINPUT);
-    widgetTriCasterInput->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterSource = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterSource->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectNetworkSourceSmall.png"));
-    widgetTriCasterSource->setText(0, "Select Network Source");
-    widgetTriCasterSource->setText(1, "0");
-    widgetTriCasterSource->setText(2, "Select Network Source");
-    widgetTriCasterSource->setText(3, "");
-    widgetTriCasterSource->setText(4, Rundown::TRICASTERNETSOURCE);
-    widgetTriCasterSource->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterPreset->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"));
-    widgetTriCasterPreset->setText(0, "Select Preset");
-    widgetTriCasterPreset->setText(1, "0");
-    widgetTriCasterPreset->setText(2, "Select Preset");
-    widgetTriCasterPreset->setText(3, "");
-    widgetTriCasterPreset->setText(4, Rundown::TRICASTERPRESET);
-    widgetTriCasterPreset->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterAuto->setIcon(0, QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"));
-    widgetTriCasterAuto->setText(0, "Trigger Auto");
-    widgetTriCasterAuto->setText(1, "0");
-    widgetTriCasterAuto->setText(2, "Trigger Auto");
-    widgetTriCasterAuto->setText(3, "");
-    widgetTriCasterAuto->setText(4, Rundown::TRICASTERAUTO);
-    widgetTriCasterAuto->setText(5, "0");
-
-    QTreeWidgetItem* widgetTriCasterTake = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
-    widgetTriCasterTake->setIcon(0, QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"));
-    widgetTriCasterTake->setText(0, "Trigger Take");
-    widgetTriCasterTake->setText(1, "0");
-    widgetTriCasterTake->setText(2, "Trigger Take");
-    widgetTriCasterTake->setText(3, "");
-    widgetTriCasterTake->setText(4, Rundown::TRICASTERTAKE);
-    widgetTriCasterTake->setText(5, "0");
-
-    QTreeWidgetItem* widgetAtemInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemInput->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
     widgetAtemInput->setText(0, "Select Input");
     widgetAtemInput->setText(1, "0");
@@ -524,7 +470,7 @@ void LibraryWidget::setupTools()
     widgetAtemInput->setText(4, Rundown::ATEMINPUT);
     widgetAtemInput->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemAudioGain = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemAudioGain = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemAudioGain->setIcon(0, QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"));
     widgetAtemAudioGain->setText(0, "Set Audio Gain");
     widgetAtemAudioGain->setText(1, "0");
@@ -533,7 +479,7 @@ void LibraryWidget::setupTools()
     widgetAtemAudioGain->setText(4, Rundown::ATEMAUDIOGAIN);
     widgetAtemAudioGain->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemAudioInputState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemAudioInputState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemAudioInputState->setIcon(0, QIcon(":/Graphics/Images/Atem/AudioInputStateSmall.png"));
     widgetAtemAudioInputState->setText(0, "Set Audio Input State");
     widgetAtemAudioInputState->setText(1, "0");
@@ -542,7 +488,7 @@ void LibraryWidget::setupTools()
     widgetAtemAudioInputState->setText(4, Rundown::ATEMAUDIOINPUTSTATE);
     widgetAtemAudioInputState->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemAudioInputBalance = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemAudioInputBalance = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemAudioInputBalance->setIcon(0, QIcon(":/Graphics/Images/Atem/AudioInputBalanceSmall.png"));
     widgetAtemAudioInputBalance->setText(0, "Set Audio Input Balance");
     widgetAtemAudioInputBalance->setText(1, "0");
@@ -551,7 +497,7 @@ void LibraryWidget::setupTools()
     widgetAtemAudioInputBalance->setText(4, Rundown::ATEMAUDIOINPUTBALANCE);
     widgetAtemAudioInputBalance->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemKeyerState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemKeyerState = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemKeyerState->setIcon(0, QIcon(":/Graphics/Images/Atem/KeyerStateSmall.png"));
     widgetAtemKeyerState->setText(0, "Set Keyer State");
     widgetAtemKeyerState->setText(1, "0");
@@ -560,7 +506,7 @@ void LibraryWidget::setupTools()
     widgetAtemKeyerState->setText(4, Rundown::ATEMKEYERSTATE);
     widgetAtemKeyerState->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemVideoFormat = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemVideoFormat = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemVideoFormat->setIcon(0, QIcon(":/Graphics/Images/Atem/VideoFormatSmall.png"));
     widgetAtemVideoFormat->setText(0, "Set Video Format");
     widgetAtemVideoFormat->setText(1, "0");
@@ -569,7 +515,7 @@ void LibraryWidget::setupTools()
     widgetAtemVideoFormat->setText(4, Rundown::ATEMVIDEOFORMAT);
     widgetAtemVideoFormat->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemAuto->setIcon(0, QIcon(":/Graphics/Images/Atem/TriggerAutoSmall.png"));
     widgetAtemAuto->setText(0, "Trigger Auto");
     widgetAtemAuto->setText(1, "0");
@@ -578,7 +524,7 @@ void LibraryWidget::setupTools()
     widgetAtemAuto->setText(4, Rundown::ATEMAUTO);
     widgetAtemAuto->setText(5, "0");
 
-    QTreeWidgetItem* widgetAtemCut = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
+    QTreeWidgetItem* widgetAtemCut = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemCut->setIcon(0, QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"));
     widgetAtemCut->setText(0, "Trigger Cut");
     widgetAtemCut->setText(1, "0");
@@ -587,7 +533,7 @@ void LibraryWidget::setupTools()
     widgetAtemCut->setText(4, Rundown::ATEMCUT);
     widgetAtemCut->setText(5, "0");
 
-    QTreeWidgetItem* widgetPanasonicPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
+    QTreeWidgetItem* widgetPanasonicPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(4));
     widgetPanasonicPreset->setIcon(0, QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"));
     widgetPanasonicPreset->setText(0, "Panasonic PTZ Preset");
     widgetPanasonicPreset->setText(1, "0");
@@ -596,7 +542,7 @@ void LibraryWidget::setupTools()
     widgetPanasonicPreset->setText(4, Rundown::PANASONICPRESET);
     widgetPanasonicPreset->setText(5, "0");
 
-    QTreeWidgetItem* widgetSonyPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(6));
+    QTreeWidgetItem* widgetSonyPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(5));
     widgetSonyPreset->setIcon(0, QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"));
     widgetSonyPreset->setText(0, "Sony VISCA Preset");
     widgetSonyPreset->setText(1, "0");
@@ -604,6 +550,69 @@ void LibraryWidget::setupTools()
     widgetSonyPreset->setText(3, "");
     widgetSonyPreset->setText(4, Rundown::SONYPRESET);
     widgetSonyPreset->setText(5, "0");
+
+    QTreeWidgetItem* widgetSpyderPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(6));
+    widgetSpyderPreset->setIcon(0, QIcon(":/Graphics/Images/Spyder/SpyderPresetSmall.png"));
+    widgetSpyderPreset->setText(0, "Spyder Preset");
+    widgetSpyderPreset->setText(1, "0");
+    widgetSpyderPreset->setText(2, "Spyder Preset");
+    widgetSpyderPreset->setText(3, "");
+    widgetSpyderPreset->setText(4, Rundown::SPYDERPRESET);
+    widgetSpyderPreset->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterMacro->setIcon(0, QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"));
+    widgetTriCasterMacro->setText(0, "Play Macro");
+    widgetTriCasterMacro->setText(1, "0");
+    widgetTriCasterMacro->setText(2, "Play Macro");
+    widgetTriCasterMacro->setText(3, "");
+    widgetTriCasterMacro->setText(4, Rundown::TRICASTERMACRO);
+    widgetTriCasterMacro->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterInput->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"));
+    widgetTriCasterInput->setText(0, "Select Input");
+    widgetTriCasterInput->setText(1, "0");
+    widgetTriCasterInput->setText(2, "Select Input");
+    widgetTriCasterInput->setText(3, "");
+    widgetTriCasterInput->setText(4, Rundown::TRICASTERINPUT);
+    widgetTriCasterInput->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterSource = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterSource->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectNetworkSourceSmall.png"));
+    widgetTriCasterSource->setText(0, "Select Network Source");
+    widgetTriCasterSource->setText(1, "0");
+    widgetTriCasterSource->setText(2, "Select Network Source");
+    widgetTriCasterSource->setText(3, "");
+    widgetTriCasterSource->setText(4, Rundown::TRICASTERNETSOURCE);
+    widgetTriCasterSource->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterPreset = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterPreset->setIcon(0, QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"));
+    widgetTriCasterPreset->setText(0, "Select Preset");
+    widgetTriCasterPreset->setText(1, "0");
+    widgetTriCasterPreset->setText(2, "Select Preset");
+    widgetTriCasterPreset->setText(3, "");
+    widgetTriCasterPreset->setText(4, Rundown::TRICASTERPRESET);
+    widgetTriCasterPreset->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterAuto = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterAuto->setIcon(0, QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"));
+    widgetTriCasterAuto->setText(0, "Trigger Auto");
+    widgetTriCasterAuto->setText(1, "0");
+    widgetTriCasterAuto->setText(2, "Trigger Auto");
+    widgetTriCasterAuto->setText(3, "");
+    widgetTriCasterAuto->setText(4, Rundown::TRICASTERAUTO);
+    widgetTriCasterAuto->setText(5, "0");
+
+    QTreeWidgetItem* widgetTriCasterTake = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(7));
+    widgetTriCasterTake->setIcon(0, QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"));
+    widgetTriCasterTake->setText(0, "Trigger Take");
+    widgetTriCasterTake->setText(1, "0");
+    widgetTriCasterTake->setText(2, "Trigger Take");
+    widgetTriCasterTake->setText(3, "");
+    widgetTriCasterTake->setText(4, Rundown::TRICASTERTAKE);
+    widgetTriCasterTake->setText(5, "0");
 
     this->treeWidgetTool->expandAll();
 }

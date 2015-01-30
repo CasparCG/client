@@ -107,6 +107,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Sony/debug/ -lson
 else:macx:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 else:unix:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 
+DEPENDPATH += $$OUT_PWD/../Spyder $$PWD/../Spyder
+INCLUDEPATH += $$OUT_PWD/../Spyder $$PWD/../Spyder
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Spyder/release/ -lspyder
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Spyder/debug/ -lspyder
+else:macx:LIBS += -L$$OUT_PWD/../Spyder/ -lspyder
+else:unix:LIBS += -L$$OUT_PWD/../Spyder/ -lspyder
+
 DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
 INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb

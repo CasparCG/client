@@ -163,7 +163,9 @@ HEADERS += \
     Rundown/RundownRouteVideolayerWidget.h \
     Inspector/InspectorRouteVideolayerWidget.h \
     Inspector/Sony/InspectorSonyPresetWidget.h \
-    Rundown/Sony/RundownSonyPresetWidget.h
+    Rundown/Sony/RundownSonyPresetWidget.h \
+    Rundown/Spyder/RundownSpyderPresetWidget.h \
+    Inspector/Spyder/InspectorSpyderPresetWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -315,7 +317,9 @@ SOURCES += \
     Rundown/RundownRouteVideolayerWidget.cpp \
     Inspector/InspectorRouteVideolayerWidget.cpp \
     Inspector/Sony/InspectorSonyPresetWidget.cpp \
-    Rundown/Sony/RundownSonyPresetWidget.cpp
+    Rundown/Sony/RundownSonyPresetWidget.cpp \
+    Rundown/Spyder/RundownSpyderPresetWidget.cpp \
+    Inspector/Spyder/InspectorSpyderPresetWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -455,7 +459,9 @@ FORMS += \
     Rundown/RundownRouteVideolayerWidget.ui \
     Inspector/InspectorRouteVideolayerWidget.ui \
     Inspector/Sony/InspectorSonyPresetWidget.ui \
-    Rundown/Sony/RundownSonyPresetWidget.ui
+    Rundown/Sony/RundownSonyPresetWidget.ui \
+    Rundown/Spyder/RundownSpyderPresetWidget.ui \
+    Inspector/Spyder/InspectorSpyderPresetWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -801,6 +807,13 @@ else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Sony/debug/ -lson
 else:macx:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 else:unix:LIBS += -L$$OUT_PWD/../Sony/ -lsony
 
+DEPENDPATH += $$OUT_PWD/../Spyder $$PWD/../Spyder
+INCLUDEPATH += $$OUT_PWD/../Spyder $$PWD/../Spyder
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Spyder/release/ -lspyder
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Spyder/debug/ -lspyder
+else:macx:LIBS += -L$$OUT_PWD/../Spyder/ -lspyder
+else:unix:LIBS += -L$$OUT_PWD/../Spyder/ -lspyder
+
 DEPENDPATH += $$OUT_PWD/../Web $$PWD/../Web
 INCLUDEPATH += $$OUT_PWD/../Web $$PWD/../Web
 win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Web/release/ -lweb
@@ -842,3 +855,8 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Core/release/ -lcore
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Core/debug/ -lcore
 else:macx:LIBS += -L$$OUT_PWD/../Core/ -lcore
 else:unix:LIBS += -L$$OUT_PWD/../Core/ -lcore
+
+DISTFILES += \
+    Images/Sypder/Spyder.png \
+    Images/Sypder/SpyderSmall.png \
+    Images/Sypder/SpyderSmallHover.png

@@ -40,6 +40,14 @@ namespace Sony
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
+namespace Spyder
+{
+    static const QString DEFAULT_ADDRESS = "";
+    static const QString DEFAULT_PORT = "";
+    static const int DEFAULT_PRESET = 1;
+    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+}
+
 namespace Http
 {
     static const QString DEFAULT_URL = "";
@@ -454,6 +462,7 @@ namespace Rundown
     static const QString OSCOUTPUT = "OSCOUTPUT";
     static const QString PANASONICPRESET = "PANASONICPRESET";
     static const QString SONYPRESET = "SONYPRESET";
+    static const QString SPYDERPRESET = "SPYDERPRESET";
     static const QString PERSPECTIVE = "PERSPECTIVE";
     static const QString ROTATION = "ROTATION";
     static const QString RESET = "RESET";

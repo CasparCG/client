@@ -76,7 +76,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
-        PtzDevice device;
+        PtzDevice* device;
 
         void checkGpiConnection();
         void checkDeviceConnection();

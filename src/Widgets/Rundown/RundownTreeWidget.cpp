@@ -191,16 +191,24 @@ void RundownTreeWidget::setupMenus()
     //this->contextMenuSony->setIcon(QIcon(":/Graphics/Images/Sony.png"));
     this->contextMenuSony->addAction(QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"), "Sony VISCA Preset", this, SLOT(addSonyPresetItem()));
 
+    this->contextMenuSpyder = new QMenu(this);
+    this->contextMenuSpyder->setObjectName("contextMenuSpyder");
+    this->contextMenuSpyder->setTitle("Spyder");
+    //this->contextMenuSpyder->setIcon(QIcon(":/Graphics/Images/Spyder.png"));
+    this->contextMenuSpyder->addAction(QIcon(":/Graphics/Images/Spyder/SpyderPresetSmall.png"), "Spyder Preset", this, SLOT(addSpyderPresetItem()));
+
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
     //this->contextMenuTools->setIcon(QIcon(":/Graphics/Images/New.png"));
     this->contextMenuTools->addMenu(this->contextMenuLibrary);
     this->contextMenuTools->addMenu(this->contextMenuMixer);
     this->contextMenuTools->addMenu(this->contextMenuOther);
-    this->contextMenuTools->addMenu(this->contextMenuTriCaster);
+    this->contextMenuTools->addSeparator();
     this->contextMenuTools->addMenu(this->contextMenuAtem);
     this->contextMenuTools->addMenu(this->contextMenuPanasonic);
     this->contextMenuTools->addMenu(this->contextMenuSony);
+    this->contextMenuTools->addMenu(this->contextMenuSpyder);
+    this->contextMenuTools->addMenu(this->contextMenuTriCaster);
 
     this->contextMenuMark = new QMenu(this);
     this->contextMenuMark->setTitle("Mark Item");
@@ -1575,6 +1583,11 @@ void RundownTreeWidget::addPanasonicPresetItem()
 void RundownTreeWidget::addSonyPresetItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SONYPRESET);
+}
+
+void RundownTreeWidget::addSpyderPresetItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SPYDERPRESET);
 }
 
 void RundownTreeWidget::saveAsPreset()

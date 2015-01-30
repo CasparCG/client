@@ -2,11 +2,11 @@
 
 #include "../../Shared.h"
 #include "../AbstractRundownWidget.h"
-#include "ui_RundownSonyPresetWidget.h"
+#include "ui_RundownSpyderPresetWidget.h"
 
 #include "Global.h"
 
-#include "ViscaDevice.h"
+#include "SpyderDevice.h"
 
 #include "GpiDevice.h"
 
@@ -14,7 +14,7 @@
 #include "Animations/ActiveAnimation.h"
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
-#include "Commands/Sony/SonyPresetCommand.h"
+#include "Commands/Spyder/SpyderPresetCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -23,13 +23,13 @@
 
 #include <QtWidgets/QWidget>
 
-class WIDGETS_EXPORT RundownSonyPresetWidget : public QWidget, Ui::RundownSonyPresetWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
+class WIDGETS_EXPORT RundownSpyderPresetWidget : public QWidget, Ui::RundownSpyderPresetWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
 {
     Q_OBJECT
 
     public:
-        explicit RundownSonyPresetWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                         bool active = false, bool inGroup = false, bool compactView = false);
+        explicit RundownSpyderPresetWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
+                                           bool active = false, bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 
@@ -63,7 +63,7 @@ class WIDGETS_EXPORT RundownSonyPresetWidget : public QWidget, Ui::RundownSonyPr
         bool compactView;
         QString color;
         LibraryModel model;
-        SonyPresetCommand command;
+        SpyderPresetCommand command;
         ActiveAnimation* animation;
         bool markUsedItems;
 
@@ -76,7 +76,7 @@ class WIDGETS_EXPORT RundownSonyPresetWidget : public QWidget, Ui::RundownSonyPr
         OscSubscription* clearChannelControlSubscription;
 
         QTimer executeTimer;
-        ViscaDevice* device;
+        SpyderDevice* device;
 
         void checkGpiConnection();
         void checkDeviceConnection();

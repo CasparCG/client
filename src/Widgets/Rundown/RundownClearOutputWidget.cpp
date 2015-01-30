@@ -333,7 +333,8 @@ void RundownClearOutputWidget::executeClearChannel()
         }
     }
 
-    setUsed(true);
+    if (this->markUsedItems)
+        setUsed(true);
 }
 
 void RundownClearOutputWidget::channelChanged(int channel)

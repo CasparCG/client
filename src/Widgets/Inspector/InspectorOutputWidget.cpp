@@ -44,6 +44,7 @@
 #include "Commands/RouteVideolayerCommand.h"
 #include "Commands/Panasonic/PanasonicPresetCommand.h"
 #include "Commands/Sony/SonyPresetCommand.h"
+#include "Commands/Spyder/SpyderPresetCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -226,6 +227,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<HttpGetCommand*>(event.getCommand()) ||
                  dynamic_cast<HttpPostCommand*>(event.getCommand()) ||
                  dynamic_cast<SonyPresetCommand*>(event.getCommand()) ||
+                 dynamic_cast<SpyderPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PanasonicPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {

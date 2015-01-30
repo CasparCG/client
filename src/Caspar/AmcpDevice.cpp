@@ -9,7 +9,7 @@
 
 AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
     : QObject(parent),
-      command(AmcpDevice::NONE), port(port), state(AmcpDevice::ExpectingHeader), connected(false), address(address), disableCommands(false)
+      command(AmcpDevice::NONE), address(address), port(port), state(AmcpDevice::ExpectingHeader), connected(false), disableCommands(false)
 {
     this->socket = new QTcpSocket(this);
 

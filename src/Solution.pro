@@ -7,6 +7,7 @@ SUBDIRS += \
     TriCaster \
     Panasonic \
     Sony \
+    Spyder \
     Web \
     Gpi \
     Osc \

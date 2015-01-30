@@ -454,4 +454,6 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Videolayer", "", "", Rundown::ROUTEVIDEOLAYER, 0, "")));
     else if (type ==  Rundown::SONYPRESET)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Sony VISCA Preset", "", "", Rundown::SONYPRESET, 0, "")));
+    else if (type ==  Rundown::SPYDERPRESET)
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Spyder Preset", "", "", Rundown::SPYDERPRESET, 0, "")));
 }

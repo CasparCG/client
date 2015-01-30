@@ -1,4 +1,4 @@
-#include "RundownPanasonicPresetWidget.h"
+#include "RundownSpyderPresetWidget.h"
 
 #include "Global.h"
 
@@ -12,15 +12,16 @@
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
-RundownPanasonicPresetWidget::RundownPanasonicPresetWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                                           bool inGroup, bool compactView)
+RundownSpyderPresetWidget::RundownSpyderPresetWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
+                                                     bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), playControlSubscription(NULL),
-      playNowControlSubscription(NULL), updateControlSubscription(NULL)
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
+      playControlSubscription(NULL), playNowControlSubscription(NULL), updateControlSubscription(NULL), clearControlSubscription(NULL),
+      clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
-    this->device = new PtzDevice(this);
+    this->device = new SpyderDevice(this);
 
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
@@ -52,7 +53,7 @@ RundownPanasonicPresetWidget::RundownPanasonicPresetWidget(const LibraryModel& m
     checkGpiConnection();
 }
 
-void RundownPanasonicPresetWidget::labelChanged(const LabelChangedEvent& event)
+void RundownSpyderPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
     if (!this->active)
@@ -63,12 +64,12 @@ void RundownPanasonicPresetWidget::labelChanged(const LabelChangedEvent& event)
     this->labelLabel->setText(this->model.getLabel());
 }
 
-AbstractRundownWidget* RundownPanasonicPresetWidget::clone()
+AbstractRundownWidget* RundownSpyderPresetWidget::clone()
 {
-    RundownPanasonicPresetWidget* widget = new RundownPanasonicPresetWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                                            this->inGroup, this->compactView);
+    RundownSpyderPresetWidget* widget = new RundownSpyderPresetWidget(this->model, this->parentWidget(), this->color, this->active,
+                                                                      this->inGroup, this->compactView);
 
-    PanasonicPresetCommand* command = dynamic_cast<PanasonicPresetCommand*>(widget->getCommand());
+    SpyderPresetCommand* command = dynamic_cast<SpyderPresetCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
@@ -77,13 +78,14 @@ AbstractRundownWidget* RundownPanasonicPresetWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setAddress(this->command.getAddress());
+    command->setPort(this->command.getPort());
     command->setPreset(this->command.getPreset());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
 
     return widget;
 }
 
-void RundownPanasonicPresetWidget::setCompactView(bool compactView)
+void RundownSpyderPresetWidget::setCompactView(bool compactView)
 {
     if (compactView)
     {
@@ -101,37 +103,37 @@ void RundownPanasonicPresetWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownPanasonicPresetWidget::readProperties(boost::property_tree::wptree& pt)
+void RundownSpyderPresetWidget::readProperties(boost::property_tree::wptree& pt)
 {
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownPanasonicPresetWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownSpyderPresetWidget::writeProperties(QXmlStreamWriter* writer)
 {
     writer->writeTextElement("color", this->color);
 }
 
-bool RundownPanasonicPresetWidget::isGroup() const
+bool RundownSpyderPresetWidget::isGroup() const
 {
     return false;
 }
 
-bool RundownPanasonicPresetWidget::isInGroup() const
+bool RundownSpyderPresetWidget::isInGroup() const
 {
     return this->inGroup;
 }
 
-AbstractCommand* RundownPanasonicPresetWidget::getCommand()
+AbstractCommand* RundownSpyderPresetWidget::getCommand()
 {
     return &this->command;
 }
 
-LibraryModel* RundownPanasonicPresetWidget::getLibraryModel()
+LibraryModel* RundownSpyderPresetWidget::getLibraryModel()
 {
     return &this->model;
 }
 
-void RundownPanasonicPresetWidget::setActive(bool active)
+void RundownSpyderPresetWidget::setActive(bool active)
 {
     if (this->active == active)
         return;
@@ -146,29 +148,29 @@ void RundownPanasonicPresetWidget::setActive(bool active)
         this->labelActiveColor->setStyleSheet("");
 }
 
-void RundownPanasonicPresetWidget::setInGroup(bool inGroup)
+void RundownSpyderPresetWidget::setInGroup(bool inGroup)
 {
     this->inGroup = inGroup;
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-QString RundownPanasonicPresetWidget::getColor() const
+QString RundownSpyderPresetWidget::getColor() const
 {
     return this->color;
 }
 
-void RundownPanasonicPresetWidget::setColor(const QString& color)
+void RundownSpyderPresetWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
 }
 
-void RundownPanasonicPresetWidget::clearDelayedCommands()
+void RundownSpyderPresetWidget::clearDelayedCommands()
 {
     this->executeTimer.stop();
 }
 
-void RundownPanasonicPresetWidget::setUsed(bool used)
+void RundownSpyderPresetWidget::setUsed(bool used)
 {
     if (used)
     {
@@ -184,7 +186,7 @@ void RundownPanasonicPresetWidget::setUsed(bool used)
         this->setGraphicsEffect(NULL);
 }
 
-bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType::Type type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();
@@ -193,7 +195,7 @@ bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType::Type typ
         if (this->command.getDelay() < 0)
             return true;
 
-        if (!this->command.getAddress().isEmpty())
+        if (!this->command.getAddress().isEmpty() && !this->command.getPort().isEmpty())
         {
             this->executeTimer.setInterval(this->command.getDelay());
             this->executeTimer.start();
@@ -216,25 +218,25 @@ bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType::Type typ
     return true;
 }
 
-void RundownPanasonicPresetWidget::executeStop()
+void RundownSpyderPresetWidget::executeStop()
 {
     this->executeTimer.stop();
 }
 
-void RundownPanasonicPresetWidget::executePlay()
+void RundownSpyderPresetWidget::executePlay()
 {
-    this->device->selectPreset(this->command.getAddress(), this->command.getPreset());
+    this->device->selectPreset(this->command.getPreset(), this->command.getAddress(), this->command.getPort().toInt());
 
     if (this->markUsedItems)
         setUsed(true);
 }
 
-void RundownPanasonicPresetWidget::delayChanged(int delay)
+void RundownSpyderPresetWidget::delayChanged(int delay)
 {
     this->labelDelay->setText(QString("Delay: %1").arg(delay));
 }
 
-void RundownPanasonicPresetWidget::checkGpiConnection()
+void RundownSpyderPresetWidget::checkGpiConnection()
 {
     this->labelGpiConnected->setVisible(this->command.getAllowGpi());
 
@@ -244,7 +246,7 @@ void RundownPanasonicPresetWidget::checkGpiConnection()
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiDisconnected.png"));
 }
 
-void RundownPanasonicPresetWidget::configureOscSubscriptions()
+void RundownSpyderPresetWidget::configureOscSubscriptions()
 {
     if (!this->command.getAllowRemoteTriggering())
         return;
@@ -313,80 +315,61 @@ void RundownPanasonicPresetWidget::configureOscSubscriptions()
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 }
 
-void RundownPanasonicPresetWidget::allowGpiChanged(bool allowGpi)
+void RundownSpyderPresetWidget::allowGpiChanged(bool allowGpi)
 {
-    Q_UNUSED(allowGpi);
-
     checkGpiConnection();
 }
 
-void RundownPanasonicPresetWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
+void RundownSpyderPresetWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
-    Q_UNUSED(connected);
-    Q_UNUSED(device);
-
     checkGpiConnection();
 }
 
-void RundownPanasonicPresetWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
+void RundownSpyderPresetWidget::remoteTriggerIdChanged(const QString& remoteTriggerId)
 {
     configureOscSubscriptions();
 
     this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
 }
 
-void RundownPanasonicPresetWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
-void RundownPanasonicPresetWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
-void RundownPanasonicPresetWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
-void RundownPanasonicPresetWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
 }
 
-void RundownPanasonicPresetWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
-void RundownPanasonicPresetWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
-void RundownPanasonicPresetWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownSpyderPresetWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
-    Q_UNUSED(predicate);
-
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

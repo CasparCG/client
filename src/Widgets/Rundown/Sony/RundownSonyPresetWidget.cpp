@@ -21,6 +21,8 @@ RundownSonyPresetWidget::RundownSonyPresetWidget(const LibraryModel& model, QWid
 {
     setupUi(this);
 
+    this->device = new ViscaDevice(this);
+
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
@@ -222,7 +224,7 @@ void RundownSonyPresetWidget::executeStop()
 
 void RundownSonyPresetWidget::executePlay()
 {
-    device.selectPreset(this->command.getAddress(), this->command.getPreset());
+    this->device->selectPreset(this->command.getAddress(), this->command.getPreset());
 
     if (this->markUsedItems)
         setUsed(true);

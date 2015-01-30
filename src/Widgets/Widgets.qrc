@@ -252,6 +252,9 @@
         <file>Images/Sony/SonyPreset.png</file>
         <file>Images/Sony/SonyPresetSmall.png</file>
         <file>Images/Sony/SonyPresetSmallHover.png</file>
+        <file>Images/Spyder/SpyderPreset.png</file>
+        <file>Images/Spyder/SpyderPresetSmall.png</file>
+        <file>Images/Spyder/SpyderPresetSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

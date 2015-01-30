@@ -56,6 +56,7 @@
 #include "TriCaster/RundownMacroWidget.h"
 #include "Panasonic/RundownPanasonicPresetWidget.h"
 #include "Sony/RundownSonyPresetWidget.h"
+#include "Spyder/RundownSpyderPresetWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -121,6 +122,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ROUTECHANNEL) return new RundownRouteChannelWidget(model, this);
     else if (model.getType() == Rundown::ROUTEVIDEOLAYER) return new RundownRouteVideolayerWidget(model, this);
     else if (model.getType() == Rundown::SONYPRESET) return new RundownSonyPresetWidget(model, this);
+    else if (model.getType() == Rundown::SPYDERPRESET) return new RundownSpyderPresetWidget(model, this);
 
     return NULL;
 }
