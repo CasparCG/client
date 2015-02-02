@@ -7,19 +7,12 @@ QHeaderView::section
 }
 
 /*
- * QToolTip
+ * RundownWidget
  */
-QToolTip
+#tabWidgetRundown QTabBar::tab
 {
-    font-size: 12px;
-}
-
-/*
- * QTabBar
- */
-QTabBar::tab
-{
-    min-height: 18px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 /*

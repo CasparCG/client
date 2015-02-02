@@ -26,6 +26,7 @@
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QSplashScreen>
+#include <QtWidgets/QStyleFactory>
 
 #include <QtSql/QSqlDatabase>
 
@@ -158,7 +159,7 @@ int main(int argc, char* argv[])
     QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
     splashScreen.show();
 
-    application.setStyle("plastique");
+    application.setStyle(QStyleFactory::create("plastique"));
 
     loadDatabase(application);
     DatabaseManager::getInstance().initialize();

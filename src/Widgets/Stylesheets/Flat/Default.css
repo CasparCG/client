@@ -7,11 +7,17 @@
     border-color: rgba(65, 65, 65, 255);
     border-style: solid;
     border-width: 1px;
+    height: 11px;
+    width: 11px;
 }
 *::indicator:checked
 {
     image: url(:/Graphics/Images/CheckboxChecked.png);
 }
+/**::indicator:unchecked
+{
+    image: url(:/Graphics/Images/CheckboxUnchecked.png);
+}*/
 *::menu-indicator
 {
     image: url(:/Graphics/Images/ArrowDown.png);
@@ -124,9 +130,6 @@ QCheckBox
 QCheckBox::indicator
 {
     background-color: rgba(28, 28, 28, 255);
-    border-color: rgba(65, 65, 65, 255);
-    border-style: solid;
-    border-width: 1px;
 }
 QCheckBox::indicator:disabled
 {
@@ -140,19 +143,19 @@ QCheckBox::indicator:hover
 {
     image: url(:/Graphics/Images/CheckboxUnchecked.png);
 }
-QCheckBox::indicator:unchecked:hover
+/*QCheckBox::indicator:unchecked:hover
 {
     image: url(:/Graphics/Images/CheckboxUncheckedHover.png);
 }
 QCheckBox::indicator:unchecked:pressed
 {
     image: url(:/Graphics/Images/CheckboxUncheckedPressed.png);
-}*/
+}
 QCheckBox::indicator:checked
 {
     image: url(:/Graphics/Images/CheckboxChecked.png);
 }
-/*QCheckBox::indicator:checked:hover
+QCheckBox::indicator:checked:hover
 {
     image: url(:/Graphics/Images/CheckboxCheckedHover.png);
 }
@@ -408,7 +411,7 @@ QTreeView::item:has-children
 }
 QTreeView::branch
 {
-    background-color: transparent;
+    background-color: rgba(35, 35, 35, 255);
 }
 QTreeView::branch:closed:has-children
 {
@@ -443,7 +446,7 @@ QTreeWidget::item:has-children
 }
 QTreeWidget::branch
 {
-    background-color: transparent;
+    background-color: rgba(35, 35, 35, 255);
 }
 QTreeWidget::branch:closed:has-children
 {
@@ -563,7 +566,6 @@ QMenu::separator
     background-color: rgba(45, 45, 45, 255);
     height: 1px;
 }
-
 
 /*
  * QToolBox
@@ -697,7 +699,7 @@ QComboBox::drop-down
 QComboBox QAbstractItemView
 {
     selection-background-color: rgba(70, 115, 195, 64);
-    background-color: rgba(28, 28, 28, 255);
+    background-color: transparent;
 }
 
 /*
