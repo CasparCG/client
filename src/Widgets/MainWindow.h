@@ -21,6 +21,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
+#include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -47,11 +48,13 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* markMenu;
         QMenu* playoutMenu;
         QMenu* helpMenu;
+        QMenu* openRecentMenu;
         QMenuBar* menuBar;
 
         QAction* newRundownAction;
         QAction* openRundownAction;
         QAction* openRundownFromUrlAction;
+        QAction* openRecentMenuAction;
         QAction* exportPresetAction;
         QAction* saveAsPresetAction;
         QAction* saveAction;
@@ -62,6 +65,9 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
 
         void setupMenu();
 
+        Q_SLOT void openRecentMenuActionTriggered(QAction*);
+        Q_SLOT void openRecentMenuHovered();
+        Q_SLOT void clearOpenRecent();
         Q_SLOT void newRundown();
         Q_SLOT void openRundown();
         Q_SLOT void openRundownFromUrl();

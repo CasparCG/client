@@ -9,9 +9,10 @@
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 
-#include <QtCore/QUuid>
+#include <QtCore/QDir>
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
+#include <QtCore/QUuid>
 
 #include <QtGui/QIcon>
 
@@ -230,7 +231,7 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
     QString path = "";
 
     if (event.getPath().isEmpty())
-        path = QFileDialog::getOpenFileName(this, "Open Rundown", "", "Rundown (*.xml)");
+        path = QFileDialog::getOpenFileName(this, "Open Rundown", QDir::homePath(), "Rundown (*.xml)");
     else
         path = event.getPath();
 

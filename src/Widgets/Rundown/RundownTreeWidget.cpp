@@ -613,6 +613,8 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         this->treeWidgetRundown->setFocus();
 
+        DatabaseManager::getInstance().insertOpenRecent(path);
+
         qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
     }
 

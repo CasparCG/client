@@ -76,10 +76,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
 void MainWindow::setupMenu()
 {
+    this->openRecentMenu = new QMenu(this);
+    this->openRecentMenu->setTitle("Open Recent Rundown");
+    QObject::connect(this->openRecentMenu, SIGNAL(triggered(QAction*)), this, SLOT(openRecentMenuActionTriggered(QAction*)));
+
     this->fileMenu = new QMenu(this);
     this->newRundownAction = this->fileMenu->addAction("New Rundown", this, SLOT(newRundown()), QKeySequence::fromString("Ctrl+N"));
     this->openRundownAction = this->fileMenu->addAction("Open Rundown...", this, SLOT(openRundown()), QKeySequence::fromString("Ctrl+O"));
     this->openRundownFromUrlAction = this->fileMenu->addAction("Open Rundown from repository...", this, SLOT(openRundownFromUrl()), QKeySequence::fromString("Ctrl+Shift+O"));
+    this->fileMenu->addSeparator();
+    this->openRecentMenuAction = this->fileMenu->addMenu(this->openRecentMenu);
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Import Preset...", this, SLOT(importPreset()));
     this->exportPresetAction = this->fileMenu->addAction("Export Preset...", this, SLOT(exportPreset()));
@@ -90,6 +96,7 @@ void MainWindow::setupMenu()
     this->fileMenu->addSeparator();
     this->fileMenu->addAction("Quit", this, SLOT(close()));
     this->saveAsPresetAction->setEnabled(false);
+    QObject::connect(this->openRecentMenuAction, SIGNAL(hovered()), this, SLOT(openRecentMenuHovered()));
 
     this->editMenu = new QMenu(this);
     this->editMenu->addAction("Settings...", this, SLOT(showSettingsDialog()));
@@ -160,6 +167,32 @@ void MainWindow::setupMenu()
     this->menuBar->addMenu(this->helpMenu)->setText("Help");
 
     setMenuBar(this->menuBar);
+}
+
+void MainWindow::openRecentMenuHovered()
+{
+    foreach (QAction* action, this->openRecentMenu->actions())
+        this->openRecentMenu->removeAction(action);
+
+    QList<QString> paths = DatabaseManager::getInstance().getOpenRecent();
+    foreach (QString path, paths)
+        this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/OpenRecent.png"),*/ path);
+
+    this->openRecentMenu->addSeparator();
+    this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/ClearOpenRecent.png"),*/ "Clear Menu", this, SLOT(clearOpenRecent()));
+}
+
+void MainWindow::openRecentMenuActionTriggered(QAction* action)
+{
+    if (action->text().contains("Clear"))
+        return;
+
+    EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(action->text()));
+}
+
+void MainWindow::clearOpenRecent()
+{
+   DatabaseManager::getInstance().deleteOpenRecent();
 }
 
 void MainWindow::reloadRundownMenu(const ReloadRundownMenuEvent& event)

@@ -58,6 +58,10 @@ class CORE_EXPORT DatabaseManager
         QList<FormatModel> getFormat();
         FormatModel getFormat(const QString& name);
 
+        QList<QString> getOpenRecent();
+        void insertOpenRecent(const QString& path);
+        void deleteOpenRecent();
+
         QList<PresetModel> getPreset();
         PresetModel getPreset(const QString& name);
         QList<PresetModel> getPresetByFilter(const QString& filter);

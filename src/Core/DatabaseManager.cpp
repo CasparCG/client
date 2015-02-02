@@ -173,6 +173,60 @@ FormatModel DatabaseManager::getFormat(const QString& name)
     return FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString());
 }
 
+QList<QString> DatabaseManager::getOpenRecent()
+{
+    QMutexLocker locker(&mutex);
+
+    QString query = QString("SELECT o.Id, o.Value FROM OpenRecent o "
+                            "ORDER BY o.Id DESC");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    QList<QString> values;
+    while (sql.next())
+        values.push_back(sql.value(1).toString());
+
+    return values;
+}
+
+void DatabaseManager::insertOpenRecent(const QString& path)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("INSERT INTO OpenRecent (Value) "
+                            "VALUES('%1')").arg(path);
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    query = QString("DELETE FROM OpenRecent WHERE Id > 10");
+
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deleteOpenRecent()
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QString query = QString("DELETE FROM OpenRecent");
+
+    QSqlQuery sql;
+    if (!sql.exec(query))
+       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+
+    QSqlDatabase::database().commit();
+}
+
 QList<PresetModel> DatabaseManager::getPreset()
 {
     QMutexLocker locker(&mutex);
