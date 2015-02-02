@@ -178,8 +178,11 @@ void MainWindow::openRecentMenuHovered()
     foreach (QString path, paths)
         this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/OpenRecent.png"),*/ path);
 
-    this->openRecentMenu->addSeparator();
-    this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/ClearOpenRecent.png"),*/ "Clear Menu", this, SLOT(clearOpenRecent()));
+    if (this->openRecentMenu->actions().count() > 0)
+    {
+        this->openRecentMenu->addSeparator();
+        this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/ClearOpenRecent.png"),*/ "Clear Menu", this, SLOT(clearOpenRecent()));
+    }
 }
 
 void MainWindow::openRecentMenuActionTriggered(QAction* action)

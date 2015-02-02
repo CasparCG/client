@@ -556,10 +556,12 @@ QMenu::indicator
     background-color: transparent;
     border-width: 0px;
     padding-left: 7px;
+    padding-right: 7px;
 }
 QMenu::separator
 {
-    height: 2px;
+    background-color: rgba(45, 45, 45, 255);
+    height: 1px;
 }
 
 
