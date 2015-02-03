@@ -316,11 +316,16 @@ void RundownSonyPresetWidget::configureOscSubscriptions()
 
 void RundownSonyPresetWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownSonyPresetWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -333,42 +338,56 @@ void RundownSonyPresetWidget::remoteTriggerIdChanged(const QString& remoteTrigge
 
 void RundownSonyPresetWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownSonyPresetWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownSonyPresetWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownSonyPresetWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownSonyPresetWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownSonyPresetWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownSonyPresetWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }
