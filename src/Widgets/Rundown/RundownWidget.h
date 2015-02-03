@@ -46,6 +46,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
     private:
         QMenu* contextMenuRundownDropdown;
         QMenu* contextMenuMark;
+        QMenu* openRecentMenu;
 
         QAction* newRundownAction;
         QAction* openRundownAction;
@@ -55,9 +56,13 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         QAction* allowRemoteTriggeringAction;
         QAction* insertRepositoryChangesAction;
         QAction* reloadRundownAction;
+        QAction* openRecentMenuAction;
 
         void setupMenus();
 
+        Q_SLOT void openRecentMenuActionTriggered(QAction*);
+        Q_SLOT void openRecentMenuHovered();
+        Q_SLOT void clearOpenRecent();
         Q_SLOT void openRundownFromDisk();
         Q_SLOT void openRundownFromRepo();
         Q_SLOT void reloadCurrentRundown();

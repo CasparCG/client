@@ -43,6 +43,7 @@
 #include "Models/RundownModel.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
 #include <QtCore/QPoint>
 #include <QtCore/QTextCodec>
 #include <QtCore/QTime>
@@ -730,7 +731,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
 
     QString path;
     if (saveAs)
-        path = QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)");
+        path = QFileDialog::getSaveFileName(this, "Save Rundown", QDir::homePath(), "Rundown (*.xml)");
     else
         path = (this->activeRundown == Rundown::DEFAULT_NAME) ? QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)") : this->activeRundown;
 

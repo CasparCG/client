@@ -3,6 +3,7 @@
 #include "OpenRundownFromUrlDialog.h"
 
 #include "EventManager.h"
+#include "DatabaseManager.h"
 #include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
@@ -54,6 +55,10 @@ RundownWidget::RundownWidget(QWidget* parent)
 
 void RundownWidget::setupMenus()
 {
+    this->openRecentMenu = new QMenu(this);
+    this->openRecentMenu->setTitle("Open Recent Rundown");
+    QObject::connect(this->openRecentMenu, SIGNAL(triggered(QAction*)), this, SLOT(openRecentMenuActionTriggered(QAction*)));
+
     this->contextMenuMark = new QMenu(this);
     this->contextMenuMark->setTitle("Mark Item");
     this->contextMenuMark->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "As Used", this, SLOT(markItemAsUsedInRundown()));
@@ -66,6 +71,8 @@ void RundownWidget::setupMenus()
     this->newRundownAction = this->contextMenuRundownDropdown->addAction("New Rundown", this, SLOT(createNewRundown()));
     this->openRundownAction = this->contextMenuRundownDropdown->addAction("Open Rundown...", this, SLOT(openRundownFromDisk()));
     this->openRundownFromUrlAction = this->contextMenuRundownDropdown->addAction("Open Rundown from repository...", this, SLOT(openRundownFromRepo()));
+    this->contextMenuRundownDropdown->addSeparator();
+    this->openRecentMenuAction = this->contextMenuRundownDropdown->addMenu(this->openRecentMenu);
     this->contextMenuRundownDropdown->addSeparator();
     this->saveAction = this->contextMenuRundownDropdown->addAction("Save", this, SLOT(saveRundownToDisk()));
     this->saveAsAction = this->contextMenuRundownDropdown->addAction("Save As...", this, SLOT(saveAsRundownToDisk()));
@@ -85,6 +92,7 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
     this->insertRepositoryChangesAction->setEnabled(false);
+    QObject::connect(this->openRecentMenuAction, SIGNAL(hovered()), this, SLOT(openRecentMenuHovered()));
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -94,6 +102,35 @@ void RundownWidget::setupMenus()
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
+}
+
+void RundownWidget::openRecentMenuHovered()
+{
+    foreach (QAction* action, this->openRecentMenu->actions())
+        this->openRecentMenu->removeAction(action);
+
+    QList<QString> paths = DatabaseManager::getInstance().getOpenRecent();
+    foreach (QString path, paths)
+        this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/OpenRecent.png"),*/ path);
+
+    if (this->openRecentMenu->actions().count() > 0)
+    {
+        this->openRecentMenu->addSeparator();
+        this->openRecentMenu->addAction(/*QIcon(":/Graphics/Images/ClearOpenRecent.png"),*/ "Clear Menu", this, SLOT(clearOpenRecent()));
+    }
+}
+
+void RundownWidget::openRecentMenuActionTriggered(QAction* action)
+{
+    if (action->text().contains("Clear"))
+        return;
+
+    EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(action->text()));
+}
+
+void RundownWidget::clearOpenRecent()
+{
+   DatabaseManager::getInstance().deleteOpenRecent();
 }
 
 bool RundownWidget::checkForSaveBeforeQuit()
