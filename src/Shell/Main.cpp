@@ -38,9 +38,9 @@ void loadDatabase(QApplication& application)
     if (!directory.exists(path))
         directory.mkpath(path);
 
-    QString databaseLocation = QString("%1/%2.s3db").arg(path).arg(DATABASE_VERSION);
+    QString databaseLocation = QString("%1/Database.s3db").arg(path);
     if (application.arguments().contains("-database"))
-        databaseLocation = QString("%1/%2%3.s3db").arg(path).arg(application.arguments().at(application.arguments().indexOf(QRegExp("-database")) + 1)).arg(DATABASE_VERSION);
+        databaseLocation = QString("%1/%2Database.s3db").arg(path).arg(application.arguments().at(application.arguments().indexOf(QRegExp("-database")) + 1));
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
     if (application.arguments().contains("-dbmemory"))
