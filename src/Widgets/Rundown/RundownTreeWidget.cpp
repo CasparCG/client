@@ -93,6 +93,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(copyItemProperties(const CopyItemPropertiesEvent&)), this, SLOT(copyItemProperties(const CopyItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(clearCurrentPlayingAutoStepItem(const ClearCurrentPlayingAutoStepItemEvent&)), this, SLOT(clearCurrentPlayingAutoStepItem(const ClearCurrentPlayingAutoStepItemEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -1621,6 +1622,12 @@ void RundownTreeWidget::removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlay
             break;
         }
     }
+}
+
+void RundownTreeWidget::clearCurrentPlayingAutoStepItem(const ClearCurrentPlayingAutoStepItemEvent& event)
+{
+    if (this->currentPlayingAutoStepItem == event.getItem())
+        this->currentPlayingAutoStepItem = NULL;
 }
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const

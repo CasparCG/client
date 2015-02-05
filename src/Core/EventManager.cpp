@@ -46,6 +46,11 @@ void EventManager::fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAuto
     emit removeItemFromAutoPlayQueue(event);
 }
 
+void EventManager::fireClearCurrentPlayingAutoStepItemEvent(const ClearCurrentPlayingAutoStepItemEvent& event)
+{
+    emit clearCurrentPlayingAutoStepItem(event);
+}
+
 void EventManager::fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent& event)
 {
     emit executePlayoutCommand(event);

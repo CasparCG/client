@@ -175,7 +175,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 
     if (pt.get_child(L"items").count(L"allowremotetriggering") > 0)
     {
-        bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
+        bool allowRemoteTriggering = pt.get_child(L"items").get(L"allowremotetriggering", false);
         EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
     }
 
@@ -281,16 +281,22 @@ void RundownTreeBaseWidget::removeSelectedItems()
             {
                 QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                // Remove our items from the auto play queue if they exists.
+                // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                // Clear current playing AutoStep item.
+                EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
             }
         }
 
-        // Remove our items from the AutoPlay queue if they exists.
+        // Remove our items from the AutoPlay queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        // Clear current playing AutoStep item.
+        EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
 
         delete widget;
         delete item;
@@ -311,16 +317,22 @@ void RundownTreeBaseWidget::removeAllItems()
             {
                 QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                // Remove our items from the auto play queue if they exists.
+                // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                // Clear current playing AutoStep item.
+                EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
             }
         }
 
-        // Remove our items from the auto play queue if they exists.
+        // Remove our items from the auto play queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        // Clear current playing AutoStep item.
+        EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
 
         delete widget;
         delete item;
@@ -1093,13 +1105,22 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
                 {
                     QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                    // Remove our items from the AutoPlay queue if they exists.
+                    // Remove our items from the AutoPlay queue if it exists.
                     EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                    // Clear current playing AutoStep item.
+                    EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
 
                     delete childWidget;
                     delete item->child(i);
                 }
             }
+
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+            // Clear current playing AutoStep item.
+            EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
 
             delete widget;
             delete item;
