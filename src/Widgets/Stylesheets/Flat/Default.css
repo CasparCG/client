@@ -77,6 +77,7 @@
 QWidget
 {
     alternate-background-color: rgba(45, 45, 45, 255);
+    paint-alternating-row-colors-for-empty-area: false;
     background-color: rgba(45, 45, 45, 255);
     border-color: transparent;
     border-style: solid;
