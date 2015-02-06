@@ -8,6 +8,7 @@
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <iostream>
@@ -896,17 +897,11 @@ void RundownTreeBaseWidget::selectItemAbove()
 
     if (itemAbove != NULL)
     {
-        // Inactivate the current item.
-        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
-        if (itemWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+        QTreeWidgetItem* previousItem = QTreeWidget::currentItem();
 
         QTreeWidget::setCurrentItem(itemAbove);
 
-        // Activate item above.
-        QWidget* itemAboveWidget = QTreeWidget::itemWidget(itemAbove, 0);
-        if (itemAboveWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemAboveWidget)->setActive(true);
+        EventManager::getInstance().fireCurrentItemChangedEvent(CurrentItemChangedEvent(itemAbove, previousItem));
     }
 }
 
@@ -926,17 +921,11 @@ void RundownTreeBaseWidget::selectItemBelow()
 
     if (itemBelow != NULL)
     {
-        // Inactivate the current item.
-        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
-        if (itemWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+        QTreeWidgetItem* previousItem = QTreeWidget::currentItem();
 
         QTreeWidget::setCurrentItem(itemBelow);
 
-        // Activate item below.
-        QWidget* itemBelowWidget = QTreeWidget::itemWidget(itemBelow, 0);
-        if (itemBelowWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemBelowWidget)->setActive(true);
+        EventManager::getInstance().fireCurrentItemChangedEvent(CurrentItemChangedEvent(itemBelow, previousItem));
     }
 }
 

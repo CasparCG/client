@@ -27,6 +27,7 @@
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -241,4 +242,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void repositoryConnectionStateChanged(RepositoryDevice&);
         Q_SLOT void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
         Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
+        Q_SLOT void currentItemChanged(const CurrentItemChangedEvent&);
 };

@@ -94,6 +94,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)), this, SLOT(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(currentItemChanged(const CurrentItemChangedEvent&)), this, SLOT(currentItemChanged(const CurrentItemChangedEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -1280,8 +1281,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             if (this->treeWidgetRundown->currentItem() != previousItem)
             {
                 if (this->previewOnAutoStep && type == Playout::PlayoutType::Play)
+                {
                     executePreview();
                     //QTimer::singleShot(600, this, SLOT(executePreview()));
+                }
             }
         }
     }
@@ -1639,6 +1642,11 @@ void RundownTreeWidget::clearCurrentPlayingItem(const ClearCurrentPlayingItemEve
 
     if (this->currentPlayingAutoStepItem == event.getItem())
         this->currentPlayingAutoStepItem = NULL;
+}
+
+void RundownTreeWidget::currentItemChanged(const CurrentItemChangedEvent& event)
+{
+    currentItemChanged(event.getCurrentItem(), event.getPreviousItem());
 }
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const

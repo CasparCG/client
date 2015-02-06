@@ -141,6 +141,11 @@ void EventManager::fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataD
     emit showAddHttpPostDataDialog(event);
 }
 
+void EventManager::fireCurrentItemChangedEvent(const CurrentItemChangedEvent& event)
+{
+    emit currentItemChanged(event);
+}
+
 void EventManager::fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent& event)
 {
     emit markItemAsUsed(event);

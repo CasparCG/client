@@ -267,7 +267,7 @@ void RundownStillWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL || this->labelThumbnail->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* frameItemEffect = new QGraphicsOpacityEffect(this);
             frameItemEffect->setOpacity(0.25);

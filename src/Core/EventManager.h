@@ -70,6 +70,7 @@
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/Rundown/ReloadRundownMenuEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
@@ -91,6 +92,7 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void currentItemChanged(const CurrentItemChangedEvent&);
         Q_SIGNAL void durationChanged(const DurationChangedEvent&);
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
         Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
@@ -158,6 +160,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
         Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        void fireCurrentItemChangedEvent(const CurrentItemChangedEvent&);
         void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
         void fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent&);
         void fireDurationChangedEvent(const DurationChangedEvent&);
