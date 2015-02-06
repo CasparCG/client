@@ -2,10 +2,19 @@ CasparCG Client 2.0.8
 =====================
 - NEW: 64-bit support for Windows.
 - NEW: Upgraded to Qt 5. (krzyc)
-- NEW: Added support for trigger preset on Sony VISCA over IP cameras.
+- NEW: Added support for trigger preset in Sony VISCA over IP cameras.
 - NEW: Added support for preview images on the preview channel.
 - NEW: Added support for Blackmagic 2M/E mixers.
+- NEW: Added support for trigger preset in Spyder system.
+- NEW: Added "Open Recent Rundown" menu.
+- NEW: Added support for migrating the database between release versions.
+- NEW: Added missing CasparCG video modes.
 - FIX: Disabled ATEM dropdown in the inspector panel, issue #132. 
+- FIX: Max delay limit for items.
+- FIX: Changing label changes labels in all rundowns, issue #134.
+- FIX: Various bug fixes and UI enhancements.
+- FIX: iNews integration bug.
+- FIX: Use zero indexing for Panasonic PTZ presets.
 
 
 
