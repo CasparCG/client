@@ -22,7 +22,7 @@
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
-#include "Events/Rundown/ClearCurrentPlayingAutoStepItemEvent.h"
+#include "Events/Rundown/ClearCurrentPlayingItemEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
@@ -99,6 +99,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
 
         QTreeWidgetItem* copyItem;
+        QTreeWidgetItem* currentPlayingItem;
         QTreeWidgetItem* currentPlayingAutoStepItem;
 
         OscSubscription* upControlSubscription;
@@ -201,7 +202,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void saveAsPreset();
         Q_SLOT void addOscOutputItem();
         Q_SLOT void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
-        Q_SLOT void clearCurrentPlayingAutoStepItem(const ClearCurrentPlayingAutoStepItemEvent&);
+        Q_SLOT void clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&);
         Q_SLOT void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
         Q_SLOT void addPresetItem(const AddPresetItemEvent&);

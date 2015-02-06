@@ -8,10 +8,10 @@
 
 #include <QtWidgets/QTreeWidgetItem>
 
-class CORE_EXPORT ClearCurrentPlayingAutoStepItemEvent
+class CORE_EXPORT ClearCurrentPlayingItemEvent
 {
     public:
-        explicit ClearCurrentPlayingAutoStepItemEvent(QTreeWidgetItem* item);
+        explicit ClearCurrentPlayingItemEvent(QTreeWidgetItem* item);
 
         QTreeWidgetItem* getItem() const;
 

@@ -182,9 +182,6 @@ LibraryModel* RundownAtemCutWidget::getLibraryModel()
 
 void RundownAtemCutWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -234,11 +231,11 @@ void RundownAtemCutWidget::setUsed(bool used)
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownAtemCutWidget::executeCommand(Playout::PlayoutType::Type type)

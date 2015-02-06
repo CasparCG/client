@@ -191,7 +191,7 @@ HEADERS += \
     Commands/Sony/SonyPresetCommand.h \
     Models/Atem/AtemMixerStepModel.h \
     Commands/Spyder/SpyderPresetCommand.h \
-    Events/Rundown/ClearCurrentPlayingAutoStepItemEvent.h
+    Events/Rundown/ClearCurrentPlayingItemEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -372,7 +372,7 @@ SOURCES += \
     Commands/Sony/SonyPresetCommand.cpp \
     Models/Atem/AtemMixerStepModel.cpp \
     Commands/Spyder/SpyderPresetCommand.cpp \
-    Events/Rundown/ClearCurrentPlayingAutoStepItemEvent.cpp
+    Events/Rundown/ClearCurrentPlayingItemEvent.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

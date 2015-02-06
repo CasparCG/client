@@ -284,8 +284,8 @@ void RundownTreeBaseWidget::removeSelectedItems()
                 // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
 
-                // Clear current playing AutoStep item.
-                EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
+                // Clear current playing item.
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
@@ -295,8 +295,8 @@ void RundownTreeBaseWidget::removeSelectedItems()
         // Remove our items from the AutoPlay queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
 
-        // Clear current playing AutoStep item.
-        EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
         delete widget;
         delete item;
@@ -320,8 +320,8 @@ void RundownTreeBaseWidget::removeAllItems()
                 // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
 
-                // Clear current playing AutoStep item.
-                EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
+                // Clear current playing item.
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
@@ -331,8 +331,8 @@ void RundownTreeBaseWidget::removeAllItems()
         // Remove our items from the auto play queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
 
-        // Clear current playing AutoStep item.
-        EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
         delete widget;
         delete item;
@@ -1108,8 +1108,8 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
                     // Remove our items from the AutoPlay queue if it exists.
                     EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
 
-                    // Clear current playing AutoStep item.
-                    EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item->child(i)));
+                    // Clear current playing item.
+                    EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                     delete childWidget;
                     delete item->child(i);
@@ -1119,8 +1119,8 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
             // Remove our items from the auto play queue if it exists.
             EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
 
-            // Clear current playing AutoStep item.
-            EventManager::getInstance().fireClearCurrentPlayingAutoStepItemEvent(ClearCurrentPlayingAutoStepItemEvent(item));
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
             delete widget;
             delete item;

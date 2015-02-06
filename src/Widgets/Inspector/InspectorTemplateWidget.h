@@ -7,6 +7,7 @@
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/ShowAddTemplateDataDialogEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
+#include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QEvent>
@@ -29,6 +30,7 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         int fieldCounter;
         LibraryModel* model;
         TemplateCommand* command;
+        bool lock;
 
         void updateTemplateDataModels();
         void blockAllSignals(bool block);
@@ -49,4 +51,5 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void addTemplateData(const AddTemplateDataEvent&);
         Q_SLOT void showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
 };

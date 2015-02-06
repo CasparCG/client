@@ -138,9 +138,6 @@ LibraryModel* RundownOscOutputWidget::getLibraryModel()
 
 void RundownOscOutputWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -182,11 +179,11 @@ void RundownOscOutputWidget::setUsed(bool used)
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)

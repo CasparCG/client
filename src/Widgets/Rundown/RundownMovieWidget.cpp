@@ -276,9 +276,6 @@ void RundownMovieWidget::setThumbnail()
 
 void RundownMovieWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -342,14 +339,26 @@ void RundownMovieWidget::setUsed(bool used)
     {
         if (this->graphicsEffect() == NULL)
         {
-            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
-            effect->setOpacity(0.25);
+            QGraphicsOpacityEffect* frameItemEffect = new QGraphicsOpacityEffect(this);
+            frameItemEffect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            QGraphicsOpacityEffect* labelThumbnailEffect = new QGraphicsOpacityEffect(this);
+            labelThumbnailEffect->setOpacity(0.25);
+
+            QGraphicsOpacityEffect* widgetOscTimeEffect = new QGraphicsOpacityEffect(this);
+            widgetOscTimeEffect->setOpacity(0.25);
+
+            this->frameItem->setGraphicsEffect(frameItemEffect);
+            this->labelThumbnail->setGraphicsEffect(labelThumbnailEffect);
+            this->widgetOscTime->setGraphicsEffect(widgetOscTimeEffect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+    {
+        this->frameItem->setGraphicsEffect(NULL);
+        this->labelThumbnail->setGraphicsEffect(NULL);
+        this->widgetOscTime->setGraphicsEffect(NULL);
+    }
 }
 
 bool RundownMovieWidget::executeCommand(Playout::PlayoutType::Type type)

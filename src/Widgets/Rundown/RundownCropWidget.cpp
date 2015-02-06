@@ -191,9 +191,6 @@ LibraryModel* RundownCropWidget::getLibraryModel()
 
 void RundownCropWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -243,11 +240,11 @@ void RundownCropWidget::setUsed(bool used)
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownCropWidget::executeCommand(Playout::PlayoutType::Type type)

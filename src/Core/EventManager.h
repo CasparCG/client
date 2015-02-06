@@ -61,7 +61,7 @@
 #include "Events/Rundown/SaveAsMenuEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
-#include "Events/Rundown/ClearCurrentPlayingAutoStepItemEvent.h"
+#include "Events/Rundown/ClearCurrentPlayingItemEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
@@ -95,7 +95,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
         Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
-        Q_SIGNAL void clearCurrentPlayingAutoStepItem(const ClearCurrentPlayingAutoStepItemEvent&);
+        Q_SIGNAL void clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
         Q_SIGNAL void reloadRundown(const ReloadRundownEvent&);
@@ -166,7 +166,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
-        void fireClearCurrentPlayingAutoStepItemEvent(const ClearCurrentPlayingAutoStepItemEvent&);
+        void fireClearCurrentPlayingItemEvent(const ClearCurrentPlayingItemEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireReloadRundownEvent(const ReloadRundownEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);

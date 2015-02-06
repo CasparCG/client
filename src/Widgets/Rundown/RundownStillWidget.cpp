@@ -219,9 +219,6 @@ void RundownStillWidget::setThumbnail()
 
 void RundownStillWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -272,14 +269,21 @@ void RundownStillWidget::setUsed(bool used)
     {
         if (this->graphicsEffect() == NULL)
         {
-            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
-            effect->setOpacity(0.25);
+            QGraphicsOpacityEffect* frameItemEffect = new QGraphicsOpacityEffect(this);
+            frameItemEffect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            QGraphicsOpacityEffect* labelThumbnailEffect = new QGraphicsOpacityEffect(this);
+            labelThumbnailEffect->setOpacity(0.25);
+
+            this->frameItem->setGraphicsEffect(frameItemEffect);
+            this->labelThumbnail->setGraphicsEffect(labelThumbnailEffect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+    {
+        this->frameItem->setGraphicsEffect(NULL);
+        this->labelThumbnail->setGraphicsEffect(NULL);
+    }
 }
 
 bool RundownStillWidget::executeCommand(Playout::PlayoutType::Type type)
