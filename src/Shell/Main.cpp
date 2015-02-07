@@ -20,6 +20,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
+#include <QtCore/QCommandLineParser>
 
 #include <QtGui/QPixmap>
 #include <QtGui/QFontDatabase>
@@ -30,7 +31,7 @@
 
 #include <QtSql/QSqlDatabase>
 
-void loadDatabase(QApplication& application)
+void loadDatabase(cons QCommandLineParser& parser)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
@@ -39,11 +40,11 @@ void loadDatabase(QApplication& application)
         directory.mkpath(path);
 
     QString databaseLocation = QString("%1/%2.s3db").arg(path).arg(DATABASE_VERSION);
-    if (application.arguments().contains("-database"))
+    if (parser.isSet("database"))
         databaseLocation = QString("%1/%2%3.s3db").arg(path).arg(application.arguments().at(application.arguments().indexOf(QRegExp("-database")) + 1)).arg(DATABASE_VERSION);
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
-    if (application.arguments().contains("-dbmemory"))
+    if (parser.isSet("dbmemory"))
         database.setDatabaseName(":memory:");
     else
         database.setDatabaseName(databaseLocation);
@@ -146,22 +147,34 @@ void loadConfiguration(QApplication& application, QMainWindow& window)
 
 int main(int argc, char* argv[])
 {
-#if defined(Q_OS_MAC)
-    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
-        QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande"); // FIX: Mac OSX 10.9 (Mavericks) font issue: https://bugreports.qt-project.org/browse/QTBUG-32789
-#endif
-
-    //Application::setOrganizationName("CasparCG");
-    //Application::setApplicationName("CasparCG Client");
+    Application::setOrganizationName("CasparCG");
+    Application::setApplicationName("CasparCG Client");
 
     Application application(argc, argv);
+    application.setApplicationName("CasparCG Client");
+    application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
 
     QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
     splashScreen.show();
 
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption rundownOption("rundown", "Open rundown");
+    parser.addOption(rundownOption);
+
+    QCommandLineOption databaseOption("database", "Database location");
+    parser.addOption(databaseOption);
+
+    QCommandLineOption dbmemoryOption("dbmemory", "Use in memory database");
+    parser.addOption(dbmemoryOption);
+
+    parser.process(application);
+
     application.setStyle(QStyleFactory::create("plastique"));
 
-    loadDatabase(application);
+    loadDatabase(&parser);
     DatabaseManager::getInstance().initialize();
 
     loadStyleSheets(application);
