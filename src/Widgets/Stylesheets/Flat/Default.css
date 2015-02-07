@@ -384,7 +384,7 @@ QGroupBox::title
  */
 QAbstractItemView
 {
-    outline: 0;
+    outline: 0px;
 }
 
 /*
