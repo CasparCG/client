@@ -675,6 +675,8 @@ void InspectorOutputWidget::deviceRemoved()
 
 void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 {
+    blockAllSignals(true);
+
     const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
     if (model == NULL || model->getShadow() == "Yes")
         return; // Don't add shadow systems.
@@ -685,6 +687,8 @@ void InspectorOutputWidget::deviceAdded(CasparDevice& device)
 
     if (index == -1)
         this->comboBoxDevice->setCurrentIndex(index);
+
+    blockAllSignals(false);
 }
 
 void InspectorOutputWidget::deviceNameChanged(QString deviceName)

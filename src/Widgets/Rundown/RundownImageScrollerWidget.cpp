@@ -223,9 +223,6 @@ void RundownImageScrollerWidget::setThumbnail()
 
 void RundownImageScrollerWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -274,16 +271,23 @@ void RundownImageScrollerWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL || this->labelThumbnail->graphicsEffect() == NULL)
         {
-            QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
-            effect->setOpacity(0.25);
+            QGraphicsOpacityEffect* frameItemEffect = new QGraphicsOpacityEffect(this);
+            frameItemEffect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            QGraphicsOpacityEffect* labelThumbnailEffect = new QGraphicsOpacityEffect(this);
+            labelThumbnailEffect->setOpacity(0.25);
+
+            this->frameItem->setGraphicsEffect(frameItemEffect);
+            this->labelThumbnail->setGraphicsEffect(labelThumbnailEffect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+    {
+        this->frameItem->setGraphicsEffect(NULL);
+        this->labelThumbnail->setGraphicsEffect(NULL);
+    }
 }
 
 bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)

@@ -61,6 +61,7 @@
 #include "Events/Rundown/SaveAsMenuEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
+#include "Events/Rundown/ClearCurrentPlayingItemEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
@@ -69,6 +70,7 @@
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/Rundown/ReloadRundownMenuEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
@@ -90,10 +92,12 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void currentItemChanged(const CurrentItemChangedEvent&);
         Q_SIGNAL void durationChanged(const DurationChangedEvent&);
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
         Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
+        Q_SIGNAL void clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SIGNAL void deleteRundown(const DeleteRundownEvent&);
         Q_SIGNAL void reloadRundown(const ReloadRundownEvent&);
@@ -156,6 +160,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
         Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        void fireCurrentItemChangedEvent(const CurrentItemChangedEvent&);
         void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
         void fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent&);
         void fireDurationChangedEvent(const DurationChangedEvent&);
@@ -164,6 +169,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
         void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
+        void fireClearCurrentPlayingItemEvent(const ClearCurrentPlayingItemEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);
         void fireReloadRundownEvent(const ReloadRundownEvent&);
         void fireOpenRundownEvent(const OpenRundownEvent&);

@@ -31,7 +31,7 @@
 
 #include <QtSql/QSqlDatabase>
 
-void loadDatabase(cons QCommandLineParser& parser)
+void loadDatabase(const QCommandLineParser& parser)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
@@ -39,9 +39,9 @@ void loadDatabase(cons QCommandLineParser& parser)
     if (!directory.exists(path))
         directory.mkpath(path);
 
-    QString databaseLocation = QString("%1/%2.s3db").arg(path).arg(DATABASE_VERSION);
+    QString databaseLocation = QString("%1/Database.s3db").arg(path);
     if (parser.isSet("database"))
-        databaseLocation = QString("%1/%2%3.s3db").arg(path).arg(application.arguments().at(application.arguments().indexOf(QRegExp("-database")) + 1)).arg(DATABASE_VERSION);
+        databaseLocation = parser.value("database");
 
     QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
     if (parser.isSet("dbmemory"))
@@ -124,32 +124,21 @@ void loadFonts(QApplication& application)
 #endif
 }
 
-void loadConfiguration(QApplication& application, QMainWindow& window)
+void loadConfiguration(QApplication& application, QMainWindow& window, const QCommandLineParser& parser)
 {
     QString stylesheet = QString("QWidget { font-size: %1px; }").arg(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
     application.setStyleSheet(application.styleSheet() + stylesheet);
 
     // Check command line arguments followed by the configuration.
-    if (application.arguments().contains("-fullscreen") || DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true")
+    if (parser.isSet("fullscreen") || DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true")
          window.showFullScreen();
 
-    if (application.arguments().contains("-rundown"))
-    {
-        int i = application.arguments().indexOf("-rundown");
-        if (application.arguments().count() > i + 1)
-        {
-            QString path = application.arguments().at(i + 1);
-
-            EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(path));
-        }
-    }
+    if (parser.isSet("rundown"))
+        EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(parser.value("rundown")));
 }
 
 int main(int argc, char* argv[])
 {
-    Application::setOrganizationName("CasparCG");
-    Application::setApplicationName("CasparCG Client");
-
     Application application(argc, argv);
     application.setApplicationName("CasparCG Client");
     application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
@@ -164,6 +153,9 @@ int main(int argc, char* argv[])
     QCommandLineOption rundownOption("rundown", "Open rundown");
     parser.addOption(rundownOption);
 
+    QCommandLineOption fullscreenOption("fullscreen", "Start in fullscreen");
+    parser.addOption(fullscreenOption);
+
     QCommandLineOption databaseOption("database", "Database location");
     parser.addOption(databaseOption);
 
@@ -174,7 +166,7 @@ int main(int argc, char* argv[])
 
     application.setStyle(QStyleFactory::create("plastique"));
 
-    loadDatabase(&parser);
+    loadDatabase(parser);
     DatabaseManager::getInstance().initialize();
 
     loadStyleSheets(application);
@@ -186,7 +178,7 @@ int main(int argc, char* argv[])
     MainWindow window;
     splashScreen.finish(&window);
 
-    loadConfiguration(application, window);
+    loadConfiguration(application, window, parser);
 
     window.show();
 

@@ -8,6 +8,7 @@
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 #include "Models/LibraryModel.h"
 
 #include <iostream>
@@ -173,9 +174,9 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-    if (pt.count(L"items.allowremotetriggering") > 0)
+    if (pt.get_child(L"items").count(L"allowremotetriggering") > 0)
     {
-        bool allowRemoteTriggering = pt.get(L"items.allowremotetriggering", false);
+        bool allowRemoteTriggering = pt.get_child(L"items").get(L"allowremotetriggering", false);
         EventManager::getInstance().fireAllowRemoteTriggeringEvent(AllowRemoteTriggeringEvent(allowRemoteTriggering));
     }
 
@@ -281,16 +282,22 @@ void RundownTreeBaseWidget::removeSelectedItems()
             {
                 QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                // Remove our items from the auto play queue if they exists.
+                // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                // Clear current playing item.
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
             }
         }
 
-        // Remove our items from the AutoPlay queue if they exists.
+        // Remove our items from the AutoPlay queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
         delete widget;
         delete item;
@@ -311,16 +318,22 @@ void RundownTreeBaseWidget::removeAllItems()
             {
                 QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                // Remove our items from the auto play queue if they exists.
+                // Remove our items from the auto play queue if it exists.
                 EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                // Clear current playing item.
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                 delete childWidget;
                 delete item->child(i);
             }
         }
 
-        // Remove our items from the auto play queue if they exists.
+        // Remove our items from the auto play queue if it exists.
         EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
         delete widget;
         delete item;
@@ -884,17 +897,11 @@ void RundownTreeBaseWidget::selectItemAbove()
 
     if (itemAbove != NULL)
     {
-        // Inactivate the current item.
-        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
-        if (itemWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+        QTreeWidgetItem* previousItem = QTreeWidget::currentItem();
 
         QTreeWidget::setCurrentItem(itemAbove);
 
-        // Activate item above.
-        QWidget* itemAboveWidget = QTreeWidget::itemWidget(itemAbove, 0);
-        if (itemAboveWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemAboveWidget)->setActive(true);
+        EventManager::getInstance().fireCurrentItemChangedEvent(CurrentItemChangedEvent(itemAbove, previousItem));
     }
 }
 
@@ -914,17 +921,11 @@ void RundownTreeBaseWidget::selectItemBelow()
 
     if (itemBelow != NULL)
     {
-        // Inactivate the current item.
-        QWidget* itemWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
-        if (itemWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemWidget)->setActive(false);
+        QTreeWidgetItem* previousItem = QTreeWidget::currentItem();
 
         QTreeWidget::setCurrentItem(itemBelow);
 
-        // Activate item below.
-        QWidget* itemBelowWidget = QTreeWidget::itemWidget(itemBelow, 0);
-        if (itemBelowWidget != NULL)
-            dynamic_cast<AbstractRundownWidget*>(itemBelowWidget)->setActive(true);
+        EventManager::getInstance().fireCurrentItemChangedEvent(CurrentItemChangedEvent(itemBelow, previousItem));
     }
 }
 
@@ -1093,13 +1094,22 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
                 {
                     QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
 
-                    // Remove our items from the AutoPlay queue if they exists.
+                    // Remove our items from the AutoPlay queue if it exists.
                     EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                    // Clear current playing item.
+                    EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
 
                     delete childWidget;
                     delete item->child(i);
                 }
             }
+
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
 
             delete widget;
             delete item;

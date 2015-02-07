@@ -109,9 +109,6 @@ void RundownSeparatorWidget::setColor(const QString& color)
 
 void RundownSeparatorWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();

@@ -62,7 +62,7 @@
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false), previewOnAutoStep(false),
-      clearDelayedCommands(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingAutoStepItem(NULL),
+      clearDelayedCommands(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingItem(NULL), currentPlayingAutoStepItem(NULL),
       upControlSubscription(NULL), downControlSubscription(NULL), playAndAutoStepControlSubscription(NULL), playNowAndAutoStepControlSubscription(NULL),
       playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -93,6 +93,8 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(copyItemProperties(const CopyItemPropertiesEvent&)), this, SLOT(copyItemProperties(const CopyItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(pasteItemProperties(const PasteItemPropertiesEvent&)), this, SLOT(pasteItemProperties(const PasteItemPropertiesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)), this, SLOT(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(currentItemChanged(const CurrentItemChangedEvent&)), this, SLOT(currentItemChanged(const CurrentItemChangedEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -707,10 +709,12 @@ void RundownTreeWidget::reloadRundown()
 
     delete this->copyItem;
     delete this->currentAutoPlayWidget;
+    delete this->currentPlayingItem;
     delete this->currentPlayingAutoStepItem;
 
     this->copyItem = NULL;
     this->currentAutoPlayWidget = NULL;
+    this->currentPlayingItem = NULL;
     this->currentPlayingAutoStepItem = NULL;
 
     this->treeWidgetRundown->removeAllItems();
@@ -1023,10 +1027,10 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
     QWidget* currentWidget = this->treeWidgetRundown->itemWidget(current, 0);
     QWidget* previousWidget = this->treeWidgetRundown->itemWidget(previous, 0);
 
-    if (previous != NULL && previousWidget != NULL)
+    if (previous != NULL && previousWidget != NULL && previous != this->currentPlayingItem && previous != this->currentPlayingAutoStepItem)
         dynamic_cast<AbstractRundownWidget*>(previousWidget)->setActive(false);
 
-    if (current != NULL && currentWidget != NULL)
+    if (current != NULL && currentWidget != NULL && current != this->currentPlayingItem && current != this->currentPlayingAutoStepItem)
         dynamic_cast<AbstractRundownWidget*>(currentWidget)->setActive(true);
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
@@ -1169,7 +1173,13 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
     }
     else
     {
+        if (this->currentPlayingItem != NULL)
+            dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->currentPlayingItem, 0))->setActive(false);
+
+        dynamic_cast<AbstractRundownWidget*>(selectedWidget)->setActive(true);
         dynamic_cast<AbstractPlayoutCommand*>(selectedWidget)->executeCommand(type);
+
+        this->currentPlayingItem = currentItem;
     }
 
     if (rundownWidget != NULL && rundownWidget->isGroup())
@@ -1271,8 +1281,10 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::
             if (this->treeWidgetRundown->currentItem() != previousItem)
             {
                 if (this->previewOnAutoStep && type == Playout::PlayoutType::Play)
+                {
                     executePreview();
                     //QTimer::singleShot(600, this, SLOT(executePreview()));
+                }
             }
         }
     }
@@ -1621,6 +1633,20 @@ void RundownTreeWidget::removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlay
             break;
         }
     }
+}
+
+void RundownTreeWidget::clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent& event)
+{
+    if (this->currentPlayingItem == event.getItem())
+        this->currentPlayingItem = NULL;
+
+    if (this->currentPlayingAutoStepItem == event.getItem())
+        this->currentPlayingAutoStepItem = NULL;
+}
+
+void RundownTreeWidget::currentItemChanged(const CurrentItemChangedEvent& event)
+{
+    currentItemChanged(event.getCurrentItem(), event.getPreviousItem());
 }
 
 bool RundownTreeWidget::getAllowRemoteTriggering() const

@@ -1,4 +1,12 @@
 /*
+ * QWidget
+ */
+QWidget
+{
+    paint-alternating-row-colors-for-empty-area: false;
+}
+
+/*
  * QHeaderView
  */
 QHeaderView::section

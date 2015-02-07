@@ -134,9 +134,6 @@ LibraryModel* RundownGpiOutputWidget::getLibraryModel()
 
 void RundownGpiOutputWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -173,16 +170,16 @@ void RundownGpiOutputWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)

@@ -135,9 +135,6 @@ LibraryModel* RundownSpyderPresetWidget::getLibraryModel()
 
 void RundownSpyderPresetWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -174,16 +171,16 @@ void RundownSpyderPresetWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType::Type type)
@@ -317,11 +314,16 @@ void RundownSpyderPresetWidget::configureOscSubscriptions()
 
 void RundownSpyderPresetWidget::allowGpiChanged(bool allowGpi)
 {
+    Q_UNUSED(allowGpi);
+
     checkGpiConnection();
 }
 
 void RundownSpyderPresetWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)
 {
+    Q_UNUSED(connected);
+    Q_UNUSED(device);
+
     checkGpiConnection();
 }
 
@@ -334,42 +336,56 @@ void RundownSpyderPresetWidget::remoteTriggerIdChanged(const QString& remoteTrig
 
 void RundownSpyderPresetWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
 void RundownSpyderPresetWidget::playControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Play);
 }
 
 void RundownSpyderPresetWidget::playNowControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
 void RundownSpyderPresetWidget::updateControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Update);
 }
 
 void RundownSpyderPresetWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
 void RundownSpyderPresetWidget::clearVideolayerControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
 void RundownSpyderPresetWidget::clearChannelControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
+    Q_UNUSED(predicate);
+
     if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0] == 1)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

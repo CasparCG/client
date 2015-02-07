@@ -180,9 +180,6 @@ LibraryModel* RundownDeckLinkInputWidget::getLibraryModel()
 
 void RundownDeckLinkInputWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -227,16 +224,16 @@ void RundownDeckLinkInputWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType::Type type)

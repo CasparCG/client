@@ -17,7 +17,7 @@
 
 InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL)
+      model(NULL), command(NULL), lock(false)
 {
     setupUi(this);
 
@@ -27,6 +27,7 @@ InspectorTemplateWidget::InspectorTemplateWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&)), this, SLOT(showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addTemplateData(const AddTemplateDataEvent&)), this, SLOT(addTemplateData(const AddTemplateDataEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
 
     this->treeWidgetTemplateData->installEventFilter(this);
 }
@@ -53,9 +54,17 @@ bool InspectorTemplateWidget::eventFilter(QObject* target, QEvent* event)
     return QObject::eventFilter(target, event);
 }
 
+void InspectorTemplateWidget::repositoryRundown(const RepositoryRundownEvent& event)
+{
+    this->lock = event.getRepositoryRundown();
+}
+
 void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDataDialogEvent& event)
 {
     Q_UNUSED(event);
+
+    if (this->lock)
+        return;
 
     int index = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1;
     this->treeWidgetTemplateData->setCurrentItem(this->treeWidgetTemplateData->invisibleRootItem()->child(index));

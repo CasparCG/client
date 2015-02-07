@@ -188,9 +188,6 @@ LibraryModel* RundownBrightnessWidget::getLibraryModel()
 
 void RundownBrightnessWidget::setActive(bool active)
 {
-    if (this->active == active)
-        return;
-
     this->active = active;
 
     this->animation->stop();
@@ -235,16 +232,16 @@ void RundownBrightnessWidget::setUsed(bool used)
 {
     if (used)
     {
-        if (this->graphicsEffect() == NULL)
+        if (this->frameItem->graphicsEffect() == NULL)
         {
             QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
             effect->setOpacity(0.25);
 
-            this->setGraphicsEffect(effect);
+            this->frameItem->setGraphicsEffect(effect);
         }
     }
     else
-        this->setGraphicsEffect(NULL);
+        this->frameItem->setGraphicsEffect(NULL);
 }
 
 bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType::Type type)

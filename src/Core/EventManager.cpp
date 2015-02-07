@@ -46,6 +46,11 @@ void EventManager::fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAuto
     emit removeItemFromAutoPlayQueue(event);
 }
 
+void EventManager::fireClearCurrentPlayingItemEvent(const ClearCurrentPlayingItemEvent& event)
+{
+    emit clearCurrentPlayingItem(event);
+}
+
 void EventManager::fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent& event)
 {
     emit executePlayoutCommand(event);
@@ -134,6 +139,11 @@ void EventManager::fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDia
 void EventManager::fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent& event)
 {
     emit showAddHttpPostDataDialog(event);
+}
+
+void EventManager::fireCurrentItemChangedEvent(const CurrentItemChangedEvent& event)
+{
+    emit currentItemChanged(event);
 }
 
 void EventManager::fireMarkItemAsUsedEvent(const MarkItemAsUsedEvent& event)

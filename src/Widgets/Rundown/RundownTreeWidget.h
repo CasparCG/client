@@ -22,10 +22,12 @@
 #include "Events/Rundown/ExecuteRundownItemEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 #include "Events/Rundown/RemoveItemFromAutoPlayQueueEvent.h"
+#include "Events/Rundown/ClearCurrentPlayingItemEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
+#include "Events/Rundown/CurrentItemChangedEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -98,6 +100,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;
 
         QTreeWidgetItem* copyItem;
+        QTreeWidgetItem* currentPlayingItem;
         QTreeWidgetItem* currentPlayingAutoStepItem;
 
         OscSubscription* upControlSubscription;
@@ -200,6 +203,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void saveAsPreset();
         Q_SLOT void addOscOutputItem();
         Q_SLOT void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
+        Q_SLOT void clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&);
         Q_SLOT void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
         Q_SLOT void addPresetItem(const AddPresetItemEvent&);
@@ -238,4 +242,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void repositoryConnectionStateChanged(RepositoryDevice&);
         Q_SLOT void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
         Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
+        Q_SLOT void currentItemChanged(const CurrentItemChangedEvent&);
 };
