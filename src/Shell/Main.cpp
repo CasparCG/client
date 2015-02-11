@@ -143,26 +143,26 @@ int main(int argc, char* argv[])
     application.setApplicationName("CasparCG Client");
     application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
 
-    QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
-    splashScreen.show();
-
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addVersionOption();
 
-    QCommandLineOption rundownOption("rundown", "Open rundown");
+    QCommandLineOption rundownOption("rundown", "Open specified rundown");
     parser.addOption(rundownOption);
 
-    QCommandLineOption fullscreenOption("fullscreen", "Start in fullscreen");
+    QCommandLineOption fullscreenOption("fullscreen", "Start the application in fullscreen");
     parser.addOption(fullscreenOption);
 
-    QCommandLineOption databaseOption("database", "Database location");
+    QCommandLineOption databaseOption("database", "Open specified database");
     parser.addOption(databaseOption);
 
     QCommandLineOption dbmemoryOption("dbmemory", "Use in memory database");
     parser.addOption(dbmemoryOption);
 
     parser.process(application);
+
+    QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
+    splashScreen.show();
 
     application.setStyle(QStyleFactory::create("plastique"));
 

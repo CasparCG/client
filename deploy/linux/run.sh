@@ -2,4 +2,4 @@
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:lib
 
-./bin/client
+./bin/client -style plastique

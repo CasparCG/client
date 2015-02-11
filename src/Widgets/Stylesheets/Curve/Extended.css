@@ -216,20 +216,16 @@
 
 #treeWidgetRundown
 {
-    background-color: rgba(64, 64, 64, 255);
+    background-color: rgba(55, 55, 55, 255);
     border-top-left-radius: 0px;
 }
 #treeWidgetRundown::item:selected
 {
-    background-color: rgba(80, 80, 80, 255);
+    background-color: rgba(0, 255, 0, 64);
 
     border-style: solid;
     border-width: 1px;
-    border-color: rgba(128, 128, 128, 255);
-}
-#treeWidgetRundown::item:hover:selected
-{
-    background-color: rgba(80, 80, 80, 255);
+    border-color: rgba(0, 255, 0, 255);
 }
 #treeWidgetRundown::item:has-children
 {
@@ -237,7 +233,7 @@
 }
 #treeWidgetRundown::item:has-children:selected
 {
-    background-color: rgba(80, 80, 80, 255);
+    background-color: rgba(0, 255, 0, 64);
 }
 #treeWidgetRundown::branch
 {
