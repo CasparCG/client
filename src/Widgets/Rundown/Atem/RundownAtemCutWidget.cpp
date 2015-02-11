@@ -67,7 +67,7 @@ void RundownAtemCutWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     executePlay();
@@ -76,7 +76,7 @@ void RundownAtemCutWidget::preview(const PreviewEvent& event)
 void RundownAtemCutWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -87,7 +87,7 @@ void RundownAtemCutWidget::labelChanged(const LabelChangedEvent& event)
 void RundownAtemCutWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?

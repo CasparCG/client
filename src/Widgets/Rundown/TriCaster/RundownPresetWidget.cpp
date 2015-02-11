@@ -67,7 +67,7 @@ void RundownPresetWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     executePlay();
@@ -76,7 +76,7 @@ void RundownPresetWidget::preview(const PreviewEvent& event)
 void RundownPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -87,7 +87,7 @@ void RundownPresetWidget::labelChanged(const LabelChangedEvent& event)
 void RundownPresetWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?

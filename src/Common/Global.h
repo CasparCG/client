@@ -12,6 +12,7 @@
 namespace Atem
 {
     static const int DEFAULT_SPEED = 12;
+    static const QString DEFAULT_MACRO = "0";
     static const QString DEFAULT_TRANSITION = "0";
     static const QString DEFAULT_INPUT = "0";
     static const QString DEFAULT_SWITCHER = "prev";
@@ -451,6 +452,7 @@ namespace Rundown
     static const QString TRICASTERPRESET = "TRICASTERPRESET";
     static const QString TRICASTERNETSOURCE = "TRICASTERNETSOURCE";
     static const QString TRICASTERMACRO = "TRICASTERMACRO";
+    static const QString ATEMMACRO = "ATEMMACRO";
     static const QString ATEMAUTO = "ATEMAUTO";
     static const QString ATEMINPUT = "ATEMINPUT";
     static const QString ATEMKEYERSTATE = "ATEMKEYERSTATE";

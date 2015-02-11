@@ -18,11 +18,13 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef QUPSTREAMKEYSETTINGS_H
 #define QUPSTREAMKEYSETTINGS_H
 
+#include "qatemtypes.h"
+
 #include <QColor>
 
 struct QUpstreamKeySettings
 {
-    QUpstreamKeySettings ()
+    QUpstreamKeySettings(quint8 id) : m_id (id)
     {
         m_onAir = false;
         m_type = 0;
@@ -69,9 +71,15 @@ struct QUpstreamKeySettings
         m_dveRate = 0;
         m_dveKeyFrameASet = 0;
         m_dveKeyFrameBSet = 0;
+        m_dveMaskEnabled = false;
+        m_dveMaskTop = 0;
+        m_dveMaskBottom = 0;
+        m_dveMaskLeft = 0;
+        m_dveMaskRight = 0;
         m_enableFly = false;
     }
 
+    quint8 m_id;
     bool m_onAir;
     quint8 m_type;
     quint16 m_fillSource;
@@ -114,11 +122,18 @@ struct QUpstreamKeySettings
     quint8 m_dveBorderInsideSoften;
     quint8 m_dveBorderOpacity;
     float m_dveBorderBevelPosition;
-    quint8 m_dveBorderBevelSoften;
+    float m_dveBorderBevelSoften;
     quint8 m_dveRate;
     bool m_dveKeyFrameASet;
     bool m_dveKeyFrameBSet;
+    bool m_dveMaskEnabled;
+    float m_dveMaskTop;
+    float m_dveMaskBottom;
+    float m_dveMaskLeft;
+    float m_dveMaskRight;
     bool m_enableFly;
+
+    QAtem::DveKeyFrame m_keyFrames[2];
 };
 
 #endif // QUPSTREAMKEYSETTINGS_H

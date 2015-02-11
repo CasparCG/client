@@ -168,6 +168,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addSelectPresetItem();
         Q_SLOT void addSelectNetworkSourceItem();
         Q_SLOT void addPlayMacroItem();
+        Q_SLOT void addAtemPlayMacroItem();
         Q_SLOT void addAtemTriggerAutoItem();
         Q_SLOT void addAtemTriggerCutItem();
         Q_SLOT void addAtemSelectInputItem();

@@ -53,6 +53,7 @@
 #include "Commands/Atem/AtemVideoFormatCommand.h"
 #include "Commands/Atem/AtemAudioInputBalanceCommand.h"
 #include "Commands/Atem/AtemAudioGainCommand.h"
+#include "Commands/Atem/AtemMacroCommand.h"
 #include "Commands/TriCaster/AutoCommand.h"
 #include "Commands/TriCaster/InputCommand.h"
 #include "Commands/TriCaster/PresetCommand.h"
@@ -348,6 +349,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<AtemVideoFormatCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAudioInputStateCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAudioGainCommand*>(event.getCommand()) ||
+                 dynamic_cast<AtemMacroCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand()))
         {
             this->comboBoxTarget->setEnabled(false);

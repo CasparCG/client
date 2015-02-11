@@ -67,7 +67,7 @@ void RundownInputWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     executePlay();
@@ -76,7 +76,7 @@ void RundownInputWidget::preview(const PreviewEvent& event)
 void RundownInputWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -87,7 +87,7 @@ void RundownInputWidget::labelChanged(const LabelChangedEvent& event)
 void RundownInputWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?
@@ -105,7 +105,7 @@ void RundownInputWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEven
         // Connect connectionStateChanged() to the new device.
         const QSharedPointer<TriCasterDevice> newDevice = TriCasterDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (newDevice != NULL)
-            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(CasparDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
+            QObject::connect(newDevice.data(), SIGNAL(connectionStateChanged(TriCasterDevice&)), this, SLOT(deviceConnectionStateChanged(TriCasterDevice&)));
     }
 
     checkEmptyDevice();

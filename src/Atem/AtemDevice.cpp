@@ -1,5 +1,8 @@
 #include "AtemDevice.h"
 
+#include "qatemmixeffect.h"
+#include "qatemconnection.h"
+
 #include <math.h>
 #include <QtCore/QStringList>
 
@@ -10,25 +13,25 @@ AtemDevice::AtemDevice(const QString& address, QObject* parent)
 {
 }
 
-void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition, const QString& mixerStep)
+void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition, const QString& me)
 {
-    SwitcherDevice::atemConnection->setTransitionType(transition.toInt());
+    SwitcherDevice::atemConnection->mixEffect(me.toInt())->setTransitionType(transition.toInt());
 
     if (target == "background")
     {
         switch (transition.toInt())
         {
             case 0: // Mix
-                SwitcherDevice::atemConnection->setMixFrames(speed);
+                SwitcherDevice::atemConnection->mixEffect(me.toInt())->setMixFrames(speed);
             case 1: // Dip
-                SwitcherDevice::atemConnection->setDipFrames(speed);
+                SwitcherDevice::atemConnection->mixEffect(me.toInt())->setDipFrames(speed);
             case 2: // Wipe
-                SwitcherDevice::atemConnection->setWipeFrames(speed);
+                SwitcherDevice::atemConnection->mixEffect(me.toInt())->setWipeFrames(speed);
             case 5: // DVE
-                SwitcherDevice::atemConnection->setDVERate(speed);
+                SwitcherDevice::atemConnection->mixEffect(me.toInt())->setDVERate(speed);
         }
 
-        SwitcherDevice::atemConnection->doAuto(mixerStep.toInt());
+        SwitcherDevice::atemConnection->mixEffect(me.toInt())->autoTransition();
     }
     else
     {
@@ -38,33 +41,49 @@ void AtemDevice::triggerAuto(const QString& target, int speed, const QString& tr
     }
 }
 
-void AtemDevice::triggerCut(const QString& mixerStep)
+void AtemDevice::triggerCut(const QString& me)
 {
-    SwitcherDevice::atemConnection->doCut(mixerStep.toInt());
+    SwitcherDevice::atemConnection->mixEffect(me.toInt())->cut();
 }
 
-QMap<quint16, QAtemConnection::InputInfo> AtemDevice::inputInfos()
+QVector<QAtem::MacroInfo> AtemDevice::macroInfos()
 {
     /*
-    QMap<quint16, QAtemConnection::InputInfo> infos = SwitcherDevice::atemConnection->inputInfos();
+    QMap<quint8, QAtem::InputInfo> macros = SwitcherDevice::atemConnection->macroInfos();
+    foreach (quint8 key, macros.keys())
+        qDebug() << "Name: " << macros.value(key).name << " Index: " << macros.value(key).index;
+    */
+
+    return SwitcherDevice::atemConnection->macroInfos();
+}
+
+QMap<quint16, QAtem::InputInfo> AtemDevice::inputInfos()
+{
+    /*
+    QMap<quint16, QAtem::InputInfo> infos = SwitcherDevice::atemConnection->inputInfos();
     foreach (quint16 key, infos.keys())
-        qDebug() << "LongText: " << infos.value(key).longText << ", ShortText: " << infos.value(key).shortText << " Index: " << infos.value(key).index << ", Type: " << infos.value(key).type;
+        qDebug() << "LongText: " << infos.value(key).longText << ", ShortText: " << infos.value(key).shortText << " Index: " << infos.value(key).index << ", Internal Type: " << infos.value(key).internalType;
     */
 
     return SwitcherDevice::atemConnection->inputInfos();
 }
 
-QHash<quint16, QAtemConnection::AudioInput> AtemDevice::audioInputs()
+QHash<quint16, QAtem::AudioInput> AtemDevice::audioInputs()
 {
     return SwitcherDevice::atemConnection->audioInputs();
 }
 
-void AtemDevice::selectInput(const QString& switcher, const QString& input, const QString& mixerStep)
+void AtemDevice::selectInput(const QString& switcher, const QString& input, const QString& me)
 {
     if (switcher == "pgm")
-        SwitcherDevice::atemConnection->changeProgramInput(input.toInt(), mixerStep.toInt());
+        SwitcherDevice::atemConnection->mixEffect(me.toInt())->changeProgramInput(input.toInt());
     else if (switcher == "prev")
-        SwitcherDevice::atemConnection->changePreviewInput(input.toInt(), mixerStep.toInt());
+        SwitcherDevice::atemConnection->mixEffect(me.toInt())->changePreviewInput(input.toInt());
+}
+
+void AtemDevice::playMacro(const QString& preset)
+{
+    SwitcherDevice::atemConnection->runMacro(preset.toInt());
 }
 
 void AtemDevice::setAuxSource(const QString& aux, const QString& source)
@@ -77,7 +96,7 @@ void AtemDevice::setKeyerState(const QString& keyer, bool state)
     if (keyer == "0" || keyer == "1") // Downstream keyer.
         SwitcherDevice::atemConnection->setDownstreamKeyOn(keyer.toInt(), state);
     else
-        SwitcherDevice::atemConnection->setUpstreamKeyOn(keyer.toInt() - 2, state);
+        SwitcherDevice::atemConnection->mixEffect(1)->setUpstreamKeyOnAir(keyer.toInt() - 2, state);
 }
 
 void AtemDevice::setAudioInputState(const QString& input, const QString& state)

@@ -173,6 +173,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuAtem->setObjectName("contextMenuAtem");
     this->contextMenuAtem->setTitle("ATEM");
     //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/PlayMacroSmall.png"), "Play Macro", this, SLOT(addAtemPlayMacroItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioInputStateSmall.png"), "Set Audio Input State", this, SLOT(addAtemAudioInputStateItem()));
@@ -707,15 +708,20 @@ void RundownTreeWidget::reloadRundown()
     if (this->activeRundown == Rundown::DEFAULT_NAME)
         return;
 
-    delete this->copyItem;
-    delete this->currentAutoPlayWidget;
-    delete this->currentPlayingItem;
-    delete this->currentPlayingAutoStepItem;
+    if (this->copyItem != NULL)
+        this->copyItem = NULL;
 
-    this->copyItem = NULL;
-    this->currentAutoPlayWidget = NULL;
-    this->currentPlayingItem = NULL;
-    this->currentPlayingAutoStepItem = NULL;
+    if (this->currentPlayingItem != NULL)
+        this->currentPlayingItem = NULL;
+
+    if (this->currentPlayingAutoStepItem != NULL)
+        this->currentPlayingAutoStepItem = NULL;
+
+    if (this->currentAutoPlayWidget != NULL)
+    {
+        delete this->currentAutoPlayWidget;
+        this->currentAutoPlayWidget = NULL;
+    }
 
     this->treeWidgetRundown->removeAllItems();
 
@@ -1563,6 +1569,11 @@ void RundownTreeWidget::addAtemSelectInputItem()
 void RundownTreeWidget::addAtemTriggerAutoItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUTO);
+}
+
+void RundownTreeWidget::addAtemPlayMacroItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMMACRO);
 }
 
 void RundownTreeWidget::addAtemTriggerCutItem()

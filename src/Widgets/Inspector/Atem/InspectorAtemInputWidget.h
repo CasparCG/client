@@ -10,6 +10,8 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
+#include "qatemtypes.h"
+
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
@@ -25,7 +27,7 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
     private:
         LibraryModel* model;
         AtemInputCommand* command;
-        QMap<quint16, QAtemConnection::InputInfo> inputs;
+        QMap<quint16, QAtem::InputInfo> inputs;
 
         void loadAtemSwitcher();
         void blockAllSignals(bool block);

@@ -47,6 +47,7 @@
 #include "Inspector/Atem/InspectorAtemAudioInputStateWidget.h"
 #include "Inspector/Atem/InspectorAtemAudioGainWidget.h"
 #include "Inspector/Atem/InspectorAtemAudioInputBalanceWidget.h"
+#include "Inspector/Atem/InspectorAtemMacroWidget.h"
 #include "Inspector/TriCaster/InspectorInputWidget.h"
 #include "Inspector/TriCaster/InspectorTakeWidget.h"
 #include "Inspector/TriCaster/InspectorAutoWidget.h"
@@ -103,6 +104,7 @@
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemAudioGainCommand.h"
 #include "Commands/Atem/AtemAudioInputBalanceCommand.h"
+#include "Commands/Atem/AtemMacroCommand.h"
 #include "Commands/TriCaster/InputCommand.h"
 #include "Commands/TriCaster/TakeCommand.h"
 #include "Commands/TriCaster/AutoCommand.h"
@@ -175,6 +177,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(53)), 0, new InspectorRouteVideolayerWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(54)), 0, new InspectorSonyPresetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(55)), 0, new InspectorSpyderPresetWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(56)), 0, new InspectorAtemMacroWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -311,6 +314,8 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
             this->treeWidgetInspector->topLevelItem(54)->setHidden(false);
     else if (dynamic_cast<SpyderPresetCommand*>(event.getCommand()))
             this->treeWidgetInspector->topLevelItem(55)->setHidden(false);
+    else if (dynamic_cast<AtemMacroCommand*>(event.getCommand()))
+            this->treeWidgetInspector->topLevelItem(56)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -371,6 +376,7 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(53)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(54)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(55)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(56)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)
