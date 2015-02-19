@@ -2,7 +2,7 @@
 
 #include "Shared.h"
 
-#include "qatemconnection.h"
+#include "qatemtypes.h"
 
 #include "SwitcherDevice.h"
 
@@ -13,14 +13,16 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
     public:
         explicit AtemDevice(const QString& address, QObject* parent = 0);
 
-        void triggerAuto(const QString& target, int speed, const QString& transition, const QString& mixerStep);
-        void triggerCut(const QString& mixerStep);
+        void triggerAuto(const QString& target, int speed, const QString& transition, const QString& me);
+        void triggerCut(const QString& me);
 
-        QMap<quint16, QAtemConnection::InputInfo> inputInfos();
-        QHash<quint16, QAtemConnection::AudioInput> audioInputs();
+        QVector<QAtem::MacroInfo> macroInfos();
+        QMap<quint16, QAtem::InputInfo> inputInfos();
+        QHash<quint16, QAtem::AudioInput> audioInputs();
 
         void setAuxSource(const QString& aux, const QString& source);
-        void selectInput(const QString& switcher, const QString& input, const QString& mixerStep);
+        void selectInput(const QString& switcher, const QString& input, const QString& me);
+        void playMacro(const QString& preset);
 
         void setKeyerState(const QString& keyer, bool state);
         void setVideoFormat(const QString& format);

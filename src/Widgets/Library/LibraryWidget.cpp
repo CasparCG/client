@@ -461,6 +461,15 @@ void LibraryWidget::setupTools()
     widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
     widgetSolidColor->setText(5, "0");
 
+    QTreeWidgetItem* widgetAtemMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetAtemMacro->setIcon(0, QIcon(":/Graphics/Images/Atem/PlayMacroSmall.png"));
+    widgetAtemMacro->setText(0, "Play Macro");
+    widgetAtemMacro->setText(1, "0");
+    widgetAtemMacro->setText(2, "Play Macro");
+    widgetAtemMacro->setText(3, "");
+    widgetAtemMacro->setText(4, Rundown::ATEMMACRO);
+    widgetAtemMacro->setText(5, "0");
+
     QTreeWidgetItem* widgetAtemInput = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemInput->setIcon(0, QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"));
     widgetAtemInput->setText(0, "Select Input");

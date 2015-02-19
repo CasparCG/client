@@ -255,6 +255,9 @@
         <file>Images/Spyder/SpyderPreset.png</file>
         <file>Images/Spyder/SpyderPresetSmall.png</file>
         <file>Images/Spyder/SpyderPresetSmallHover.png</file>
+        <file>Images/Atem/PlayMacro.png</file>
+        <file>Images/Atem/PlayMacroSmall.png</file>
+        <file>Images/Atem/PlayMacroSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

@@ -48,6 +48,7 @@
 #include "Atem/RundownAtemAudioInputStateWidget.h"
 #include "Atem/RundownAtemAudioGainWidget.h"
 #include "Atem/RundownAtemAudioInputBalanceWidget.h"
+#include "Atem/RundownAtemMacroWidget.h"
 #include "TriCaster/RundownInputWidget.h"
 #include "TriCaster/RundownTakeWidget.h"
 #include "TriCaster/RundownAutoWidget.h"
@@ -108,6 +109,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::ATEMAUDIOINPUTSTATE) return new RundownAtemAudioInputStateWidget(model, this);
     else if (model.getType() == Rundown::ATEMAUDIOGAIN) return new RundownAtemAudioGainWidget(model, this);
     else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
+    else if (model.getType() == Rundown::ATEMMACRO) return new RundownAtemMacroWidget(model, this);
     else if (model.getType() == Rundown::PLAYOUTCOMMAND) return new RundownPlayoutCommandWidget(model, this);
     else if (model.getType() == Rundown::FADETOBLACK) return new RundownFadeToBlackWidget(model, this);
     else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);

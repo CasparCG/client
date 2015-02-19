@@ -10,6 +10,8 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
+#include "qatemtypes.h"
+
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
@@ -25,7 +27,7 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
     private:
         LibraryModel* model;
         AtemAudioInputStateCommand* command;
-        QMap<quint16, QAtemConnection::InputInfo> inputs;
+        QMap<quint16, QAtem::InputInfo> inputs;
 
         void loadAtemInputState();
         void blockAllSignals(bool block);

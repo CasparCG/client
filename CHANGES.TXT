@@ -6,6 +6,7 @@ CasparCG Client 2.0.8
 - NEW: Added support for preview images on the preview channel.
 - NEW: Added support for Blackmagic 2M/E mixers.
 - NEW: Added support for trigger preset in Spyder system.
+- NEW: Added support for trigger ATEM mixer macro. Requires the latest firmware.
 - NEW: Added "Open Recent Rundown" menu.
 - NEW: Added support for migrating the database between release versions.
 - NEW: Added missing CasparCG video modes.

@@ -88,7 +88,7 @@ bool RundownTemplateWidget::eventFilter(QObject* object, QEvent* event)
 void RundownTemplateWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -99,7 +99,7 @@ void RundownTemplateWidget::labelChanged(const LabelChangedEvent& event)
 void RundownTemplateWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setName(event.getTarget());
@@ -109,7 +109,7 @@ void RundownTemplateWidget::targetChanged(const TargetChangedEvent& event)
 void RundownTemplateWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?
@@ -136,7 +136,7 @@ void RundownTemplateWidget::deviceChanged(const DeviceChangedEvent& event)
 
 void RundownTemplateWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     if (event->mimeData()->hasFormat("application/library-dataitem"))

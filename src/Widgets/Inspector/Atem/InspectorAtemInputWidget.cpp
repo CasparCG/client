@@ -90,7 +90,7 @@ void InspectorAtemInputWidget::loadAtemInput()
     this->comboBoxInput->clear();
     foreach (quint16 key, this->inputs.keys())
     {
-        if (inputs.value(key).type == 129) // Aux.
+        if (inputs.value(key).internalType == 129) // Aux.
             continue;
 
         this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
@@ -121,7 +121,7 @@ void InspectorAtemInputWidget::loadAtemSwitcher()
 
     foreach (quint16 key, this->inputs.keys())
     {
-        if (inputs.value(key).type == 129) // Aux.
+        if (inputs.value(key).internalType == 129) // Aux.
             this->comboBoxSwitcher->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
     }
 

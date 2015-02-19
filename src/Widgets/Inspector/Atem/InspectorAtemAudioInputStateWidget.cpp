@@ -74,7 +74,7 @@ void InspectorAtemAudioInputStateWidget::loadAtemAudioInput()
     this->comboBoxInput->addItem("Master", "0");
     foreach (quint16 key, this->inputs.keys())
     {
-        if (this->inputs.value(key).type == 0 || this->inputs.value(key).type == 4)
+        if (this->inputs.value(key).internalType == 0 || this->inputs.value(key).internalType == 4)
             this->comboBoxInput->addItem(this->inputs.value(key).longText, this->inputs.value(key).index);
     }
 

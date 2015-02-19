@@ -192,7 +192,8 @@ HEADERS += \
     Models/Atem/AtemMixerStepModel.h \
     Commands/Spyder/SpyderPresetCommand.h \
     Events/Rundown/ClearCurrentPlayingItemEvent.h \
-    Events/Rundown/CurrentItemChangedEvent.h
+    Events/Rundown/CurrentItemChangedEvent.h \
+    Commands/Atem/AtemMacroCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -374,7 +375,8 @@ SOURCES += \
     Models/Atem/AtemMixerStepModel.cpp \
     Commands/Spyder/SpyderPresetCommand.cpp \
     Events/Rundown/ClearCurrentPlayingItemEvent.cpp \
-    Events/Rundown/CurrentItemChangedEvent.cpp
+    Events/Rundown/CurrentItemChangedEvent.cpp \
+    Commands/Atem/AtemMacroCommand.cpp
 
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include

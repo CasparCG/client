@@ -78,7 +78,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
 void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -89,7 +89,7 @@ void RundownAudioWidget::labelChanged(const LabelChangedEvent& event)
 void RundownAudioWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setName(event.getTarget());
@@ -99,7 +99,7 @@ void RundownAudioWidget::targetChanged(const TargetChangedEvent& event)
 void RundownAudioWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?

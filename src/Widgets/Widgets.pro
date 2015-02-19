@@ -165,7 +165,9 @@ HEADERS += \
     Inspector/Sony/InspectorSonyPresetWidget.h \
     Rundown/Sony/RundownSonyPresetWidget.h \
     Rundown/Spyder/RundownSpyderPresetWidget.h \
-    Inspector/Spyder/InspectorSpyderPresetWidget.h
+    Inspector/Spyder/InspectorSpyderPresetWidget.h \
+    Rundown/Atem/RundownAtemMacroWidget.h \
+    Inspector/Atem/InspectorAtemMacroWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -319,7 +321,9 @@ SOURCES += \
     Inspector/Sony/InspectorSonyPresetWidget.cpp \
     Rundown/Sony/RundownSonyPresetWidget.cpp \
     Rundown/Spyder/RundownSpyderPresetWidget.cpp \
-    Inspector/Spyder/InspectorSpyderPresetWidget.cpp
+    Inspector/Spyder/InspectorSpyderPresetWidget.cpp \
+    Rundown/Atem/RundownAtemMacroWidget.cpp \
+    Inspector/Atem/InspectorAtemMacroWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -461,7 +465,9 @@ FORMS += \
     Inspector/Sony/InspectorSonyPresetWidget.ui \
     Rundown/Sony/RundownSonyPresetWidget.ui \
     Rundown/Spyder/RundownSpyderPresetWidget.ui \
-    Inspector/Spyder/InspectorSpyderPresetWidget.ui
+    Inspector/Spyder/InspectorSpyderPresetWidget.ui \
+    Rundown/Atem/RundownAtemMacroWidget.ui \
+    Inspector/Atem/InspectorAtemMacroWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -855,8 +861,3 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Core/release/ -lcore
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Core/debug/ -lcore
 else:macx:LIBS += -L$$OUT_PWD/../Core/ -lcore
 else:unix:LIBS += -L$$OUT_PWD/../Core/ -lcore
-
-DISTFILES += \
-    Images/Sypder/Spyder.png \
-    Images/Sypder/SpyderSmall.png \
-    Images/Sypder/SpyderSmallHover.png
