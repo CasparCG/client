@@ -15,6 +15,7 @@ CasparCG Client 2.0.8
 - FIX: Various bug fixes and UI enhancements.
 - FIX: iNews integration bug.
 - FIX: Use zero indexing for Panasonic PTZ presets.
+- FIX: Labels and channels change randomly, issue #137.
 
 
 

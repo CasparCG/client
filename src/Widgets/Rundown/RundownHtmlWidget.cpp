@@ -68,7 +68,7 @@ RundownHtmlWidget::RundownHtmlWidget(const LibraryModel& model, QWidget* parent,
 void RundownHtmlWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -79,7 +79,7 @@ void RundownHtmlWidget::labelChanged(const LabelChangedEvent& event)
 void RundownHtmlWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?

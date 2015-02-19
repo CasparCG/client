@@ -75,18 +75,17 @@ RundownStillWidget::RundownStillWidget(const LibraryModel& model, QWidget* paren
 void RundownStillWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
-
     this->labelLabel->setText(this->model.getLabel());
 }
 
 void RundownStillWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setName(event.getTarget());
@@ -98,7 +97,7 @@ void RundownStillWidget::targetChanged(const TargetChangedEvent& event)
 void RundownStillWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active)
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?
