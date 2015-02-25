@@ -29,13 +29,6 @@ echo Building...
 export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
 /usr/bin/time make || fail "make failed"
 
-
-
-
-
-
-
-
 # Copy compiled binaries
 echo Copying binaries...
 mkdir -p "Shell/shell.app/Contents/Frameworks" || fail "Could not create Shell/shell.app/Contents/Frameworks"
@@ -72,3 +65,4 @@ cp -f ../LICENSE.TXT "$CLIENT_FOLDER/" || fail "Could not copy LICENSE.TXT"
 # Create dmg file
 echo Creating dmg...
 hdiutil create -volname "$CLIENT_FOLDER" -srcfolder "$CLIENT_FOLDER" -ov -format UDZO "$BUILD_ARCHIVE_NAME.dmg" || fail "Could not create dmg"
+
