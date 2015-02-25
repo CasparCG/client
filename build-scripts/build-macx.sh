@@ -32,7 +32,7 @@ export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
 # Copy compiled binaries
 echo Copying binaries...
 mkdir -p "Shell/shell.app/Contents/Frameworks" || fail "Could not create Shell/shell.app/Contents/Frameworks"
-find . -name \*.dylib\* -exec cp -fP {} "Shell/shell.app/Contents/Frameworks" \; || fail "Could not copy client libraries"
+find . -name \*.dylib\* -exec cp -RfP {} "Shell/shell.app/Contents/Frameworks" \; || fail "Could not copy client libraries"
 
 # Copy binary dependencies
 echo Copying binary dependencies...
