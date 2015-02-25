@@ -36,8 +36,8 @@ find . -name \*.dylib\* -exec cp -fP {} "Shell/shell.app/Contents/Frameworks" \;
 
 # Copy binary dependencies
 echo Copying binary dependencies...
-cp -Rf ../deploy/macx/MacOS "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
-cp -Rf ../deploy/macx/Frameworks "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
+cp -RfP ../deploy/macx/MacOS "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
+cp -RfP ../deploy/macx/Frameworks "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
 
 # Create app bundle
 echo Creating app bundle...
@@ -45,7 +45,7 @@ echo Creating app bundle...
 
 # Copy Info.plist
 echo Copying Info.plist...
-cp -Rf ../deploy/macx/Info.plist "Shell/shell.app/Contents" || fail "Could not copy Info.plist"
+cp -RfP ../deploy/macx/Info.plist "Shell/shell.app/Contents" || fail "Could not copy Info.plist"
 
 # Create client folder to later dmg
 export CLIENT_FOLDER="CasparCG Client"
