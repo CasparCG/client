@@ -65,9 +65,9 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool checkForSave() const;
 
         bool getAllowRemoteTriggering() const;
-        bool executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item = NULL);
+        bool executeCommand(Playout::PlayoutType type, Action::ActionType source, QTreeWidgetItem* item = NULL);
 
-        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
+        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType);
 
     private:
         bool active;
@@ -94,7 +94,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuSony;
         QMenu* contextMenuSpyder;
 
-        QMap<int, Playout::PlayoutType::Type> gpiBindings;
+        QMap<int, Playout::PlayoutType> gpiBindings;
 
         AbstractRundownWidget* currentAutoPlayWidget;
         QList<QList<AbstractRundownWidget*>* > autoPlayQueues;

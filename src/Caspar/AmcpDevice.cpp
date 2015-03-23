@@ -8,8 +8,7 @@
 #include <QtNetwork/QTcpSocket>
 
 AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
-    : QObject(parent),
-      command(AmcpDevice::NONE), address(address), port(port), state(AmcpDevice::ExpectingHeader), connected(false), disableCommands(false)
+    : QObject(parent), address(address), port(port)
 {
     this->socket = new QTcpSocket(this);
 
@@ -42,7 +41,7 @@ void AmcpDevice::disconnectDevice()
     this->socket->blockSignals(false);
 
     this->connected = false;
-    this->command = AmcpDevice::CONNECTIONSTATE;
+    this->command = AmcpDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -50,7 +49,7 @@ void AmcpDevice::disconnectDevice()
 void AmcpDevice::setConnected()
 {
     this->connected = true;
-    this->command = AmcpDevice::CONNECTIONSTATE;
+    this->command = AmcpDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -58,7 +57,7 @@ void AmcpDevice::setConnected()
 void AmcpDevice::setDisconnected()
 {
     this->connected = false;
-    this->command = AmcpDevice::CONNECTIONSTATE;
+    this->command = AmcpDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 
@@ -113,48 +112,48 @@ void AmcpDevice::readMessage()
 
 AmcpDevice::AmcpDeviceCommand AmcpDevice::translateCommand(const QString& command)
 {
-    if (command == "LOAD") return AmcpDevice::LOAD;
-    else if (command == "LOADBG") return AmcpDevice::LOADBG;
-    else if (command == "PLAY") return AmcpDevice::PLAY;
-    else if (command == "STOP") return AmcpDevice::STOP;
-    else if (command == "CG") return AmcpDevice::CG;
-    else if (command == "CLS") return AmcpDevice::CLS;
-    else if (command == "CINF") return AmcpDevice::CINF;
-    else if (command == "VERSION") return AmcpDevice::VERSION;
-    else if (command == "TLS") return AmcpDevice::TLS;
-    else if (command == "INFO") return AmcpDevice::INFO;
-    else if (command == "INFO SYSTEM") return AmcpDevice::INFOSYSTEM;
-    else if (command == "DATA LIST") return AmcpDevice::DATALIST;
-    else if (command == "DATA RETRIEVE") return AmcpDevice::DATARETRIEVE;
-    else if (command == "CLEAR") return AmcpDevice::CLEAR;
-    else if (command == "SET") return AmcpDevice::SET;
-    else if (command == "MIXER") return AmcpDevice::MIXER;
-    else if (command == "CALL") return AmcpDevice::CALL;
-    else if (command == "REMOVE") return AmcpDevice::REMOVE;
-    else if (command == "ADD") return AmcpDevice::ADD;
-    else if (command == "SWAP") return AmcpDevice::SWAP;
-    else if (command == "STATUS") return AmcpDevice::STATUS;
-    else if (command == "ERROR") return AmcpDevice::ERROR;
-    else if (command == "THUMBNAIL LIST") return AmcpDevice::THUMBNAILLIST;
-    else if (command == "THUMBNAIL RETRIEVE") return AmcpDevice::THUMBNAILRETRIEVE;
+    if (command == "LOAD") return AmcpDeviceCommand::LOAD;
+    else if (command == "LOADBG") return AmcpDeviceCommand::LOADBG;
+    else if (command == "PLAY") return AmcpDeviceCommand::PLAY;
+    else if (command == "STOP") return AmcpDeviceCommand::STOP;
+    else if (command == "CG") return AmcpDeviceCommand::CG;
+    else if (command == "CLS") return AmcpDeviceCommand::CLS;
+    else if (command == "CINF") return AmcpDeviceCommand::CINF;
+    else if (command == "VERSION") return AmcpDeviceCommand::VERSION;
+    else if (command == "TLS") return AmcpDeviceCommand::TLS;
+    else if (command == "INFO") return AmcpDeviceCommand::INFO;
+    else if (command == "INFO SYSTEM") return AmcpDeviceCommand::INFOSYSTEM;
+    else if (command == "DATA LIST") return AmcpDeviceCommand::DATALIST;
+    else if (command == "DATA RETRIEVE") return AmcpDeviceCommand::DATARETRIEVE;
+    else if (command == "CLEAR") return AmcpDeviceCommand::CLEAR;
+    else if (command == "SET") return AmcpDeviceCommand::SET;
+    else if (command == "MIXER") return AmcpDeviceCommand::MIXER;
+    else if (command == "CALL") return AmcpDeviceCommand::CALL;
+    else if (command == "REMOVE") return AmcpDeviceCommand::REMOVE;
+    else if (command == "ADD") return AmcpDeviceCommand::ADD;
+    else if (command == "SWAP") return AmcpDeviceCommand::SWAP;
+    else if (command == "STATUS") return AmcpDeviceCommand::STATUS;
+    else if (command == "ERROR") return AmcpDeviceCommand::ERROR;
+    else if (command == "THUMBNAIL LIST") return AmcpDeviceCommand::THUMBNAILLIST;
+    else if (command == "THUMBNAIL RETRIEVE") return AmcpDeviceCommand::THUMBNAILRETRIEVE;
 
-    return AmcpDevice::NONE;
+    return AmcpDeviceCommand::NONE;
 }
 
 void AmcpDevice::parseLine(const QString& line)
 {
     switch (this->state)
     {
-        case AmcpDevice::ExpectingHeader:
+        case AmcpDeviceParserState::ExpectingHeader:
             parseHeader(line);
             break;
-        case AmcpDevice::ExpectingOneline:
+        case AmcpDeviceParserState::ExpectingOneline:
             parseOneline(line);
             break;
-        case AmcpDevice::ExpectingTwoline:
+        case AmcpDeviceParserState::ExpectingTwoline:
             parseTwoline(line);
             break;
-        case AmcpDevice::ExpectingMultiline:
+        case AmcpDeviceParserState::ExpectingMultiline:
             parseMultiline(line);
             break;
         default:
@@ -173,11 +172,11 @@ void AmcpDevice::parseHeader(const QString& line)
     switch (this->code)
     {
         case 200: // The command has been executed and several lines of data are being returned.
-            this->state = AmcpDevice::ExpectingMultiline;
+            this->state = AmcpDeviceParserState::ExpectingMultiline;
             break;
         case 201: // The command has been executed and a line of data is being returned.
         case 400: // Command not understood.
-            this->state = AmcpDevice::ExpectingTwoline;
+            this->state = AmcpDeviceParserState::ExpectingTwoline;
             break;
         default:
             parseOneline(line);
@@ -218,6 +217,6 @@ void AmcpDevice::resetDevice()
 {
     this->code = 0;
     this->response.clear();
-    this->command = AmcpDevice::NONE;
-    this->state = AmcpDevice::ExpectingHeader;
+    this->command = AmcpDeviceCommand::NONE;
+    this->state = AmcpDeviceParserState::ExpectingHeader;
 }

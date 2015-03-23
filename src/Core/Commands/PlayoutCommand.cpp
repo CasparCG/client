@@ -1,10 +1,9 @@
 #include "PlayoutCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 PlayoutCommand::PlayoutCommand(QObject* parent)
-    : AbstractCommand(parent),
-    command(Output::DEFAULT_PLAYOUT_COMMAND)
+    : AbstractCommand(parent)
 {
 }
 

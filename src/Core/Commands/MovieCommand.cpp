@@ -1,13 +1,9 @@
 #include "MovieCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 MovieCommand::MovieCommand(QObject* parent)
-    : AbstractCommand(parent),
-      videoName(Movie::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Movie::DEFAULT_LOOP),
-      freezeOnLoad(Movie::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Movie::DEFAULT_TRIGGER_ON_NEXT), seek(Movie::DEFAULT_SEEK),
-      length(Movie::DEFAULT_LENGTH), autoPlay(Movie::DEFAULT_AUTO_PLAY)
+    : AbstractCommand(parent)
 {
 }
 

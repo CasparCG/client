@@ -1,10 +1,9 @@
 #include "SpyderPresetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 SpyderPresetCommand::SpyderPresetCommand(QObject* parent)
-    : AbstractCommand(parent),
-      address(Spyder::DEFAULT_ADDRESS), port(Spyder::DEFAULT_PORT), preset(Spyder::DEFAULT_PRESET), triggerOnNext(Spyder::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

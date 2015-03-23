@@ -246,7 +246,7 @@ void RundownGridWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownGridWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownGridWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeClearVideolayer();

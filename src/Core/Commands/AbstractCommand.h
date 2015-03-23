@@ -3,11 +3,15 @@
 #include "../Shared.h"
 #include "AbstractProperties.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <QtCore/QObject>
+
+class QXmlStreamWriter;
 
 class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
 {
@@ -40,14 +44,16 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
     protected:
         explicit AbstractCommand(QObject* parent = 0);
 
-        int channel;
-        int videolayer;
-        int delay;
-        int duration;
-        bool allowGpi;
-        bool allowRemoteTriggering;
-        QString remoteTriggerId;
-        QString storyId;
+        QString storyId = "";
+        QString remoteTriggerId = Output::DEFAULT_REMOTE_TRIGGER_ID;
+
+        int channel = Output::DEFAULT_CHANNEL;
+        int videolayer = Output::DEFAULT_VIDEOLAYER;
+        int delay = Output::DEFAULT_DELAY;
+        int duration = Output::DEFAULT_DURATION ;
+        bool allowGpi = Output::DEFAULT_ALLOW_GPI;
+        bool allowRemoteTriggering = Output::DEFAULT_ALLOW_REMOTE_TRIGGERING;
+
 
     private:
         Q_SIGNAL void channelChanged(int);

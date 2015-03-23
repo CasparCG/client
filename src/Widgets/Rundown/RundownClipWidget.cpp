@@ -247,7 +247,7 @@ void RundownClipWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownClipWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownClipWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

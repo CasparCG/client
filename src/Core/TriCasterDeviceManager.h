@@ -36,6 +36,6 @@ class CORE_EXPORT TriCasterDeviceManager : public QObject
 
     private:
         QMap<QString, TriCasterDeviceModel> deviceModels;
-        QMap<QString, QSharedPointer<TriCasterDevice> > devices;
+        QMap<QString, QSharedPointer<TriCasterDevice>> devices;
 };
 

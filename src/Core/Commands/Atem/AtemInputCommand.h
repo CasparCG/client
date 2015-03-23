@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QXmlStreamWriter;
 
 class CORE_EXPORT AtemInputCommand: public AbstractCommand
 {
@@ -33,10 +35,10 @@ class CORE_EXPORT AtemInputCommand: public AbstractCommand
         void setMixerStep(const QString& mixerStep);
 
     private:
-        QString switcher;
-        QString input;
-        bool triggerOnNext;
-        QString mixerStep;
+        QString switcher = Atem::DEFAULT_SWITCHER;
+        QString input = Atem::DEFAULT_INPUT;
+        bool triggerOnNext = Atem::DEFAULT_TRIGGER_ON_NEXT;
+        QString mixerStep = Atem::DEFAULT_MIXER_STEP;
 
         Q_SIGNAL void switcherChanged(const QString&);
         Q_SIGNAL void inputChanged(const QString&);

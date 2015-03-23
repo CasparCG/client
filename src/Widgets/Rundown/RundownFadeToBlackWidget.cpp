@@ -237,7 +237,7 @@ void RundownFadeToBlackWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownFadeToBlackWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownFadeToBlackWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

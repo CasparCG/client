@@ -1,11 +1,9 @@
 #include "OpacityCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 OpacityCommand::OpacityCommand(QObject* parent)
-    : AbstractCommand(parent),
-      opacity(Mixer::DEFAULT_OPACITY), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Opacity::DEFAULT_TRIGGER_ON_NEXT),
-      defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

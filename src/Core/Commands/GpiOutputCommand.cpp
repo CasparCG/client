@@ -1,10 +1,9 @@
 #include "GpiOutputCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 GpiOutputCommand::GpiOutputCommand(QObject* parent)
-    : AbstractCommand(parent),
-      gpoPort(GpiOutput::DEFAULT_PORT), triggerOnNext(GpiOutput::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

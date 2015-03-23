@@ -484,7 +484,7 @@ void RundownWidget::currentChanged(int index)
     this->allowRemoteTriggeringAction->blockSignals(false);
 }
 
-void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)
+void RundownWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType binding)
 {
     for (int i = 0; i < this->tabWidgetRundown->count(); i++)
         dynamic_cast<RundownTreeWidget*>(this->tabWidgetRundown->widget(i))->gpiBindingChanged(gpiPort, binding);

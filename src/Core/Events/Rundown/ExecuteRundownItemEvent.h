@@ -12,14 +12,14 @@
 class CORE_EXPORT ExecuteRundownItemEvent
 {
     public:
-        explicit ExecuteRundownItemEvent(Playout::PlayoutType::Type type, QTreeWidgetItem* item, const QString& address = "");
+        explicit ExecuteRundownItemEvent(Playout::PlayoutType type, QTreeWidgetItem* item, const QString& address = "");
 
-        Playout::PlayoutType::Type getType() const;
+        Playout::PlayoutType getType() const;
         QTreeWidgetItem* getItem() const;
         QString getAddress() const;
 
     private:
-        Playout::PlayoutType::Type type;
+        Playout::PlayoutType type;
 
         QTreeWidgetItem* item;
         QString address;

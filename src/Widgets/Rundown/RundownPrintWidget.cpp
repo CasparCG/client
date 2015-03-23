@@ -225,7 +225,7 @@ void RundownPrintWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownPrintWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownPrintWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

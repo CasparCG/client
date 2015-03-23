@@ -8,6 +8,8 @@
 #include "Models/CasparTemplate.h"
 #include "Models/CasparThumbnail.h"
 
+class QObject;
+
 class CASPAR_EXPORT CasparDevice : public AmcpDevice
 {
     Q_OBJECT

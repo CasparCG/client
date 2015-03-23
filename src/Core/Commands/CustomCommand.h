@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT CustomCommand : public AbstractCommand
 {
@@ -49,18 +51,18 @@ class CORE_EXPORT CustomCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString stopCommand;
-        QString playCommand;
-        QString loadCommand;
-        QString pauseCommand;
-        QString nextCommand;
-        QString updateCommand;
-        QString invokeCommand;
-        QString previewCommand;
-        QString clearCommand;
-        QString clearVideolayerCommand;
-        QString clearChannelCommand;
-        bool triggerOnNext;
+        QString stopCommand = "";
+        QString playCommand = "";
+        QString loadCommand = "";
+        QString pauseCommand = "";
+        QString nextCommand = "";
+        QString updateCommand = "";
+        QString invokeCommand = "";
+        QString previewCommand = "";
+        QString clearCommand = "";
+        QString clearVideolayerCommand = "";
+        QString clearChannelCommand = "";
+        bool triggerOnNext = Custom::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void stopCommandChanged(const QString&);
         Q_SIGNAL void playCommandChanged(const QString&);

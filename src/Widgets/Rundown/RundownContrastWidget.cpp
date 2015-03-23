@@ -244,7 +244,7 @@ void RundownContrastWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownContrastWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownContrastWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

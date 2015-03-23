@@ -232,7 +232,7 @@ void RundownRouteVideolayerWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownRouteVideolayerWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownRouteVideolayerWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

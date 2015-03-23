@@ -1,7 +1,6 @@
 #include "GpiPortModel.h"
 
-GpiPortModel::GpiPortModel(
-        int port, bool risingEdge, Playout::PlayoutType::Type action)
+GpiPortModel::GpiPortModel(int port, bool risingEdge, Playout::PlayoutType action)
     : port(port), risingEdge(risingEdge), action(action)
 {
 }
@@ -16,7 +15,7 @@ bool GpiPortModel::isRisingEdge() const
     return risingEdge;
 }
 
-Playout::PlayoutType::Type GpiPortModel::getAction() const
+Playout::PlayoutType GpiPortModel::getAction() const
 {
     return action;
 }

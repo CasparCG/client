@@ -186,7 +186,7 @@ void RundownOscOutputWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownOscOutputWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

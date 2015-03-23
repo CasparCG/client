@@ -1,10 +1,9 @@
 #include "ContrastCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 ContrastCommand::ContrastCommand(QObject* parent)
-    : AbstractCommand(parent),
-      contrast(Mixer::DEFAULT_CONTRAST), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

@@ -289,7 +289,7 @@ void RundownTemplateWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownTemplateWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

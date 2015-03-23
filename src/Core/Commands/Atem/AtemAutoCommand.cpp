@@ -1,10 +1,9 @@
 #include "AtemAutoCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemAutoCommand::AtemAutoCommand(QObject* parent)
-    : AbstractCommand(parent),
-      step(""), speed(Atem::DEFAULT_SPEED), transition(Atem::DEFAULT_TRANSITION), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT), mixerStep(Atem::DEFAULT_MIXER_STEP)
+    : AbstractCommand(parent)
 {
 }
 

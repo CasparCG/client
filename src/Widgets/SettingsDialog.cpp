@@ -239,7 +239,7 @@ void SettingsDialog::loadGpi()
 {
     QList<GpiPortModel> inputs = DatabaseManager::getInstance().getGpiPorts();
 
-    const QList<Playout::PlayoutType::Type>& actions = Playout::enumConstants();
+    const QList<Playout::PlayoutType>& actions = Playout::enumConstants();
     this->comboBoxAction1->setCurrentIndex(actions.indexOf(inputs.at(0).getAction()));
     this->comboBoxAction2->setCurrentIndex(actions.indexOf(inputs.at(1).getAction()));
     this->comboBoxAction3->setCurrentIndex(actions.indexOf(inputs.at(2).getAction()));
@@ -686,7 +686,7 @@ void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBo
         return;       // values in the database that are already there.
 
     bool risingEdge = voltage->currentIndex() == 0;
-    Playout::PlayoutType::Type playoutType = Playout::enumConstants().at(action->currentIndex());
+    Playout::PlayoutType playoutType = Playout::enumConstants().at(action->currentIndex());
 
     qDebug() << "GPI " << gpi
              << " changed -- rising edge: " << risingEdge

@@ -1,10 +1,9 @@
 #include "TakeCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 TakeCommand::TakeCommand(QObject* parent)
-    : AbstractCommand(parent),
-      step(""), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

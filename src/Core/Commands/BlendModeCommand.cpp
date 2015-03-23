@@ -1,10 +1,9 @@
 #include "BlendModeCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 BlendModeCommand::BlendModeCommand(QObject* parent)
-    : AbstractCommand(parent),
-    blendMode(Mixer::DEFAULT_BLENDMODE)
+    : AbstractCommand(parent)
 {
 }
 

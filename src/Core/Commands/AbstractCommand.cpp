@@ -1,12 +1,9 @@
 #include "AbstractCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AbstractCommand::AbstractCommand(QObject* parent)
-    : QObject(parent),
-      channel(Output::DEFAULT_CHANNEL), videolayer(Output::DEFAULT_VIDEOLAYER), delay(Output::DEFAULT_DELAY), duration(Output::DEFAULT_DURATION),
-      allowGpi(Output::DEFAULT_ALLOW_GPI), allowRemoteTriggering(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING), remoteTriggerId(Output::DEFAULT_REMOTE_TRIGGER_ID),
-      storyId("")
+    : QObject(parent)
 {
 }
 

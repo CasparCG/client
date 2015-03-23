@@ -32,7 +32,7 @@ class CORE_EXPORT LibraryManager : public QObject
 
     private:
         QTimer refreshTimer;
-        QList<QSharedPointer<ThumbnailWorker> > thumbnailWorkers;
+        QList<QSharedPointer<ThumbnailWorker>> thumbnailWorkers;
 
         Q_SLOT void refresh();
         Q_SLOT void deviceRemoved();

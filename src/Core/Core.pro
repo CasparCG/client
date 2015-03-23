@@ -1,10 +1,6 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-04-12T13:26:10
-#
-#-------------------------------------------------
-
 QT += core sql network widgets
+
+CONFIG += c++11
 
 TARGET = core
 TEMPLATE = lib

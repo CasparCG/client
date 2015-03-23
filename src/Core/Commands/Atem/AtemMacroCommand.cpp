@@ -1,10 +1,9 @@
 #include "AtemMacroCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemMacroCommand::AtemMacroCommand(QObject* parent)
-    : AbstractCommand(parent),
-      macro(Atem::DEFAULT_MACRO), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

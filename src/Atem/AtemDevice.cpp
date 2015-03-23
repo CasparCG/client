@@ -126,7 +126,7 @@ void AtemDevice::sendNotification()
 {
     switch (SwitcherDevice::command)
     {
-        case SwitcherDevice::CONNECTIONSTATE:
+        case SwitcherDevice::SwitcherDeviceCommand::CONNECTIONSTATE:
         {
             emit connectionStateChanged(*this);
 

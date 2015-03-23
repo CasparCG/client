@@ -244,7 +244,7 @@ void RundownBrightnessWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownBrightnessWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

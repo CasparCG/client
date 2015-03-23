@@ -228,7 +228,7 @@ void RundownKeyerWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownKeyerWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownKeyerWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

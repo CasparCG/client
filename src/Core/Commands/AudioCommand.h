@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT AudioCommand : public AbstractCommand
 {
@@ -41,14 +43,14 @@ class CORE_EXPORT AudioCommand : public AbstractCommand
         void setUseAuto(bool useAuto);
 
     private:
-        QString audioName;
-        QString transition;
-        int transitionDuration;
-        QString tween;
-        QString direction;
-        bool loop;
-        bool triggerOnNext;
-        bool useAuto;
+        QString audioName = Audio::DEFAULT_NAME;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool loop = Audio::DEFAULT_LOOP;
+        bool triggerOnNext = Audio::DEFAULT_TRIGGER_ON_NEXT;
+        bool useAuto = Audio::DEFAULT_USE_AUTO;
 
         Q_SIGNAL void audioNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);

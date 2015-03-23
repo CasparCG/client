@@ -227,7 +227,7 @@ void RundownResetWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownResetWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownResetWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

@@ -1,14 +1,9 @@
 #include "AudioCommand.h"
 
-#include "Global.h"
-
-#include "EventManager.h"
+#include <QtCore/QXmlStreamWriter>
 
 AudioCommand::AudioCommand(QObject* parent)
-    : AbstractCommand(parent),
-      audioName(Audio::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), loop(Audio::DEFAULT_LOOP),
-      triggerOnNext(Audio::DEFAULT_TRIGGER_ON_NEXT), useAuto(Audio::DEFAULT_USE_AUTO)
+    : AbstractCommand(parent)
 {
     this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
 }

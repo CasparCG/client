@@ -1,10 +1,9 @@
 #include "GroupCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 GroupCommand::GroupCommand(QObject* parent)
-    : AbstractCommand(parent),
-      notes(Group::DEFAULT_NOTE), autoStep(Group::DEFAULT_AUTO_STEP), autoPlay(Group::DEFAULT_AUTO_PLAY), countdown("")
+    : AbstractCommand(parent)
 {
 }
 

@@ -1,10 +1,9 @@
 #include "GridCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 GridCommand::GridCommand(QObject* parent)
-    : AbstractCommand(parent),
-      grid(Mixer::DEFAULT_GRID), transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

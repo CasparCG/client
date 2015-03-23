@@ -1,10 +1,9 @@
 #include "PrintCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 PrintCommand::PrintCommand(QObject* parent)
-    : AbstractCommand(parent),
-      output(Print::DEFAULT_OUTPUT)
+    : AbstractCommand(parent)
 {
 }
 

@@ -3,9 +3,9 @@
 #include "../Shared.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QPropertyAnimation>
 
-#include <QtWidgets/QWidget>
+class QWidget;
+class QPropertyAnimation;
 
 class CORE_EXPORT ActiveAnimation : public QObject
 {
@@ -19,9 +19,9 @@ class CORE_EXPORT ActiveAnimation : public QObject
         void stop();
 
     private:
-        int value;
-        QWidget* target;
-        QPropertyAnimation* animation;
+        int value = 255;
+        QWidget* target = nullptr;
+        QPropertyAnimation* animation = nullptr;
 
         int color() const;
         void setColor(const int value);

@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT ImageScrollerCommand : public AbstractCommand
 {
@@ -35,11 +37,11 @@ class CORE_EXPORT ImageScrollerCommand : public AbstractCommand
         void setProgressive(bool progressive);
 
     private:
-        QString imageScrollerName;
-        int blur;
-        int speed;
-        bool premultiply;
-        bool progressive;
+        QString imageScrollerName = ImageScroller::DEFAULT_NAME;
+        int blur = ImageScroller::DEFAULT_BLUR;
+        int speed = ImageScroller::DEFAULT_SPEED;
+        bool premultiply = ImageScroller::DEFAULT_PREMULTIPLY;
+        bool progressive = ImageScroller::DEFAULT_PROGRESSIVE;
 
         Q_SIGNAL void blurChanged(int);
         Q_SIGNAL void speedChanged(int);

@@ -1,10 +1,7 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-04-12T13:07:49
-#
-#-------------------------------------------------
 QT -= gui
 QT += network
+
+CONFIG += c++11
 
 TARGET = repository
 TEMPLATE = lib

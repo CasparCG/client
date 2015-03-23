@@ -13,6 +13,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
+#include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -238,7 +239,7 @@ void RundownInputWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownInputWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownInputWidget::executeCommand(Playout::PlayoutType type)
 {
     if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) || type == Playout::PlayoutType::Update)
     {

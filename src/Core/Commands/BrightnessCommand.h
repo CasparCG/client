@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT BrightnessCommand : public AbstractCommand
 {
@@ -33,10 +35,10 @@ class CORE_EXPORT BrightnessCommand : public AbstractCommand
         void setDefer(bool defer);
 
     private:
-        float brightness;
-        int transtitionDuration;
-        QString tween;
-        bool defer;
+        float brightness = Mixer::DEFAULT_BRIGHTNESS;
+        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void brightnessChanged(float);
         Q_SIGNAL void transtitionDurationChanged(int);

@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT GroupCommand : public AbstractCommand
 {
@@ -33,10 +35,10 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         void setCountdown(const QString& countdown);
 
     private:
-        QString notes;
-        bool autoStep;
-        bool autoPlay;
-        QString countdown;
+        QString notes = Group::DEFAULT_NOTE;
+        bool autoStep = Group::DEFAULT_AUTO_STEP;
+        bool autoPlay = Group::DEFAULT_AUTO_PLAY;
+        QString countdown = "";
 
         Q_SIGNAL void notesChanged(const QString&);
         Q_SIGNAL void autoStepChanged(bool);

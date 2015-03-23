@@ -1,10 +1,9 @@
 #include "InputCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 InputCommand::InputCommand(QObject* parent)
-    : AbstractCommand(parent),
-      switcher(TriCaster::DEFAULT_SWITCHER), input(TriCaster::DEFAULT_INPUT), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

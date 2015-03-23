@@ -1,6 +1,6 @@
 #include "ResetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 ResetCommand::ResetCommand(QObject* parent)
     : AbstractCommand(parent)

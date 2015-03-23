@@ -1,10 +1,9 @@
 #include "SaturationCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 SaturationCommand::SaturationCommand(QObject* parent)
-    : AbstractCommand(parent),
-      saturation(Mixer::DEFAULT_SATURATION), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT AutoCommand : public AbstractCommand
 {
@@ -33,10 +35,10 @@ class CORE_EXPORT AutoCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString step;
-        QString speed;
-        QString transition;
-        bool triggerOnNext;
+        QString step = "";
+        QString speed = TriCaster::DEFAULT_SPEED;
+        QString transition = TriCaster::DEFAULT_TRANSITION;
+        bool triggerOnNext = TriCaster::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void stepChanged(const QString&);
         Q_SIGNAL void speedChanged(const QString&);

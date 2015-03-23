@@ -1,8 +1,11 @@
 #include "ActiveAnimation.h"
 
+#include <QtCore/QPropertyAnimation>
+
+#include <QtWidgets/QWidget>
+
 ActiveAnimation::ActiveAnimation(QWidget* target, QObject* parent)
-    : QObject(parent),
-    value(255), target(target), animation(NULL)
+    : QObject(parent), target(target)
 {
     this->animation = new QPropertyAnimation(this, "color");
     this->animation->setDuration(350);

@@ -1,10 +1,9 @@
 #include "PanasonicPresetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 PanasonicPresetCommand::PanasonicPresetCommand(QObject* parent)
-    : AbstractCommand(parent),
-      address(Panasonic::DEFAULT_ADDRESS), preset(Panasonic::DEFAULT_PRESET), triggerOnNext(Panasonic::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

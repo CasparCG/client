@@ -1,11 +1,9 @@
 #include "ClipCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 ClipCommand::ClipCommand(QObject* parent)
-    : AbstractCommand(parent),
-      left(Mixer::DEFAULT_CLIP_LEFT), width(Mixer::DEFAULT_CLIP_WIDTH), top(Mixer::DEFAULT_CLIP_TOP),
-      height(Mixer::DEFAULT_CLIP_HEIGHT), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

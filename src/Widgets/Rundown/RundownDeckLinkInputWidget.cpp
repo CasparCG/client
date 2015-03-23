@@ -236,7 +236,7 @@ void RundownDeckLinkInputWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownDeckLinkInputWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

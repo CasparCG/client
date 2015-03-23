@@ -1,10 +1,9 @@
 #include "AtemInputCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemInputCommand::AtemInputCommand(QObject* parent)
-    : AbstractCommand(parent),
-      switcher(Atem::DEFAULT_SWITCHER), input(Atem::DEFAULT_INPUT), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT), mixerStep(Atem::DEFAULT_MIXER_STEP)
+    : AbstractCommand(parent)
 {
 }
 

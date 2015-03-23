@@ -227,7 +227,7 @@ void RundownCommitWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownCommitWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownCommitWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

@@ -45,7 +45,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         virtual void setExpanded(bool expanded);
 
-        virtual bool executeCommand(Playout::PlayoutType::Type type);
+        virtual bool executeCommand(Playout::PlayoutType type);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
@@ -79,7 +79,7 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
 
         void checkGpiConnection();
         void configureOscSubscriptions();
-        bool executeOscCommand(Playout::PlayoutType::Type type);
+        bool executeOscCommand(Playout::PlayoutType type);
 
         Q_SLOT void durationChanged(int);
         Q_SLOT void notesChanged(const QString&);

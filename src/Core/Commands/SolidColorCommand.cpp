@@ -1,14 +1,11 @@
 #include "SolidColorCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 #include <QtGui/QColor>
 
 SolidColorCommand::SolidColorCommand(QObject* parent)
-    : AbstractCommand(parent),
-      color(SolidColor::DEFAULT_COLOR), transition(Mixer::DEFAULT_TRANSITION), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(SolidColor::DEFAULT_USE_AUTO),
-      triggerOnNext(SolidColor::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

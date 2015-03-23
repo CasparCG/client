@@ -1,10 +1,9 @@
 #include "AtemCutCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemCutCommand::AtemCutCommand(QObject* parent)
-    : AbstractCommand(parent),
-      step("background"), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT), mixerStep(Atem::DEFAULT_MIXER_STEP)
+    : AbstractCommand(parent)
 {
 }
 

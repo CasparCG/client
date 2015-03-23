@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QXmlStreamWriter;
 
 class CORE_EXPORT AtemKeyerStateCommand: public AbstractCommand
 {
@@ -31,9 +33,9 @@ class CORE_EXPORT AtemKeyerStateCommand: public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString keyer;
-        bool state;
-        bool triggerOnNext;
+        QString keyer = Atem::DEFAULT_KEYER;
+        bool state = Atem::DEFAULT_KEYER_STATE;
+        bool triggerOnNext = Atem::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void keyerChanged(const QString&);
         Q_SIGNAL void stateChanged(bool);

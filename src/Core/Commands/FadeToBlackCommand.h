@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT FadeToBlackCommand : public AbstractCommand
 {
@@ -38,13 +40,13 @@ class CORE_EXPORT FadeToBlackCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString color;
-        QString transition;
-        int transtitionDuration;
-        QString tween;
-        QString direction;
-        bool useAuto;
-        bool triggerOnNext;
+        QString color = FadeToBlack::DEFAULT_COLOR;
+        QString transition = FadeToBlack::DEFAULT_TRANSITION;
+        int transtitionDuration = FadeToBlack::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool useAuto = FadeToBlack::DEFAULT_USE_AUTO;
+        bool triggerOnNext = FadeToBlack::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void transitionChanged(const QString&);
         Q_SIGNAL void transtitionDurationChanged(int);

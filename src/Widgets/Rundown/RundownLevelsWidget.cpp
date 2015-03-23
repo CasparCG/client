@@ -248,7 +248,7 @@ void RundownLevelsWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownLevelsWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownLevelsWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

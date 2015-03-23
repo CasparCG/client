@@ -36,6 +36,6 @@ class CORE_EXPORT AtemDeviceManager : public QObject
 
     private:
         QMap<QString, AtemDeviceModel> deviceModels;
-        QMap<QString, QSharedPointer<AtemDevice> > devices;
+        QMap<QString, QSharedPointer<AtemDevice>> devices;
 };
 

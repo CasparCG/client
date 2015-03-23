@@ -1,10 +1,9 @@
 #include "HttpPostCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 HttpPostCommand::HttpPostCommand(QObject* parent)
-    : AbstractCommand(parent),
-      url(Http::DEFAULT_URL), triggerOnNext(Http::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

@@ -1,11 +1,9 @@
 #include "CropCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 CropCommand::CropCommand(QObject* parent)
-    : AbstractCommand(parent),
-      left(Mixer::DEFAULT_CROP_LEFT), top(Mixer::DEFAULT_CROP_TOP), right(Mixer::DEFAULT_CROP_RIGHT),
-      bottom(Mixer::DEFAULT_CROP_BOTTOM), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

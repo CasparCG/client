@@ -1,10 +1,9 @@
 #include "AtemAudioInputStateCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemAudioInputStateCommand::AtemAudioInputStateCommand(QObject* parent)
-    : AbstractCommand(parent),
-      input(Atem::DEFAULT_AUDIO_INPUT), state(Atem::DEFAULT_AUDIO_INPUT_STATE), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

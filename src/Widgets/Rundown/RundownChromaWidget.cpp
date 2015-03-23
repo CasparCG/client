@@ -246,7 +246,7 @@ void RundownChromaWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownChromaWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownChromaWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

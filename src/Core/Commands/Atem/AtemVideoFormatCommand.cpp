@@ -1,10 +1,9 @@
 #include "AtemVideoFormatCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemVideoFormatCommand::AtemVideoFormatCommand(QObject* parent)
-    : AbstractCommand(parent),
-      format(Atem::DEFAULT_VIDEO_FORMAT), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

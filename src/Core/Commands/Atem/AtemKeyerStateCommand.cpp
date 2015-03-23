@@ -1,10 +1,9 @@
 #include "AtemKeyerStateCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemKeyerStateCommand::AtemKeyerStateCommand(QObject* parent)
-    : AbstractCommand(parent),
-      keyer(Atem::DEFAULT_KEYER), state(Atem::DEFAULT_KEYER_STATE), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

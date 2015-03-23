@@ -1,10 +1,9 @@
 #include "AtemAudioInputBalanceCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemAudioInputBalanceCommand::AtemAudioInputBalanceCommand(QObject* parent)
-    : AbstractCommand(parent),
-      input(Atem::DEFAULT_AUDIO_INPUT), balance(Atem::DEFAULT_AUDIO_INPUT_BALANCE), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

@@ -1,13 +1,9 @@
 #include "PerspectiveCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 PerspectiveCommand::PerspectiveCommand(QObject* parent)
-    : AbstractCommand(parent),
-      upperLeftX(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_X), upperLeftY(Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_Y), upperRightX(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_X),
-      upperRightY(Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_Y), lowerRightX(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_X), lowerRightY(Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y),
-      lowerLeftX(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X), lowerLeftY(Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Fill::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
+    : AbstractCommand(parent)
 {
 }
 

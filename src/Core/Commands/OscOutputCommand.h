@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT OscOutputCommand : public AbstractCommand
 {
@@ -37,12 +39,12 @@ class CORE_EXPORT OscOutputCommand : public AbstractCommand
         void setUseBundle(bool useBundle);
 
     private:
-        QString output;
-        QString path;
-        QString message;
-        QString type;
-        bool triggerOnNext;
-        bool useBundle;
+        QString output = Osc::DEFAULT_OUTPUT;
+        QString path = "";
+        QString message = "";
+        QString type = Osc::DEFAULT_TYPE;
+        bool triggerOnNext = Osc::DEFAULT_TRIGGER_ON_NEXT;
+        bool useBundle = Osc::DEFAULT_USE_BUNDLE;
 
         Q_SIGNAL void outputChanged(const QString&);
         Q_SIGNAL void pathChanged(const QString&);

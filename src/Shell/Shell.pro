@@ -6,6 +6,8 @@
 
 QT += core gui sql network widgets
 
+CONFIG += c++11
+
 TARGET = shell
 TEMPLATE = app
 

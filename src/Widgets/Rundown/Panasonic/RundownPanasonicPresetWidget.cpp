@@ -9,6 +9,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
+#include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -181,7 +182,7 @@ void RundownPanasonicPresetWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownPanasonicPresetWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

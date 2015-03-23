@@ -244,7 +244,7 @@ void RundownVolumeWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownVolumeWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownVolumeWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

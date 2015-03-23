@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT MovieCommand : public AbstractCommand
 {
@@ -47,17 +49,17 @@ class CORE_EXPORT MovieCommand : public AbstractCommand
         void setAutoPlay(bool autoPlay);
 
     private:
-        QString videoName;
-        QString transition;
-        int transitionDuration;
-        QString tween;
-        QString direction;
-        bool loop;
-        bool freezeOnLoad;
-        bool triggerOnNext;
-        int seek;
-        int length;
-        bool autoPlay;
+        QString videoName = Movie::DEFAULT_NAME;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool loop = Movie::DEFAULT_LOOP;
+        bool freezeOnLoad = Movie::DEFAULT_FREEZE_ON_LOAD;
+        bool triggerOnNext = Movie::DEFAULT_TRIGGER_ON_NEXT;
+        int seek = Movie::DEFAULT_SEEK;
+        int length = Movie::DEFAULT_LENGTH;
+        bool autoPlay = Movie::DEFAULT_AUTO_PLAY;
 
         Q_SIGNAL void videoNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);

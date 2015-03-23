@@ -1,10 +1,9 @@
 #include "KeyerCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 KeyerCommand::KeyerCommand(QObject* parent)
-    : AbstractCommand(parent),
-      defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

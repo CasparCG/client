@@ -1,10 +1,9 @@
 #include "RouteVideolayerCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 RouteVideolayerCommand::RouteVideolayerCommand(QObject* parent)
-    : AbstractCommand(parent),
-      fromChannel(Route::DEFAULT_FROM_CHANNEL), fromVideolayer(Route::DEFAULT_FROM_VIDEOLAYER)
+    : AbstractCommand(parent)
 {
 }
 

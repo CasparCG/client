@@ -249,7 +249,7 @@ void RundownFillWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownFillWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownFillWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

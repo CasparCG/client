@@ -1,10 +1,9 @@
 #include "PresetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 PresetCommand::PresetCommand(QObject* parent)
-    : AbstractCommand(parent),
-      source(TriCaster::DEFAULT_SOURCE), preset(TriCaster::DEFAULT_PRESET), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

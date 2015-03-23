@@ -1,11 +1,9 @@
 #include "FileRecorderCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 FileRecorderCommand::FileRecorderCommand(QObject* parent)
-    : AbstractCommand(parent),
-      output(FileRecorder::DEFAULT_OUTPUT), codec(FileRecorder::DEFAULT_CODEC), preset(FileRecorder::DEFAULT_PRESET),
-      tune(FileRecorder::DEFAULT_TUNE), withAlpha(FileRecorder::DEFAULT_WITH_ALPHA)
+    : AbstractCommand(parent)
 {
 }
 

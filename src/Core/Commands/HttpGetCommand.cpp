@@ -1,10 +1,9 @@
 #include "HttpGetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 HttpGetCommand::HttpGetCommand(QObject* parent)
-    : AbstractCommand(parent),
-      url(Http::DEFAULT_URL), triggerOnNext(Http::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

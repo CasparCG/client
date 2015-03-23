@@ -1,11 +1,9 @@
 #include "AnchorCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AnchorCommand::AnchorCommand(QObject* parent)
-    : AbstractCommand(parent),
-      positionX(Mixer::DEFAULT_ANCHOR_XPOS), positionY(Mixer::DEFAULT_ANCHOR_YPOS), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Anchor::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

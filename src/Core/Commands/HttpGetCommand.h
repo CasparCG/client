@@ -4,15 +4,17 @@
 #include "AbstractCommand.h"
 #include "Models/KeyValueModel.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
 #include <QtCore/QUrlQuery>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT HttpGetCommand : public AbstractCommand
 {
@@ -34,9 +36,10 @@ class CORE_EXPORT HttpGetCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString url;
+        QString url = Http::DEFAULT_URL;
+        bool triggerOnNext = Http::DEFAULT_TRIGGER_ON_NEXT;
+
         QList<KeyValueModel> models;
-        bool triggerOnNext;
 
         Q_SIGNAL void urlChanged(const QString&);
         Q_SIGNAL void httpDataChanged(const QList<KeyValueModel>&);

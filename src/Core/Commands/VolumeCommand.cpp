@@ -1,10 +1,9 @@
 #include "VolumeCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 VolumeCommand::VolumeCommand(QObject* parent)
-    : AbstractCommand(parent),
-      volume(Mixer::DEFAULT_VOLUME), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
     this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
 }

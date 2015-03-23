@@ -1,10 +1,9 @@
 #include "AtemAudioGainCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AtemAudioGainCommand::AtemAudioGainCommand(QObject* parent)
-    : AbstractCommand(parent),
-      input(Atem::DEFAULT_AUDIO_INPUT), gain(Atem::DEFAULT_AUDIO_GAIN), triggerOnNext(Atem::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

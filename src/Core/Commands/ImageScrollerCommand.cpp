@@ -1,11 +1,9 @@
 #include "ImageScrollerCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 ImageScrollerCommand::ImageScrollerCommand(QObject* parent)
-    : AbstractCommand(parent),
-      imageScrollerName(ImageScroller::DEFAULT_NAME), blur(ImageScroller::DEFAULT_BLUR), speed(ImageScroller::DEFAULT_SPEED),
-      premultiply(ImageScroller::DEFAULT_PREMULTIPLY), progressive(ImageScroller::DEFAULT_PROGRESSIVE)
+    : AbstractCommand(parent)
 {
 }
 

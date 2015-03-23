@@ -1,11 +1,9 @@
 #include "RotationCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 RotationCommand::RotationCommand(QObject* parent)
-    : AbstractCommand(parent),
-      rotation(Mixer::DEFAULT_ROTATION), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN),
-      triggerOnNext(Rotation::DEFAULT_TRIGGER_ON_NEXT), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

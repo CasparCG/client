@@ -623,7 +623,7 @@ void CasparDevice::sendNotification()
 {
     switch (AmcpDevice::command)
     {
-        case AmcpDevice::CLS:
+        case AmcpDevice::AmcpDeviceCommand::CLS:
         {
             emit responseChanged(AmcpDevice::response.at(0), *this);
 
@@ -667,7 +667,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::TLS:
+        case AmcpDevice::AmcpDeviceCommand::TLS:
         {
             emit responseChanged(AmcpDevice::response.at(0), *this);
 
@@ -691,14 +691,14 @@ void CasparDevice::sendNotification()
 
             break;
         }       
-        case AmcpDevice::INFO:
+        case AmcpDevice::AmcpDeviceCommand::INFO:
         {
             AmcpDevice::response.removeFirst(); // First post is the header, 200 INFO OK.
             emit infoChanged(AmcpDevice::response, *this);
 
             break;
         }
-        case AmcpDevice::INFOSYSTEM:
+        case AmcpDevice::AmcpDeviceCommand::INFOSYSTEM:
         {
             AmcpDevice::response.removeFirst(); // First post is the header, 201 INFO SYSTEM OK.
 
@@ -706,7 +706,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::DATALIST:
+        case AmcpDevice::AmcpDeviceCommand::DATALIST:
         {
             emit responseChanged(AmcpDevice::response.at(0), *this);
 
@@ -730,7 +730,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::THUMBNAILLIST:
+        case AmcpDevice::AmcpDeviceCommand::THUMBNAILLIST:
         {
             emit responseChanged(AmcpDevice::response.at(0), *this);
 
@@ -757,7 +757,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::THUMBNAILRETRIEVE:
+        case AmcpDevice::AmcpDeviceCommand::THUMBNAILRETRIEVE:
         {
             AmcpDevice::response.removeFirst(); // First post is the header, 200 THUMBNAIL RETRIEVE OK.
 
@@ -765,7 +765,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::VERSION:
+        case AmcpDevice::AmcpDeviceCommand::VERSION:
         {
             AmcpDevice::response.removeFirst(); // First post is the header, 200 VERSION OK.
 
@@ -773,7 +773,7 @@ void CasparDevice::sendNotification()
 
             break;
         }
-        case AmcpDevice::CONNECTIONSTATE:
+        case AmcpDevice::AmcpDeviceCommand::CONNECTIONSTATE:
         {
             emit connectionStateChanged(*this);
 

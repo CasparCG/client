@@ -1,10 +1,9 @@
 #include "RouteChannelCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 RouteChannelCommand::RouteChannelCommand(QObject* parent)
-    : AbstractCommand(parent),
-      fromChannel(Route::DEFAULT_FROM_CHANNEL)
+    : AbstractCommand(parent)
 {
 }
 

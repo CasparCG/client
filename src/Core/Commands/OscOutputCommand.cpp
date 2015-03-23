@@ -1,11 +1,9 @@
 #include "OscOutputCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 OscOutputCommand::OscOutputCommand(QObject* parent)
-    : AbstractCommand(parent),
-      output(Osc::DEFAULT_OUTPUT), path(""), message(""), type(Osc::DEFAULT_TYPE),
-      triggerOnNext(Osc::DEFAULT_TRIGGER_ON_NEXT), useBundle(Osc::DEFAULT_USE_BUNDLE)
+    : AbstractCommand(parent)
 {
 }
 

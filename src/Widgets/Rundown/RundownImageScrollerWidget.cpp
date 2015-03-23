@@ -290,7 +290,7 @@ void RundownImageScrollerWidget::setUsed(bool used)
     }
 }
 
-bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownImageScrollerWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

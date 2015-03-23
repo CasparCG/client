@@ -1,10 +1,9 @@
 #include "AutoCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 AutoCommand::AutoCommand(QObject* parent)
-    : AbstractCommand(parent),
-      step(""), speed(TriCaster::DEFAULT_SPEED), transition(TriCaster::DEFAULT_TRANSITION), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

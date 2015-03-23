@@ -1,12 +1,9 @@
 #include "CustomCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 CustomCommand::CustomCommand(QObject* parent)
-    : AbstractCommand(parent),
-      stopCommand(""), playCommand(""), loadCommand(""), pauseCommand(""), nextCommand(""), updateCommand(""),
-      invokeCommand(""), previewCommand(""), clearCommand(""), clearVideolayerCommand(""), clearChannelCommand(""),
-      triggerOnNext(Custom::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

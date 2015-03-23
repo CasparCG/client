@@ -253,7 +253,7 @@ void RundownPerspectiveWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownPerspectiveWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownPerspectiveWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

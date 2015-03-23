@@ -260,7 +260,7 @@ void RundownAudioWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownAudioWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownAudioWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

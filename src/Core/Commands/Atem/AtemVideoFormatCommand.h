@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QXmlStreamWriter;
 
 class CORE_EXPORT AtemVideoFormatCommand: public AbstractCommand
 {
@@ -29,8 +31,8 @@ class CORE_EXPORT AtemVideoFormatCommand: public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString format;
-        bool triggerOnNext;
+        QString format = Atem::DEFAULT_VIDEO_FORMAT;
+        bool triggerOnNext = Atem::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void formatChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);

@@ -177,7 +177,7 @@ void RundownPlayoutCommandWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownPlayoutCommandWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownPlayoutCommandWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Play)
     {

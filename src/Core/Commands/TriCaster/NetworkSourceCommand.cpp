@@ -1,10 +1,9 @@
 #include "NetworkSourceCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 NetworkSourceCommand::NetworkSourceCommand(QObject* parent)
-    : AbstractCommand(parent),
-      source(TriCaster::DEFAULT_NETWORK_SOURCE), target(TriCaster::DEFAULT_NETWORK_TARGET), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

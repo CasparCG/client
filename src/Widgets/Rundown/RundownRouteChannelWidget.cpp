@@ -231,7 +231,7 @@ void RundownRouteChannelWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownRouteChannelWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownRouteChannelWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

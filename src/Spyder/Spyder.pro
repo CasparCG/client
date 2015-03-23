@@ -1,10 +1,7 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-10-12T13:07:49
-#
-#-------------------------------------------------
 QT -= gui
 QT += network
+
+CONFIG += c++11
 
 TARGET = spyder
 TEMPLATE = lib

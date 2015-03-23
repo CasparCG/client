@@ -1,12 +1,9 @@
 #include "LevelsCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 LevelsCommand::LevelsCommand(QObject* parent)
-    : AbstractCommand(parent),
-      minIn(Mixer::DEFAULT_LEVELS_MIN_IN), maxIn(Mixer::DEFAULT_LEVELS_MAX_IN), minOut(Mixer::DEFAULT_LEVELS_MIN_OUT),
-      maxOut(Mixer::DEFAULT_LEVELS_MAX_OUT), gamma(Mixer::DEFAULT_LEVELS_GAMMA), transtitionDuration(Mixer::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

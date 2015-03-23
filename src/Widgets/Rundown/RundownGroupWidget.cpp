@@ -182,7 +182,7 @@ void RundownGroupWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownGroupWidget::executeCommand(Playout::PlayoutType type)
 {
     if (this->active)
         this->animation->start(1);
@@ -198,7 +198,7 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType::Type type)
     return true;
 }
 
-bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType::Type type)
+bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType type)
 {
     if (this->parentWidget()->parentWidget() == NULL)
         return true;

@@ -10,13 +10,12 @@
 #include <QtCore/QThread>
 
 SwitcherDevice::SwitcherDevice(const QString& address, QObject* parent)
-    : QObject(parent),
-      command(SwitcherDevice::NONE), connected(false), address(address)
+    : QObject(parent), address(address)
 {
     this->atemConnection = new QAtemConnection(this);
 
-    QObject::connect(this->atemConnection, SIGNAL(connected()), this, SLOT(setConnected()));
-    QObject::connect(this->atemConnection, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
+    QObject::connect(this->atemConnection, &QAtemConnection::connected, this, &SwitcherDevice::setConnected);
+    QObject::connect(this->atemConnection, &QAtemConnection::disconnected, this, &SwitcherDevice::setDisconnected);
 }
 
 SwitcherDevice::~SwitcherDevice()
@@ -38,7 +37,7 @@ void SwitcherDevice::disconnectDevice()
     this->atemConnection->blockSignals(false);
 
     this->connected = false;
-    this->command = SwitcherDevice::CONNECTIONSTATE;
+    this->command = SwitcherDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -46,7 +45,7 @@ void SwitcherDevice::disconnectDevice()
 void SwitcherDevice::setConnected()
 {
     this->connected = true;
-    this->command = SwitcherDevice::CONNECTIONSTATE;
+    this->command = SwitcherDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 }
@@ -54,11 +53,11 @@ void SwitcherDevice::setConnected()
 void SwitcherDevice::setDisconnected()
 {
     this->connected = false;
-    this->command = SwitcherDevice::CONNECTIONSTATE;
+    this->command = SwitcherDeviceCommand::CONNECTIONSTATE;
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
+    QTimer::singleShot(5000, this, &SwitcherDevice::connectDevice);
 }
 
 bool SwitcherDevice::isConnected() const
@@ -73,5 +72,5 @@ const QString& SwitcherDevice::getAddress() const
 
 void SwitcherDevice::resetDevice()
 {
-    this->command = SwitcherDevice::NONE;
+    this->command = SwitcherDeviceCommand::NONE;
 }

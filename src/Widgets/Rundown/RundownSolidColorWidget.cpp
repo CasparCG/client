@@ -238,7 +238,7 @@ void RundownSolidColorWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownSolidColorWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

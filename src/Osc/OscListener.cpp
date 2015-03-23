@@ -78,7 +78,7 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
 
 void OscListener::sendEventBatch()
 {
-    QMap<QString, QList<QVariant> > other;
+    QMap<QString, QList<QVariant>> other;
     {
         QMutexLocker locker(&eventsMutex);
         this->events.swap(other);

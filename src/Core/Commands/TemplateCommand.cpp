@@ -1,12 +1,11 @@
 #include "TemplateCommand.h"
 
-#include "Global.h"
 #include "Xml.h"
 
+#include <QtCore/QXmlStreamWriter>
+
 TemplateCommand::TemplateCommand(QObject* parent)
-    : AbstractCommand(parent),
-      flashlayer(Template::DEFAULT_FLASHLAYER), invoke(Template::DEFAULT_INVOKE), useStoredData(Template::DEFAULT_USE_STORED_DATA),
-      useUppercaseData(Template::DEFAULT_USE_UPPERCASE_DATA), templateName(Template::DEFAULT_TEMPLATENAME), triggerOnNext(Template::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
     this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }

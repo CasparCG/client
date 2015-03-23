@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT HtmlCommand : public AbstractCommand
 {
@@ -41,14 +43,14 @@ class CORE_EXPORT HtmlCommand : public AbstractCommand
         void setUseAuto(bool useAuto);
 
     private:
-        QString url;
-        QString transition;
-        int transitionDuration;
-        QString tween;
-        QString direction;
-        bool freezeOnLoad;
-        bool triggerOnNext;
-        bool useAuto;
+        QString url = Html::DEFAULT_URL;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool freezeOnLoad = Html::DEFAULT_FREEZE_ON_LOAD;
+        bool triggerOnNext = Html::DEFAULT_TRIGGER_ON_NEXT;
+        bool useAuto = Html::DEFAULT_USE_AUTO;
 
         Q_SIGNAL void urlChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);

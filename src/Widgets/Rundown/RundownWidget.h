@@ -84,7 +84,7 @@ class WIDGETS_EXPORT RundownWidget : public QWidget, Ui::RundownWidget
         Q_SLOT bool selectTab(int index);
         Q_SLOT void currentChanged(int);
         Q_SLOT void tabCloseRequested(int);
-        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType::Type);
+        Q_SLOT void gpiBindingChanged(int, Playout::PlayoutType);
         Q_SLOT void remoteTriggering(bool);
         Q_SLOT void insertRepositoryChanges();
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);

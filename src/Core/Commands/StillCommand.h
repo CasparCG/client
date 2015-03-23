@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT StillCommand : public AbstractCommand
 {
@@ -39,13 +41,13 @@ class CORE_EXPORT StillCommand : public AbstractCommand
         void setUseAuto(bool useAuto);
 
     private:
-        QString imageName;
-        QString transition;
-        int transitionDuration;
-        QString tween;
-        QString direction;
-        bool triggerOnNext;
-        bool useAuto;
+        QString imageName = Still::DEFAULT_NAME;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool triggerOnNext = Still::DEFAULT_TRIGGER_ON_NEXT;
+        bool useAuto = Still::DEFAULT_USE_AUTO;
 
         Q_SIGNAL void imageNameChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);

@@ -4,14 +4,16 @@
 #include "AbstractCommand.h"
 #include "Models/KeyValueModel.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT TemplateCommand : public AbstractCommand
 {
@@ -41,13 +43,13 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        int flashlayer;
-        QString invoke;
-        bool useStoredData;
-        bool useUppercaseData;
-        QString templateName;
+        int flashlayer = Template::DEFAULT_FLASHLAYER;
+        QString invoke = Template::DEFAULT_INVOKE;
+        bool useStoredData = Template::DEFAULT_USE_STORED_DATA;
+        bool useUppercaseData = Template::DEFAULT_USE_UPPERCASE_DATA;
+        QString templateName = Template::DEFAULT_TEMPLATENAME;
         QList<KeyValueModel> models;
-        bool triggerOnNext;
+        bool triggerOnNext = Template::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void flashlayerChanged(int);
         Q_SIGNAL void invokeChanged(const QString&);

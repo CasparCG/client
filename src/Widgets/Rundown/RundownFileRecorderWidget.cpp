@@ -241,7 +241,7 @@ void RundownFileRecorderWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

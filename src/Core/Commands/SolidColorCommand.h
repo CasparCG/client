@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT SolidColorCommand : public AbstractCommand
 {
@@ -40,13 +42,13 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString color;
-        QString transition;
-        int transtitionDuration;
-        QString tween;
-        QString direction;
-        bool useAuto;
-        bool triggerOnNext;
+        QString color = SolidColor::DEFAULT_COLOR;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
+        bool useAuto = SolidColor::DEFAULT_USE_AUTO;
+        bool triggerOnNext = SolidColor::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void colorChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);

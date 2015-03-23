@@ -1,12 +1,9 @@
 #include "HtmlCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 HtmlCommand::HtmlCommand(QObject* parent)
-    : AbstractCommand(parent),
-      url(Html::DEFAULT_URL), transition(Mixer::DEFAULT_TRANSITION),
-      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      freezeOnLoad(Html::DEFAULT_FREEZE_ON_LOAD), triggerOnNext(Html::DEFAULT_TRIGGER_ON_NEXT), useAuto(Html::DEFAULT_USE_AUTO)
+    : AbstractCommand(parent)
 {
 }
 

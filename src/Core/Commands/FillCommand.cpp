@@ -1,12 +1,9 @@
 #include "FillCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 FillCommand::FillCommand(QObject* parent)
-    : AbstractCommand(parent),
-      positionX(Mixer::DEFAULT_FILL_XPOS), positionY(Mixer::DEFAULT_FILL_YPOS), scaleX(Mixer::DEFAULT_FILL_XSCALE),
-      scaleY(Mixer::DEFAULT_FILL_YSCALE), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), triggerOnNext(Fill::DEFAULT_TRIGGER_ON_NEXT),
-      defer(Mixer::DEFAULT_DEFER), useMipmap(Mixer::DEFAULT_MIPMAP)
+    : AbstractCommand(parent)
 {
 }
 

@@ -1,12 +1,9 @@
 #include "FadeToBlackCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 FadeToBlackCommand::FadeToBlackCommand(QObject* parent)
-    : AbstractCommand(parent),
-      color(FadeToBlack::DEFAULT_COLOR), transition(FadeToBlack::DEFAULT_TRANSITION), transtitionDuration(FadeToBlack::DEFAULT_DURATION),
-      tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION), useAuto(FadeToBlack::DEFAULT_USE_AUTO),
-      triggerOnNext(FadeToBlack::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
     this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
 }

@@ -1,11 +1,9 @@
 #include "ChromaCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 ChromaCommand::ChromaCommand(QObject* parent)
-    : AbstractCommand(parent),
-    key(Mixer::DEFAULT_CHROMAKEY), blur(Mixer::DEFAULT_CHROMABLUR), spread(Mixer::DEFAULT_CHROMABLENDSTOP),
-    spill(Mixer::DEFAULT_CHROMASPILL), threshold(Mixer::DEFAULT_CHROMABLENDSTART), showMask(false)
+    : AbstractCommand(parent)
 {
 }
 

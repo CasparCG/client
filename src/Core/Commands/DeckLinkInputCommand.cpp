@@ -1,11 +1,9 @@
 #include "DeckLinkInputCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 DeckLinkInputCommand::DeckLinkInputCommand(QObject* parent)
-    : AbstractCommand(parent),
-      device(DeckLinkInput::DEFAULT_DEVICE), format(DeckLinkInput::DEFAULT_FORMAT), transition(Mixer::DEFAULT_TRANSITION),
-      transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION)
+    : AbstractCommand(parent)
 {
 }
 

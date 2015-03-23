@@ -47,7 +47,7 @@ class WIDGETS_EXPORT RundownClearOutputWidget : public QWidget, Ui::RundownClear
 
         virtual void setExpanded(bool /* expanded */) {}
 
-        virtual bool executeCommand(Playout::PlayoutType::Type type);
+        virtual bool executeCommand(Playout::PlayoutType type);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);

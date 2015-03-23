@@ -244,7 +244,7 @@ void RundownSaturationWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownSaturationWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownSaturationWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

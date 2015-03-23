@@ -9,14 +9,14 @@
 class CORE_EXPORT GpiPortModel
 {
     public:
-        explicit GpiPortModel(int port, bool risingEdge, Playout::PlayoutType::Type action);
+        explicit GpiPortModel(int port, bool risingEdge, Playout::PlayoutType action);
 
         int getPort() const;
         bool isRisingEdge() const;
-        Playout::PlayoutType::Type getAction() const;
+        Playout::PlayoutType getAction() const;
 
     private:
         int port;
         bool risingEdge;
-        Playout::PlayoutType::Type action;
+        Playout::PlayoutType action;
 };

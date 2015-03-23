@@ -246,7 +246,7 @@ void RundownAnchorWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownAnchorWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownAnchorWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

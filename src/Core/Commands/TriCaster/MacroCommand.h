@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT MacroCommand : public AbstractCommand
 {
@@ -29,8 +31,8 @@ class CORE_EXPORT MacroCommand : public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString macro;
-        bool triggerOnNext;
+        QString macro = TriCaster::DEFAULT_MACRO;
+        bool triggerOnNext = TriCaster::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void macroChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);

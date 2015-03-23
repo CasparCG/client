@@ -240,7 +240,7 @@ void RundownHtmlWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownHtmlWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownHtmlWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

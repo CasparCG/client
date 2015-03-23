@@ -245,7 +245,7 @@ void RundownRotationWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownRotationWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownRotationWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

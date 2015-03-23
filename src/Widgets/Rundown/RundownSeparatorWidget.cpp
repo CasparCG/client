@@ -125,7 +125,7 @@ void RundownSeparatorWidget::setInGroup(bool inGroup)
     this->labelGroupColor->setVisible(this->inGroup);
 }
 
-bool RundownSeparatorWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownSeparatorWidget::executeCommand(Playout::PlayoutType type)
 {
     Q_UNUSED(type);
 

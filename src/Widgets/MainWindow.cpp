@@ -453,7 +453,7 @@ void MainWindow::showSettingsDialog()
     EventManager::getInstance().fireEmptyRundownEvent(EmptyRundownEvent());
 
     SettingsDialog* dialog = new SettingsDialog(this);
-    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType::Type)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType::Type)));
+    QObject::connect(dialog, SIGNAL(gpiBindingChanged(int, Playout::PlayoutType)), this->widgetRundown, SLOT(gpiBindingChanged(int, Playout::PlayoutType)));
 
     dialog->exec();
 }

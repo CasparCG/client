@@ -3,14 +3,16 @@
 #include "../../Shared.h"
 #include "../AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QXmlStreamWriter;
 
 class CORE_EXPORT AtemAudioInputBalanceCommand: public AbstractCommand
 {
@@ -31,9 +33,9 @@ class CORE_EXPORT AtemAudioInputBalanceCommand: public AbstractCommand
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
-        QString input;
-        float balance;
-        bool triggerOnNext;
+        QString input = Atem::DEFAULT_AUDIO_INPUT;
+        float balance = Atem::DEFAULT_AUDIO_INPUT_BALANCE;
+        bool triggerOnNext = Atem::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void inputChanged(const QString&);
         Q_SIGNAL void balanceChanged(float);

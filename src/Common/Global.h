@@ -496,25 +496,16 @@ namespace Panel
     static const int DEFAULT_PREVIEW_HEIGHT = 188;
     static const int DEFAULT_LIVE_HEIGHT = 188;
     static const int DEFAULT_AUDIOLEVELS_HEIGHT = 147;
-#if defined(Q_OS_WIN)
     static const int COMPACT_PREVIEW_HEIGHT = 25;
     static const int COMPACT_LIVE_HEIGHT = 25;
     static const int COMPACT_AUDIOLEVELS_HEIGHT = 25;
-#else
-    static const int COMPACT_PREVIEW_HEIGHT = 25;
-    static const int COMPACT_LIVE_HEIGHT = 25;
-    static const int COMPACT_AUDIOLEVELS_HEIGHT = 25;
-#endif
 }
 
 namespace Action
 {
-    struct ActionType
+    enum class ActionType
     {
-        enum Type
-        {
-            KeyPress,
-            GpiPulse
-        };
+        KeyPress,
+        GpiPulse
     };
 }

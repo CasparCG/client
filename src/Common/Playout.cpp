@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-Playout::PlayoutType::Type Playout::fromString(const QString& value)
+Playout::PlayoutType Playout::fromString(const QString& value)
 {
     if (value == "Stop")
         return PlayoutType::Stop;
@@ -35,7 +35,7 @@ Playout::PlayoutType::Type Playout::fromString(const QString& value)
         throw std::invalid_argument(value.toStdString());
 }
 
-QString Playout::toString(PlayoutType::Type value)
+QString Playout::toString(Playout::PlayoutType value)
 {
     switch (value)
     {
@@ -68,9 +68,9 @@ QString Playout::toString(PlayoutType::Type value)
     }
 }
 
-QList<Playout::PlayoutType::Type> Playout::createConstantList()
+QList<Playout::PlayoutType> Playout::createConstantList()
 {
-    QList<Playout::PlayoutType::Type> result;
+    QList<Playout::PlayoutType> result;
 
     result.push_back(Playout::PlayoutType::Stop);
     result.push_back(Playout::PlayoutType::Play);
@@ -88,9 +88,9 @@ QList<Playout::PlayoutType::Type> Playout::createConstantList()
     return result;
 }
 
-const QList<Playout::PlayoutType::Type>& Playout::enumConstants()
+const QList<Playout::PlayoutType>& Playout::enumConstants()
 {
-    static QList<Playout::PlayoutType::Type> result(createConstantList());
+    static QList<Playout::PlayoutType> result(createConstantList());
 
     return result;
 }

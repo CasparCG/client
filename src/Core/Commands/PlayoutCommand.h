@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT PlayoutCommand : public AbstractCommand
 {
@@ -27,7 +29,7 @@ class CORE_EXPORT PlayoutCommand : public AbstractCommand
         void setPlayoutCommand(const QString& command);
 
     private:
-        QString command;
+        QString command = Output::DEFAULT_PLAYOUT_COMMAND;
 
         Q_SIGNAL void playoutCommandChanged(const QString&);
 };

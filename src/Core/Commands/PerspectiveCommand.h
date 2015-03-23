@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT PerspectiveCommand : public AbstractCommand
 {
@@ -51,19 +53,19 @@ class CORE_EXPORT PerspectiveCommand : public AbstractCommand
         void setUseMipmap(bool useMipmap);
 
     private:
-        float upperLeftX;
-        float upperLeftY;
-        float upperRightX;
-        float upperRightY;
-        float lowerRightX;
-        float lowerRightY;
-        float lowerLeftX;
-        float lowerLeftY;
-        int transtitionDuration;
-        QString tween;
-        bool triggerOnNext;
-        bool defer;
-        bool useMipmap;
+        float upperLeftX = Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_X;
+        float upperLeftY = Mixer::DEFAULT_PERSPECTIVE_UPPERLEFT_Y;
+        float upperRightX = Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_X;
+        float upperRightY = Mixer::DEFAULT_PERSPECTIVE_UPPERRIGHT_Y;
+        float lowerRightX = Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_X;
+        float lowerRightY = Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y;
+        float lowerLeftX = Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X;
+        float lowerLeftY = Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y;
+        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        bool triggerOnNext = Fill::DEFAULT_TRIGGER_ON_NEXT;
+        bool defer = Mixer::DEFAULT_DEFER;
+        bool useMipmap = Mixer::DEFAULT_MIPMAP;
 
         Q_SIGNAL void upperLeftXChanged(float);
         Q_SIGNAL void upperLeftYChanged(float);

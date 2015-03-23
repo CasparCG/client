@@ -29,7 +29,7 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
 
     private:
         QMutex eventsMutex;
-        QMap<QString, QList<QVariant> > events;
+        QMap<QString, QList<QVariant>> events;
         OscThread* thread;
         UdpSocket* socket;
         SocketReceiveMultiplexer* multiplexer;

@@ -1,10 +1,9 @@
 #include "BrightnessCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 BrightnessCommand::BrightnessCommand(QObject* parent)
-    : AbstractCommand(parent),
-      brightness(Mixer::DEFAULT_BRIGHTNESS), transtitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), defer(Mixer::DEFAULT_DEFER)
+    : AbstractCommand(parent)
 {
 }
 

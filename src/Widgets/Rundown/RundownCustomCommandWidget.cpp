@@ -237,7 +237,7 @@ void RundownCustomCommandWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownCustomCommandWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownCustomCommandWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

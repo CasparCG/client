@@ -831,7 +831,7 @@ void RundownTreeWidget::gpiPortTriggered(int gpiPort, GpiDevice* device)
     executeCommand(gpiBindings[gpiPort], Action::ActionType::GpiPulse);
 }
 
-void RundownTreeWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType::Type binding)
+void RundownTreeWidget::gpiBindingChanged(int gpiPort, Playout::PlayoutType binding)
 {
     gpiBindings[gpiPort] = binding;
 }
@@ -1131,7 +1131,7 @@ void RundownTreeWidget::setAllUsed(bool used)
     }
 }
 
-bool RundownTreeWidget::executeCommand(Playout::PlayoutType::Type type, Action::ActionType::Type source, QTreeWidgetItem* item)
+bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::ActionType source, QTreeWidgetItem* item)
 {
     //QModelIndex currentIndex;
     QTreeWidgetItem* currentItem = NULL;

@@ -4,6 +4,7 @@
 
 #include <QtCore/QObject>
 
+class QObject;
 class QTcpSocket;
 class QTextDecoder;
 
@@ -15,6 +16,7 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         explicit AmcpDevice(const QString& address, int port, QObject* parent = 0);
         virtual ~AmcpDevice();
 
+        void connectDevice();
         void disconnectDevice();
 
         void setDisableCommands(bool disable);
@@ -23,10 +25,8 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         int getPort() const;
         const QString& getAddress() const;
 
-        Q_SLOT void connectDevice();
-
     protected:
-        enum AmcpDeviceCommand
+        enum class AmcpDeviceCommand
         {
             NONE,
             CONNECTIONSTATE,
@@ -56,8 +56,8 @@ class CASPAR_EXPORT AmcpDevice : public QObject
             THUMBNAILRETRIEVE
         };
 
-        QTcpSocket* socket;
-        AmcpDeviceCommand command;
+        QTcpSocket* socket = nullptr;
+        AmcpDeviceCommand command = AmcpDeviceCommand::NONE;
 
         QList<QString> response;
 
@@ -67,7 +67,7 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         void writeMessage(const QString& message);
 
     private:
-        enum AmcpDeviceParserState
+        enum class AmcpDeviceParserState
         {
             ExpectingHeader,
             ExpectingOneline,
@@ -75,15 +75,19 @@ class CASPAR_EXPORT AmcpDevice : public QObject
             ExpectingMultiline
         };
 
+        QString address;
+
         int port;
         int code;
-        int state;
-        bool connected;
-        QString fragments;
-        QString address;
-        bool disableCommands;
 
-        QTextDecoder* decoder;
+        bool connected = false;
+        bool disableCommands = false;
+
+        QString fragments;
+
+        QTextDecoder* decoder = nullptr;
+
+        AmcpDeviceParserState state = AmcpDeviceParserState::ExpectingHeader;
 
         void parseLine(const QString& line);
         void parseHeader(const QString& line);
@@ -93,7 +97,7 @@ class CASPAR_EXPORT AmcpDevice : public QObject
 
         AmcpDeviceCommand translateCommand(const QString& command);
 
-        Q_SLOT void readMessage();
-        Q_SLOT void setConnected();
-        Q_SLOT void setDisconnected();
+        void readMessage();
+        void setConnected();
+        void setDisconnected();
 };

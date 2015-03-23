@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
 {
@@ -37,12 +39,12 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         void setDirection(const QString& direction);
 
     private:
-        int device;
-        QString format;
-        QString transition;
-        int transtitionDuration;
-        QString tween;
-        QString direction;
+        int device = DeckLinkInput::DEFAULT_DEVICE;
+        QString format = DeckLinkInput::DEFAULT_FORMAT;
+        QString transition = Mixer::DEFAULT_TRANSITION;
+        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        QString direction = Mixer::DEFAULT_DIRECTION;
 
         Q_SIGNAL void deviceChanged(int);
         Q_SIGNAL void formatChanged(QString);

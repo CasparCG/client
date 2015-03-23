@@ -182,7 +182,7 @@ void RundownGpiOutputWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

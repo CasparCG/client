@@ -285,7 +285,7 @@ void RundownStillWidget::setUsed(bool used)
     }
 }
 
-bool RundownStillWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownStillWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

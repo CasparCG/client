@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT ChromaCommand : public AbstractCommand
 {
@@ -37,12 +39,15 @@ class CORE_EXPORT ChromaCommand : public AbstractCommand
         void setThreshold(float start);
 
     private:
-        QString key;
-        float   blur;
-        float   spread;
-        float   spill;
-        float   threshold;
-        bool    showMask;
+        bool showMask = false;
+
+        QString key = Mixer::DEFAULT_CHROMAKEY;
+
+        float blur = Mixer::DEFAULT_CHROMABLUR;
+        float spread = Mixer::DEFAULT_CHROMABLENDSTOP;
+        float spill = Mixer::DEFAULT_CHROMASPILL;
+        float threshold = Mixer::DEFAULT_CHROMABLENDSTART;
+
 
         Q_SIGNAL void blurChanged(float);
         Q_SIGNAL void keyChanged(const QString&);

@@ -361,7 +361,7 @@ void RundownMovieWidget::setUsed(bool used)
     }
 }
 
-bool RundownMovieWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownMovieWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

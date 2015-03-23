@@ -9,6 +9,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
+#include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -183,7 +184,7 @@ void RundownSpyderPresetWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

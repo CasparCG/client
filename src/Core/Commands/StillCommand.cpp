@@ -1,12 +1,9 @@
 #include "StillCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 StillCommand::StillCommand(QObject* parent)
-    : AbstractCommand(parent),
-      imageName(Still::DEFAULT_NAME), transition(Mixer::DEFAULT_TRANSITION),
-      transitionDuration(Mixer::DEFAULT_DURATION), tween(Mixer::DEFAULT_TWEEN), direction(Mixer::DEFAULT_DIRECTION),
-      triggerOnNext(Still::DEFAULT_TRIGGER_ON_NEXT), useAuto(Still::DEFAULT_USE_AUTO)
+    : AbstractCommand(parent)
 {
 }
 

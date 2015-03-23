@@ -1,10 +1,9 @@
 #include "SonyPresetCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 SonyPresetCommand::SonyPresetCommand(QObject* parent)
-    : AbstractCommand(parent),
-      address(Sony::DEFAULT_ADDRESS), preset(Sony::DEFAULT_PRESET), triggerOnNext(Sony::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

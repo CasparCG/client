@@ -16,7 +16,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
     public:
         explicit SettingsDialog(QWidget* parent = 0);
 
-        Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType::Type);
+        Q_SIGNAL void gpiBindingChanged(int, Playout::PlayoutType);
 
     private:
         QString stylesheet;

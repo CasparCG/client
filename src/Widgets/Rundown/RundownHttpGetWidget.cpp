@@ -190,7 +190,7 @@ void RundownHttpGetWidget::setUsed(bool used)
         this->frameItem->setGraphicsEffect(NULL);
 }
 
-bool RundownHttpGetWidget::executeCommand(Playout::PlayoutType::Type type)
+bool RundownHttpGetWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Stop)
         executeStop();

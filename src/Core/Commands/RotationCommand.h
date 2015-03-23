@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT RotationCommand : public AbstractCommand
 {
@@ -35,11 +37,11 @@ class CORE_EXPORT RotationCommand : public AbstractCommand
         void setDefer(bool defer);
 
     private:
-        float rotation;
-        int transtitionDuration;
-        QString tween;
-        bool triggerOnNext;
-        bool defer;
+        float rotation = Mixer::DEFAULT_ROTATION;
+        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        QString tween = Mixer::DEFAULT_TWEEN;
+        bool triggerOnNext = Rotation::DEFAULT_TRIGGER_ON_NEXT;
+        bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void rotationChanged(float);

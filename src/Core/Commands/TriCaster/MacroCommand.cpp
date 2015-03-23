@@ -1,10 +1,9 @@
 #include "MacroCommand.h"
 
-#include "Global.h"
+#include <QtCore/QXmlStreamWriter>
 
 MacroCommand::MacroCommand(QObject* parent)
-    : AbstractCommand(parent),
-      macro(TriCaster::DEFAULT_MACRO), triggerOnNext(TriCaster::DEFAULT_TRIGGER_ON_NEXT)
+    : AbstractCommand(parent)
 {
 }
 

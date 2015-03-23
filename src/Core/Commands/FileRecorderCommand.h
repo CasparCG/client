@@ -3,14 +3,16 @@
 #include "../Shared.h"
 #include "AbstractCommand.h"
 
+#include "Global.h"
+
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QXmlStreamWriter>
+
+class QObject;
+class QXmlStreamWriter;
 
 class CORE_EXPORT FileRecorderCommand : public AbstractCommand
 {
@@ -35,11 +37,11 @@ class CORE_EXPORT FileRecorderCommand : public AbstractCommand
         void setWithAlpha(bool withAlpha);
 
     private:
-        QString output;
-        QString codec;
-        QString preset;
-        QString tune;
-        bool withAlpha;
+        QString output = FileRecorder::DEFAULT_OUTPUT;
+        QString codec = FileRecorder::DEFAULT_CODEC;
+        QString preset = FileRecorder::DEFAULT_PRESET;
+        QString tune = FileRecorder::DEFAULT_TUNE;
+        bool withAlpha = FileRecorder::DEFAULT_WITH_ALPHA;
 
         Q_SIGNAL void outputChanged(const QString&);
         Q_SIGNAL void codecChanged(const QString&);
