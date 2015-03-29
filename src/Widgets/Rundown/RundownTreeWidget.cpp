@@ -743,7 +743,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
     if (saveAs)
         path = QFileDialog::getSaveFileName(this, "Save Rundown", QDir::homePath(), "Rundown (*.xml)");
     else
-        path = (this->activeRundown == Rundown::DEFAULT_NAME) ? QFileDialog::getSaveFileName(this, "Save Rundown", "", "Rundown (*.xml)") : this->activeRundown;
+        path = (this->activeRundown == Rundown::DEFAULT_NAME) ? QFileDialog::getSaveFileName(this, "Save Rundown", QDir::homePath(), "Rundown (*.xml)") : this->activeRundown;
 
     if (!path.isEmpty())
     {
