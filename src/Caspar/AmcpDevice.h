@@ -89,6 +89,9 @@ class CASPAR_EXPORT AmcpDevice : public QObject
 
         AmcpDeviceParserState state = AmcpDeviceParserState::ExpectingHeader;
 
+        void readMessage();
+        void setConnected();
+        void setDisconnected();
         void parseLine(const QString& line);
         void parseHeader(const QString& line);
         void parseOneline(const QString& line);
@@ -96,8 +99,4 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         void parseMultiline(const QString& line);
 
         AmcpDeviceCommand translateCommand(const QString& command);
-
-        void readMessage();
-        void setConnected();
-        void setDisconnected();
 };
