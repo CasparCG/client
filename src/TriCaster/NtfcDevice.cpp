@@ -9,8 +9,8 @@ NtfcDevice::NtfcDevice(const QString& address, int port, QObject* parent)
 {
     this->socket = new QTcpSocket(this);
 
-    QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
-    QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
+    QObject::connect(this->socket, &QTcpSocket::connected, this, &NtfcDevice::setConnected);
+    QObject::connect(this->socket, &QTcpSocket::disconnected, this, &NtfcDevice::setDisconnected);
 }
 
 NtfcDevice::~NtfcDevice()
@@ -24,7 +24,7 @@ void NtfcDevice::connectDevice()
 
     this->socket->connectToHost(this->address, this->port);
 
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
+    QTimer::singleShot(5000, this, &NtfcDevice::connectDevice);
 }
 
 void NtfcDevice::disconnectDevice()
@@ -54,7 +54,7 @@ void NtfcDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, SLOT(connectDevice()));
+    QTimer::singleShot(5000, this, &NtfcDevice::connectDevice);
 }
 
 bool NtfcDevice::isConnected() const
@@ -81,11 +81,11 @@ void NtfcDevice::writeMessage(const QString& message)
         const ushort* destinationData = destination.utf16();
         const ushort* messageData = message.utf16();
 
-        const int destinationDataSize = (destination.length() + 1) * sizeof(ushort);
-        const int messageDataSize = (message.length() + 1) * sizeof(ushort);
+        const unsigned int destinationDataSize = (destination.length() + 1) * sizeof(ushort);
+        const unsigned int messageDataSize = (message.length() + 1) * sizeof(ushort);
 
         // Setup the transission header.
-        const TcpMessageHeader tcpMessageHeader = { 1, 0, destinationDataSize, sizeof(MessageHeader) + messageDataSize };
+        const TcpMessageHeader tcpMessageHeader = { 1, 0, destinationDataSize, static_cast<uint32_t>(sizeof(MessageHeader) + messageDataSize) };
 
         // Setup the message header.
         const MessageHeader messageHeader = { 2, messageDataSize };
