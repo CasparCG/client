@@ -6,12 +6,6 @@ QHeaderView::section
     padding: 4px;
 }
 
-#tabWidgetRundown QTabBar::tab
-{
-    padding-bottom: 1px;
-    padding-top: 1px;
-}
-
 /*
  * AudioMeterWidget
  */
