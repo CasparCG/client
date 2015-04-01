@@ -7,6 +7,7 @@ fail()
 }
 
 # Fail early if environment not set
+[ -z "$BUILD_QT_PATH" ] && fail "BUILD_QT_PATH has to be set"
 [ -z "$BUILD_ARCHIVE_NAME" ] && fail "BUILD_ARCHIVE_NAME has to be set"
 [ -z "$BUILD_PARALLEL_THREADS" ] && fail "BUILD_PARALLEL_THREADS has to be set"
 
@@ -21,7 +22,7 @@ cd ../build || fail "Could not enter ../build"
 
 # Run qmake
 echo Running qmake...
-qmake ../src/Solution.pro -r -spec linux-g++-64 "CONFIG+=release" || fail "qmake failed"
+"$BUILD_QT_PATH/qmake" ../src/Solution.pro -r -spec linux-g++-64 "CONFIG+=release" || fail "qmake failed"
 
 # Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
