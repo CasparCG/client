@@ -255,7 +255,7 @@
 }
 #treeWidgetRundown::item:selected
 {
-    background-color: rgba(0, 255, 0, 64);
+    background-color: rgba(0, 255, 0, 32);
 
     border-style: solid;
     border-width: 1px;
@@ -267,7 +267,7 @@
 }
 #treeWidgetRundown::item:has-children:selected
 {
-    background-color: rgba(0, 255, 0, 64);
+    background-color: rgba(0, 255, 0, 32);
 }
 #treeWidgetRundown::branch
 {
