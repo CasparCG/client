@@ -94,7 +94,7 @@ void RundownMovieWidget::videolayerChanged(const VideolayerChangedEvent& event)
 {
     Q_UNUSED(event);
 
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     configureOscSubscriptions();
@@ -105,7 +105,7 @@ void RundownMovieWidget::channelChanged(const ChannelChangedEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     configureOscSubscriptions();
@@ -114,7 +114,7 @@ void RundownMovieWidget::channelChanged(const ChannelChangedEvent& event)
 void RundownMovieWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -125,7 +125,7 @@ void RundownMovieWidget::labelChanged(const LabelChangedEvent& event)
 void RundownMovieWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setName(event.getTarget());
@@ -137,7 +137,7 @@ void RundownMovieWidget::targetChanged(const TargetChangedEvent& event)
 void RundownMovieWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?
