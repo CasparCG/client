@@ -37,7 +37,7 @@ void InspectorFillWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
         const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (!model.getName().isEmpty())
         {
-            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
             const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
             this->resolutionWidth = formatModel.getWidth();
@@ -67,7 +67,7 @@ void InspectorFillWidget::deviceChanged(const DeviceChangedEvent& event)
         const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(event.getDeviceName());
         if (!model.getName().isEmpty())
         {
-            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
             const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
             this->resolutionWidth = formatModel.getWidth();
@@ -95,7 +95,7 @@ void InspectorFillWidget::channelChanged(const ChannelChangedEvent& event)
         const DeviceModel model = DatabaseManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (!model.getName().isEmpty())
         {
-            const QStringList& channelFormats = model.getChannelFormats().split(",");
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
             if (event.getChannel() <= channelFormats.count())
             {
                 const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(event.getChannel() - 1));

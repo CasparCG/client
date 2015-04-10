@@ -155,7 +155,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         {
             if (deviceModel != NULL)
             {
-                const QStringList& channelFormats = deviceModel->getChannelFormats().split(",");
+                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(deviceModel->getName()).getChannelFormats().split(",");
                 this->spinBoxChannel->setMaximum(channelFormats.count());
             }
         }
@@ -699,7 +699,7 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
         return;
 
     const QSharedPointer<DeviceModel> model = DeviceManager::getInstance().getDeviceModelByName(deviceName);
-    const QStringList& channelFormats = model->getChannelFormats().split(",");
+    const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model->getName()).getChannelFormats().split(",");
     this->spinBoxChannel->setMaximum(channelFormats.count());
 
     if (model->getLockedChannel() > 0 && model->getLockedChannel() <= this->spinBoxChannel->maximum())
