@@ -845,7 +845,7 @@ void LibraryWidget::importPreset(const ImportPresetEvent& event)
 {
     Q_UNUSED(event);
 
-    QString path = QFileDialog::getOpenFileName(this, "Import Preset", "", "Preset (*.xml)");
+    QString path = QFileDialog::getOpenFileName(this, "Import Preset", QDir::homePath(), "Preset (*.xml)");
     if (!path.isEmpty())
     {
         QFile file(path);

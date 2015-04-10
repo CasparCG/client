@@ -68,7 +68,7 @@ void RundownAtemVideoFormatWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     executePlay();
@@ -77,7 +77,7 @@ void RundownAtemVideoFormatWidget::preview(const PreviewEvent& event)
 void RundownAtemVideoFormatWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
@@ -88,7 +88,7 @@ void RundownAtemVideoFormatWidget::labelChanged(const LabelChangedEvent& event)
 void RundownAtemVideoFormatWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     // Should we update the device name?

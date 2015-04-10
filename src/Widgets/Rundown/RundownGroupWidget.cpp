@@ -57,7 +57,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active && !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;
 
     this->model.setLabel(event.getLabel());
