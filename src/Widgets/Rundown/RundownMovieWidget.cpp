@@ -1051,8 +1051,6 @@ void RundownMovieWidget::timeSubscriptionReceived(const QString& predicate, cons
 {
     Q_UNUSED(predicate);
 
-    //qDebug() << predicate << " " << arguments;
-
     if (this->fileModel != NULL)
     {
         delete this->fileModel;
@@ -1068,8 +1066,6 @@ void RundownMovieWidget::frameSubscriptionReceived(const QString& predicate, con
 {
     Q_UNUSED(predicate);
 
-    //qDebug() << predicate << " " << arguments;
-
     if (this->fileModel == NULL)
         return;
 
@@ -1081,8 +1077,6 @@ void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const
 {
     Q_UNUSED(predicate);
 
-    //qDebug() << predicate << " " << arguments;
-
     if (this->fileModel == NULL)
         return;
 
@@ -1092,8 +1086,6 @@ void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const
 void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     Q_UNUSED(predicate);
-
-    //qDebug() << predicate << " " << arguments << "\n";
 
     QString name = arguments.at(0).toString();
     name.remove(name.lastIndexOf('.'), name.length()); // Remove extension.
@@ -1127,7 +1119,7 @@ void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, cons
         this->sendAutoPlay = false;
         this->hasSentAutoPlay = true;
 
-        qDebug() << "RundownMovieWidget::pathSubscriptionReceived: Dispatched AutoPlay event";
+        qDebug("Dispatched AutoPlay event");
     }
 
     this->playing = true;

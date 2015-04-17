@@ -675,7 +675,7 @@ void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
     for (int i = 0; i < this->treeWidgetPreset->topLevelItemCount(); i++)
         this->treeWidgetPreset->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
 
-    qDebug() << QString("LibraryWidget::repositoryRundown: Completed in %1 msec").arg(time.elapsed());
+    qDebug("LibraryWidget::repositoryRundown %d msec", time.elapsed());
 }
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)

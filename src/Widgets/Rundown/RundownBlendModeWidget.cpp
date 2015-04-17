@@ -18,7 +18,7 @@
 RundownBlendModeWidget::RundownBlendModeWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
                                        bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), disconnected(disconnected), compactView(compactView), color(color), model(model),
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model),
       stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), updateControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {

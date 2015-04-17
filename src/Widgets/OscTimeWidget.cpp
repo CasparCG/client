@@ -148,8 +148,6 @@ void OscTimeWidget::checkState()
         return;
     }
 
-    //qDebug() << "OscTimeWidget::checkState()";
-
     QTimer::singleShot(500, this, SLOT(checkState()));
 }
 

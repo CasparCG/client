@@ -9,7 +9,6 @@ LiveDialog::LiveDialog(QWidget* parent)
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(toggleFullscreen(const ToggleFullscreenEvent&)), this, SLOT(toggleFullscreen(const ToggleFullscreenEvent&)));
-
 }
 
 void LiveDialog::toggleFullscreen(const ToggleFullscreenEvent& event)

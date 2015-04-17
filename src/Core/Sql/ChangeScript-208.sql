@@ -1,4 +1,5 @@
 CREATE TABLE OpenRecent (Id INTEGER PRIMARY KEY, Value TEXT UNIQUE);
+CREATE TABLE Log (Id INTEGER PRIMARY KEY, Timestamp TEXT, ThreadId TEXT, Type TEXT, Message TEXT);
 
 CREATE TABLE AtemMixerStep (Id INTEGER PRIMARY KEY, Name TEXT, Value TEXT);
 INSERT INTO AtemMixerStep (Name, Value) VALUES('1', '0');

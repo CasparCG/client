@@ -147,7 +147,7 @@ void RundownHttpGetWidget::setActive(bool active)
     this->animation->stop();
 
     if (this->active)
-        this->labelActiveColor->setStyleSheet("background-color: lime;");
+        this->labelActiveColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_ACTIVE_COLOR));
     else
         this->labelActiveColor->setStyleSheet("");
 }

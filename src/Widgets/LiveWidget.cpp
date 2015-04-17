@@ -36,7 +36,7 @@ LiveWidget::LiveWidget(QWidget* parent)
     foreach (QString value, arguments)
         args += value + " ";
 
-    qDebug() << QString("LiveWidget::LiveWidget: Using arguments: %1").arg(args.trimmed());
+    qDebug("Using live arguments: %s", qPrintable(args.trimmed()));
 
     char* vlcArguments[arguments.count()];
     for (int i = 0; i < arguments.count(); i++)

@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma GCC diagnostic ignored "-Wformat-security"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
 #include <QtCore/QByteArray>

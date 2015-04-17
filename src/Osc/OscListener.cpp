@@ -63,7 +63,7 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     QString eventMessage = QString("%1").arg(message.AddressPattern());
     QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
 
-    //qDebug() << "OSC message received: " << eventPath;
+    //qDebug("OSC message received: %s", eventPath);
 
     QMutexLocker locker(&eventsMutex);
     if (eventMessage.startsWith("/control"))

@@ -102,7 +102,7 @@ void AudioMeterWidget::audioSubscriptionReceived(const QString& predicate, const
 {
     Q_UNUSED(predicate);
 
-    //qDebug() << predicate << " " << arguments;
+    //qDebug("%s%s", qPrintable(predicate), qPrintable(arguments));
 
     int value = arguments.at(0).toInt();
     if (value < -60)

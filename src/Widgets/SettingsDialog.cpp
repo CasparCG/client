@@ -688,10 +688,6 @@ void SettingsDialog::updateGpi(int gpi, const QComboBox* voltage, const QComboBo
     bool risingEdge = voltage->currentIndex() == 0;
     Playout::PlayoutType playoutType = Playout::enumConstants().at(action->currentIndex());
 
-    qDebug() << "GPI " << gpi
-             << " changed -- rising edge: " << risingEdge
-             << " action: " << Playout::toString(playoutType);
-
     DatabaseManager::getInstance().updateGpiPort(GpiPortModel(gpi, risingEdge, playoutType));
 
     GpiManager::getInstance().getGpiDevice()->setupGpiPort(gpi, risingEdge);

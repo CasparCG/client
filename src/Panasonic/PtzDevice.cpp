@@ -22,7 +22,7 @@ void PtzDevice::selectPreset(const QString& address, int preset)
 
     request.setQuery(query);
 
-    qDebug() << QString("PtzDevice::selectPreset: %1").arg(request.toString());
+    qDebug("Ptz request %s", qPrintable(request.toString()));
 
     this->networkManager = new QNetworkAccessManager(this);
     QObject::connect(this->networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(selectPresetFinished(QNetworkReply*)));
@@ -33,7 +33,7 @@ void PtzDevice::selectPresetFinished(QNetworkReply* reply)
 {
     QString data = QString::fromUtf8(reply->readAll());
 
-    qDebug() << QString("PtzDevice::selectPresetFinished: %1").arg(data);
+    qDebug("PtzDevice::selectPresetFinished %s", qPrintable(data));
 
     reply->deleteLater();
     this->networkManager->deleteLater();

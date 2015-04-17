@@ -30,7 +30,8 @@ class WIDGETS_EXPORT RundownHtmlWidget : public QWidget, Ui::RundownHtmlWidget, 
 
     public: 
         explicit RundownHtmlWidget(const LibraryModel& model, QWidget* parent = 0, const QString& color = Color::DEFAULT_TRANSPARENT_COLOR,
-                                   bool active = false, bool inGroup = false, bool compactView = false);
+                                   bool active = false, bool loaded = false, bool paused = false, bool playing = false,
+                                   bool inGroup = false, bool compactView = false);
 
         virtual AbstractRundownWidget* clone();
 

@@ -31,6 +31,49 @@
 
 #include <QtSql/QSqlDatabase>
 
+void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& message)
+{
+    Q_UNUSED(context);
+
+    QString logMessage;
+    QString threadId = QString::number((long long)QThread::currentThreadId(), 16);
+    QString timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
+
+    switch (type)
+    {
+        case QtDebugMsg:
+            logMessage = QString("[%1] [%2] [D] %3").arg(timestamp).arg(threadId).arg(message);
+            break;
+        case QtWarningMsg:
+            logMessage = QString("\033[33m[%1] [%2] [W] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+            break;
+        case QtCriticalMsg:
+            logMessage = QString("\033[31m[%1] [%2] [C] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+            break;
+        case QtFatalMsg:
+            logMessage = QString("\033[31m[%1] [%2] [F] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+    }
+
+    fprintf(stderr, "%s\n", qPrintable(logMessage));
+
+    QString path = QString("%1/.CasparCG/Client/Logs").arg(QDir::homePath());
+
+    QDir directory;
+    if (!directory.exists(path))
+        directory.mkpath(path);
+
+    QFile logFile(QString("%1/Client_%2.log").arg(path).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")));
+    logFile.open(QIODevice::WriteOnly | QIODevice::Append);
+
+    QTextStream logStream(&logFile);
+    logStream << logMessage << endl;
+
+    logFile.close();
+
+    if (type == QtFatalMsg)
+       abort();
+}
+
 void loadDatabase(const QCommandLineParser& parser)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
@@ -139,6 +182,8 @@ void loadConfiguration(QApplication& application, QMainWindow& window, const QCo
 
 int main(int argc, char* argv[])
 {
+    qInstallMessageHandler(messageHandler);
+
     Application application(argc, argv);
     application.setApplicationName("CasparCG Client");
     application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
@@ -168,6 +213,8 @@ int main(int argc, char* argv[])
 
     loadDatabase(parser);
     DatabaseManager::getInstance().initialize();
+
+    qDebug("Starting %s %s", qPrintable(application.applicationName()), qPrintable(application.applicationVersion()));
 
     loadStyleSheets(application);
     loadFonts(application);

@@ -140,7 +140,8 @@ void RundownTreeBaseWidget::copyItemProperties() const
 
 bool RundownTreeBaseWidget::pasteItemProperties()
 {
-    qDebug() << qApp->clipboard()->text();
+    qDebug(qPrintable(qApp->clipboard()->text()));
+
     std::wstringstream wstringstream;
     wstringstream << qApp->clipboard()->text().toStdWString();
 
@@ -241,7 +242,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 
     checkEmptyRundown();
 
-    qDebug() << QString("RundownTreeBaseWidget::pasteSelectedItems: Completed in %1").arg(time.elapsed());
+    qDebug("RundownTreeBaseWidget::pasteSelectedItems %d", time.elapsed());
 
     return true;
 }
@@ -936,7 +937,7 @@ void RundownTreeBaseWidget::repositoryRundown(const RepositoryRundownEvent& even
 
 void RundownTreeBaseWidget::applyRepositoryChanges()
 {
-    qDebug() << "RundownTreeBaseWidget::applyRepositoryChanges()";
+    qDebug("Apply repository changes");
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Updating rundown..."));
 

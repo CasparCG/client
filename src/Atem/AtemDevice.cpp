@@ -51,7 +51,7 @@ QVector<QAtem::MacroInfo> AtemDevice::macroInfos()
     /*
     QMap<quint8, QAtem::InputInfo> macros = SwitcherDevice::atemConnection->macroInfos();
     foreach (quint8 key, macros.keys())
-        qDebug() << "Name: " << macros.value(key).name << " Index: " << macros.value(key).index;
+        qDebug("Name: %s Index: %s", qPrintable(macros.value(key).name), qPrintable(macros.value(key).index));
     */
 
     return SwitcherDevice::atemConnection->macroInfos();
@@ -62,7 +62,7 @@ QMap<quint16, QAtem::InputInfo> AtemDevice::inputInfos()
     /*
     QMap<quint16, QAtem::InputInfo> infos = SwitcherDevice::atemConnection->inputInfos();
     foreach (quint16 key, infos.keys())
-        qDebug() << "LongText: " << infos.value(key).longText << ", ShortText: " << infos.value(key).shortText << " Index: " << infos.value(key).index << ", Internal Type: " << infos.value(key).internalType;
+        qDebug("LongText: %s  ShortText: %s Index: %s Internal Type: %s", infos.value(key).longText, infos.value(key).shortText, infos.value(key).index, infos.value(key).internalType);
     */
 
     return SwitcherDevice::atemConnection->inputInfos();

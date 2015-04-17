@@ -49,36 +49,34 @@ void DatabaseManager::createDatabase()
                  continue;
 
              if (!sql.exec(query))
-                qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
         }
 
 #if defined(Q_OS_WIN)
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')");
-    sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)");
+        if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')"))
+            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text()));
+
+        if (!sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)"))
+            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text()));
 #else
-    sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')");
+        if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')"))
+            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 #endif
 
         if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
-            qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
-
-        qDebug() << QString("DatabaseManager::createDatabase(): Created version: %1").arg(DATABASE_VERSION);
+            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
     }
 }
 
 void DatabaseManager::upgradeDatabase()
 {
-    qDebug() << QString("DatabaseManager::upgradeDatabase(): Required version: %1").arg(DATABASE_VERSION);
-
     QSqlQuery sql;
     if (!sql.exec("PRAGMA user_version"))
-       qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
 
     sql.first();
 
     int version = sql.value(0).toInt();
-
-    qDebug() << QString("DatabaseManager::upgradeDatabase(): Current version: %1").arg(version);
 
     while (version + 1 <= QString("%1").arg(DATABASE_VERSION).toInt())
     {
@@ -95,16 +93,16 @@ void DatabaseManager::upgradeDatabase()
                      continue;
 
                  if (!sql.exec(query))
-                    qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+                    qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
             }
 
             sql.prepare("PRAGMA user_version = :Version");
             sql.bindValue(":Version", version + 1);
 
             if (!sql.exec())
-                qCritical() << QString("Failed to execute: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text());
+                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 
-            qDebug() << QString("DatabaseManager::upgradeDatabase(): ChangeScript-%1 executed").arg(version + 1);
+            qDebug("Successfully upgraded to ChangeScript-%d", version + 1);
         }
 
         version++;
@@ -124,7 +122,7 @@ void DatabaseManager::updateConfiguration(const ConfigurationModel& model)
     sql.bindValue(":Name", model.getName());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -139,7 +137,7 @@ ConfigurationModel DatabaseManager::getConfigurationByName(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -152,7 +150,7 @@ QList<FormatModel> DatabaseManager::getFormat()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT f.Id, f.Name, f.Width, f.Height, f.FramesPerSecond FROM Format f"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<FormatModel> models;
     while (sql.next())
@@ -171,7 +169,7 @@ FormatModel DatabaseManager::getFormat(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -184,7 +182,7 @@ QList<QString> DatabaseManager::getOpenRecent()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT o.Id, o.Value FROM OpenRecent o ORDER BY o.Id DESC"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<QString> values;
     while (sql.next())
@@ -205,10 +203,10 @@ void DatabaseManager::insertOpenRecent(const QString& path)
     sql.bindValue(":Value", path);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     if (!sql.exec("DELETE FROM OpenRecent WHERE Id > 10"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -221,7 +219,7 @@ void DatabaseManager::deleteOpenRecent()
 
     QSqlQuery sql;
     if (!sql.exec("DELETE FROM OpenRecent"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -232,7 +230,7 @@ QList<PresetModel> DatabaseManager::getPreset()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT p.Id, p.Name, p.Value FROM Preset p"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<PresetModel> models;
     while (sql.next())
@@ -251,7 +249,7 @@ PresetModel DatabaseManager::getPreset(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -269,7 +267,7 @@ QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
     sql.bindValue(":Name", QString("%%1%").arg(filter));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<PresetModel> models;
     while (sql.next())
@@ -291,7 +289,7 @@ void DatabaseManager::insertPreset(const PresetModel& model)
     sql.bindValue(":Value", model.getValue());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -309,7 +307,7 @@ void DatabaseManager::deletePreset(int id)
     sql.bindValue(":Id", id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -320,7 +318,7 @@ QList<BlendModeModel> DatabaseManager::getBlendMode()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT b.Id, b.Value FROM BlendMode b"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<BlendModeModel> models;
     while (sql.next())
@@ -335,7 +333,7 @@ QList<ChromaModel> DatabaseManager::getChroma()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT c.Id, c.Key FROM Chroma c"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<ChromaModel> models;
     while (sql.next())
@@ -350,7 +348,7 @@ QList<DirectionModel> DatabaseManager::getDirection()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT d.Id, d.Value FROM Direction d"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<DirectionModel> models;
     while (sql.next())
@@ -365,7 +363,7 @@ QList<TransitionModel> DatabaseManager::getTransition()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Value FROM Transition t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TransitionModel> models;
     while (sql.next())
@@ -380,7 +378,7 @@ QList<TweenModel> DatabaseManager::getTween()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Value FROM Tween t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TweenModel> models;
     while (sql.next())
@@ -393,7 +391,7 @@ QList<OscOutputModel> DatabaseManager::getOscOutput()
 {
     QSqlQuery sql;
     if (!sql.exec("SELECT o.Id, o.Name, o.Address, o.Port, o.Description FROM OscOutput o ORDER BY o.Name"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<OscOutputModel> models;
     while (sql.next())
@@ -418,7 +416,7 @@ void DatabaseManager::insertOscOutput(const OscOutputModel& model)
     sql.bindValue(":Description", model.getDescription());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -433,7 +431,7 @@ OscOutputModel DatabaseManager::getOscOutputByName(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -451,7 +449,7 @@ OscOutputModel DatabaseManager::getOscOutputByAddress(const QString& address)
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -475,7 +473,7 @@ void DatabaseManager::updateOscOutput(const OscOutputModel& model)
     sql.bindValue(":Id", model.getId());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -494,7 +492,7 @@ void DatabaseManager::deleteOscOutput(int id)
     sql.bindValue(":Id", id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -505,7 +503,7 @@ QList<AtemStepModel> DatabaseManager::getAtemStep()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemStep t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemStepModel> models;
     while (sql.next())
@@ -520,7 +518,7 @@ QList<AtemMixerStepModel> DatabaseManager::getAtemMixerStep()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemMixerStep t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemMixerStepModel> models;
     while (sql.next())
@@ -535,7 +533,7 @@ QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemAudioInputState t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemAudioInputStateModel> models;
     while (sql.next())
@@ -550,7 +548,7 @@ QList<AtemKeyerModel> DatabaseManager::getAtemKeyer()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemKeyer t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemKeyerModel> models;
     while (sql.next())
@@ -565,7 +563,7 @@ QList<AtemSwitcherModel> DatabaseManager::getAtemSwitcher()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemSwitcher t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemSwitcherModel> models;
     while (sql.next())
@@ -580,7 +578,7 @@ QList<AtemVideoFormatModel> DatabaseManager::getAtemVideoFormat()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemVideoFormat t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemVideoFormatModel> models;
     while (sql.next())
@@ -595,7 +593,7 @@ QList<AtemAutoTransitionModel> DatabaseManager::getAtemAutoTransition()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemAutoTransition t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemAutoTransitionModel> models;
     while (sql.next())
@@ -610,7 +608,7 @@ QList<AtemDeviceModel> DatabaseManager::getAtemDevice()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT o.Id, o.Name, o.Address, o.Description FROM AtemDevice o ORDER BY o.Name"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<AtemDeviceModel> models;
     while (sql.next())
@@ -629,7 +627,7 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByName(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -646,7 +644,7 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByAddress(const QString& address)
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -667,7 +665,7 @@ void DatabaseManager::insertAtemDevice(const AtemDeviceModel& model)
     sql.bindValue(":Description", model.getDescription());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -687,7 +685,7 @@ void DatabaseManager::updateAtemDevice(const AtemDeviceModel& model)
     sql.bindValue(":Description", model.getId());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -704,7 +702,7 @@ void DatabaseManager::deleteAtemDevice(int id)
     sql.bindValue(":Id", id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -715,7 +713,7 @@ QList<TriCasterProductModel> DatabaseManager::getTriCasterProduct()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT p.Id, p.Name FROM TriCasterProduct p"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterProductModel> models;
     while (sql.next())
@@ -736,7 +734,7 @@ QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterInputModel> models;
     while (sql.next())
@@ -757,7 +755,7 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterStepModel> models;
     while (sql.next())
@@ -778,7 +776,7 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterAutoSpeedModel> models;
     while (sql.next())
@@ -799,7 +797,7 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
@@ -820,7 +818,7 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterPresetModel> models;
     while (sql.next())
@@ -841,7 +839,7 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterSourceModel> models;
     while (sql.next())
@@ -862,7 +860,7 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterSwitcherModel> models;
     while (sql.next())
@@ -883,7 +881,7 @@ QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
     sql.bindValue(":Products", QString("%%1%").arg(product));
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterNetworkTargetModel> models;
     while (sql.next())
@@ -898,7 +896,7 @@ QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT d.Id, d.Name, d.Address, d.Port, d.Description FROM TriCasterDevice d ORDER BY d.Name"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TriCasterDeviceModel> models;
     while (sql.next())
@@ -918,7 +916,7 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByName(const QString& na
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -936,7 +934,7 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByAddress(const QString&
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -959,7 +957,7 @@ void DatabaseManager::insertTriCasterDevice(const TriCasterDeviceModel& model)
     sql.bindValue(":Description", model.getDescription());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -980,7 +978,7 @@ void DatabaseManager::updateTriCasterDevice(const TriCasterDeviceModel& model)
     sql.bindValue(":Id", model.getId());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -997,7 +995,7 @@ void DatabaseManager::deleteTriCasterDevice(int id)
     sql.bindValue(":Id", id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1008,7 +1006,7 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT Id, RisingEdge, Action FROM GpiPort ORDER BY Id"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<GpiPortModel> models;
     while (sql.next())
@@ -1031,7 +1029,7 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
     sql.bindValue(":Id", model.getPort());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1042,7 +1040,7 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT Id, RisingEdge, PulseLengthMillis FROM GpoPort ORDER BY Id"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<GpoPortModel> models;
     while (sql.next())
@@ -1065,7 +1063,7 @@ void DatabaseManager::updateGpoPort(const GpoPortModel& model)
     sql.bindValue(":Id", model.getPort());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1076,7 +1074,7 @@ QList<TypeModel> DatabaseManager::getType()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT t.Id, t.Value FROM Type t"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<TypeModel> models;
     while (sql.next())
@@ -1095,7 +1093,7 @@ TypeModel DatabaseManager::getTypeByValue(const QString& value)
     sql.bindValue(":Value", value);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1106,7 +1104,7 @@ QList<DeviceModel> DatabaseManager::getDevice()
 {
     QSqlQuery sql;
     if (!sql.exec("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d ORDER BY d.Name"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<DeviceModel> models;
     while (sql.next())
@@ -1127,7 +1125,7 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
     sql.bindValue(":Name", name);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1146,7 +1144,7 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1178,7 +1176,7 @@ void DatabaseManager::insertDevice(const DeviceModel& model)
     sql.bindValue(":LockedChannel", model.getLockedChannel());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1207,7 +1205,7 @@ void DatabaseManager::updateDevice(const DeviceModel& model)
     sql.bindValue(":Id", model.getId());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1225,7 +1223,7 @@ void DatabaseManager::updateDeviceVersion(const DeviceModel& model)
     sql.bindValue(":Address", model.getAddress());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1243,7 +1241,7 @@ void DatabaseManager::updateDeviceChannels(const DeviceModel& model)
     sql.bindValue(":Address", model.getAddress());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1261,7 +1259,7 @@ void DatabaseManager::updateDeviceChannelFormats(const DeviceModel& model)
     sql.bindValue(":Address", model.getAddress());
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1278,21 +1276,21 @@ void DatabaseManager::deleteDevice(int id)
     sql.bindValue(":Id",id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.prepare("DELETE FROM Thumbnail "
                 "WHERE Id IN (SELECT l.ThumbnailId FROM Library l WHERE DeviceId = :DeviceId)");
     sql.bindValue(":DeviceId",id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.prepare("DELETE FROM Library "
                 "WHERE DeviceId = :DeviceId");
     sql.bindValue(":DeviceId",id);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1303,7 +1301,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) ORDER BY l.Name, l.DeviceId"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1320,7 +1318,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 ORDER BY l.Name, l.DeviceId"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1337,7 +1335,7 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
 
     QSqlQuery sql;
     if (!sql.exec("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t WHERE  l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 ORDER BY l.Name, l.DeviceId"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1390,7 +1388,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
     }
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1443,7 +1441,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     }
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1496,7 +1494,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
     }
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1518,7 +1516,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
     sql.bindValue(":Id", deviceId);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1552,7 +1550,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceIdAndFilter(int deviceId,
     }
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1574,7 +1572,7 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1596,7 +1594,7 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1618,7 +1616,7 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1640,7 +1638,7 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
     sql.bindValue(":DeviceId", deviceId);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<LibraryModel> models;
     while (sql.next())
@@ -1671,7 +1669,7 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
             sql.bindValue(":Id", deleteModels.at(i).getId());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1696,7 +1694,7 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
             sql.bindValue(":Timecode", insertModels.at(i).getTimecode());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1723,7 +1721,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
             sql.bindValue(":Id", deleteModels.at(i).getId());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1740,7 +1738,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
             sql.bindValue(":Timecode", insertModels.at(i).getTimecode());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1766,14 +1764,14 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
             sql.bindValue(":Id", deleteModels.at(i).getThumbnailId());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
             sql.prepare("DELETE FROM Library "
                         "WHERE Id = :Id AND TypeId = 2");
             sql.bindValue(":Id", deleteModels.at(i).getId());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1794,7 +1792,7 @@ void DatabaseManager::updateLibraryData(const QString& address, const QList<Libr
             sql.bindValue(":Timecode", insertModels.at(i).getTimecode());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1813,7 +1811,7 @@ void DatabaseManager::deleteLibrary(int deviceId)
     sql.bindValue(":DeviceId", deviceId);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QSqlDatabase::database().commit();
 }
@@ -1828,7 +1826,7 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
     sql.bindValue(":Address", address);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     QList<ThumbnailModel> models;
     while (sql.next())
@@ -1849,7 +1847,7 @@ ThumbnailModel DatabaseManager::getThumbnailByNameAndDeviceName(const QString& n
     sql.bindValue(":DeviceName", deviceName);
 
     if (!sql.exec())
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     sql.first();
 
@@ -1882,7 +1880,7 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                 sql.bindValue(":Id", libraryModel.getThumbnailId());
 
                 if (!sql.exec())
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
             }
             else
             {
@@ -1893,7 +1891,7 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                 sql.bindValue(":Size", model.getSize());
 
                 if (!sql.exec())
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
                 sql.prepare("UPDATE Library SET ThumbnailId = :ThumbnailId "
                             "WHERE Id = :Id");
@@ -1901,7 +1899,7 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                 sql.bindValue(":Id", libraryModel.getId());
 
                 if (!sql.exec())
-                   qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+                   qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
             }
         }
     }
@@ -1917,7 +1915,7 @@ void DatabaseManager::deleteThumbnails()
 
     QSqlQuery sql;
     if (!sql.exec("DELETE FROM Thumbnail"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 
     const QList<LibraryModel>& models = this->getLibraryMedia();
     for (int i = 0; i < models.count(); i++)
@@ -1930,7 +1928,7 @@ void DatabaseManager::deleteThumbnails()
             sql.bindValue(":Id", model.getId());
 
             if (!sql.exec())
-               qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+               qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
         }
     }
 
@@ -1938,5 +1936,5 @@ void DatabaseManager::deleteThumbnails()
 
     // Shrink file on disk.
     if (!sql.exec("VACUUM Thumbnail"))
-       qCritical() << QString("Failed to execute: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
+       qCritical() << QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text());
 }

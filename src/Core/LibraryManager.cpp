@@ -77,7 +77,7 @@ void LibraryManager::refresh()
         return;
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Refreshing library..."));
-    qDebug() << QString("LibraryManager::refresh: Refreshing library...");
+    qDebug("Refreshing library...");
 
     // Only refresh library for all devices.
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -194,7 +194,7 @@ void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDe
         EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     }
 
-    qDebug() << QString("LibraryManager::deviceMediaChanged: %1 msec").arg(time.elapsed());
+    qDebug("LibraryManager::deviceMediaChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
@@ -240,7 +240,7 @@ void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems,
         EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     }
 
-    qDebug() << QString("LibraryManager::deviceTemplateChanged: %1 msec").arg(time.elapsed());
+    qDebug("LibraryManager::deviceTemplateChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
@@ -286,7 +286,7 @@ void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevic
         EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     }
 
-    qDebug() << QString("LibraryManager::deviceDataChanged: %1 msec").arg(time.elapsed());
+    qDebug("LibraryManager::deviceDataChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::thumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)

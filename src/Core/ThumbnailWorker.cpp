@@ -55,7 +55,7 @@ void ThumbnailWorker::process()
     }
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(QString("Retrieving thumbnail %1...").arg(this->currentName)));
-    qDebug() << QString("ThumbnailWorker::process: Retrieving thumbnail %1").arg(this->currentName);
+    qDebug("Retrieving thumbnail %s", qPrintable(this->currentName));
 
     QObject::connect(device.data(), SIGNAL(thumbnailRetrieveChanged(const QString&, CasparDevice&)), this, SLOT(thumbnailRetrieveChanged(const QString&, CasparDevice&)));
     device->retrieveThumbnail(this->currentName);

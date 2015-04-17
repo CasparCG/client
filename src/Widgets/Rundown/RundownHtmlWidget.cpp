@@ -15,7 +15,7 @@
 #include <QtWidgets/QGraphicsOpacityEffect>
 
 RundownHtmlWidget::RundownHtmlWidget(const LibraryModel& model, QWidget* parent, const QString& color, bool active,
-                                     bool inGroup, bool compactView)
+                                     bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
       stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL), updateControlSubscription(NULL),
@@ -107,7 +107,7 @@ void RundownHtmlWidget::deviceChanged(const DeviceChangedEvent& event)
 AbstractRundownWidget* RundownHtmlWidget::clone()
 {
     RundownHtmlWidget* widget = new RundownHtmlWidget(this->model, this->parentWidget(), this->color, this->active,
-                                                            this->inGroup, this->compactView);
+                                                      this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
 
     HtmlCommand* command = dynamic_cast<HtmlCommand*>(widget->getCommand());
     command->setChannel(this->command.getChannel());

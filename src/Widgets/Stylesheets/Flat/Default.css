@@ -628,6 +628,9 @@ QPushButton
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 3px;
+    max-height: 14px;
+    min-height: 14px;
+    min-width: 55px;
 }
 QPushButton:disabled
 {
@@ -636,16 +639,6 @@ QPushButton:disabled
 QPushButton:hover
 {
     border-color: rgba(70, 115, 195, 255);
-}
-
-QMessageBox QPushButton
-{
-    min-width: 54px;
-}
-
-QFileDialog QPushButton
-{
-    min-height: 12px;
 }
 
 /*

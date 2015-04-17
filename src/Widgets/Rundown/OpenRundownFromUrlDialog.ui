@@ -13,67 +13,77 @@
   <property name="windowTitle">
    <string>Open Rundown from repository</string>
   </property>
-  <widget class="QPushButton" name="pushButtonOk">
-   <property name="geometry">
-    <rect>
-     <x>593</x>
-     <y>488</y>
-     <width>75</width>
-     <height>22</height>
-    </rect>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
    </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="text">
-    <string>&amp;OK</string>
-   </property>
-   <property name="shortcut">
-    <string>Alt+O</string>
-   </property>
-  </widget>
-  <widget class="QTreeWidget" name="treeWidgetRundowns">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>11</y>
-     <width>657</width>
-     <height>465</height>
-    </rect>
-   </property>
-   <property name="rootIsDecorated">
-    <bool>false</bool>
-   </property>
-   <property name="uniformRowHeights">
-    <bool>true</bool>
-   </property>
-   <attribute name="headerDefaultSectionSize">
-    <number>350</number>
-   </attribute>
-   <attribute name="headerShowSortIndicator" stdset="0">
-    <bool>false</bool>
-   </attribute>
-   <column>
-    <property name="text">
-     <string>Icon</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Name</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Description</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Url</string>
-    </property>
-   </column>
-  </widget>
+   <item>
+    <widget class="QTreeWidget" name="treeWidgetRundowns">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>350</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Icon</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Url</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonOk">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="shortcut">
+        <string>Alt+O</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>

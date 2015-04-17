@@ -597,10 +597,8 @@ void RundownTreeWidget::openRundown(const QString& path)
         QString latest = qApp->clipboard()->text();
         QString data = stream.readAll();
 
-        //qDebug() << data;
-
         this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
-        qDebug() << QString("RundownTreeWidget::openRundown: Md5 hash is %1").arg(this->hexHash);
+        qDebug("Md5 hash is %s", qPrintable(this->hexHash));
 
         qApp->clipboard()->setText(data);
         pasteSelectedItems();
@@ -608,7 +606,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         // Set previous stored clipboard value.
         qApp->clipboard()->setText(latest);
 
-        qDebug() << QString("RundownTreeWidget::openRundown: Parsing rundown file completed in %1 msec").arg(time.elapsed());
+        qDebug("Parsing rundown file completed in %d msec", time.elapsed());
 
         file.close();
 
@@ -619,7 +617,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         DatabaseManager::getInstance().insertOpenRecent(path);
 
-        qDebug() << QString("RundownTreeWidget::openRundown: Completed in %1 msec (%2 items)").arg(time.elapsed()).arg(this->treeWidgetRundown->invisibleRootItem()->childCount());
+        qDebug("RundownTreeWidget::openRundown %d msec (%d items)", time.elapsed(), this->treeWidgetRundown->invisibleRootItem()->childCount());
     }
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
@@ -651,7 +649,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     QString data = QString::fromUtf8(reply->readAll());
 
     this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
-    qDebug() << QString("RundownTreeWidget::doOpenRundownFromUrl: Md5 hash is %1").arg(this->hexHash);
+    qDebug("Md5 hash is %s", qPrintable(this->hexHash));
 
     qApp->clipboard()->setText(data);
     pasteSelectedItems();
@@ -675,7 +673,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
 
 void RundownTreeWidget::repositoryConnectionStateChanged(RepositoryDevice& device)
 {
-    qDebug() << QString("RundownTreeWidget::repositoryConnectionStateChanged: %1 (%2)").arg(device.getAddress()).arg((device.isConnected() == true) ? "connected" : "disconnected");
+    qDebug("RundownTreeWidget::repositoryConnectionStateChanged %s (%s)", qPrintable(device.getAddress()), qPrintable((device.isConnected() == true) ? "connected" : "disconnected"));
 
     QStringList repositoryUrl = this->activeRundown.split("/");
     QString rundown = repositoryUrl.takeLast();
@@ -769,7 +767,7 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->writeEndDocument();
 
             this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
-            qDebug() << QString("RundownTreeWidget::saveRundown: Md5 hash is %1").arg(this->hexHash);
+            qDebug("Md5 hash is %s", qPrintable(this->hexHash));
 
             file.write(data);
             file.close();
@@ -804,10 +802,8 @@ bool RundownTreeWidget::checkForSave() const
     writer->writeEndElement();
     writer->writeEndDocument();
 
-    //qDebug() << QString(data);
-
     QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
-    qDebug() << QString("RundownTreeWidget::checkForSave: Md5 hash is %1").arg(hexHash);
+    qDebug("Md5 hash is %s", qPrintable(hexHash));
 
     if (hexHash != this->hexHash)
         return true;
