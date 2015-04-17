@@ -17,12 +17,13 @@ class TRICASTER_EXPORT NtfcDevice : public QObject
         explicit NtfcDevice(const QString& address, int port, QObject* parent = 0);
         virtual ~NtfcDevice();
 
-        void connectDevice();
         void disconnectDevice();
 
         bool isConnected() const;
         int getPort() const;
         const QString& getAddress() const;
+
+        Q_SLOT void connectDevice();
 
     protected:
         enum NtfcDeviceCommand
@@ -59,7 +60,7 @@ class TRICASTER_EXPORT NtfcDevice : public QObject
         bool connected;
         QString address;
 
-        //void readMessage();
-        void setConnected();
-        void setDisconnected();
+        //Q_SLOT void readMessage();
+        Q_SLOT void setConnected();
+        Q_SLOT void setDisconnected();
 };

@@ -87,6 +87,7 @@ void RundownAtemMacroWidget::labelChanged(const LabelChangedEvent& event)
 
 void RundownAtemMacroWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
 {
+    QString s = this->labelActiveColor->styleSheet();
     // This event is not for us.
     if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
         return;

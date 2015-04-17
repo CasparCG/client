@@ -56,7 +56,7 @@ void DatabaseManager::createDatabase()
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')"))
             qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 
-        if (!sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)"))
+        if (!sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel, LockedChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)"))
             qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 #else
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')"))

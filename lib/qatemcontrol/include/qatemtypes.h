@@ -53,10 +53,14 @@ namespace QAtem
 
     struct VideoMode
     {
-        VideoMode(quint8 i, const QString &n) : index(i), name(n) {}
+        VideoMode() : index(0), framesPerSecond(0.0) {}
+        VideoMode(quint8 i, const QString &n, const QSize &s, float f) :
+            index(i), name(n), size(s), framesPerSecond(f) {}
 
         quint8 index;
         QString name;
+        QSize size;
+        float framesPerSecond;
     };
 
     struct MultiView
@@ -203,6 +207,13 @@ namespace QAtem
         bool used;
         QString name;
         QString description;
+    };
+
+    enum MacroRunningState
+    {
+        MacroStoped,
+        MacroRunning,
+        MacroWaiting
     };
 }
 

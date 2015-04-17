@@ -14,8 +14,8 @@ SwitcherDevice::SwitcherDevice(const QString& address, QObject* parent)
 {
     this->atemConnection = new QAtemConnection(this);
 
-    QObject::connect(this->atemConnection, &QAtemConnection::connected, this, &SwitcherDevice::setConnected);
-    QObject::connect(this->atemConnection, &QAtemConnection::disconnected, this, &SwitcherDevice::setDisconnected);
+    QObject::connect(this->atemConnection, SIGNAL(connected()), this, SLOT(setConnected()));
+    QObject::connect(this->atemConnection, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
 SwitcherDevice::~SwitcherDevice()
@@ -57,7 +57,7 @@ void SwitcherDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, &SwitcherDevice::connectDevice);
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 bool SwitcherDevice::isConnected() const

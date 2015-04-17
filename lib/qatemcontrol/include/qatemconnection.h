@@ -140,10 +140,9 @@ public:
     quint8 multiViewCount() const { return m_multiViews.count(); }
     QAtem::MultiView *multiView(quint8 index) const;
 
-    QList<QAtem::VideoMode> availableVideoModes() const { return m_availableVideoModes; }
+    QMap<quint8, QAtem::VideoMode> availableVideoModes() const { return m_availableVideoModes; }
     /// @returns index of the video format in use. 0 = 525i5994, 1 = 625i50, 2 = 525i5994 16:9, 3 = 625i50 16:9, 4 = 720p50, 5 = 720p5994, 6 = 1080i50, 7 = 1080i5994
     quint8 videoFormat() const { return m_videoFormat; }
-    quint8 framesPerSecond() const { return m_framesPerSecond; }
     /// @returns type of video down coversion, 0 = Center cut, 1 = Letterbox, 2 = Anamorphic
     quint8 videoDownConvertType() const { return m_videoDownConvertType; }
 
@@ -189,9 +188,11 @@ public:
     /// @returns the state of the media pool lock with ID @p id.
     bool mediaLockState(quint8 id) const { return m_mediaLocks.value(id); }
 
+    void aquireLock(quint8 storeId);
+
     /**
      * @brief Send data to a store in the switcher.
-     * @param storeId 0 = Still store, 1 = Clip store, 2 = Sound store, 3 = Multiview labels
+     * @param storeId 0 = Still store, 1 = Clip store, 2 = Sound store, 3 = Multiview labels, 255 = Macros
      * @param index Index in the store
      * @param name Name shown to the user
      * @param data Actual pixel or sound data
@@ -201,6 +202,8 @@ public:
     bool transferActive() const { return m_transferActive; }
     quint16 transferId () const { return m_transferId; }
     int remainingTransferDataSize() const { return m_transferData.size(); }
+    quint16 getDataFromSwitcher(quint8 storeId, quint8 index);
+    QByteArray transferData() const { return m_transferData; }
 
     /**
      * Convert @p image to a QByteArray suitable for sending to the switcher.
@@ -225,7 +228,7 @@ public:
     QAtem::MacroInfo macroInfo(quint8 index) const { return m_macroInfos.at(index); }
     QVector<QAtem::MacroInfo> macroInfos () const { return m_macroInfos; }
 
-    bool macroRunning() const { return m_macroRunning; }
+    QAtem::MacroRunningState macroRunningState() const { return m_macroRunningState; }
     bool macroRepeating() const { return m_macroRepeating; }
     quint8 runningMacro() const { return m_runningMacro; }
     bool macroRecording() const { return m_macroRecording; }
@@ -361,9 +364,13 @@ protected slots:
     void onMRPr(const QByteArray& payload);
     void onMRcS(const QByteArray& payload);
     void on_MAC(const QByteArray& payload);
+    void onFTDa(const QByteArray& payload);
+    void onFTDE(const QByteArray& payload);
+    void onLKOB(const QByteArray& payload);
 
     void initDownloadToSwitcher();
     void flushTransferBuffer(quint8 count);
+    void acceptData();
 
 protected:
     QByteArray createCommandHeader(Commands bitmask, quint16 payloadSize, quint16 uid, quint16 ackId);
@@ -378,6 +385,7 @@ protected:
 
     void sendData(quint16 id, const QByteArray &data);
     void sendFileDescription();
+    void requestData();
 
     static float convertToDecibel(quint16 level);
     static quint16 convertFromDecibel(float level);
@@ -442,7 +450,6 @@ private:
     QVector<QAtem::MultiView*> m_multiViews;
 
     quint8 m_videoFormat;
-    quint8 m_framesPerSecond;
     quint8 m_videoDownConvertType;
 
     quint16 m_mediaPoolClip1Size;
@@ -485,12 +492,12 @@ private:
 
     quint8 m_powerStatus;
 
-    QList<QAtem::VideoMode> m_availableVideoModes;
+    QMap<quint8, QAtem::VideoMode> m_availableVideoModes;
 
     QAtemCameraControl *m_cameraControl;
 
     QVector<QAtem::MacroInfo> m_macroInfos;
-    bool m_macroRunning;
+    QAtem::MacroRunningState m_macroRunningState;
     bool m_macroRepeating;
     quint8 m_runningMacro;
     bool m_macroRecording;
@@ -552,6 +559,7 @@ signals:
     void audioLevelsChanged();
 
     void mediaLockStateChanged(quint8 id, bool state);
+    void getLockStateChanged(quint8 storeId, bool state);
 
     void dataTransferFinished(quint16 transferId);
 
@@ -563,7 +571,7 @@ signals:
     void multiViewInputsChanged(quint8 multiView);
 
     void macroInfoChanged(quint8 index, const QAtem::MacroInfo &info);
-    void macroRunningStateChanged(bool running, bool repeating, quint8 macroIndex);
+    void macroRunningStateChanged(QAtem::MacroRunningState running, bool repeating, quint8 macroIndex);
     void macroRecordingStateChanged(bool recording, quint8 macroIndex);
 };
 

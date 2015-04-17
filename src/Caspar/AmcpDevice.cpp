@@ -14,9 +14,9 @@ AmcpDevice::AmcpDevice(const QString& address, int port, QObject* parent)
 
     this->decoder = new QTextDecoder(QTextCodec::codecForName("UTF-8"));
 
-    QObject::connect(this->socket, &QTcpSocket::readyRead, this, &AmcpDevice::readMessage);
-    QObject::connect(this->socket, &QTcpSocket::connected, this, &AmcpDevice::setConnected);
-    QObject::connect(this->socket, &QTcpSocket::disconnected, this, &AmcpDevice::setDisconnected);
+    QObject::connect(this->socket, SIGNAL(readyRead()), this, SLOT(readMessage()));
+    QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
+    QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
 AmcpDevice::~AmcpDevice()
@@ -31,7 +31,7 @@ void AmcpDevice::connectDevice()
 
     this->socket->connectToHost(this->address, this->port);
 
-    QTimer::singleShot(5000, this, &AmcpDevice::connectDevice);
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void AmcpDevice::disconnectDevice()
@@ -61,7 +61,7 @@ void AmcpDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, &AmcpDevice::connectDevice);
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void AmcpDevice::setDisableCommands(bool disable)

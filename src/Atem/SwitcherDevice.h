@@ -14,11 +14,12 @@ class ATEM_EXPORT SwitcherDevice : public QObject
         explicit SwitcherDevice(const QString& address, QObject* parent = 0);
         virtual ~SwitcherDevice();
 
-        void connectDevice();
         void disconnectDevice();
 
         bool isConnected() const;
         const QString& getAddress() const;
+
+        Q_SLOT void connectDevice();
 
     protected:
         enum class SwitcherDeviceCommand
@@ -43,6 +44,6 @@ class ATEM_EXPORT SwitcherDevice : public QObject
 
         bool connected = false;
 
-        void setConnected();
-        void setDisconnected();
+        Q_SLOT void setConnected();
+        Q_SLOT void setDisconnected();
 };

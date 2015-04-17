@@ -113,7 +113,7 @@ void AtemDeviceDialog::testConnection()
 {
     this->device = QSharedPointer<AtemDevice>(new AtemDevice(this->lineEditAddress->text()));
 
-    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged(AtemDevice&)), this, SLOT(connectionStateChanged(AtemDevice&)));
+    QObject::connect(this->device.data(), SIGNAL(connectionStateChanged()), this, SLOT(connectionStateChanged()));
     this->device->connectDevice();
 }
 
@@ -139,7 +139,7 @@ void AtemDeviceDialog::addressChanged(QString name)
 
 void AtemDeviceDialog::connectionStateChanged(AtemDevice& device)
 {
-    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged(AtemDevice&)), this, SLOT(connectionStateChanged(AtemDevice&)));
+    QObject::disconnect(this->device.data(), SIGNAL(connectionStateChanged()), this, SLOT(connectionStateChanged()));
 
     if (device.isConnected())
     {

@@ -9,8 +9,8 @@ NtfcDevice::NtfcDevice(const QString& address, int port, QObject* parent)
 {
     this->socket = new QTcpSocket(this);
 
-    QObject::connect(this->socket, &QTcpSocket::connected, this, &NtfcDevice::setConnected);
-    QObject::connect(this->socket, &QTcpSocket::disconnected, this, &NtfcDevice::setDisconnected);
+    QObject::connect(this->socket, SIGNAL(connected()), this, SLOT(setConnected()));
+    QObject::connect(this->socket, SIGNAL(disconnected()), this, SLOT(setDisconnected()));
 }
 
 NtfcDevice::~NtfcDevice()
@@ -24,7 +24,7 @@ void NtfcDevice::connectDevice()
 
     this->socket->connectToHost(this->address, this->port);
 
-    QTimer::singleShot(5000, this, &NtfcDevice::connectDevice);
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 void NtfcDevice::disconnectDevice()
@@ -54,7 +54,7 @@ void NtfcDevice::setDisconnected()
 
     sendNotification();
 
-    QTimer::singleShot(5000, this, &NtfcDevice::connectDevice);
+    QTimer::singleShot(5000, this, SLOT(connectDevice()));
 }
 
 bool NtfcDevice::isConnected() const

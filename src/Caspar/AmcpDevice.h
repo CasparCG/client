@@ -16,7 +16,6 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         explicit AmcpDevice(const QString& address, int port, QObject* parent = 0);
         virtual ~AmcpDevice();
 
-        void connectDevice();
         void disconnectDevice();
 
         void setDisableCommands(bool disable);
@@ -24,6 +23,8 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         bool isConnected() const;
         int getPort() const;
         const QString& getAddress() const;
+
+        Q_SLOT void connectDevice();
 
     protected:
         enum class AmcpDeviceCommand
@@ -89,9 +90,6 @@ class CASPAR_EXPORT AmcpDevice : public QObject
 
         AmcpDeviceParserState state = AmcpDeviceParserState::ExpectingHeader;
 
-        void readMessage();
-        void setConnected();
-        void setDisconnected();
         void parseLine(const QString& line);
         void parseHeader(const QString& line);
         void parseOneline(const QString& line);
@@ -99,4 +97,8 @@ class CASPAR_EXPORT AmcpDevice : public QObject
         void parseMultiline(const QString& line);
 
         AmcpDeviceCommand translateCommand(const QString& command);
+
+        Q_SLOT void readMessage();
+        Q_SLOT void setConnected();
+        Q_SLOT void setDisconnected();
 };
