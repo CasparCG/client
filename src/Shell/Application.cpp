@@ -16,7 +16,7 @@ bool Application::notify(QObject* receiver, QEvent* event)
     }
     catch (std::exception& e)
     {
-        qCritical() << "Exception thrown: " << e.what();
+        qCritical("Exception thrown: %s", qPrintable(e.what()));
     }
 
     return false;

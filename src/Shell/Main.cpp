@@ -93,7 +93,7 @@ void loadDatabase(const QCommandLineParser& parser)
         database.setDatabaseName(databaseLocation);
 
     if (!database.open())
-        qCritical() << "Unable to open database";
+        qCritical("Unable to open database");
 }
 
 void loadStyleSheets(QApplication& application)

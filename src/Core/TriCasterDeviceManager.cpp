@@ -112,7 +112,7 @@ const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByName(const QS
             return model;
     }
 
-    qCritical() << "No TriCasterDeviceModel found for specified name";
+    qCritical("No TriCasterDeviceModel found for specified name");
 
     return TriCasterDeviceModel();
 }
@@ -125,7 +125,7 @@ const TriCasterDeviceModel TriCasterDeviceManager::getDeviceModelByAddress(const
             return model;
     }
 
-    qCritical() << "No TriCasterDeviceModel found for specified address";
+    qCritical("No TriCasterDeviceModel found for specified address");
 
     return TriCasterDeviceModel();
 }
