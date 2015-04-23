@@ -597,8 +597,8 @@ void RundownTreeWidget::openRundown(const QString& path)
         QString latest = qApp->clipboard()->text();
         QString data = stream.readAll();
 
-        this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
-        qDebug("Md5 hash is %s", qPrintable(this->hexHash));
+        this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex());
+        qDebug("Hash is %s", qPrintable(this->hexHash));
 
         qApp->clipboard()->setText(data);
         pasteSelectedItems();
@@ -648,8 +648,8 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     QString latest = qApp->clipboard()->text();
     QString data = QString::fromUtf8(reply->readAll());
 
-    this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
-    qDebug("Md5 hash is %s", qPrintable(this->hexHash));
+    this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex());
+    qDebug("Hash is %s", qPrintable(this->hexHash));
 
     qApp->clipboard()->setText(data);
     pasteSelectedItems();
@@ -770,8 +770,8 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->writeEndElement();
             writer->writeEndDocument();
 
-            this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
-            qDebug("Md5 hash is %s", qPrintable(this->hexHash));
+            this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex());
+            qDebug("Hash is %s", qPrintable(this->hexHash));
 
             file.write(data);
             file.close();
@@ -806,8 +806,8 @@ bool RundownTreeWidget::checkForSave() const
     writer->writeEndElement();
     writer->writeEndDocument();
 
-    QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
-    qDebug("Md5 hash is %s", qPrintable(hexHash));
+    QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex());
+    qDebug("Hash is %s", qPrintable(hexHash));
 
     if (hexHash != this->hexHash)
         return true;
