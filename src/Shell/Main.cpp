@@ -58,9 +58,9 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
 
     QString path = QString("%1/.CasparCG/Client/Logs").arg(QDir::homePath());
 
-    QDir directory;
-    if (!directory.exists(path))
-        directory.mkpath(path);
+    QDir directory(path);
+    if (!directory.exists())
+        directory.mkpath(".");
 
     QFile logFile(QString("%1/Client_%2.log").arg(path).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd")));
     logFile.open(QIODevice::WriteOnly | QIODevice::Append);
@@ -78,9 +78,9 @@ void loadDatabase(const QCommandLineParser& parser)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
-    QDir directory;
-    if (!directory.exists(path))
-        directory.mkpath(path);
+    QDir directory(path);
+    if (!directory.exists())
+        directory.mkpath(".");
 
     QString databaseLocation = QString("%1/Database.s3db").arg(path);
     if (parser.isSet("database"))
