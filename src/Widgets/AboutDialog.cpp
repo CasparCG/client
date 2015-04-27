@@ -18,6 +18,6 @@ AboutDialog::AboutDialog(QWidget* parent)
     this->labelQtVersion->setText(QString("Based on Qt %1 (64 bit)").arg(QT_VERSION_STR));
 #endif
 
-    this->labelBuildTime->setText(QString("Buit on %1").arg(BUILD_TIMESTAMP));
+    this->labelBuildTime->setText(QString("Built on %1").arg(BUILD_TIMESTAMP));
     this->labelBuildVersion->setText(QString("From revision %1").arg(BUILD_VERSION));
 }
