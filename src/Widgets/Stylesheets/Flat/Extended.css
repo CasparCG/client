@@ -34,7 +34,7 @@
     image: url(:/Graphics/Images/Add.png);
 }
 
-#tabGeneral, #tabDevices, #tabMixers, #tabGpi, #tabOsc
+#tabGeneral, #tabLiveStream, #tabDevices, #tabMixers, #tabGpi, #tabOsc
 {
     background-color: rgba(35, 35, 35, 255);
 }

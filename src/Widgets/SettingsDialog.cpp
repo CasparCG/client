@@ -312,7 +312,7 @@ void SettingsDialog::checkEmptyDeviceList()
 {
     if (this->treeWidgetDevice->invisibleRootItem()->childCount() == 0)
     {
-        this->tabWidgetSettings->setCurrentIndex(1);
+        this->tabWidgetSettings->setCurrentIndex(2);
         this->treeWidgetDevice->setStyleSheet("border-color: firebrick;");
     }
     else
