@@ -87,6 +87,9 @@ void InspectorTemplateWidget::showAddTemplateDataDialog(const ShowAddTemplateDat
 
 void InspectorTemplateWidget::addTemplateData(const AddTemplateDataEvent& event)
 {
+    if (!this->model || this->model->getType() != "TEMPLATE")
+        return;
+
     this->treeWidgetTemplateData->clear();
     this->fieldCounter = 0;
 
