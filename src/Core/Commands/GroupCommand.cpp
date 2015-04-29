@@ -22,11 +22,6 @@ bool GroupCommand::getAutoPlay() const
     return this->autoPlay;
 }
 
-const QString& GroupCommand::getCountdown() const
-{
-    return this->countdown;
-}
-
 void GroupCommand::setAutoStep(bool autoStep)
 {
     this->autoStep = autoStep;
@@ -45,12 +40,6 @@ void GroupCommand::setNotes(const QString& notes)
     emit notesChanged(this->notes);
 }
 
-void GroupCommand::setCountdown(const QString& countdown)
-{
-    this->countdown = countdown;
-    emit countdownChanged(this->countdown);
-}
-
 void GroupCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
@@ -58,7 +47,6 @@ void GroupCommand::readProperties(boost::property_tree::wptree& pt)
     setNotes(QString::fromStdWString(pt.get(L"notes", Group::DEFAULT_NOTE.toStdWString())));
     setAutoStep(pt.get(L"autostep", Group::DEFAULT_AUTO_STEP));
     setAutoPlay(pt.get(L"autoplay", Group::DEFAULT_AUTO_PLAY));
-    setCountdown(QString::fromStdWString(pt.get(L"countdown", L"")));
 }
 
 void GroupCommand::writeProperties(QXmlStreamWriter* writer)
@@ -68,5 +56,4 @@ void GroupCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("notes", this->getNotes());
     writer->writeTextElement("autostep", (getAutoStep() == true) ? "true" : "false");
     writer->writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
-    writer->writeTextElement("countdown", this->getCountdown());
 }

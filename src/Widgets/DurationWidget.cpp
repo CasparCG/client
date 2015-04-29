@@ -19,7 +19,7 @@ DurationWidget::DurationWidget(QWidget* parent)
 
     QObject::connect(&this->updateTimer, SIGNAL(timeout()), this, SLOT(updateTime()));
     QObject::connect(&EventManager::getInstance(), SIGNAL(durationChanged(const DurationChangedEvent&)), this, SLOT(durationChanged(const DurationChangedEvent&)));
-    QObject::connect(&EventManager::getInstance(), SIGNAL(executePlayoutCommand(const ExecutePlayoutCommandEvent&)), this, SLOT(executePlayoutCommand(const ExecutePlayoutCommandEvent&)));
+    //QObject::connect(&EventManager::getInstance(), SIGNAL(executePlayoutCommand(const ExecutePlayoutCommandEvent&)), this, SLOT(executePlayoutCommand(const ExecutePlayoutCommandEvent&)));
 }
 
 void DurationWidget::executePlayoutCommand(const ExecutePlayoutCommandEvent& event)

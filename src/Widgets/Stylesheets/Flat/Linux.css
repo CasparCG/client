@@ -6,6 +6,11 @@ QHeaderView::section
     padding: 4px;
 }
 
+#tabWidgetAudioLevels QTabBar::tab
+{
+    margin-top: 2px;
+}
+
 /*
  * AudioMeterWidget
  */

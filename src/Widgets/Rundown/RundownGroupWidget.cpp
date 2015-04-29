@@ -81,7 +81,6 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->setNotes(this->command.getNotes());
     command->setAutoStep(this->command.getAutoStep());
     command->setAutoPlay(this->command.getAutoPlay());
-    command->setCountdown(this->command.getCountdown());
 
     return widget;
 }
@@ -189,10 +188,20 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType type)
 
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
     {
-        EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
+        if (this->command.getDuration() > 0)
+            EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
 
         if (this->markUsedItems)
             setUsed(true);
+    }
+    else if (type == Playout::PlayoutType::Stop)
+    {
+        if (this->command.getDuration() > 0)
+            EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(0));
+    }
+    else if (type == Playout::PlayoutType::Clear || type == Playout::PlayoutType::ClearVideoLayer || type == Playout::PlayoutType::ClearChannel)
+    {
+        EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(0)); // Reset counter.
     }
 
     return true;

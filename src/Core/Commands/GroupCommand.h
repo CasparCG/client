@@ -27,21 +27,17 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         bool getAutoStep() const;
         const QString& getNotes() const;
         bool getAutoPlay() const;
-        const QString& getCountdown() const;
 
         void setAutoStep(bool autoStep);
         void setNotes(const QString& notes);
         void setAutoPlay(bool autoPlay);
-        void setCountdown(const QString& countdown);
 
     private:
         QString notes = Group::DEFAULT_NOTE;
         bool autoStep = Group::DEFAULT_AUTO_STEP;
         bool autoPlay = Group::DEFAULT_AUTO_PLAY;
-        QString countdown = "";
 
         Q_SIGNAL void notesChanged(const QString&);
         Q_SIGNAL void autoStepChanged(bool);
         Q_SIGNAL void autoPlayChanged(bool);
-        Q_SIGNAL void countdownChanged(const QString&);
 };
