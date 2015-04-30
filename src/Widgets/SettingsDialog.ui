@@ -31,7 +31,7 @@
      <x>11</x>
      <y>11</y>
      <width>678</width>
-     <height>691</height>
+     <height>681</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -3557,7 +3557,7 @@
    <property name="geometry">
     <rect>
      <x>614</x>
-     <y>710</y>
+     <y>706</y>
      <width>75</width>
      <height>22</height>
     </rect>
@@ -3573,7 +3573,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>699</y>
+     <y>695</y>
      <width>591</width>
      <height>16</height>
     </rect>

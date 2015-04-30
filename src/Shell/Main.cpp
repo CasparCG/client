@@ -209,8 +209,6 @@ int main(int argc, char* argv[])
     QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
     splashScreen.show();
 
-    application.setStyle(QStyleFactory::create("plastique"));
-
     loadDatabase(parser);
     DatabaseManager::getInstance().initialize();
 
