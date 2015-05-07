@@ -33,8 +33,7 @@ void InspectorAtemMacroWidget::rundownItemSelected(const RundownItemSelectedEven
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
         {
-            if (this->macros.isEmpty())
-                this->macros = device->macroInfos();
+            this->macros = device->macroInfos();
 
             loadAtemMacro();
         }
