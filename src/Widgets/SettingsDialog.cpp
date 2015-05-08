@@ -545,7 +545,7 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
 {
     Q_UNUSED(index);
 
-    DeviceModel model = DatabaseManager::getInstance().getDeviceByAddress(current->text(3));
+    DeviceModel model = DatabaseManager::getInstance().getDeviceById(current->text(0).toInt());
 
     DeviceDialog* dialog = new DeviceDialog(this);
     dialog->setDeviceModel(model);

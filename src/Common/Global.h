@@ -45,7 +45,6 @@ namespace Sony
 namespace Spyder
 {
     static const QString DEFAULT_ADDRESS = "";
-    static const QString DEFAULT_PORT = "";
     static const int DEFAULT_PRESET = 1;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }

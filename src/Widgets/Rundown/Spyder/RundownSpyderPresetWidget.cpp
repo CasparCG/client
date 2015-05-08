@@ -79,7 +79,6 @@ AbstractRundownWidget* RundownSpyderPresetWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setAddress(this->command.getAddress());
-    command->setPort(this->command.getPort());
     command->setPreset(this->command.getPreset());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
 
@@ -193,7 +192,7 @@ bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        if (!this->command.getAddress().isEmpty() && !this->command.getPort().isEmpty())
+        if (!this->command.getAddress().isEmpty())
         {
             this->executeTimer.setInterval(this->command.getDelay());
             this->executeTimer.start();
@@ -223,7 +222,7 @@ void RundownSpyderPresetWidget::executeStop()
 
 void RundownSpyderPresetWidget::executePlay()
 {
-    this->device->selectPreset(this->command.getPreset(), this->command.getAddress(), this->command.getPort().toInt());
+    this->device->selectPreset(this->command.getPreset(), this->command.getAddress());
 
     if (this->markUsedItems)
         setUsed(true);

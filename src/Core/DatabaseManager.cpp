@@ -1115,6 +1115,26 @@ QList<DeviceModel> DatabaseManager::getDevice()
     return models;
 }
 
+
+DeviceModel DatabaseManager::getDeviceById(int deviceId)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+    sql.prepare("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d "
+                "WHERE d.Id = :Id");
+    sql.bindValue(":Id", deviceId);
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    sql.first();
+
+    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
+                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
+}
+
 DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);

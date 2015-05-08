@@ -23,13 +23,11 @@ void InspectorSpyderPresetWidget::rundownItemSelected(const RundownItemSelectedE
         this->command = dynamic_cast<SpyderPresetCommand*>(event.getCommand());
 
         this->lineEditAddress->setText(this->command->getAddress());
-        this->lineEditPort->setText(QString("%1").arg(this->command->getPort()));
         this->spinBoxPreset->setValue(this->command->getPreset());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
     checkEmptyAddress();
-    checkEmptyPort();
 
     blockAllSignals(false);
 }
@@ -37,7 +35,6 @@ void InspectorSpyderPresetWidget::rundownItemSelected(const RundownItemSelectedE
 void InspectorSpyderPresetWidget::blockAllSignals(bool block)
 {
     this->lineEditAddress->blockSignals(block);
-    this->lineEditPort->blockSignals(block);
     this->spinBoxPreset->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
 }
@@ -50,26 +47,11 @@ void InspectorSpyderPresetWidget::checkEmptyAddress()
         this->lineEditAddress->setStyleSheet("");
 }
 
-void InspectorSpyderPresetWidget::checkEmptyPort()
-{
-    if (this->lineEditPort->text().isEmpty())
-        this->lineEditPort->setStyleSheet("border-color: firebrick;");
-    else
-        this->lineEditPort->setStyleSheet("");
-}
-
 void InspectorSpyderPresetWidget::addressChanged(QString address)
 {
     this->command->setAddress(address);
 
     checkEmptyAddress();
-}
-
-void InspectorSpyderPresetWidget::portChanged(QString port)
-{
-    this->command->setPort(port);
-
-    checkEmptyPort();
 }
 
 void InspectorSpyderPresetWidget::presetChanged(int preset)

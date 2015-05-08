@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>207</width>
-    <height>140</height>
+    <height>127</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,43 +46,6 @@
       <widget class="QLineEdit" name="lineEditAddress">
        <property name="placeholderText">
         <string>IP address / Hostname</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPort">
-     <item>
-      <spacer name="horizontalSpacerPort">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>66</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPort">
-       <property name="text">
-        <string>Port</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditPort">
-       <property name="placeholderText">
-        <string>Port</string>
        </property>
       </widget>
      </item>
@@ -128,7 +91,7 @@
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>16</number>
+        <number>99</number>
        </property>
       </widget>
      </item>
@@ -252,22 +215,6 @@
     <hint type="destinationlabel">
      <x>0</x>
      <y>41</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditPort</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>InspectorSpyderPresetWidget</receiver>
-   <slot>portChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>168</x>
-     <y>50</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>210</x>
-     <y>35</y>
     </hint>
    </hints>
   </connection>
