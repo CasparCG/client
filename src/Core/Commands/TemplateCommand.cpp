@@ -25,6 +25,11 @@ bool TemplateCommand::getUseStoredData() const
     return this->useStoredData;
 }
 
+bool TemplateCommand::getSendAsJson() const
+{
+    return this->sendAsJson;
+}
+
 bool TemplateCommand::getUseUppercaseData() const
 {
     return this->useUppercaseData;
@@ -47,19 +52,33 @@ const QString TemplateCommand::getTemplateData() const
     }
     else
     {
-        templateData.append("<templateData>");
-        foreach (KeyValueModel model, this->models)
+        if (this->sendAsJson)
         {
-            QString componentData = TemplateData::DEFAULT_COMPONENT_DATA_XML;
-            componentData.replace("#KEY", model.getKey());
-
-            QString value = model.getValue();
-            value = Xml::encode(value).replace("\\", "\\\\");
-            componentData.replace("#VALUE", (this->useUppercaseData == true) ? value.toUpper() : value);
-
-            templateData.append(componentData);
+            templateData.append("[{");
+            foreach (KeyValueModel model, this->models)
+            {
+                templateData.append(QString("\"%1\":\"%2\",").arg(model.getKey())
+                                                            .arg((this->useUppercaseData == true) ? model.getValue().toUpper() : model.getValue()));
+            }
+            templateData.chop(1);
+            templateData.append("}]");
         }
-        templateData.append("</templateData>");
+        else
+        {
+            templateData.append("<templateData>");
+            foreach (KeyValueModel model, this->models)
+            {
+                QString componentData = TemplateData::DEFAULT_COMPONENT_DATA_XML;
+                componentData.replace("#KEY", model.getKey());
+
+                QString value = model.getValue();
+                value = Xml::encode(value).replace("\\", "\\\\");
+                componentData.replace("#VALUE", (this->useUppercaseData == true) ? value.toUpper() : value);
+
+                templateData.append(componentData);
+            }
+            templateData.append("</templateData>");
+        }
     }
 
     return templateData;
@@ -91,6 +110,12 @@ void TemplateCommand::setUseStoredData(bool useStoredData)
 {
     this->useStoredData = useStoredData;
     emit useStoredDataChanged(this->useStoredData);
+}
+
+void TemplateCommand::setSendAsJson(bool sendAsJson)
+{
+    this->sendAsJson = sendAsJson;
+    emit sendAsJsonChanged(this->sendAsJson);
 }
 
 void TemplateCommand::setUseUppercaseData(bool useUppercaseData)
@@ -126,6 +151,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     setUseStoredData(pt.get(L"usestoreddata", Template::DEFAULT_USE_STORED_DATA));
     setUseUppercaseData(pt.get(L"useuppercasedata", Template::DEFAULT_USE_UPPERCASE_DATA));
     setTriggerOnNext(pt.get(L"triggeronnext", Template::DEFAULT_TRIGGER_ON_NEXT));
+    setSendAsJson(pt.get(L"sendasjson", Template::DEFAULT_SEND_AS_JSON));
 
     if (pt.count(L"templatedata") > 0)
     {
@@ -146,6 +172,8 @@ void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");
     writer->writeTextElement("useuppercasedata", (getUseUppercaseData() == true) ? "true" : "false");
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer->writeTextElement("sendasjson", (getSendAsJson() == true) ? "true" : "false");
+
 
     if (this->models.count() > 0)
     {

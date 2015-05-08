@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>264</width>
-    <height>478</height>
+    <height>540</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -262,6 +262,59 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutSendAsJson">
+     <item>
+      <spacer name="horizontalSpacerSendAsJson2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>33</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSendAsJson">
+       <property name="text">
+        <string>Send as JSON</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxSendAsJson">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerSendAsJsonxt2_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayoutData">
@@ -441,7 +494,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>202</y>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -457,7 +510,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>44</x>
-     <y>230</y>
+     <y>276</y>
     </hint>
     <hint type="destinationlabel">
      <x>211</x>
@@ -488,8 +541,8 @@
    <slot>useStoredDataChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>81</y>
+     <x>171</x>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel">
      <x>236</x>
@@ -536,8 +589,8 @@
    <slot>useUppercaseDataChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>102</y>
+     <x>177</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>263</x>
@@ -552,12 +605,28 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>131</y>
+     <x>169</x>
+     <y>158</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
      <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxSendAsJson</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorTemplateWidget</receiver>
+   <slot>sendAsJsonChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -572,5 +641,6 @@
   <slot>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
   <slot>useUppercaseDataChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>sendAsJsonChanged(int)</slot>
  </slots>
 </ui>

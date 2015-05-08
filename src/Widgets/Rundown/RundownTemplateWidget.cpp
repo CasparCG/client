@@ -176,6 +176,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
     command->setUseStoredData(this->command.getUseStoredData());
     command->setUseUppercaseData(this->command.getUseUppercaseData());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setSendAsJson(this->command.getSendAsJson());
 
     return widget;
 }
