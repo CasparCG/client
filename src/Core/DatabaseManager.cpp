@@ -1678,12 +1678,12 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
         int typeId;
         for (int i = 0; i < insertModels.count(); i++)
         {
-            if (insertModels.at(i).getType() == "AUDIO")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("AUDIO"))->getId();
-            else if (insertModels.at(i).getType() == "MOVIE")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("MOVIE"))->getId();
-            else if (insertModels.at(i).getType() == "STILL")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("STILL"))->getId();
+            if (insertModels.at(i).getType() == Rundown::AUDIO)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::AUDIO))->getId();
+            else if (insertModels.at(i).getType() == Rundown::MOVIE)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::MOVIE))->getId();
+            else if (insertModels.at(i).getType() == Rundown::STILL)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::STILL))->getId();
 
             sql.prepare("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId, Timecode) "
                         "VALUES(:Name, :DeviceId, :TypeId, :ThumbnailId, :Timecode)");
@@ -1707,7 +1707,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
 
     int deviceId = getDeviceByAddress(address).getId();
     QList<TypeModel> typeModels = getType();
-    int typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("TEMPLATE"))->getId();
+    int typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::TEMPLATE))->getId();
 
     QSqlDatabase::database().transaction();
 
@@ -1893,9 +1893,10 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                 if (!sql.exec())
                    qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
+                int lastInsertId = sql.lastInsertId().toInt();
                 sql.prepare("UPDATE Library SET ThumbnailId = :ThumbnailId "
                             "WHERE Id = :Id");
-                sql.bindValue(":ThumbnailId", sql.lastInsertId().toInt());
+                sql.bindValue(":ThumbnailId", lastInsertId);
                 sql.bindValue(":Id", libraryModel.getId());
 
                 if (!sql.exec())
