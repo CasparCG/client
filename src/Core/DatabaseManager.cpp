@@ -31,16 +31,6 @@ void DatabaseManager::initialize()
         createDatabase();
     else
         upgradeDatabase();
-
-    QSqlQuery sql;
-    if (!sql.exec("PRAGMA page_size = 4096"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
-
-    if (!sql.exec("PRAGMA cache_size = 16384"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
-
-    if (!sql.exec("PRAGMA temp_store = MEMORY"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 }
 
 void DatabaseManager::createDatabase()
