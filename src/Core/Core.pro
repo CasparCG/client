@@ -374,6 +374,13 @@ SOURCES += \
     Events/Rundown/CurrentItemChangedEvent.cpp \
     Commands/Atem/AtemMacroCommand.cpp
 
+DISTFILES += \
+    Sql/ChangeScript-208.sql \
+    Sql/Schema.sql
+
+RESOURCES += \
+    Core.qrc
+
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
@@ -442,10 +449,3 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Common/release/ -lco
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Common/debug/ -lcommon
 else:macx:LIBS += -L$$OUT_PWD/../Common/ -lcommon
 else:unix:LIBS += -L$$OUT_PWD/../Common/ -lcommon
-
-DISTFILES += \
-    Sql/ChangeScript-208.sql \
-    Sql/Schema.sql
-
-RESOURCES += \
-    Core.qrc

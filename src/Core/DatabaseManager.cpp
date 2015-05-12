@@ -64,7 +64,7 @@ void DatabaseManager::createDatabase()
 #endif
 
         if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
     }
 }
 
@@ -72,7 +72,7 @@ void DatabaseManager::upgradeDatabase()
 {
     QSqlQuery sql;
     if (!sql.exec("PRAGMA user_version"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
+       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
 
     sql.first();
 
