@@ -49,22 +49,22 @@ void DatabaseManager::createDatabase()
                  continue;
 
              if (!sql.exec(query))
-                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
         }
 
 #if defined(Q_OS_WIN)
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
         if (!sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel, LockedChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 #else
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 #endif
 
         if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
     }
 }
 
@@ -72,7 +72,7 @@ void DatabaseManager::upgradeDatabase()
 {
     QSqlQuery sql;
     if (!sql.exec("PRAGMA user_version"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+       qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     sql.first();
 
@@ -93,14 +93,14 @@ void DatabaseManager::upgradeDatabase()
                      continue;
 
                  if (!sql.exec(query))
-                    qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                    qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
             }
 
             sql.prepare("PRAGMA user_version = :Version");
             sql.bindValue(":Version", version + 1);
 
             if (!sql.exec())
-                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
             qDebug("Successfully upgraded to ChangeScript-%d", version + 1);
         }
