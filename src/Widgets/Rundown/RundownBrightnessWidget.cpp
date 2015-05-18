@@ -72,7 +72,7 @@ void RundownBrightnessWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -81,7 +81,7 @@ void RundownBrightnessWidget::preview(const PreviewEvent& event)
 void RundownBrightnessWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -92,7 +92,7 @@ void RundownBrightnessWidget::labelChanged(const LabelChangedEvent& event)
 void RundownBrightnessWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -184,6 +184,11 @@ AbstractCommand* RundownBrightnessWidget::getCommand()
 LibraryModel* RundownBrightnessWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownBrightnessWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownBrightnessWidget::setActive(bool active)

@@ -64,7 +64,7 @@ bool RundownHttpGetWidget::eventFilter(QObject* object, QEvent* event)
 void RundownHttpGetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -138,6 +138,11 @@ AbstractCommand* RundownHttpGetWidget::getCommand()
 LibraryModel* RundownHttpGetWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownHttpGetWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownHttpGetWidget::setActive(bool active)

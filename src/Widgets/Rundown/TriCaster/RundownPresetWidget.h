@@ -38,27 +38,23 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
 
         virtual bool isGroup() const;
         virtual bool isInGroup() const;
+        virtual bool executeCommand(Playout::PlayoutType type);
 
         virtual AbstractCommand* getCommand();
         virtual LibraryModel* getLibraryModel();
 
-        virtual void setActive(bool active);
-        virtual void setInGroup(bool inGroup);
-        virtual void setColor(const QString& color);
         virtual QString getColor() const;
 
         virtual void setExpanded(bool /* expanded */) {}
-
-        virtual bool executeCommand(Playout::PlayoutType type);
-
+        virtual void setActive(bool active);
+        virtual void setInGroup(bool inGroup);
+        virtual void setColor(const QString& color);
         virtual void readProperties(boost::property_tree::wptree& pt);
         virtual void writeProperties(QXmlStreamWriter* writer);
-
         virtual void setCompactView(bool compactView);
-
         virtual void clearDelayedCommands();
-
         virtual void setUsed(bool used);
+        virtual void setSelected(bool selected);
 
     private:
         bool active;
@@ -69,6 +65,7 @@ class WIDGETS_EXPORT RundownPresetWidget : public QWidget, Ui::RundownPresetWidg
         PresetCommand command;
         ActiveAnimation* animation;
         bool markUsedItems;
+        bool selected = false;
 
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;

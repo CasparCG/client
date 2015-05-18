@@ -72,7 +72,7 @@ void RundownLevelsWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -81,7 +81,7 @@ void RundownLevelsWidget::preview(const PreviewEvent& event)
 void RundownLevelsWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -92,7 +92,7 @@ void RundownLevelsWidget::labelChanged(const LabelChangedEvent& event)
 void RundownLevelsWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -188,6 +188,11 @@ AbstractCommand* RundownLevelsWidget::getCommand()
 LibraryModel* RundownLevelsWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownLevelsWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownLevelsWidget::setActive(bool active)

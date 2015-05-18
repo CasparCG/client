@@ -74,7 +74,7 @@ void RundownGridWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -83,7 +83,7 @@ void RundownGridWidget::preview(const PreviewEvent& event)
 void RundownGridWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -94,7 +94,7 @@ void RundownGridWidget::labelChanged(const LabelChangedEvent& event)
 void RundownGridWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -186,6 +186,11 @@ AbstractCommand* RundownGridWidget::getCommand()
 LibraryModel* RundownGridWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownGridWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownGridWidget::setActive(bool active)

@@ -57,7 +57,7 @@ RundownSpyderPresetWidget::RundownSpyderPresetWidget(const LibraryModel& model, 
 void RundownSpyderPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -131,6 +131,11 @@ AbstractCommand* RundownSpyderPresetWidget::getCommand()
 LibraryModel* RundownSpyderPresetWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownSpyderPresetWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownSpyderPresetWidget::setActive(bool active)

@@ -70,7 +70,7 @@ RundownRouteVideolayerWidget::RundownRouteVideolayerWidget(const LibraryModel& m
 void RundownRouteVideolayerWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -81,7 +81,7 @@ void RundownRouteVideolayerWidget::labelChanged(const LabelChangedEvent& event)
 void RundownRouteVideolayerWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -172,6 +172,11 @@ AbstractCommand* RundownRouteVideolayerWidget::getCommand()
 LibraryModel* RundownRouteVideolayerWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownRouteVideolayerWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownRouteVideolayerWidget::setActive(bool active)

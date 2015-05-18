@@ -68,7 +68,7 @@ RundownCommitWidget::RundownCommitWidget(const LibraryModel& model, QWidget* par
 void RundownCommitWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -79,7 +79,7 @@ void RundownCommitWidget::labelChanged(const LabelChangedEvent& event)
 void RundownCommitWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -167,6 +167,11 @@ AbstractCommand* RundownCommitWidget::getCommand()
 LibraryModel* RundownCommitWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownCommitWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownCommitWidget::setActive(bool active)

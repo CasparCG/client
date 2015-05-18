@@ -71,7 +71,7 @@ RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QW
 void RundownFadeToBlackWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -82,7 +82,7 @@ void RundownFadeToBlackWidget::labelChanged(const LabelChangedEvent& event)
 void RundownFadeToBlackWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -177,6 +177,11 @@ AbstractCommand* RundownFadeToBlackWidget::getCommand()
 LibraryModel* RundownFadeToBlackWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownFadeToBlackWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownFadeToBlackWidget::setActive(bool active)
