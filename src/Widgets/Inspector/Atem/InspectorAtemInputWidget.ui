@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>187</width>
-    <height>140</height>
+    <width>219</width>
+    <height>162</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -208,8 +208,8 @@
    <slot>inputChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>57</y>
+     <x>208</x>
+     <y>106</y>
     </hint>
     <hint type="destinationlabel">
      <x>177</x>
@@ -224,8 +224,8 @@
    <slot>switcherChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>142</x>
-     <y>18</y>
+     <x>208</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -240,12 +240,28 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>70</y>
+     <x>147</x>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>189</x>
      <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxMixerStep</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAtemInputWidget</receiver>
+   <slot>mixerStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>17</y>
     </hint>
    </hints>
   </connection>
@@ -254,5 +270,6 @@
   <slot>inputChanged(int)</slot>
   <slot>switcherChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>mixerStepChanged(int)</slot>
  </slots>
 </ui>

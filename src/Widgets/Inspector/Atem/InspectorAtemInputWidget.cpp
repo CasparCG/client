@@ -36,8 +36,7 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
         const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
         if (device != NULL)
         {
-            if (this->inputs.isEmpty())
-                this->inputs = device->inputInfos();
+            this->inputs = device->inputInfos();
 
             loadAtemSwitcher();
             loadAtemInput();
@@ -60,10 +59,13 @@ void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            this->inputs = device->inputInfos();
+            if (device != NULL)
+            {
+                this->inputs = device->inputInfos();
 
-            loadAtemSwitcher();
-            loadAtemInput();
+                loadAtemSwitcher();
+                loadAtemInput();
+            }
         }
     }
 }
