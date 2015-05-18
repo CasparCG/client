@@ -68,7 +68,7 @@ void RundownTakeWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -77,7 +77,7 @@ void RundownTakeWidget::preview(const PreviewEvent& event)
 void RundownTakeWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -88,7 +88,7 @@ void RundownTakeWidget::labelChanged(const LabelChangedEvent& event)
 void RundownTakeWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -178,6 +178,11 @@ AbstractCommand* RundownTakeWidget::getCommand()
 LibraryModel* RundownTakeWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownTakeWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownTakeWidget::setActive(bool active)

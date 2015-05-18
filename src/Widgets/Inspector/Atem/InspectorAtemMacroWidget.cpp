@@ -53,9 +53,12 @@ void InspectorAtemMacroWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
         if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
         {
             const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
-            this->macros = device->macroInfos();
+            if (device != NULL)
+            {
+                this->macros = device->macroInfos();
 
-            loadAtemMacro();
+                loadAtemMacro();
+            }
         }
     }
 }

@@ -120,6 +120,7 @@ class CORE_EXPORT DatabaseManager
         TypeModel getTypeByValue(const QString& value);
 
         QList<DeviceModel> getDevice();
+        DeviceModel getDeviceById(int deviceId);
         DeviceModel getDeviceByName(const QString& name);
         DeviceModel getDeviceByAddress(const QString& address);
         void insertDevice(const DeviceModel& model);

@@ -68,7 +68,7 @@ void RundownAtemAudioGainWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -77,7 +77,7 @@ void RundownAtemAudioGainWidget::preview(const PreviewEvent& event)
 void RundownAtemAudioGainWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -88,7 +88,7 @@ void RundownAtemAudioGainWidget::labelChanged(const LabelChangedEvent& event)
 void RundownAtemAudioGainWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -179,6 +179,11 @@ AbstractCommand* RundownAtemAudioGainWidget::getCommand()
 LibraryModel* RundownAtemAudioGainWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownAtemAudioGainWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownAtemAudioGainWidget::setActive(bool active)

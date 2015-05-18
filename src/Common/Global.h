@@ -45,7 +45,6 @@ namespace Sony
 namespace Spyder
 {
     static const QString DEFAULT_ADDRESS = "";
-    static const QString DEFAULT_PORT = "";
     static const int DEFAULT_PRESET = 1;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
@@ -351,6 +350,7 @@ namespace Template
     static const bool DEFAULT_USE_STORED_DATA = false;
     static const bool DEFAULT_USE_UPPERCASE_DATA = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
+    static const bool DEFAULT_SEND_AS_JSON = false;
 }
 
 namespace DeckLinkInput

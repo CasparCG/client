@@ -68,7 +68,7 @@ void RundownAutoWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -77,7 +77,7 @@ void RundownAutoWidget::preview(const PreviewEvent& event)
 void RundownAutoWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -88,7 +88,7 @@ void RundownAutoWidget::labelChanged(const LabelChangedEvent& event)
 void RundownAutoWidget::tricasterDeviceChanged(const TriCasterDeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -180,6 +180,11 @@ AbstractCommand* RundownAutoWidget::getCommand()
 LibraryModel* RundownAutoWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownAutoWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownAutoWidget::setActive(bool active)

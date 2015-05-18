@@ -75,7 +75,7 @@ RundownStillWidget::RundownStillWidget(const LibraryModel& model, QWidget* paren
 void RundownStillWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -85,7 +85,7 @@ void RundownStillWidget::labelChanged(const LabelChangedEvent& event)
 void RundownStillWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setName(event.getTarget());
@@ -97,7 +97,7 @@ void RundownStillWidget::targetChanged(const TargetChangedEvent& event)
 void RundownStillWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -214,6 +214,11 @@ void RundownStillWidget::setThumbnail()
     bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
     if (displayThumbnailTooltip)
         this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
+}
+
+void RundownStillWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownStillWidget::setActive(bool active)

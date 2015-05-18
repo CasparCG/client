@@ -69,7 +69,7 @@ RundownKeyerWidget::RundownKeyerWidget(const LibraryModel& model, QWidget* paren
 void RundownKeyerWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -80,7 +80,7 @@ void RundownKeyerWidget::labelChanged(const LabelChangedEvent& event)
 void RundownKeyerWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -168,6 +168,11 @@ AbstractCommand* RundownKeyerWidget::getCommand()
 LibraryModel* RundownKeyerWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownKeyerWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownKeyerWidget::setActive(bool active)

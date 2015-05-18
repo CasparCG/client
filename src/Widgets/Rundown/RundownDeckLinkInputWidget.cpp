@@ -70,7 +70,7 @@ RundownDeckLinkInputWidget::RundownDeckLinkInputWidget(const LibraryModel& model
 void RundownDeckLinkInputWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -81,7 +81,7 @@ void RundownDeckLinkInputWidget::labelChanged(const LabelChangedEvent& event)
 void RundownDeckLinkInputWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -176,6 +176,11 @@ AbstractCommand* RundownDeckLinkInputWidget::getCommand()
 LibraryModel* RundownDeckLinkInputWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownDeckLinkInputWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownDeckLinkInputWidget::setActive(bool active)

@@ -120,6 +120,7 @@ void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent
         this->checkBoxUseStoredData->setChecked(this->command->getUseStoredData());
         this->checkBoxUseUppercaseData->setChecked(this->command->getUseUppercaseData());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxSendAsJson->setChecked(this->command->getSendAsJson());
 
         for (int i = this->treeWidgetTemplateData->invisibleRootItem()->childCount() - 1; i >= 0; i--)
             delete this->treeWidgetTemplateData->invisibleRootItem()->child(i);
@@ -147,6 +148,7 @@ void InspectorTemplateWidget::blockAllSignals(bool block)
     this->checkBoxUseStoredData->blockSignals(block);
     this->checkBoxUseUppercaseData->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxSendAsJson->blockSignals(block);
     this->treeWidgetTemplateData->blockSignals(block);
 }
 
@@ -280,6 +282,11 @@ void InspectorTemplateWidget::flashlayerChanged(int flashlayer)
 void InspectorTemplateWidget::useStoredDataChanged(int state)
 {
     this->command->setUseStoredData((state == Qt::Checked) ? true : false);
+}
+
+void InspectorTemplateWidget::sendAsJsonChanged(int state)
+{
+    this->command->setSendAsJson((state == Qt::Checked) ? true : false);
 }
 
 void InspectorTemplateWidget::useUppercaseDataChanged(int state)

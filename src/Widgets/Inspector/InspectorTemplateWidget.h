@@ -44,6 +44,7 @@ class WIDGETS_EXPORT InspectorTemplateWidget : public QWidget, Ui::InspectorTemp
         Q_SLOT void invokeChanged(QString);
         Q_SLOT void flashlayerChanged(int);
         Q_SLOT void useStoredDataChanged(int);
+        Q_SLOT void sendAsJsonChanged(int);
         Q_SLOT void useUppercaseDataChanged(int);
         Q_SLOT void currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*);
         Q_SLOT void itemDoubleClicked(QTreeWidgetItem*, int);

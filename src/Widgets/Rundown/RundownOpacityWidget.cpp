@@ -72,7 +72,7 @@ void RundownOpacityWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -81,7 +81,7 @@ void RundownOpacityWidget::preview(const PreviewEvent& event)
 void RundownOpacityWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -92,7 +92,7 @@ void RundownOpacityWidget::labelChanged(const LabelChangedEvent& event)
 void RundownOpacityWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -185,6 +185,11 @@ AbstractCommand* RundownOpacityWidget::getCommand()
 LibraryModel* RundownOpacityWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownOpacityWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownOpacityWidget::setActive(bool active)

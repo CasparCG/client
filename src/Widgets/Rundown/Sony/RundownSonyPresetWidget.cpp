@@ -57,7 +57,7 @@ RundownSonyPresetWidget::RundownSonyPresetWidget(const LibraryModel& model, QWid
 void RundownSonyPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -131,6 +131,11 @@ AbstractCommand* RundownSonyPresetWidget::getCommand()
 LibraryModel* RundownSonyPresetWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownSonyPresetWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownSonyPresetWidget::setActive(bool active)

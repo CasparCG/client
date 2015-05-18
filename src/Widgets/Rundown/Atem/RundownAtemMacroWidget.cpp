@@ -68,7 +68,7 @@ void RundownAtemMacroWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -77,7 +77,7 @@ void RundownAtemMacroWidget::preview(const PreviewEvent& event)
 void RundownAtemMacroWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -89,7 +89,7 @@ void RundownAtemMacroWidget::atemDeviceChanged(const AtemDeviceChangedEvent& eve
 {
     QString s = this->labelActiveColor->styleSheet();
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -179,6 +179,11 @@ AbstractCommand* RundownAtemMacroWidget::getCommand()
 LibraryModel* RundownAtemMacroWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownAtemMacroWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownAtemMacroWidget::setActive(bool active)

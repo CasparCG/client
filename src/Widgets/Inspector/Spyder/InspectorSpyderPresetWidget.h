@@ -18,11 +18,9 @@ class WIDGETS_EXPORT InspectorSpyderPresetWidget : public QWidget, Ui::Inspector
         SpyderPresetCommand* command;
 
         void checkEmptyAddress();
-        void checkEmptyPort();
         void blockAllSignals(bool block);
 
         Q_SLOT void addressChanged(QString);
-        Q_SLOT void portChanged(QString);
         Q_SLOT void presetChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);

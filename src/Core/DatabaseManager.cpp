@@ -49,22 +49,22 @@ void DatabaseManager::createDatabase()
                  continue;
 
              if (!sql.exec(query))
-                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
         }
 
 #if defined(Q_OS_WIN)
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '11')"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
         if (!sql.exec("INSERT INTO Device (Name, Address, Port, Username, Password, Description, Version, Shadow, Channels, ChannelFormats, PreviewChannel, LockedChannel) VALUES('Local CasparCG', '127.0.0.1', 5250, '', '', '', '', 'No', 0, '', 0, 0)"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 #else
         if (!sql.exec("INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12')"))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 #endif
 
         if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
-            qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
+            qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
     }
 }
 
@@ -72,7 +72,7 @@ void DatabaseManager::upgradeDatabase()
 {
     QSqlQuery sql;
     if (!sql.exec("PRAGMA user_version"))
-       qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %1").arg(sql.lastQuery()).arg(sql.lastError().text())));
+       qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     sql.first();
 
@@ -93,14 +93,14 @@ void DatabaseManager::upgradeDatabase()
                      continue;
 
                  if (!sql.exec(query))
-                    qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                    qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
             }
 
             sql.prepare("PRAGMA user_version = :Version");
             sql.bindValue(":Version", version + 1);
 
             if (!sql.exec())
-                qFatal(qPrintable(QString("Failed to execute sql query: %1, Error: %2").arg(sql.lastQuery()).arg(sql.lastError().text())));
+                qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
             qDebug("Successfully upgraded to ChangeScript-%d", version + 1);
         }
@@ -1115,6 +1115,26 @@ QList<DeviceModel> DatabaseManager::getDevice()
     return models;
 }
 
+
+DeviceModel DatabaseManager::getDeviceById(int deviceId)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+    sql.prepare("SELECT d.Id, d.Name, d.Address, d.Port, d.Username, d.Password, d.Description, d.Version, d.Shadow, d.Channels, d.ChannelFormats, d.PreviewChannel, d.LockedChannel FROM Device d "
+                "WHERE d.Id = :Id");
+    sql.bindValue(":Id", deviceId);
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    sql.first();
+
+    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
+                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(6).toString(),
+                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
+}
+
 DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 {
     QMutexLocker locker(&mutex);
@@ -1678,12 +1698,12 @@ void DatabaseManager::updateLibraryMedia(const QString& address, const QList<Lib
         int typeId;
         for (int i = 0; i < insertModels.count(); i++)
         {
-            if (insertModels.at(i).getType() == "AUDIO")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("AUDIO"))->getId();
-            else if (insertModels.at(i).getType() == "MOVIE")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("MOVIE"))->getId();
-            else if (insertModels.at(i).getType() == "STILL")
-                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("STILL"))->getId();
+            if (insertModels.at(i).getType() == Rundown::AUDIO)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::AUDIO))->getId();
+            else if (insertModels.at(i).getType() == Rundown::MOVIE)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::MOVIE))->getId();
+            else if (insertModels.at(i).getType() == Rundown::STILL)
+                typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::STILL))->getId();
 
             sql.prepare("INSERT INTO Library (Name, DeviceId, TypeId, ThumbnailId, Timecode) "
                         "VALUES(:Name, :DeviceId, :TypeId, :ThumbnailId, :Timecode)");
@@ -1707,7 +1727,7 @@ void DatabaseManager::updateLibraryTemplate(const QString& address, const QList<
 
     int deviceId = getDeviceByAddress(address).getId();
     QList<TypeModel> typeModels = getType();
-    int typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName("TEMPLATE"))->getId();
+    int typeId = std::find_if(typeModels.begin(), typeModels.end(), TypeModel::ByName(Rundown::TEMPLATE))->getId();
 
     QSqlDatabase::database().transaction();
 
@@ -1893,9 +1913,10 @@ void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
                 if (!sql.exec())
                    qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
+                int lastInsertId = sql.lastInsertId().toInt();
                 sql.prepare("UPDATE Library SET ThumbnailId = :ThumbnailId "
                             "WHERE Id = :Id");
-                sql.bindValue(":ThumbnailId", sql.lastInsertId().toInt());
+                sql.bindValue(":ThumbnailId", lastInsertId);
                 sql.bindValue(":Id", libraryModel.getId());
 
                 if (!sql.exec())

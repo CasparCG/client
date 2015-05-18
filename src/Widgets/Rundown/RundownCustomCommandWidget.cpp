@@ -66,7 +66,7 @@ RundownCustomCommandWidget::RundownCustomCommandWidget(const LibraryModel& model
 void RundownCustomCommandWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -77,7 +77,7 @@ void RundownCustomCommandWidget::labelChanged(const LabelChangedEvent& event)
 void RundownCustomCommandWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -177,6 +177,11 @@ AbstractCommand* RundownCustomCommandWidget::getCommand()
 LibraryModel* RundownCustomCommandWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownCustomCommandWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownCustomCommandWidget::setActive(bool active)

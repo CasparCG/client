@@ -57,7 +57,7 @@ RundownOscOutputWidget::RundownOscOutputWidget(const LibraryModel& model, QWidge
 void RundownOscOutputWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -134,6 +134,11 @@ AbstractCommand* RundownOscOutputWidget::getCommand()
 LibraryModel* RundownOscOutputWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownOscOutputWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownOscOutputWidget::setActive(bool active)

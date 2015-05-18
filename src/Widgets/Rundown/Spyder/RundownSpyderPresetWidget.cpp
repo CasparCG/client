@@ -57,7 +57,7 @@ RundownSpyderPresetWidget::RundownSpyderPresetWidget(const LibraryModel& model, 
 void RundownSpyderPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -79,7 +79,6 @@ AbstractRundownWidget* RundownSpyderPresetWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setAddress(this->command.getAddress());
-    command->setPort(this->command.getPort());
     command->setPreset(this->command.getPreset());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
 
@@ -132,6 +131,11 @@ AbstractCommand* RundownSpyderPresetWidget::getCommand()
 LibraryModel* RundownSpyderPresetWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownSpyderPresetWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownSpyderPresetWidget::setActive(bool active)
@@ -193,7 +197,7 @@ bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        if (!this->command.getAddress().isEmpty() && !this->command.getPort().isEmpty())
+        if (!this->command.getAddress().isEmpty())
         {
             this->executeTimer.setInterval(this->command.getDelay());
             this->executeTimer.start();
@@ -223,7 +227,7 @@ void RundownSpyderPresetWidget::executeStop()
 
 void RundownSpyderPresetWidget::executePlay()
 {
-    this->device->selectPreset(this->command.getPreset(), this->command.getAddress(), this->command.getPort().toInt());
+    this->device->selectPreset(this->command.getPreset(), this->command.getAddress());
 
     if (this->markUsedItems)
         setUsed(true);

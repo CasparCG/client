@@ -57,7 +57,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 void RundownGroupWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -151,6 +151,11 @@ void RundownGroupWidget::setColor(const QString& color)
 {
     this->color = color;
     this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
+}
+
+void RundownGroupWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownGroupWidget::setActive(bool active)

@@ -88,7 +88,7 @@ bool RundownTemplateWidget::eventFilter(QObject* object, QEvent* event)
 void RundownTemplateWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -99,7 +99,7 @@ void RundownTemplateWidget::labelChanged(const LabelChangedEvent& event)
 void RundownTemplateWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setName(event.getTarget());
@@ -109,7 +109,7 @@ void RundownTemplateWidget::targetChanged(const TargetChangedEvent& event)
 void RundownTemplateWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -136,7 +136,7 @@ void RundownTemplateWidget::deviceChanged(const DeviceChangedEvent& event)
 
 void RundownTemplateWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     if (event->mimeData()->hasFormat("application/library-dataitem"))
@@ -176,6 +176,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
     command->setUseStoredData(this->command.getUseStoredData());
     command->setUseUppercaseData(this->command.getUseUppercaseData());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setSendAsJson(this->command.getSendAsJson());
 
     return widget;
 }
@@ -226,6 +227,11 @@ AbstractCommand* RundownTemplateWidget::getCommand()
 LibraryModel* RundownTemplateWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownTemplateWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownTemplateWidget::setActive(bool active)

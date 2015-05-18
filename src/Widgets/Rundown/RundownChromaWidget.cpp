@@ -72,7 +72,7 @@ void RundownChromaWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -81,7 +81,7 @@ void RundownChromaWidget::preview(const PreviewEvent& event)
 void RundownChromaWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -92,7 +92,7 @@ void RundownChromaWidget::labelChanged(const LabelChangedEvent& event)
 void RundownChromaWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -186,6 +186,11 @@ AbstractCommand* RundownChromaWidget::getCommand()
 LibraryModel* RundownChromaWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownChromaWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownChromaWidget::setActive(bool active)

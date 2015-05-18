@@ -72,7 +72,7 @@ void RundownSaturationWidget::preview(const PreviewEvent& event)
     Q_UNUSED(event);
 
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     executePlay();
@@ -81,7 +81,7 @@ void RundownSaturationWidget::preview(const PreviewEvent& event)
 void RundownSaturationWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -92,7 +92,7 @@ void RundownSaturationWidget::labelChanged(const LabelChangedEvent& event)
 void RundownSaturationWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -184,6 +184,11 @@ AbstractCommand* RundownSaturationWidget::getCommand()
 LibraryModel* RundownSaturationWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownSaturationWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownSaturationWidget::setActive(bool active)

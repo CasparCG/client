@@ -56,7 +56,7 @@ RundownPanasonicPresetWidget::RundownPanasonicPresetWidget(const LibraryModel& m
 void RundownPanasonicPresetWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -130,6 +130,11 @@ AbstractCommand* RundownPanasonicPresetWidget::getCommand()
 LibraryModel* RundownPanasonicPresetWidget::getLibraryModel()
 {
     return &this->model;
+}
+
+void RundownPanasonicPresetWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownPanasonicPresetWidget::setActive(bool active)

@@ -75,7 +75,7 @@ RundownImageScrollerWidget::RundownImageScrollerWidget(const LibraryModel& model
 void RundownImageScrollerWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -86,7 +86,7 @@ void RundownImageScrollerWidget::labelChanged(const LabelChangedEvent& event)
 void RundownImageScrollerWidget::targetChanged(const TargetChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setName(event.getTarget());
@@ -98,7 +98,7 @@ void RundownImageScrollerWidget::targetChanged(const TargetChangedEvent& event)
 void RundownImageScrollerWidget::deviceChanged(const DeviceChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     // Should we update the device name?
@@ -219,6 +219,11 @@ void RundownImageScrollerWidget::setThumbnail()
     bool displayThumbnailTooltip = (DatabaseManager::getInstance().getConfigurationByName("ShowThumbnailTooltip").getValue() == "true") ? true : false;
     if (displayThumbnailTooltip)
         this->labelThumbnail->setToolTip(QString("<img src=\"data:image/png;base64,%1 \"/>").arg(data));
+}
+
+void RundownImageScrollerWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownImageScrollerWidget::setActive(bool active)

@@ -25,23 +25,19 @@ class CORE_EXPORT SpyderPresetCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter* writer);
 
         const QString& getAddress() const;
-        const QString& getPort() const;
         int getPreset() const;
         bool getTriggerOnNext() const;
 
         void setAddress(const QString& address);
-        void setPort(const QString& port);
         void setPreset(int preset);
         void setTriggerOnNext(bool triggerOnNext);
 
     private:
         QString address = Spyder::DEFAULT_ADDRESS;
-        QString port = Spyder::DEFAULT_PORT;
         int preset = Spyder::DEFAULT_PRESET;
         bool triggerOnNext = Spyder::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void addressChanged(const QString&);
-        Q_SIGNAL void portChanged(const QString&);
         Q_SIGNAL void presetChanged(int);
         Q_SIGNAL void triggerOnNextChanged(bool);
 };

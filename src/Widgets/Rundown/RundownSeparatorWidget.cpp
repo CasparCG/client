@@ -36,7 +36,7 @@ RundownSeparatorWidget::RundownSeparatorWidget(const LibraryModel& model, QWidge
 void RundownSeparatorWidget::labelChanged(const LabelChangedEvent& event)
 {
     // This event is not for us.
-    if (!this->active || !this->labelActiveColor->styleSheet().contains(Color::DEFAULT_ACTIVE_COLOR))
+    if (!this->selected)
         return;
 
     this->model.setLabel(event.getLabel());
@@ -105,6 +105,11 @@ void RundownSeparatorWidget::setColor(const QString& color)
         this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(Color::DEFAULT_SEPARATOR_COLOR));
     else
         this->setStyleSheet(QString("#frameItem, #frameStatus { background-color: %1; }").arg(color));
+}
+
+void RundownSeparatorWidget::setSelected(bool selected)
+{
+    this->selected = selected;
 }
 
 void RundownSeparatorWidget::setActive(bool active)

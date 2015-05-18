@@ -564,6 +564,7 @@ void RundownTreeWidget::setActive(bool active)
     if (currentItem != NULL && currentItemWidget != NULL)
     {
         dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setActive(this->active);
+        dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->setSelected(this->active);
 
         AbstractCommand* command = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getCommand();
         LibraryModel* model = dynamic_cast<AbstractRundownWidget*>(currentItemWidget)->getLibraryModel();
@@ -1033,11 +1034,21 @@ void RundownTreeWidget::currentItemChanged(QTreeWidgetItem* current, QTreeWidget
     QWidget* currentWidget = this->treeWidgetRundown->itemWidget(current, 0);
     QWidget* previousWidget = this->treeWidgetRundown->itemWidget(previous, 0);
 
-    if (previous != NULL && previousWidget != NULL && previous != this->currentPlayingItem && previous != this->currentPlayingAutoStepItem)
-        dynamic_cast<AbstractRundownWidget*>(previousWidget)->setActive(false);
+    if (previous != NULL && previousWidget != NULL)
+    {
+        dynamic_cast<AbstractRundownWidget*>(previousWidget)->setSelected(false);
 
-    if (current != NULL && currentWidget != NULL && current != this->currentPlayingItem && current != this->currentPlayingAutoStepItem)
-        dynamic_cast<AbstractRundownWidget*>(currentWidget)->setActive(true);
+        if (previous != this->currentPlayingItem && previous != this->currentPlayingAutoStepItem)
+            dynamic_cast<AbstractRundownWidget*>(previousWidget)->setActive(false);
+    }
+
+    if (current != NULL && currentWidget != NULL)
+    {
+        dynamic_cast<AbstractRundownWidget*>(currentWidget)->setSelected(true);
+
+        if (current != this->currentPlayingItem && current != this->currentPlayingAutoStepItem)
+            dynamic_cast<AbstractRundownWidget*>(currentWidget)->setActive(true);
+    }
 
     QTreeWidgetItem* currentItem = this->treeWidgetRundown->currentItem();
     QWidget* currentItemWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);

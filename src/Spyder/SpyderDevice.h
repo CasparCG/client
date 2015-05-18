@@ -12,7 +12,7 @@ class SPYDER_EXPORT SpyderDevice : public QObject
     public:
         explicit SpyderDevice(QObject* parent = 0);
 
-        void selectPreset(int preset, const QString& address, int port);
+        void selectPreset(int preset, const QString& address, int port = 11116);
 
     private:
         int preset;

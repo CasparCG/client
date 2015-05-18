@@ -63,7 +63,7 @@ void PreviewWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 
 void PreviewWidget::setThumbnail()
 {
-    if (this->model->getType() != "STILL" && this->model->getType() != "MOVIE")
+    if (this->model->getType() != Rundown::STILL && this->model->getType() != Rundown::MOVIE)
     {
         this->labelPreview->clear();
         return;
