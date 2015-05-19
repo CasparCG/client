@@ -682,7 +682,7 @@ void DatabaseManager::updateAtemDevice(const AtemDeviceModel& model)
     sql.bindValue(":Name", model.getName());
     sql.bindValue(":Address", model.getAddress());
     sql.bindValue(":Description", model.getDescription());
-    sql.bindValue(":Description", model.getId());
+    sql.bindValue(":Id", model.getId());
 
     if (!sql.exec())
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
