@@ -1381,30 +1381,16 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE :Name AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND l.Name LIKE :Name AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
         sql.bindValue(":Name", QString("%%1%").arg(filter));
-        sql.bindValue(":Address", address);
     }
     else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND (l.TypeId = 1 OR l.TypeId = 3 OR l.TypeId = 4) AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
-        sql.bindValue(":Address", address);
     }
 
     if (!sql.exec())
@@ -1434,30 +1420,16 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE :Name AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND l.Name LIKE :Name AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
         sql.bindValue(":Name", QString("%%1%").arg(filter));
-        sql.bindValue(":Address", address);
     }
     else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 5 AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
-        sql.bindValue(":Address", address);
     }
 
     if (!sql.exec())
@@ -1487,30 +1459,16 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
     }
     else if (!filter.isEmpty() && !devices.isEmpty()) // Filter specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE :Name AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND l.Name LIKE :Name AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
         sql.bindValue(":Name", QString("%%1%").arg(filter));
-        sql.bindValue(":Address", address);
     }
     else if (filter.isEmpty() && !devices.isEmpty()) // All on specific devices.
     {
-        QString address;
-        foreach (QString device, devices)
-            address += QString("d.Address LIKE '%%1%' OR ").arg(device);
-
-        address = address.mid(0, address.length() - 4); // Remove the last OR.
-
         sql.prepare("SELECT l.Id, l.Name, d.Name, t.Value, l.ThumbnailId, l.Timecode FROM Library l, Device d, Type t "
-                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND (:Address) "
+                    "WHERE l.DeviceId = d.Id AND l.TypeId = t.Id AND l.TypeId = 2 AND d.Address IN ('" + QStringList(devices).join("', '") + "') "
                     "ORDER BY l.Name, l.DeviceId");
-        sql.bindValue(":Address", address);
     }
 
     if (!sql.exec())
