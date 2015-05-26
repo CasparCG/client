@@ -28,6 +28,8 @@ void InspectorRouteChannelWidget::rundownItemSelected(const RundownItemSelectedE
 
         this->spinBoxChannel->setValue(this->command->getFromChannel());
     }
+    else
+        this->command = NULL;
 
     blockAllSignals(false);
 }

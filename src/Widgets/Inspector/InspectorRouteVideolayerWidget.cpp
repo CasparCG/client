@@ -29,6 +29,8 @@ void InspectorRouteVideolayerWidget::rundownItemSelected(const RundownItemSelect
         this->spinBoxChannel->setValue(this->command->getFromChannel());
         this->spinBoxVideolayer->setValue(this->command->getFromVideolayer());
     }
+    else
+        this->command = NULL;
 
     blockAllSignals(false);
 }
