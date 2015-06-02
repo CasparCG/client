@@ -54,14 +54,14 @@ const QString TemplateCommand::getTemplateData() const
     {
         if (this->sendAsJson)
         {
-            templateData.append("[{");
+            templateData.append("{");
             foreach (KeyValueModel model, this->models)
             {
-                templateData.append(QString("\"%1\":\"%2\",").arg(model.getKey())
-                                                            .arg((this->useUppercaseData == true) ? model.getValue().toUpper() : model.getValue()));
+                templateData.append(QString("\\\"%1\\\":\\\"%2\\\",").arg(model.getKey())
+                                                                     .arg((this->useUppercaseData == true) ? model.getValue().toUpper() : model.getValue()));
             }
             templateData.chop(1);
-            templateData.append("}]");
+            templateData.append("}");
         }
         else
         {
