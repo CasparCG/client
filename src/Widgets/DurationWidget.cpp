@@ -49,6 +49,8 @@ void DurationWidget::durationChanged(const DurationChangedEvent& event)
 
     this->labelCountdownDuration->setText(Timecode::fromTime(this->time));
 
+    qDebug("DurationWidget::durationChanged %s", qPrintable(this->labelCountdownDuration->text()));
+
     this->updateTimer.start();
     this->timeSinceStart.restart();
 }

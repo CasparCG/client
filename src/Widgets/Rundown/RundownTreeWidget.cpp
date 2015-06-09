@@ -586,6 +586,8 @@ void RundownTreeWidget::openRundown(const QString& path)
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
 
+    qDebug("Open rundown %s", qPrintable(path));
+
     QFile file(path);
     if (file.open(QFile::ReadOnly | QIODevice::Text))
     {
@@ -598,7 +600,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         QString latest = qApp->clipboard()->text();
         QString data = stream.readAll();
 
-        this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex());
+        this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
         qDebug("Hash is %s", qPrintable(this->hexHash));
 
         qApp->clipboard()->setText(data);
@@ -607,7 +609,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         // Set previous stored clipboard value.
         qApp->clipboard()->setText(latest);
 
-        qDebug("Parsing rundown file completed in %d msec", time.elapsed());
+        qDebug("Parsing rundown completed in %d msec", time.elapsed());
 
         file.close();
 
@@ -629,6 +631,8 @@ void RundownTreeWidget::openRundownFromUrl(const QString& url)
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
     EventManager::getInstance().fireReloadRundownMenuEvent(ReloadRundownMenuEvent(false));
 
+    qDebug("Open rundown from url %s", qPrintable(url));
+
     this->activeRundown = url;
 
     this->repositoryDevice = QSharedPointer<RepositoryDevice>(new RepositoryDevice(QUrl(url).host()));
@@ -649,7 +653,7 @@ void RundownTreeWidget::doOpenRundownFromUrl(QNetworkReply* reply)
     QString latest = qApp->clipboard()->text();
     QString data = QString::fromUtf8(reply->readAll());
 
-    this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1).toHex());
+    this->hexHash = QString(QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Md5).toHex());
     qDebug("Hash is %s", qPrintable(this->hexHash));
 
     qApp->clipboard()->setText(data);
@@ -771,11 +775,13 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             writer->writeEndElement();
             writer->writeEndDocument();
 
-            this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex());
+            this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
             qDebug("Hash is %s", qPrintable(this->hexHash));
 
             file.write(data);
             file.close();
+
+            qDebug("Saved rundown to %s", qPrintable(path));
         }
 
         this->activeRundown = path;

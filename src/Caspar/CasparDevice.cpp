@@ -621,6 +621,9 @@ void CasparDevice::setAnchor(int channel, int videolayer, float positionX, float
 
 void CasparDevice::sendNotification()
 {
+    if (AmcpDevice::response.count() > 0)
+        qDebug("Received message from %s:%d: %s\\r\\n", qPrintable(AmcpDevice::getAddress()), AmcpDevice::getPort(), qPrintable(AmcpDevice::response.at(0).trimmed()));
+
     switch (AmcpDevice::command)
     {
         case AmcpDevice::AmcpDeviceCommand::CLS:

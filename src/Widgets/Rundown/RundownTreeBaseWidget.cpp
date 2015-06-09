@@ -242,8 +242,6 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 
     checkEmptyRundown();
 
-    qDebug("RundownTreeBaseWidget::pasteSelectedItems %d", time.elapsed());
-
     return true;
 }
 
