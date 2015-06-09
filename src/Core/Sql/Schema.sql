@@ -95,12 +95,8 @@ INSERT INTO Configuration (Name, Value) VALUES('StreamPort', '9250');
 INSERT INTO Configuration (Name, Value) VALUES('LogLevel', '-1');
 
 INSERT INTO Chroma (Key) VALUES('None');
-INSERT INTO Chroma (Key) VALUES('Red');
-INSERT INTO Chroma (Key) VALUES('Yellow');
 INSERT INTO Chroma (Key) VALUES('Green');
-INSERT INTO Chroma (Key) VALUES('Torquise');
 INSERT INTO Chroma (Key) VALUES('Blue');
-INSERT INTO Chroma (Key) VALUES('Magenta');
 
 INSERT INTO Direction (Value) VALUES('RIGHT');
 INSERT INTO Direction (Value) VALUES('LEFT');

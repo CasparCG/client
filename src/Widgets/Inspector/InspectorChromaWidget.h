@@ -26,9 +26,7 @@ class WIDGETS_EXPORT InspectorChromaWidget : public QWidget, Ui::InspectorChroma
         void loadChroma();
         void blockAllSignals(bool block);
 
-        Q_SLOT void blurChanged(int);
         Q_SLOT void keyChanged(QString);
-        Q_SLOT void showMaskChanged(bool);
         Q_SLOT void softnessChanged(int);
         Q_SLOT void spillChanged(int);
         Q_SLOT void thresholdChanged(int);

@@ -403,10 +403,10 @@ void CasparDevice::setMasterVolume(int channel, float masterVolume)
 }
 
 
-void CasparDevice::setChroma(int channel, int videolayer, const QString& key, float threshold, float spread, float spill, float blur, bool mask)
+void CasparDevice::setChroma(int channel, int videolayer, const QString& key, float threshold, float spread, float spill)
 {
-    writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6 %7 %8")
-                 .arg(channel).arg(videolayer).arg(key).arg(threshold).arg(spread).arg(spill).arg(blur).arg(mask));
+    writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6")
+                 .arg(channel).arg(videolayer).arg(key).arg(threshold).arg(spread).arg(spill));
 }
 
 void CasparDevice::setBlendMode(int channel, int videolayer, const QString& blendMode)

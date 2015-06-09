@@ -31,13 +31,10 @@ void InspectorChromaWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->command = dynamic_cast<ChromaCommand*>(event.getCommand());
 
         this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(this->command->getKey()));
-        this->checkBoxShowMask->setChecked(this->command->getShowMask());
         this->spinBoxThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
         this->sliderThreshold->setValue(QString("%1").arg(this->command->getThreshold() * 100).toFloat());
         this->spinBoxSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
         this->sliderSoftness->setValue(QString("%1").arg(this->command->getSpread() * 100).toFloat());
-        this->spinBoxBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
-        this->sliderBlur->setValue(QString("%1").arg(this->command->getBlur() * 100).toFloat());
         this->spinBoxSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
         this->sliderSpill->setValue(QString("%1").arg(this->command->getSpill() * 100).toFloat());
     }
@@ -48,10 +45,8 @@ void InspectorChromaWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 void InspectorChromaWidget::blockAllSignals(bool block)
 {
     this->comboBoxKey->blockSignals(block);
-    this->checkBoxShowMask->blockSignals(block);
     this->spinBoxThreshold->blockSignals(block);
     this->spinBoxSoftness->blockSignals(block);
-    this->spinBoxBlur->blockSignals(block);
     this->spinBoxSpill->blockSignals(block);
 }
 
@@ -68,29 +63,11 @@ void InspectorChromaWidget::loadChroma()
     this->comboBoxKey->blockSignals(false);
 }
 
-void InspectorChromaWidget::blurChanged(int blur)
-{
-    this->command->setBlur(static_cast<float>(blur) / 100.0);
-
-    this->spinBoxBlur->setValue(blur);
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
 void InspectorChromaWidget::keyChanged(QString key)
 {
     this->command->setKey(key);
 
     this->comboBoxKey->setCurrentIndex(this->comboBoxKey->findText(key));
-
-    EventManager::getInstance().firePreviewEvent(PreviewEvent());
-}
-
-void InspectorChromaWidget::showMaskChanged(bool show)
-{
-    this->command->setShowMask(show);
-
-    this->checkBoxShowMask->setChecked(show);
 
     EventManager::getInstance().firePreviewEvent(PreviewEvent());
 }

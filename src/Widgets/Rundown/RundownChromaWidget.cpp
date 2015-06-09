@@ -133,9 +133,7 @@ AbstractRundownWidget* RundownChromaWidget::clone()
     command->setKey(this->command.getKey());
     command->setThreshold(this->command.getThreshold());
     command->setSpread(this->command.getSpread());
-    command->setBlur(this->command.getBlur());
     command->setSpill(this->command.getSpill());
-    command->setShowMask(this->command.getShowMask());
 
     return widget;
 }
@@ -311,7 +309,7 @@ void RundownChromaWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setChroma(this->command.getChannel(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0, 0.0, false);
+        device->setChroma(this->command.getChannel(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -320,7 +318,7 @@ void RundownChromaWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0, 0.0, false);
+            deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0);
     }
 }
 
@@ -329,7 +327,7 @@ void RundownChromaWidget::executePlay()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
-                          this->command.getSpread(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
+                          this->command.getSpread(), this->command.getSpill());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -338,8 +336,8 @@ void RundownChromaWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
-                                    this->command.getSpread(), this->command.getSpill(), this->command.getBlur(), this->command.getShowMask());
+            deviceShadow->setChroma(this->command.getChannel(), this->command.getVideolayer(), this->command.getKey(),
+                                    this->command.getThreshold(), this->command.getSpread(), this->command.getSpill());
     }
 
     if (this->markUsedItems)

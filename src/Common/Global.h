@@ -183,7 +183,6 @@ namespace Mixer
     static const float DEFAULT_OPACITY = 1.0f;
     static const float DEFAULT_SATURATION = 1.0f;
     static const float DEFAULT_VOLUME = 1.0f;
-    static const float DEFAULT_CHROMABLUR = 0.0f;
     static const float DEFAULT_CHROMABLENDSTART = 0.340f;
     static const float DEFAULT_CHROMABLENDSTOP = 0.440f;
     static const float DEFAULT_CHROMASPILL = 1.0f; 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>243</width>
-    <height>199</height>
+    <height>168</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -39,8 +39,8 @@
       <widget class="QLabel" name="labelKey">
        <property name="sizeHint" stdset="0">
         <size>
-         <width>18</width>
-         <height>13</height>
+         <width>26</width>
+         <height>17</height>
         </size>
        </property>
        <property name="text">
@@ -57,53 +57,6 @@
         </sizepolicy>
        </property>
       </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutDefer">
-     <item>
-      <spacer name="horizontalSpacerShowMask1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>5</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelDefer">
-       <property name="text">
-        <string>Show Mask</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxShowMask">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerShowMask2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
@@ -202,50 +155,6 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutBlur">
-     <item>
-      <spacer name="horizontalSpacerBlur1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>42</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelBlur">
-       <property name="text">
-        <string>Blur</string>
-       </property>
-       <property name="buddy">
-        <cstring>sliderBlur</cstring>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderBlur">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxBlur">
-       <property name="maximum">
-        <number>100</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayoutSpill">
      <item>
       <spacer name="horizontalSpacerSpill1">
@@ -312,13 +221,10 @@
  </widget>
  <tabstops>
   <tabstop>comboBoxKey</tabstop>
-  <tabstop>checkBoxShowMask</tabstop>
   <tabstop>sliderThreshold</tabstop>
   <tabstop>spinBoxThreshold</tabstop>
   <tabstop>sliderSoftness</tabstop>
   <tabstop>spinBoxSoftness</tabstop>
-  <tabstop>sliderBlur</tabstop>
-  <tabstop>spinBoxBlur</tabstop>
   <tabstop>sliderSpill</tabstop>
   <tabstop>spinBoxSpill</tabstop>
  </tabstops>
@@ -353,22 +259,6 @@
     <hint type="destinationlabel">
      <x>184</x>
      <y>114</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxBlur</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>sliderBlur</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>232</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>184</x>
-     <y>143</y>
     </hint>
    </hints>
   </connection>
@@ -421,22 +311,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>sliderBlur</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>spinBoxBlur</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>184</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>232</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>sliderSpill</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>spinBoxSpill</receiver>
@@ -485,22 +359,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxBlur</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>InspectorChromaWidget</receiver>
-   <slot>blurChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>232</x>
-     <y>143</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>481</x>
-     <y>312</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxSpill</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorChromaWidget</receiver>
@@ -529,22 +387,6 @@
     <hint type="destinationlabel">
      <x>308</x>
      <y>640</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxShowMask</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>InspectorChromaWidget</receiver>
-   <slot>showMaskChanged(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>92</x>
-     <y>54</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>367</x>
-     <y>641</y>
     </hint>
    </hints>
   </connection>
