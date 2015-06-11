@@ -22,6 +22,7 @@ InspectorBlendModeWidget::InspectorBlendModeWidget(QWidget* parent)
 
 void InspectorBlendModeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

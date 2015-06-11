@@ -22,6 +22,7 @@ InspectorSaturationWidget::InspectorSaturationWidget(QWidget* parent)
 
 void InspectorSaturationWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

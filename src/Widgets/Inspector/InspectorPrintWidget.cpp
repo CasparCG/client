@@ -17,6 +17,7 @@ InspectorPrintWidget::InspectorPrintWidget(QWidget* parent)
 
 void InspectorPrintWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

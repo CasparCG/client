@@ -22,6 +22,7 @@ InspectorDeckLinkInputWidget::InspectorDeckLinkInputWidget(QWidget* parent)
 
 void InspectorDeckLinkInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

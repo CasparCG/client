@@ -18,6 +18,7 @@ InspectorPlayoutCommandWidget::InspectorPlayoutCommandWidget(QWidget* parent)
 
 void InspectorPlayoutCommandWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

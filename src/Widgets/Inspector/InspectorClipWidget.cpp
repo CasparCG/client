@@ -24,6 +24,7 @@ InspectorClipWidget::InspectorClipWidget(QWidget* parent)
 
 void InspectorClipWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -48,8 +49,6 @@ void InspectorClipWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

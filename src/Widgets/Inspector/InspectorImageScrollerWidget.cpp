@@ -15,6 +15,7 @@ InspectorImageScrollerWidget::InspectorImageScrollerWidget(QWidget* parent)
 
 void InspectorImageScrollerWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

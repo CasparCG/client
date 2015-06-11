@@ -21,6 +21,7 @@ InspectorAtemAudioInputBalanceWidget::InspectorAtemAudioInputBalanceWidget(QWidg
 
 void InspectorAtemAudioInputBalanceWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

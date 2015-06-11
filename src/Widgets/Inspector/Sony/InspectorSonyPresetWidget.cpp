@@ -16,6 +16,8 @@ InspectorSonyPresetWidget::InspectorSonyPresetWidget(QWidget *parent)
 
 void InspectorSonyPresetWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
+
     blockAllSignals(true);
 
     if (dynamic_cast<SonyPresetCommand*>(event.getCommand()))

@@ -18,6 +18,7 @@ InspectorRouteVideolayerWidget::InspectorRouteVideolayerWidget(QWidget* parent)
 
 void InspectorRouteVideolayerWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -29,8 +30,6 @@ void InspectorRouteVideolayerWidget::rundownItemSelected(const RundownItemSelect
         this->spinBoxChannel->setValue(this->command->getFromChannel());
         this->spinBoxVideolayer->setValue(this->command->getFromVideolayer());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

@@ -21,6 +21,7 @@ InspectorNetworkSourceWidget::InspectorNetworkSourceWidget(QWidget* parent)
 
 void InspectorNetworkSourceWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

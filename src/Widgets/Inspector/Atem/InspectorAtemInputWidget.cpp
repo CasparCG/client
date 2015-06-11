@@ -24,6 +24,7 @@ InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
 
 void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

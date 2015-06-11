@@ -22,6 +22,7 @@ InspectorLevelsWidget::InspectorLevelsWidget(QWidget* parent)
 
 void InspectorLevelsWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

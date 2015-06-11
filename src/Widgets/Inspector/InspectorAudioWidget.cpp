@@ -23,6 +23,7 @@ InspectorAudioWidget::InspectorAudioWidget(QWidget* parent)
 
 void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

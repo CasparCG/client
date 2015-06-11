@@ -18,6 +18,7 @@ InspectorRouteChannelWidget::InspectorRouteChannelWidget(QWidget* parent)
 
 void InspectorRouteChannelWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -28,8 +29,6 @@ void InspectorRouteChannelWidget::rundownItemSelected(const RundownItemSelectedE
 
         this->spinBoxChannel->setValue(this->command->getFromChannel());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

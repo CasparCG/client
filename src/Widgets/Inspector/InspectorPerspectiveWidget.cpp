@@ -26,6 +26,7 @@ InspectorPerspectiveWidget::InspectorPerspectiveWidget(QWidget* parent)
 
 void InspectorPerspectiveWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -52,8 +53,6 @@ void InspectorPerspectiveWidget::rundownItemSelected(const RundownItemSelectedEv
         this->checkBoxDefer->setChecked(this->command->getDefer());
         this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

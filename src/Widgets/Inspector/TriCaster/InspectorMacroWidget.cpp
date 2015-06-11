@@ -19,6 +19,7 @@ InspectorMacroWidget::InspectorMacroWidget(QWidget* parent)
 
 void InspectorMacroWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

@@ -26,6 +26,7 @@ InspectorFillWidget::InspectorFillWidget(QWidget* parent)
 
 void InspectorFillWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -52,8 +53,6 @@ void InspectorFillWidget::rundownItemSelected(const RundownItemSelectedEvent& ev
         this->checkBoxDefer->setChecked(this->command->getDefer());
         this->checkBoxUseMipmap->setChecked(this->command->getUseMipmap());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

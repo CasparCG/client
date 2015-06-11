@@ -19,6 +19,8 @@ InspectorOscOutputWidget::InspectorOscOutputWidget(QWidget *parent)
 
 void InspectorOscOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
+
     blockAllSignals(true);
 
     if (dynamic_cast<OscOutputCommand*>(event.getCommand()))

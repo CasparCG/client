@@ -22,6 +22,7 @@ InspectorRotationWidget::InspectorRotationWidget(QWidget* parent)
 
 void InspectorRotationWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

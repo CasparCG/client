@@ -22,6 +22,7 @@ InspectorOpacityWidget::InspectorOpacityWidget(QWidget* parent)
 
 void InspectorOpacityWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

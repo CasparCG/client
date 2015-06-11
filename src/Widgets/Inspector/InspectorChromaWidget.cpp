@@ -22,6 +22,7 @@ InspectorChromaWidget::InspectorChromaWidget(QWidget* parent)
 
 void InspectorChromaWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -58,7 +59,7 @@ void InspectorChromaWidget::loadChroma()
 
     QList<ChromaModel> models = DatabaseManager::getInstance().getChroma();
     foreach (ChromaModel model, models)
-        this->comboBoxKey->addItem(model.getKey());
+        this->comboBoxKey->addItem(model.getValue());
 
     this->comboBoxKey->blockSignals(false);
 }

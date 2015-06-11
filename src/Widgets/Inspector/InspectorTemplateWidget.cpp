@@ -107,6 +107,7 @@ void InspectorTemplateWidget::addTemplateData(const AddTemplateDataEvent& event)
 
 void InspectorTemplateWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

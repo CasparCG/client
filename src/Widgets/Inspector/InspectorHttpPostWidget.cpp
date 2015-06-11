@@ -74,6 +74,7 @@ void InspectorHttpPostWidget::showAddHttpPostDataDialog(const ShowAddHttpPostDat
 
 void InspectorHttpPostWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

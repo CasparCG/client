@@ -15,6 +15,8 @@ InspectorGpiOutputWidget::InspectorGpiOutputWidget(QWidget *parent)
 
 void InspectorGpiOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
+
     blockAllSignals(true);
 
     if (dynamic_cast<GpiOutputCommand*>(event.getCommand()))

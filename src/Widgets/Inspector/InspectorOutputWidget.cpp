@@ -110,6 +110,7 @@ void InspectorOutputWidget::libraryFilterChanged(const LibraryFilterChangedEvent
 
 void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model->getDeviceName());

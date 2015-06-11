@@ -22,6 +22,7 @@ InspectorKeyerWidget::InspectorKeyerWidget(QWidget* parent)
 
 void InspectorKeyerWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

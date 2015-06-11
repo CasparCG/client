@@ -22,6 +22,7 @@ InspectorContrastWidget::InspectorContrastWidget(QWidget* parent)
 
 void InspectorContrastWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

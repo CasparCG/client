@@ -17,6 +17,7 @@ InspectorCustomCommandWidget::InspectorCustomCommandWidget(QWidget* parent)
 
 void InspectorCustomCommandWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

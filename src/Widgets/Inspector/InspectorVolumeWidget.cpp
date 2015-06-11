@@ -24,6 +24,7 @@ InspectorVolumeWidget::InspectorVolumeWidget(QWidget* parent)
 
 void InspectorVolumeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

@@ -21,6 +21,7 @@ InspectorTakeWidget::InspectorTakeWidget(QWidget* parent)
 
 void InspectorTakeWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

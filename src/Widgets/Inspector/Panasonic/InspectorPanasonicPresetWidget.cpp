@@ -16,6 +16,8 @@ InspectorPanasonicPresetWidget::InspectorPanasonicPresetWidget(QWidget *parent)
 
 void InspectorPanasonicPresetWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
+
     blockAllSignals(true);
 
     if (dynamic_cast<PanasonicPresetCommand*>(event.getCommand()))

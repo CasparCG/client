@@ -23,6 +23,7 @@ InspectorAtemCutWidget::InspectorAtemCutWidget(QWidget* parent)
 
 void InspectorAtemCutWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

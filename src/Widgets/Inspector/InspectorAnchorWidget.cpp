@@ -26,6 +26,7 @@ InspectorAnchorWidget::InspectorAnchorWidget(QWidget* parent)
 
 void InspectorAnchorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);
@@ -51,8 +52,6 @@ void InspectorAnchorWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         this->checkBoxDefer->setChecked(this->command->getDefer());
     }
-    else
-        this->command = NULL;
 
     blockAllSignals(false);
 }

@@ -23,6 +23,7 @@ InspectorStillWidget::InspectorStillWidget(QWidget* parent)
 
 void InspectorStillWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
     this->model = event.getLibraryModel();
 
     blockAllSignals(true);

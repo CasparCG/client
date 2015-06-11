@@ -16,6 +16,8 @@ InspectorSpyderPresetWidget::InspectorSpyderPresetWidget(QWidget *parent)
 
 void InspectorSpyderPresetWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
 {
+    this->command = nullptr;
+
     blockAllSignals(true);
 
     if (dynamic_cast<SpyderPresetCommand*>(event.getCommand()))
