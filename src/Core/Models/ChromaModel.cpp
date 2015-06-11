@@ -1,7 +1,7 @@
 #include "ChromaModel.h"
 
-ChromaModel::ChromaModel(int id, const QString& key)
-    : id(id), key(key)
+ChromaModel::ChromaModel(int id, const QString& value)
+    : id(id), value(value)
 {
 }
 
@@ -10,7 +10,7 @@ int ChromaModel::getId() const
     return this->id;
 }
 
-const QString& ChromaModel::getKey() const
+const QString& ChromaModel::getValue() const
 {
-    return this->key;
+    return this->value;
 }

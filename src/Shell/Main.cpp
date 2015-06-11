@@ -21,6 +21,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 #include <QtCore/QCommandLineParser>
+#include <QtCore/QCommandLineOption>
 
 #include <QtGui/QPixmap>
 #include <QtGui/QFontDatabase>
@@ -30,6 +31,28 @@
 #include <QtWidgets/QStyleFactory>
 
 #include <QtSql/QSqlDatabase>
+
+struct CommandLineArgs
+{
+    QString rundown;
+
+    QString mysqlhost;
+    QString mysqluser;
+    QString mysqlpass;
+    QString mysqldb;
+    QString sqlitepath;
+
+    bool dbmemory = false;
+    bool fullscreen = false;
+};
+
+enum CommandLineParseResult
+{
+    CommandLineOk,
+    CommandLineError,
+    CommandLineVersionRequested,
+    CommandLineHelpRequested
+};
 
 void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& message)
 {
@@ -74,7 +97,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
        abort();
 }
 
-void loadDatabase(const QCommandLineParser& parser)
+void loadDatabase(CommandLineArgs* args)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
 
@@ -82,15 +105,38 @@ void loadDatabase(const QCommandLineParser& parser)
     if (!directory.exists())
         directory.mkpath(".");
 
-    QString databaseLocation = QString("%1/Database.s3db").arg(path);
-    if (parser.isSet("database"))
-        databaseLocation = parser.value("database");
+    QSqlDatabase database;
+    if (args->dbmemory)
+    {
+        qDebug("Using SQLite in memory database");
 
-    QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
-    if (parser.isSet("dbmemory"))
+        database = QSqlDatabase::addDatabase("QSQLITE");
         database.setDatabaseName(":memory:");
+    }
     else
-        database.setDatabaseName(databaseLocation);
+    {
+        if (!args->mysqlhost.isEmpty() && !args->mysqluser.isEmpty() && !args->mysqlpass.isEmpty() && !args->mysqldb.isEmpty())
+        {
+            qDebug("Using MySQL database");
+
+            database = QSqlDatabase::addDatabase("QMYSQL");
+            database.setHostName(args->mysqlhost);
+            database.setDatabaseName(args->mysqldb);
+            database.setUserName(args->mysqluser);
+            database.setPassword(args->mysqlpass);
+        }
+        else
+        {
+            qDebug("Using SQLite database");
+
+            database = QSqlDatabase::addDatabase("QSQLITE");
+            QString databaseLocation = QString("%1/Database.s3db").arg(path);
+            if (!args->sqlitepath.isEmpty())
+                databaseLocation = args->sqlitepath;
+
+            database.setDatabaseName(databaseLocation);
+        }
+    }
 
     if (!database.open())
         qCritical("Unable to open database");
@@ -167,17 +213,67 @@ void loadFonts(QApplication& application)
 #endif
 }
 
-void loadConfiguration(QApplication& application, QMainWindow& window, const QCommandLineParser& parser)
+void loadConfiguration(QApplication& application, QMainWindow& window, CommandLineArgs* args)
 {
     QString stylesheet = QString("QWidget { font-size: %1px; }").arg(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
     application.setStyleSheet(application.styleSheet() + stylesheet);
 
     // Check command line arguments followed by the configuration.
-    if (parser.isSet("fullscreen") || DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true")
+    if (args->fullscreen || DatabaseManager::getInstance().getConfigurationByName("StartFullscreen").getValue() == "true")
          window.showFullScreen();
 
+    if (!args->rundown.isEmpty())
+        EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(args->rundown));
+}
+
+CommandLineParseResult parseCommandLine(QCommandLineParser& parser, CommandLineArgs* args)
+{
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    parser.addOption({{"f", "fullscreen"}, "Start application in fullscreen."});
+    parser.addOption({{"m", "dbmemory"}, "Use SQLite in memory database."});
+    parser.addOption({{"r", "rundown"}, "The rundown path.", "rundown"});
+    parser.addOption({{"t", "sqlitepath"}, "The SQLite database path.", "sqlitepath"});
+    parser.addOption({{"a", "mysqlhost"}, "MySQL database host.", "mysqlhost"});
+    parser.addOption({{"u", "mysqluser"}, "MySQL database user.", "mysqluser"});
+    parser.addOption({{"p", "mysqlpass"}, "MySQL database password.", "mysqlpass"});
+    parser.addOption({{"n", "mysqldb"}, "MySQL database name.", "mysqldb"});
+
+    if (!parser.parse(QApplication::arguments()))
+        return CommandLineError;
+
+    if (parser.isSet("version"))
+        return CommandLineVersionRequested;
+
+    if (parser.isSet("help"))
+        return CommandLineHelpRequested;
+
     if (parser.isSet("rundown"))
-        EventManager::getInstance().fireOpenRundownEvent(OpenRundownEvent(parser.value("rundown")));
+        args->rundown = parser.value("rundown");
+
+    if (parser.isSet("fullscreen"))
+        args->fullscreen = true;
+
+    if (parser.isSet("dbmemory"))
+        args->dbmemory = true;
+
+    if (parser.isSet("mysqlhost"))
+        args->mysqlhost = parser.value("mysqlhost");
+
+    if (parser.isSet("mysqluser"))
+        args->mysqluser = parser.value("mysqluser");
+
+    if (parser.isSet("mysqlpass"))
+        args->mysqlpass = parser.value("mysqlpass");
+
+    if (parser.isSet("mysqldb"))
+        args->mysqldb = parser.value("mysqldb");
+
+    if (parser.isSet("sqlitepath"))
+        args->sqlitepath = parser.value("sqlitepath");
+
+    return CommandLineOk;
 }
 
 int main(int argc, char* argv[])
@@ -188,31 +284,31 @@ int main(int argc, char* argv[])
     application.setApplicationName("CasparCG Client");
     application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
 
+    qDebug("Starting %s %s", qPrintable(application.applicationName()), qPrintable(application.applicationVersion()));
+
+    CommandLineArgs args;
     QCommandLineParser parser;
-    parser.addHelpOption();
-    parser.addVersionOption();
-
-    QCommandLineOption rundownOption("rundown", "Open specified rundown");
-    parser.addOption(rundownOption);
-
-    QCommandLineOption fullscreenOption("fullscreen", "Start the application in fullscreen");
-    parser.addOption(fullscreenOption);
-
-    QCommandLineOption databaseOption("database", "Open specified database");
-    parser.addOption(databaseOption);
-
-    QCommandLineOption dbmemoryOption("dbmemory", "Use in memory database");
-    parser.addOption(dbmemoryOption);
-
-    parser.process(application);
+    switch (parseCommandLine(parser, &args))
+    {
+        case CommandLineOk:
+            break;
+        case CommandLineError:
+            qCritical("Unable to parse command line: %s", qPrintable(parser.errorText()));
+            parser.showHelp();
+            return 0;
+        case CommandLineVersionRequested:
+            parser.showVersion();
+            return 0;
+        case CommandLineHelpRequested:
+            parser.showHelp();
+            return 0;
+    }
 
     QSplashScreen splashScreen(QPixmap(":/Graphics/Images/SplashScreen.png"));
     splashScreen.show();
 
-    loadDatabase(parser);
+    loadDatabase(&args);
     DatabaseManager::getInstance().initialize();
-
-    qDebug("Starting %s %s", qPrintable(application.applicationName()), qPrintable(application.applicationVersion()));
 
     loadStyleSheets(application);
     loadFonts(application);
@@ -223,7 +319,7 @@ int main(int argc, char* argv[])
     MainWindow window;
     splashScreen.finish(&window);
 
-    loadConfiguration(application, window, parser);
+    loadConfiguration(application, window, &args);
 
     window.show();
 

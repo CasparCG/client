@@ -11,6 +11,7 @@ CasparCG Client 2.0.8
 - NEW: Added support for migrating the database between release versions.
 - NEW: Added missing CasparCG video modes.
 - NEW: Added support for send template data as JSON, issue #138. Requires CasparCG Server 2.1 or later.
+- NEW: Added support for MySQL database.
 - FIX: Disabled ATEM dropdown in the inspector panel, issue #132. 
 - FIX: Max delay limit for items.
 - FIX: Changing label changes labels in all rundowns, issue #134.
@@ -18,6 +19,20 @@ CasparCG Client 2.0.8
 - FIX: iNews integration bug.
 - FIX: Use zero indexing for Panasonic PTZ presets.
 - FIX: Labels and channels change randomly, issue #137.
+- FIX: Unused chroma key options, issue #149.
+- UPDATE: Changed command line arguments.
+
+Note: Supported command line arguments
+  -h, --help                     Displays this help.
+  -v, --version                  Displays version information.
+  -f, --fullscreen               Start application in fullscreen.
+  -m, --dbmemory                 Use SQLite in memory database.
+  -r, --rundown <rundown>        The rundown path.
+  -t, --sqlitepath <sqlitepath>  The SQLite database path.
+  -a, --mysqlhost <mysqlhost>    MySQL database host.
+  -u, --mysqluser <mysqluser>    MySQL database user.
+  -p, --mysqlpass <mysqlpass>    MySQL database password.
+  -n, --mysqldb <mysqldb>        MySQL database name.
 
 
 

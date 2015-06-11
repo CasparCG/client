@@ -8,6 +8,7 @@
 #include <QtCore/QTime>
 #include <QtCore/QVariant>
 
+#include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
@@ -43,12 +44,15 @@ void DatabaseManager::createDatabase()
         file.close();
 
         QSqlQuery sql;
-        foreach (const QString& query, queries)
+        foreach (QString query, queries)
         {
-             if (query.trimmed().isEmpty())
-                 continue;
+            if (query.trimmed().isEmpty())
+                continue;
 
-             if (!sql.exec(query))
+            if (sql.driver()->dbmsType() == QSqlDriver::SQLite)
+                query.remove("AUTO_INCREMENT");
+
+            if (!sql.exec(query))
                 qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
         }
 
@@ -63,7 +67,11 @@ void DatabaseManager::createDatabase()
             qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 #endif
 
-        if (!sql.exec(QString("PRAGMA user_version = %1").arg(DATABASE_VERSION)))
+        sql.prepare("UPDATE Configuration SET Value = :Value "
+                    "WHERE Name = 'DatabaseVersion'");
+        sql.bindValue(":Value", DATABASE_VERSION);
+
+        if (!sql.exec())
             qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
     }
 }
@@ -71,12 +79,12 @@ void DatabaseManager::createDatabase()
 void DatabaseManager::upgradeDatabase()
 {
     QSqlQuery sql;
-    if (!sql.exec("PRAGMA user_version"))
+    if (!sql.exec("SELECT c.Id, c.Name, c.Value FROM Configuration c WHERE c.Name = 'DatabaseVersion'"))
        qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     sql.first();
 
-    int version = sql.value(0).toInt();
+    int version = sql.value(2).toInt();
 
     while (version + 1 <= QString("%1").arg(DATABASE_VERSION).toInt())
     {
@@ -96,8 +104,9 @@ void DatabaseManager::upgradeDatabase()
                     qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
             }
 
-            sql.prepare("PRAGMA user_version = :Version");
-            sql.bindValue(":Version", version + 1);
+            sql.prepare("UPDATE Configuration SET Value = :Value "
+                        "WHERE Name = 'DatabaseVersion'");
+            sql.bindValue(":Value", version + 1);
 
             if (!sql.exec())
                 qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
@@ -332,7 +341,7 @@ QList<ChromaModel> DatabaseManager::getChroma()
     QMutexLocker locker(&mutex);
 
     QSqlQuery sql;
-    if (!sql.exec("SELECT c.Id, c.Key FROM Chroma c"))
+    if (!sql.exec("SELECT c.Id, c.Value FROM Chroma c"))
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     QList<ChromaModel> models;
@@ -1912,8 +1921,4 @@ void DatabaseManager::deleteThumbnails()
     }
 
     QSqlDatabase::database().commit();
-
-    // Shrink file on disk.
-    if (!sql.exec("VACUUM Thumbnail"))
-       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 }

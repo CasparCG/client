@@ -7,12 +7,12 @@
 class CORE_EXPORT ChromaModel
 {
     public:
-        explicit ChromaModel(int id, const QString& key);
+        explicit ChromaModel(int id, const QString& value);
 
         int getId() const;
-        const QString& getKey() const;
+        const QString& getValue() const;
 
     private:
         int id;
-        QString key;
+        QString value;
 };

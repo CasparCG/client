@@ -10,3 +10,5 @@ DELETE FROM Chroma WHERE Key = 'Red'
 DELETE FROM Chroma WHERE Key = 'Yellow'
 DELETE FROM Chroma WHERE Key = 'Torquise'
 DELETE FROM Chroma WHERE Key = 'Magenta'
+
+INSERT INTO Configuration (Name, Value) VALUES('DatabaseVersion', '208');
