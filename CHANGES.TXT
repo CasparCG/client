@@ -8,7 +8,7 @@ CasparCG Client 2.0.8
 - NEW: Added support for trigger preset in Spyder system.
 - NEW: Added support for trigger ATEM mixer macro. Requires the latest firmware.
 - NEW: Added "Open Recent Rundown" menu.
-- NEW: Added support for migrating the database between release versions.
+- NEW: Added support for migrating the database between release and git commit versions.
 - NEW: Added missing CasparCG video modes.
 - NEW: Added support for send template data as JSON, issue #138. Requires CasparCG Server 2.1 or later.
 - NEW: Added support for MySQL database.
