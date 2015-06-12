@@ -606,14 +606,14 @@ void CasparDevice::setRotation(int channel, int videolayer, float rotation, int 
 
 void CasparDevice::setAnchor(int channel, int videolayer, float positionX, float positionY, bool defer)
 {
-    writeMessage(QString("MIXER %1-%2 ANCHOR %3 %4 %5 %6 %7")
+    writeMessage(QString("MIXER %1-%2 ANCHOR %3 %4 %5")
                  .arg(channel).arg(videolayer).arg(positionX).arg(positionY)
                  .arg((defer == true) ? "DEFER" : ""));
 }
 
 void CasparDevice::setAnchor(int channel, int videolayer, float positionX, float positionY, int duration, const QString& easing, bool defer)
 {
-    writeMessage(QString("MIXER %1-%2 ANCHOR %3 %4 %5 %6 %7 %8 %9")
+    writeMessage(QString("MIXER %1-%2 ANCHOR %3 %4 %5 %6 %7")
                  .arg(channel).arg(videolayer).arg(positionX).arg(positionY)
                  .arg(duration).arg(easing)
                  .arg((defer == true) ? "DEFER" : ""));

@@ -313,7 +313,7 @@ void RundownAnchorWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1);
+        device->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -322,7 +322,7 @@ void RundownAnchorWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0, 1);
+            deviceShadow->setAnchor(this->command.getChannel(), this->command.getVideolayer(), 0, 0);
     }
 }
 
@@ -331,7 +331,7 @@ void RundownAnchorWidget::executePlay()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
         device->setAnchor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
-                            this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                          this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -341,7 +341,7 @@ void RundownAnchorWidget::executePlay()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->setAnchor(this->command.getChannel(), this->command.getVideolayer(), this->command.getPositionX(),
-                                      this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
+                                    this->command.getPositionY(), this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
 
     if (this->markUsedItems)
