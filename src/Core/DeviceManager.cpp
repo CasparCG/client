@@ -115,7 +115,7 @@ const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByName(const QStr
             return QSharedPointer<DeviceModel>(new DeviceModel(model));
     }
 
-    qWarning() << "No DeviceModel found for specified name";
+    qWarning("No DeviceModel found for name: %s", qPrintable(name));
 
     return QSharedPointer<DeviceModel>();
 }
@@ -128,7 +128,7 @@ const QSharedPointer<DeviceModel> DeviceManager::getDeviceModelByAddress(const Q
            return QSharedPointer<DeviceModel>(new DeviceModel(model));
     }
 
-    qWarning() << "No DeviceModel found for specified address";
+    qWarning("No DeviceModel found for address: %s", qPrintable(address));
 
     return QSharedPointer<DeviceModel>();
 }
