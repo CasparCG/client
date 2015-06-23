@@ -1170,9 +1170,6 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
         selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
         selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
 
-        if (selectedWidget == nullptr || selectedWidgetParent == nullptr)
-            return true;
-
         rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
     }
@@ -1183,9 +1180,6 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
 
         selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
         selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
-
-        if (selectedWidget == nullptr || selectedWidgetParent == nullptr)
-            return true;
 
         rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);

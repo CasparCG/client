@@ -858,8 +858,36 @@ bool RundownTreeBaseWidget::dropMimeData(QTreeWidgetItem* parent, int index, con
 
             selectItemBelow();
 
-            foreach (QTreeWidgetItem* item, items)
-               delete item;
+            for (int i = items.count() - 1; i >= 0; i--)
+            {
+                QTreeWidgetItem* item = items.at(i);
+                AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
+                if (widget->isGroup())
+                {
+                    for (int i = item->childCount() - 1; i >= 0; i--)
+                    {
+                        QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+
+                        // Remove our items from the auto play queue if it exists.
+                        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+
+                        // Clear current playing item.
+                        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
+
+                        delete childWidget;
+                        delete item->child(i);
+                    }
+                }
+
+                // Remove our items from the auto play queue if it exists.
+                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+                // Clear current playing item.
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
+
+                delete widget;
+                delete item;
+            }
         }
     }
 
