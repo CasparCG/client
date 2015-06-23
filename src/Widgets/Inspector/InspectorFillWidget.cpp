@@ -67,6 +67,9 @@ void InspectorFillWidget::deviceChanged(const DeviceChangedEvent& event)
         if (!model.getName().isEmpty())
         {
             const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
+            if (this->command->getChannel() > channelFormats.count())
+                return;
+
             const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
 
             this->resolutionWidth = formatModel.getWidth();
