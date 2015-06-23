@@ -813,7 +813,7 @@ bool RundownTreeWidget::checkForSave() const
     writer->writeEndElement();
     writer->writeEndDocument();
 
-    QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Sha1).toHex());
+    QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
     qDebug("Hash is %s", qPrintable(hexHash));
 
     if (hexHash != this->hexHash)
@@ -1151,17 +1151,17 @@ void RundownTreeWidget::setAllUsed(bool used)
 bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::ActionType source, QTreeWidgetItem* item)
 {
     //QModelIndex currentIndex;
-    QTreeWidgetItem* currentItem = NULL;
+    QTreeWidgetItem* currentItem = nullptr;
 
-    QWidget* selectedWidget = NULL;
-    QWidget* selectedWidgetParent = NULL;
+    QWidget* selectedWidget = nullptr;
+    QWidget* selectedWidgetParent = nullptr;
 
-    AbstractRundownWidget* rundownWidget = NULL;
-    AbstractRundownWidget* rundownWidgetParent = NULL;
+    AbstractRundownWidget* rundownWidget = nullptr;
+    AbstractRundownWidget* rundownWidgetParent = nullptr;
 
-    if (item == NULL)
+    if (item == nullptr)
     {
-        if (this->treeWidgetRundown->currentItem() == NULL)
+        if (this->treeWidgetRundown->currentItem() == nullptr)
             return true;
 
         currentItem = this->treeWidgetRundown->currentItem();
@@ -1169,6 +1169,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
 
         selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
         selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
+
+        if (selectedWidget == nullptr || selectedWidgetParent == nullptr)
+            return true;
 
         rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
@@ -1181,6 +1184,9 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
         selectedWidget = this->treeWidgetRundown->itemWidget(currentItem, 0);
         selectedWidgetParent = this->treeWidgetRundown->itemWidget(currentItem->parent(), 0);
 
+        if (selectedWidget == nullptr || selectedWidgetParent == nullptr)
+            return true;
+
         rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
     }
@@ -1188,7 +1194,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
     if (source == Action::ActionType::GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
         return true; // Gpi pulses cannot trigger this item.
 
-    if (type == Playout::PlayoutType::Next && rundownWidgetParent != NULL && rundownWidgetParent->isGroup() && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
+    if (type == Playout::PlayoutType::Next && rundownWidgetParent != nullptr && rundownWidgetParent->isGroup() && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
     {
         EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
 
@@ -1196,7 +1202,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
     }
     else
     {
-        if (this->currentPlayingItem != NULL)
+        if (this->currentPlayingItem != nullptr)
             dynamic_cast<AbstractRundownWidget*>(this->treeWidgetRundown->itemWidget(this->currentPlayingItem, 0))->setActive(false);
 
         dynamic_cast<AbstractRundownWidget*>(selectedWidget)->setActive(true);
@@ -1205,16 +1211,16 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
         this->currentPlayingItem = currentItem;
     }
 
-    if (rundownWidget != NULL && rundownWidget->isGroup())
+    if (rundownWidget != nullptr && rundownWidget->isGroup())
     {
         if (type == Playout::PlayoutType::Next && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
-            if (this->currentAutoPlayWidget != NULL)
+            if (this->currentAutoPlayWidget != nullptr)
                 EventManager::getInstance().fireAutoPlayNextRundownItemEvent(AutoPlayNextRundownItemEvent(dynamic_cast<QWidget*>(this->currentAutoPlayWidget)));
         }
         else if (type == Playout::PlayoutType::PauseResume && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
         {
-            if (this->currentAutoPlayWidget != NULL)
+            if (this->currentAutoPlayWidget != nullptr)
                 dynamic_cast<AbstractPlayoutCommand*>(this->currentAutoPlayWidget)->executeCommand(type);
         }
         else if ((type == Playout::PlayoutType::Play || type == Playout::PlayoutType::Load) && dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoPlay())
@@ -1263,7 +1269,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
             {
                 if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() && type == Playout::PlayoutType::Play)
                 {
-                    if (this->currentPlayingAutoStepItem != NULL)
+                    if (this->currentPlayingAutoStepItem != nullptr)
                     {
                         for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
                         {
@@ -1311,7 +1317,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
             }
         }
     }
-    else if (rundownWidgetParent != NULL && rundownWidgetParent->isGroup())
+    else if (rundownWidgetParent != nullptr && rundownWidgetParent->isGroup())
     {
         // The selected items parent is a group. If the group have AutoPlay property set, then play current item and below within the group.
         if (type == Playout::PlayoutType::Play && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())
