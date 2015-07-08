@@ -353,10 +353,10 @@ FORMS += \
     Rundown/RundownVolumeWidget.ui \
     Rundown/RundownLevelsWidget.ui \
     Rundown/RundownKeyerWidget.ui \
-    Rundown/RundownGridWidget.ui \ 
+    Rundown/RundownGridWidget.ui \
     Rundown/RundownGpiOutputWidget.ui \
     Rundown/RundownCommitWidget.ui \
-    Rundown/RundownImageScrollerWidget.ui \ 
+    Rundown/RundownImageScrollerWidget.ui \
     Rundown/RundownFileRecorderWidget.ui \
     Inspector/InspectorBlendModeWidget.ui \
     Rundown/RundownBlendModeWidget.ui \
@@ -741,6 +741,9 @@ OTHER_FILES += \
     Images/Sony/SonyPresetSmall.png \
     Images/Sony/SonyPresetSmallHover.png
 
+CONFIG(system-libqatemcontrol) {
+LIBS += -lqatemcontrol
+} else {
 DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
 INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
 win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
@@ -749,30 +752,47 @@ else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/
 else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
 else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
 else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
+}
 
+CONFIG(system-oscpack) {
+LIBS += -loscpack
+} else {
 DEPENDPATH += $$PWD/../../lib/oscpack/include
 INCLUDEPATH += $$PWD/../../lib/oscpack/include
 win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
 else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
 else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
+}
 
+CONFIG(system-boost) {
+LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+} else {
 DEPENDPATH += $$PWD/../../lib/boost
 INCLUDEPATH += $$PWD/../../lib/boost
 win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
 else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+}
 
+CONFIG(system-libvlc) {
+LIBS += -lvlc -lvlccore
+} else {
 DEPENDPATH += $$PWD/../../lib/libvlc/include
 INCLUDEPATH += $$PWD/../../lib/libvlc/include
 win32:LIBS += -L$$PWD/../../lib/libvlc/lib/win32/ -lvlc -lvlccore
 else:macx:LIBS += -L$$PWD/../../lib/libvlc/lib/macx/ -lvlc -lvlccore
 else:unix:LIBS += -lvlc -lvlccore
+}
 
+CONFIG(system-gpio-client) {
+LIBS += -lgpio-client
+} else {
 DEPENDPATH += $$PWD/../../lib/gpio-client/include
 INCLUDEPATH += $$PWD/../../lib/gpio-client/include
 win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
 else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
 else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
+}
 
 DEPENDPATH += $$OUT_PWD/../Atem $$PWD/../Atem
 INCLUDEPATH += $$OUT_PWD/../Atem $$PWD/../Atem
