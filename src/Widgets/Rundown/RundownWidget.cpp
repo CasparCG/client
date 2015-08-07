@@ -209,7 +209,7 @@ void RundownWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& even
     if (!event.getEnabled())
         this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon());
     else
-        this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/OscTriggerSmall.png"));
+        this->tabWidgetRundown->setTabIcon(this->tabWidgetRundown->currentIndex(), QIcon(":/Graphics/Images/RemoteTriggeringSmall.png"));
 }
 
 void RundownWidget::repositoryRundown(const RepositoryRundownEvent& event)

@@ -172,7 +172,6 @@
         <file>Images/TriCaster/TriggerTakeSmall.png</file>
         <file>Images/TriCaster/TriggerTakeSmallHover.png</file>
         <file>Images/Clients.png</file>
-        <file>Images/OscTriggerSmall.png</file>
         <file>Images/Atem/SelectInput.png</file>
         <file>Images/Atem/SelectInputSmall.png</file>
         <file>Images/Atem/SelectInputSmallHover.png</file>
@@ -258,6 +257,7 @@
         <file>Images/Atem/PlayMacro.png</file>
         <file>Images/Atem/PlayMacroSmall.png</file>
         <file>Images/Atem/PlayMacroSmallHover.png</file>
+        <file>Images/RemoteTriggeringSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

@@ -653,7 +653,7 @@ OTHER_FILES += \
     Stylesheets/Flat/Linux.css \
     Stylesheets/Flat/Extended.css \
     Stylesheets/Flat/Default.css \
-    Images/OscTriggerSmall.png \
+    Images/RemoteTriggeringSmall.png \
     Images/Atem/SelectInputSmallHover.png \
     Images/Atem/SelectInputSmall.png \
     Images/Atem/SelectInput.png \
@@ -857,3 +857,6 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Core/release/ -lcore
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Core/debug/ -lcore
 else:macx:LIBS += -L$$OUT_PWD/../Core/ -lcore
 else:unix:LIBS += -L$$OUT_PWD/../Core/ -lcore
+
+DISTFILES += \
+    Images/RemoteTriggeringSmall.png
