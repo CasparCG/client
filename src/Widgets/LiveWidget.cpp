@@ -23,7 +23,6 @@ LiveWidget::LiveWidget(QWidget* parent)
     this->streamPort = (streamPort.isEmpty() == true) ? Stream::DEFAULT_PORT : streamPort.toInt();
 
     QStringList arguments;
-    arguments.append("--intf dummy");
     arguments.append("--no-osd");
     arguments.append("--ignore-config");
     arguments.append(QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
