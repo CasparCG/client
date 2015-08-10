@@ -36,11 +36,12 @@ if [ -f "$CLIENT_FOLDER" ]; then
 fi
 mkdir "$CLIENT_FOLDER" || fail "Could not create $CLIENT_FOLDER"
 mkdir "$CLIENT_FOLDER/bin" || fail "Could not create $CLIENT_FOLDER/bin"
-mkdir "$CLIENT_FOLDER/lib" || fail "Could not create $CLIENT_FOLDER/lib"
+#mkdir "$CLIENT_FOLDER/lib" || fail "Could not create $CLIENT_FOLDER/lib"
 
 # Copy compiled binaries
 echo Copying binaries...
-find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/lib/" \; || fail "Could not copy client libraries"
+#find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/lib/" \; || fail "Could not copy client libraries"
+find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/bin/" \; || fail "Could not copy client libraries"
 cp -f Shell/shell "$CLIENT_FOLDER/bin/client" || fail "Could not copy client executable"
 
 # Copy binary dependencies
