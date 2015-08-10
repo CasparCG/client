@@ -26,6 +26,8 @@ start it.
 Open the DMG file and drag the 'CasparCG Client' app to your Applications folder.
 
 ## Installation Linux
+VLC need to be installed on Linux: sudo apt-get install vlc. The plugin cache may need to be refreshed: sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
+
 Unpack the tar file and run the run.sh.
 
 ## Documentation
