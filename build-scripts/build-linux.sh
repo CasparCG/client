@@ -40,14 +40,12 @@ mkdir "$CLIENT_FOLDER/bin" || fail "Could not create $CLIENT_FOLDER/bin"
 
 # Copy compiled binaries
 echo Copying binaries...
-#find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/lib/" \; || fail "Could not copy client libraries"
 find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/bin/" \; || fail "Could not copy client libraries"
 cp -f Shell/shell "$CLIENT_FOLDER/bin/client" || fail "Could not copy client executable"
 
 # Copy binary dependencies
 echo Copying binary dependencies...
-#cp -RfP ../deploy/linux/* "$CLIENT_FOLDER/" || fail "Could not copy binary dependencies"
-cp -RfP ../deploy/linux/lib/* "$CLIENT_FOLDER/bin" || fail "Could not copy binary dependencies"
+cp -RfP ../deploy/linux/* "$CLIENT_FOLDER/" || fail "Could not copy binary dependencies"
 
 # Copy documentation
 echo Copying documentation...
