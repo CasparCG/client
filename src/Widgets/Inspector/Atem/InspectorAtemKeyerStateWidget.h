@@ -24,6 +24,7 @@ class WIDGETS_EXPORT InspectorAtemKeyerStateWidget : public QWidget, Ui::Inspect
         AtemKeyerStateCommand* command;
 
         void loadAtemKeyer();
+        void loadAtemMixerStep();
         void blockAllSignals(bool block);
 
         Q_SLOT void keyerChanged(int);

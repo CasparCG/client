@@ -91,12 +91,12 @@ void AtemDevice::setAuxSource(const QString& aux, const QString& source)
     SwitcherDevice::atemConnection->setAuxSource(aux.toInt() - 8001, source.toInt());
 }
 
-void AtemDevice::setKeyerState(const QString& keyer, bool state)
+void AtemDevice::setKeyerState(const QString& keyer, bool state, const QString& me)
 {
     if (keyer == "0" || keyer == "1") // Downstream keyer.
         SwitcherDevice::atemConnection->setDownstreamKeyOn(keyer.toInt(), state);
     else
-        SwitcherDevice::atemConnection->mixEffect(1)->setUpstreamKeyOnAir(keyer.toInt() - 2, state);
+        SwitcherDevice::atemConnection->mixEffect(me.toInt())->setUpstreamKeyOnAir(keyer.toInt() - 2, state);
 }
 
 void AtemDevice::setAudioInputState(const QString& input, const QString& state)

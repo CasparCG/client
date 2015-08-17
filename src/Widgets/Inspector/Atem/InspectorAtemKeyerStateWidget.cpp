@@ -16,6 +16,7 @@ InspectorAtemKeyerStateWidget::InspectorAtemKeyerStateWidget(QWidget* parent)
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
+    loadAtemMixerStep();
     loadAtemKeyer();
 }
 
@@ -30,6 +31,7 @@ void InspectorAtemKeyerStateWidget::rundownItemSelected(const RundownItemSelecte
     {
         this->command = dynamic_cast<AtemKeyerStateCommand*>(event.getCommand());
 
+        this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->comboBoxKeyer->setCurrentIndex(this->comboBoxKeyer->findData(this->command->getKeyer()));
         this->checkBoxState->setChecked(this->command->getState());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
@@ -43,6 +45,19 @@ void InspectorAtemKeyerStateWidget::blockAllSignals(bool block)
     this->comboBoxKeyer->blockSignals(block);
     this->checkBoxState->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+}
+
+void InspectorAtemKeyerStateWidget::loadAtemMixerStep()
+{
+    // We do not have a command object, block the signals.
+    // Events will not be triggered while we update the values.
+    this->comboBoxMixerStep->blockSignals(true);
+
+    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
+    foreach (AtemMixerStepModel model, models)
+        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+
+    this->comboBoxMixerStep->blockSignals(false);
 }
 
 void InspectorAtemKeyerStateWidget::loadAtemKeyer()

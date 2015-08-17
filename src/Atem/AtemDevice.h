@@ -24,7 +24,7 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
         void selectInput(const QString& switcher, const QString& input, const QString& me);
         void playMacro(const QString& preset);
 
-        void setKeyerState(const QString& keyer, bool state);
+        void setKeyerState(const QString& keyer, bool state, const QString& me);
         void setVideoFormat(const QString& format);
         void setAudioInputState(const QString& input, const QString& state);
         void setAudioInputBalance(const QString& input, float balance);

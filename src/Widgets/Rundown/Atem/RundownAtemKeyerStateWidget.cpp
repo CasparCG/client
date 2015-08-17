@@ -129,6 +129,7 @@ AbstractRundownWidget* RundownAtemKeyerStateWidget::clone()
     command->setKeyer(this->command.getKeyer());
     command->setState(this->command.getState());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
+    command->setMixerStep(this->command.getMixerStep());
 
     return widget;
 }
@@ -269,7 +270,7 @@ void RundownAtemKeyerStateWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setKeyerState(this->command.getKeyer(), this->command.getState());
+        device->setKeyerState(this->command.getKeyer(), this->command.getState(), this->command.getMixerStep());
 
     if (this->markUsedItems)
         setUsed(true);
