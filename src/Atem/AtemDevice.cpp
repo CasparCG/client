@@ -13,6 +13,11 @@ AtemDevice::AtemDevice(const QString& address, QObject* parent)
 {
 }
 
+quint8 AtemDevice::mixerEffects()
+{
+    return SwitcherDevice::atemConnection->topology().MEs;
+}
+
 void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition, const QString& me)
 {
     SwitcherDevice::atemConnection->mixEffect(me.toInt())->setTransitionType(transition.toInt());

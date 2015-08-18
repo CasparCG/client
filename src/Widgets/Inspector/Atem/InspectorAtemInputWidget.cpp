@@ -16,8 +16,6 @@ InspectorAtemInputWidget::InspectorAtemInputWidget(QWidget* parent)
 {
     setupUi(this);
 
-    loadAtemMixerStep();
-
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 }
@@ -38,7 +36,9 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
         if (device != NULL)
         {
             this->inputs = device->inputInfos();
+            this->mixerEffects = device->mixerEffects();
 
+            loadAtemMixerStep();
             loadAtemSwitcher();
             loadAtemInput();
         }
@@ -48,6 +48,10 @@ void InspectorAtemInputWidget::rundownItemSelected(const RundownItemSelectedEven
         this->comboBoxSwitcher->setCurrentIndex(this->comboBoxSwitcher->findData(this->command->getSwitcher()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
+
+    checkEmptyInput();
+    checkEmptySwitcher();
+    checkEmptyMixerStep();
 
     blockAllSignals(false);
 }
@@ -63,9 +67,14 @@ void InspectorAtemInputWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
             if (device != NULL)
             {
                 this->inputs = device->inputInfos();
+                this->mixerEffects = device->mixerEffects();
 
                 loadAtemSwitcher();
+                loadAtemMixerStep();
                 loadAtemInput();
+                checkEmptyInput();
+                checkEmptySwitcher();
+                checkEmptyMixerStep();
             }
         }
     }
@@ -77,9 +86,9 @@ void InspectorAtemInputWidget::loadAtemMixerStep()
     // Events will not be triggered while we update the values.
     this->comboBoxMixerStep->blockSignals(true);
 
-    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
-    foreach (AtemMixerStepModel model, models)
-        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+    this->comboBoxMixerStep->clear();
+    for (int i = 0; i < this->mixerEffects; i++)
+        this->comboBoxMixerStep->addItem(QString("%1").arg(i + 1), i);
 
     this->comboBoxMixerStep->blockSignals(false);
 }
@@ -131,14 +140,42 @@ void InspectorAtemInputWidget::loadAtemSwitcher()
     this->comboBoxSwitcher->blockSignals(false);
 }
 
+void InspectorAtemInputWidget::checkEmptyInput()
+{
+    if (this->comboBoxInput->isEnabled() && this->comboBoxInput->currentText() == "")
+        this->comboBoxInput->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxInput->setStyleSheet("");
+}
+
+void InspectorAtemInputWidget::checkEmptyMixerStep()
+{
+    if (this->comboBoxMixerStep->isEnabled() && this->comboBoxMixerStep->currentText() == "")
+        this->comboBoxMixerStep->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxMixerStep->setStyleSheet("");
+}
+
+void InspectorAtemInputWidget::checkEmptySwitcher()
+{
+    if (this->comboBoxSwitcher->isEnabled() && this->comboBoxSwitcher->currentText() == "")
+        this->comboBoxSwitcher->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxSwitcher->setStyleSheet("");
+}
+
 void InspectorAtemInputWidget::switcherChanged(int index)
 {
     this->command->setSwitcher(this->comboBoxSwitcher->itemData(index).toString());
+
+    checkEmptySwitcher();
 }
 
 void InspectorAtemInputWidget::inputChanged(int index)
 {
     this->command->setInput(this->comboBoxInput->itemData(index).toString());
+
+    checkEmptyInput();
 }
 
 void InspectorAtemInputWidget::triggerOnNextChanged(int state)
@@ -149,4 +186,6 @@ void InspectorAtemInputWidget::triggerOnNextChanged(int state)
 void InspectorAtemInputWidget::mixerStepChanged(int index)
 {
     this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
+
+    checkEmptyMixerStep();
 }

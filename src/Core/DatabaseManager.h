@@ -82,7 +82,6 @@ class CORE_EXPORT DatabaseManager
         void deleteOscOutput(int id);
 
         QList<AtemStepModel> getAtemStep();
-        QList<AtemMixerStepModel> getAtemMixerStep();
         QList<AtemAudioInputStateModel> getAtemAudioInputState();
         QList<AtemKeyerModel> getAtemKeyer();
         QList<AtemSwitcherModel> getAtemSwitcher();

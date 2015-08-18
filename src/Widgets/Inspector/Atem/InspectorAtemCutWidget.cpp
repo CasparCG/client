@@ -2,6 +2,7 @@
 
 #include "Global.h"
 
+#include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "Models/Atem/AtemStepModel.h"
@@ -16,8 +17,8 @@ InspectorAtemCutWidget::InspectorAtemCutWidget(QWidget* parent)
     setupUi(this);
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
 
-    loadAtemMixerStep();
     loadAtemStep();
 }
 
@@ -32,14 +33,43 @@ void InspectorAtemCutWidget::rundownItemSelected(const RundownItemSelectedEvent&
     {
         this->command = dynamic_cast<AtemCutCommand*>(event.getCommand());
 
+        this->comboBoxMixerStep->clear();
+        const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model->getDeviceName());
+        if (device != NULL)
+        {
+            this->mixerEffects = device->mixerEffects();
+
+            loadAtemMixerStep();
+        }
+
         this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
     checkEmptyStep();
+    checkEmptyMixerStep();
 
     blockAllSignals(false);
+}
+
+void InspectorAtemCutWidget::atemDeviceChanged(const AtemDeviceChangedEvent& event)
+{
+    if (this->model != NULL)
+    {
+        // Should we update the device name?
+        if (!event.getDeviceName().isEmpty() && event.getDeviceName() != this->model->getDeviceName())
+        {
+            const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(event.getDeviceName());
+            if (device != NULL)
+            {
+                this->mixerEffects = device->mixerEffects();
+
+                loadAtemMixerStep();
+                checkEmptyMixerStep();
+            }
+        }
+    }
 }
 
 void InspectorAtemCutWidget::blockAllSignals(bool block)
@@ -55,9 +85,9 @@ void InspectorAtemCutWidget::loadAtemMixerStep()
     // Events will not be triggered while we update the values.
     this->comboBoxMixerStep->blockSignals(true);
 
-    QList<AtemMixerStepModel> models = DatabaseManager::getInstance().getAtemMixerStep();
-    foreach (AtemMixerStepModel model, models)
-        this->comboBoxMixerStep->addItem(model.getName(), model.getValue());
+    this->comboBoxMixerStep->clear();
+    for (int i = 0; i < this->mixerEffects; i++)
+        this->comboBoxMixerStep->addItem(QString("%1").arg(i + 1), i);
 
     this->comboBoxMixerStep->blockSignals(false);
 }
@@ -86,6 +116,14 @@ void InspectorAtemCutWidget::checkEmptyStep()
         this->comboBoxStep->setStyleSheet("");
 }
 
+void InspectorAtemCutWidget::checkEmptyMixerStep()
+{
+    if (this->comboBoxMixerStep->isEnabled() && this->comboBoxMixerStep->currentText() == "")
+        this->comboBoxMixerStep->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxMixerStep->setStyleSheet("");
+}
+
 void InspectorAtemCutWidget::stepChanged(int index)
 {
     this->command->setStep(this->comboBoxStep->itemData(index).toString());
@@ -101,4 +139,6 @@ void InspectorAtemCutWidget::triggerOnNextChanged(int state)
 void InspectorAtemCutWidget::mixerStepChanged(int index)
 {
     this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
+
+    checkEmptyMixerStep();
 }

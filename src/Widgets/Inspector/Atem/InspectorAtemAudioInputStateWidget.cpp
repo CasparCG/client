@@ -45,6 +45,9 @@ void InspectorAtemAudioInputStateWidget::rundownItemSelected(const RundownItemSe
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
+    checkEmptyInput();
+    checkEmptyState();
+
     blockAllSignals(false);
 }
 
@@ -62,6 +65,8 @@ void InspectorAtemAudioInputStateWidget::atemDeviceChanged(const AtemDeviceChang
 
                 loadAtemInputState();
                 loadAtemAudioInput();
+                checkEmptyInput();
+                checkEmptyState();
             }
         }
     }
@@ -104,14 +109,34 @@ void InspectorAtemAudioInputStateWidget::loadAtemInputState()
     this->comboBoxState->blockSignals(false);
 }
 
+void InspectorAtemAudioInputStateWidget::checkEmptyInput()
+{
+    if (this->comboBoxInput->isEnabled() && this->comboBoxInput->currentText() == "")
+        this->comboBoxInput->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxInput->setStyleSheet("");
+}
+
+void InspectorAtemAudioInputStateWidget::checkEmptyState()
+{
+    if (this->comboBoxState->isEnabled() && this->comboBoxState->currentText() == "")
+        this->comboBoxState->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxState->setStyleSheet("");
+}
+
 void InspectorAtemAudioInputStateWidget::inputChanged(int index)
 {
     this->command->setInput(this->comboBoxInput->itemData(index).toString());
+
+    checkEmptyInput();
 }
 
 void InspectorAtemAudioInputStateWidget::stateChanged(int index)
 {
     this->command->setState(this->comboBoxState->itemData(index).toString());
+
+    checkEmptyState();
 }
 
 void InspectorAtemAudioInputStateWidget::triggerOnNextChanged(int state)

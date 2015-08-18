@@ -29,6 +29,8 @@ class WIDGETS_EXPORT InspectorAtemAudioInputStateWidget : public QWidget, Ui::In
         AtemAudioInputStateCommand* command;
         QMap<quint16, QAtem::InputInfo> inputs;
 
+        void checkEmptyInput();
+        void checkEmptyState();
         void loadAtemInputState();
         void blockAllSignals(bool block);
         void loadAtemAudioInput();

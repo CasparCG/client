@@ -43,6 +43,8 @@ void InspectorAtemMacroWidget::rundownItemSelected(const RundownItemSelectedEven
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
+    checkEmptyMacro();
+
     blockAllSignals(false);
 }
 
@@ -59,6 +61,7 @@ void InspectorAtemMacroWidget::atemDeviceChanged(const AtemDeviceChangedEvent& e
                 this->macros = device->macroInfos();
 
                 loadAtemMacro();
+                checkEmptyMacro();
             }
         }
     }
@@ -88,9 +91,19 @@ void InspectorAtemMacroWidget::blockAllSignals(bool block)
     this->checkBoxTriggerOnNext->blockSignals(block);
 }
 
+void InspectorAtemMacroWidget::checkEmptyMacro()
+{
+    if (this->comboBoxMacro->isEnabled() && this->comboBoxMacro->currentText() == "")
+        this->comboBoxMacro->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxMacro->setStyleSheet("");
+}
+
 void InspectorAtemMacroWidget::macroChanged(int index)
 {
     this->command->setMacro(this->comboBoxMacro->itemData(index).toString());
+
+    checkEmptyMacro();
 }
 
 void InspectorAtemMacroWidget::triggerOnNextChanged(int state)

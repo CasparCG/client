@@ -3,5 +3,6 @@
         <file>Sql/Schema.sql</file>
         <file>Sql/ChangeScript-208.sql</file>
         <file>Sql/ChangeScript-209.sql</file>
+        <file>Sql/ChangeScript-210.sql</file>
     </qresource>
 </RCC>

@@ -175,9 +175,6 @@ INSERT INTO AtemStep (Name, Value) VALUES('Background', 'background');
 INSERT INTO AtemStep (Name, Value) VALUES('DSK 1', '0');
 INSERT INTO AtemStep (Name, Value) VALUES('DSK 2', '1');
 
-INSERT INTO AtemMixerStep (Name, Value) VALUES('1', '0');
-INSERT INTO AtemMixerStep (Name, Value) VALUES('2', '1');
-
 INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 1', '0');
 INSERT INTO AtemKeyer (Name, Value) VALUES('Downstream Key 2', '1');
 INSERT INTO AtemKeyer (Name, Value) VALUES('Upstream Key 1', '2');

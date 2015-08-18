@@ -25,10 +25,15 @@ class WIDGETS_EXPORT InspectorAtemInputWidget : public QWidget, Ui::InspectorAte
         explicit InspectorAtemInputWidget(QWidget* parent = 0);
 
     private:
+        quint8 mixerEffects;
+
         LibraryModel* model;
         AtemInputCommand* command;
         QMap<quint16, QAtem::InputInfo> inputs;
 
+        void checkEmptySwitcher();
+        void checkEmptyInput();
+        void checkEmptyMixerStep();
         void loadAtemSwitcher();
         void blockAllSignals(bool block);
         void loadAtemInput();

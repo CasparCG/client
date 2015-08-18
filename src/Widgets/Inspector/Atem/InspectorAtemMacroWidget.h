@@ -29,6 +29,7 @@ class WIDGETS_EXPORT InspectorAtemMacroWidget : public QWidget, Ui::InspectorAte
         AtemMacroCommand* command;
         QVector<QAtem::MacroInfo> macros;
 
+        void checkEmptyMacro();
         void loadAtemMacro();
         void blockAllSignals(bool block);
 

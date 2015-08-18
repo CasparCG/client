@@ -45,6 +45,8 @@ void InspectorAtemAudioGainWidget::rundownItemSelected(const RundownItemSelected
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
     }
 
+    checkEmptyInput();
+
     blockAllSignals(false);
 }
 
@@ -61,6 +63,7 @@ void InspectorAtemAudioGainWidget::atemDeviceChanged(const AtemDeviceChangedEven
                 this->inputs = device->inputInfos();
 
                 loadAtemAudioInput();
+                checkEmptyInput();
             }
         }
     }
@@ -94,6 +97,16 @@ void InspectorAtemAudioGainWidget::blockAllSignals(bool block)
 void InspectorAtemAudioGainWidget::inputChanged(int index)
 {
     this->command->setInput(this->comboBoxInput->itemData(index).toString());
+
+    checkEmptyInput();
+}
+
+void InspectorAtemAudioGainWidget::checkEmptyInput()
+{
+    if (this->comboBoxInput->isEnabled() && this->comboBoxInput->currentText() == "")
+        this->comboBoxInput->setStyleSheet("border-color: firebrick;");
+    else
+        this->comboBoxInput->setStyleSheet("");
 }
 
 void InspectorAtemAudioGainWidget::sliderGainChanged(int value)

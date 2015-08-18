@@ -521,21 +521,6 @@ QList<AtemStepModel> DatabaseManager::getAtemStep()
     return models;
 }
 
-QList<AtemMixerStepModel> DatabaseManager::getAtemMixerStep()
-{
-    QMutexLocker locker(&mutex);
-
-    QSqlQuery sql;
-    if (!sql.exec("SELECT t.Id, t.Name, t.Value FROM AtemMixerStep t"))
-       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
-
-    QList<AtemMixerStepModel> models;
-    while (sql.next())
-        models.push_back(AtemMixerStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
-
-    return models;
-}
-
 QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
 {
     QMutexLocker locker(&mutex);

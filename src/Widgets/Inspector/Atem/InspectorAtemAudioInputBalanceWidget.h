@@ -29,6 +29,7 @@ class WIDGETS_EXPORT InspectorAtemAudioInputBalanceWidget : public QWidget, Ui::
         AtemAudioInputBalanceCommand* command;
         QMap<quint16, QAtem::InputInfo> inputs;
 
+        void checkEmptyInput();
         void blockAllSignals(bool block);
         void loadAtemAudioInput();
 

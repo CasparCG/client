@@ -13,6 +13,8 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
     public:
         explicit AtemDevice(const QString& address, QObject* parent = 0);
 
+        quint8 mixerEffects();
+
         void triggerAuto(const QString& target, int speed, const QString& transition, const QString& me);
         void triggerCut(const QString& me);
 

@@ -3,7 +3,10 @@
 #include "../../Shared.h"
 #include "ui_InspectorAtemCutWidget.h"
 
+#include "AtemDevice.h"
+
 #include "Commands/Atem/AtemCutCommand.h"
+#include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Models/LibraryModel.h"
 
@@ -20,10 +23,13 @@ class WIDGETS_EXPORT InspectorAtemCutWidget : public QWidget, Ui::InspectorAtemC
         explicit InspectorAtemCutWidget(QWidget* parent = 0);
 
     private:
+        quint8 mixerEffects;
+
         LibraryModel* model;
         AtemCutCommand* command;
 
         void checkEmptyStep();
+        void checkEmptyMixerStep();
         void loadAtemMixerStep();
         void loadAtemStep();
         void blockAllSignals(bool block);
@@ -31,5 +37,6 @@ class WIDGETS_EXPORT InspectorAtemCutWidget : public QWidget, Ui::InspectorAtemC
         Q_SLOT void stepChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SLOT void mixerStepChanged(int);
 };
