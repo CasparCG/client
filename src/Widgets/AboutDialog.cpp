@@ -19,5 +19,6 @@ AboutDialog::AboutDialog(QWidget* parent)
 #endif
 
     this->labelBuildTime->setText(QString("Built on %1").arg(BUILD_TIMESTAMP));
-    this->labelBuildVersion->setText(QString("From revision %1").arg(BUILD_VERSION));
+    this->labelBuildRevision->setText(QString("From revision %1").arg(BUILD_VERSION));
+    this->labelDatabaseRevision->setText(QString("Database revision %1").arg(DATABASE_VERSION));
 }

@@ -22,3 +22,11 @@ QHeaderView::section
 {
     font-size: 9px;
 }
+
+/*
+ * AboutWidget
+ */
+#labelApplicationVersion
+{
+    font-size: 14px;
+}
