@@ -22,34 +22,6 @@ LiveWidget::LiveWidget(QWidget* parent)
     QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
     this->streamPort = (streamPort.isEmpty() == true) ? Stream::DEFAULT_PORT : streamPort.toInt();
 
-    QStringList arguments;
-    arguments.append("--no-osd");
-    arguments.append("--ignore-config");
-    arguments.append(QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
-    arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue()));
-
-    bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
-    if (disableAudioInStream)
-        arguments.append("--no-audio");
-
-    QString args;
-    foreach (QString value, arguments)
-        args += value + " ";
-
-    qDebug("Using live arguments: %s", qPrintable(args.trimmed()));
-
-    char* vlcArguments[arguments.count()];
-    for (int i = 0; i < arguments.count(); i++)
-        vlcArguments[i] = (char*)qstrdup(arguments.at(i).toUtf8().data());
-
-    this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
-    this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);
-
-    this->vlcMedia = libvlc_media_new_location(this->vlcInstance, QString("udp://@0.0.0.0:%1").arg(this->streamPort).toStdString().c_str());
-    libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
-
-    setupRenderTarget(this->windowMode);
-
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeApplication(const CloseApplicationEvent&)), this, SLOT(closeApplication(const CloseApplicationEvent&)));
 }
 
@@ -59,11 +31,17 @@ void LiveWidget::closeApplication(const CloseApplicationEvent& event)
 
     stopStream();
 
-    libvlc_media_player_release(this->vlcMediaPlayer);
-    libvlc_release(this->vlcInstance);
+    if (!this->vlcMediaPlayer)
+    {
+        libvlc_media_player_release(this->vlcMediaPlayer);
+        this->vlcMediaPlayer = NULL;
+    }
 
-    this->vlcMediaPlayer = NULL;
-    this->vlcInstance = NULL;
+    if (!this->vlcInstance)
+    {
+        libvlc_release(this->vlcInstance);
+        this->vlcInstance = NULL;
+    }
 }
 
 void LiveWidget::setupMenus()
@@ -107,17 +85,6 @@ void LiveWidget::setupMenus()
     //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 }
 
-void LiveWidget::setupRenderTarget(bool windowMode)
-{
-#if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
-#elif defined(Q_OS_MAC)
-    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
-#elif defined(Q_OS_LINUX)
-    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
-#endif
-}
-
 void LiveWidget::audioTrackMenuHovered()
 {
     setupAudioTrackMenu();
@@ -125,6 +92,9 @@ void LiveWidget::audioTrackMenuHovered()
 
 void LiveWidget::setupAudioTrackMenu()
 {
+    if (!this->vlcMediaPlayer)
+        return;
+
     if (!libvlc_media_player_is_playing(this->vlcMediaPlayer))
         return;
 
@@ -148,6 +118,9 @@ void LiveWidget::setupAudioTrackMenu()
 
 void LiveWidget::audioMenuActionTriggered(QAction* action)
 {
+    if (!this->vlcMediaPlayer)
+        return;
+
     libvlc_audio_set_track(this->vlcMediaPlayer, action->data().toInt());
 }
 
@@ -197,39 +170,97 @@ void LiveWidget::disconnectStream()
     this->deviceChannel.clear();
 }
 
-void LiveWidget::stopStream()
-{
-    if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
-    {
-        libvlc_media_player_stop(this->vlcMediaPlayer);
-
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
-        if (device != NULL && device->isConnected())
-            device->stopStream(this->deviceChannel.toInt(), this->streamPort);
-    }
-}
-
 void LiveWidget::startStream()
 {
     if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
     {
-        libvlc_media_player_play(this->vlcMediaPlayer);
+        QStringList arguments;
+        arguments.append("--ignore-config");
+        arguments.append("--deinterlace=-1");
+        arguments.append("--deinterlace-mode=yadif");
+        arguments.append("--video-filter=deinterlace");
+        arguments.append(QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
+        arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue()));
 
-        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
-        if (device != NULL && device->isConnected())
+        bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
+        if (disableAudioInStream)
+            arguments.append("--no-audio");
+
+        QString args;
+        foreach (QString value, arguments)
+            args += value + " ";
+
+        qDebug("Using live arguments: %s", qPrintable(args.trimmed()));
+
+        char* vlcArguments[arguments.count()];
+        for (int i = 0; i < arguments.count(); i++)
+            vlcArguments[i] = (char*)qstrdup(arguments.at(i).toUtf8().data());
+
+        this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
+        if (this->vlcInstance)
         {
-            int quality = DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt();
+            this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);
+            if (this->vlcMediaPlayer)
+            {
+                this->vlcMedia = libvlc_media_new_location(this->vlcInstance, QString("udp://@0.0.0.0:%1").arg(this->streamPort).toStdString().c_str());
+                if (this->vlcMedia)
+                {
+                    libvlc_media_player_set_media(this->vlcMediaPlayer, this->vlcMedia);
 
-            if (this->windowMode)
-                device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey);
-            else
-                device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
+                    setupRenderTarget(this->windowMode);
+
+                    libvlc_media_player_play(this->vlcMediaPlayer);
+
+                    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
+                    if (device != NULL && device->isConnected())
+                    {
+                        int quality = DatabaseManager::getInstance().getConfigurationByName("StreamQuality").getValue().toInt();
+
+                        if (this->windowMode)
+                            device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey);
+                        else
+                            device->startStream(this->deviceChannel.toInt(), this->streamPort, quality, this->useKey, Stream::COMPACT_WIDTH, Stream::COMPACT_HEIGHT);
+                    }
+                }
+            }
         }
     }
 }
 
+void LiveWidget::setupRenderTarget(bool windowMode)
+{
+    if (!this->vlcMediaPlayer)
+        return;
+
+#if defined(Q_OS_WIN)
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
+#elif defined(Q_OS_MAC)
+    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
+#elif defined(Q_OS_LINUX)
+    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+#endif
+}
+
+void LiveWidget::stopStream()
+{
+    if (!this->vlcMediaPlayer)
+        return;
+
+    if (this->deviceName.isEmpty() || this->deviceChannel.isEmpty())
+        return;
+
+    libvlc_media_player_stop(this->vlcMediaPlayer);
+
+    const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->deviceName);
+    if (device != NULL && device->isConnected())
+        device->stopStream(this->deviceChannel.toInt(), this->streamPort);
+}
+
 void LiveWidget::muteAudio(bool mute)
 {
+    if (!this->vlcMediaPlayer)
+        return;
+
     libvlc_audio_set_mute(this->vlcMediaPlayer, mute);
 }
 
