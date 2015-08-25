@@ -27,11 +27,11 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         bool useKey;
         int streamPort;
 
-        LiveDialog* liveDialog;
+        LiveDialog* liveDialog = nullptr;
 
-        libvlc_media_t* vlcMedia;
-        libvlc_instance_t* vlcInstance;
-        libvlc_media_player_t* vlcMediaPlayer;
+        libvlc_media_t* vlcMedia = nullptr;
+        libvlc_instance_t* vlcInstance = nullptr;
+        libvlc_media_player_t* vlcMediaPlayer = nullptr;
 
         QMenu* streamMenu;
         QMenu* audioMenu;

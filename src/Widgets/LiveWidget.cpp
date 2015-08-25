@@ -31,16 +31,16 @@ void LiveWidget::closeApplication(const CloseApplicationEvent& event)
 
     stopStream();
 
-    if (!this->vlcMediaPlayer)
+    if (this->vlcMediaPlayer != nullptr)
     {
         libvlc_media_player_release(this->vlcMediaPlayer);
-        this->vlcMediaPlayer = NULL;
+        this->vlcMediaPlayer = nullptr;
     }
 
-    if (!this->vlcInstance)
+    if (this->vlcInstance != nullptr)
     {
         libvlc_release(this->vlcInstance);
-        this->vlcInstance = NULL;
+        this->vlcInstance = nullptr;
     }
 }
 
