@@ -54,9 +54,9 @@ void AtemDevice::triggerCut(const QString& me)
 QVector<QAtem::MacroInfo> AtemDevice::macroInfos()
 {
     /*
-    QMap<quint8, QAtem::InputInfo> macros = SwitcherDevice::atemConnection->macroInfos();
-    foreach (quint8 key, macros.keys())
-        qDebug("Name: %s Index: %s", qPrintable(macros.value(key).name), qPrintable(macros.value(key).index));
+    QVector<QAtem::MacroInfo> macros = SwitcherDevice::atemConnection->macroInfos();
+    foreach (QAtem::MacroInfo macro, macros)
+        qDebug("Name: %s Index: %s", qPrintable(macro.name), qPrintable(macro.index));
     */
 
     return SwitcherDevice::atemConnection->macroInfos();
