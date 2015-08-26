@@ -68,13 +68,13 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
             logMessage = QString("[%1] [%2] [D] %3").arg(timestamp).arg(threadId).arg(message);
             break;
         case QtWarningMsg:
-            logMessage = QString("\033[33m[%1] [%2] [W] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+            logMessage = QString("[%1] [%2] [W] %3").arg(timestamp).arg(threadId).arg(message);
             break;
         case QtCriticalMsg:
-            logMessage = QString("\033[31m[%1] [%2] [C] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+            logMessage = QString("[%1] [%2] [C] %3").arg(timestamp).arg(threadId).arg(message);
             break;
         case QtFatalMsg:
-            logMessage = QString("\033[31m[%1] [%2] [F] %3\033[0m").arg(timestamp).arg(threadId).arg(message);
+            logMessage = QString("[%1] [%2] [F] %3").arg(timestamp).arg(threadId).arg(message);
     }
 
     fprintf(stderr, "%s\n", qPrintable(logMessage));
