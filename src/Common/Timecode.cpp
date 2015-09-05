@@ -4,7 +4,7 @@
 
 QString Timecode::fromTime(const QTime& time)
 {
-    QString result = time.toString("hh:mm:ss").append(":");
+    QString result = time.toString("hh:mm:ss").append(".");
 
     int msec = time.msec() / 10;
     if (msec < 10)
@@ -27,5 +27,5 @@ QString Timecode::fromTime(double time, double fps)
     seconds = (int)(time - hour * 3600 - minutes * 60);
     frames = (int)((time - hour * 3600 - minutes * 60 - seconds) * fps);
 
-    return smpteFormat.sprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
+    return smpteFormat.sprintf("%02d:%02d:%02d.%02d", hour, minutes, seconds, frames);
 }
