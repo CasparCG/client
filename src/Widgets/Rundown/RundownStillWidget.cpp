@@ -42,7 +42,7 @@ RundownStillWidget::RundownStillWidget(const LibraryModel& model, QWidget* paren
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_STILL_COLOR));
 
-    this->labelLabel->setText(this->model.getLabel());
+    this->labelLabel->setText(this->model.getLabel().split('/').last());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
@@ -79,7 +79,7 @@ void RundownStillWidget::labelChanged(const LabelChangedEvent& event)
         return;
 
     this->model.setLabel(event.getLabel());
-    this->labelLabel->setText(this->model.getLabel());
+    this->labelLabel->setText(this->model.getLabel().split('/').last());
 }
 
 void RundownStillWidget::targetChanged(const TargetChangedEvent& event)
