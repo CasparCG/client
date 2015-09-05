@@ -653,11 +653,12 @@ void CasparDevice::sendNotification()
                     // "CG1080I50"  MOVIE  6159792 20121101150514 264 1/25
                     // "GO1080P25"  MOVIE  16694084 20121101150514 445 1/25
                     // "WIPE"  MOVIE  1268784 20121101150514 31 1/25
+                    // "HOOLOOVOO"  MOVIE  1111111 22222222222222 333 100/2997
                     QString totalFrames = response.split("\" ").at(1).trimmed().split(" ").at(4);
-                    QString timebase = response.split("\" ").at(1).trimmed().split(" ").at(5);
+                    QStringList timebase = response.split("\" ").at(1).trimmed().split(" ").at(5).split("/");
 
                     int frames = totalFrames.toInt();
-                    int fps = timebase.split("/").at(1).toInt();
+                    double fps = timebase.at(1).toDouble() / timebase.at(0).toDouble();
 
                     double time = frames * (1.0 / fps);
                     timecode = Timecode::fromTime(time, fps);
@@ -693,7 +694,7 @@ void CasparDevice::sendNotification()
             emit templateChanged(items, *this);
 
             break;
-        }       
+        }
         case AmcpDevice::AmcpDeviceCommand::INFO:
         {
             AmcpDevice::response.removeFirst(); // First post is the header, 200 INFO OK.
