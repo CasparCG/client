@@ -9,7 +9,7 @@ class COMMON_EXPORT Timecode
 {
     public:
         static QString fromTime(const QTime& time);
-        static QString fromTime(double time, int fps);
+        static QString fromTime(double time, double fps);
 
     private:
         Timecode() {}

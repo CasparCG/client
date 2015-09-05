@@ -13,7 +13,7 @@ QString Timecode::fromTime(const QTime& time)
     return result.append(QString("%1").arg(msec));
 }
 
-QString Timecode::fromTime(double time, int fps)
+QString Timecode::fromTime(double time, double fps)
 {
     int hour;
     int minutes;

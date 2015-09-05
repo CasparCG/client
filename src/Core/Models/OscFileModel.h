@@ -21,8 +21,8 @@ class CORE_EXPORT OscFileModel
         int getTotalFrames() const;
         void setTotalFrames(int totalFrames);
 
-        int getFramesPerSecond() const;
-        void setFramesPerSecond(int fps);
+        double getFramesPerSecond() const;
+        void setFramesPerSecond(double fps);
 
         const QString& getPath() const;
         void setPath(const QString& path);
@@ -32,7 +32,7 @@ class CORE_EXPORT OscFileModel
         double totalTime;
         int currentFrame;
         int totalFrames;
-        int fps;
+        double fps;
         QString path;
 };
 

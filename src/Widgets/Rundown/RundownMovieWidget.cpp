@@ -1085,7 +1085,7 @@ void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const
     if (this->fileModel == NULL)
         return;
 
-    this->fileModel->setFramesPerSecond(arguments.at(0).toInt());
+    this->fileModel->setFramesPerSecond(arguments.at(0).toDouble());
 }
 
 void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)

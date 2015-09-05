@@ -17,14 +17,14 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         void setStartTime(const QString& startTime, bool reverseOscTime);
         void setInOutTime(int seek, int length);
         void setProgress(int currentFrame);
-        void setFramesPerSecond(int fps);
+        void setFramesPerSecond(double fps);
         void setPaused(bool paused);
         void setLoop(bool loop);
 
         void setCompactView(bool compactView);
 
     private:
-        int fps;
+        double fps;
         bool paused;
         qint64 timestamp;
         QString startTime;
