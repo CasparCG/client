@@ -116,7 +116,7 @@ void OscTimeWidget::setProgress(int currentFrame)
     this->progressBarOscTime->update();
 }
 
-void OscTimeWidget::setFramesPerSecond(int fps)
+void OscTimeWidget::setFramesPerSecond(double fps)
 {
     this->fps = fps;
 }

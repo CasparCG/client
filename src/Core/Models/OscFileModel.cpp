@@ -45,12 +45,12 @@ void OscFileModel::setTotalFrames(int totalFrames)
     this->totalFrames = totalFrames;
 }
 
-int OscFileModel::getFramesPerSecond() const
+double OscFileModel::getFramesPerSecond() const
 {
     return this->fps;
 }
 
-void OscFileModel::setFramesPerSecond(int fps)
+void OscFileModel::setFramesPerSecond(double fps)
 {
     this->fps = fps;
 }
