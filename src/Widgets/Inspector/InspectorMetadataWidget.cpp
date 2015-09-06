@@ -30,7 +30,7 @@ void InspectorMetadataWidget::rundownItemSelected(const RundownItemSelectedEvent
 
     this->lineEditLabel->setEnabled(true);
     this->lineEditLabel->setReadOnly(false);
-    this->lineEditLabel->setText(this->model->getLabel());
+    this->lineEditLabel->setText(this->model->getLabel().split('/').last());
 
     blockAllSignals(false);
 }
