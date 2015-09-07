@@ -15,7 +15,7 @@ DurationWidget::DurationWidget(QWidget* parent)
     setupUi(this);
 
     this->updateTimer.setInterval(50);
-    this->lcdNumber->display("00:00:00:00");
+    this->lcdNumber->display("00:00:00.00");
 
     QObject::connect(&this->updateTimer, SIGNAL(timeout()), this, SLOT(updateTime()));
     QObject::connect(&EventManager::getInstance(), SIGNAL(durationChanged(const DurationChangedEvent&)), this, SLOT(durationChanged(const DurationChangedEvent&)));
@@ -45,7 +45,7 @@ void DurationWidget::durationChanged(const DurationChangedEvent& event)
     this->progressBarDuration->setMaximum(this->duration);
     this->progressBarDuration->setValue(this->duration);
 
-    this->time = QTime::fromString("00:00:00:00").addMSecs(this->duration);
+    this->time = QTime::fromString("00:00:00.00").addMSecs(this->duration);
 
     this->labelCountdownDuration->setText(Timecode::fromTime(this->time));
 
@@ -77,6 +77,6 @@ void DurationWidget::resetDuration()
     this->updateTimer.stop();
 
     this->progressBarDuration->setValue(0);
-    this->lcdNumber->display("00:00:00:00");
-    this->labelCountdownDuration->setText("00:00:00:00");
+    this->lcdNumber->display("00:00:00.00");
+    this->labelCountdownDuration->setText("00:00:00.00");
 }

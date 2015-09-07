@@ -351,7 +351,7 @@ void RundownGroupWidget::durationChanged(int duration)
 {
     Q_UNUSED(duration);
 
-    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00:00").addMSecs(this->command.getDuration()))));
+    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00.00").addMSecs(this->command.getDuration()))));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)
