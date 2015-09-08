@@ -54,6 +54,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
     this->comboBoxTheme->setCurrentIndex(this->comboBoxTheme->findText(DatabaseManager::getInstance().getConfigurationByName("Theme").getValue()));
     this->spinBoxFontSize->setValue(DatabaseManager::getInstance().getConfigurationByName("FontSize").getValue().toInt());
+    bool useDropFrameNotation = (DatabaseManager::getInstance().getConfigurationByName("UseDropFrameNotation").getValue() == "true") ? true : false;
+    this->checkBoxUseDropFrameNotation->setChecked(useDropFrameNotation);
 
     bool autoRefreshLibrary = (DatabaseManager::getInstance().getConfigurationByName("AutoRefreshLibrary").getValue() == "true") ? true : false;
     this->checkBoxAutoRefresh->setChecked(autoRefreshLibrary);
@@ -964,4 +966,10 @@ void SettingsDialog::useFreezeOnLoadChanged(int state)
 {
     QString useFreezeOnLoad = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "UseFreezeOnLoad", useFreezeOnLoad));
+}
+
+void SettingsDialog::useDropFrameNotationChanged(int state)
+{
+    QString useDropFrameNotation = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "UseDropFrameNotation", useDropFrameNotation));
 }

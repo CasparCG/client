@@ -20,7 +20,9 @@ class WIDGETS_EXPORT DurationWidget : public QWidget, Ui::DurationWidget
         explicit DurationWidget(QWidget* parent = 0);
 
     private:
-        int duration;
+        int duration = 0;
+        bool useDropFrameNotation = false;
+
         QTime time;
         QTime timeSinceStart;
         QTimer updateTimer;

@@ -10,8 +10,7 @@
 #include <QtCore/QDebug>
 
 OscTimeWidget::OscTimeWidget(QWidget* parent)
-    : QWidget(parent),
-      fps(0), paused(false), timestamp(0), startTime(""), reverseOscTime(false)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -22,6 +21,11 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
         this->labelOscInTime->setVisible(false);
         this->labelOscOutTime->setVisible(false);
     }
+
+    this->useDropFrameNotation = (DatabaseManager::getInstance().getConfigurationByName("UseDropFrameNotation").getValue() == "true") ? true : false;
+    this->labelOscTime->setText(QString("00:00:00").append((this->useDropFrameNotation == true) ? ".00" : ":00"));
+    this->labelOscInTime->setText(QString("00:00:00").append((this->useDropFrameNotation == true) ? ".00" : ":00"));
+    this->labelOscOutTime->setText(QString("00:00:00").append((this->useDropFrameNotation == true) ? ".00" : ":00"));
 
 #if defined(Q_OS_MAC)
     this->labelOscTime->setGeometry(this->labelOscTime->geometry().x() + 2, this->labelOscTime->geometry().y() + 1,
@@ -65,7 +69,7 @@ void OscTimeWidget::setTime(int currentFrame)
 
     double currentTime = currentFrame * (1.0 / this->fps);
 
-    this->labelOscTime->setText(Timecode::fromTime(currentTime, this->fps));
+    this->labelOscTime->setText(Timecode::fromTime(currentTime, this->fps, this->useDropFrameNotation));
 
     if (this->timestamp == 0) // First time.
         QTimer::singleShot(500, this, SLOT(checkState()));
@@ -98,8 +102,8 @@ void OscTimeWidget::setInOutTime(int seek, int length)
     double inTime = seek * (1.0 / this->fps);
     double outTime = (seek + length) * (1.0 / this->fps);
 
-    this->labelOscInTime->setText(Timecode::fromTime(inTime, this->fps));
-    this->labelOscOutTime->setText(Timecode::fromTime(outTime, this->fps));
+    this->labelOscInTime->setText(Timecode::fromTime(inTime, this->fps, this->useDropFrameNotation));
+    this->labelOscOutTime->setText(Timecode::fromTime(outTime, this->fps, this->useDropFrameNotation));
 
     this->progressBarOscTime->setRange(seek, seek + length);
 }

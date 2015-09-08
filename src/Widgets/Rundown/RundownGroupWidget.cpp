@@ -28,6 +28,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     this->animation = new ActiveAnimation(this->labelActiveColor);
 
     this->markUsedItems = (DatabaseManager::getInstance().getConfigurationByName("MarkUsedItems").getValue() == "true") ? true : false;
+    this->useDropFrameNotation = (DatabaseManager::getInstance().getConfigurationByName("UseDropFrameNotation").getValue() == "true") ? true : false;
 
     setColor(this->color);
     setActive(this->active);
@@ -351,7 +352,8 @@ void RundownGroupWidget::durationChanged(int duration)
 {
     Q_UNUSED(duration);
 
-    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(QTime::fromString("00:00:00.00").addMSecs(this->command.getDuration()))));
+    QTime time = QTime::fromString(QString("00:00:00").append((this->useDropFrameNotation == true) ? ".00" : ":00"));
+    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(time.addMSecs(this->command.getDuration()), this->useDropFrameNotation)));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)

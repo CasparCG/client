@@ -53,8 +53,9 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         virtual void setSelected(bool selected);
 
     private:
-        bool active;
-        bool compactView;
+        bool active = false;
+        bool compactView = false;
+        bool useDropFrameNotation = false;
         QString color; 
         LibraryModel model;
         GroupCommand command;

@@ -24,11 +24,13 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         void setCompactView(bool compactView);
 
     private:
-        double fps;
-        bool paused;
-        qint64 timestamp;
-        QString startTime;
-        bool reverseOscTime;
+        double fps = 0;
+        bool paused = false;
+        bool reverseOscTime = false;
+        bool useDropFrameNotation = false;
+
+        qint64 timestamp = 0;
+        QString startTime = "";
 
         Q_SLOT void checkState();
 };

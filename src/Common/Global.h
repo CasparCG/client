@@ -108,7 +108,7 @@ namespace Osc
     static const int DEFAULT_PAUSE_Y = 14;
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
-    static const QString DEFAULT_TIME = "00:00:00.00";
+    static const QString DEFAULT_TIME = "00:00:00:00";
     static const QString DEFAULT_TIME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/time";
     static const QString DEFAULT_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame";
     static const QString DEFAULT_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps";

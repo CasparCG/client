@@ -715,6 +715,22 @@
       <string>Use freeze on load for video items</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxUseDropFrameNotation">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>96</y>
+       <width>211</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Use drop frame notation</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabLiveStream">
     <attribute name="title">
@@ -3632,8 +3648,8 @@
    <slot>showAddDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>152</x>
-     <y>806</y>
+     <x>154</x>
+     <y>679</y>
     </hint>
     <hint type="destinationlabel">
      <x>39</x>
@@ -3649,7 +3665,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>194</x>
-     <y>806</y>
+     <y>679</y>
     </hint>
     <hint type="destinationlabel">
      <x>80</x>
@@ -3712,8 +3728,8 @@
    <slot>startFullscreenChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>80</y>
+     <x>163</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -3744,8 +3760,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>166</y>
+     <x>215</x>
+     <y>191</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3760,8 +3776,8 @@
    <slot>gpi2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>201</y>
+     <x>215</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3840,8 +3856,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>376</y>
+     <x>215</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3856,8 +3872,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>411</y>
+     <x>215</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3872,8 +3888,8 @@
    <slot>serialPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>70</y>
+     <x>215</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -3888,8 +3904,8 @@
    <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>166</y>
+     <x>373</x>
+     <y>191</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3904,8 +3920,8 @@
    <slot>gpi2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>201</y>
+     <x>373</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -3984,8 +4000,8 @@
    <slot>gpi7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>376</y>
+     <x>373</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
      <x>262</x>
@@ -4000,8 +4016,8 @@
    <slot>gpi8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>411</y>
+     <x>373</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4016,8 +4032,8 @@
    <slot>gpo1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>472</y>
+     <x>215</x>
+     <y>460</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4032,8 +4048,8 @@
    <slot>gpo1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>471</y>
+     <x>447</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4048,8 +4064,8 @@
    <slot>gpo2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>507</y>
+     <x>215</x>
+     <y>490</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4064,8 +4080,8 @@
    <slot>gpo2Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>506</y>
+     <x>447</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4080,8 +4096,8 @@
    <slot>gpo3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>542</y>
+     <x>215</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4096,8 +4112,8 @@
    <slot>gpo3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>541</y>
+     <x>447</x>
+     <y>522</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4112,8 +4128,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>577</y>
+     <x>215</x>
+     <y>550</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4128,8 +4144,8 @@
    <slot>gpo4Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>576</y>
+     <x>447</x>
+     <y>552</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4144,8 +4160,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>612</y>
+     <x>215</x>
+     <y>580</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4160,8 +4176,8 @@
    <slot>gpo5Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>611</y>
+     <x>447</x>
+     <y>582</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4176,8 +4192,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>647</y>
+     <x>215</x>
+     <y>610</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4192,8 +4208,8 @@
    <slot>gpo6Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>646</y>
+     <x>447</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4208,8 +4224,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>682</y>
+     <x>215</x>
+     <y>640</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4224,8 +4240,8 @@
    <slot>gpo7Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>681</y>
+     <x>447</x>
+     <y>642</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4240,8 +4256,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>717</y>
+     <x>215</x>
+     <y>670</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4256,8 +4272,8 @@
    <slot>gpo8Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>445</x>
-     <y>716</y>
+     <x>447</x>
+     <y>672</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4272,8 +4288,8 @@
    <slot>baudRateChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>105</y>
+     <x>215</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -4353,7 +4369,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>657</x>
-     <y>806</y>
+     <y>679</y>
     </hint>
     <hint type="destinationlabel">
      <x>691</x>
@@ -4368,8 +4384,8 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>108</y>
+     <x>179</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -4400,8 +4416,8 @@
    <slot>removeOscOutput()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>436</y>
+     <x>164</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4416,8 +4432,8 @@
    <slot>showAddOscOutputDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>436</y>
+     <x>125</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -4432,8 +4448,8 @@
    <slot>delayTypeChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>526</x>
-     <y>554</y>
+     <x>528</x>
+     <y>582</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -4448,8 +4464,8 @@
    <slot>enableOscInputChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>72</y>
+     <x>125</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4480,8 +4496,8 @@
    <slot>showAddAtemDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>782</y>
+     <x>152</x>
+     <y>691</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -4496,8 +4512,8 @@
    <slot>removeAtemDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>188</x>
-     <y>782</y>
+     <x>190</x>
+     <y>691</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -4512,8 +4528,8 @@
    <slot>showImportAtemDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>646</x>
-     <y>782</y>
+     <x>648</x>
+     <y>691</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4560,8 +4576,8 @@
    <slot>showAddTriCasterDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>140</x>
-     <y>421</y>
+     <x>142</x>
+     <y>384</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -4576,8 +4592,8 @@
    <slot>removeTriCasterDevice()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>421</y>
+     <x>189</x>
+     <y>384</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -4592,8 +4608,8 @@
    <slot>showImportTriCasterDeviceDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>640</x>
-     <y>417</y>
+     <x>642</x>
+     <y>384</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4608,8 +4624,8 @@
    <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>309</x>
-     <y>413</y>
+     <x>311</x>
+     <y>442</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4656,8 +4672,8 @@
    <slot>deleteThumbnails()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>230</x>
-     <y>782</y>
+     <x>232</x>
+     <y>678</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
@@ -4672,8 +4688,8 @@
    <slot>storeThumbnailsInDatabaseChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>746</y>
+     <x>125</x>
+     <y>637</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4752,8 +4768,8 @@
    <slot>networkCacheChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>212</x>
-     <y>683</y>
+     <x>214</x>
+     <y>175</y>
     </hint>
     <hint type="destinationlabel">
      <x>703</x>
@@ -4768,8 +4784,8 @@
    <slot>disableAudioInStreamChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>612</y>
+     <x>125</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>706</x>
@@ -4784,8 +4800,8 @@
    <slot>streamQualityChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>212</x>
-     <y>648</y>
+     <x>214</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>708</x>
@@ -4816,8 +4832,8 @@
    <slot>tricasterProductChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>271</x>
-     <y>77</y>
+     <x>273</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -4832,8 +4848,8 @@
    <slot>showDurationChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>565</y>
+     <x>217</x>
+     <y>582</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -4848,8 +4864,8 @@
    <slot>useFreezeOnLoadChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>563</x>
-     <y>486</y>
+     <x>565</x>
+     <y>504</y>
     </hint>
     <hint type="destinationlabel">
      <x>696</x>
@@ -4864,8 +4880,8 @@
    <slot>streamPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>589</x>
-     <y>694</y>
+     <x>591</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -4880,12 +4896,28 @@
    <slot>logLevelChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>611</x>
-     <y>616</y>
+     <x>613</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
      <y>825</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseDropFrameNotation</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>useDropFrameNotationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>488</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>25</y>
     </hint>
    </hints>
   </connection>
@@ -4955,5 +4987,6 @@
   <slot>useFreezeOnLoadChanged(int)</slot>
   <slot>streamPortChanged()</slot>
   <slot>logLevelChanged(int)</slot>
+  <slot>useDropFrameNotationChanged(int)</slot>
  </slots>
 </ui>

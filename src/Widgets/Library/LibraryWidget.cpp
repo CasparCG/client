@@ -85,6 +85,8 @@ LibraryWidget::LibraryWidget(QWidget* parent)
     this->treeWidgetPreset->setColumnHidden(1, true);
     this->treeWidgetPreset->setColumnHidden(2, true);
 
+    this->useDropFrameNotation = (DatabaseManager::getInstance().getConfigurationByName("UseDropFrameNotation").getValue() == "true") ? true : false;
+
     QObject::connect(this->treeWidgetTool, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
     QObject::connect(this->treeWidgetPreset, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuPresetRequested(const QPoint &)));
     QObject::connect(this->treeWidgetAudio, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
@@ -710,7 +712,14 @@ void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
                 widget->setText(3, model.getDeviceName());
                 widget->setText(4, model.getType());
                 widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                widget->setText(6, model.getTimecode());
+
+                if (this->useDropFrameNotation)
+                {
+                    QString timecode = model.getTimecode();
+                    widget->setText(6, timecode.replace(model.getTimecode().lastIndexOf(":"), 1, "."));
+                }
+                else
+                    widget->setText(6, model.getTimecode());
             }
             else if (model.getType() == "STILL")
             {
@@ -722,7 +731,14 @@ void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
                 widget->setText(3, model.getDeviceName());
                 widget->setText(4, model.getType());
                 widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                widget->setText(6, model.getTimecode());
+
+                if (this->useDropFrameNotation)
+                {
+                    QString timecode = model.getTimecode();
+                    widget->setText(6, timecode.replace(model.getTimecode().lastIndexOf(":"), 1, "."));
+                }
+                else
+                    widget->setText(6, model.getTimecode());
             }
             else if (model.getType() == "MOVIE")
             {
@@ -734,7 +750,14 @@ void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
                 widget->setText(3, model.getDeviceName());
                 widget->setText(4, model.getType());
                 widget->setText(5, QString("%1").arg(model.getThumbnailId()));
-                widget->setText(6, model.getTimecode());
+
+                if (this->useDropFrameNotation)
+                {
+                    QString timecode = model.getTimecode();
+                    widget->setText(6, timecode.replace(model.getTimecode().lastIndexOf(":"), 1, "."));
+                }
+                else
+                    widget->setText(6, model.getTimecode());
             }
         }
     }

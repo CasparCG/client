@@ -11,7 +11,16 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <property name="spacing">
@@ -83,9 +92,6 @@
           <height>100</height>
          </size>
         </property>
-        <property name="numDigits">
-         <number>11</number>
-        </property>
         <property name="digitCount">
          <number>11</number>
         </property>
@@ -111,7 +117,7 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="numDigits">
+        <property name="digitCount">
          <number>2</number>
         </property>
         <property name="segmentStyle">
@@ -139,7 +145,7 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="numDigits">
+        <property name="digitCount">
          <number>2</number>
         </property>
         <property name="segmentStyle">
@@ -167,7 +173,7 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="numDigits">
+        <property name="digitCount">
          <number>2</number>
         </property>
         <property name="segmentStyle">
@@ -195,7 +201,7 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="numDigits">
+        <property name="digitCount">
          <number>2</number>
         </property>
         <property name="segmentStyle">
@@ -223,7 +229,7 @@
        <item>
         <widget class="QLabel" name="labelZero">
          <property name="text">
-          <string>00:00:00:00</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -287,7 +293,7 @@
        <item>
         <widget class="QLabel" name="labelCountdownDuration">
          <property name="text">
-          <string>00:00:00:00</string>
+          <string/>
          </property>
         </widget>
        </item>

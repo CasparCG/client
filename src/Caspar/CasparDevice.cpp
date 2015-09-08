@@ -2,6 +2,8 @@
 
 #include "Timecode.h"
 
+#include "../Core/DatabaseManager.h"
+
 #include <QtCore/QStringList>
 
 #include <QtNetwork/QHostInfo>
@@ -661,7 +663,7 @@ void CasparDevice::sendNotification()
                     double fps = timebase.at(1).toDouble() / timebase.at(0).toDouble();
 
                     double time = frames * (1.0 / fps);
-                    timecode = Timecode::fromTime(time, fps);
+                    timecode = Timecode::fromTime(time, fps, false);
                 }
 
                 items.push_back(CasparMedia(name, type, timecode));
