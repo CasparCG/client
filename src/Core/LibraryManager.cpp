@@ -194,7 +194,7 @@ void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDe
         EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     }
 
-    qDebug("LibraryManager::deviceMediaChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::mediaChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
@@ -240,7 +240,7 @@ void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems,
         EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     }
 
-    qDebug("LibraryManager::deviceTemplateChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::templateChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
@@ -286,7 +286,7 @@ void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevic
         EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     }
 
-    qDebug("LibraryManager::deviceDataChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::dataChanged %d msec", time.elapsed());
 }
 
 void LibraryManager::thumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)
