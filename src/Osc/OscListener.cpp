@@ -9,30 +9,41 @@
 OscListener::OscListener(const QString& address, int port, QObject* parent)
     : QObject(parent)
 {
-    this->socket = new UdpSocket();
-    this->socket->SetAllowReuse(true);
-    this->socket->Bind(IpEndpointName(address.toStdString().c_str(), port));
+    try
+    {
+        this->socket = new UdpSocket();
+        this->socket->SetAllowReuse(true);
+        this->socket->Bind(IpEndpointName(address.toStdString().c_str(), port));
 
-    this->multiplexer = new SocketReceiveMultiplexer();
-    this->multiplexer->AttachSocketListener(this->socket, this);
+        this->multiplexer = new SocketReceiveMultiplexer();
+        this->multiplexer->AttachSocketListener(this->socket, this);
 
-    this->thread = new OscThread(this->multiplexer, this);
+        this->thread = new OscThread(this->multiplexer, this);
 
-    QTimer::singleShot(200, this, SLOT(sendEventBatch()));
+        QTimer::singleShot(200, this, SLOT(sendEventBatch()));
+    }
+    catch (std::runtime_error &e)
+    {
+        qDebug("%s", qPrintable(QString::fromStdString(e.what()).trimmed()));
+    }
 }
 
 OscListener::~OscListener()
 {
-    this->thread->stop();
-    this->thread->wait();
+    if (this->thread != nullptr)
+    {
+        this->thread->stop();
+        this->thread->wait();
 
-    delete this->socket;
-    delete this->multiplexer;
+        delete this->socket;
+        delete this->multiplexer;
+    }
 }
 
 void OscListener::start()
 {
-    this->thread->start();
+    if (this->thread != nullptr && this->socket->IsBound())
+        this->thread->start();
 }
 
 void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint)

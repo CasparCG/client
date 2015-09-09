@@ -30,9 +30,9 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
     private:
         QMutex eventsMutex;
         QMap<QString, QList<QVariant>> events;
-        OscThread* thread;
-        UdpSocket* socket;
-        SocketReceiveMultiplexer* multiplexer;
+        OscThread* thread = nullptr;
+        UdpSocket* socket = nullptr;
+        SocketReceiveMultiplexer* multiplexer = nullptr;
 
         Q_SLOT void sendEventBatch();
 };
