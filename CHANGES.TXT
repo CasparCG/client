@@ -2,6 +2,7 @@ CasparCG Client 2.0.9
 =====================
 - NEW: Added support for drop frame notation. (dimitry-ishenko)
 - FIX: Properly calculate fractional fps. (dimitry-ishenko)
+- FIX: Various bug fixes and enhancements.
 - UPDATE: Strip leading directories from filename to improve readability. (dimitry-ishenko)
 
 
