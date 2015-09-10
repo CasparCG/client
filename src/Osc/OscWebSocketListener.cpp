@@ -1,4 +1,4 @@
-#include "OscListener.h"
+#include "OscWebSocketListener.h"
 
 #include <QtCore/QString>
 #include <QtCore/QThread>
@@ -6,46 +6,31 @@
 #include <QtCore/QPair>
 #include <QtCore/QDebug>
 
-OscListener::OscListener(const QString& address, int port, QObject* parent)
+#include <QtWebSockets/QWebSocket>
+#include <QtWebSockets/QWebSocketServer>
+
+OscWebSocketListener::OscWebSocketListener(const QString& address, int port, QObject* parent)
     : QObject(parent)
 {
-    try
+    this->socket = new QWebSocketServer("", QWebSocketServer::NonSecureMode, this);
+    if (this->socket->listen(QHostAddress::Any, port))
     {
-        this->socket = new UdpSocket();
-        this->socket->SetAllowReuse(true);
-        this->socket->Bind(IpEndpointName(address.toStdString().c_str(), port));
+        qDebug("Listening for incoming OSC over WebSocket on port %d", qPrintable(port);
 
-        qDebug("Listening for incoming OSC over UDP on port %d", qPrintable(port));
-
-        this->multiplexer = new SocketReceiveMultiplexer();
-        this->multiplexer->AttachSocketListener(this->socket, this);
-
-        this->thread = new OscThread(this->multiplexer, this);
-
-        QTimer::singleShot(200, this, SLOT(sendEventBatch()));
+        QObject::connect(&this->socket, SIGNAL(newConnection), this, SLOT(newConnection));
     }
-    catch (std::runtime_error &e)
+    else
     {
-        qDebug("%s", qPrintable(QString::fromStdString(e.what()).trimmed()));
+        qWarning("Unable to listen on port %d", port);
     }
 }
 
-OscListener::~OscListener()
+OscWebSocketListener::~OscWebSocketListener()
 {
-    if (this->thread != nullptr)
-    {
-        this->thread->stop();
-        this->thread->wait();
-
-        delete this->socket;
-        delete this->multiplexer;
-    }
 }
 
-void OscListener::start()
+void OscWebSocketListener::start()
 {
-    if (this->thread != nullptr && this->socket->IsBound())
-        this->thread->start();
 }
 
 void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint)
@@ -89,7 +74,7 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
         this->events[eventPath] = arguments;
 }
 
-void OscListener::sendEventBatch()
+void OscWebSocketListener::sendEventBatch()
 {
     QMap<QString, QList<QVariant>> other;
     {

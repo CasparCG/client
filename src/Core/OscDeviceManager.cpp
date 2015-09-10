@@ -1,8 +1,6 @@
 #include "OscDeviceManager.h"
 #include "DatabaseManager.h"
 
-#include <stdexcept>
-
 #include <QtCore/QSharedPointer>
 
 Q_GLOBAL_STATIC(OscDeviceManager, oscDeviceManager)

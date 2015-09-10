@@ -1,4 +1,4 @@
-QT += core
+QT += core network websockets
 
 CONFIG += c++11
 
@@ -11,12 +11,14 @@ HEADERS += \
     Shared.h \
     OscThread.h \
     OscListener.h \
-    OscSender.h
+    OscSender.h \
+    OscWebSocketListener.h
 
 SOURCES += \
     OscThread.cpp \
     OscListener.cpp \
-    OscSender.cpp
+    OscSender.cpp \
+    OscWebSocketListener.cpp
 
 CONFIG(system-boost) {
     LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono

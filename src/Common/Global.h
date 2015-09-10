@@ -87,6 +87,7 @@ namespace Osc
     static const bool DEFAULT_USE_BUNDLE = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const int DEFAULT_PORT = 6250;
+    static const int DEFAULT_WEBSOCKET_PORT = 4250;
     static const QString DEFAULT_OUTPUT = "";
     static const QString DEFAULT_TYPE = "String";
     static const int DEFAULT_OUTPUT_PORT = 7250;
