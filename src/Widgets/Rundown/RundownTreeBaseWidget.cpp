@@ -744,6 +744,9 @@ void RundownTreeBaseWidget::moveItemIntoGroup()
 
 void RundownTreeBaseWidget::setExpanded(bool expanded)
 {
+    if (QTreeWidget::currentItem() == nullptr)
+        return;
+
     QWidget* selectedWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
     AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 
