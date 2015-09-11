@@ -16,81 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutNoteField">
-     <item>
-      <spacer name="horizontalSpacerNotes">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>33</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelNotes">
-       <property name="text">
-        <string>Notes</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="plainTextEditNotes">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>40</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutAutoStep">
-     <item>
-      <spacer name="horizontalSpacerAutoStep1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>8</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelAutoStep">
-       <property name="text">
-        <string>Auto step</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAutoStep">
        <property name="layoutDirection">
@@ -116,34 +44,70 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelAutoStep">
+     <property name="text">
+      <string>Auto step</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelNotes">
+     <property name="text">
+      <string>Notes</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <spacer name="verticalSpacerGroup">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPlainTextEdit" name="plainTextEditNotes">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>40</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelAutoPlay">
+     <property name="text">
+      <string>Auto play</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutAutoPlay">
-     <item>
-      <spacer name="horizontalSpacerAutoPlay1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>8</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelAutoPlay">
-       <property name="text">
-        <string>Auto play</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxAutoPlay">
        <property name="layoutDirection">
@@ -168,22 +132,6 @@
       </spacer>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacerGroup">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
