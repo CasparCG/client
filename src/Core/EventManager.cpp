@@ -427,7 +427,7 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
     else if (type ==  Rundown::PLAYOUTCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Playout Command", "", "", Rundown::PLAYOUTCOMMAND, 0, "")));
     else if (type ==  Rundown::FADETOBLACK)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade to Black", "", "", Rundown::FADETOBLACK, 0, "")));
+        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade Out", "", "", Rundown::FADETOBLACK, 0, "")));
     else if (type ==  Rundown::PANASONICPRESET)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Panasonic PTZ Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)

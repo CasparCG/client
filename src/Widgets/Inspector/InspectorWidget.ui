@@ -1138,7 +1138,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Fade to Black</string>
+               <string>Fade Out</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

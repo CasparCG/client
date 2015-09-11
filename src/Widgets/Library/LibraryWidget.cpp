@@ -357,9 +357,9 @@ void LibraryWidget::setupTools()
 
     QTreeWidgetItem* widgetFadeToBlack = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(2));
     widgetFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/FadeToBlackSmall.png"));
-    widgetFadeToBlack->setText(0, "Fade to Black");
+    widgetFadeToBlack->setText(0, "Fade Out");
     widgetFadeToBlack->setText(1, "0");
-    widgetFadeToBlack->setText(2, "Fade to Black");
+    widgetFadeToBlack->setText(2, "Fade Out");
     widgetFadeToBlack->setText(3, "");
     widgetFadeToBlack->setText(4, Rundown::FADETOBLACK);
     widgetFadeToBlack->setText(5, "0");

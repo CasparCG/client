@@ -145,7 +145,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/ClearSmall.png"), "Clear Output", this, SLOT(addClearOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/CustomCommandSmall.png"), "Custom Command", this, SLOT(addCustomCommandItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/DeckLinkProducerSmall.png"), "DeckLink Input", this, SLOT(addDeckLinkInputItem()));
-    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Fade to Black", this, SLOT(addFadeToBlackItem()));
+    this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Fade Out", this, SLOT(addFadeToBlackItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/FileRecorderSmall.png"), "File Recorder", this, SLOT(addFileRecorderItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/GpiOutputSmall.png"), "GPI Output", this, SLOT(addGpiOutputItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/HtmlSmall.png"), "HTML Page", this, SLOT(addHtmlItem()));
