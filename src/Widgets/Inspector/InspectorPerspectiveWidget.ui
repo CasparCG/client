@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
-    <height>392</height>
+    <width>300</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,328 +16,63 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUpperLeftX">
-     <item>
-      <spacer name="horizontalSpacerUpperLeftX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUpperLeftX">
-       <property name="text">
-        <string>Upper Left X</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderUpperLeftX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxUpperLeftX"/>
-     </item>
-    </layout>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item row="1" column="1">
+    <widget class="QSlider" name="sliderUpperLeftY">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUpperLeftY">
-     <item>
-      <spacer name="horizontalSpacerUpperLeftY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUpperLeftY">
-       <property name="text">
-        <string>Upper Left Y</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderUpperLeftY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxUpperLeftY"/>
-     </item>
-    </layout>
+   <item row="9" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxTween">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUpperRightX">
-     <item>
-      <spacer name="horizontalSpacerUpperRightX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>24</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUpperRightX">
-       <property name="text">
-        <string>Upper Right X</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderUpperRightX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxUpperRightX"/>
-     </item>
-    </layout>
+   <item row="0" column="1">
+    <widget class="QSlider" name="sliderUpperLeftX">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUpperRightY">
-     <item>
-      <spacer name="horizontalSpacerUpperRightY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>24</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUpperRightY">
-       <property name="text">
-        <string>Upper Right Y</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderUpperRightY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxUpperRightY"/>
-     </item>
-    </layout>
+   <item row="8" column="0">
+    <widget class="QLabel" name="labelTransitionDuration">
+     <property name="text">
+      <string>Duration</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLowerRightX">
-     <item>
-      <spacer name="horizontalSpacerLowerRightX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>24</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelLowerRightX">
-       <property name="text">
-        <string>Lower Right X</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderLowerRightX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxLowerRightX"/>
-     </item>
-    </layout>
+   <item row="9" column="0">
+    <widget class="QLabel" name="labelEasing">
+     <property name="text">
+      <string>Tween</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLowerRightY">
-     <item>
-      <spacer name="horizontalSpacerLowerRightY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>24</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelLowerRightY">
-       <property name="text">
-        <string>Lower Right Y</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderLowerRightY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxLowerRightY"/>
-     </item>
-    </layout>
+   <item row="2" column="1">
+    <widget class="QSlider" name="sliderUpperRightX">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLowerLeftX">
-     <item>
-      <spacer name="horizontalSpacerLowerLeftX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelLowerLeftX">
-       <property name="text">
-        <string>Lower Left X</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderLowerLeftX">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxLowerLeftX"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLowerLeftY">
-     <item>
-      <spacer name="horizontalSpacerLowerLeftY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelLowerLeftY">
-       <property name="text">
-        <string>Lower Left Y</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="sliderLowerLeftY">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBoxLowerLeftY"/>
-     </item>
-    </layout>
-   </item>
-   <item>
+   <item row="8" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayoutTransitionDuration">
-     <item>
-      <spacer name="horizontalSpacerTransitionDuration">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>50</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTransitionDuration">
-       <property name="text">
-        <string>Duration</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QSpinBox" name="spinBoxTransitionDuration">
        <property name="sizePolicy">
@@ -363,71 +98,74 @@
      </item>
     </layout>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutTween">
-     <item>
-      <spacer name="horizontalSpacerTween">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>63</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelEasing">
-       <property name="text">
-        <string>Tween</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxTween">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelUpperRightX">
+     <property name="text">
+      <string>Upper Right X</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelUpperRightY">
+     <property name="text">
+      <string>Upper Right Y</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelUpperLeftY">
+     <property name="text">
+      <string>Upper Left Y</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelUpperLeftX">
+     <property name="text">
+      <string>Upper Left X</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSlider" name="sliderLowerRightX">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QSpinBox" name="spinBoxUpperLeftX"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="QSpinBox" name="spinBoxUpperLeftY"/>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="labelUseMipmap">
+     <property name="text">
+      <string>Use Mipmapping</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QSpinBox" name="spinBoxUpperRightX"/>
+   </item>
+   <item row="10" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
-     <item>
-      <spacer name="horizontalSpacerTriggerOnNext1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>11</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTriggerOnNext">
-       <property name="text">
-        <string>Trigger on next</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxTriggerOnNext">
        <property name="layoutDirection">
@@ -453,34 +191,111 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="3" column="1">
+    <widget class="QSlider" name="sliderUpperRightY">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QSpinBox" name="spinBoxUpperRightY"/>
+   </item>
+   <item row="4" column="2">
+    <widget class="QSpinBox" name="spinBoxLowerRightX"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelLowerRightX">
+     <property name="text">
+      <string>Lower Right X</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="labelLowerRightY">
+     <property name="text">
+      <string>Lower Right Y</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="labelLowerLeftX">
+     <property name="text">
+      <string>Lower Left X</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QSlider" name="sliderLowerRightY">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="labelTriggerOnNext">
+     <property name="text">
+      <string>Trigger on next</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QSpinBox" name="spinBoxLowerRightY"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="labelLowerLeftY">
+     <property name="text">
+      <string>Lower Left Y</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QSlider" name="sliderLowerLeftX">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QSpinBox" name="spinBoxLowerLeftX"/>
+   </item>
+   <item row="7" column="1">
+    <widget class="QSlider" name="sliderLowerLeftY">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QSpinBox" name="spinBoxLowerLeftY"/>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="labelDefer">
+     <property name="text">
+      <string>Defer</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayoutUseMipmap">
-     <item>
-      <spacer name="horizontalSpacerUseMipmap1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUseMipmap">
-       <property name="text">
-        <string>Use Mipmapping</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxUseMipmap">
        <property name="layoutDirection">
@@ -506,34 +321,8 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="12" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayoutDefer">
-     <item>
-      <spacer name="horizontalSpacerDefer1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>62</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelDefer">
-       <property name="text">
-        <string>Defer</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxDefer">
        <property name="layoutDirection">
@@ -559,24 +348,31 @@
      </item>
     </layout>
    </item>
-   <item>
-    <spacer name="verticalSpacerPerspective">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sliderUpperLeftX</tabstop>
+  <tabstop>spinBoxUpperLeftX</tabstop>
+  <tabstop>sliderUpperLeftY</tabstop>
+  <tabstop>spinBoxUpperLeftY</tabstop>
+  <tabstop>sliderUpperRightX</tabstop>
+  <tabstop>spinBoxUpperRightX</tabstop>
+  <tabstop>sliderUpperRightY</tabstop>
+  <tabstop>spinBoxUpperRightY</tabstop>
+  <tabstop>sliderLowerRightX</tabstop>
+  <tabstop>spinBoxLowerRightX</tabstop>
+  <tabstop>sliderLowerRightY</tabstop>
+  <tabstop>spinBoxLowerRightY</tabstop>
+  <tabstop>sliderLowerLeftX</tabstop>
+  <tabstop>spinBoxLowerLeftX</tabstop>
+  <tabstop>sliderLowerLeftY</tabstop>
+  <tabstop>spinBoxLowerLeftY</tabstop>
+  <tabstop>spinBoxTransitionDuration</tabstop>
+  <tabstop>comboBoxTween</tabstop>
+  <tabstop>checkBoxTriggerOnNext</tabstop>
+  <tabstop>checkBoxUseMipmap</tabstop>
+  <tabstop>checkBoxDefer</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

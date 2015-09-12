@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>235</width>
-    <height>442</height>
+    <width>300</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,398 +16,90 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutStop">
-     <item>
-      <spacer name="horizontalSpacerStop">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelStop">
-       <property name="text">
-        <string>Stop</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditStop"/>
-     </item>
-    </layout>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item row="6" column="0">
+    <widget class="QLabel" name="labelInvoke">
+     <property name="text">
+      <string>Invoke</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPlay">
-     <item>
-      <spacer name="horizontalSpacerPlay">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>42</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPlay">
-       <property name="text">
-        <string>Play</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditPlay"/>
-     </item>
-    </layout>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEditStop"/>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutLoad">
-     <item>
-      <spacer name="horizontalSpacerLoad">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>39</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelLoad">
-       <property name="text">
-        <string>Load</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditLoad"/>
-     </item>
-    </layout>
+   <item row="8" column="0">
+    <widget class="QLabel" name="labelClear">
+     <property name="text">
+      <string>Clear</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPause">
-     <item>
-      <spacer name="horizontalSpacerPause">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>33</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPause">
-       <property name="text">
-        <string>Pause</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditPause"/>
-     </item>
-    </layout>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="lineEditNext"/>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutNext">
-     <item>
-      <spacer name="horizontalSpacerNext">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>39</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelNext">
-       <property name="text">
-        <string>Next</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditNext"/>
-     </item>
-    </layout>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineEditPlay"/>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutUpdate">
-     <item>
-      <spacer name="horizontalSpacerUpdate">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>27</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelUpdate">
-       <property name="text">
-        <string>Update</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditUpdate"/>
-     </item>
-    </layout>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lineEditInvoke"/>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutInvoke">
-     <item>
-      <spacer name="horizontalSpacerInvoke">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>29</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelInvoke">
-       <property name="text">
-        <string>Invoke</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditInvoke"/>
-     </item>
-    </layout>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelPlay">
+     <property name="text">
+      <string>Play</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPreview">
-     <item>
-      <spacer name="horizontalSpacerPreview">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>22</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPrev">
-       <property name="text">
-        <string>Preview</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditPreview"/>
-     </item>
-    </layout>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelLoad">
+     <property name="text">
+      <string>Load</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutClear">
-     <item>
-      <spacer name="horizontalSpacerClear">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>37</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelClear">
-       <property name="text">
-        <string>Clear</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditClear"/>
-     </item>
-    </layout>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelStop">
+     <property name="text">
+      <string>Stop</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutClearVideolayer">
-     <item>
-      <spacer name="horizontalSpacerClearVideolayer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelClearVideolayer">
-       <property name="text">
-        <string>Clear Videolayer</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditClearVideolayer"/>
-     </item>
-    </layout>
+   <item row="5" column="0">
+    <widget class="QLabel" name="labelUpdate">
+     <property name="text">
+      <string>Update</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutClearChannel">
-     <item>
-      <spacer name="horizontalSpacerClearChannel">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>15</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelClearChannel">
-       <property name="text">
-        <string>Clear Channel</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditClearChannel"/>
-     </item>
-    </layout>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="lineEditUpdate"/>
    </item>
-   <item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="lineEditClear"/>
+   </item>
+   <item row="11" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
-     <item>
-      <spacer name="horizontalSpacerTriggerOnNext1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTriggerOnNext">
-       <property name="text">
-        <string>Trigger on next</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxTriggerOnNext">
        <property name="layoutDirection">
@@ -433,24 +125,97 @@
      </item>
     </layout>
    </item>
-   <item>
-    <spacer name="verticalSpacerFileRecorder">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lineEditLoad"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelPause">
+     <property name="text">
+      <string>Pause</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelNext">
+     <property name="text">
+      <string>Next</string>
      </property>
-    </spacer>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lineEditPause"/>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="labelClearChannel">
+     <property name="text">
+      <string>Clear Channel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QLineEdit" name="lineEditClearChannel"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="labelPrev">
+     <property name="text">
+      <string>Preview</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="labelTriggerOnNext">
+     <property name="text">
+      <string>Trigger on next</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="lineEditPreview"/>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="labelClearVideolayer">
+     <property name="text">
+      <string>Clear Video layer</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="lineEditClearVideolayer"/>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditStop</tabstop>
+  <tabstop>lineEditPlay</tabstop>
+  <tabstop>lineEditLoad</tabstop>
+  <tabstop>lineEditPause</tabstop>
+  <tabstop>lineEditNext</tabstop>
+  <tabstop>lineEditUpdate</tabstop>
+  <tabstop>lineEditInvoke</tabstop>
+  <tabstop>lineEditPreview</tabstop>
+  <tabstop>lineEditClear</tabstop>
+  <tabstop>lineEditClearVideolayer</tabstop>
+  <tabstop>lineEditClearChannel</tabstop>
+  <tabstop>checkBoxTriggerOnNext</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
