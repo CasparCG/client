@@ -38,6 +38,7 @@ void InspectorCustomCommandWidget::rundownItemSelected(const RundownItemSelected
         this->lineEditClearVideolayer->setText(this->command->getClearVideolayerCommand());
         this->lineEditClearChannel->setText(this->command->getClearChannelCommand());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
     }
 
     blockAllSignals(false);
@@ -57,6 +58,7 @@ void InspectorCustomCommandWidget::blockAllSignals(bool block)
     this->lineEditClearVideolayer->blockSignals(block);
     this->lineEditClearChannel->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxAutoStep->blockSignals(block);
 }
 
 void InspectorCustomCommandWidget::stopCommandChanged(QString command)
@@ -119,3 +121,7 @@ void InspectorCustomCommandWidget::triggerOnNextChanged(int state)
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
 }
 
+void InspectorCustomCommandWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
+}
