@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>208</height>
+    <height>236</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,20 +20,20 @@
    <property name="bottomMargin">
     <number>20</number>
    </property>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelTween">
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelDirection">
      <property name="text">
-      <string>Tween</string>
+      <string>Direction</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelUseAuto">
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelTween">
      <property name="text">
-      <string>Use auto</string>
+      <string>Tween</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -47,69 +47,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="labelFrm1">
-     <property name="text">
-      <string>frm</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QSpinBox" name="spinBoxTransitionDuration">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="text">
-      <string>Trigger on next</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelDirection">
-     <property name="text">
-      <string>Direction</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="labelTransition">
-     <property name="text">
-      <string>Transition</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBoxDirection">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
      </property>
     </widget>
    </item>
@@ -140,16 +77,6 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBoxTween">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
      <item>
@@ -177,6 +104,26 @@
      </item>
     </layout>
    </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="labelFrm1">
+     <property name="text">
+      <string>frm</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxDirection">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1" colspan="2">
     <widget class="QComboBox" name="comboBoxTransition">
      <property name="sizePolicy">
@@ -184,6 +131,96 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelTransition">
+     <property name="text">
+      <string>Transition</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="labelAutoStep">
+     <property name="text">
+      <string>Auto step</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelUseAuto">
+     <property name="text">
+      <string>Use auto</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxTween">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="labelTriggerOnNext">
+     <property name="text">
+      <string>Trigger on next</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoStep">
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoStep">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoStep2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="spinBoxTransitionDuration">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximum">
+      <number>999</number>
      </property>
     </widget>
    </item>
@@ -196,6 +233,7 @@
   <tabstop>comboBoxDirection</tabstop>
   <tabstop>checkBoxUseAuto</tabstop>
   <tabstop>checkBoxTriggerOnNext</tabstop>
+  <tabstop>checkBoxAutoStep</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -295,6 +333,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorFadeToBlackWidget</receiver>
+   <slot>autoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>129</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>117</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>transitionDurationChanged(int)</slot>
@@ -306,5 +360,6 @@
   <slot>colorDialogClicked()</slot>
   <slot>colorChanged(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>autoStepChanged(int)</slot>
  </slots>
 </ui>

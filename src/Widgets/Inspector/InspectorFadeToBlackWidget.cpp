@@ -39,6 +39,7 @@ void InspectorFadeToBlackWidget::rundownItemSelected(const RundownItemSelectedEv
         this->comboBoxTween->setCurrentIndex(this->comboBoxTween->findText(this->command->getTween()));
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
     }
 
     blockAllSignals(false);
@@ -51,6 +52,7 @@ void InspectorFadeToBlackWidget::blockAllSignals(bool block)
     this->comboBoxTween->blockSignals(block);
     this->comboBoxDirection->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxAutoStep->blockSignals(block);
 }
 
 void InspectorFadeToBlackWidget::loadDirection()
@@ -120,4 +122,9 @@ void InspectorFadeToBlackWidget::useAutoChanged(int state)
 void InspectorFadeToBlackWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorFadeToBlackWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
 }
