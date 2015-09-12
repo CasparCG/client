@@ -51,6 +51,11 @@ QString AbstractCommand::getStoryId() const
     return this->storyId;
 }
 
+bool AbstractCommand::getAutoStep() const
+{
+    return this->autoStep;
+}
+
 void AbstractCommand::setChannel(int channel)
 {
     this->channel = channel;
@@ -99,6 +104,12 @@ void AbstractCommand::setStoryId(const QString& storyId)
     emit storyIdChanged(this->storyId);
 }
 
+void AbstractCommand::setAutoStep(bool autoStep)
+{
+    this->autoStep = autoStep;
+    emit autoStepChanged(this->autoStep);
+}
+
 void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
     setChannel(pt.get(L"channel", Output::DEFAULT_CHANNEL));
@@ -109,6 +120,7 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
     setAllowRemoteTriggering(pt.get(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
     setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
     setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
+    setAutoStep(pt.get(L"autostep", Output::DEFAULT_AUTO_STEP));
 }
 
 void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
@@ -121,4 +133,5 @@ void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
     writer->writeTextElement("remotetriggerid", getRemoteTriggerId());
     writer->writeTextElement("storyid", getStoryId());
+    writer->writeTextElement("autostep", (getAutoStep() == true) ? "true" : "false");
 }

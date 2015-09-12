@@ -185,7 +185,7 @@ namespace Mixer
     static const float DEFAULT_VOLUME = 1.0f;
     static const float DEFAULT_CHROMABLENDSTART = 0.340f;
     static const float DEFAULT_CHROMABLENDSTOP = 0.440f;
-    static const float DEFAULT_CHROMASPILL = 1.0f; 
+    static const float DEFAULT_CHROMASPILL = 1.0f;
     static const float DEFAULT_PERSPECTIVE_UPPERLEFT_X = 0.0f;
     static const float DEFAULT_PERSPECTIVE_UPPERLEFT_Y = 0.0f;
     static const float DEFAULT_PERSPECTIVE_UPPERRIGHT_X = 1.0f;
@@ -270,6 +270,7 @@ namespace Output
     static const QString DEFAULT_DELAY_IN_FRAMES = "Frames";
     static const QString DEFAULT_DELAY_IN_MILLISECONDS = "Milliseconds";
     static const QString DEFAULT_PLAYOUT_COMMAND = "Play";
+    static const bool DEFAULT_AUTO_STEP = false;
 }
 
 namespace Audio
@@ -408,7 +409,6 @@ namespace ClearOutput
 namespace Group
 {
     static const QString DEFAULT_NOTE = "";
-    static const bool DEFAULT_AUTO_STEP = false;
     static const bool DEFAULT_AUTO_PLAY = false;
 }
 
