@@ -46,12 +46,6 @@
    </item>
    <item row="8" column="0">
     <widget class="QLabel" name="labelTransitionDuration">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Duration</string>
      </property>
@@ -62,12 +56,6 @@
    </item>
    <item row="9" column="0">
     <widget class="QLabel" name="labelEasing">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Tween</string>
      </property>
@@ -112,12 +100,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelUpperRightX">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Upper Right X</string>
      </property>
@@ -128,12 +110,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelUpperRightY">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Upper Right Y</string>
      </property>
@@ -144,12 +120,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelUpperLeftY">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Upper Left Y</string>
      </property>
@@ -160,12 +130,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelUpperLeftX">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Upper Left X</string>
      </property>
@@ -189,12 +153,6 @@
    </item>
    <item row="11" column="0">
     <widget class="QLabel" name="labelUseMipmap">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Use Mipmapping</string>
      </property>
@@ -248,12 +206,6 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="labelLowerRightX">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Lower Right X</string>
      </property>
@@ -264,12 +216,6 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelLowerRightY">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Lower Right Y</string>
      </property>
@@ -280,12 +226,6 @@
    </item>
    <item row="6" column="0">
     <widget class="QLabel" name="labelLowerLeftX">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Lower Left X</string>
      </property>
@@ -303,12 +243,6 @@
    </item>
    <item row="10" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -322,12 +256,6 @@
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="labelLowerLeftY">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Lower Left Y</string>
      </property>
@@ -358,12 +286,6 @@
    </item>
    <item row="12" column="0">
     <widget class="QLabel" name="labelDefer">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Defer</string>
      </property>

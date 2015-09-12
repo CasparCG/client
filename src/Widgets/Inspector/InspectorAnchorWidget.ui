@@ -29,12 +29,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelEasing">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Tween</string>
      </property>
@@ -72,12 +66,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelPositionY">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Position Y</string>
      </property>
@@ -125,12 +113,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelTransitionDuration">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Duration</string>
      </property>
@@ -178,12 +160,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelPositionX">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Position X</string>
      </property>
@@ -197,12 +173,6 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -213,12 +183,6 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelDefer">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Defer</string>
      </property>

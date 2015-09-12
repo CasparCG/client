@@ -39,12 +39,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelThreshold">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Threshold</string>
      </property>
@@ -65,12 +59,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelSoftness">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Softness</string>
      </property>
@@ -84,16 +72,10 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelKey">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>27</width>
-       <height>18</height>
+       <width>120</width>
+       <height>14</height>
       </size>
      </property>
      <property name="text">
@@ -133,12 +115,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelSpill">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Spill</string>
      </property>

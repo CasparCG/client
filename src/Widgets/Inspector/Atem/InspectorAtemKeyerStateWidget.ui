@@ -32,12 +32,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelMixerStep">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>M / E</string>
      </property>
@@ -48,12 +42,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelKeyer">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Keyer</string>
      </property>
@@ -64,12 +52,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -131,12 +113,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelState">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>On AIR</string>
      </property>

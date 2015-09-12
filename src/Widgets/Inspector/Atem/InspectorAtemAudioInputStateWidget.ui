@@ -22,12 +22,6 @@
    </property>
    <item row="0" column="0">
     <widget class="QLabel" name="labelInput">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Input</string>
      </property>
@@ -75,12 +69,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelState">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>State</string>
      </property>
@@ -101,12 +89,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>

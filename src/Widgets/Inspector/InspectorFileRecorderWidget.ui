@@ -22,12 +22,6 @@
    </property>
    <item row="4" column="0">
     <widget class="QLabel" name="labelWithAlpha">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>With alpha</string>
      </property>
@@ -58,12 +52,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelCodec">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Codec</string>
      </property>
@@ -77,12 +65,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelOutput">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Output</string>
      </property>
@@ -165,12 +147,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelPreset">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Preset</string>
      </property>
@@ -201,12 +177,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelTune">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Tune</string>
      </property>

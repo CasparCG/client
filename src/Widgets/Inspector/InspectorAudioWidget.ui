@@ -86,12 +86,6 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelUseAuto">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Use auto</string>
      </property>
@@ -102,12 +96,6 @@
    </item>
    <item row="6" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -128,12 +116,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelDirection">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Direction</string>
      </property>
@@ -144,12 +126,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelTransitionDuration">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Duration</string>
      </property>
@@ -187,12 +163,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelTransition">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Transition</string>
      </property>
@@ -203,12 +173,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelTween">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Tween</string>
      </property>
@@ -229,12 +193,6 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="labelLoop">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Loop</string>
      </property>

@@ -22,12 +22,6 @@
    </property>
    <item row="4" column="0">
     <widget class="QLabel" name="labelGamma">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Gamma</string>
      </property>
@@ -48,12 +42,6 @@
    </item>
    <item row="6" column="0">
     <widget class="QLabel" name="labelEasing">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Tween</string>
      </property>
@@ -115,12 +103,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelMaxOut">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Max out</string>
      </property>
@@ -131,12 +113,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelMinIn">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Min in</string>
      </property>
@@ -154,12 +130,6 @@
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="labelDefer">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Defer</string>
      </property>
@@ -197,12 +167,6 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelTransitionDuration">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Duration</string>
      </property>
@@ -213,12 +177,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelMaxIn">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Max in</string>
      </property>
@@ -256,12 +214,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelMinOut">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Min out</string>
      </property>

@@ -19,12 +19,6 @@
    </property>
    <item row="0" column="0">
     <widget class="QLabel" name="labelOutput">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Output</string>
      </property>
@@ -35,12 +29,6 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelType">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Type</string>
      </property>
@@ -64,12 +52,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelPath">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Path</string>
      </property>
@@ -80,12 +62,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelMessage">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Message</string>
      </property>
@@ -96,12 +72,6 @@
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -177,12 +147,6 @@
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelUseBundle">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Use bundle</string>
      </property>

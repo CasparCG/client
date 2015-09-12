@@ -42,12 +42,6 @@
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Trigger on next</string>
      </property>
@@ -58,12 +52,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="labelStep">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Step</string>
      </property>
@@ -74,12 +62,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelMixerStep">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>M / E</string>
      </property>

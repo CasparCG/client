@@ -92,12 +92,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelPlayout">
-     <property name="minimumSize">
-      <size>
-       <width>120</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="text">
       <string>Playout</string>
      </property>
