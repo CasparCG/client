@@ -38,6 +38,7 @@ void InspectorStillWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->comboBoxDirection->setCurrentIndex(this->comboBoxDirection->findText(this->command->getDirection()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
     }
 
     blockAllSignals(false);
@@ -51,6 +52,7 @@ void InspectorStillWidget::blockAllSignals(bool block)
     this->comboBoxDirection->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxUseAuto->blockSignals(block);
+    this->checkBoxAutoStep->blockSignals(block);
 }
 
 void InspectorStillWidget::loadDirection()
@@ -120,4 +122,9 @@ void InspectorStillWidget::useAutoChanged(int state)
 void InspectorStillWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorStillWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
 }
