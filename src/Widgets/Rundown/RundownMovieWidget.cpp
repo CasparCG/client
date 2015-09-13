@@ -45,6 +45,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
 
     this->labelAutoPlay->setVisible(false);
     this->labelLoopOverlay->setVisible(false);
+    this->labelAutoStep->setVisible(false);
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));

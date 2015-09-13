@@ -38,6 +38,8 @@ RundownStillWidget::RundownStillWidget(const LibraryModel& model, QWidget* paren
 
     this->command.setImageName(this->model.getName());
 
+    this->labelAutoStep->setVisible(false);
+
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_STILL_COLOR));

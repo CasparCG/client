@@ -35,6 +35,8 @@ RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QW
     setActive(this->active);
     setCompactView(this->compactView);
 
+    this->labelAutoStep->setVisible(false);
+
     this->labelGroupColor->setVisible(inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_COLOR_PRODUCER_COLOR));
