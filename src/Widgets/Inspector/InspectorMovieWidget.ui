@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>330</height>
+    <height>358</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,6 +20,19 @@
    <property name="bottomMargin">
     <number>20</number>
    </property>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="spinBoxSeek">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="1">
     <widget class="QSpinBox" name="spinBoxTransitionDuration">
      <property name="sizePolicy">
@@ -30,6 +43,62 @@
      </property>
      <property name="maximum">
       <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxTween">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="labelPauseOnLoad">
+     <property name="text">
+      <string>Freeze on load</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="labelTriggerOnNext">
+     <property name="text">
+      <string>Trigger on next</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QSpinBox" name="spinBoxLength">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelSeek">
+     <property name="toolTip">
+      <string>Start playback at this frame</string>
+     </property>
+     <property name="text">
+      <string>Seek</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -60,6 +129,29 @@
      </item>
     </layout>
    </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="labelLength">
+     <property name="toolTip">
+      <string>Stop playback at this frame relative to the seek frame</string>
+     </property>
+     <property name="text">
+      <string>Length</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QLabel" name="labelFrm3">
+     <property name="text">
+      <string>frm</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="labelTransition">
      <property name="text">
@@ -70,15 +162,32 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBoxTransition">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
+   <item row="12" column="1" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoPlay">
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoPlay">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoPlay2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item row="4" column="2">
     <widget class="QLabel" name="labelFrm2">
@@ -90,8 +199,65 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
-    <widget class="QLabel" name="labelFrm3">
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelTransitionDuration">
+     <property name="text">
+      <string>Duration</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelDirection">
+     <property name="text">
+      <string>Direction</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelTween">
+     <property name="text">
+      <string>Tween</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayoutFreezeOnLoad">
+     <item>
+      <widget class="QCheckBox" name="checkBoxFreezeOnLoad">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerFreezeOnLoad2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="labelFrm1">
      <property name="text">
       <string>frm</string>
      </property>
@@ -127,31 +293,8 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelSeek">
-     <property name="toolTip">
-      <string>Start playback at this frame</string>
-     </property>
-     <property name="text">
-      <string>Seek</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="labelFrm1">
-     <property name="text">
-      <string>frm</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QComboBox" name="comboBoxTween">
+   <item row="0" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxTransition">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -160,116 +303,20 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="labelTriggerOnNext">
+   <item row="12" column="0">
+    <widget class="QLabel" name="labelAutoPlay">
      <property name="text">
-      <string>Trigger on next</string>
+      <string>Auto play</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QSpinBox" name="spinBoxSeek">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QSpinBox" name="spinBoxLength">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="labelPauseOnLoad">
+   <item row="10" column="0">
+    <widget class="QLabel" name="labelAutoStep">
      <property name="text">
-      <string>Freeze on load</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelDirection">
-     <property name="text">
-      <string>Direction</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="labelLength">
-     <property name="toolTip">
-      <string>Stop playback at this frame relative to the seek frame</string>
-     </property>
-     <property name="text">
-      <string>Length</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayoutFreezeOnLoad">
-     <item>
-      <widget class="QCheckBox" name="checkBoxFreezeOnLoad">
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacerFreezeOnLoad2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="labelTransitionDuration">
-     <property name="text">
-      <string>Duration</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelTween">
-     <property name="text">
-      <string>Tween</string>
+      <string>Auto step</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -296,20 +343,10 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="labelAutoPlay">
-     <property name="text">
-      <string>Auto play</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="10" column="1" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayoutAutoPlay">
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoStep">
      <item>
-      <widget class="QCheckBox" name="checkBoxAutoPlay">
+      <widget class="QCheckBox" name="checkBoxAutoStep">
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
@@ -319,7 +356,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacerAutoPlay2">
+      <spacer name="horizontalSpacerAutoStep2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -345,6 +382,7 @@
   <tabstop>checkBoxLoop</tabstop>
   <tabstop>checkBoxFreezeOnLoad</tabstop>
   <tabstop>checkBoxTriggerOnNext</tabstop>
+  <tabstop>checkBoxAutoStep</tabstop>
   <tabstop>checkBoxAutoPlay</tabstop>
  </tabstops>
  <resources/>
@@ -357,7 +395,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>137</x>
-     <y>224</y>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>220</x>
@@ -437,7 +475,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>137</x>
-     <y>257</y>
+     <y>249</y>
     </hint>
     <hint type="destinationlabel">
      <x>239</x>
@@ -453,7 +491,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>137</x>
-     <y>289</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -509,6 +547,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorMovieWidget</receiver>
+   <slot>autoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>transitionDurationChanged(int)</slot>
@@ -532,5 +586,6 @@
   <slot>resetTriggerOnNext(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
   <slot>autoPlayChanged(int)</slot>
+  <slot>autoStepChanged(int)</slot>
  </slots>
 </ui>

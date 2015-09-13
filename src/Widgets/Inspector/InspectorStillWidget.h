@@ -35,5 +35,6 @@ class WIDGETS_EXPORT InspectorStillWidget : public QWidget, Ui::InspectorStillWi
         Q_SLOT void tweenChanged(QString);
         Q_SLOT void useAutoChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void autoStepChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

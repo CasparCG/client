@@ -46,6 +46,7 @@ void InspectorMovieWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->checkBoxLoop->setChecked(this->command->getLoop());
         this->checkBoxFreezeOnLoad->setChecked(this->command->getFreezeOnLoad());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
 
         RundownGroupWidget* parent = dynamic_cast<RundownGroupWidget*>(event.getParent());
         AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(event.getSource());
@@ -79,6 +80,7 @@ void InspectorMovieWidget::blockAllSignals(bool block)
     this->checkBoxLoop->blockSignals(block);
     this->checkBoxFreezeOnLoad->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->checkBoxAutoStep->blockSignals(block);
     this->checkBoxAutoPlay->blockSignals(block);
 }
 
@@ -164,6 +166,11 @@ void InspectorMovieWidget::seekChanged(int seek)
 void InspectorMovieWidget::lengthChanged(int length)
 {
     this->command->setLength(length);
+}
+
+void InspectorMovieWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
 }
 
 void InspectorMovieWidget::autoPlayChanged(int state)

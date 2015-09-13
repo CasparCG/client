@@ -39,6 +39,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->command.setAudioName(this->model.getName());
 
     this->labelLoopOverlay->setVisible(false);
+    this->labelAutoStep->setVisible(false);
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
@@ -57,6 +58,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
@@ -654,6 +656,11 @@ void RundownAudioWidget::allowGpiChanged(bool allowGpi)
     Q_UNUSED(allowGpi);
 
     checkGpiConnection();
+}
+
+void RundownAudioWidget::autoStepChanged(bool autoStep)
+{
+    this->labelAutoStep->setVisible(autoStep);
 }
 
 void RundownAudioWidget::loopChanged(bool loop)

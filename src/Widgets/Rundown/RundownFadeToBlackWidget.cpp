@@ -35,6 +35,8 @@ RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QW
     setActive(this->active);
     setCompactView(this->compactView);
 
+    this->labelAutoStep->setVisible(false);
+
     this->labelGroupColor->setVisible(inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_COLOR_PRODUCER_COLOR));
@@ -52,6 +54,7 @@ RundownFadeToBlackWidget::RundownFadeToBlackWidget(const LibraryModel& model, QW
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
@@ -610,6 +613,11 @@ void RundownFadeToBlackWidget::allowGpiChanged(bool allowGpi)
     Q_UNUSED(allowGpi);
 
     checkGpiConnection();
+}
+
+void RundownFadeToBlackWidget::autoStepChanged(bool autoStep)
+{
+    this->labelAutoStep->setVisible(autoStep);
 }
 
 void RundownFadeToBlackWidget::gpiConnectionStateChanged(bool connected, GpiDevice* device)

@@ -83,7 +83,7 @@ void InspectorGroupWidget::resetAutoStep(QString note)
 {
     Q_UNUSED(note);
 
-    this->checkBoxAutoStep->setChecked(Group::DEFAULT_AUTO_STEP);
+    this->checkBoxAutoStep->setChecked(Output::DEFAULT_AUTO_STEP);
     this->command->setAutoStep(this->checkBoxAutoStep->isChecked());
 }
 

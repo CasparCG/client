@@ -39,6 +39,7 @@ void InspectorAudioWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->checkBoxLoop->setChecked(this->command->getLoop());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
         this->checkBoxUseAuto->setChecked(this->command->getUseAuto());
+        this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
     }
 
     blockAllSignals(false);
@@ -53,6 +54,7 @@ void InspectorAudioWidget::blockAllSignals(bool block)
     this->checkBoxLoop->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
     this->checkBoxUseAuto->blockSignals(block);
+    this->checkBoxAutoStep->blockSignals(block);
 }
 
 void InspectorAudioWidget::loadDirection()
@@ -127,4 +129,9 @@ void InspectorAudioWidget::useAutoChanged(int state)
 void InspectorAudioWidget::triggerOnNextChanged(int state)
 {
     this->command->setTriggerOnNext((state == Qt::Checked) ? true : false);
+}
+
+void InspectorAudioWidget::autoStepChanged(int state)
+{
+    this->command->setAutoStep((state == Qt::Checked) ? true : false);
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>403</height>
+    <height>431</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,9 +30,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lineEditStop"/>
-   </item>
    <item row="8" column="0">
     <widget class="QLabel" name="labelClear">
      <property name="text">
@@ -43,29 +40,26 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="lineEditNext"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEditPlay"/>
-   </item>
-   <item row="6" column="1">
-    <widget class="QLineEdit" name="lineEditInvoke"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="labelPlay">
+   <item row="11" column="0">
+    <widget class="QLabel" name="labelTriggerOnNext">
      <property name="text">
-      <string>Play</string>
+      <string>Trigger on next</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelLoad">
+   <item row="10" column="1">
+    <widget class="QLineEdit" name="lineEditClearChannel"/>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="lineEditClear"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelNext">
      <property name="text">
-      <string>Load</string>
+      <string>Next</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -82,6 +76,87 @@
      </property>
     </widget>
    </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="labelClearVideolayer">
+     <property name="text">
+      <string>Clear Video layer</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="labelClearChannel">
+     <property name="text">
+      <string>Clear Channel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelLoad">
+     <property name="text">
+      <string>Load</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="labelAutoStep">
+     <property name="text">
+      <string>Auto step</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="lineEditPreview"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lineEditPause"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEditStop"/>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="lineEditClearVideolayer"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelPause">
+     <property name="text">
+      <string>Pause</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="lineEditUpdate"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineEditPlay"/>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lineEditInvoke"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="labelPrev">
+     <property name="text">
+      <string>Preview</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="0">
     <widget class="QLabel" name="labelUpdate">
      <property name="text">
@@ -92,11 +167,8 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="lineEditUpdate"/>
-   </item>
-   <item row="8" column="1">
-    <widget class="QLineEdit" name="lineEditClear"/>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lineEditLoad"/>
    </item>
    <item row="11" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutTriggerOnNext">
@@ -125,80 +197,45 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="lineEditLoad"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelPause">
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelPlay">
      <property name="text">
-      <string>Pause</string>
+      <string>Play</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelNext">
-     <property name="text">
-      <string>Next</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
+   <item row="12" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayoutAutoStep">
+     <item>
+      <widget class="QCheckBox" name="checkBoxAutoStep">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerAutoStep2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="lineEditPause"/>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="labelClearChannel">
-     <property name="text">
-      <string>Clear Channel</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1">
-    <widget class="QLineEdit" name="lineEditClearChannel"/>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="labelPrev">
-     <property name="text">
-      <string>Preview</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="labelTriggerOnNext">
-     <property name="text">
-      <string>Trigger on next</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="QLineEdit" name="lineEditPreview"/>
-   </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="labelClearVideolayer">
-     <property name="text">
-      <string>Clear Video layer</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <widget class="QLineEdit" name="lineEditClearVideolayer"/>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="lineEditNext"/>
    </item>
   </layout>
  </widget>
@@ -215,6 +252,7 @@
   <tabstop>lineEditClearVideolayer</tabstop>
   <tabstop>lineEditClearChannel</tabstop>
   <tabstop>checkBoxTriggerOnNext</tabstop>
+  <tabstop>checkBoxAutoStep</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -273,8 +311,8 @@
    <slot>pauseCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>156</x>
-     <y>101</y>
+     <x>290</x>
+     <y>130</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -289,8 +327,8 @@
    <slot>nextCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>200</x>
-     <y>131</y>
+     <x>290</x>
+     <y>162</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -305,8 +343,8 @@
    <slot>updateCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>156</y>
+     <x>290</x>
+     <y>194</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -321,8 +359,8 @@
    <slot>invokeCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>201</x>
-     <y>189</y>
+     <x>290</x>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>230</x>
@@ -337,8 +375,8 @@
    <slot>clearCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>253</y>
+     <x>290</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -353,8 +391,8 @@
    <slot>clearVideolayerCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>281</y>
+     <x>290</x>
+     <y>322</y>
     </hint>
     <hint type="destinationlabel">
      <x>227</x>
@@ -369,8 +407,8 @@
    <slot>clearChannelCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>309</y>
+     <x>290</x>
+     <y>354</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -385,8 +423,8 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>333</y>
+     <x>156</x>
+     <y>378</y>
     </hint>
     <hint type="destinationlabel">
      <x>234</x>
@@ -401,12 +439,28 @@
    <slot>previewCommandChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>215</y>
+     <x>290</x>
+     <y>258</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
      <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InspectorCustomCommandWidget</receiver>
+   <slot>autoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>404</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>137</x>
+     <y>422</y>
     </hint>
    </hints>
   </connection>
@@ -424,5 +478,6 @@
   <slot>clearChannelCommandChanged(QString)</slot>
   <slot>triggerOnNextChanged(int)</slot>
   <slot>previewCommandChanged(QString)</slot>
+  <slot>autoStepChanged(int)</slot>
  </slots>
 </ui>

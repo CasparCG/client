@@ -39,6 +39,7 @@ class WIDGETS_EXPORT InspectorMovieWidget : public QWidget, Ui::InspectorMovieWi
         Q_SLOT void triggerOnNextChanged(int);
         Q_SLOT void seekChanged(int);
         Q_SLOT void lengthChanged(int);
+        Q_SLOT void autoStepChanged(int);
         Q_SLOT void autoPlayChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };

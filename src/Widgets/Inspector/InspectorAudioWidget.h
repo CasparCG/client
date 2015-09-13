@@ -36,5 +36,6 @@ class WIDGETS_EXPORT InspectorAudioWidget : public QWidget, Ui::InspectorAudioWi
         Q_SLOT void loopChanged(int);
         Q_SLOT void useAutoChanged(int);
         Q_SLOT void triggerOnNextChanged(int);
+        Q_SLOT void autoStepChanged(int);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
 };
