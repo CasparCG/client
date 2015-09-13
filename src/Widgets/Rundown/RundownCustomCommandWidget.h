@@ -99,6 +99,7 @@ class WIDGETS_EXPORT RundownCustomCommandWidget : public QWidget, Ui::RundownCus
         Q_SLOT void executeClearChannel();
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void autoStepChanged(bool);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
