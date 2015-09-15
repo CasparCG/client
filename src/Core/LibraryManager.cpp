@@ -77,7 +77,6 @@ void LibraryManager::refresh()
         return;
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Refreshing library..."));
-    qDebug("Refreshing library...");
 
     // Only refresh library for all devices.
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())

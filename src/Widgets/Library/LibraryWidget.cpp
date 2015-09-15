@@ -653,9 +653,6 @@ void LibraryWidget::setupUiMenu()
 
 void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
 {
-    QTime time;
-    time.start();
-
     for (int i = 0; i < this->treeWidgetTool->topLevelItemCount(); i++)
         this->treeWidgetTool->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
 
@@ -676,8 +673,6 @@ void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
 
     for (int i = 0; i < this->treeWidgetPreset->topLevelItemCount(); i++)
         this->treeWidgetPreset->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    qDebug("LibraryWidget::repositoryRundown %d msec", time.elapsed());
 }
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
