@@ -29,11 +29,32 @@ const QString RepositoryDevice::resolveIpAddress() const
     return hostInfo.addresses().at(0).toString();
 }
 
+/*
+ * The client sends a subscribe message request to the backend
+ * to start receive updates for a specific rundown, e.g:
+ *
+ * SUBSCRIBE rundown profile\r\n
+ */
 void RepositoryDevice::subscribe(const QString& rundown, const QString& profile)
 {
     writeMessage(QString("SUBSCRIBE %1 %2").arg(rundown).arg(profile));
 }
 
+/*
+ * Parse incoming command, e.g:
+ *
+ * ADD\r\n
+ * <StoryId>\r\n
+ * <xml><data></data></xml>\r\n\r\n
+ *
+ * The XML format is standard XML client data
+ * and must include a valid story ID.
+ *
+ * REMOVE\r\n
+ * <StoryId>\r\n\r\n
+ *
+ * Story ID is a unique ID of some sort.
+ */
 void RepositoryDevice::sendNotification()
 {
     switch (RrupDevice::command)
