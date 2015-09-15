@@ -75,6 +75,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     this->checkBoxEnableOscInput->setChecked(enableOscInput);
     this->labelOscPort->setEnabled(enableOscInput);
     this->lineEditOscInputPort->setEnabled(enableOscInput);
+    this->labelOscWebSocketPort->setEnabled(enableOscInput);
+    this->lineEditOscWebSocketInputPort->setEnabled(enableOscInput);
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
@@ -121,6 +123,11 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
     if (!oscPort.isEmpty())
         this->lineEditOscInputPort->setText(oscPort);
+
+    this->lineEditOscWebSocketInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_WEBSOCKET_PORT));
+    QString oscWebSocketPort = DatabaseManager::getInstance().getConfigurationByName("OscWebSocketPort").getValue();
+    if (!oscWebSocketPort.isEmpty())
+        this->lineEditOscWebSocketInputPort->setText(oscWebSocketPort);
 
     loadDevice();
     loadTriCasterDevice();
@@ -830,6 +837,15 @@ void SettingsDialog::oscPortChanged()
         oscPort = QString("%1").arg(Osc::DEFAULT_PORT);
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+}
+
+void SettingsDialog::oscWebSocketPortChanged()
+{
+    QString oscWebSocketPort = this->lineEditOscWebSocketInputPort->text().trimmed();
+    if (oscWebSocketPort.isEmpty())
+        oscWebSocketPort = QString("%1").arg(Osc::DEFAULT_WEBSOCKET_PORT);
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscWebSocketPort", oscWebSocketPort));
 }
 
 void SettingsDialog::streamPortChanged()

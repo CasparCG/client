@@ -1,23 +1,35 @@
 #include "OscWebSocketListener.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonValue>
 #include <QtCore/QString>
-#include <QtCore/QThread>
 #include <QtCore/QTimer>
-#include <QtCore/QPair>
 #include <QtCore/QDebug>
 
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
 
-OscWebSocketListener::OscWebSocketListener(const QString& address, int port, QObject* parent)
+OscWebSocketListener::OscWebSocketListener(QObject* parent)
     : QObject(parent)
 {
-    this->socket = new QWebSocketServer("", QWebSocketServer::NonSecureMode, this);
-    if (this->socket->listen(QHostAddress::Any, port))
-    {
-        qDebug("Listening for incoming OSC over WebSocket on port %d", qPrintable(port);
+}
 
-        QObject::connect(&this->socket, SIGNAL(newConnection), this, SLOT(newConnection));
+OscWebSocketListener::~OscWebSocketListener()
+{
+    this->server->close();
+    qDeleteAll(this->sockets.begin(), this->sockets.end());
+}
+
+void OscWebSocketListener::start(int port)
+{
+    this->server = new QWebSocketServer("", QWebSocketServer::NonSecureMode, this);
+    if (this->server->listen(QHostAddress::Any, port))
+    {
+        qDebug("Listening for incoming OSC messages over WebSocket on port %d", port);
+
+        QObject::connect(this->server, SIGNAL(newConnection()), this, SLOT(newConnection()));
     }
     else
     {
@@ -25,65 +37,61 @@ OscWebSocketListener::OscWebSocketListener(const QString& address, int port, QOb
     }
 }
 
-OscWebSocketListener::~OscWebSocketListener()
+void OscWebSocketListener::newConnection()
 {
+    QWebSocket* socket = this->server->nextPendingConnection();
+
+    qDebug("Accepted connection from %s", qPrintable(socket->peerAddress().toString()));
+
+    QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    QObject::connect(socket, SIGNAL(textMessageReceived(QString)), this, SLOT(textMessageReceived(QString)));
+
+    this->sockets.append(socket);
 }
 
-void OscWebSocketListener::start()
+/*
+ * The protocol for OSC over WebSockets is a simple JSON description.
+ *
+ * {
+ *      "path" : "/valid/path",
+ *      "args" : [ arg1, arg2, ... ]
+ * }
+ *
+ * For a complete list of valid OSC paths, look in Global.h. First argument
+ * must always be a number greater than zero to be executed.
+ */
+void OscWebSocketListener::textMessageReceived(const QString& message)
 {
-}
+    QJsonDocument document = QJsonDocument::fromJson(message.toUtf8());
+    QJsonObject object = document.object();
 
-void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint)
-{
-    char addressBuffer[256];
-
-    endpoint.AddressAsString(addressBuffer);
+    QString path = object.value("path").toString();
 
     QList<QVariant> arguments;
-    for (osc::ReceivedMessage::const_iterator iterator = message.ArgumentsBegin(); iterator != message.ArgumentsEnd(); ++iterator)
+    QJsonArray array = object.value("args").toArray();
+    for (int i = 0; i < array.count(); i++)
     {
-        const osc::ReceivedMessageArgument& argument = *iterator;
-
-        if (argument.IsBool())
-            arguments.push_back(argument.AsBool());
-        else if (argument.IsInt32())
-            arguments.push_back(QVariant::fromValue<qint32>(argument.AsInt32()));
-        else if (argument.IsInt64())
-            arguments.push_back(QVariant::fromValue<qint64>(argument.AsInt64()));
-        else if (argument.IsFloat())
-            arguments.push_back(argument.AsFloat());
-        else if (argument.IsDouble())
-            arguments.push_back(argument.AsDouble());
-        else if (argument.IsString())
-            arguments.push_back(argument.AsString());
+        if (array[i].isBool())
+            arguments.append(array[i].toBool());
+        else if (array[i].isDouble())
+            arguments.append(array[i].toDouble());
+        else if (array[i].isString())
+            arguments.append(array[i].toString());
     }
 
-    QString eventMessage = QString("%1").arg(message.AddressPattern());
-    QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
-
-    //qDebug("OSC message received: %s", eventPath);
-
-    QMutexLocker locker(&eventsMutex);
-    if (eventMessage.startsWith("/control"))
-    {
-        // Do not overwrite control commands already in queue.
-        if (!this->events.contains(eventPath))
-            this->events[eventPath] = arguments;
-    }
-    else
-        this->events[eventPath] = arguments;
+    if (!path.isEmpty() && arguments.count() > 0)
+        emit messageReceived(path, arguments);
 }
 
-void OscWebSocketListener::sendEventBatch()
+void OscWebSocketListener::disconnected()
 {
-    QMap<QString, QList<QVariant>> other;
+    QWebSocket* socket = qobject_cast<QWebSocket*>(QObject::sender());
+
+    qDebug("Client %s was disconnected", qPrintable(socket->peerAddress().toString()));
+
+    if (socket != nullptr)
     {
-        QMutexLocker locker(&eventsMutex);
-        this->events.swap(other);
+        this->sockets.removeAll(socket);
+        socket->deleteLater();
     }
-
-    foreach (const QString& eventPath, other.keys())
-        emit messageReceived(eventPath, other[eventPath]);
-
-    QTimer::singleShot(200, this, SLOT(sendEventBatch()));
 }

@@ -2,29 +2,30 @@
 
 #include "Shared.h"
 
+#include <QtCore/QList>
 #include <QtCore/QObject>
-#include <QtCore/QMap>
 #include <QtCore/QVariant>
-#include <QtCore/QMutex>
+
+class QWebSocket;
+class QWebSocketServer;
 
 class OSC_EXPORT OscWebSocketListener : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit OscWebSocketListener(const QString& address, int port, QObject* parent = 0);
+        explicit OscWebSocketListener(QObject* parent = 0);
         ~OscWebSocketListener();
 
-        void start();
+        void start(int port);
 
         Q_SIGNAL void messageReceived(const QString&, const QList<QVariant>&);
 
     private:
-        QMutex eventsMutex;
-        QMap<QString, QList<QVariant>> events;
+        QList<QWebSocket*> sockets;
+        QWebSocketServer* server = nullptr;
 
-        QWebSocketServer* socket = nullptr;
-
-        Q_SLOT void sendEventBatch();
+        Q_SLOT void disconnected();
+        Q_SLOT void newConnection();
         Q_SLOT void textMessageReceived(const QString& message);
 };

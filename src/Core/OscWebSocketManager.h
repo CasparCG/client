@@ -22,6 +22,6 @@ class CORE_EXPORT OscWebSocketManager : public QObject
         const QSharedPointer<OscWebSocketListener> getOscWebSocketListener() const;
 
     private:
-        QSharedPointer<OscWebSocketListener> oscWebSocket;
+        QSharedPointer<OscWebSocketListener> oscWebSocketListener;
 };
 

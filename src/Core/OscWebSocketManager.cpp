@@ -17,9 +17,9 @@ OscWebSocketManager& OscWebSocketManager::getInstance()
 void OscWebSocketManager::initialize()
 {
     QString oscWebSocketPort = DatabaseManager::getInstance().getConfigurationByName("OscWebSocketPort").getValue();
-    this->oscWebSocketListener = QSharedPointer<OscWebSocketListener>(new OscWebSocketListener("0.0.0.0", (oscWebSocketPort.isEmpty() == true) ? Osc::DEFAULT_WEBSOCKET_PORT : oscWebSocketPort.toInt()));
+    this->oscWebSocketListener = QSharedPointer<OscWebSocketListener>(new OscWebSocketListener(this));
     if (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true")
-        this->oscWebSocketListener->start();
+        this->oscWebSocketListener->start((oscWebSocketPort.isEmpty() == true) ? Osc::DEFAULT_WEBSOCKET_PORT : oscWebSocketPort.toInt());
 }
 
 void OscWebSocketManager::uninitialize()

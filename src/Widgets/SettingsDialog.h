@@ -73,6 +73,7 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void streamPortChanged();
         Q_SLOT void baudRateChanged(QString);
         Q_SLOT void oscPortChanged();
+        Q_SLOT void oscWebSocketPortChanged();
         Q_SLOT void repositoryPortChanged();
         Q_SLOT void showImportDeviceDialog();
         Q_SLOT void showImportTriCasterDeviceDialog();

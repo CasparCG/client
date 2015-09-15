@@ -3359,7 +3359,7 @@
     <widget class="QLineEdit" name="lineEditOscInputPort">
      <property name="geometry">
       <rect>
-       <x>164</x>
+       <x>204</x>
        <y>76</y>
        <width>113</width>
        <height>20</height>
@@ -3409,12 +3409,12 @@
       <rect>
        <x>104</x>
        <y>78</y>
-       <width>51</width>
+       <width>91</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Port:</string>
+      <string>UDP Port:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3565,6 +3565,41 @@
      </property>
      <property name="text">
       <string>Enable OSC input</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditOscWebSocketInputPort">
+     <property name="geometry">
+      <rect>
+       <x>443</x>
+       <y>76</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>4250</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOscWebSocketPort">
+     <property name="geometry">
+      <rect>
+       <x>293</x>
+       <y>78</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>WebSocket Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -4384,7 +4419,7 @@
    <slot>oscPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
+     <x>221</x>
      <y>137</y>
     </hint>
     <hint type="destinationlabel">
@@ -4921,6 +4956,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineEditOscWebSocketInputPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscWebSocketPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>585</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>11</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showAddDeviceDialog()</slot>
@@ -4988,5 +5039,6 @@
   <slot>streamPortChanged()</slot>
   <slot>logLevelChanged(int)</slot>
   <slot>useDropFrameNotationChanged(int)</slot>
+  <slot>oscWebSocketPortChanged()</slot>
  </slots>
 </ui>
