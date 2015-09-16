@@ -447,6 +447,12 @@ void RundownTreeBaseWidget::ungroupItems()
 
         QTreeWidget::setCurrentItem(currentItemAbove);
 
+        // Remove our items from the auto play queue if it exists.
+        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem));
+
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(currentItem));
+
         delete currentItem;
     }
     else // Group item.
@@ -467,6 +473,12 @@ void RundownTreeBaseWidget::ungroupItems()
 
             QTreeWidget::setItemWidget(newItem, 0, dynamic_cast<QWidget*>(newWidget));
 
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item));
+
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item));
+
             delete item;
 
             parentRow++;
@@ -475,7 +487,15 @@ void RundownTreeBaseWidget::ungroupItems()
         QTreeWidget::setCurrentItem(newItem);
 
         if (parentItem->childCount() == 0)
+        {
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(parentItem));
+
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(parentItem));
+
             delete parentItem;
+        }
     }
 
     QTreeWidget::doItemsLayout(); // Refresh
@@ -517,6 +537,12 @@ void RundownTreeBaseWidget::moveItemUp()
                 parentItem->addChild(childItem);
                 QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
             }
+
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem));
+
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(currentItem));
 
             delete currentItem;
 
@@ -591,6 +617,12 @@ void RundownTreeBaseWidget::moveItemDown()
                 QTreeWidget::setItemWidget(childItem, 0, dynamic_cast<QWidget*>(childWidget));
             }
 
+            // Remove our items from the auto play queue if it exists.
+            EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem));
+
+            // Clear current playing item.
+            EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(currentItem));
+
             delete currentItem;
 
             QTreeWidget::setCurrentItem(parentItem);
@@ -652,11 +684,24 @@ void RundownTreeBaseWidget::moveItemOutOfGroup()
     QTreeWidget::setCurrentItem(newItem);
     QTreeWidget::doItemsLayout(); // Refresh
 
+    // Remove our items from the auto play queue if it exists.
+    EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem));
+
+    // Clear current playing item.
+    EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(currentItem));
+
     delete currentItem;
 
     if (parentItem->childCount() == 0)
     {
         QTreeWidget::setCurrentItem(parentItemAbove);
+
+        // Remove our items from the auto play queue if it exists.
+        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(parentItem));
+
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(parentItem));
+
         delete parentItem;
     }
 }
@@ -687,12 +732,21 @@ void RundownTreeBaseWidget::moveItemIntoGroup()
         QTreeWidget::doItemsLayout(); // Ref resh
         QTreeWidget::setCurrentItem(newItem);
 
+        // Remove our items from the auto play queue if it exists.
+        EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(currentItem));
+
+        // Clear current playing item.
+        EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(currentItem));
+
         delete currentItem;
     }
 }
 
 void RundownTreeBaseWidget::setExpanded(bool expanded)
 {
+    if (QTreeWidget::currentItem() == nullptr)
+        return;
+
     QWidget* selectedWidget = QTreeWidget::itemWidget(QTreeWidget::currentItem(), 0);
     AbstractRundownWidget* rundownWidget = dynamic_cast<AbstractRundownWidget*>(selectedWidget);
 

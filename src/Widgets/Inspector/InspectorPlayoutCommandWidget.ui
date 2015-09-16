@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>193</width>
-    <height>56</height>
+    <width>307</width>
+    <height>55</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,122 +16,95 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPlayoutCommand">
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="comboBoxPlayoutCommand">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <item>
-      <spacer name="horizontalSpacerPlayoutCommand">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>15</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <property name="text">
+       <string>Stop</string>
+      </property>
      </item>
      <item>
-      <widget class="QLabel" name="labelPlayout">
-       <property name="text">
-        <string>Playout</string>
-       </property>
-      </widget>
+      <property name="text">
+       <string>Play</string>
+      </property>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBoxPlayoutCommand">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text">
-         <string>Stop</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Play</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Play Now</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Pause</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Load</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Next</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Update</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Invoke</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Preview</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Clear</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Clear Video Layer</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Clear Channel</string>
-        </property>
-       </item>
-      </widget>
+      <property name="text">
+       <string>Play Now</string>
+      </property>
      </item>
-    </layout>
+     <item>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Load</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Invoke</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Preview</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Video Layer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Clear Channel</string>
+      </property>
+     </item>
+    </widget>
    </item>
-   <item>
-    <spacer name="verticalSpacerPlayoutCommand">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelPlayout">
+     <property name="text">
+      <string>Playout</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>comboBoxPlayoutCommand</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

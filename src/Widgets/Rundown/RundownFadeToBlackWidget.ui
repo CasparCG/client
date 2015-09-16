@@ -60,7 +60,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Fade to Black</string>
+       <string>Fade Out</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelChannel">

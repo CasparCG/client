@@ -3,17 +3,18 @@
 
 #include "Application.h"
 
-#include "DatabaseManager.h"
-#include "EventManager.h"
-#include "GpiManager.h"
-#include "LibraryManager.h"
-#include "DeviceManager.h"
-#include "OscDeviceManager.h"
-#include "AtemDeviceManager.h"
-#include "TriCasterDeviceManager.h"
-#include "Events/Rundown/OpenRundownEvent.h"
+#include "../Core/DatabaseManager.h"
+#include "../Core/EventManager.h"
+#include "../Core/GpiManager.h"
+#include "../Core/LibraryManager.h"
+#include "../Core/DeviceManager.h"
+#include "../Core/OscDeviceManager.h"
+#include "../Core/OscWebSocketManager.h"
+#include "../Core/AtemDeviceManager.h"
+#include "../Core/TriCasterDeviceManager.h"
+#include "../Core/Events/Rundown/OpenRundownEvent.h"
 
-#include "MainWindow.h"
+#include "../Widgets/MainWindow.h"
 
 #include <QtCore/QRegExp>
 #include <QtCore/QDir>
@@ -328,12 +329,14 @@ int main(int argc, char* argv[])
     AtemDeviceManager::getInstance().initialize();
     TriCasterDeviceManager::getInstance().initialize();
     OscDeviceManager::getInstance().initialize();
+    OscWebSocketManager::getInstance().initialize();
 
     int returnValue = application.exec();
 
     EventManager::getInstance().uninitialize();
     DatabaseManager::getInstance().uninitialize();
     GpiManager::getInstance().uninitialize();
+    OscWebSocketManager::getInstance().uninitialize();
     OscDeviceManager::getInstance().uninitialize();
     TriCasterDeviceManager::getInstance().uninitialize();
     AtemDeviceManager::getInstance().uninitialize();

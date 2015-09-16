@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>226</width>
-    <height>168</height>
+    <width>300</width>
+    <height>179</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,243 +16,110 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutOutput">
-     <item>
-      <spacer name="horizontalSpacerOutput">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>24</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelOutput">
-       <property name="text">
-        <string>Output</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEditOutput"/>
-     </item>
-    </layout>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item row="4" column="0">
+    <widget class="QLabel" name="labelWithAlpha">
+     <property name="text">
+      <string>With alpha</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutCodec">
+   <item row="2" column="1">
+    <widget class="QComboBox" name="comboBoxPreset">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <item>
-      <spacer name="horizontalSpacerCodec">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>32</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <property name="text">
+       <string/>
+      </property>
      </item>
      <item>
-      <widget class="QLabel" name="labelCodec">
-       <property name="text">
-        <string>Codec</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
+      <property name="text">
+       <string>ultrafast</string>
+      </property>
      </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxCodec">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text">
-         <string>dnxhd</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>libx264</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>qtrle</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>prores</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>dvvideo</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ffvhuff</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>rawvideo</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutPreset">
-     <item>
-      <spacer name="horizontalSpacerPreset">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>31</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelPreset">
-       <property name="text">
-        <string>Preset</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxPreset">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ultrafast</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelCodec">
+     <property name="text">
+      <string>Codec</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutTune">
-     <item>
-      <spacer name="horizontalSpacerTune">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>38</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTune">
-       <property name="text">
-        <string>Tune</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxTune">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fastdecode</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEditOutput"/>
    </item>
-   <item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelOutput">
+     <property name="text">
+      <string>Output</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QComboBox" name="comboBoxCodec">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string>dnxhd</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>libx264</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>qtrle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>prores</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dvvideo</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ffvhuff</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>rawvideo</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutWithAlpha">
-     <item>
-      <spacer name="horizontalSpacerWithAlpha1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>2</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelWithAlpha">
-       <property name="text">
-        <string>With alpha</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QCheckBox" name="checkBoxWithAlpha">
        <property name="layoutDirection">
@@ -278,24 +145,55 @@
      </item>
     </layout>
    </item>
-   <item>
-    <spacer name="verticalSpacerFileRecorder">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelPreset">
+     <property name="text">
+      <string>Preset</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="comboBoxTune">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </spacer>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>fastdecode</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelTune">
+     <property name="text">
+      <string>Tune</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEditOutput</tabstop>
+  <tabstop>comboBoxCodec</tabstop>
+  <tabstop>comboBoxPreset</tabstop>
+  <tabstop>comboBoxTune</tabstop>
+  <tabstop>checkBoxWithAlpha</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

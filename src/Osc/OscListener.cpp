@@ -15,6 +15,8 @@ OscListener::OscListener(const QString& address, int port, QObject* parent)
         this->socket->SetAllowReuse(true);
         this->socket->Bind(IpEndpointName(address.toStdString().c_str(), port));
 
+        qDebug("Listening for incoming OSC messages over UDP on port %d", port);
+
         this->multiplexer = new SocketReceiveMultiplexer();
         this->multiplexer->AttachSocketListener(this->socket, this);
 
@@ -58,17 +60,17 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
         const osc::ReceivedMessageArgument& argument = *iterator;
 
         if (argument.IsBool())
-            arguments.push_back(argument.AsBool());
+            arguments.append(argument.AsBool());
         else if (argument.IsInt32())
-            arguments.push_back(QVariant::fromValue<qint32>(argument.AsInt32()));
+            arguments.append(QVariant::fromValue<qint32>(argument.AsInt32()));
         else if (argument.IsInt64())
-            arguments.push_back(QVariant::fromValue<qint64>(argument.AsInt64()));
+            arguments.append(QVariant::fromValue<qint64>(argument.AsInt64()));
         else if (argument.IsFloat())
-            arguments.push_back(argument.AsFloat());
+            arguments.append(argument.AsFloat());
         else if (argument.IsDouble())
-            arguments.push_back(argument.AsDouble());
+            arguments.append(argument.AsDouble());
         else if (argument.IsString())
-            arguments.push_back(argument.AsString());
+            arguments.append(argument.AsString());
     }
 
     QString eventMessage = QString("%1").arg(message.AddressPattern());

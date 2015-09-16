@@ -5,5 +5,6 @@
         <file>Sql/ChangeScript-209.sql</file>
         <file>Sql/ChangeScript-210.sql</file>
         <file>Sql/ChangeScript-211.sql</file>
+        <file>Sql/ChangeScript-212.sql</file>
     </qresource>
 </RCC>

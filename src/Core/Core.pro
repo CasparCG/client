@@ -189,7 +189,8 @@ HEADERS += \
     Commands/Spyder/SpyderPresetCommand.h \
     Events/Rundown/ClearCurrentPlayingItemEvent.h \
     Events/Rundown/CurrentItemChangedEvent.h \
-    Commands/Atem/AtemMacroCommand.h
+    Commands/Atem/AtemMacroCommand.h \
+    OscWebSocketManager.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -372,14 +373,16 @@ SOURCES += \
     Commands/Spyder/SpyderPresetCommand.cpp \
     Events/Rundown/ClearCurrentPlayingItemEvent.cpp \
     Events/Rundown/CurrentItemChangedEvent.cpp \
-    Commands/Atem/AtemMacroCommand.cpp
+    Commands/Atem/AtemMacroCommand.cpp \
+    OscWebSocketManager.cpp
 
 DISTFILES += \
     Sql/ChangeScript-208.sql \
     Sql/Schema.sql \
     Sql/ChangeScript-209.sql \
     Sql/ChangeScript-210.sql \
-    Sql/ChangeScript-211.sql
+    Sql/ChangeScript-211.sql \
+    Sql/ChangeScript-212.sql
 
 RESOURCES += \
     Core.qrc

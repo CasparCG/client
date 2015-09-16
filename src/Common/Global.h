@@ -87,6 +87,7 @@ namespace Osc
     static const bool DEFAULT_USE_BUNDLE = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
     static const int DEFAULT_PORT = 6250;
+    static const int DEFAULT_WEBSOCKET_PORT = 4250;
     static const QString DEFAULT_OUTPUT = "";
     static const QString DEFAULT_TYPE = "String";
     static const int DEFAULT_OUTPUT_PORT = 7250;
@@ -471,7 +472,7 @@ namespace Rundown
     static const QString ANCHOR = "ANCHOR";
     static const QString ROUTECHANNEL = "ROUTECHANNEL";
     static const QString ROUTEVIDEOLAYER = "ROUTEVIDEOLAYER";
-    static const int MAX_NUMBER_OF_RUNDONWS = 5;
+    static const int MAX_NUMBER_OF_RUNDONWS = 10;
     static const QString DEFAULT_NAME = "New Rundown";
     static const QString DEFAULT_AUDIO_NAME = "Audio";
     static const QString DEFAULT_STILL_NAME = "Image";
