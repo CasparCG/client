@@ -18,7 +18,7 @@ quint8 AtemDevice::mixerEffects()
     return SwitcherDevice::atemConnection->topology().MEs;
 }
 
-void AtemDevice::triggerAuto(const QString& target, int speed, const QString& transition, const QString& me)
+void AtemDevice::triggerAuto(const QString& target, qint8 speed, const QString& transition, const QString& me)
 {
     SwitcherDevice::atemConnection->mixEffect(me.toInt())->setTransitionType(transition.toInt());
 
@@ -51,8 +51,9 @@ void AtemDevice::triggerCut(const QString& me)
     SwitcherDevice::atemConnection->mixEffect(me.toInt())->cut();
 }
 
-void AtemDevice::toggleFadeToBlack(const QString& me)
+void AtemDevice::toggleFadeToBlack(const QString& me, qint8 speed)
 {
+    SwitcherDevice::atemConnection->mixEffect(me.toInt())->setFadeToBlackFrameRate(speed);
     SwitcherDevice::atemConnection->mixEffect(me.toInt())->toggleFadeToBlack();
 }
 

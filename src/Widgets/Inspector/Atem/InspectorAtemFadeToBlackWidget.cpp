@@ -41,6 +41,7 @@ void InspectorAtemFadeToBlackWidget::rundownItemSelected(const RundownItemSelect
 
         this->comboBoxMixerStep->setCurrentIndex(this->comboBoxMixerStep->findData(this->command->getMixerStep()));
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->spinBoxSpeed->setValue(this->command->getSpeed());
     }
 
     checkEmptyMixerStep();
@@ -71,6 +72,7 @@ void InspectorAtemFadeToBlackWidget::blockAllSignals(bool block)
 {
     this->comboBoxMixerStep->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->spinBoxSpeed->blockSignals(block);
 }
 
 void InspectorAtemFadeToBlackWidget::loadAtemMixerStep()
@@ -104,4 +106,11 @@ void InspectorAtemFadeToBlackWidget::mixerStepChanged(int index)
     this->command->setMixerStep(this->comboBoxMixerStep->itemData(index).toString());
 
     checkEmptyMixerStep();
+}
+
+void InspectorAtemFadeToBlackWidget::speedChanged(int value)
+{
+    Q_UNUSED(value);
+
+    this->command->setSpeed(this->spinBoxSpeed->value());
 }

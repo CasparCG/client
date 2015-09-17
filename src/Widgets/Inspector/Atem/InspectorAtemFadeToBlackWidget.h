@@ -36,4 +36,5 @@ class WIDGETS_EXPORT InspectorAtemFadeToBlackWidget : public QWidget, Ui::Inspec
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
         Q_SLOT void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SLOT void mixerStepChanged(int);
+        Q_SLOT void speedChanged(int);
 };

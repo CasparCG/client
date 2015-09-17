@@ -15,8 +15,8 @@ class ATEM_EXPORT AtemDevice : public SwitcherDevice
 
         quint8 mixerEffects();
 
-        void toggleFadeToBlack(const QString& me);
-        void triggerAuto(const QString& target, int speed, const QString& transition, const QString& me);
+        void toggleFadeToBlack(const QString& me, qint8 speed);
+        void triggerAuto(const QString& target, qint8 speed, const QString& transition, const QString& me);
         void triggerCut(const QString& me);
 
         QVector<QAtem::MacroInfo> macroInfos();

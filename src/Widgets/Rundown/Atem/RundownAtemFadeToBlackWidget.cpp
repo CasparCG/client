@@ -128,6 +128,7 @@ AbstractRundownWidget* RundownAtemFadeToBlackWidget::clone()
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
     command->setMixerStep(this->command.getMixerStep());
+    command->setSpeed(this->command.getSpeed());
 
     return widget;
 }
@@ -268,7 +269,7 @@ void RundownAtemFadeToBlackWidget::executePlay()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->toggleFadeToBlack(this->command.getMixerStep());
+        device->toggleFadeToBlack(this->command.getMixerStep(), this->command.getSpeed());
 
     if (this->markUsedItems)
         setUsed(true);
