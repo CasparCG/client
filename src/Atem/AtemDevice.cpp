@@ -51,6 +51,11 @@ void AtemDevice::triggerCut(const QString& me)
     SwitcherDevice::atemConnection->mixEffect(me.toInt())->cut();
 }
 
+void AtemDevice::toggleFadeToBlack(const QString& me)
+{
+    SwitcherDevice::atemConnection->mixEffect(me.toInt())->toggleFadeToBlack();
+}
+
 QVector<QAtem::MacroInfo> AtemDevice::macroInfos()
 {
     /*

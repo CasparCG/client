@@ -71,7 +71,7 @@
         <x>0</x>
         <y>0</y>
         <width>300</width>
-        <height>532</height>
+        <height>533</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -116,7 +116,7 @@
             <x>0</x>
             <y>0</y>
             <width>298</width>
-            <height>530</height>
+            <height>531</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1451,6 +1451,29 @@
              <item>
               <property name="text">
                <string>Macro</string>
+              </property>
+              <property name="background">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>45</red>
+                 <green>45</green>
+                 <blue>45</blue>
+                </color>
+               </brush>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>255</red>
+                 <green>255</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Fade to Black</string>
               </property>
               <property name="background">
                <brush brushstyle="SolidPattern">

@@ -163,7 +163,9 @@ HEADERS += \
     Rundown/Spyder/RundownSpyderPresetWidget.h \
     Inspector/Spyder/InspectorSpyderPresetWidget.h \
     Rundown/Atem/RundownAtemMacroWidget.h \
-    Inspector/Atem/InspectorAtemMacroWidget.h
+    Inspector/Atem/InspectorAtemMacroWidget.h \
+    Rundown/Atem/RundownAtemFadeToBlackWidget.h \
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -319,7 +321,9 @@ SOURCES += \
     Rundown/Spyder/RundownSpyderPresetWidget.cpp \
     Inspector/Spyder/InspectorSpyderPresetWidget.cpp \
     Rundown/Atem/RundownAtemMacroWidget.cpp \
-    Inspector/Atem/InspectorAtemMacroWidget.cpp
+    Inspector/Atem/InspectorAtemMacroWidget.cpp \
+    Rundown/Atem/RundownAtemFadeToBlackWidget.cpp \
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -463,7 +467,9 @@ FORMS += \
     Rundown/Spyder/RundownSpyderPresetWidget.ui \
     Inspector/Spyder/InspectorSpyderPresetWidget.ui \
     Rundown/Atem/RundownAtemMacroWidget.ui \
-    Inspector/Atem/InspectorAtemMacroWidget.ui
+    Inspector/Atem/InspectorAtemMacroWidget.ui \
+    Rundown/Atem/RundownAtemFadeToBlackWidget.ui \
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -879,4 +885,7 @@ else:macx:LIBS += -L$$OUT_PWD/../Core/ -lcore
 else:unix:LIBS += -L$$OUT_PWD/../Core/ -lcore
 
 DISTFILES += \
-    Images/RemoteTriggeringSmall.png
+    Images/RemoteTriggeringSmall.png \
+    Images/Atem/FadeToBlack.png \
+    Images/Atem/FadeToBlackSmall.png \
+    Images/Atem/FadeToBlackSmallHover.png

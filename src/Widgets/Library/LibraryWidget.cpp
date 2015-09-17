@@ -463,6 +463,15 @@ void LibraryWidget::setupTools()
     widgetSolidColor->setText(4, Rundown::SOLIDCOLOR);
     widgetSolidColor->setText(5, "0");
 
+    QTreeWidgetItem* widgetAtemFadeToBlack = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
+    widgetAtemFadeToBlack->setIcon(0, QIcon(":/Graphics/Images/Atem/FadeToBlackSmall.png"));
+    widgetAtemFadeToBlack->setText(0, "Fade to Black");
+    widgetAtemFadeToBlack->setText(1, "0");
+    widgetAtemFadeToBlack->setText(2, "Fade to Black");
+    widgetAtemFadeToBlack->setText(3, "");
+    widgetAtemFadeToBlack->setText(4, Rundown::ATEMFADETOBLACK);
+    widgetAtemFadeToBlack->setText(5, "0");
+
     QTreeWidgetItem* widgetAtemMacro = new QTreeWidgetItem(this->treeWidgetTool->topLevelItem(3));
     widgetAtemMacro->setIcon(0, QIcon(":/Graphics/Images/Atem/PlayMacroSmall.png"));
     widgetAtemMacro->setText(0, "Play Macro");

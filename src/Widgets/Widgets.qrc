@@ -258,6 +258,9 @@
         <file>Images/Atem/PlayMacroSmall.png</file>
         <file>Images/Atem/PlayMacroSmallHover.png</file>
         <file>Images/RemoteTriggeringSmall.png</file>
+        <file>Images/Atem/FadeToBlack.png</file>
+        <file>Images/Atem/FadeToBlackSmall.png</file>
+        <file>Images/Atem/FadeToBlackSmallHover.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>

@@ -173,6 +173,7 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuAtem->setObjectName("contextMenuAtem");
     this->contextMenuAtem->setTitle("ATEM");
     //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
+    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/FadeToBlackSmall.png"), "Fade to Black", this, SLOT(addAtemFadeToBlackItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/PlayMacroSmall.png"), "Play Macro", this, SLOT(addAtemPlayMacroItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
     this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
@@ -1586,6 +1587,11 @@ void RundownTreeWidget::addAtemSelectInputItem()
 void RundownTreeWidget::addAtemTriggerAutoItem()
 {
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUTO);
+}
+
+void RundownTreeWidget::addAtemFadeToBlackItem()
+{
+    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMFADETOBLACK);
 }
 
 void RundownTreeWidget::addAtemPlayMacroItem()

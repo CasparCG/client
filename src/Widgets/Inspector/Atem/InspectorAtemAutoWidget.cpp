@@ -49,6 +49,7 @@ void InspectorAtemAutoWidget::rundownItemSelected(const RundownItemSelectedEvent
         this->comboBoxStep->setCurrentIndex(this->comboBoxStep->findData(this->command->getStep()));
         this->spinBoxSpeed->setValue(this->command->getSpeed());
         this->checkBoxTriggerOnNext->setChecked(this->command->getTriggerOnNext());
+        this->comboBoxTransition->setCurrentIndex(this->comboBoxTransition->findData(this->command->getTransition()));
     }
 
     checkEmptyStep();
@@ -82,6 +83,7 @@ void InspectorAtemAutoWidget::blockAllSignals(bool block)
     this->comboBoxStep->blockSignals(block);
     this->spinBoxSpeed->blockSignals(block);
     this->checkBoxTriggerOnNext->blockSignals(block);
+    this->comboBoxTransition->blockSignals(block);
 }
 
 void InspectorAtemAutoWidget::loadAtemMixerStep()

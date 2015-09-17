@@ -39,6 +39,7 @@
 #include "Inspector/InspectorHtmlWidget.h"
 #include "Inspector/InspectorRouteChannelWidget.h"
 #include "Inspector/InspectorRouteVideolayerWidget.h"
+#include "Inspector/Atem/InspectorAtemFadeToBlackWidget.h"
 #include "Inspector/Atem/InspectorAtemInputWidget.h"
 #include "Inspector/Atem/InspectorAtemCutWidget.h"
 #include "Inspector/Atem/InspectorAtemAutoWidget.h"
@@ -178,6 +179,7 @@ InspectorWidget::InspectorWidget(QWidget* parent)
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(54)), 0, new InspectorSonyPresetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(55)), 0, new InspectorSpyderPresetWidget(this));
     this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(56)), 0, new InspectorAtemMacroWidget(this));
+    this->treeWidgetInspector->setItemWidget(new QTreeWidgetItem(this->treeWidgetInspector->topLevelItem(57)), 0, new InspectorAtemFadeToBlackWidget(this));
 
     this->treeWidgetInspector->expandAll();
 
@@ -316,6 +318,8 @@ void InspectorWidget::rundownItemSelected(const RundownItemSelectedEvent& event)
             this->treeWidgetInspector->topLevelItem(55)->setHidden(false);
     else if (dynamic_cast<AtemMacroCommand*>(event.getCommand()))
             this->treeWidgetInspector->topLevelItem(56)->setHidden(false);
+    else if (dynamic_cast<AtemFadeToBlackCommand*>(event.getCommand()))
+            this->treeWidgetInspector->topLevelItem(57)->setHidden(false);
 }
 
 void InspectorWidget::setDefaultVisibleWidgets()
@@ -377,6 +381,7 @@ void InspectorWidget::setDefaultVisibleWidgets()
     this->treeWidgetInspector->topLevelItem(54)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(55)->setHidden(true);
     this->treeWidgetInspector->topLevelItem(56)->setHidden(true);
+    this->treeWidgetInspector->topLevelItem(57)->setHidden(true);
 }
 
 void InspectorWidget::emptyRundown(const EmptyRundownEvent& event)

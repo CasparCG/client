@@ -453,6 +453,7 @@ namespace Rundown
     static const QString TRICASTERPRESET = "TRICASTERPRESET";
     static const QString TRICASTERNETSOURCE = "TRICASTERNETSOURCE";
     static const QString TRICASTERMACRO = "TRICASTERMACRO";
+    static const QString ATEMFADETOBLACK = "ATEMFADETOBLACK";
     static const QString ATEMMACRO = "ATEMMACRO";
     static const QString ATEMAUTO = "ATEMAUTO";
     static const QString ATEMINPUT = "ATEMINPUT";

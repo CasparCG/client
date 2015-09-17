@@ -45,6 +45,7 @@
 #include "Commands/Panasonic/PanasonicPresetCommand.h"
 #include "Commands/Sony/SonyPresetCommand.h"
 #include "Commands/Spyder/SpyderPresetCommand.h"
+#include "Commands/Atem/AtemFadeToBlackCommand.h"
 #include "Commands/Atem/AtemInputCommand.h"
 #include "Commands/Atem/AtemAudioInputStateCommand.h"
 #include "Commands/Atem/AtemCutCommand.h"
@@ -345,6 +346,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         }
         else if (dynamic_cast<AtemInputCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemCutCommand*>(event.getCommand()) ||
+                 dynamic_cast<AtemFadeToBlackCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemAutoCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemKeyerStateCommand*>(event.getCommand()) ||
                  dynamic_cast<AtemVideoFormatCommand*>(event.getCommand()) ||

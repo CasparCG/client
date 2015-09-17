@@ -190,7 +190,8 @@ HEADERS += \
     Events/Rundown/ClearCurrentPlayingItemEvent.h \
     Events/Rundown/CurrentItemChangedEvent.h \
     Commands/Atem/AtemMacroCommand.h \
-    OscWebSocketManager.h
+    OscWebSocketManager.h \
+    Commands/Atem/AtemFadeToBlackCommand.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -374,7 +375,8 @@ SOURCES += \
     Events/Rundown/ClearCurrentPlayingItemEvent.cpp \
     Events/Rundown/CurrentItemChangedEvent.cpp \
     Commands/Atem/AtemMacroCommand.cpp \
-    OscWebSocketManager.cpp
+    OscWebSocketManager.cpp \
+    Commands/Atem/AtemFadeToBlackCommand.cpp
 
 DISTFILES += \
     Sql/ChangeScript-208.sql \
@@ -382,7 +384,8 @@ DISTFILES += \
     Sql/ChangeScript-209.sql \
     Sql/ChangeScript-210.sql \
     Sql/ChangeScript-211.sql \
-    Sql/ChangeScript-212.sql
+    Sql/ChangeScript-212.sql \
+    Sql/ChangeScript-213.sql
 
 RESOURCES += \
     Core.qrc

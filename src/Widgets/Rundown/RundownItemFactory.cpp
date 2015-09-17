@@ -40,6 +40,7 @@
 #include "RundownRouteChannelWidget.h"
 #include "RundownRouteVideolayerWidget.h"
 #include "RundownHttpPostWidget.h"
+#include "Atem/RundownAtemFadeToBlackWidget.h"
 #include "Atem/RundownAtemAutoWidget.h"
 #include "Atem/RundownAtemInputWidget.h"
 #include "Atem/RundownAtemCutWidget.h"
@@ -102,6 +103,7 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::TRICASTERMACRO) return new RundownMacroWidget(model, this);
     else if (model.getType() == Rundown::OSCOUTPUT) return new RundownOscOutputWidget(model, this);
     else if (model.getType() == Rundown::ATEMINPUT) return new RundownAtemInputWidget(model, this);
+    else if (model.getType() == Rundown::ATEMFADETOBLACK) return new RundownAtemFadeToBlackWidget(model, this);
     else if (model.getType() == Rundown::ATEMAUTO) return new RundownAtemAutoWidget(model, this);
     else if (model.getType() == Rundown::ATEMCUT) return new RundownAtemCutWidget(model, this);
     else if (model.getType() == Rundown::ATEMKEYERSTATE) return new RundownAtemKeyerStateWidget(model, this);
