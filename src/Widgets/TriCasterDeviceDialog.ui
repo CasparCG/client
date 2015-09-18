@@ -7,13 +7,38 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>140</height>
+    <height>142</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>142</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>148</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>New TriCaster Mixer</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" rowspan="2">
+    <widget class="QLabel" name="labelDeviceIcon">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="Widgets.qrc">:/Graphics/Images/ServerBig.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="labelDeviceName">
      <property name="text">
@@ -23,6 +48,9 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+   </item>
+   <item row="0" column="2" colspan="5">
+    <widget class="QLineEdit" name="lineEditDeviceName"/>
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="labelAddress">
@@ -51,7 +79,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="4">
+   <item row="1" column="4" colspan="2">
     <widget class="QLineEdit" name="lineEditPort">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -67,36 +95,13 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="5">
+   <item row="1" column="6">
     <widget class="QToolButton" name="toolButtonTestConnection">
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="toolTip">
       <string>Test Connection</string>
-     </property>
-     <property name="shortcut">
-      <string>Alt+O</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2" colspan="4">
-    <widget class="QLineEdit" name="lineEditDeviceName"/>
-   </item>
-   <item row="2" column="2" colspan="4">
-    <widget class="QLineEdit" name="lineEditDescription">
-     <property name="placeholderText">
-      <string>Optional</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4" colspan="2">
-    <widget class="QPushButton" name="pushButtonOk">
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="text">
-      <string>&amp;OK</string>
      </property>
      <property name="shortcut">
       <string>Alt+O</string>
@@ -113,16 +118,36 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" rowspan="3">
-    <widget class="QLabel" name="labelDeviceIcon">
+   <item row="2" column="2" colspan="5">
+    <widget class="QLineEdit" name="lineEditDescription">
+     <property name="placeholderText">
+      <string>Optional</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>344</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="5" colspan="2">
+    <widget class="QPushButton" name="pushButtonOk">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="text">
-      <string/>
+      <string>&amp;OK</string>
      </property>
-     <property name="pixmap">
-      <pixmap resource="Widgets.qrc">:/Graphics/Images/ServerBig.png</pixmap>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="shortcut">
+      <string>Alt+O</string>
      </property>
     </widget>
    </item>
