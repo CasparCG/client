@@ -113,14 +113,16 @@ void InspectorCropWidget::channelChanged(const ChannelChangedEvent& event)
 
 void InspectorCropWidget::blockAllSignals(bool block)
 {
-    this->sliderRight->blockSignals(block);
+    this->sliderLeft->blockSignals(block);
     this->sliderTop->blockSignals(block);
     this->sliderRight->blockSignals(block);
     this->sliderBottom->blockSignals(block);
-    this->spinBoxRight->blockSignals(block);
+
+    this->sliderLeft->blockSignals(block);
     this->spinBoxTop->blockSignals(block);
     this->spinBoxRight->blockSignals(block);
     this->spinBoxBottom->blockSignals(block);
+
     this->spinBoxTransitionDuration->blockSignals(block);
     this->comboBoxTween->blockSignals(block);
     this->checkBoxDefer->blockSignals(block);
