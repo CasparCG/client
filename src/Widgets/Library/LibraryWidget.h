@@ -30,6 +30,7 @@ class WIDGETS_EXPORT LibraryWidget : public QWidget, Ui::LibraryWidget
         explicit LibraryWidget(QWidget* parent = 0);
 
     private:
+        bool lock = false;
         bool useDropFrameNotation = false;
 
         QMenu* contextMenu;

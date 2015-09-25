@@ -662,26 +662,15 @@ void LibraryWidget::setupUiMenu()
 
 void LibraryWidget::repositoryRundown(const RepositoryRundownEvent& event)
 {
-    for (int i = 0; i < this->treeWidgetTool->topLevelItemCount(); i++)
-        this->treeWidgetTool->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+    this->lock = event.getRepositoryRundown();
 
-    for (int i = 0; i < this->treeWidgetAudio->topLevelItemCount(); i++)
-        this->treeWidgetAudio->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    for (int i = 0; i < this->treeWidgetImage->topLevelItemCount(); i++)
-        this->treeWidgetImage->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    for (int i = 0; i < this->treeWidgetTemplate->topLevelItemCount(); i++)
-        this->treeWidgetTemplate->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    for (int i = 0; i < this->treeWidgetVideo->topLevelItemCount(); i++)
-        this->treeWidgetVideo->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    for (int i = 0; i < this->treeWidgetData->topLevelItemCount(); i++)
-        this->treeWidgetData->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
-
-    for (int i = 0; i < this->treeWidgetPreset->topLevelItemCount(); i++)
-        this->treeWidgetPreset->topLevelItem(i)->setDisabled(event.getRepositoryRundown());
+    this->treeWidgetTool->setEnabled(!this->lock);
+    this->treeWidgetAudio->setEnabled(!this->lock);
+    this->treeWidgetImage->setEnabled(!this->lock);
+    this->treeWidgetTemplate->setEnabled(!this->lock);
+    this->treeWidgetVideo->setEnabled(!this->lock);
+    this->treeWidgetData->setEnabled(!this->lock);
+    this->treeWidgetPreset->setEnabled(!this->lock);
 }
 
 void LibraryWidget::mediaChanged(const MediaChangedEvent& event)
@@ -1092,6 +1081,9 @@ void LibraryWidget::checkEmptyFilter()
 void LibraryWidget::itemDoubleClicked(QTreeWidgetItem* current, int index)
 {
     Q_UNUSED(index);
+
+    if (this->lock)
+        return;
 
     if (current == NULL)
         return;
