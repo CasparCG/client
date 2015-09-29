@@ -41,7 +41,7 @@ mkdir "$CLIENT_FOLDER/bin" || fail "Could not create $CLIENT_FOLDER/bin"
 # Copy compiled binaries
 echo Copying binaries...
 find . -name \*.so\* -exec cp -fP {} "$CLIENT_FOLDER/bin/" \; || fail "Could not copy client libraries"
-cp -f Shell/shell "$CLIENT_FOLDER/bin/client" || fail "Could not copy client executable"
+cp -f Shell/shell "$CLIENT_FOLDER/bin/" || fail "Could not copy client executable"
 
 # Copy binary dependencies
 echo Copying binary dependencies...
