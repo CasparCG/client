@@ -404,7 +404,6 @@ void CasparDevice::setMasterVolume(int channel, float masterVolume)
     writeMessage(QString("MIXER %1 MASTERVOLUME %2").arg(channel).arg(masterVolume));
 }
 
-
 void CasparDevice::setChroma(int channel, int videolayer, const QString& key, float threshold, float spread, float spill)
 {
     writeMessage(QString("MIXER %1-%2 CHROMA %3 %4 %5 %6")

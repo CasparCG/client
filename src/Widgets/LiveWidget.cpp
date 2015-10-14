@@ -233,11 +233,11 @@ void LiveWidget::setupRenderTarget(bool windowMode)
         return;
 
 #if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLiveSmall->winId());
 #elif defined(Q_OS_MAC)
-    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLive->winId());
+    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLiveSmall->winId());
 #elif defined(Q_OS_LINUX)
-    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLive->winId());
+    libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLiveSmall->winId());
 #endif
 }
 
