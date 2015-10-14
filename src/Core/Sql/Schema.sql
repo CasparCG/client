@@ -63,6 +63,7 @@ INSERT INTO BlendMode (Value) VALUES('Saturation');
 INSERT INTO BlendMode (Value) VALUES('Color');
 INSERT INTO BlendMode (Value) VALUES('Luminosity');
 
+INSERT INTO Configuration (Name, Value) VALUES('FontSize', '12');
 INSERT INTO Configuration (Name, Value) VALUES('StartFullscreen', 'false');
 INSERT INTO Configuration (Name, Value) VALUES('AutoRefreshLibrary', 'false');
 INSERT INTO Configuration (Name, Value) VALUES('ShowThumbnailTooltip', 'true');
