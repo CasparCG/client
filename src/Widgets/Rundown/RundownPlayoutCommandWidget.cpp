@@ -258,13 +258,13 @@ void RundownPlayoutCommandWidget::configureOscSubscriptions()
     if (this->playNowControlSubscription != NULL)
         this->playNowControlSubscription->disconnect(); // Disconnect all events.
 
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
     playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
     playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),

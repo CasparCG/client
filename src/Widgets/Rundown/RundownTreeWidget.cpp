@@ -1742,77 +1742,77 @@ void RundownTreeWidget::configureOscSubscriptions()
 
     QFileInfo path(this->activeRundown);
 
-    QString upControlFilter = Osc::DEFAULT_UP_RUNDOWN_CONTROL_FILTER;
+    QString upControlFilter = Osc::RUNDOWN_CONTROL_UP_FILTER;
     this->upControlSubscription = new OscSubscription(upControlFilter, this);
     QObject::connect(this->upControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(upControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString downControlFilter = Osc::DEFAULT_DOWN_RUNDOWN_CONTROL_FILTER;
+    QString downControlFilter = Osc::RUNDOWN_CONTROL_DOWN_FILTER;
     this->downControlSubscription = new OscSubscription(downControlFilter, this);
     QObject::connect(this->downControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(downControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playAndAutoStepControlFilter = Osc::DEFAULT_PLAYANDAUTOSTEP_CONTROL_FILTER;
+    QString playAndAutoStepControlFilter = Osc::RUNDOWN_CONTROL_PLAYANDAUTOSTEP_FILTER;
     this->playAndAutoStepControlSubscription = new OscSubscription(playAndAutoStepControlFilter, this);
     QObject::connect(this->playAndAutoStepControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowAndAutoStepControlFilter = Osc::DEFAULT_PLAYNOWANDAUTOSTEP_CONTROL_FILTER;
+    QString playNowAndAutoStepControlFilter = Osc::RUNDOWN_CONTROL_PLAYNOWANDAUTOSTEP_FILTER;
     this->playNowAndAutoStepControlSubscription = new OscSubscription(playNowAndAutoStepControlFilter, this);
     QObject::connect(this->playNowAndAutoStepControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowAndAutoStepControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowIfChannelControlFilter = Osc::DEFAULT_PLAYNOWIFCHANNEL_CONTROL_FILTER;
+    QString playNowIfChannelControlFilter = Osc::RUNDOWN_CONTROL_PLAYNOWIFCHANNEL_FILTER;
     this->playNowIfChannelControlSubscription = new OscSubscription(playNowIfChannelControlFilter, this);
     QObject::connect(this->playNowIfChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowIfChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString stopControlFilter = Osc::DEFAULT_STOP_RUNDOWN_CONTROL_FILTER;
+    QString stopControlFilter = Osc::RUNDOWN_CONTROL_STOP_FILTER;
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playControlFilter = Osc::DEFAULT_PLAY_RUNDOWN_CONTROL_FILTER;
+    QString playControlFilter = Osc::RUNDOWN_CONTROL_PLAY_FILTER;
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_RUNDOWN_CONTROL_FILTER;
+    QString playNowControlFilter = Osc::RUNDOWN_CONTROL_PLAYNOW_FILTER;
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString loadControlFilter = Osc::DEFAULT_LOAD_RUNDOWN_CONTROL_FILTER;
+    QString loadControlFilter = Osc::RUNDOWN_CONTROL_LOAD_FILTER;
     this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
     QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString nextControlFilter = Osc::DEFAULT_NEXT_RUNDOWN_CONTROL_FILTER;
+    QString nextControlFilter = Osc::RUNDOWN_CONTROL_NEXT_FILTER;
     this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
     QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString updateControlFilter = Osc::DEFAULT_UPDATE_RUNDOWN_CONTROL_FILTER;
+    QString updateControlFilter = Osc::RUNDOWN_CONTROL_UPDATE_FILTER;
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString invokeControlFilter = Osc::DEFAULT_INVOKE_RUNDOWN_CONTROL_FILTER;
+    QString invokeControlFilter = Osc::RUNDOWN_CONTROL_INVOKE_FILTER;
     this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
     QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearControlFilter = Osc::DEFAULT_CLEAR_RUNDOWN_CONTROL_FILTER;
+    QString clearControlFilter = Osc::RUNDOWN_CONTROL_CLEAR_FILTER;
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_RUNDOWN_CONTROL_FILTER;
+    QString clearVideolayerControlFilter = Osc::RUNDOWN_CONTROL_CLEARVIDEOLAYER_FILTER;
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_RUNDOWN_CONTROL_FILTER;
+    QString clearChannelControlFilter = Osc::RUNDOWN_CONTROL_CLEARCHANNELFILTER;
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
