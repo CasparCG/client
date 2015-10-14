@@ -1,28 +1,8 @@
 #include "OscFileModel.h"
 
 OscFileModel::OscFileModel()
-    : currentTime(0), totalTime(0), currentFrame(0), totalFrames(0), fps(0), path("")
+    : currentFrame(0), totalFrames(0), fps(0), path("")
 {    
-}
-
-double OscFileModel::getTime() const
-{
-    return this->currentTime;
-}
-
-void OscFileModel::setTime(double currentTime)
-{
-    this->currentTime = currentTime;
-}
-
-double OscFileModel::getTotalTime() const
-{
-    return this->totalTime;
-}
-
-void OscFileModel::setTotalTime(double totalTime)
-{
-    this->totalTime = totalTime;
 }
 
 int OscFileModel::getFrame() const
