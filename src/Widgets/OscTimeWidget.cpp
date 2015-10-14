@@ -39,6 +39,23 @@ OscTimeWidget::OscTimeWidget(QWidget* parent)
 #endif
 }
 
+void OscTimeWidget::setRecording(bool enabled)
+{
+    if (enabled)
+        this->labelOscTime->setStyleSheet("color: red;");
+    else
+        this->labelOscTime->setStyleSheet("");
+}
+
+void OscTimeWidget::setRecordOnly(bool enabled)
+{
+    this->recordOnly = enabled;
+
+    this->labelOscInTime->setVisible(!enabled);
+    this->labelOscOutTime->setVisible(!enabled);
+    this->progressBarOscTime->setVisible(!enabled);
+}
+
 void OscTimeWidget::reset()
 {
     if (this->paused)
@@ -71,10 +88,13 @@ void OscTimeWidget::setTime(int currentFrame)
 
     this->labelOscTime->setText(Timecode::fromTime(currentTime, this->fps, this->useDropFrameNotation));
 
-    if (this->timestamp == 0) // First time.
-        QTimer::singleShot(500, this, SLOT(checkState()));
+    if (!this->recordOnly)
+    {
+        if (this->timestamp == 0) // First time.
+            QTimer::singleShot(500, this, SLOT(checkState()));
 
-    this->timestamp = QDateTime::currentMSecsSinceEpoch();
+        this->timestamp = QDateTime::currentMSecsSinceEpoch();
+    }
 }
 
 void OscTimeWidget::setStartTime(const QString& startTime, bool reverseOscTime)

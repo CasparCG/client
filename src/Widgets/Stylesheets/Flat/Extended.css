@@ -449,11 +449,19 @@
 }
 
 /*
- * LiveWidget
+ * LiveDialog
  */
 #labelLive
 {
     image: url(:/Graphics/Images/StreamNotAvailable.png);
+}
+
+/*
+ * LiveWidget
+ */
+#labelLiveSmall
+{
+    image: url(:/Graphics/Images/StreamNotAvailableSmall.png);
 }
 #tabLive
 {

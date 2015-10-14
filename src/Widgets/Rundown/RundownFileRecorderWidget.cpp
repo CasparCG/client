@@ -18,7 +18,8 @@
 RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, QWidget* parent, const QString& color,
                                                      bool active, bool inGroup, bool compactView)
     : QWidget(parent),
-      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model), stopControlSubscription(NULL),
+      active(active), inGroup(inGroup), compactView(compactView), color(color), model(model),
+      frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), stopControlSubscription(NULL),
       playControlSubscription(NULL), playNowControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL),
       clearChannelControlSubscription(NULL)
 {
@@ -52,6 +53,7 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(targetChanged(const TargetChangedEvent&)), this, SLOT(targetChanged(const TargetChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(channelChanged(const ChannelChangedEvent&)), this, SLOT(channelChanged(const ChannelChangedEvent&)));
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
@@ -63,6 +65,22 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     checkEmptyDevice();
     checkGpiConnection();
     checkDeviceConnection();
+
+    configureOscSubscriptions();
+
+    this->widgetOscTime->setVisible(true);
+    this->widgetOscTime->setRecordOnly(true);
+}
+
+void RundownFileRecorderWidget::channelChanged(const ChannelChangedEvent& event)
+{
+    Q_UNUSED(event);
+
+    // This event is not for us.
+    if (!this->selected)
+        return;
+
+    configureOscSubscriptions();
 }
 
 void RundownFileRecorderWidget::labelChanged(const LabelChangedEvent& event)
@@ -111,6 +129,7 @@ void RundownFileRecorderWidget::deviceChanged(const DeviceChangedEvent& event)
 
     checkEmptyDevice();
     checkDeviceConnection();
+    configureOscSubscriptions();
 }
 
 AbstractRundownWidget* RundownFileRecorderWidget::clone()
@@ -317,6 +336,8 @@ void RundownFileRecorderWidget::executeStop()
         if (deviceShadow != NULL && deviceShadow->isConnected())
             deviceShadow->stopFileRecorder(this->command.getChannel());
     }
+
+    this->widgetOscTime->setRecording(false);
 }
 
 void RundownFileRecorderWidget::executePlay()
@@ -339,11 +360,15 @@ void RundownFileRecorderWidget::executePlay()
 
     if (this->markUsedItems)
         setUsed(true);
+
+    this->widgetOscTime->setRecording(true);
 }
 
 void RundownFileRecorderWidget::channelChanged(int channel)
 {
     this->labelChannel->setText(QString("Channel: %1").arg(channel));
+
+    configureOscSubscriptions();
 }
 
 void RundownFileRecorderWidget::delayChanged(int delay)
@@ -372,6 +397,39 @@ void RundownFileRecorderWidget::checkDeviceConnection()
 
 void RundownFileRecorderWidget::configureOscSubscriptions()
 {
+    if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
+            return;
+
+    if (this->frameSubscription != NULL)
+        this->frameSubscription->disconnect(); // Disconnect all events.
+
+    if (this->fpsSubscription != NULL)
+        this->fpsSubscription->disconnect(); // Disconnect all events.
+
+    if (this->pathSubscription != NULL)
+        this->pathSubscription->disconnect(); // Disconnect all events.
+
+    QString frameFilter = Osc::FILERECORDER_FRAME_FILTER;
+    frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+    this->frameSubscription = new OscSubscription(frameFilter, this);
+    QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString fpsFilter = Osc::FILERECORDER_FPS_FILTER;
+    fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+             .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+    this->fpsSubscription = new OscSubscription(fpsFilter, this);
+    QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString pathFilter = Osc::FILERECORDER_PATH_FILTER;
+    pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+    this->pathSubscription = new OscSubscription(pathFilter, this);
+    QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
     if (!this->command.getAllowRemoteTriggering())
         return;
 
@@ -393,37 +451,37 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
     if (this->clearChannelControlSubscription != NULL)
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
-    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    QString stopControlFilter = Osc::ITEM_CONTROL_STOP_FILTER;
     stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
     playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
     playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    QString clearControlFilter = Osc::ITEM_CONTROL_CLEAR_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    QString clearVideolayerControlFilter = Osc::ITEM_CONTROL_CLEARVIDEOLAYER_FILTER;
     clearVideolayerControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    QString clearChannelControlFilter = Osc::ITEM_CONTROL_CLEARCHANNEL_FILTER;
     clearChannelControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
@@ -465,6 +523,50 @@ void RundownFileRecorderWidget::remoteTriggerIdChanged(const QString& remoteTrig
     configureOscSubscriptions();
 
     this->labelRemoteTriggerId->setText(QString("UID: %1").arg(remoteTriggerId));
+}
+
+void RundownFileRecorderWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    Q_UNUSED(predicate);
+
+    this->fileModel.setFrame(arguments.at(0).toInt());
+
+    updateOscWidget();
+}
+
+void RundownFileRecorderWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    Q_UNUSED(predicate);
+
+    this->fileModel.setFramesPerSecond(arguments.at(0).toDouble());
+
+    updateOscWidget();
+}
+
+void RundownFileRecorderWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    Q_UNUSED(predicate);
+
+    QString name = arguments.at(0).toString();
+    if (this->command.getOutput().toLower() != name.toLower())
+        return; // Wrong file.
+
+    this->fileModel.setPath(arguments.at(0).toString());
+
+    updateOscWidget();
+}
+
+void RundownFileRecorderWidget::updateOscWidget()
+{
+    if (this->fileModel.getFrame() > 0 && this->fileModel.getFramesPerSecond() > 0 && !this->fileModel.getPath().isEmpty())
+    {
+        this->widgetOscTime->setTime(this->fileModel.getFrame());
+        this->widgetOscTime->setFramesPerSecond(this->fileModel.getFramesPerSecond());
+
+        this->fileModel.setPath("");
+        this->fileModel.setFrame(0);
+        this->fileModel.setFramesPerSecond(0);
+    }
 }
 
 void RundownFileRecorderWidget::stopControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
