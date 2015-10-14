@@ -40,7 +40,7 @@ void AudioMeterWidget::deviceChanged(const DeviceChangedEvent& event)
         this->progressBarAudioMeter->setValue(-61);
         this->progressBarAudioMeter->update();
 
-        QString audioFilter = Osc::DEFAULT_AUDIO_FILTER;
+        QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
         audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(event.getDeviceName())->resolveIpAddress()))
                    .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
                    .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
@@ -89,7 +89,7 @@ void AudioMeterWidget::configureOscSubscriptions()
     if (DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName()) == NULL)
         return;
 
-    QString audioFilter = Osc::DEFAULT_AUDIO_FILTER;
+    QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
     audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName())->resolveIpAddress()))
                .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
                .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
