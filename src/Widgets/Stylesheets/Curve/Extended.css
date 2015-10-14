@@ -400,12 +400,20 @@
 }
 
 /*
+ * LiveDialog
+ */
+ #labelLive
+ {
+     image: url(:/Graphics/Images/StreamNotAvailable.png);
+ }
+
+/*
  * LiveWidget
  */
-#labelLive
-{
-    image: url(:/Graphics/Images/StreamNotAvailable.png);
-}
+ #labelLiveSmall
+ {
+     image: url(:/Graphics/Images/StreamNotAvailableSmall.png);
+ }
 #tabLive
 {
     background-color: rgba(60, 60, 60, 255);

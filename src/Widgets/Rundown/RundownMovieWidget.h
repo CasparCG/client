@@ -78,8 +78,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         bool useFreezeOnLoad;
         bool selected = false;
 
-        OscFileModel* fileModel;
-        OscSubscription* timeSubscription;
+        OscFileModel fileModel;
         OscSubscription* frameSubscription;
         OscSubscription* fpsSubscription;
         OscSubscription* pathSubscription;
@@ -101,6 +100,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         QTimer executeStartTimer;
         QTimer executeStopTimer;
 
+        void updateOscWidget();
         void setThumbnail();
         void checkEmptyDevice();
         void checkGpiConnection();

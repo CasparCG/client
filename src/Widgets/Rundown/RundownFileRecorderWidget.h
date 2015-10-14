@@ -15,10 +15,12 @@
 #include "Commands/AbstractCommand.h"
 #include "Commands/AbstractPlayoutCommand.h"
 #include "Commands/FileRecorderCommand.h"
+#include "Events/Inspector/ChannelChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Models/OscFileModel.h"
 
 #include <QtCore/QString>
 #include <QtCore/QTimer>
@@ -67,6 +69,11 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         bool markUsedItems;
         bool selected = false;
 
+        OscFileModel fileModel;
+        OscSubscription* frameSubscription;
+        OscSubscription* fpsSubscription;
+        OscSubscription* pathSubscription;
+
         OscSubscription* stopControlSubscription;
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
@@ -76,6 +83,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
 
         QTimer executeTimer;
 
+        void updateOscWidget();
         void checkEmptyDevice();
         void checkGpiConnection();
         void checkDeviceConnection();
@@ -90,6 +98,9 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
+        Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void stopControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&);
@@ -99,4 +110,5 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         Q_SLOT void labelChanged(const LabelChangedEvent&);
         Q_SLOT void targetChanged(const TargetChangedEvent&);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
+        Q_SLOT void channelChanged(const ChannelChangedEvent&);
 };
