@@ -334,25 +334,25 @@ void RundownAtemInputWidget::configureOscSubscriptions()
     if (this->previewControlSubscription != NULL)
         this->previewControlSubscription->disconnect(); // Disconnect all events.
 
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
     playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
     playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    QString updateControlFilter = Osc::ITEM_CONTROL_UPDATE_FILTER;
     updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    QString previewControlFilter = Osc::ITEM_CONTROL_PREVIEW_FILTER;
     previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
     QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
