@@ -22,10 +22,10 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
-      reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false), fileModel(NULL), timeSubscription(NULL),
-      frameSubscription(NULL), fpsSubscription(NULL), pathSubscription(NULL), pausedSubscription(NULL), loopSubscription(NULL), stopControlSubscription(NULL),
-      playControlSubscription(NULL), playNowControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL),
-      updateControlSubscription(NULL), previewControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
+      reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false), frameSubscription(NULL), fpsSubscription(NULL),
+      pathSubscription(NULL), pausedSubscription(NULL), loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL),
+      playNowControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
+      previewControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
     setupUi(this);
 
@@ -821,9 +821,6 @@ void RundownMovieWidget::configureOscSubscriptions()
     if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
             return;
 
-    if (this->timeSubscription != NULL)
-        this->timeSubscription->disconnect(); // Disconnect all events.
-
     if (this->frameSubscription != NULL)
         this->frameSubscription->disconnect(); // Disconnect all events.
 
@@ -839,15 +836,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     if (this->loopSubscription != NULL)
         this->loopSubscription->disconnect(); // Disconnect all events.
 
-    QString timeFilter = Osc::DEFAULT_TIME_FILTER;
-    timeFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
-              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
-              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
-    this->timeSubscription = new OscSubscription(timeFilter, this);
-    QObject::connect(this->timeSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
-
-    QString frameFilter = Osc::DEFAULT_FRAME_FILTER;
+    QString frameFilter = Osc::VIDEOLAYER_FRAME_FILTER;
     frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
                .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -855,7 +844,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString fpsFilter = Osc::DEFAULT_FPS_FILTER;
+    QString fpsFilter = Osc::VIDEOLAYER_FPS_FILTER;
     fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -863,7 +852,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString pathFilter = Osc::DEFAULT_PATH_FILTER;
+    QString pathFilter = Osc::VIDEOLAYER_PATH_FILTER;
     pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -871,7 +860,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString pausedFilter = Osc::DEFAULT_PAUSED_FILTER;
+    QString pausedFilter = Osc::VIDEOLAYER_PAUSED_FILTER;
     pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                 .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
                 .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -879,7 +868,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QObject::connect(this->pausedSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString loopFilter = Osc::DEFAULT_LOOP_FILTER;
+    QString loopFilter = Osc::VIDEOLAYER_LOOP_FILTER;
     loopFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
@@ -923,67 +912,67 @@ void RundownMovieWidget::configureOscSubscriptions()
     if (this->clearChannelControlSubscription != NULL)
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
-    QString stopControlFilter = Osc::DEFAULT_STOP_CONTROL_FILTER;
+    QString stopControlFilter = Osc::ITEM_CONTROL_STOP_FILTER;
     stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playControlFilter = Osc::DEFAULT_PLAY_CONTROL_FILTER;
+    QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
     playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString playNowControlFilter = Osc::DEFAULT_PLAYNOW_CONTROL_FILTER;
+    QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
     playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString loadControlFilter = Osc::DEFAULT_LOAD_CONTROL_FILTER;
+    QString loadControlFilter = Osc::ITEM_CONTROL_LOAD_FILTER;
     loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
     QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString pauseControlFilter = Osc::DEFAULT_PAUSE_CONTROL_FILTER;
+    QString pauseControlFilter = Osc::ITEM_CONTROL_PAUSE_FILTER;
     pauseControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
     QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString nextControlFilter = Osc::DEFAULT_NEXT_CONTROL_FILTER;
+    QString nextControlFilter = Osc::ITEM_CONTROL_NEXT_FILTER;
     nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
     QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString updateControlFilter = Osc::DEFAULT_UPDATE_CONTROL_FILTER;
+    QString updateControlFilter = Osc::ITEM_CONTROL_UPDATE_FILTER;
     updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString previewControlFilter = Osc::DEFAULT_PREVIEW_CONTROL_FILTER;
+    QString previewControlFilter = Osc::ITEM_CONTROL_PREVIEW_FILTER;
     previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
     QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearControlFilter = Osc::DEFAULT_CLEAR_CONTROL_FILTER;
+    QString clearControlFilter = Osc::ITEM_CONTROL_CLEAR_FILTER;
     clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearVideolayerControlFilter = Osc::DEFAULT_CLEAR_VIDEOLAYER_CONTROL_FILTER;
+    QString clearVideolayerControlFilter = Osc::ITEM_CONTROL_CLEARVIDEOLAYER_FILTER;
     clearVideolayerControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString clearChannelControlFilter = Osc::DEFAULT_CLEAR_CHANNEL_CONTROL_FILTER;
+    QString clearChannelControlFilter = Osc::ITEM_CONTROL_CLEARCHANNEL_FILTER;
     clearChannelControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
@@ -1052,40 +1041,23 @@ void RundownMovieWidget::deviceAdded(CasparDevice& device)
     configureOscSubscriptions();
 }
 
-void RundownMovieWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
-{
-    Q_UNUSED(predicate);
-
-    if (this->fileModel != NULL)
-    {
-        delete this->fileModel;
-        this->fileModel = NULL;
-    }
-
-    this->fileModel = new OscFileModel();
-    this->fileModel->setTime(arguments.at(0).toDouble());
-    this->fileModel->setTotalTime(arguments.at(1).toDouble());
-}
-
 void RundownMovieWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     Q_UNUSED(predicate);
 
-    if (this->fileModel == NULL)
-        return;
+    this->fileModel.setFrame(arguments.at(0).toInt());
+    this->fileModel.setTotalFrames(arguments.at(1).toInt());
 
-    this->fileModel->setFrame(arguments.at(0).toInt());
-    this->fileModel->setTotalFrames(arguments.at(1).toInt());
+    updateOscWidget();
 }
 
 void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     Q_UNUSED(predicate);
 
-    if (this->fileModel == NULL)
-        return;
+    this->fileModel.setFramesPerSecond(arguments.at(0).toDouble());
 
-    this->fileModel->setFramesPerSecond(arguments.at(0).toDouble());
+    updateOscWidget();
 }
 
 void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
@@ -1098,36 +1070,48 @@ void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, cons
     if (this->model.getName().toLower() != name.toLower())
         return; // Wrong file.
 
-    if (this->fileModel == NULL)
-        return;
+    this->fileModel.setPath(arguments.at(0).toString());
 
-    this->fileModel->setPath(arguments.at(0).toString());
+    updateOscWidget();
+}
 
-    this->widgetOscTime->setProgress(this->fileModel->getFrame());
+void RundownMovieWidget::updateOscWidget()
+{
+    if (this->fileModel.getFrame() > 0 && this->fileModel.getTotalFrames() > 0 &&
+        !this->fileModel.getPath().isEmpty() && this->fileModel.getFramesPerSecond() > 0)
 
-    if (this->reverseOscTime && this->fileModel->getFrame() > 0)
-        this->widgetOscTime->setTime(this->fileModel->getTotalFrames() - this->fileModel->getFrame());
-    else
-        this->widgetOscTime->setTime(this->fileModel->getFrame());
-
-    if (this->command.getSeek() == 0 && this->command.getLength() == 0)
-        this->widgetOscTime->setInOutTime(0, this->fileModel->getTotalFrames());
-    else
-        this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
-
-    this->widgetOscTime->setFramesPerSecond(this->fileModel->getFramesPerSecond());
-
-    if (this->sendAutoPlay && !this->hasSentAutoPlay)
     {
-        EventManager::getInstance().fireAutoPlayRundownItemEvent(AutoPlayRundownItemEvent(this));
+        this->widgetOscTime->setProgress(this->fileModel.getFrame());
 
-        this->sendAutoPlay = false;
-        this->hasSentAutoPlay = true;
+        if (this->reverseOscTime && this->fileModel.getFrame() > 0)
+            this->widgetOscTime->setTime(this->fileModel.getTotalFrames() - this->fileModel.getFrame());
+        else
+            this->widgetOscTime->setTime(this->fileModel.getFrame());
 
-        qDebug("Dispatched AutoPlay event");
+        if (this->command.getSeek() == 0 && this->command.getLength() == 0)
+            this->widgetOscTime->setInOutTime(0, this->fileModel.getTotalFrames());
+        else
+            this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
+
+        this->widgetOscTime->setFramesPerSecond(this->fileModel.getFramesPerSecond());
+
+        if (this->sendAutoPlay && !this->hasSentAutoPlay)
+        {
+            EventManager::getInstance().fireAutoPlayRundownItemEvent(AutoPlayRundownItemEvent(this));
+
+            this->sendAutoPlay = false;
+            this->hasSentAutoPlay = true;
+
+            qDebug("Dispatched AutoPlay event");
+        }
+
+        this->playing = true;
+
+        this->fileModel.setPath("");
+        this->fileModel.setFrame(0);
+        this->fileModel.setTotalFrames(0);
+        this->fileModel.setFramesPerSecond(0);
     }
-
-    this->playing = true;
 }
 
 void RundownMovieWidget::pausedSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
