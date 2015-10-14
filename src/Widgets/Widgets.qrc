@@ -207,7 +207,6 @@
         <file>Images/Maroon.png</file>
         <file>Images/SteelBlue.png</file>
         <file>Images/DarkSlateGray.png</file>
-        <file>Images/StreamNotAvailable.png</file>
         <file>Images/PlayoutCommand.png</file>
         <file>Images/PlayoutCommandSmall.png</file>
         <file>Images/PlayoutCommandSmallHover.png</file>
@@ -261,6 +260,8 @@
         <file>Images/Atem/FadeToBlack.png</file>
         <file>Images/Atem/FadeToBlackSmall.png</file>
         <file>Images/Atem/FadeToBlackSmallHover.png</file>
+        <file>Images/StreamNotAvailable.png</file>
+        <file>Images/StreamNotAvailableSmall.png</file>
     </qresource>
     <qresource prefix="/Appearances">
         <file>Stylesheets/Flat/Default.css</file>
@@ -273,8 +274,5 @@
         <file>Stylesheets/Curve/Linux.css</file>
         <file>Stylesheets/Curve/Mac.css</file>
         <file>Stylesheets/Curve/Windows.css</file>
-        <file>Images/Html.png</file>
-        <file>Images/HtmlSmall.png</file>
-        <file>Images/HtmlSmallHover.png</file>
     </qresource>
 </RCC>
