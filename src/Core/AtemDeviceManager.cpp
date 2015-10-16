@@ -1,6 +1,5 @@
 #include "AtemDeviceManager.h"
 #include "DatabaseManager.h"
-#include "Events/ConnectionStateChangedEvent.h"
 #include "Models/Atem/AtemDeviceModel.h"
 
 #include <stdexcept>
