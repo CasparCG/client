@@ -125,7 +125,6 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
-        Q_SLOT void timeSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
