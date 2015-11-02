@@ -1,3 +1,5 @@
+<iframe src="https://kiwiirc.com/client/sinisalo.freenode.net/?nick=Guest|?#CasparCG" style="border:0; width:100%; height:450px;"></iframe>
+
 <p align="center"><img src="/src/Widgets/Images/Clients.png"></p>
 
 # CasparCG Client
