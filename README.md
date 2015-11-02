@@ -16,7 +16,7 @@ VLC need to be installed on Linux: sudo apt-get install vlc libvlc-dev libvlccor
 
 ## License
 CasparCG Client is distributed under the GNU General Public License GPLv3 or
-higher, see LICENSE.TXT for details.
+higher, see LICENSE for details.
 
 The included software is provided as-is by Sveriges Televison AB.
-More information is available at http://casparcg.com/
+More information is available at http://casparcg.com
