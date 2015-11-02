@@ -1,4 +1,4 @@
-[![Visit our IRC channel](https://kiwiirc.com/buttons/sinisalo.freenode.net/CasparCG.png)](https://kiwiirc.com/client/sinisalo.freenode.net/?nick=Guest|?#CasparCG)
+[![Visit our IRC channel](https://kiwiirc.com/buttons/sinisalo.freenode.net/CasparCG.png)](https://kiwiirc.com/client/sinisalo.freenode.net/?nick=Guest|?&theme=basic#CasparCG)
 
 <p align="center"><img src="/src/Widgets/Images/Clients.png"></p>
 
