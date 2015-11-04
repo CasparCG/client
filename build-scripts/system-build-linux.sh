@@ -23,7 +23,7 @@ qmake -qt=5 ../src/Solution.pro -r -spec linux-g++-64 CONFIG+=release CONFIG+=sy
 
 # Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
-time make -j8 || fail "make failed"
+time make -j${BUILD_PARALLEL_THREADS:-4} || fail "make failed"
 
 # Create client folder to later zip
 CLIENT_FOLDER="$BUILD_ARCHIVE_NAME"
@@ -45,8 +45,8 @@ cp -fa Shell/shell "$BIN_DIR/casparcg-client" || fail "Could not copy client exe
 
 # Copy documentation
 echo Copying documentation...
-cp -fa ../CHANGES.TXT "$DOC_DIR/" || fail "Could not copy CHANGES.TXT"
-cp -fa ../LICENSE.TXT "$DOC_DIR/" || fail "Could not copy LICENSE.TXT"
+cp -fa ../CHANGES "$DOC_DIR/" || fail "Could not copy CHANGES.TXT"
+cp -fa ../LICENSE "$DOC_DIR/" || fail "Could not copy LICENSE.TXT"
 
 # Create tar.gz file
 echo Creating tag.gz...
