@@ -49,8 +49,8 @@ cp -RfP ../deploy/linux/* "$CLIENT_FOLDER/" || fail "Could not copy binary depen
 
 # Copy documentation
 echo Copying documentation...
-cp -f ../CHANGES.TXT "$CLIENT_FOLDER/" || fail "Could not copy CHANGES.TXT"
-cp -f ../LICENSE.TXT "$CLIENT_FOLDER/" || fail "Could not copy LICENSE.TXT"
+cp -f ../CHANGES "$CLIENT_FOLDER/" || fail "Could not copy CHANGES"
+cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
 
 # Create tar.gz file
 echo Creating tag.gz...

@@ -59,8 +59,8 @@ mv Shell/shell.app "$CLIENT_FOLDER/$CLIENT_FOLDER.app" || fail "Could not move a
 
 # Copy documentation
 echo Copying documentation...
-cp -f ../CHANGES.TXT "$CLIENT_FOLDER/" || fail "Could not copy CHANGES.TXT"
-cp -f ../LICENSE.TXT "$CLIENT_FOLDER/" || fail "Could not copy LICENSE.TXT"
+cp -f ../CHANGES "$CLIENT_FOLDER/" || fail "Could not copy CHANGES"
+cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
 
 # Create dmg file
 echo Creating dmg...
