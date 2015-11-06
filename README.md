@@ -12,7 +12,7 @@ Pre-built Qt 5.* binaries for Windows 64-bit (MinGW SEH exception handling) can 
 
 VLC need to be installed on Linux: sudo apt-get install vlc libvlc-dev libvlccore-dev. The plugin cache may need to be refreshed: sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
 
-You can find the latest builds on [http://builds.casparcg.com](http://builds.casparcg.com).
+You can find the latest unstable development builds on [http://builds.casparcg.com](http://builds.casparcg.com).
 
 **Join our development IRC channel on the Freenode network.**
 
