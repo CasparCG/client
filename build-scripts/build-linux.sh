@@ -49,7 +49,7 @@ cp -RfP ../deploy/linux/* "$CLIENT_FOLDER/" || fail "Could not copy binary depen
 
 # Copy documentation
 echo Copying documentation...
-cp -f ../CHANGES "$CLIENT_FOLDER/" || fail "Could not copy CHANGES"
+cp -f ../CHANGELOG "$CLIENT_FOLDER/" || fail "Could not copy CHANGELOG"
 cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
 
 # Create tar.gz file

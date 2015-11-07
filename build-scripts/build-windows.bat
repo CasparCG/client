@@ -46,7 +46,7 @@ xcopy ..\deploy\win32\platforms "%CLIENT_FOLDER%\%CLIENT_FOLDER%\platforms" /E /
 
 :: Copy documentation
 echo Copying documentation...
-copy ..\CHANGES "%CLIENT_FOLDER%" || goto :error
+copy ..\CHANGELOG "%CLIENT_FOLDER%" || goto :error
 copy ..\LICENSE "%CLIENT_FOLDER%" || goto :error
 
 :: Create zip file

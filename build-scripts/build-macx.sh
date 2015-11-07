@@ -59,7 +59,7 @@ mv Shell/shell.app "$CLIENT_FOLDER/$CLIENT_FOLDER.app" || fail "Could not move a
 
 # Copy documentation
 echo Copying documentation...
-cp -f ../CHANGES "$CLIENT_FOLDER/" || fail "Could not copy CHANGES"
+cp -f ../CHANGELOG "$CLIENT_FOLDER/" || fail "Could not copy CHANGELOG"
 cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
 
 # Create dmg file
