@@ -45,8 +45,8 @@ cp -fa Shell/shell "$BIN_DIR/casparcg-client" || fail "Could not copy client exe
 
 # Copy documentation
 echo Copying documentation...
-cp -fa ../CHANGES.TXT "$DOC_DIR/" || fail "Could not copy CHANGES.TXT"
-cp -fa ../LICENSE.TXT "$DOC_DIR/" || fail "Could not copy LICENSE.TXT"
+cp -fa ../CHANGELOG "$DOC_DIR/" || fail "Could not copy CHANGELOG"
+cp -fa ../LICENSE "$DOC_DIR/" || fail "Could not copy LICENSE"
 
 # Create tar.gz file
 echo Creating tag.gz...
