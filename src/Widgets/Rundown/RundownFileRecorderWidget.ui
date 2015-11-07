@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>825</width>
+    <width>1125</width>
     <height>36</height>
    </rect>
   </property>
@@ -14,7 +14,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -147,20 +156,20 @@
     <widget class="QFrame" name="frameStatus">
      <property name="minimumSize">
       <size>
-       <width>77</width>
+       <width>305</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>77</width>
+       <width>109</width>
        <height>16777215</height>
       </size>
      </property>
      <widget class="QLabel" name="labelGpiConnected">
       <property name="geometry">
        <rect>
-        <x>1</x>
+        <x>229</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -194,7 +203,7 @@
      <widget class="QLabel" name="labelDisconnected">
       <property name="geometry">
        <rect>
-        <x>32</x>
+        <x>261</x>
         <y>2</y>
         <width>32</width>
         <height>32</height>
@@ -225,7 +234,7 @@
      <widget class="QLabel" name="labelActiveColor">
       <property name="geometry">
        <rect>
-        <x>69</x>
+        <x>297</x>
         <y>0</y>
         <width>8</width>
         <height>36</height>
@@ -247,10 +256,28 @@
        <string/>
       </property>
      </widget>
+     <widget class="OscTimeWidget" name="widgetOscTime" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>3</y>
+        <width>220</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OscTimeWidget</class>
+   <extends>QWidget</extends>
+   <header>OscTimeWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Widgets.qrc"/>
  </resources>

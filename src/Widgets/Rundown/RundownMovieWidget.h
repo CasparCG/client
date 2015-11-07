@@ -78,8 +78,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         bool useFreezeOnLoad;
         bool selected = false;
 
-        OscFileModel* fileModel;
-        OscSubscription* timeSubscription;
+        OscFileModel fileModel;
         OscSubscription* frameSubscription;
         OscSubscription* fpsSubscription;
         OscSubscription* pathSubscription;
@@ -101,6 +100,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         QTimer executeStartTimer;
         QTimer executeStopTimer;
 
+        void updateOscWidget();
         void setThumbnail();
         void checkEmptyDevice();
         void checkGpiConnection();
@@ -125,7 +125,6 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
-        Q_SLOT void timeSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);

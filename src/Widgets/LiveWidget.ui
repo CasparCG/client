@@ -42,7 +42,16 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -77,7 +86,7 @@
           </spacer>
          </item>
          <item row="0" column="1">
-          <widget class="QLabel" name="labelLive">
+          <widget class="QLabel" name="labelLiveSmall">
            <property name="minimumSize">
             <size>
              <width>287</width>

@@ -20,12 +20,15 @@ class WIDGETS_EXPORT OscTimeWidget : public QWidget, Ui::OscTimeWidget
         void setFramesPerSecond(double fps);
         void setPaused(bool paused);
         void setLoop(bool loop);
+        void setRecording(bool enabled);
+        void setRecordOnly(bool enabled);
 
         void setCompactView(bool compactView);
 
     private:
         double fps = 0;
         bool paused = false;
+        bool recordOnly = false;
         bool reverseOscTime = false;
         bool useDropFrameNotation = false;
 
