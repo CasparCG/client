@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -4963,8 +4963,8 @@
    <slot>oscWebSocketPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>585</x>
-     <y>136</y>
+     <x>568</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>

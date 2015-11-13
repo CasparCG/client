@@ -1017,10 +1017,10 @@ void DatabaseManager::updateGpiPort(const GpiPortModel& model)
 
     QSqlQuery sql;
     sql.prepare("UPDATE GpiPort SET Action = :Action, RisingEdge = :RisingEdge "
-                "WHERE Id = :id");
+                "WHERE Id = :Id");
     sql.bindValue(":Action", Playout::toString(model.getAction()));
     sql.bindValue(":RisingEdge", model.isRisingEdge() ? "1" : "0");
-    sql.bindValue(":Id", model.getPort());
+    sql.bindValue(":Id", model.getPort() + 1);
 
     if (!sql.exec())
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
@@ -1054,7 +1054,7 @@ void DatabaseManager::updateGpoPort(const GpoPortModel& model)
                 "WHERE Id = :Id");
     sql.bindValue(":PulseLengthMillis", model.getPulseLengthMillis());
     sql.bindValue(":RisingEdge", model.isRisingEdge() ? "1" : "0");
-    sql.bindValue(":Id", model.getPort());
+    sql.bindValue(":Id", model.getPort() + 1);
 
     if (!sql.exec())
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
