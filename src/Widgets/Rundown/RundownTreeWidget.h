@@ -75,7 +75,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         bool allowRemoteRundownTriggering;
         bool repositoryRundown;
         bool previewOnAutoStep;
-        bool clearDelayedCommands;
+        bool clearDelayedCommandsOnAutoStep;
 
         QString page;
         QString activeRundown;
@@ -245,4 +245,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void repositoryChanged(const RepositoryChangeModel&, RepositoryDevice&);
         Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
         Q_SLOT void currentItemChanged(const CurrentItemChangedEvent&);
+        Q_SLOT void clearDelayedCommands();
 };
