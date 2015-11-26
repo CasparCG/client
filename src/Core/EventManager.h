@@ -92,6 +92,7 @@ class CORE_EXPORT EventManager : public QObject
         void initialize();
         void uninitialize();
 
+        Q_SIGNAL void clearDelayedCommands();
         Q_SIGNAL void currentItemChanged(const CurrentItemChangedEvent&);
         Q_SIGNAL void durationChanged(const DurationChangedEvent&);
         Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
@@ -160,6 +161,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
         Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        void fireClearDelayedCommands();
         void fireCurrentItemChangedEvent(const CurrentItemChangedEvent&);
         void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
         void fireShowAddHttpGetDataDialogEvent(const ShowAddHttpGetDataDialogEvent&);

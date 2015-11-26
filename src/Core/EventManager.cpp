@@ -21,6 +21,11 @@ void EventManager::uninitialize()
 {
 }
 
+void EventManager::fireClearDelayedCommands()
+{
+    emit clearDelayedCommands();
+}
+
 void EventManager::fireInsertRepositoryChangesEvent(const InsertRepositoryChangesEvent& event)
 {
     emit insertRepositoryChanges(event);

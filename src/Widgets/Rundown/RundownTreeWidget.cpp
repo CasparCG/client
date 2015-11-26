@@ -62,7 +62,7 @@
 RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     : QWidget(parent),
       active(false), enterPressed(false), allowRemoteRundownTriggering(false), repositoryRundown(false), previewOnAutoStep(false),
-      clearDelayedCommands(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingItem(NULL), currentPlayingAutoStepItem(NULL),
+      clearDelayedCommandsOnAutoStep(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingItem(NULL), currentPlayingAutoStepItem(NULL),
       upControlSubscription(NULL), downControlSubscription(NULL), playAndAutoStepControlSubscription(NULL), playNowAndAutoStepControlSubscription(NULL),
       playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
       loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
@@ -72,13 +72,14 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     setupMenus();
 
     this->previewOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("PreviewOnAutoStep").getValue() == "true") ? true : false;
-    this->clearDelayedCommands = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
+    this->clearDelayedCommandsOnAutoStep = (DatabaseManager::getInstance().getConfigurationByName("ClearDelayedCommandsOnAutoStep").getValue() == "true") ? true : false;
 
     QObject::connect(this->treeWidgetRundown, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(customContextMenuRequested(const QPoint &)));
 
     // TODO: Specific Gpi device.
     QObject::connect(GpiManager::getInstance().getGpiDevice().data(), SIGNAL(gpiTriggered(int, GpiDevice*)), this, SLOT(gpiPortTriggered(int, GpiDevice*)));
 
+    QObject::connect(&EventManager::getInstance(), SIGNAL(clearDelayedCommands()), this, SLOT(clearDelayedCommands()));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPreset(const SaveAsPresetEvent&)), this, SLOT(saveAsPreset(const SaveAsPresetEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addPresetItem(const AddPresetItemEvent&)), this, SLOT(addPresetItem(const AddPresetItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addRudnownItem(const AddRudnownItemEvent&)), this, SLOT(addRudnownItem(const AddRudnownItemEvent&)));
@@ -421,6 +422,21 @@ void RundownTreeWidget::executeRundownItem(const ExecuteRundownItemEvent& event)
 {
     if (event.getItem()->treeWidget() == this->treeWidgetRundown)
         executeCommand(event.getType(), Action::ActionType::KeyPress, event.getItem());
+}
+
+void RundownTreeWidget::clearDelayedCommands()
+{
+    if (!this->active)
+        return;
+
+    if (this->currentPlayingAutoStepItem != nullptr)
+    {
+        for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
+        {
+            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->currentPlayingAutoStepItem->child(i), 0);
+            dynamic_cast<AbstractRundownWidget*>(childWidget)->clearDelayedCommands();
+        }
+    }
 }
 
 void RundownTreeWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
@@ -1260,18 +1276,11 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
         else
         {
             // Setting: Should we clear delayed commands on play if the group have AutoStep property set.
-            if (this->clearDelayedCommands)
+            if (this->clearDelayedCommandsOnAutoStep)
             {
                 if (dynamic_cast<GroupCommand*>(rundownWidget->getCommand())->getAutoStep() && type == Playout::PlayoutType::Play)
                 {
-                    if (this->currentPlayingAutoStepItem != nullptr)
-                    {
-                        for (int i = 0; i < this->currentPlayingAutoStepItem->childCount(); i++)
-                        {
-                            QWidget* childWidget = this->treeWidgetRundown->itemWidget(this->currentPlayingAutoStepItem->child(i), 0);
-                            dynamic_cast<AbstractRundownWidget*>(childWidget)->clearDelayedCommands();
-                        }
-                    }
+                    EventManager::getInstance().fireClearDelayedCommands();
 
                     this->currentPlayingAutoStepItem = currentItem;
                 }
