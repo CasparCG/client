@@ -83,7 +83,7 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     QMutexLocker locker(&eventsMutex);
     if (eventMessage.startsWith("/control"))
     {
-        qDebug("Received OSC message from %s:%d: %s", qPrintable(addressBuffer), this->port, qPrintable(eventMessage));
+        qDebug("Received OSC message over UDP from %s:%d: %s", qPrintable(addressBuffer), this->port, qPrintable(eventMessage));
 
         // Do not overwrite control commands already in queue.
         if (!this->events.contains(eventPath))

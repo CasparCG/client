@@ -80,7 +80,11 @@ void OscWebSocketListener::textMessageReceived(const QString& message)
     }
 
     if (!path.isEmpty() && arguments.count() > 0)
+    {
+        qDebug("Received OSC message over WebSocket: %s", qPrintable(path));
+
         emit messageReceived(path, arguments);
+    }
 }
 
 void OscWebSocketListener::disconnected()
