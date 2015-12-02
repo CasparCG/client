@@ -11,11 +11,13 @@ OscListener::OscListener(const QString& address, int port, QObject* parent)
 {
     try
     {
+        this->port = port;
+
         this->socket = new UdpSocket();
         this->socket->SetAllowReuse(true);
-        this->socket->Bind(IpEndpointName(address.toStdString().c_str(), port));
+        this->socket->Bind(IpEndpointName(address.toStdString().c_str(), this->port));
 
-        qDebug("Listening for incoming OSC messages over UDP on port %d", port);
+        qDebug("Listening for incoming OSC messages over UDP on port %d", this->port);
 
         this->multiplexer = new SocketReceiveMultiplexer();
         this->multiplexer->AttachSocketListener(this->socket, this);
@@ -76,11 +78,13 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     QString eventMessage = QString("%1").arg(message.AddressPattern());
     QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
 
-    //qDebug("OSC message received: %s", eventPath);
+    //qDebug("DEBUG: OSC message received: %s", eventPath);
 
     QMutexLocker locker(&eventsMutex);
     if (eventMessage.startsWith("/control"))
     {
+        qDebug("Received OSC message from %s:%d: %s", qPrintable(addressBuffer), this->port, qPrintable(eventMessage));
+
         // Do not overwrite control commands already in queue.
         if (!this->events.contains(eventPath))
             this->events[eventPath] = arguments;

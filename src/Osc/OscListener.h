@@ -28,6 +28,7 @@ class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
         virtual void ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint);
 
     private:
+        int port;
         QMutex eventsMutex;
         QMap<QString, QList<QVariant>> events;
         OscThread* thread = nullptr;
