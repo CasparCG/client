@@ -81,7 +81,9 @@ void OscWebSocketListener::textMessageReceived(const QString& message)
 
     if (!path.isEmpty() && arguments.count() > 0)
     {
-        qDebug("Received OSC message over WebSocket: %s", qPrintable(path));
+        QWebSocket* socket = qobject_cast<QWebSocket*>(QObject::sender());
+
+        qDebug("Received OSC message over WebSocket from %s:%d: %s", qPrintable(socket->peerAddress().toString()), socket->peerPort(), qPrintable(path));
 
         emit messageReceived(path, arguments);
     }
