@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>180</height>
+    <height>184</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -155,8 +155,8 @@
    <slot>stepChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>131</x>
-     <y>19</y>
+     <x>250</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
      <x>176</x>
@@ -171,8 +171,8 @@
    <slot>transitionChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>120</x>
-     <y>79</y>
+     <x>239</x>
+     <y>134</y>
     </hint>
     <hint type="destinationlabel">
      <x>0</x>
@@ -187,8 +187,8 @@
    <slot>triggerOnNextChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>101</y>
+     <x>139</x>
+     <y>162</y>
     </hint>
     <hint type="destinationlabel">
      <x>216</x>
@@ -203,12 +203,28 @@
    <slot>speedChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>55</y>
+     <x>263</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>215</x>
      <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxMixerStep</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAtemAutoWidget</receiver>
+   <slot>mixerStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>17</y>
     </hint>
    </hints>
   </connection>
@@ -218,5 +234,6 @@
   <slot>transitionChanged(int)</slot>
   <slot>speedChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
+  <slot>mixerStepChanged(int)</slot>
  </slots>
 </ui>
