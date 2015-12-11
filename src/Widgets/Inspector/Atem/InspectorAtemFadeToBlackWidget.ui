@@ -137,9 +137,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBoxMixerStep</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InspectorAtemFadeToBlackWidget</receiver>
+   <slot>mixerStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>stepChanged(int)</slot>
+  <slot>mixerStepChanged(int)</slot>
   <slot>triggerOnNextChanged(int)</slot>
   <slot>speedChanged(int)</slot>
  </slots>
