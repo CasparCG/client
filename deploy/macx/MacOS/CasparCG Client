@@ -5,4 +5,4 @@ cd "`dirname "$0"`"
 export VLC_PLUGIN_PATH=lib/plugins
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:lib
 
-./shell -style plastique "$@"
+./shell "$@"
