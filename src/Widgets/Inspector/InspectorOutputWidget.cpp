@@ -380,6 +380,9 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     {
         this->spinBoxChannel->setEnabled(false);
         this->spinBoxChannel->setValue(deviceModel->getLockedChannel());
+
+        // Manually trigger the changed channel slot because we actively blocking signals.
+        channelChanged(deviceModel->getLockedChannel());
     }
 
     checkEmptyDevice();

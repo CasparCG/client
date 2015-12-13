@@ -279,6 +279,8 @@ CommandLineParseResult parseCommandLine(QCommandLineParser& parser, CommandLineA
 
 int main(int argc, char* argv[])
 {
+    qputenv("QT_STYLE_OVERRIDE", "plastique");
+
     qInstallMessageHandler(messageHandler);
 
     Application application(argc, argv);
