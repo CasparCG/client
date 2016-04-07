@@ -85,9 +85,8 @@ void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEn
     {
         qDebug("Received OSC message over UDP from %s:%d: %s", qPrintable(addressBuffer), this->port, qPrintable(eventMessage));
 
-        // Do not overwrite control commands already in queue.
-        if (!this->events.contains(eventPath))
-            this->events[eventPath] = arguments;
+        // Trigger control events immediately.
+        emit messageReceived(eventPath, arguments);
     }
     else
         this->events[eventPath] = arguments;
