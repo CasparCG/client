@@ -34,7 +34,7 @@ float LevelsCommand::getGamma() const
 
 int LevelsCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& LevelsCommand::getTween() const
@@ -77,10 +77,10 @@ void LevelsCommand::setGamma(float gamma)
     emit gammaChanged(this->gamma);
 }
 
-void LevelsCommand::setTransitionDuration(int transtitionDuration)
+void LevelsCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void LevelsCommand::setTween(const QString& tween)
@@ -104,7 +104,7 @@ void LevelsCommand::readProperties(boost::property_tree::wptree& pt)
     setMinOut(pt.get(L"minout", Mixer::DEFAULT_LEVELS_MIN_OUT));
     setMaxOut(pt.get(L"maxout", Mixer::DEFAULT_LEVELS_MAX_OUT));
     setGamma(pt.get(L"gamma", Mixer::DEFAULT_LEVELS_GAMMA));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
@@ -118,7 +118,7 @@ void LevelsCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("minout", QString::number(getMinOut()));
     writer->writeTextElement("maxout", QString::number(getMaxOut()));
     writer->writeTextElement("gamma", QString::number(getGamma()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }
