@@ -29,7 +29,7 @@ float CropCommand::getBottom() const
 
 int CropCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& CropCommand::getTween() const
@@ -66,10 +66,10 @@ void CropCommand::setBottom(float bottom)
     emit bottomChanged(this->bottom);
 }
 
-void CropCommand::setTransitionDuration(int transtitionDuration)
+void CropCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void CropCommand::setTween(const QString& tween)
@@ -92,7 +92,7 @@ void CropCommand::readProperties(boost::property_tree::wptree& pt)
     setTop(pt.get(L"top", Mixer::DEFAULT_CROP_TOP));
     setRight(pt.get(L"right", Mixer::DEFAULT_CROP_RIGHT));
     setBottom(pt.get(L"bottom", Mixer::DEFAULT_CROP_BOTTOM));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
@@ -105,7 +105,7 @@ void CropCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("top", QString::number(getTop()));
     writer->writeTextElement("right", QString::number(getRight()));
     writer->writeTextElement("bottom", QString::number(getBottom()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }
