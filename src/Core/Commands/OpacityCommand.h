@@ -31,20 +31,20 @@ class CORE_EXPORT OpacityCommand : public AbstractCommand
         bool getDefer() const;
 
         void setOpacity(float opacity);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
 
     private:
         float opacity = Mixer::DEFAULT_OPACITY;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool triggerOnNext = Opacity::DEFAULT_TRIGGER_ON_NEXT;
         bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void opacityChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);
