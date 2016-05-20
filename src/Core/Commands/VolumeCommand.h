@@ -30,18 +30,18 @@ class CORE_EXPORT VolumeCommand : public AbstractCommand
         bool getDefer() const;
 
         void setVolume(float volume);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private:
         float volume = Mixer::DEFAULT_VOLUME;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void volumeChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };
