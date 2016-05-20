@@ -33,7 +33,7 @@ class CORE_EXPORT AnchorCommand : public AbstractCommand
 
         void setPositionX(float positionX);
         void setPositionY(float positionY);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
@@ -47,11 +47,11 @@ class CORE_EXPORT AnchorCommand : public AbstractCommand
         bool defer = Mixer::DEFAULT_DEFER;
         bool triggerOnNext = Anchor::DEFAULT_TRIGGER_ON_NEXT;
 
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
 
         Q_SIGNAL void positionXChanged(float);
         Q_SIGNAL void positionYChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);
