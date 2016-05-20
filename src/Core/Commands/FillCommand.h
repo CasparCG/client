@@ -38,7 +38,7 @@ class CORE_EXPORT FillCommand : public AbstractCommand
         void setPositionY(float positionY);
         void setScaleX(float scaleX);
         void setScaleY(float scaleY);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
@@ -49,7 +49,7 @@ class CORE_EXPORT FillCommand : public AbstractCommand
         float positionY = Mixer::DEFAULT_FILL_YPOS;
         float scaleX = Mixer::DEFAULT_FILL_XSCALE;
         float scaleY = Mixer::DEFAULT_FILL_YSCALE;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool triggerOnNext = Fill::DEFAULT_TRIGGER_ON_NEXT;
         bool defer = Mixer::DEFAULT_DEFER;
@@ -59,7 +59,7 @@ class CORE_EXPORT FillCommand : public AbstractCommand
         Q_SIGNAL void positionYChanged(float);
         Q_SIGNAL void scaleXChanged(float);
         Q_SIGNAL void scaleYChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);
