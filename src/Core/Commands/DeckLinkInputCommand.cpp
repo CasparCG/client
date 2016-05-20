@@ -24,7 +24,7 @@ const QString& DeckLinkInputCommand::getTransition() const
 
 int DeckLinkInputCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& DeckLinkInputCommand::getDirection() const
@@ -55,10 +55,10 @@ void DeckLinkInputCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void DeckLinkInputCommand::setTransitionDuration(int transtitionDuration)
+void DeckLinkInputCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void DeckLinkInputCommand::setDirection(const QString& direction)
@@ -80,7 +80,7 @@ void DeckLinkInputCommand::readProperties(boost::property_tree::wptree& pt)
     setDevice(pt.get(L"device", DeckLinkInput::DEFAULT_DEVICE));
     setFormat(QString::fromStdWString(pt.get(L"format", DeckLinkInput::DEFAULT_FORMAT.toStdWString())));
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
 }
@@ -92,7 +92,7 @@ void DeckLinkInputCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("device", QString::number(getDevice()));
     writer->writeTextElement("format", getFormat());
     writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("direction", getDirection());
 }
