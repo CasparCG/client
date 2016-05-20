@@ -14,7 +14,7 @@ float ContrastCommand::getContrast() const
 
 int ContrastCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& ContrastCommand::getTween() const
@@ -33,10 +33,10 @@ void ContrastCommand::setContrast(float contrast)
     emit contrastChanged(this->contrast);
 }
 
-void ContrastCommand::setTransitionDuration(int transtitionDuration)
+void ContrastCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void ContrastCommand::setTween(const QString& tween)
@@ -56,7 +56,7 @@ void ContrastCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setContrast(pt.get(L"contrast", Mixer::DEFAULT_CONTRAST));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
@@ -66,7 +66,7 @@ void ContrastCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("contrast", QString::number(getContrast()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }
