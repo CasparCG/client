@@ -31,21 +31,21 @@ class CORE_EXPORT RotationCommand : public AbstractCommand
         bool getDefer() const;
 
         void setRotation(float rotation);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTriggerOnNext(bool triggerOnNext);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private:
         float rotation = Mixer::DEFAULT_ROTATION;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool triggerOnNext = Rotation::DEFAULT_TRIGGER_ON_NEXT;
         bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void rotationChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };
