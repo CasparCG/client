@@ -20,7 +20,7 @@ const QString& FadeToBlackCommand::getTransition() const
 
 int FadeToBlackCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& FadeToBlackCommand::getDirection() const
@@ -49,10 +49,10 @@ void FadeToBlackCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void FadeToBlackCommand::setTransitionDuration(int transtitionDuration)
+void FadeToBlackCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void FadeToBlackCommand::setDirection(const QString& direction)
@@ -84,7 +84,7 @@ void FadeToBlackCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
     setUseAuto(pt.get(L"useauto", FadeToBlack::DEFAULT_USE_AUTO));
@@ -96,7 +96,7 @@ void FadeToBlackCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("direction", getDirection());
     writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");

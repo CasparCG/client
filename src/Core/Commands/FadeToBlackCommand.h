@@ -33,7 +33,7 @@ class CORE_EXPORT FadeToBlackCommand : public AbstractCommand
         bool getTriggerOnNext() const;
 
         void setTransition(const QString& transition);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
         void setUseAuto(bool useAuto);
@@ -42,14 +42,14 @@ class CORE_EXPORT FadeToBlackCommand : public AbstractCommand
     private:
         QString color = FadeToBlack::DEFAULT_COLOR;
         QString transition = FadeToBlack::DEFAULT_TRANSITION;
-        int transtitionDuration = FadeToBlack::DEFAULT_DURATION;
+        int transitionDuration = FadeToBlack::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         QString direction = Mixer::DEFAULT_DIRECTION;
         bool useAuto = FadeToBlack::DEFAULT_USE_AUTO;
         bool triggerOnNext = FadeToBlack::DEFAULT_TRIGGER_ON_NEXT;
 
         Q_SIGNAL void transitionChanged(const QString&);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void useAutoChanged(bool);
