@@ -29,7 +29,7 @@ float ClipCommand::getHeight() const
 
 int ClipCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& ClipCommand::getTween() const
@@ -66,10 +66,10 @@ void ClipCommand::setHeight(float height)
     emit heightChanged(this->height);
 }
 
-void ClipCommand::setTransitionDuration(int transtitionDuration)
+void ClipCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void ClipCommand::setTween(const QString& tween)
@@ -92,7 +92,7 @@ void ClipCommand::readProperties(boost::property_tree::wptree& pt)
     setWidth(pt.get(L"width", Mixer::DEFAULT_CLIP_WIDTH));
     setTop(pt.get(L"top", Mixer::DEFAULT_CLIP_TOP));
     setHeight(pt.get(L"height", Mixer::DEFAULT_CLIP_HEIGHT));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
@@ -105,7 +105,7 @@ void ClipCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("width", QString::number(getWidth()));
     writer->writeTextElement("top", QString::number(getTop()));
     writer->writeTextElement("height", QString::number(getHeight()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", this->getTween());
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }
