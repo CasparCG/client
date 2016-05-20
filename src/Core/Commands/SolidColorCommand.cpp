@@ -39,7 +39,7 @@ const QString& SolidColorCommand::getTransition() const
 
 int SolidColorCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& SolidColorCommand::getDirection() const
@@ -74,10 +74,10 @@ void SolidColorCommand::setTransition(const QString& transition)
     emit transitionChanged(this->transition);
 }
 
-void SolidColorCommand::setTransitionDuration(int transtitionDuration)
+void SolidColorCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void SolidColorCommand::setDirection(const QString& direction)
@@ -109,7 +109,7 @@ void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setTransition(QString::fromStdWString(pt.get(L"transition", Mixer::DEFAULT_TRANSITION.toStdWString())));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setDirection(QString::fromStdWString(pt.get(L"direction", Mixer::DEFAULT_DIRECTION.toStdWString())));
     setColor(QString::fromStdWString(pt.get(L"solidcolor", SolidColor::DEFAULT_COLOR.toStdWString())));
@@ -122,7 +122,7 @@ void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("direction", getDirection());
     writer->writeTextElement("solidcolor", getColor());
