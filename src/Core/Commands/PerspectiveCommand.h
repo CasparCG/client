@@ -46,7 +46,7 @@ class CORE_EXPORT PerspectiveCommand : public AbstractCommand
         void setLowerRightY(float lowerRightY);
         void setLowerLeftX(float lowerLeftX);
         void setLowerLeftY(float lowerLeftY);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setTriggerOnNext(bool triggerOnNext);
         void setDefer(bool defer);
@@ -61,7 +61,7 @@ class CORE_EXPORT PerspectiveCommand : public AbstractCommand
         float lowerRightY = Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y;
         float lowerLeftX = Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X;
         float lowerLeftY = Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool triggerOnNext = Fill::DEFAULT_TRIGGER_ON_NEXT;
         bool defer = Mixer::DEFAULT_DEFER;
@@ -75,7 +75,7 @@ class CORE_EXPORT PerspectiveCommand : public AbstractCommand
         Q_SIGNAL void lowerRightYChanged(float);
         Q_SIGNAL void lowerLeftXChanged(float);
         Q_SIGNAL void lowerLeftYChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void triggerOnNextChanged(bool);
         Q_SIGNAL void deferChanged(bool);
