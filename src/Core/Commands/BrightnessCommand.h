@@ -30,18 +30,18 @@ class CORE_EXPORT BrightnessCommand : public AbstractCommand
         bool getDefer() const;
 
         void setBrightness(float brightness);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
     private:
         float brightness = Mixer::DEFAULT_BRIGHTNESS;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool defer = Mixer::DEFAULT_DEFER;
 
         Q_SIGNAL void brightnessChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };
