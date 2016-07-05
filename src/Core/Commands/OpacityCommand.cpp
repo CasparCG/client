@@ -14,7 +14,7 @@ float OpacityCommand::getOpacity() const
 
 int OpacityCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& OpacityCommand::getTween() const
@@ -38,10 +38,10 @@ void OpacityCommand::setOpacity(float opacity)
     emit opacityChanged(this->opacity);
 }
 
-void OpacityCommand::setTransitionDuration(int transtitionDuration)
+void OpacityCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void OpacityCommand::setTween(const QString& tween)
@@ -67,7 +67,7 @@ void OpacityCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setOpacity(pt.get(L"opacity", Mixer::DEFAULT_OPACITY));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Opacity::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
@@ -78,7 +78,7 @@ void OpacityCommand::writeProperties(QXmlStreamWriter* writer)
     AbstractCommand::writeProperties(writer);
 
     writer->writeTextElement("opacity", QString::number(getOpacity()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
