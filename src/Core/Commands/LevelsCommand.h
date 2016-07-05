@@ -38,7 +38,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         void setMinOut(float minOut);
         void setMaxOut(float maxOut);
         void setGamma(float gamma);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDefer(bool defer);
 
@@ -48,7 +48,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         float minOut = Mixer::DEFAULT_LEVELS_MIN_OUT;
         float maxOut = Mixer::DEFAULT_LEVELS_MAX_OUT;
         float gamma = Mixer::DEFAULT_LEVELS_GAMMA;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         bool defer = Mixer::DEFAULT_DEFER;
 
@@ -57,7 +57,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         Q_SIGNAL void minOutChanged(float);
         Q_SIGNAL void maxOutChanged(float);
         Q_SIGNAL void gammaChanged(float);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void deferChanged(bool);
 };
