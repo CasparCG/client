@@ -29,7 +29,7 @@ float FillCommand::getScaleY() const
 
 int FillCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& FillCommand::getTween() const
@@ -76,10 +76,10 @@ void FillCommand::setScaleY(float scaleY)
     emit scaleYChanged(this->scaleY);
 }
 
-void FillCommand::setTransitionDuration(int transtitionDuration)
+void FillCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void FillCommand::setTween(const QString& tween)
@@ -114,7 +114,7 @@ void FillCommand::readProperties(boost::property_tree::wptree& pt)
     setPositionY(pt.get(L"positiony", Mixer::DEFAULT_FILL_YPOS));
     setScaleX(pt.get(L"scalex", Mixer::DEFAULT_FILL_XSCALE));
     setScaleY(pt.get(L"scaley", Mixer::DEFAULT_FILL_YSCALE));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Fill::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
@@ -129,7 +129,7 @@ void FillCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("positiony", QString::number(getPositionY()));
     writer->writeTextElement("scalex", QString::number(getScaleX()));
     writer->writeTextElement("scaley", QString::number(getScaleY()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
