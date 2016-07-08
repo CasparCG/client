@@ -49,7 +49,7 @@ float PerspectiveCommand::getLowerLeftY() const
 
 int PerspectiveCommand::getTransitionDuration() const
 {
-    return this->transtitionDuration;
+    return this->transitionDuration;
 }
 
 const QString& PerspectiveCommand::getTween() const
@@ -120,10 +120,10 @@ void PerspectiveCommand::setLowerLeftY(float lowerLeftY)
     emit lowerLeftYChanged(this->lowerLeftY);
 }
 
-void PerspectiveCommand::setTransitionDuration(int transtitionDuration)
+void PerspectiveCommand::setTransitionDuration(int transitionDuration)
 {
-    this->transtitionDuration = transtitionDuration;
-    emit transtitionDurationChanged(this->transtitionDuration);
+    this->transitionDuration = transitionDuration;
+    emit transitionDurationChanged(this->transitionDuration);
 }
 
 void PerspectiveCommand::setTween(const QString& tween)
@@ -162,7 +162,7 @@ void PerspectiveCommand::readProperties(boost::property_tree::wptree& pt)
     setLowerRightY(pt.get(L"lowerrighty", Mixer::DEFAULT_PERSPECTIVE_LOWERRIGHT_Y));
     setLowerLeftX(pt.get(L"lowerleftx", Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_X));
     setLowerLeftY(pt.get(L"lowerlefty", Mixer::DEFAULT_PERSPECTIVE_LOWERLEFT_Y));
-    setTransitionDuration(pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION));
+    setTransitionDuration(pt.get(L"transitionDuration", pt.get(L"transtitionDuration", Mixer::DEFAULT_DURATION)));
     setTween(QString::fromStdWString(pt.get(L"tween", Mixer::DEFAULT_TWEEN.toStdWString())));
     setTriggerOnNext(pt.get(L"triggeronnext", Fill::DEFAULT_TRIGGER_ON_NEXT));
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
@@ -181,7 +181,7 @@ void PerspectiveCommand::writeProperties(QXmlStreamWriter* writer)
     writer->writeTextElement("lowerrighty", QString::number(getLowerRightY()));
     writer->writeTextElement("lowerleftx", QString::number(getLowerLeftX()));
     writer->writeTextElement("lowerlefty", QString::number(getLowerLeftY()));
-    writer->writeTextElement("transtitionDuration", QString::number(getTransitionDuration()));
+    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
     writer->writeTextElement("tween", getTween());
     writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
     writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
