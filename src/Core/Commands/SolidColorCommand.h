@@ -35,7 +35,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
 
         void setColor(const QString& color);
         void setTransition(const QString& transition);
-        void setTransitionDuration(int transtitionDuration);
+        void setTransitionDuration(int transitionDuration);
         void setTween(const QString& tween);
         void setDirection(const QString& direction);
         void setUseAuto(bool useAuto);
@@ -44,7 +44,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
     private:
         QString color = SolidColor::DEFAULT_COLOR;
         QString transition = Mixer::DEFAULT_TRANSITION;
-        int transtitionDuration = Mixer::DEFAULT_DURATION;
+        int transitionDuration = Mixer::DEFAULT_DURATION;
         QString tween = Mixer::DEFAULT_TWEEN;
         QString direction = Mixer::DEFAULT_DIRECTION;
         bool useAuto = SolidColor::DEFAULT_USE_AUTO;
@@ -52,7 +52,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
 
         Q_SIGNAL void colorChanged(const QString&);
         Q_SIGNAL void transitionChanged(const QString&);
-        Q_SIGNAL void transtitionDurationChanged(int);
+        Q_SIGNAL void transitionDurationChanged(int);
         Q_SIGNAL void directionChanged(const QString&);
         Q_SIGNAL void tweenChanged(const QString&);
         Q_SIGNAL void useAutoChanged(bool);
