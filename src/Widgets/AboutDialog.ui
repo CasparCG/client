@@ -132,7 +132,7 @@ p, li { white-space: pre-wrap; }
 &lt;/head&gt;
 &lt;body&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
-CasparCG Client is distributed under the GNU General Public License GPLv3 or higher, see &lt;a href=&quot;https://raw.github.com/CasparCG/Client/master/LICENSE.TXT&quot;&gt;&lt;span style=&quot;text-decoration: none; color:#4673c3;&quot;&gt;LICENSE&lt;/span&gt;&lt;/a&gt; for details.
+CasparCG Client is distributed under the GNU General Public License GPLv3 or higher, see &lt;a href=&quot;https://raw.githubusercontent.com/CasparCG/Client/master/LICENSE&quot;&gt;&lt;span style=&quot;text-decoration: none; color:#4673c3;&quot;&gt;LICENSE&lt;/span&gt;&lt;/a&gt; for details.
 &lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
