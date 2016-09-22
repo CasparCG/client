@@ -191,7 +191,9 @@ HEADERS += \
     Events/Rundown/CurrentItemChangedEvent.h \
     Commands/Atem/AtemMacroCommand.h \
     OscWebSocketManager.h \
-    Commands/Atem/AtemFadeToBlackCommand.h
+    Commands/Atem/AtemFadeToBlackCommand.h \
+    Commands/AbstractProperty.h \
+    Commands/AbstractProperty_impl.h
 
 SOURCES += \
     DatabaseManager.cpp \
