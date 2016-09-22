@@ -39,7 +39,7 @@ RundownRotationWidget::RundownRotationWidget(const LibraryModel& model, QWidget*
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -47,7 +47,7 @@ RundownRotationWidget::RundownRotationWidget(const LibraryModel& model, QWidget*
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
+    QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -124,7 +124,7 @@ AbstractRundownWidget* RundownRotationWidget::clone()
 
     RotationCommand* command = dynamic_cast<RotationCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -310,7 +310,7 @@ void RundownRotationWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setRotation(this->command.channel.get(), this->command.getVideolayer(), 0);
+        device->setRotation(this->command.channel.get(), this->command.videolayer.get(), 0);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -319,7 +319,7 @@ void RundownRotationWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setRotation(this->command.channel.get(), this->command.getVideolayer(), 0);
+            deviceShadow->setRotation(this->command.channel.get(), this->command.videolayer.get(), 0);
     }
 }
 
@@ -327,7 +327,7 @@ void RundownRotationWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setRotation(this->command.channel.get(), this->command.getVideolayer(), this->command.getRotation(),
+        device->setRotation(this->command.channel.get(), this->command.videolayer.get(), this->command.getRotation(),
                             this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -337,7 +337,7 @@ void RundownRotationWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setRotation(this->command.channel.get(), this->command.getVideolayer(), this->command.getRotation(),
+            deviceShadow->setRotation(this->command.channel.get(), this->command.videolayer.get(), this->command.getRotation(),
                                       this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer());
     }
 
@@ -351,7 +351,7 @@ void RundownRotationWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearMixerVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearMixerVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -360,7 +360,7 @@ void RundownRotationWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearMixerVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearMixerVideolayer(this->command.channel.get(), this->command.videolayer.get());
     }
 }
 

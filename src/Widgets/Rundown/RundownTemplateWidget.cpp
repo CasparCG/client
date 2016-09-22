@@ -45,7 +45,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(this->command.getFlashlayer()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
@@ -54,7 +54,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->executePreviewTimer.setSingleShot(true);
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
+    QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(flashlayerChanged(int)), this, SLOT(flashlayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -163,7 +163,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
 
     TemplateCommand* command = dynamic_cast<TemplateCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -443,12 +443,12 @@ void RundownTemplateWidget::executeStop()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->stopTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+        device->stopTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
 
         // Stop preview channels item.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->stopTemplate(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+            device->stopTemplate(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -459,11 +459,11 @@ void RundownTemplateWidget::executeStop()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->stopTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+            deviceShadow->stopTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
 
             // Stop preview channels item.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->stopTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+                deviceShadow->stopTemplate(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
         }
     }
 
@@ -479,7 +479,7 @@ void RundownTemplateWidget::executeStopPreview()
     {
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (device != NULL && device->isConnected())
-            device->stopTemplate(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+            device->stopTemplate(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -491,7 +491,7 @@ void RundownTemplateWidget::executeStopPreview()
         {
             const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
             if (deviceShadow != NULL && deviceShadow->isConnected())
-                deviceShadow->stopTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+                deviceShadow->stopTemplate(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
         }
     }
 }
@@ -503,15 +503,15 @@ void RundownTemplateWidget::executePlay()
     {
         if (this->loaded)
         {
-            device->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+            device->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
         }
         else
         {
             if (this->command.getTemplateData().isEmpty())
-                device->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                device->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                      this->command.getTemplateName());
             else
-                device->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                device->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                      this->command.getTemplateName(), this->command.getTemplateData());
         }
     }
@@ -526,15 +526,15 @@ void RundownTemplateWidget::executePlay()
         {
             if (this->loaded)
             {
-                deviceShadow->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+                deviceShadow->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
             }
             else
             {
                 if (this->command.getTemplateData().isEmpty())
-                    deviceShadow->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                    deviceShadow->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                                this->command.getTemplateName());
                 else
-                    deviceShadow->playTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                    deviceShadow->playTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                                this->command.getTemplateName(), this->command.getTemplateData());
             }
         }
@@ -555,10 +555,10 @@ void RundownTemplateWidget::executePlayPreview()
         if (device != NULL && device->isConnected())
         {
             if (this->command.getTemplateData().isEmpty())
-                device->playTemplate(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                device->playTemplate(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                      this->command.getTemplateName());
             else
-                device->playTemplate(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                device->playTemplate(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                      this->command.getTemplateName(), this->command.getTemplateData());
         }
     }
@@ -574,10 +574,10 @@ void RundownTemplateWidget::executePlayPreview()
             if (deviceShadow != NULL && deviceShadow->isConnected())
             {
                 if (this->command.getTemplateData().isEmpty())
-                    deviceShadow->playTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                    deviceShadow->playTemplate(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                                this->command.getTemplateName());
                 else
-                    deviceShadow->playTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                    deviceShadow->playTemplate(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                                this->command.getTemplateName(), this->command.getTemplateData());
             }
         }
@@ -590,10 +590,10 @@ void RundownTemplateWidget::executeLoad()
     if (device != NULL && device->isConnected())
     {
         if (this->command.getTemplateData().isEmpty())
-            device->addTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+            device->addTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                 this->command.getTemplateName(), false);
         else
-            device->addTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+            device->addTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                 this->command.getTemplateName(), false, this->command.getTemplateData());
     }
 
@@ -606,10 +606,10 @@ void RundownTemplateWidget::executeLoad()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->command.getTemplateData().isEmpty())
-                deviceShadow->addTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                deviceShadow->addTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                           this->command.getTemplateName(), false);
             else
-                deviceShadow->addTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer(),
+                deviceShadow->addTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer(),
                                           this->command.getTemplateName(), false, this->command.getTemplateData());
         }
     }
@@ -621,7 +621,7 @@ void RundownTemplateWidget::executeNext()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->nextTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+        device->nextTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -630,7 +630,7 @@ void RundownTemplateWidget::executeNext()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->nextTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+            deviceShadow->nextTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
     }
 }
 
@@ -639,7 +639,7 @@ void RundownTemplateWidget::executeUpdate()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->updateTemplate(this->command.channel.get(), this->command.getVideolayer(),
+        device->updateTemplate(this->command.channel.get(), this->command.videolayer.get(),
                                this->command.getFlashlayer(), this->command.getTemplateData());
     }
 
@@ -651,7 +651,7 @@ void RundownTemplateWidget::executeUpdate()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->updateTemplate(this->command.channel.get(), this->command.getVideolayer(),
+            deviceShadow->updateTemplate(this->command.channel.get(), this->command.videolayer.get(),
                                          this->command.getFlashlayer(), this->command.getTemplateData());
         }
     }
@@ -661,7 +661,7 @@ void RundownTemplateWidget::executeInvoke()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->invokeTemplate(this->command.channel.get(), this->command.getVideolayer(),
+        device->invokeTemplate(this->command.channel.get(), this->command.videolayer.get(),
                                this->command.getFlashlayer(), this->command.getInvoke());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -671,7 +671,7 @@ void RundownTemplateWidget::executeInvoke()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->invokeTemplate(this->command.channel.get(), this->command.getVideolayer(),
+            deviceShadow->invokeTemplate(this->command.channel.get(), this->command.videolayer.get(),
                                          this->command.getFlashlayer(), this->command.getInvoke());
     }
 }
@@ -684,12 +684,12 @@ void RundownTemplateWidget::executeClear()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->removeTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+        device->removeTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
 
         // Clear preview channels item.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->removeTemplate(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+            device->removeTemplate(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -700,11 +700,11 @@ void RundownTemplateWidget::executeClear()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->removeTemplate(this->command.channel.get(), this->command.getVideolayer(), this->command.getFlashlayer());
+            deviceShadow->removeTemplate(this->command.channel.get(), this->command.videolayer.get(), this->command.getFlashlayer());
 
             // Clear preview channels item.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->removeTemplate(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getFlashlayer());
+                deviceShadow->removeTemplate(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getFlashlayer());
         }
     }
 
@@ -719,12 +719,12 @@ void RundownTemplateWidget::executeClearVideolayer()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
         // Clear preview channels videolayer.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->clearVideolayer(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+            device->clearVideolayer(deviceModel->getPreviewChannel(), this->command.videolayer.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -735,11 +735,11 @@ void RundownTemplateWidget::executeClearVideolayer()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
             // Clear preview channels videolayer.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.getVideolayer());
+                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.videolayer.get());
         }
     }
 

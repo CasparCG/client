@@ -5,16 +5,12 @@
 AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent)
     , channel(Output::DEFAULT_CHANNEL, this)
+    , videolayer(Output::DEFAULT_VIDEOLAYER, this)
 {
 }
 
 AbstractCommand::~AbstractCommand()
 {
-}
-
-int AbstractCommand::getVideolayer() const
-{
-    return this->videolayer;
 }
 
 int AbstractCommand::getDelay() const
@@ -45,12 +41,6 @@ QString AbstractCommand::getRemoteTriggerId() const
 QString AbstractCommand::getStoryId() const
 {
     return this->storyId;
-}
-
-void AbstractCommand::setVideolayer(int videolayer)
-{
-    this->videolayer = videolayer;
-    emit videolayerChanged(this->videolayer);
 }
 
 void AbstractCommand::setDelay(int delay)
@@ -93,7 +83,6 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractProperties::readProperties(pt);
 
-    setVideolayer(pt.get(L"videolayer", Output::DEFAULT_VIDEOLAYER));
     setDelay(pt.get(L"delay", Output::DEFAULT_DELAY));
     setDuration(pt.get(L"duration", Output::DEFAULT_DURATION));
     setAllowGpi(pt.get(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
@@ -106,7 +95,6 @@ void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractProperties::writeProperties(writer);
 
-    writer->writeTextElement("videolayer", QString::number(getVideolayer()));
     writer->writeTextElement("delay", QString::number(getDelay()));
     writer->writeTextElement("duration", QString::number(getDuration()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");

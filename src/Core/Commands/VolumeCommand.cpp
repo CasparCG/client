@@ -5,7 +5,7 @@
 VolumeCommand::VolumeCommand(QObject* parent)
     : AbstractCommand(parent)
 {
-    this->videolayer = Output::DEFAULT_AUDIO_VIDEOLAYER;
+    this->videolayer.set(Output::DEFAULT_AUDIO_VIDEOLAYER);
 }
 
 float VolumeCommand::getVolume() const

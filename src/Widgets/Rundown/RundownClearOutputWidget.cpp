@@ -109,7 +109,7 @@ AbstractRundownWidget* RundownClearOutputWidget::clone()
 
     ClearOutputCommand* command = dynamic_cast<ClearOutputCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -295,7 +295,7 @@ void RundownClearOutputWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -304,7 +304,7 @@ void RundownClearOutputWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
     }
 
     if (this->markUsedItems)

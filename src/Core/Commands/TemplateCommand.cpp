@@ -7,7 +7,7 @@
 TemplateCommand::TemplateCommand(QObject* parent)
     : AbstractCommand(parent)
 {
-    this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
+    this->videolayer.set(Output::DEFAULT_FLASH_VIDEOLAYER);
 }
 
 int TemplateCommand::getFlashlayer() const

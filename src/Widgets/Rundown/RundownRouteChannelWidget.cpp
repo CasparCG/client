@@ -40,7 +40,7 @@ RundownRouteChannelWidget::RundownRouteChannelWidget(const LibraryModel& model, 
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -48,7 +48,7 @@ RundownRouteChannelWidget::RundownRouteChannelWidget(const LibraryModel& model, 
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
+    QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -114,7 +114,7 @@ AbstractRundownWidget* RundownRouteChannelWidget::clone()
 
     RouteChannelCommand* command = dynamic_cast<RouteChannelCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -300,7 +300,7 @@ void RundownRouteChannelWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stop(this->command.channel.get(), this->command.getVideolayer());
+        device->stop(this->command.channel.get(), this->command.videolayer.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -309,7 +309,7 @@ void RundownRouteChannelWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stop(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.channel.get(), this->command.videolayer.get());
     }
 
     this->paused = false;
@@ -323,9 +323,9 @@ void RundownRouteChannelWidget::executePlay()
     if (device != NULL && device->isConnected())
     {
         if (this->loaded)
-            device->play(this->command.channel.get(), this->command.getVideolayer());
+            device->play(this->command.channel.get(), this->command.videolayer.get());
         else
-            device->playRouteChannel(this->command.channel.get(), this->command.getVideolayer(), this->command.getFromChannel());
+            device->playRouteChannel(this->command.channel.get(), this->command.videolayer.get(), this->command.getFromChannel());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -337,9 +337,9 @@ void RundownRouteChannelWidget::executePlay()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->loaded)
-                deviceShadow->play(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->play(this->command.channel.get(), this->command.videolayer.get());
             else
-                deviceShadow->playRouteChannel(this->command.channel.get(), this->command.getVideolayer(), this->command.getFromChannel());
+                deviceShadow->playRouteChannel(this->command.channel.get(), this->command.videolayer.get(), this->command.getFromChannel());
         }
     }
 
@@ -360,9 +360,9 @@ void RundownRouteChannelWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->resume(this->command.channel.get(), this->command.getVideolayer());
+            device->resume(this->command.channel.get(), this->command.videolayer.get());
         else
-            device->pause(this->command.channel.get(), this->command.getVideolayer());
+            device->pause(this->command.channel.get(), this->command.videolayer.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -374,9 +374,9 @@ void RundownRouteChannelWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->resume(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->resume(this->command.channel.get(), this->command.videolayer.get());
             else
-                deviceShadow->pause(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.channel.get(), this->command.videolayer.get());
         }
     }
 
@@ -387,7 +387,7 @@ void RundownRouteChannelWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->loadRouteChannel(this->command.channel.get(), this->command.getVideolayer(), this->command.getFromChannel());
+        device->loadRouteChannel(this->command.channel.get(), this->command.videolayer.get(), this->command.getFromChannel());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -396,7 +396,7 @@ void RundownRouteChannelWidget::executeLoad()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->loadRouteChannel(this->command.channel.get(), this->command.getVideolayer(), this->command.getFromChannel());
+            deviceShadow->loadRouteChannel(this->command.channel.get(), this->command.videolayer.get(), this->command.getFromChannel());
     }
 
     this->loaded = true;
@@ -408,7 +408,7 @@ void RundownRouteChannelWidget::executeClearVideolayer()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -417,7 +417,7 @@ void RundownRouteChannelWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
     }
 
     this->paused = false;

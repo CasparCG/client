@@ -39,7 +39,7 @@ RundownChromaWidget::RundownChromaWidget(const LibraryModel& model, QWidget* par
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -47,7 +47,7 @@ RundownChromaWidget::RundownChromaWidget(const LibraryModel& model, QWidget* par
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
+    QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -124,7 +124,7 @@ AbstractRundownWidget* RundownChromaWidget::clone()
 
     ChromaCommand* command = dynamic_cast<ChromaCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -309,7 +309,7 @@ void RundownChromaWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setChroma(this->command.channel.get(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0);
+        device->setChroma(this->command.channel.get(), this->command.videolayer.get(), "None", 0.0, 0.0, 0.0);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -318,7 +318,7 @@ void RundownChromaWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setChroma(this->command.channel.get(), this->command.getVideolayer(), "None", 0.0, 0.0, 0.0);
+            deviceShadow->setChroma(this->command.channel.get(), this->command.videolayer.get(), "None", 0.0, 0.0, 0.0);
     }
 }
 
@@ -326,7 +326,7 @@ void RundownChromaWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setChroma(this->command.channel.get(), this->command.getVideolayer(), this->command.getKey(), this->command.getThreshold(),
+        device->setChroma(this->command.channel.get(), this->command.videolayer.get(), this->command.getKey(), this->command.getThreshold(),
                           this->command.getSpread(), this->command.getSpill());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -336,7 +336,7 @@ void RundownChromaWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setChroma(this->command.channel.get(), this->command.getVideolayer(), this->command.getKey(),
+            deviceShadow->setChroma(this->command.channel.get(), this->command.videolayer.get(), this->command.getKey(),
                                     this->command.getThreshold(), this->command.getSpread(), this->command.getSpill());
     }
 
@@ -350,7 +350,7 @@ void RundownChromaWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearMixerVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearMixerVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -359,7 +359,7 @@ void RundownChromaWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearMixerVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearMixerVideolayer(this->command.channel.get(), this->command.videolayer.get());
     }
 }
 

@@ -52,7 +52,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
 
     this->labelLabel->setText(this->model.getLabel().split('/').last());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
+    this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -60,7 +60,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
     this->executeStopTimer.setSingleShot(true);
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
+    QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
@@ -170,7 +170,7 @@ AbstractRundownWidget* RundownMovieWidget::clone()
 
     MovieCommand* command = dynamic_cast<MovieCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
@@ -455,12 +455,12 @@ void RundownMovieWidget::executeStop()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->stop(this->command.channel.get(), this->command.getVideolayer());
+        device->stop(this->command.channel.get(), this->command.videolayer.get());
 
         // Stop preview channels item.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->stop(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+            device->stop(deviceModel->getPreviewChannel(), this->command.videolayer.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -471,11 +471,11 @@ void RundownMovieWidget::executeStop()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->stop(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.channel.get(), this->command.videolayer.get());
 
             // Stop preview channels item.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->stop(model.getPreviewChannel(), this->command.getVideolayer());
+                deviceShadow->stop(model.getPreviewChannel(), this->command.videolayer.get());
         }
     }
 
@@ -497,20 +497,20 @@ void RundownMovieWidget::executePlay()
     {
         if (this->loaded)
         {
-            device->play(this->command.channel.get(), this->command.getVideolayer());
+            device->play(this->command.channel.get(), this->command.videolayer.get());
         }
         else
         {
             if (this->command.getAutoPlay())
             {
-                device->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+                device->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                   this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                   this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                   this->command.getLoop(), true);
             }
             else
             {
-                device->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+                device->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                   this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                   this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                   this->command.getLoop(), this->command.getAutoPlay());
@@ -528,20 +528,20 @@ void RundownMovieWidget::executePlay()
         {
             if (this->loaded)
             {
-                deviceShadow->play(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->play(this->command.channel.get(), this->command.videolayer.get());
             }
             else
             {
                 if (this->command.getAutoPlay())
                 {
-                    deviceShadow->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+                    deviceShadow->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                             this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                             this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                             this->command.getLoop(), true);
                 }
                 else
                 {
-                    deviceShadow->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+                    deviceShadow->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                             this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                             this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                             this->command.getLoop(), this->command.getAutoPlay());
@@ -571,9 +571,9 @@ void RundownMovieWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->resume(this->command.channel.get(), this->command.getVideolayer());
+            device->resume(this->command.channel.get(), this->command.videolayer.get());
         else
-            device->pause(this->command.channel.get(), this->command.getVideolayer());
+            device->pause(this->command.channel.get(), this->command.videolayer.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -585,9 +585,9 @@ void RundownMovieWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->resume(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->resume(this->command.channel.get(), this->command.videolayer.get());
             else
-                deviceShadow->pause(this->command.channel.get(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.channel.get(), this->command.videolayer.get());
         }
     }
 
@@ -601,7 +601,7 @@ void RundownMovieWidget::executeLoad()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->loadMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+        device->loadMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                           this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                           this->command.getLoop(), this->command.getFreezeOnLoad(), false);
@@ -615,7 +615,7 @@ void RundownMovieWidget::executeLoad()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->loadMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+            deviceShadow->loadMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                     this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                     this->command.getLoop(), this->command.getFreezeOnLoad(), false);
@@ -636,7 +636,7 @@ void RundownMovieWidget::executeLoadPreview()
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (device != NULL && device->isConnected())
         {
-            device->loadMovie(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+            device->loadMovie(deviceModel->getPreviewChannel(), this->command.videolayer.get(), this->command.getVideoName(),
                               this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                               this->command.getLoop(), true, false);
@@ -653,7 +653,7 @@ void RundownMovieWidget::executeLoadPreview()
             const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
             if (deviceShadow != NULL && deviceShadow->isConnected())
             {
-                deviceShadow->loadMovie(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getVideoName(),
+                deviceShadow->loadMovie(model.getPreviewChannel(), this->command.videolayer.get(), this->command.getVideoName(),
                                         this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                         this->command.getLoop(), true, false);
@@ -669,7 +669,7 @@ void RundownMovieWidget::executeNext()
         const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
         if (device != NULL && device->isConnected())
         {
-            device->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+            device->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                               this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                               this->command.getLoop(), false);
@@ -684,7 +684,7 @@ void RundownMovieWidget::executeNext()
             const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
             if (deviceShadow != NULL && deviceShadow->isConnected())
             {
-                deviceShadow->playMovie(this->command.channel.get(), this->command.getVideolayer(), this->command.getVideoName(),
+                deviceShadow->playMovie(this->command.channel.get(), this->command.videolayer.get(), this->command.getVideoName(),
                                         this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getSeek(), this->command.getLength(),
                                         this->command.getLoop(), false);
@@ -708,12 +708,12 @@ void RundownMovieWidget::executeClearVideolayer()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
         // Clear preview channels videolayer.
         const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
         if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
-            device->clearVideolayer(deviceModel->getPreviewChannel(), this->command.getVideolayer());
+            device->clearVideolayer(deviceModel->getPreviewChannel(), this->command.videolayer.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -724,11 +724,11 @@ void RundownMovieWidget::executeClearVideolayer()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.videolayer.get());
 
             // Clear preview channels videolayer.
             if (model.getPreviewChannel() > 0)
-                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.getVideolayer());
+                deviceShadow->clearVideolayer(model.getPreviewChannel(), this->command.videolayer.get());
         }
     }
 
@@ -839,7 +839,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QString frameFilter = Osc::VIDEOLAYER_FRAME_FILTER;
     frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()))
-               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.videolayer.get()));
     this->frameSubscription = new OscSubscription(frameFilter, this);
     QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -847,7 +847,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QString fpsFilter = Osc::VIDEOLAYER_FPS_FILTER;
     fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
              .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()))
-             .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+             .replace("#VIDEOLAYER#", QString("%1").arg(this->command.videolayer.get()));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -855,7 +855,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QString pathFilter = Osc::VIDEOLAYER_PATH_FILTER;
     pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()))
-              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.videolayer.get()));
     this->pathSubscription = new OscSubscription(pathFilter, this);
     QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -863,7 +863,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QString pausedFilter = Osc::VIDEOLAYER_PAUSED_FILTER;
     pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                 .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()))
-                .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+                .replace("#VIDEOLAYER#", QString("%1").arg(this->command.videolayer.get()));
     this->pausedSubscription = new OscSubscription(pausedFilter, this);
     QObject::connect(this->pausedSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pausedSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -871,7 +871,7 @@ void RundownMovieWidget::configureOscSubscriptions()
     QString loopFilter = Osc::VIDEOLAYER_LOOP_FILTER;
     loopFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()))
-              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.videolayer.get()));
     this->loopSubscription = new OscSubscription(loopFilter, this);
     QObject::connect(this->loopSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(loopSubscriptionReceived(const QString&, const QList<QVariant>&)));

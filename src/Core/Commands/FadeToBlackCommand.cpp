@@ -5,7 +5,7 @@
 FadeToBlackCommand::FadeToBlackCommand(QObject* parent)
     : AbstractCommand(parent)
 {
-    this->videolayer = Output::DEFAULT_FLASH_VIDEOLAYER;
+    this->videolayer.set(Output::DEFAULT_FLASH_VIDEOLAYER);
 }
 
 const QString& FadeToBlackCommand::getColor() const

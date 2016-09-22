@@ -120,7 +120,7 @@ AbstractRundownWidget* RundownPresetWidget::clone()
 
     PresetCommand* command = dynamic_cast<PresetCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
-    command->setVideolayer(this->command.getVideolayer());
+    command->videolayer.set(this->command.videolayer.get());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
