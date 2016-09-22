@@ -193,7 +193,8 @@ HEADERS += \
     OscWebSocketManager.h \
     Commands/Atem/AtemFadeToBlackCommand.h \
     Commands/AbstractProperty.h \
-    Commands/AbstractProperty_impl.h
+    Commands/AbstractProperty_impl.h \
+    Commands/Properties.h
 
 SOURCES += \
     DatabaseManager.cpp \
