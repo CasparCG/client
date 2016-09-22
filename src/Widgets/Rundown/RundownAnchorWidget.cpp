@@ -128,7 +128,7 @@ AbstractRundownWidget* RundownAnchorWidget::clone()
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
-    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setPositionX(this->command.getPositionX());
     command->setPositionY(this->command.getPositionY());
@@ -428,7 +428,7 @@ void RundownAnchorWidget::checkDeviceConnection()
 
 void RundownAnchorWidget::configureOscSubscriptions()
 {
-    if (!this->command.getAllowRemoteTriggering())
+    if (!this->command.allowRemoteTriggering.get())
         return;
 
     if (this->stopControlSubscription != NULL)
@@ -545,7 +545,7 @@ void RundownAnchorWidget::stopControlSubscriptionReceived(const QString& predica
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
@@ -553,7 +553,7 @@ void RundownAnchorWidget::playControlSubscriptionReceived(const QString& predica
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
@@ -561,7 +561,7 @@ void RundownAnchorWidget::playNowControlSubscriptionReceived(const QString& pred
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
@@ -569,7 +569,7 @@ void RundownAnchorWidget::nextControlSubscriptionReceived(const QString& predica
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Next);
 }
 
@@ -577,7 +577,7 @@ void RundownAnchorWidget::updateControlSubscriptionReceived(const QString& predi
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
@@ -585,7 +585,7 @@ void RundownAnchorWidget::clearControlSubscriptionReceived(const QString& predic
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
@@ -593,7 +593,7 @@ void RundownAnchorWidget::clearVideolayerControlSubscriptionReceived(const QStri
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
@@ -601,6 +601,6 @@ void RundownAnchorWidget::clearChannelControlSubscriptionReceived(const QString&
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

@@ -128,7 +128,7 @@ AbstractRundownWidget* RundownOpacityWidget::clone()
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
-    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setOpacity(this->command.getOpacity());
     command->setTransitionDuration(this->command.getTransitionDuration());
@@ -427,7 +427,7 @@ void RundownOpacityWidget::checkDeviceConnection()
 
 void RundownOpacityWidget::configureOscSubscriptions()
 {
-    if (!this->command.getAllowRemoteTriggering())
+    if (!this->command.allowRemoteTriggering.get())
         return;
 
     if (this->stopControlSubscription != NULL)
@@ -545,7 +545,7 @@ void RundownOpacityWidget::stopControlSubscriptionReceived(const QString& predic
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
@@ -553,7 +553,7 @@ void RundownOpacityWidget::playControlSubscriptionReceived(const QString& predic
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
@@ -561,7 +561,7 @@ void RundownOpacityWidget::playNowControlSubscriptionReceived(const QString& pre
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
@@ -569,7 +569,7 @@ void RundownOpacityWidget::nextControlSubscriptionReceived(const QString& predic
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Next);
 }
 
@@ -577,7 +577,7 @@ void RundownOpacityWidget::updateControlSubscriptionReceived(const QString& pred
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }
 
@@ -585,7 +585,7 @@ void RundownOpacityWidget::clearControlSubscriptionReceived(const QString& predi
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
@@ -593,7 +593,7 @@ void RundownOpacityWidget::clearVideolayerControlSubscriptionReceived(const QStr
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
@@ -601,6 +601,6 @@ void RundownOpacityWidget::clearChannelControlSubscriptionReceived(const QString
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

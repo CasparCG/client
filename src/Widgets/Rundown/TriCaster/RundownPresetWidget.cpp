@@ -124,7 +124,7 @@ AbstractRundownWidget* RundownPresetWidget::clone()
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
-    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setSource(this->command.getSource());
     command->setPreset(this->command.getPreset());
@@ -301,7 +301,7 @@ void RundownPresetWidget::checkDeviceConnection()
 
 void RundownPresetWidget::configureOscSubscriptions()
 {
-    if (!this->command.getAllowRemoteTriggering())
+    if (!this->command.allowRemoteTriggering.get())
         return;
 
     if (this->playControlSubscription != NULL)
@@ -373,7 +373,7 @@ void RundownPresetWidget::playControlSubscriptionReceived(const QString& predica
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
@@ -381,7 +381,7 @@ void RundownPresetWidget::playNowControlSubscriptionReceived(const QString& pred
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
@@ -389,6 +389,6 @@ void RundownPresetWidget::updateControlSubscriptionReceived(const QString& predi
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Update);
 }

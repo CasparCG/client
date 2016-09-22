@@ -135,7 +135,7 @@ AbstractRundownWidget* RundownImageScrollerWidget::clone()
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
-    command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
+    command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setImageScrollerName(this->command.getImageScrollerName());
     command->setBlur(this->command.getBlur());
@@ -563,7 +563,7 @@ void RundownImageScrollerWidget::checkDeviceConnection()
 
 void RundownImageScrollerWidget::configureOscSubscriptions()
 {
-    if (!this->command.getAllowRemoteTriggering())
+    if (!this->command.allowRemoteTriggering.get())
         return;
 
     if (this->stopControlSubscription != NULL)
@@ -680,7 +680,7 @@ void RundownImageScrollerWidget::stopControlSubscriptionReceived(const QString& 
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Stop);
 }
 
@@ -688,7 +688,7 @@ void RundownImageScrollerWidget::playControlSubscriptionReceived(const QString& 
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Play);
 }
 
@@ -696,7 +696,7 @@ void RundownImageScrollerWidget::playNowControlSubscriptionReceived(const QStrin
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PlayNow);
 }
 
@@ -704,7 +704,7 @@ void RundownImageScrollerWidget::loadControlSubscriptionReceived(const QString& 
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Load);
 }
 
@@ -712,7 +712,7 @@ void RundownImageScrollerWidget::pauseControlSubscriptionReceived(const QString&
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::PauseResume);
 }
 
@@ -720,7 +720,7 @@ void RundownImageScrollerWidget::clearControlSubscriptionReceived(const QString&
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::Clear);
 }
 
@@ -728,7 +728,7 @@ void RundownImageScrollerWidget::clearVideolayerControlSubscriptionReceived(cons
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearVideoLayer);
 }
 
@@ -736,6 +736,6 @@ void RundownImageScrollerWidget::clearChannelControlSubscriptionReceived(const Q
 {
     Q_UNUSED(predicate);
 
-    if (this->command.getAllowRemoteTriggering() && arguments.count() > 0 && arguments[0].toInt() > 0)
+    if (this->command.allowRemoteTriggering.get() && arguments.count() > 0 && arguments[0].toInt() > 0)
         executeCommand(Playout::PlayoutType::ClearChannel);
 }

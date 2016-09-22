@@ -9,16 +9,12 @@ AbstractCommand::AbstractCommand(QObject* parent)
     , delay(Output::DEFAULT_DELAY, this)
     , duration(Output::DEFAULT_DURATION, this)
     , allowGpi(Output::DEFAULT_ALLOW_GPI, this)
+    , allowRemoteTriggering(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING, this)
 {
 }
 
 AbstractCommand::~AbstractCommand()
 {
-}
-
-bool AbstractCommand::getAllowRemoteTriggering() const
-{
-    return this->allowRemoteTriggering;
 }
 
 QString AbstractCommand::getRemoteTriggerId() const
@@ -29,12 +25,6 @@ QString AbstractCommand::getRemoteTriggerId() const
 QString AbstractCommand::getStoryId() const
 {
     return this->storyId;
-}
-
-void AbstractCommand::setAllowRemoteTriggering(bool allowRemoteTriggering)
-{
-    this->allowRemoteTriggering = allowRemoteTriggering;
-    emit allowRemoteTriggeringChanged(this->allowRemoteTriggering);
 }
 
 void AbstractCommand::setRemoteTriggerId(const QString& remoteTriggerId)
@@ -53,7 +43,6 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractProperties::readProperties(pt);
 
-    setAllowRemoteTriggering(pt.get(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
     setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
     setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
 }
@@ -62,7 +51,6 @@ void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractProperties::writeProperties(writer);
 
-    writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
     writer->writeTextElement("remotetriggerid", getRemoteTriggerId());
     writer->writeTextElement("storyid", getStoryId());
 }

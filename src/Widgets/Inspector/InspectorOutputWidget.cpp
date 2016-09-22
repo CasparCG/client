@@ -170,7 +170,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->spinBoxDelay->setValue(this->command->delay.get());
         this->spinBoxDuration->setValue(this->command->duration.get());
         this->checkBoxAllowGpi->setChecked(this->command->allowGpi.get());
-        this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
+        this->checkBoxAllowRemoteTriggering->setChecked(this->command->allowRemoteTriggering.get());
         this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
 
         if (!this->checkBoxAllowRemoteTriggering->isChecked())
@@ -772,10 +772,10 @@ void InspectorOutputWidget::allowGpiChanged(int state)
 
 void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 {
-    this->command->setAllowRemoteTriggering((state == Qt::Checked) ? true : false);
+    this->command->allowRemoteTriggering.set((state == Qt::Checked) ? true : false);
 
-    this->labelRemoteTriggerIdField->setEnabled(this->command->getAllowRemoteTriggering());
-    this->lineEditRemoteTriggerId->setEnabled(this->command->getAllowRemoteTriggering());
+    this->labelRemoteTriggerIdField->setEnabled(this->command->allowRemoteTriggering.get());
+    this->lineEditRemoteTriggerId->setEnabled(this->command->allowRemoteTriggering.get());
 }
 
 void InspectorOutputWidget::remoteTriggerIdChanged(QString id)
