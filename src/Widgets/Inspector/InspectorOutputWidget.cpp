@@ -167,7 +167,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
         this->spinBoxChannel->setValue(this->command->channel.get());
         this->spinBoxVideolayer->setValue(this->command->videolayer.get());
-        this->spinBoxDelay->setValue(this->command->getDelay());
+        this->spinBoxDelay->setValue(this->command->delay.get());
         this->spinBoxDuration->setValue(this->command->getDuration());
         this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
         this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
@@ -757,7 +757,7 @@ void InspectorOutputWidget::videolayerChanged(int videolayer)
 
 void InspectorOutputWidget::delayChanged(int delay)
 {
-    this->command->setDelay(delay);
+    this->command->delay.set(delay);
 }
 
 void InspectorOutputWidget::durationChanged(int duration)

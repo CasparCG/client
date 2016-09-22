@@ -37,12 +37,12 @@ RundownPlayoutCommandWidget::RundownPlayoutCommandWidget(const LibraryModel& mod
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
-    this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
+    this->labelDelay->setText(QString("Delay: %1").arg(this->command.delay.get()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
@@ -71,7 +71,7 @@ AbstractRundownWidget* RundownPlayoutCommandWidget::clone()
     PlayoutCommand* command = dynamic_cast<PlayoutCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
-    command->setDelay(this->command.getDelay());
+    command->delay.set(this->command.delay.get());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
@@ -186,10 +186,10 @@ bool RundownPlayoutCommandWidget::executeCommand(Playout::PlayoutType type)
 {
     if (type == Playout::PlayoutType::Play)
     {
-        if (this->command.getDelay() < 0)
+        if (this->command.delay.get() < 0)
             return true;
 
-        this->executeTimer.setInterval(this->command.getDelay());
+        this->executeTimer.setInterval(this->command.delay.get());
         this->executeTimer.start();
     }
     else if (type == Playout::PlayoutType::PlayNow)

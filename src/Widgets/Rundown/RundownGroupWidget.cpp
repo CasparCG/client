@@ -74,7 +74,7 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     GroupCommand* command = dynamic_cast<GroupCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
-    command->setDelay(this->command.getDelay());
+    command->delay.set(this->command.delay.get());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());

@@ -23,15 +23,14 @@ public:
 
     ChannelProperty channel;
     VideolayerProperty videolayer;
+    DelayProperty delay;
 
-    virtual int getDelay() const;
     virtual int getDuration() const;
     virtual bool getAllowGpi() const;
     virtual bool getAllowRemoteTriggering() const;
     virtual QString getRemoteTriggerId() const;
     virtual QString getStoryId() const;
 
-    virtual void setDelay(int delay);
     virtual void setDuration(int duration);
     virtual void setAllowGpi(bool allowGpi);
     virtual void setAllowRemoteTriggering(bool allowRemoteTriggering);
@@ -47,14 +46,12 @@ protected:
     QString storyId = "";
     QString remoteTriggerId = Output::DEFAULT_REMOTE_TRIGGER_ID;
 
-    int delay = Output::DEFAULT_DELAY;
     int duration = Output::DEFAULT_DURATION ;
     bool allowGpi = Output::DEFAULT_ALLOW_GPI;
     bool allowRemoteTriggering = Output::DEFAULT_ALLOW_REMOTE_TRIGGERING;
 
 
 private:
-    Q_SIGNAL void delayChanged(int);
     Q_SIGNAL void durationChanged(int);
     Q_SIGNAL void allowGpiChanged(bool);
     Q_SIGNAL void allowRemoteTriggeringChanged(bool);

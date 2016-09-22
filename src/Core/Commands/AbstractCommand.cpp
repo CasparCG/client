@@ -6,16 +6,12 @@ AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent)
     , channel(Output::DEFAULT_CHANNEL, this)
     , videolayer(Output::DEFAULT_VIDEOLAYER, this)
+    , delay(Output::DEFAULT_DELAY, this)
 {
 }
 
 AbstractCommand::~AbstractCommand()
 {
-}
-
-int AbstractCommand::getDelay() const
-{
-    return this->delay;
 }
 
 int AbstractCommand::getDuration() const
@@ -41,12 +37,6 @@ QString AbstractCommand::getRemoteTriggerId() const
 QString AbstractCommand::getStoryId() const
 {
     return this->storyId;
-}
-
-void AbstractCommand::setDelay(int delay)
-{
-    this->delay = delay;
-    emit delayChanged(this->delay);
 }
 
 void AbstractCommand::setDuration(int duration)
@@ -83,7 +73,6 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractProperties::readProperties(pt);
 
-    setDelay(pt.get(L"delay", Output::DEFAULT_DELAY));
     setDuration(pt.get(L"duration", Output::DEFAULT_DURATION));
     setAllowGpi(pt.get(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
     setAllowRemoteTriggering(pt.get(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
@@ -95,7 +84,6 @@ void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractProperties::writeProperties(writer);
 
-    writer->writeTextElement("delay", QString::number(getDelay()));
     writer->writeTextElement("duration", QString::number(getDuration()));
     writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");

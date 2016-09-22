@@ -39,13 +39,13 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
-    this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
+    this->labelDelay->setText(QString("Delay: %1").arg(this->command.delay.get()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
-    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
@@ -110,7 +110,7 @@ AbstractRundownWidget* RundownClearOutputWidget::clone()
     ClearOutputCommand* command = dynamic_cast<ClearOutputCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
-    command->setDelay(this->command.getDelay());
+    command->delay.set(this->command.delay.get());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
@@ -239,7 +239,7 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType type)
     else if ((type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext()) ||
              (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext()))
     {
-        if (this->command.getDelay() < 0)
+        if (this->command.delay.get() < 0)
             return true;
 
         this->executeTimer.disconnect(); // Disconnect all events.
@@ -259,11 +259,11 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType type)
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
-                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                this->executeTimer.setInterval(floor(this->command.delay.get() * (1000 / framesPerSecond)));
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executeTimer.setInterval(this->command.getDelay());
+                this->executeTimer.setInterval(this->command.delay.get());
             }
 
             this->executeTimer.start();

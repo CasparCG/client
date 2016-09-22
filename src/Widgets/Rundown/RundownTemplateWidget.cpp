@@ -46,7 +46,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->labelLabel->setText(this->model.getLabel());
     this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.videolayer.get()));
-    this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
+    this->labelDelay->setText(QString("Delay: %1").arg(this->command.delay.get()));
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(this->command.getFlashlayer()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
@@ -55,7 +55,7 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
-    QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
+    QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(flashlayerChanged(int)), this, SLOT(flashlayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -164,7 +164,7 @@ AbstractRundownWidget* RundownTemplateWidget::clone()
     TemplateCommand* command = dynamic_cast<TemplateCommand*>(widget->getCommand());
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
-    command->setDelay(this->command.getDelay());
+    command->delay.set(this->command.delay.get());
     command->setDuration(this->command.getDuration());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
@@ -301,7 +301,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         executeStop();
     else if (type == Playout::PlayoutType::Play && !this->command.getTriggerOnNext())
     {
-        if (this->command.getDelay() < 0)
+        if (this->command.delay.get() < 0)
             return true;
 
         this->executeTimer.disconnect(); // Disconnect all events.
@@ -317,7 +317,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                int startDelay = floor(this->command.delay.get() * (1000 / framesPerSecond));
                 this->executeTimer.setInterval(startDelay);
 
                 if (this->command.getDuration() > 0)
@@ -328,10 +328,10 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executeTimer.setInterval(this->command.getDelay());
+                this->executeTimer.setInterval(this->command.delay.get());
 
                 if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
+                    QTimer::singleShot(this->command.delay.get() + this->command.getDuration(), this, SLOT(executeStop()));
             }
 
             this->executeTimer.start();
@@ -341,7 +341,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         executePlay();
     else if (type == Playout::PlayoutType::Update)
     {
-        if (this->command.getDelay() < 0)
+        if (this->command.delay.get() < 0)
             return true;
 
         this->executeTimer.disconnect(); // Disconnect all events.
@@ -357,12 +357,12 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                int startDelay = floor(this->command.delay.get() * (1000 / framesPerSecond));
                 this->executeTimer.setInterval(startDelay);
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executeTimer.setInterval(this->command.getDelay());
+                this->executeTimer.setInterval(this->command.delay.get());
             }
 
             this->executeTimer.start();
@@ -387,7 +387,7 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         executeClearChannel();
     else if (type == Playout::PlayoutType::Preview)
     {
-        if (this->command.getDelay() < 0)
+        if (this->command.delay.get() < 0)
             return true;
 
         this->executePreviewTimer.disconnect(); // Disconnect all events.
@@ -408,21 +408,21 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
 
                 double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[deviceModel->getPreviewChannel() - 1]).getFramesPerSecond().toDouble();
 
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
+                int startDelay = floor(this->command.delay.get() * (1000 / framesPerSecond));
                 this->executePreviewTimer.setInterval(startDelay);
 
                 if (this->command.getDuration() > 0)
                 {
                     int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStopPreview()));
+                    QTimer::singleShot(this->command.delay.get() + this->command.getDuration(), this, SLOT(executeStopPreview()));
                 }
             }
             else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
             {
-                this->executePreviewTimer.setInterval(this->command.getDelay());
+                this->executePreviewTimer.setInterval(this->command.delay.get());
 
                 if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStopPreview()));
+                    QTimer::singleShot(this->command.delay.get() + this->command.getDuration(), this, SLOT(executeStopPreview()));
             }
 
             this->executePreviewTimer.start();
