@@ -1061,9 +1061,9 @@ QString RundownTreeBaseWidget::currentItemStoryId()
         AbstractRundownWidget* parentWidget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(currentItem->parent(), 0));
 
         if (parentWidget != NULL)
-            currentStoryId = parentWidget->getCommand()->getStoryId(); // Group item.
+            currentStoryId = parentWidget->getCommand()->storyId.get(); // Group item.
         else
-            currentStoryId = currentWidget->getCommand()->getStoryId(); // Group or top level item.
+            currentStoryId = currentWidget->getCommand()->storyId.get(); // Group or top level item.
     }
 
     return currentStoryId;
@@ -1114,7 +1114,7 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
     {
         QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
         AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
-        if (widget->getCommand()->getStoryId() == storyId)
+        if (widget->getCommand()->storyId.get() == storyId)
         {
             row = QTreeWidget::indexFromItem(item).row();
             break; // We have found the last story id in the rundown.
@@ -1167,7 +1167,7 @@ void RundownTreeBaseWidget::removeRepositoryItem(const QString& storyId)
     {
         QTreeWidgetItem* item = QTreeWidget::topLevelItem(i);
         AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
-        if (widget->getCommand()->getStoryId() == storyId)
+        if (widget->getCommand()->storyId.get() == storyId)
         {
             if (widget->isGroup())
             {

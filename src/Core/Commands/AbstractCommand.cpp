@@ -1,6 +1,6 @@
 #include "AbstractCommand.h"
 
-#include <QtCore/QXmlStreamWriter>
+#include "Global.h"
 
 AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent)
@@ -11,34 +11,7 @@ AbstractCommand::AbstractCommand(QObject* parent)
     , allowGpi(Output::DEFAULT_ALLOW_GPI, this)
     , allowRemoteTriggering(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING, this)
     , remoteTriggerId(Output::DEFAULT_REMOTE_TRIGGER_ID, this)
-{
-}
+    , storyId("", this)
+{ }
 
-AbstractCommand::~AbstractCommand()
-{
-}
-
-QString AbstractCommand::getStoryId() const
-{
-    return this->storyId;
-}
-
-void AbstractCommand::setStoryId(const QString& storyId)
-{
-    this->storyId = storyId;
-    emit storyIdChanged(this->storyId);
-}
-
-void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
-{
-    AbstractProperties::readProperties(pt);
-
-    setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
-}
-
-void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
-{
-    AbstractProperties::writeProperties(writer);
-
-    writer->writeTextElement("storyid", getStoryId());
-}
+AbstractCommand::~AbstractCommand() { }
