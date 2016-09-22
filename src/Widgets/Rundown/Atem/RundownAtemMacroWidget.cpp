@@ -123,7 +123,7 @@ AbstractRundownWidget* RundownAtemMacroWidget::clone()
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
-    command->setDuration(this->command.getDuration());
+    command->duration.set(this->command.duration.get());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());

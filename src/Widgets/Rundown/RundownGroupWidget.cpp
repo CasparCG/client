@@ -42,7 +42,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
 
     this->labelLabel->setText(this->model.getLabel());
 
-    QObject::connect(&this->command, SIGNAL(durationChanged(int)), this, SLOT(durationChanged(int)));
+    QObject::connect(&this->command.duration, SIGNAL(changed(int)), this, SLOT(durationChanged(int)));
     QObject::connect(&this->command, SIGNAL(notesChanged(const QString&)), this, SLOT(notesChanged(const QString&)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
@@ -75,7 +75,7 @@ AbstractRundownWidget* RundownGroupWidget::clone()
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
-    command->setDuration(this->command.getDuration());
+    command->duration.set(this->command.duration.get());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
@@ -194,15 +194,15 @@ bool RundownGroupWidget::executeCommand(Playout::PlayoutType type)
 
     if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
     {
-        if (this->command.getDuration() > 0)
-            EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
+        if (this->command.duration.get() > 0)
+            EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.duration.get()));
 
         if (this->markUsedItems)
             setUsed(true);
     }
     else if (type == Playout::PlayoutType::Stop)
     {
-        if (this->command.getDuration() > 0)
+        if (this->command.duration.get() > 0)
             EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(0));
     }
     else if (type == Playout::PlayoutType::Clear || type == Playout::PlayoutType::ClearVideoLayer || type == Playout::PlayoutType::ClearChannel)
@@ -229,7 +229,7 @@ bool RundownGroupWidget::executeOscCommand(Playout::PlayoutType type)
 
             if (type == Playout::PlayoutType::Play || type == Playout::PlayoutType::PlayNow)
             {
-                EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.getDuration()));
+                EventManager::getInstance().fireDurationChangedEvent(DurationChangedEvent(this->command.duration.get()));
 
                 if (this->markUsedItems)
                     setUsed(true);
@@ -353,7 +353,7 @@ void RundownGroupWidget::durationChanged(int duration)
     Q_UNUSED(duration);
 
     QTime time = QTime::fromString(QString("00:00:00").append((this->useDropFrameNotation == true) ? ".00" : ":00"));
-    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(time.addMSecs(this->command.getDuration()), this->useDropFrameNotation)));
+    this->labelDuration->setText(QString("Duration: %1").arg(Timecode::fromTime(time.addMSecs(this->command.duration.get()), this->useDropFrameNotation)));
 }
 
 void RundownGroupWidget::notesChanged(const QString& note)

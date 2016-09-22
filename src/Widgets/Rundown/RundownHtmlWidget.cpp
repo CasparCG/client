@@ -113,7 +113,7 @@ AbstractRundownWidget* RundownHtmlWidget::clone()
     command->channel.set(this->command.channel.get());
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
-    command->setDuration(this->command.getDuration());
+    command->duration.set(this->command.duration.get());
     command->setAllowGpi(this->command.getAllowGpi());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
@@ -274,9 +274,9 @@ bool RundownHtmlWidget::executeCommand(Playout::PlayoutType type)
                 int startDelay = floor(this->command.delay.get() * (1000 / framesPerSecond));
                 this->executeStartTimer.setInterval(startDelay);
 
-                if (this->command.getDuration() > 0)
+                if (this->command.duration.get() > 0)
                 {
-                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
+                    int stopDelay = floor(this->command.duration.get() * (1000 / framesPerSecond));
                     this->executeStopTimer.setInterval(startDelay + stopDelay);
                 }
             }
@@ -284,8 +284,8 @@ bool RundownHtmlWidget::executeCommand(Playout::PlayoutType type)
             {
                 this->executeStartTimer.setInterval(this->command.delay.get());
 
-                if (this->command.getDuration() > 0)
-                    this->executeStopTimer.setInterval(this->command.delay.get() + this->command.getDuration());
+                if (this->command.duration.get() > 0)
+                    this->executeStopTimer.setInterval(this->command.delay.get() + this->command.duration.get());
             }
 
             this->executeStartTimer.start();
