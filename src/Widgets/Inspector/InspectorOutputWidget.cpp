@@ -169,7 +169,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->spinBoxVideolayer->setValue(this->command->videolayer.get());
         this->spinBoxDelay->setValue(this->command->delay.get());
         this->spinBoxDuration->setValue(this->command->duration.get());
-        this->checkBoxAllowGpi->setChecked(this->command->getAllowGpi());
+        this->checkBoxAllowGpi->setChecked(this->command->allowGpi.get());
         this->checkBoxAllowRemoteTriggering->setChecked(this->command->getAllowRemoteTriggering());
         this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
 
@@ -767,7 +767,7 @@ void InspectorOutputWidget::durationChanged(int duration)
 
 void InspectorOutputWidget::allowGpiChanged(int state)
 {
-    this->command->setAllowGpi((state == Qt::Checked) ? true : false);
+    this->command->allowGpi.set((state == Qt::Checked) ? true : false);
 }
 
 void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)

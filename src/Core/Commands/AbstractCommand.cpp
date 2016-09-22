@@ -8,16 +8,12 @@ AbstractCommand::AbstractCommand(QObject* parent)
     , videolayer(Output::DEFAULT_VIDEOLAYER, this)
     , delay(Output::DEFAULT_DELAY, this)
     , duration(Output::DEFAULT_DURATION, this)
+    , allowGpi(Output::DEFAULT_ALLOW_GPI, this)
 {
 }
 
 AbstractCommand::~AbstractCommand()
 {
-}
-
-bool AbstractCommand::getAllowGpi() const
-{
-    return this->allowGpi;
 }
 
 bool AbstractCommand::getAllowRemoteTriggering() const
@@ -33,12 +29,6 @@ QString AbstractCommand::getRemoteTriggerId() const
 QString AbstractCommand::getStoryId() const
 {
     return this->storyId;
-}
-
-void AbstractCommand::setAllowGpi(bool allowGpi)
-{
-    this->allowGpi = allowGpi;
-    emit allowGpiChanged(this->allowGpi);
 }
 
 void AbstractCommand::setAllowRemoteTriggering(bool allowRemoteTriggering)
@@ -63,7 +53,6 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractProperties::readProperties(pt);
 
-    setAllowGpi(pt.get(L"allowgpi", Output::DEFAULT_ALLOW_GPI));
     setAllowRemoteTriggering(pt.get(L"allowremotetriggering", Output::DEFAULT_ALLOW_REMOTE_TRIGGERING));
     setRemoteTriggerId(QString::fromStdWString(pt.get(L"remotetriggerid", Output::DEFAULT_REMOTE_TRIGGER_ID.toStdWString())));
     setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
@@ -73,7 +62,6 @@ void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
     AbstractProperties::writeProperties(writer);
 
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
     writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
     writer->writeTextElement("remotetriggerid", getRemoteTriggerId());
     writer->writeTextElement("storyid", getStoryId());

@@ -46,7 +46,7 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
 
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
-    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command.allowGpi, SIGNAL(changed(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
@@ -112,7 +112,7 @@ AbstractRundownWidget* RundownClearOutputWidget::clone()
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
-    command->setAllowGpi(this->command.getAllowGpi());
+    command->allowGpi.set(this->command.allowGpi.get());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setClearChannel(this->command.getClearChannel());
@@ -351,7 +351,7 @@ void RundownClearOutputWidget::delayChanged(int delay)
 
 void RundownClearOutputWidget::checkGpiConnection()
 {
-    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.allowGpi.get());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));

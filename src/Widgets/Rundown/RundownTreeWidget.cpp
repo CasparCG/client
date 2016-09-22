@@ -1202,7 +1202,7 @@ bool RundownTreeWidget::executeCommand(Playout::PlayoutType type, Action::Action
         rundownWidgetParent = dynamic_cast<AbstractRundownWidget*>(selectedWidgetParent);
     }
 
-    if (source == Action::ActionType::GpiPulse && !rundownWidget->getCommand()->getAllowGpi())
+    if (source == Action::ActionType::GpiPulse && !rundownWidget->getCommand()->allowGpi.get())
         return true; // Gpi pulses cannot trigger this item.
 
     if (type == Playout::PlayoutType::Next && rundownWidgetParent != nullptr && rundownWidgetParent->isGroup() && dynamic_cast<GroupCommand*>(rundownWidgetParent->getCommand())->getAutoPlay())

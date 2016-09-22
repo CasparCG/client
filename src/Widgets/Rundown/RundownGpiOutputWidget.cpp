@@ -44,7 +44,7 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
 
     QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
-    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command.allowGpi, SIGNAL(changed(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
@@ -75,7 +75,7 @@ AbstractRundownWidget* RundownGpiOutputWidget::clone()
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
-    command->setAllowGpi(this->command.getAllowGpi());
+    command->allowGpi.set(this->command.allowGpi.get());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setGpoPort(this->command.getGpoPort());
@@ -244,7 +244,7 @@ void RundownGpiOutputWidget::gpiOutputPortChanged(int port)
 
 void RundownGpiOutputWidget::checkGpiConnection()
 {
-    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.allowGpi.get());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));

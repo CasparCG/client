@@ -62,7 +62,7 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command.videolayer, SIGNAL(changed(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
-    QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
+    QObject::connect(&this->command.allowGpi, SIGNAL(changed(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(loopChanged(bool)), this, SLOT(loopChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoPlayChanged(bool)), this, SLOT(autoPlayChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -173,7 +173,7 @@ AbstractRundownWidget* RundownMovieWidget::clone()
     command->videolayer.set(this->command.videolayer.get());
     command->delay.set(this->command.delay.get());
     command->duration.set(this->command.duration.get());
-    command->setAllowGpi(this->command.getAllowGpi());
+    command->allowGpi.set(this->command.allowGpi.get());
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setVideoName(this->command.getVideoName());
@@ -796,7 +796,7 @@ void RundownMovieWidget::executeClearChannel()
 
 void RundownMovieWidget::checkGpiConnection()
 {
-    this->labelGpiConnected->setVisible(this->command.getAllowGpi());
+    this->labelGpiConnected->setVisible(this->command.allowGpi.get());
 
     if (GpiManager::getInstance().getGpiDevice()->isConnected())
         this->labelGpiConnected->setPixmap(QPixmap(":/Graphics/Images/GpiConnected.png"));
