@@ -71,7 +71,7 @@ AbstractRundownWidget* RundownGpiOutputWidget::clone()
                                                                 this->active, this->inGroup, this->compactView);
 
     GpiOutputCommand* command = dynamic_cast<GpiOutputCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

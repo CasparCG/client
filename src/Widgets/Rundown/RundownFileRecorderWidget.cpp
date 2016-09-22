@@ -39,14 +39,14 @@ RundownFileRecorderWidget::RundownFileRecorderWidget(const LibraryModel& model, 
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRODUCER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
-    this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -138,7 +138,7 @@ AbstractRundownWidget* RundownFileRecorderWidget::clone()
                                                                       this->active, this->inGroup, this->compactView);
 
     FileRecorderCommand* command = dynamic_cast<FileRecorderCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
@@ -279,10 +279,10 @@ bool RundownFileRecorderWidget::executeCommand(Playout::PlayoutType type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
+                if (this->command.channel.get() > channelFormats.count())
                     return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
                 int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
                 this->executeTimer.setInterval(startDelay);
@@ -325,7 +325,7 @@ void RundownFileRecorderWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stopFileRecorder(this->command.getChannel());
+        device->stopFileRecorder(this->command.channel.get());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -334,7 +334,7 @@ void RundownFileRecorderWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stopFileRecorder(this->command.getChannel());
+            deviceShadow->stopFileRecorder(this->command.channel.get());
     }
 
     this->widgetOscTime->setRecording(false);
@@ -344,7 +344,7 @@ void RundownFileRecorderWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->startFileRecorder(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
+        device->startFileRecorder(this->command.channel.get(), this->command.getOutput(), this->command.getCodec(),
                                   this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -354,7 +354,7 @@ void RundownFileRecorderWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->startFileRecorder(this->command.getChannel(), this->command.getOutput(), this->command.getCodec(),
+            deviceShadow->startFileRecorder(this->command.channel.get(), this->command.getOutput(), this->command.getCodec(),
                                             this->command.getPreset(), this->command.getTune(), this->command.getWithAlpha());
     }
 
@@ -411,21 +411,21 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
 
     QString frameFilter = Osc::FILERECORDER_FRAME_FILTER;
     frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
-               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+               .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()));
     this->frameSubscription = new OscSubscription(frameFilter, this);
     QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString fpsFilter = Osc::FILERECORDER_FPS_FILTER;
     fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
-             .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+             .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pathFilter = Osc::FILERECORDER_PATH_FILTER;
     pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
-              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()));
+              .replace("#CHANNEL#", QString("%1").arg(this->command.channel.get()));
     this->pathSubscription = new OscSubscription(pathFilter, this);
     QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));

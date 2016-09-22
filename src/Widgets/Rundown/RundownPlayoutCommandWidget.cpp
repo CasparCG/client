@@ -69,7 +69,7 @@ AbstractRundownWidget* RundownPlayoutCommandWidget::clone()
                                                                           this->inGroup, this->compactView);
 
     PlayoutCommand* command = dynamic_cast<PlayoutCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

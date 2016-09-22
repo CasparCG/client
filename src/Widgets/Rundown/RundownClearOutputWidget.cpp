@@ -38,13 +38,13 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_CLEAR_OUTPUT_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
-    this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -108,7 +108,7 @@ AbstractRundownWidget* RundownClearOutputWidget::clone()
                                                                     this->inGroup, this->compactView);
 
     ClearOutputCommand* command = dynamic_cast<ClearOutputCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
@@ -254,10 +254,10 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
+                if (this->command.channel.get() > channelFormats.count())
                     return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
                 this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
             }
@@ -295,7 +295,7 @@ void RundownClearOutputWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -304,7 +304,7 @@ void RundownClearOutputWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
     }
 
     if (this->markUsedItems)
@@ -318,8 +318,8 @@ void RundownClearOutputWidget::executeClearChannel()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->clearChannel(this->command.getChannel());
-        device->clearMixerChannel(this->command.getChannel());
+        device->clearChannel(this->command.channel.get());
+        device->clearMixerChannel(this->command.channel.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -330,8 +330,8 @@ void RundownClearOutputWidget::executeClearChannel()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->clearChannel(this->command.getChannel());
-            deviceShadow->clearMixerChannel(this->command.getChannel());
+            deviceShadow->clearChannel(this->command.channel.get());
+            deviceShadow->clearMixerChannel(this->command.channel.get());
         }
     }
 

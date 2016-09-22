@@ -42,7 +42,7 @@ void AudioMeterWidget::deviceChanged(const DeviceChangedEvent& event)
 
         QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
         audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(event.getDeviceName())->resolveIpAddress()))
-                   .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
+                   .replace("#CHANNEL#", QString("%1").arg(this->command->channel.get()))
                    .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
         this->audioSubscription = new OscSubscription(audioFilter, this);
         QObject::connect(this->audioSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
@@ -91,7 +91,7 @@ void AudioMeterWidget::configureOscSubscriptions()
 
     QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
     audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName())->resolveIpAddress()))
-               .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
+               .replace("#CHANNEL#", QString("%1").arg(this->command->channel.get()))
                .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
     this->audioSubscription = new OscSubscription(audioFilter, this);
     QObject::connect(this->audioSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),

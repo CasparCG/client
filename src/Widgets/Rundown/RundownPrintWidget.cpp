@@ -37,14 +37,14 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PRINT_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
-    this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
@@ -108,7 +108,7 @@ AbstractRundownWidget* RundownPrintWidget::clone()
                                                         this->inGroup, this->compactView);
 
     PrintCommand* command = dynamic_cast<PrintCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
@@ -244,10 +244,10 @@ bool RundownPrintWidget::executeCommand(Playout::PlayoutType type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
+                if (this->command.channel.get() > channelFormats.count())
                     return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
                 this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
             }
@@ -283,7 +283,7 @@ void RundownPrintWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->print(this->command.getChannel(), this->command.getOutput());
+        device->print(this->command.channel.get(), this->command.getOutput());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -292,7 +292,7 @@ void RundownPrintWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->print(this->command.getChannel(), this->command.getOutput());
+            deviceShadow->print(this->command.channel.get(), this->command.getOutput());
     }
 
     if (this->markUsedItems)

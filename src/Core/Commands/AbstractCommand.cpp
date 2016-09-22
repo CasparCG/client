@@ -4,16 +4,12 @@
 
 AbstractCommand::AbstractCommand(QObject* parent)
     : QObject(parent)
+    , channel(Output::DEFAULT_CHANNEL, this)
 {
 }
 
 AbstractCommand::~AbstractCommand()
 {
-}
-
-int AbstractCommand::getChannel() const
-{
-    return this->channel;
 }
 
 int AbstractCommand::getVideolayer() const
@@ -49,12 +45,6 @@ QString AbstractCommand::getRemoteTriggerId() const
 QString AbstractCommand::getStoryId() const
 {
     return this->storyId;
-}
-
-void AbstractCommand::setChannel(int channel)
-{
-    this->channel = channel;
-    emit channelChanged(this->channel);
 }
 
 void AbstractCommand::setVideolayer(int videolayer)
@@ -101,7 +91,8 @@ void AbstractCommand::setStoryId(const QString& storyId)
 
 void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 {
-    setChannel(pt.get(L"channel", Output::DEFAULT_CHANNEL));
+    AbstractProperties::readProperties(pt);
+
     setVideolayer(pt.get(L"videolayer", Output::DEFAULT_VIDEOLAYER));
     setDelay(pt.get(L"delay", Output::DEFAULT_DELAY));
     setDuration(pt.get(L"duration", Output::DEFAULT_DURATION));
@@ -113,7 +104,8 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
 
 void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
 {
-    writer->writeTextElement("channel", QString::number(getChannel()));
+    AbstractProperties::writeProperties(writer);
+
     writer->writeTextElement("videolayer", QString::number(getVideolayer()));
     writer->writeTextElement("delay", QString::number(getDelay()));
     writer->writeTextElement("duration", QString::number(getDuration()));

@@ -165,7 +165,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->comboBoxDevice->setCurrentIndex(index);
         this->comboBoxAtemDevice->setCurrentIndex(this->comboBoxAtemDevice->findText(this->model->getDeviceName()));
         this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
-        this->spinBoxChannel->setValue(this->command->getChannel());
+        this->spinBoxChannel->setValue(this->command->channel.get());
         this->spinBoxVideolayer->setValue(this->command->getVideolayer());
         this->spinBoxDelay->setValue(this->command->getDelay());
         this->spinBoxDuration->setValue(this->command->getDuration());
@@ -743,7 +743,7 @@ void InspectorOutputWidget::channelChanged(int channel)
     if (this->command == NULL)
         return;
 
-    this->command->setChannel(channel);
+    this->command->channel.set(channel);
 
     EventManager::getInstance().fireChannelChangedEvent(ChannelChangedEvent(channel));
 }

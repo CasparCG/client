@@ -79,7 +79,7 @@ AbstractRundownWidget* RundownHttpGetWidget::clone()
                                                             this->inGroup, this->compactView);
 
     HttpGetCommand* command = dynamic_cast<HttpGetCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

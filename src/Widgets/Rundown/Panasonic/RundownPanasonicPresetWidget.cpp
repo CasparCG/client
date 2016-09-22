@@ -70,7 +70,7 @@ AbstractRundownWidget* RundownPanasonicPresetWidget::clone()
                                                                             this->inGroup, this->compactView);
 
     PanasonicPresetCommand* command = dynamic_cast<PanasonicPresetCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

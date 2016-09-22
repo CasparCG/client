@@ -39,7 +39,7 @@ void InspectorAnchorWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         if (!model.getName().isEmpty())
         {
             const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
-            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+            const FormatModel& formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->channel.get() - 1));
 
             this->resolutionWidth = formatModel.getWidth();
             this->resolutionHeight = formatModel.getHeight();
@@ -66,10 +66,10 @@ void InspectorAnchorWidget::deviceChanged(const DeviceChangedEvent& event)
         if (!model.getName().isEmpty())
         {
             const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(model.getName()).getChannelFormats().split(",");
-            if (this->command->getChannel() > channelFormats.count())
+            if (this->command->channel.get() > channelFormats.count())
                 return;
 
-            const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->getChannel() - 1));
+            const FormatModel formatModel = DatabaseManager::getInstance().getFormat(channelFormats.at(this->command->channel.get() - 1));
 
             this->resolutionWidth = formatModel.getWidth();
             this->resolutionHeight = formatModel.getHeight();

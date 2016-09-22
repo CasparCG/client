@@ -119,7 +119,7 @@ AbstractRundownWidget* RundownAtemAudioInputBalanceWidget::clone()
                                                                           this->inGroup, this->compactView);
 
     AtemAudioInputBalanceCommand* command = dynamic_cast<AtemAudioInputBalanceCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

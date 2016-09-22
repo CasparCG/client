@@ -1925,7 +1925,7 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
                     continue; // Only CasparCG devices.
 
                 AbstractCommand* command = dynamic_cast<AbstractCommand*>(rundownChildWidget->getCommand());
-                if (arguments[0].toInt() == command->getChannel())
+                if (arguments[0].toInt() == command->channel.get())
                     EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, childItem));
             }
         }
@@ -1940,7 +1940,7 @@ void RundownTreeWidget::playNowIfChannelControlSubscriptionReceived(const QStrin
                 return; // Only CasparCG devices.
 
             AbstractCommand* command = dynamic_cast<AbstractCommand*>(rundownWidget->getCommand());
-            if (arguments[0].toInt() == command->getChannel())
+            if (arguments[0].toInt() == command->channel.get())
                 EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::PlayNow, currentItem));
         }
     }

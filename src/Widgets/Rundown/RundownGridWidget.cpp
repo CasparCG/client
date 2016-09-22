@@ -40,7 +40,7 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_MIXER_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
-    this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
@@ -48,7 +48,7 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     this->executeTimer.setSingleShot(true);
     QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -125,7 +125,7 @@ AbstractRundownWidget* RundownGridWidget::clone()
                                                       this->inGroup, this->compactView);
 
     GridCommand* command = dynamic_cast<GridCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
@@ -265,10 +265,10 @@ bool RundownGridWidget::executeCommand(Playout::PlayoutType type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
+                if (this->command.channel.get() > channelFormats.count())
                     return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
                 this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
             }
@@ -299,7 +299,7 @@ void RundownGridWidget::executePlay()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->setGrid(this->command.getChannel(), this->command.getGrid(), this->command.getTransitionDuration(),
+        device->setGrid(this->command.channel.get(), this->command.getGrid(), this->command.getTransitionDuration(),
                         this->command.getTween(), this->command.getDefer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -309,7 +309,7 @@ void RundownGridWidget::executePlay()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->setGrid(this->command.getChannel(), this->command.getGrid(), this->command.getTransitionDuration(),
+            deviceShadow->setGrid(this->command.channel.get(), this->command.getGrid(), this->command.getTransitionDuration(),
                                   this->command.getTween(), this->command.getDefer());
     }
 
@@ -325,7 +325,7 @@ void RundownGridWidget::executeClearVideolayer()
     if (device != NULL && device->isConnected())
     {
         for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-            device->clearMixerVideolayer(this->command.getChannel(), i);
+            device->clearMixerVideolayer(this->command.channel.get(), i);
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -337,7 +337,7 @@ void RundownGridWidget::executeClearVideolayer()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             for (int i = 1; i <= this->command.getGrid() * this->command.getGrid(); i++)
-                device->clearMixerVideolayer(this->command.getChannel(), i);
+                device->clearMixerVideolayer(this->command.channel.get(), i);
         }
     }
 }
@@ -349,8 +349,8 @@ void RundownGridWidget::executeClearChannel()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->clearChannel(this->command.getChannel());
-        device->clearMixerChannel(this->command.getChannel());
+        device->clearChannel(this->command.channel.get());
+        device->clearMixerChannel(this->command.channel.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -361,8 +361,8 @@ void RundownGridWidget::executeClearChannel()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->clearChannel(this->command.getChannel());
-            deviceShadow->clearMixerChannel(this->command.getChannel());
+            deviceShadow->clearChannel(this->command.channel.get());
+            deviceShadow->clearMixerChannel(this->command.channel.get());
         }
     }
 }

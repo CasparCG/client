@@ -119,7 +119,7 @@ AbstractRundownWidget* RundownAutoWidget::clone()
                                                       this->inGroup, this->compactView);
 
     AutoCommand* command = dynamic_cast<AutoCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

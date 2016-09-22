@@ -119,7 +119,7 @@ AbstractRundownWidget* RundownAtemKeyerStateWidget::clone()
                                                                           this->inGroup, this->compactView);
 
     AtemKeyerStateCommand* command = dynamic_cast<AtemKeyerStateCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());

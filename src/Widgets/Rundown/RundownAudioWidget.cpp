@@ -45,7 +45,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_AUDIO_COLOR));
 
     this->labelLabel->setText(this->model.getLabel().split('/').last());
-    this->labelChannel->setText(QString("Channel: %1").arg(this->command.getChannel()));
+    this->labelChannel->setText(QString("Channel: %1").arg(this->command.channel.get()));
     this->labelVideolayer->setText(QString("Video layer: %1").arg(this->command.getVideolayer()));
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
@@ -53,7 +53,7 @@ RundownAudioWidget::RundownAudioWidget(const LibraryModel& model, QWidget* paren
     this->executeStartTimer.setSingleShot(true);
     this->executeStopTimer.setSingleShot(true);
 
-    QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
+    QObject::connect(&this->command.channel, SIGNAL(changed(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -130,7 +130,7 @@ AbstractRundownWidget* RundownAudioWidget::clone()
                                                         this->loaded, this->paused, this->playing, this->inGroup, this->compactView);
 
     AudioCommand* command = dynamic_cast<AudioCommand*>(widget->getCommand());
-    command->setChannel(this->command.getChannel());
+    command->channel.set(this->command.channel.get());
     command->setVideolayer(this->command.getVideolayer());
     command->setDelay(this->command.getDelay());
     command->setDuration(this->command.getDuration());
@@ -286,10 +286,10 @@ bool RundownAudioWidget::executeCommand(Playout::PlayoutType type)
             if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
             {
                 const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
+                if (this->command.channel.get() > channelFormats.count())
                     return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
+                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.channel.get() - 1]).getFramesPerSecond().toDouble();
 
                 int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
                 this->executeStartTimer.setInterval(startDelay);
@@ -341,7 +341,7 @@ void RundownAudioWidget::executeStop()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->stop(this->command.getChannel(), this->command.getVideolayer());
+        device->stop(this->command.channel.get(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -350,7 +350,7 @@ void RundownAudioWidget::executeStop()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->stop(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->stop(this->command.channel.get(), this->command.getVideolayer());
     }
 
     this->paused = false;
@@ -365,11 +365,11 @@ void RundownAudioWidget::executePlay()
     {
         if (this->loaded)
         {
-            device->play(this->command.getChannel(), this->command.getVideolayer());
+            device->play(this->command.channel.get(), this->command.getVideolayer());
         }
         else
         {
-            device->playAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
+            device->playAudio(this->command.channel.get(), this->command.getVideolayer(), this->command.getAudioName(),
                               this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                               this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
         }
@@ -385,11 +385,11 @@ void RundownAudioWidget::executePlay()
         {
             if (this->loaded)
             {
-                deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->play(this->command.channel.get(), this->command.getVideolayer());
             }
             else
             {
-                deviceShadow->playAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
+                deviceShadow->playAudio(this->command.channel.get(), this->command.getVideolayer(), this->command.getAudioName(),
                                         this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                         this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
             }
@@ -413,9 +413,9 @@ void RundownAudioWidget::executePause()
     if (device != NULL && device->isConnected())
     {
         if (this->paused)
-            device->resume(this->command.getChannel(), this->command.getVideolayer());
+            device->resume(this->command.channel.get(), this->command.getVideolayer());
         else
-            device->pause(this->command.getChannel(), this->command.getVideolayer());
+            device->pause(this->command.channel.get(), this->command.getVideolayer());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -427,9 +427,9 @@ void RundownAudioWidget::executePause()
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
             if (this->paused)
-                deviceShadow->resume(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->resume(this->command.channel.get(), this->command.getVideolayer());
             else
-                deviceShadow->pause(this->command.getChannel(), this->command.getVideolayer());
+                deviceShadow->pause(this->command.channel.get(), this->command.getVideolayer());
         }
     }
 
@@ -441,7 +441,7 @@ void RundownAudioWidget::executeLoad()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->loadAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
+        device->loadAudio(this->command.channel.get(), this->command.getVideolayer(), this->command.getAudioName(),
                           this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                           this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
     }
@@ -454,7 +454,7 @@ void RundownAudioWidget::executeLoad()
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->loadAudio(this->command.getChannel(), this->command.getVideolayer(), this->command.getAudioName(),
+            deviceShadow->loadAudio(this->command.channel.get(), this->command.getVideolayer(), this->command.getAudioName(),
                                     this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
                                     this->command.getDirection(), this->command.getLoop(), this->command.getUseAuto());
         }
@@ -472,7 +472,7 @@ void RundownAudioWidget::executeClearVideolayer()
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+        device->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -481,7 +481,7 @@ void RundownAudioWidget::executeClearVideolayer()
 
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->clearVideolayer(this->command.getChannel(), this->command.getVideolayer());
+            deviceShadow->clearVideolayer(this->command.channel.get(), this->command.getVideolayer());
     }
 
     this->paused = false;
@@ -497,8 +497,8 @@ void RundownAudioWidget::executeClearChannel()
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
     {
-        device->clearChannel(this->command.getChannel());
-        device->clearMixerChannel(this->command.getChannel());
+        device->clearChannel(this->command.channel.get());
+        device->clearMixerChannel(this->command.channel.get());
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -509,8 +509,8 @@ void RundownAudioWidget::executeClearChannel()
         const QSharedPointer<CasparDevice> deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
         {
-            deviceShadow->clearChannel(this->command.getChannel());
-            deviceShadow->clearMixerChannel(this->command.getChannel());
+            deviceShadow->clearChannel(this->command.channel.get());
+            deviceShadow->clearMixerChannel(this->command.channel.get());
         }
     }
 
