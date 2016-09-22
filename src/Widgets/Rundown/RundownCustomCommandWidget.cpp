@@ -47,7 +47,7 @@ RundownCustomCommandWidget::RundownCustomCommandWidget(const LibraryModel& model
 
     QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command.allowGpi, SIGNAL(changed(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&this->command.remoteTriggerId, SIGNAL(changed(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(deviceChanged(const DeviceChangedEvent&)), this, SLOT(deviceChanged(const DeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
@@ -114,7 +114,7 @@ AbstractRundownWidget* RundownCustomCommandWidget::clone()
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
     command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
-    command->setRemoteTriggerId(this->command.getRemoteTriggerId());
+    command->remoteTriggerId.set(this->command.remoteTriggerId.get());
     command->setStopCommand(this->command.getStopCommand());
     command->setPlayCommand(this->command.getPlayCommand());
     command->setLoadCommand(this->command.getLoadCommand());
@@ -574,73 +574,73 @@ void RundownCustomCommandWidget::configureOscSubscriptions()
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
 
     QString stopControlFilter = Osc::ITEM_CONTROL_STOP_FILTER;
-    stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    stopControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->stopControlSubscription = new OscSubscription(stopControlFilter, this);
     QObject::connect(this->stopControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(stopControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
-    playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    playControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
-    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    playNowControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString loadControlFilter = Osc::ITEM_CONTROL_LOAD_FILTER;
-    loadControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    loadControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->loadControlSubscription = new OscSubscription(loadControlFilter, this);
     QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pauseControlFilter = Osc::ITEM_CONTROL_PAUSE_FILTER;
-    pauseControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    pauseControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
     QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pauseControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString nextControlFilter = Osc::ITEM_CONTROL_NEXT_FILTER;
-    nextControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    nextControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
     QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(nextControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::ITEM_CONTROL_UPDATE_FILTER;
-    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    updateControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString invokeControlFilter = Osc::ITEM_CONTROL_INVOKE_FILTER;
-    invokeControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    invokeControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
     QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString previewControlFilter = Osc::ITEM_CONTROL_PREVIEW_FILTER;
-    previewControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    previewControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
     QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::ITEM_CONTROL_CLEAR_FILTER;
-    clearControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    clearControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
     QObject::connect(this->clearControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearVideolayerControlFilter = Osc::ITEM_CONTROL_CLEARVIDEOLAYER_FILTER;
-    clearVideolayerControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    clearVideolayerControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->clearVideolayerControlSubscription = new OscSubscription(clearVideolayerControlFilter, this);
     QObject::connect(this->clearVideolayerControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearChannelControlFilter = Osc::ITEM_CONTROL_CLEARCHANNEL_FILTER;
-    clearChannelControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    clearChannelControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->clearChannelControlSubscription = new OscSubscription(clearChannelControlFilter, this);
     QObject::connect(this->clearChannelControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&)));

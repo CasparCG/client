@@ -46,7 +46,7 @@ RundownAtemAudioInputBalanceWidget::RundownAtemAudioInputBalanceWidget(const Lib
 
     QObject::connect(&this->command.delay, SIGNAL(changed(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command.allowGpi, SIGNAL(changed(bool)), this, SLOT(allowGpiChanged(bool)));
-    QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
+    QObject::connect(&this->command.remoteTriggerId, SIGNAL(changed(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(preview(const PreviewEvent&)), this, SLOT(preview(const PreviewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(atemDeviceChanged(const AtemDeviceChangedEvent&)), this, SLOT(atemDeviceChanged(const AtemDeviceChangedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
@@ -125,7 +125,7 @@ AbstractRundownWidget* RundownAtemAudioInputBalanceWidget::clone()
     command->duration.set(this->command.duration.get());
     command->allowGpi.set(this->command.allowGpi.get());
     command->allowRemoteTriggering.set(this->command.allowRemoteTriggering.get());
-    command->setRemoteTriggerId(this->command.getRemoteTriggerId());
+    command->remoteTriggerId.set(this->command.remoteTriggerId.get());
     command->setInput(this->command.getInput());
     command->setBalance(this->command.getBalance());
     command->setTriggerOnNext(this->command.getTriggerOnNext());
@@ -314,19 +314,19 @@ void RundownAtemAudioInputBalanceWidget::configureOscSubscriptions()
         this->updateControlSubscription->disconnect(); // Disconnect all events.
 
     QString playControlFilter = Osc::ITEM_CONTROL_PLAY_FILTER;
-    playControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    playControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->playControlSubscription = new OscSubscription(playControlFilter, this);
     QObject::connect(this->playControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString playNowControlFilter = Osc::ITEM_CONTROL_PLAYNOW_FILTER;
-    playNowControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    playNowControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->playNowControlSubscription = new OscSubscription(playNowControlFilter, this);
     QObject::connect(this->playNowControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(playNowControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString updateControlFilter = Osc::ITEM_CONTROL_UPDATE_FILTER;
-    updateControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
+    updateControlFilter.replace("#UID#", this->command.remoteTriggerId.get());
     this->updateControlSubscription = new OscSubscription(updateControlFilter, this);
     QObject::connect(this->updateControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(updateControlSubscriptionReceived(const QString&, const QList<QVariant>&)));

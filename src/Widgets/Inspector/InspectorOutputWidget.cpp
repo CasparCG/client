@@ -171,7 +171,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         this->spinBoxDuration->setValue(this->command->duration.get());
         this->checkBoxAllowGpi->setChecked(this->command->allowGpi.get());
         this->checkBoxAllowRemoteTriggering->setChecked(this->command->allowRemoteTriggering.get());
-        this->lineEditRemoteTriggerId->setText(this->command->getRemoteTriggerId());
+        this->lineEditRemoteTriggerId->setText(this->command->remoteTriggerId.get());
 
         if (!this->checkBoxAllowRemoteTriggering->isChecked())
         {
@@ -780,7 +780,7 @@ void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 
 void InspectorOutputWidget::remoteTriggerIdChanged(QString id)
 {
-    this->command->setRemoteTriggerId(id);
+    this->command->remoteTriggerId.set(id);
 }
 
 void InspectorOutputWidget::tricasterDeviceRemoved()

@@ -27,11 +27,10 @@ public:
     DurationProperty duration;
     AllowGpiProperty allowGpi;
     AllowRemoteTriggeringProperty allowRemoteTriggering;
+    RemoteTriggerIdProperty remoteTriggerId;
 
-    virtual QString getRemoteTriggerId() const;
     virtual QString getStoryId() const;
 
-    virtual void setRemoteTriggerId(const QString& remoteTriggerId);
     virtual void setStoryId(const QString& storyId);
 
     virtual void readProperties(boost::property_tree::wptree& pt);
@@ -41,9 +40,7 @@ protected:
     explicit AbstractCommand(QObject* parent = 0);
 
     QString storyId = "";
-    QString remoteTriggerId = Output::DEFAULT_REMOTE_TRIGGER_ID;
 
 private:
-    Q_SIGNAL void remoteTriggerIdChanged(const QString&);
     Q_SIGNAL void storyIdChanged(const QString&);
 };
