@@ -1,12 +1,12 @@
 #pragma once
 
 #include "../Shared.h"
-#include "AbstractProperties.h"
+#include "CommandProperties.h"
 #include "Properties.h"
 
 #include <QtCore/QObject>
 
-class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
+class CORE_EXPORT AbstractCommand : public QObject, public CommandProperties
 {
     Q_OBJECT
 

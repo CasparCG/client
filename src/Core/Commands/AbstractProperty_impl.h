@@ -1,14 +1,14 @@
 #pragma once
 
 #include "AbstractProperty.h"
-#include "AbstractProperties.h"
+#include "CommandProperties.h"
 
 #include <QtCore/QVariant>
 
 #include <functional> // std::bind
 
 template<typename Tag>
-AbstractProperty<Tag>::AbstractProperty(const Type& def_value, AbstractProperties* reg) :
+AbstractProperty<Tag>::AbstractProperty(const Type& def_value, CommandProperties* reg) :
     value(def_value), def_value(def_value)
 {
     reg->registerReader(std::bind(&AbstractProperty<Tag>::read<Tag>, this, std::placeholders::_1));

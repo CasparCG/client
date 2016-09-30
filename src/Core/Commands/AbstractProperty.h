@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <utility> // std::move
 
-class AbstractProperties;
+class CommandProperties;
 
 template<typename Tag> struct PropertyTraits { };
 
@@ -18,7 +18,7 @@ class AbstractProperty
 public:
     using Type = typename PropertyTraits<Tag>::Type;
 
-    AbstractProperty(const Type& def_value, AbstractProperties*);
+    AbstractProperty(const Type& def_value, CommandProperties*);
     virtual ~AbstractProperty();
 
     const Type& get() const { return value; }
@@ -31,7 +31,7 @@ protected:
 private:
     virtual void emit_changed(const Type&) const = 0;
 
-    friend class AbstractProperties;
+    friend class CommandProperties;
 
     // generic version for types acceptable by boost::property_tree::wptree::get
     template<typename U = Tag>

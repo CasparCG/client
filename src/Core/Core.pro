@@ -58,7 +58,6 @@ HEADERS += \
     Commands/SeparatorCommand.h \
     Commands/PrintCommand.h \
     Commands/AbstractCommand.h \
-    Commands/AbstractProperties.h \
     Commands/AbstractPlayoutCommand.h \
     Commands/ClearOutputCommand.h \
     Animations/ActiveAnimation.h \
@@ -194,7 +193,8 @@ HEADERS += \
     Commands/Atem/AtemFadeToBlackCommand.h \
     Commands/AbstractProperty.h \
     Commands/AbstractProperty_impl.h \
-    Commands/Properties.h
+    Commands/Properties.h \
+    Commands/CommandProperties.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -248,7 +248,6 @@ SOURCES += \
     Commands/AbstractCommand.cpp \
     Commands/ClearOutputCommand.cpp \
     Commands/AbstractPlayoutCommand.cpp \
-    Commands/AbstractProperties.cpp \
     Animations/ActiveAnimation.cpp \
     Models/ThumbnailModel.cpp \
     ThumbnailWorker.cpp \
@@ -379,7 +378,8 @@ SOURCES += \
     Events/Rundown/CurrentItemChangedEvent.cpp \
     Commands/Atem/AtemMacroCommand.cpp \
     OscWebSocketManager.cpp \
-    Commands/Atem/AtemFadeToBlackCommand.cpp
+    Commands/Atem/AtemFadeToBlackCommand.cpp \
+    Commands/CommandProperties.cpp
 
 DISTFILES += \
     Sql/ChangeScript-208.sql \

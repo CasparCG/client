@@ -13,7 +13,7 @@ class PROP ## Property : public QObject, public AbstractProperty<PROP>  \
 {                                                                       \
     Q_OBJECT                                                            \
 public:                                                                 \
-    explicit PROP ## Property(const Type& def_value, AbstractProperties* owner = nullptr, QObject* parent = nullptr) : \
+    explicit PROP ## Property(const Type& def_value, CommandProperties* owner = nullptr, QObject* parent = nullptr) : \
         QObject(parent),                                                \
         AbstractProperty(def_value, owner)                              \
     { }                                                                 \

@@ -5,12 +5,12 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
-#include "Commands/AbstractProperties.h"
+#include "Commands/CommandProperties.h"
 #include "Models/LibraryModel.h"
 
 #include <QtCore/QString>
 
-class WIDGETS_EXPORT AbstractRundownWidget : public AbstractProperties
+class WIDGETS_EXPORT AbstractRundownWidget : public CommandProperties
 {
     public:
         virtual ~AbstractRundownWidget() {}

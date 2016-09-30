@@ -12,10 +12,10 @@
 using PropertyReader = std::function<void(boost::property_tree::wptree&)>;
 using PropertyWriter = std::function<void(QXmlStreamWriter*)>;
 
-class CORE_EXPORT AbstractProperties
+class CORE_EXPORT CommandProperties
 {
 public:
-    virtual ~AbstractProperties();
+    virtual ~CommandProperties();
 
     virtual void readProperties(boost::property_tree::wptree&);
     virtual void writeProperties(QXmlStreamWriter*);
