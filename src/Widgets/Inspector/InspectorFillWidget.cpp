@@ -151,23 +151,23 @@ void InspectorFillWidget::loadTween()
 
 void InspectorFillWidget::setScaleAndPositionValues()
 {
-    this->sliderPositionX->setMinimum(-this->resolutionWidth);
-    this->sliderPositionX->setMaximum(this->resolutionWidth);
-    this->sliderPositionY->setMinimum(-this->resolutionHeight);
-    this->sliderPositionY->setMaximum(this->resolutionHeight);
-    this->spinBoxPositionX->setMinimum(-this->resolutionWidth);
-    this->spinBoxPositionX->setMaximum(this->resolutionWidth);
-    this->spinBoxPositionY->setMinimum(-this->resolutionHeight);
-    this->spinBoxPositionY->setMaximum(this->resolutionHeight);
+    this->sliderPositionX->setMinimum(-this->resolutionWidth*2);
+    this->sliderPositionX->setMaximum(this->resolutionWidth*2);
+    this->sliderPositionY->setMinimum(-this->resolutionHeight*2);
+    this->sliderPositionY->setMaximum(this->resolutionHeight*2);
+    this->spinBoxPositionX->setMinimum(-this->resolutionWidth*2);
+    this->spinBoxPositionX->setMaximum(this->resolutionWidth*2);
+    this->spinBoxPositionY->setMinimum(-this->resolutionHeight*2);
+    this->spinBoxPositionY->setMaximum(this->resolutionHeight*2);
 
-    this->sliderScaleX->setMinimum(0);
-    this->sliderScaleX->setMaximum(this->resolutionWidth * 2);
-    this->sliderScaleY->setMinimum(0);
-    this->sliderScaleY->setMaximum(this->resolutionHeight * 2);
-    this->spinBoxScaleX->setMinimum(0);
-    this->spinBoxScaleX->setMaximum(this->resolutionWidth * 2);
-    this->spinBoxScaleY->setMinimum(0);
-    this->spinBoxScaleY->setMaximum(this->resolutionHeight * 2);
+    this->sliderScaleX->setMinimum(-this->resolutionWidth * 4);//to flip a image
+    this->sliderScaleX->setMaximum(this->resolutionWidth * 4);
+    this->sliderScaleY->setMinimum(-this->resolutionWidth * 4);
+    this->sliderScaleY->setMaximum(this->resolutionHeight * 4);
+    this->spinBoxScaleX->setMinimum(-this->resolutionWidth * 4);
+    this->spinBoxScaleX->setMaximum(this->resolutionWidth * 4);
+    this->spinBoxScaleY->setMinimum(-this->resolutionWidth * 4);
+    this->spinBoxScaleY->setMaximum(this->resolutionHeight * 4);
 
     this->sliderPositionX->setValue(QString("%1").arg(this->command->getPositionX() * this->resolutionWidth).toFloat());
     this->sliderPositionY->setValue(QString("%1").arg(this->command->getPositionY() * this->resolutionHeight).toFloat());
