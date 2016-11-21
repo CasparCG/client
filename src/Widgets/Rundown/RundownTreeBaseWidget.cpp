@@ -118,6 +118,9 @@ bool RundownTreeBaseWidget::copySelectedItems() const
     QString data;
     QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
 
+    writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+    writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
+
     writer->writeStartDocument();
     writer->writeStartElement("items");
     for (int i = 0; i < QTreeWidget::selectedItems().count(); i++)

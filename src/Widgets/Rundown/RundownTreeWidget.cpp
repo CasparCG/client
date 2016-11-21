@@ -782,6 +782,9 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             QByteArray data;
             QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
 
+            writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+            writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
+
             writer->writeStartDocument();
             writer->writeStartElement("items");
             writer->writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
@@ -819,6 +822,9 @@ bool RundownTreeWidget::checkForSave() const
 
     QByteArray data;
     QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+
+    writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+    writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
 
     writer->writeStartDocument();
     writer->writeStartElement("items");

@@ -513,3 +513,9 @@ namespace Action
         GpiPulse
     };
 }
+
+namespace XmlFormatting
+{
+    static const bool ENABLE_FORMATTING = true;
+    static const int NUMBER_OF_SPACES = 4;
+}
