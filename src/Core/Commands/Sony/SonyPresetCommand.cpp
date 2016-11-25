@@ -49,11 +49,11 @@ void SonyPresetCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", Sony::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void SonyPresetCommand::writeProperties(QXmlStreamWriter* writer)
+void SonyPresetCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("address", getAddress());
-    writer->writeTextElement("preset", QString::number(getPreset()));
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("address", getAddress());
+    writer.writeTextElement("preset", QString::number(getPreset()));
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

@@ -24,7 +24,7 @@ class CORE_EXPORT HttpGetCommand : public AbstractCommand
         explicit HttpGetCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getUrl() const;
         const QUrlQuery getHttpData() const;

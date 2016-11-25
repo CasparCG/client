@@ -22,7 +22,7 @@ class CORE_EXPORT GroupCommand : public AbstractCommand
         explicit GroupCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         bool getAutoStep() const;
         const QString& getNotes() const;

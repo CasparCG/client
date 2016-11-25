@@ -22,7 +22,7 @@ class CORE_EXPORT AtemAutoCommand : public AbstractCommand
         explicit AtemAutoCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getStep() const;
         double getSpeed() const;

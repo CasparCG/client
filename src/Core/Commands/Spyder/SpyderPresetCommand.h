@@ -22,7 +22,7 @@ class CORE_EXPORT SpyderPresetCommand : public AbstractCommand
         explicit SpyderPresetCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getAddress() const;
         int getPreset() const;

@@ -61,12 +61,12 @@ void AtemKeyerStateCommand::readProperties(boost::property_tree::wptree& pt)
     setMixerStep(QString::fromStdWString(pt.get(L"mixerstep", Atem::DEFAULT_MIXER_STEP.toStdWString())));
 }
 
-void AtemKeyerStateCommand::writeProperties(QXmlStreamWriter* writer)
+void AtemKeyerStateCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("keyer", this->getKeyer());
-    writer->writeTextElement("state", (getState() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("mixerstep", this->getMixerStep());
+    writer.writeTextElement("keyer", this->getKeyer());
+    writer.writeTextElement("state", (getState() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("mixerstep", this->getMixerStep());
 }

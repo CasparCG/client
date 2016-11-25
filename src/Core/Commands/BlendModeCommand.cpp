@@ -25,9 +25,9 @@ void BlendModeCommand::readProperties(boost::property_tree::wptree& pt)
     setBlendMode(QString::fromStdWString(pt.get(L"blendmode", Mixer::DEFAULT_BLENDMODE.toStdWString())));
 }
 
-void BlendModeCommand::writeProperties(QXmlStreamWriter* writer)
+void BlendModeCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("blendmode", this->getBlendMode());
+    writer.writeTextElement("blendmode", this->getBlendMode());
 }

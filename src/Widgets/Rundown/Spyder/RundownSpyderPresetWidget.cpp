@@ -108,9 +108,9 @@ void RundownSpyderPresetWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownSpyderPresetWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownSpyderPresetWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownSpyderPresetWidget::isGroup() const

@@ -91,14 +91,14 @@ void FadeToBlackCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", FadeToBlack::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void FadeToBlackCommand::writeProperties(QXmlStreamWriter* writer)
+void FadeToBlackCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("direction", getDirection());
-    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("transition", getTransition());
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("direction", getDirection());
+    writer.writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

@@ -22,7 +22,7 @@ class CORE_EXPORT PresetCommand : public AbstractCommand
         explicit PresetCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getSource() const;
         const QString& getPreset() const;

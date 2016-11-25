@@ -37,10 +37,10 @@ void ClearOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", ClearOutput::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void ClearOutputCommand::writeProperties(QXmlStreamWriter* writer)
+void ClearOutputCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("clearchannel", (getClearChannel() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("clearchannel", (getClearChannel() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

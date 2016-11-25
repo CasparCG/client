@@ -149,9 +149,9 @@ void RundownRouteVideolayerWidget::readProperties(boost::property_tree::wptree& 
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownRouteVideolayerWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownRouteVideolayerWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownRouteVideolayerWidget::isGroup() const

@@ -22,7 +22,7 @@ class CORE_EXPORT ChromaCommand : public AbstractCommand
         explicit ChromaCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getKey() const;
 

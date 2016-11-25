@@ -50,7 +50,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         virtual void setInGroup(bool inGroup);
         virtual void setColor(const QString& color);
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
         virtual void setCompactView(bool compactView);
         virtual void clearDelayedCommands();
         virtual void setUsed(bool used);

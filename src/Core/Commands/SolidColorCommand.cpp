@@ -117,15 +117,15 @@ void SolidColorCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", SolidColor::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void SolidColorCommand::writeProperties(QXmlStreamWriter* writer)
+void SolidColorCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("direction", getDirection());
-    writer->writeTextElement("solidcolor", getColor());
-    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("transition", getTransition());
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("direction", getDirection());
+    writer.writeTextElement("solidcolor", getColor());
+    writer.writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

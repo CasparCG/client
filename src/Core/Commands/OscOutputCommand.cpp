@@ -85,14 +85,14 @@ void OscOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setUseBundle(pt.get(L"usebundle", Osc::DEFAULT_USE_BUNDLE));
 }
 
-void OscOutputCommand::writeProperties(QXmlStreamWriter* writer)
+void OscOutputCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("output", this->getOutput());
-    writer->writeTextElement("path", this->getPath());
-    writer->writeTextElement("message", this->getMessage());
-    writer->writeTextElement("osctype", this->getType());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("usebundle", (getUseBundle() == true) ? "true" : "false");
+    writer.writeTextElement("output", this->getOutput());
+    writer.writeTextElement("path", this->getPath());
+    writer.writeTextElement("message", this->getMessage());
+    writer.writeTextElement("osctype", this->getType());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("usebundle", (getUseBundle() == true) ? "true" : "false");
 }

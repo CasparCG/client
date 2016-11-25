@@ -14,5 +14,5 @@ class CORE_EXPORT AbstractProperties
         virtual ~AbstractProperties();
 
         virtual void readProperties(boost::property_tree::wptree& pt) = 0;
-        virtual void writeProperties(QXmlStreamWriter* writer) = 0;
+        virtual void writeProperties(QXmlStreamWriter& writer) = 0;
 };

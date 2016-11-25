@@ -61,12 +61,12 @@ void BrightnessCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void BrightnessCommand::writeProperties(QXmlStreamWriter* writer)
+void BrightnessCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("brightness", QString::number(getBrightness()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("brightness", QString::number(getBrightness()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", this->getTween());
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

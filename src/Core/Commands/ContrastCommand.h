@@ -22,7 +22,7 @@ class CORE_EXPORT ContrastCommand : public AbstractCommand
         explicit ContrastCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getContrast() const;
         int getTransitionDuration() const;

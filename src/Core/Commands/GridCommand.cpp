@@ -61,12 +61,12 @@ void GridCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void GridCommand::writeProperties(QXmlStreamWriter* writer)
+void GridCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("grid", QString::number(getGrid()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("grid", QString::number(getGrid()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

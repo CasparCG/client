@@ -72,12 +72,12 @@ void ImageScrollerCommand::readProperties(boost::property_tree::wptree& pt)
     setProgressive(pt.get(L"progressive", ImageScroller::DEFAULT_PROGRESSIVE));
 }
 
-void ImageScrollerCommand::writeProperties(QXmlStreamWriter* writer)
+void ImageScrollerCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("blur", QString::number(this->getBlur()));
-    writer->writeTextElement("speed", QString::number(this->getSpeed()));
-    writer->writeTextElement("premultiply", (getPremultiply() == true) ? "true" : "false");
-    writer->writeTextElement("progressive", (getProgressive() == true) ? "true" : "false");
+    writer.writeTextElement("blur", QString::number(this->getBlur()));
+    writer.writeTextElement("speed", QString::number(this->getSpeed()));
+    writer.writeTextElement("premultiply", (getPremultiply() == true) ? "true" : "false");
+    writer.writeTextElement("progressive", (getProgressive() == true) ? "true" : "false");
 }

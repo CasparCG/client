@@ -49,11 +49,11 @@ void PanasonicPresetCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", Panasonic::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void PanasonicPresetCommand::writeProperties(QXmlStreamWriter* writer)
+void PanasonicPresetCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("address", getAddress());
-    writer->writeTextElement("preset", QString::number(getPreset()));
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("address", getAddress());
+    writer.writeTextElement("preset", QString::number(getPreset()));
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

@@ -49,12 +49,12 @@ void NetworkSourceCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void NetworkSourceCommand::writeProperties(QXmlStreamWriter* writer)
+void NetworkSourceCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("source", this->getSource());
-    writer->writeTextElement("target", this->getTarget());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("source", this->getSource());
+    writer.writeTextElement("target", this->getTarget());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }
 

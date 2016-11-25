@@ -157,20 +157,20 @@ void CustomCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", Custom::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void CustomCommand::writeProperties(QXmlStreamWriter* writer)
+void CustomCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("stopCommand", this->getStopCommand());
-    writer->writeTextElement("playCommand", this->getPlayCommand());
-    writer->writeTextElement("loadCommand", this->getLoadCommand());
-    writer->writeTextElement("pauseCommand", this->getPauseCommand());
-    writer->writeTextElement("nextCommand", this->getNextCommand());
-    writer->writeTextElement("updateCommand", this->getUpdateCommand());
-    writer->writeTextElement("invokeCommand", this->getInvokeCommand());
-    writer->writeTextElement("previewCommand", this->getPreviewCommand());
-    writer->writeTextElement("clearCommand", this->getClearCommand());
-    writer->writeTextElement("clearVideolayerCommand", this->getClearVideolayerCommand());
-    writer->writeTextElement("clearChannelCommand", this->getClearChannelCommand());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("stopCommand", this->getStopCommand());
+    writer.writeTextElement("playCommand", this->getPlayCommand());
+    writer.writeTextElement("loadCommand", this->getLoadCommand());
+    writer.writeTextElement("pauseCommand", this->getPauseCommand());
+    writer.writeTextElement("nextCommand", this->getNextCommand());
+    writer.writeTextElement("updateCommand", this->getUpdateCommand());
+    writer.writeTextElement("invokeCommand", this->getInvokeCommand());
+    writer.writeTextElement("previewCommand", this->getPreviewCommand());
+    writer.writeTextElement("clearCommand", this->getClearCommand());
+    writer.writeTextElement("clearVideolayerCommand", this->getClearVideolayerCommand());
+    writer.writeTextElement("clearChannelCommand", this->getClearChannelCommand());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

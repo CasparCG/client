@@ -780,20 +780,20 @@ void RundownTreeWidget::saveRundown(bool saveAs)
         if (file.open(QFile::WriteOnly))
         {
             QByteArray data;
-            QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+            QXmlStreamWriter writer(&data);
 
-            writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
-            writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
+            writer.setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+            writer.setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
 
-            writer->writeStartDocument();
-            writer->writeStartElement("items");
-            writer->writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
+            writer.writeStartDocument();
+            writer.writeStartElement("items");
+            writer.writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
 
             for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
                 this->treeWidgetRundown->writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
 
-            writer->writeEndElement();
-            writer->writeEndDocument();
+            writer.writeEndElement();
+            writer.writeEndDocument();
 
             this->hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
             qDebug("Hash is %s", qPrintable(this->hexHash));
@@ -821,20 +821,20 @@ bool RundownTreeWidget::checkForSave() const
         return false;
 
     QByteArray data;
-    QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+    QXmlStreamWriter writer(&data);
 
-    writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
-    writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
+    writer.setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+    writer.setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
 
-    writer->writeStartDocument();
-    writer->writeStartElement("items");
-    writer->writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
+    writer.writeStartDocument();
+    writer.writeStartElement("items");
+    writer.writeTextElement("allowremotetriggering", (this->allowRemoteRundownTriggering == true) ? "true" : "false");
 
     for (int i = 0; i < this->treeWidgetRundown->invisibleRootItem()->childCount(); i++)
         this->treeWidgetRundown->writeProperties(this->treeWidgetRundown->invisibleRootItem()->child(i), writer);
 
-    writer->writeEndElement();
-    writer->writeEndDocument();
+    writer.writeEndElement();
+    writer.writeEndDocument();
 
     QString hexHash = QString(QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex());
     qDebug("Hash is %s", qPrintable(hexHash));

@@ -156,9 +156,9 @@ void RundownAtemCutWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAtemCutWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownAtemCutWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownAtemCutWidget::isGroup() const

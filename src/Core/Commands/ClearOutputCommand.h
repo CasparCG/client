@@ -22,7 +22,7 @@ class CORE_EXPORT ClearOutputCommand : public AbstractCommand
         explicit ClearOutputCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         bool getClearChannel() const;
         bool getTriggerOnNext() const;

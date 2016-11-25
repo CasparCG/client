@@ -22,7 +22,7 @@ class CORE_EXPORT AtemFadeToBlackCommand : public AbstractCommand
         explicit AtemFadeToBlackCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         double getSpeed() const;
         bool getTriggerOnNext() const;

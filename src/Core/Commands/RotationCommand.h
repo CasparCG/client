@@ -22,7 +22,7 @@ class CORE_EXPORT RotationCommand : public AbstractCommand
         explicit RotationCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         bool getTriggerOnNext() const;
         float getRotation() const;

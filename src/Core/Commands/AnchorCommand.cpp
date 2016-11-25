@@ -85,14 +85,14 @@ void AnchorCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void AnchorCommand::writeProperties(QXmlStreamWriter* writer)
+void AnchorCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("positionx", QString::number(getPositionX()));
-    writer->writeTextElement("positiony", QString::number(getPositionY()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("positionx", QString::number(getPositionX()));
+    writer.writeTextElement("positiony", QString::number(getPositionY()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

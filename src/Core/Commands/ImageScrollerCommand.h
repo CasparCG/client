@@ -22,7 +22,7 @@ class CORE_EXPORT ImageScrollerCommand : public AbstractCommand
         explicit ImageScrollerCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getImageScrollerName() const;
         int getBlur() const;

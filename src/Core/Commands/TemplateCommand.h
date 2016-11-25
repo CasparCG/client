@@ -23,7 +23,7 @@ class CORE_EXPORT TemplateCommand : public AbstractCommand
         explicit TemplateCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         int getFlashlayer() const;
         const QString& getInvoke() const;

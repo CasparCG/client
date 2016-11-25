@@ -96,14 +96,14 @@ void StillCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", Still::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void StillCommand::writeProperties(QXmlStreamWriter* writer)
+void StillCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("transitionDuration", QString::number(this->getTransitionDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("direction", this->getDirection());
-    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("transition", this->getTransition());
+    writer.writeTextElement("transitionDuration", QString::number(this->getTransitionDuration()));
+    writer.writeTextElement("tween", this->getTween());
+    writer.writeTextElement("direction", this->getDirection());
+    writer.writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

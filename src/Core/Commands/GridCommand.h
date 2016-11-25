@@ -22,7 +22,7 @@ class CORE_EXPORT GridCommand : public AbstractCommand
         explicit GridCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         int getGrid() const;
         int getTransitionDuration() const;

@@ -145,9 +145,9 @@ void RundownKeyerWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownKeyerWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownKeyerWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownKeyerWidget::isGroup() const

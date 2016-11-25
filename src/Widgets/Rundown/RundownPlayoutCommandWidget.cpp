@@ -102,9 +102,9 @@ void RundownPlayoutCommandWidget::readProperties(boost::property_tree::wptree& p
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownPlayoutCommandWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownPlayoutCommandWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownPlayoutCommandWidget::isGroup() const

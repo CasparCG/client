@@ -111,14 +111,14 @@ void AbstractCommand::readProperties(boost::property_tree::wptree& pt)
     setStoryId(QString::fromStdWString(pt.get(L"storyid", QString("").toStdWString())));
 }
 
-void AbstractCommand::writeProperties(QXmlStreamWriter* writer)
+void AbstractCommand::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("channel", QString::number(getChannel()));
-    writer->writeTextElement("videolayer", QString::number(getVideolayer()));
-    writer->writeTextElement("delay", QString::number(getDelay()));
-    writer->writeTextElement("duration", QString::number(getDuration()));
-    writer->writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
-    writer->writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
-    writer->writeTextElement("remotetriggerid", getRemoteTriggerId());
-    writer->writeTextElement("storyid", getStoryId());
+    writer.writeTextElement("channel", QString::number(getChannel()));
+    writer.writeTextElement("videolayer", QString::number(getVideolayer()));
+    writer.writeTextElement("delay", QString::number(getDelay()));
+    writer.writeTextElement("duration", QString::number(getDuration()));
+    writer.writeTextElement("allowgpi", (getAllowGpi() == true) ? "true" : "false");
+    writer.writeTextElement("allowremotetriggering", (getAllowRemoteTriggering() == true) ? "true" : "false");
+    writer.writeTextElement("remotetriggerid", getRemoteTriggerId());
+    writer.writeTextElement("storyid", getStoryId());
 }

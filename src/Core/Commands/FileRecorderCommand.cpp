@@ -73,13 +73,13 @@ void FileRecorderCommand::readProperties(boost::property_tree::wptree& pt)
     setWithAlpha(pt.get(L"withalpha", FileRecorder::DEFAULT_WITH_ALPHA));
 }
 
-void FileRecorderCommand::writeProperties(QXmlStreamWriter* writer)
+void FileRecorderCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("output", this->getOutput());
-    writer->writeTextElement("codec", this->getCodec());
-    writer->writeTextElement("preset", this->getPreset());
-    writer->writeTextElement("tune", this->getTune());
-    writer->writeTextElement("withalpha", (getWithAlpha() == true) ? "true" : "false");
+    writer.writeTextElement("output", this->getOutput());
+    writer.writeTextElement("codec", this->getCodec());
+    writer.writeTextElement("preset", this->getPreset());
+    writer.writeTextElement("tune", this->getTune());
+    writer.writeTextElement("withalpha", (getWithAlpha() == true) ? "true" : "false");
 }

@@ -22,7 +22,7 @@ class CORE_EXPORT SaturationCommand : public AbstractCommand
         explicit SaturationCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getSaturation() const;
         int getTransitionDuration() const;

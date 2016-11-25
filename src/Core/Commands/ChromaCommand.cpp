@@ -61,12 +61,12 @@ void ChromaCommand::readProperties(boost::property_tree::wptree& pt)
     setThreshold(pt.get(L"threshold", Mixer::DEFAULT_CHROMABLENDSTART));
 }
 
-void ChromaCommand::writeProperties(QXmlStreamWriter* writer)
+void ChromaCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("key", this->getKey());
-    writer->writeTextElement("spread",  QString::number(this->getSpread()));
-    writer->writeTextElement("spill", QString::number(this->getSpill()));
-    writer->writeTextElement("threshold", QString::number(this->getThreshold()));
+    writer.writeTextElement("key", this->getKey());
+    writer.writeTextElement("spread",  QString::number(this->getSpread()));
+    writer.writeTextElement("spill", QString::number(this->getSpill()));
+    writer.writeTextElement("threshold", QString::number(this->getThreshold()));
 }

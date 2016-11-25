@@ -22,7 +22,7 @@ class CORE_EXPORT AtemMacroCommand : public AbstractCommand
         explicit AtemMacroCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getMacro() const;
         bool getTriggerOnNext() const;

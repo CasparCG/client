@@ -22,7 +22,7 @@ class CORE_EXPORT OpacityCommand : public AbstractCommand
         explicit OpacityCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getOpacity() const;
         int getTransitionDuration() const;

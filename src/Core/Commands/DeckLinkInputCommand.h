@@ -22,7 +22,7 @@ class CORE_EXPORT DeckLinkInputCommand : public AbstractCommand
         explicit DeckLinkInputCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         int getDevice() const;
         const QString& getFormat() const;

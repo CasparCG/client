@@ -22,7 +22,7 @@ class CORE_EXPORT BrightnessCommand : public AbstractCommand
         explicit BrightnessCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getBrightness() const;
         int getTransitionDuration() const;

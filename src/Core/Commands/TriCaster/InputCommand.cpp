@@ -49,11 +49,11 @@ void InputCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void InputCommand::writeProperties(QXmlStreamWriter* writer)
+void InputCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("switcher", this->getSwitcher());
-    writer->writeTextElement("input", this->getInput());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("switcher", this->getSwitcher());
+    writer.writeTextElement("input", this->getInput());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

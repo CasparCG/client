@@ -22,7 +22,7 @@ class CORE_EXPORT AudioCommand : public AbstractCommand
         explicit AudioCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getAudioName() const;
         const QString& getTransition() const;

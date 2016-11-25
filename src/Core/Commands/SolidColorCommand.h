@@ -22,7 +22,7 @@ class CORE_EXPORT SolidColorCommand : public AbstractCommand
         explicit SolidColorCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getColor() const;
         const QString getPremultipliedColor() const;

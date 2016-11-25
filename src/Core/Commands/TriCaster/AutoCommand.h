@@ -22,7 +22,7 @@ class CORE_EXPORT AutoCommand : public AbstractCommand
         explicit AutoCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getStep() const;
         const QString& getSpeed() const;

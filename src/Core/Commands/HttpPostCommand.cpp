@@ -67,23 +67,23 @@ void HttpPostCommand::readProperties(boost::property_tree::wptree& pt)
     }
 }
 
-void HttpPostCommand::writeProperties(QXmlStreamWriter* writer)
+void HttpPostCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("url", getUrl());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("url", getUrl());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 
     if (this->models.count() > 0)
     {
-        writer->writeStartElement("httpdata");
+        writer.writeStartElement("httpdata");
         foreach (KeyValueModel model, this->models)
         {
-            writer->writeStartElement("componentdata");
-            writer->writeTextElement("key", model.getKey());
-            writer->writeTextElement("value", model.getValue());
-            writer->writeEndElement();
+            writer.writeStartElement("componentdata");
+            writer.writeTextElement("key", model.getKey());
+            writer.writeTextElement("value", model.getValue());
+            writer.writeEndElement();
         }
-        writer->writeEndElement();
+        writer.writeEndElement();
     }
 }

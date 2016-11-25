@@ -49,12 +49,12 @@ void PresetCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void PresetCommand::writeProperties(QXmlStreamWriter* writer)
+void PresetCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("source", this->getSource());
-    writer->writeTextElement("preset", this->getPreset());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("source", this->getSource());
+    writer.writeTextElement("preset", this->getPreset());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }
 

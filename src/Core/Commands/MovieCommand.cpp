@@ -144,18 +144,18 @@ void MovieCommand::readProperties(boost::property_tree::wptree& pt)
     setAutoPlay(pt.get(L"autoplay", Movie::DEFAULT_AUTO_PLAY));
 }
 
-void MovieCommand::writeProperties(QXmlStreamWriter* writer)
+void MovieCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("direction", getDirection());
-    writer->writeTextElement("seek", QString::number(getSeek()));
-    writer->writeTextElement("length", QString::number(getLength()));
-    writer->writeTextElement("loop", (getLoop() == true) ? "true" : "false");
-    writer->writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
+    writer.writeTextElement("transition", getTransition());
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("direction", getDirection());
+    writer.writeTextElement("seek", QString::number(getSeek()));
+    writer.writeTextElement("length", QString::number(getLength()));
+    writer.writeTextElement("loop", (getLoop() == true) ? "true" : "false");
+    writer.writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
 }

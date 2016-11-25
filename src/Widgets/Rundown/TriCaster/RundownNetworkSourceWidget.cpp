@@ -156,9 +156,9 @@ void RundownNetworkSourceWidget::readProperties(boost::property_tree::wptree& pt
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownNetworkSourceWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownNetworkSourceWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownNetworkSourceWidget::isGroup() const

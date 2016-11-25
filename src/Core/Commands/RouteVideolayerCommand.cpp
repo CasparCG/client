@@ -37,10 +37,10 @@ void RouteVideolayerCommand::readProperties(boost::property_tree::wptree& pt)
     setFromVideolayer(pt.get(L"fromvideolayer", Route::DEFAULT_FROM_VIDEOLAYER));
 }
 
-void RouteVideolayerCommand::writeProperties(QXmlStreamWriter* writer)
+void RouteVideolayerCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("fromchannel", QString::number(getFromChannel()));
-    writer->writeTextElement("fromvideolayer", QString::number(getFromVideolayer()));
+    writer.writeTextElement("fromchannel", QString::number(getFromChannel()));
+    writer.writeTextElement("fromvideolayer", QString::number(getFromVideolayer()));
 }

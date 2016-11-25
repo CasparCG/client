@@ -25,9 +25,9 @@ void PlayoutCommand::readProperties(boost::property_tree::wptree& pt)
     setPlayoutCommand(QString::fromStdWString(pt.get(L"playoutcommand", Output::DEFAULT_PLAYOUT_COMMAND.toStdWString())));
 }
 
-void PlayoutCommand::writeProperties(QXmlStreamWriter* writer)
+void PlayoutCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("playoutcommand", this->getPlayoutCommand());
+    writer.writeTextElement("playoutcommand", this->getPlayoutCommand());
 }

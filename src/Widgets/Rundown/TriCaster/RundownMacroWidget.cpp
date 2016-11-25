@@ -155,9 +155,9 @@ void RundownMacroWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownMacroWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownMacroWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownMacroWidget::isGroup() const

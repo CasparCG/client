@@ -61,12 +61,12 @@ void ContrastCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void ContrastCommand::writeProperties(QXmlStreamWriter* writer)
+void ContrastCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("contrast", QString::number(getContrast()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("contrast", QString::number(getContrast()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", this->getTween());
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

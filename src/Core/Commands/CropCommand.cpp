@@ -97,15 +97,15 @@ void CropCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void CropCommand::writeProperties(QXmlStreamWriter* writer)
+void CropCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("left", QString::number(getLeft()));
-    writer->writeTextElement("top", QString::number(getTop()));
-    writer->writeTextElement("right", QString::number(getRight()));
-    writer->writeTextElement("bottom", QString::number(getBottom()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", this->getTween());
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("left", QString::number(getLeft()));
+    writer.writeTextElement("top", QString::number(getTop()));
+    writer.writeTextElement("right", QString::number(getRight()));
+    writer.writeTextElement("bottom", QString::number(getBottom()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", this->getTween());
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
 }

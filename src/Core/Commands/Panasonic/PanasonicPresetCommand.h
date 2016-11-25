@@ -22,7 +22,7 @@ class CORE_EXPORT PanasonicPresetCommand : public AbstractCommand
         explicit PanasonicPresetCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getAddress() const;
         int getPreset() const;

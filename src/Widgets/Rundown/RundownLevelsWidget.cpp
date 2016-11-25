@@ -165,9 +165,9 @@ void RundownLevelsWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownLevelsWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownLevelsWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownLevelsWidget::isGroup() const

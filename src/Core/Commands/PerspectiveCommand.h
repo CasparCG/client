@@ -22,7 +22,7 @@ class CORE_EXPORT PerspectiveCommand : public AbstractCommand
         explicit PerspectiveCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getUpperLeftX() const;
         float getUpperLeftY() const;

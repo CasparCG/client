@@ -61,12 +61,12 @@ void AutoCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", TriCaster::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void AutoCommand::writeProperties(QXmlStreamWriter* writer)
+void AutoCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("step", this->getStep());
-    writer->writeTextElement("speed", this->getSpeed());
-    writer->writeTextElement("transition", this->getTransition());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("step", this->getStep());
+    writer.writeTextElement("speed", this->getSpeed());
+    writer.writeTextElement("transition", this->getTransition());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

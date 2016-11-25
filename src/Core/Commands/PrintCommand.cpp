@@ -25,9 +25,9 @@ void PrintCommand::readProperties(boost::property_tree::wptree& pt)
     setOutput(QString::fromStdWString(pt.get(L"output", Print::DEFAULT_OUTPUT.toStdWString())));
 }
 
-void PrintCommand::writeProperties(QXmlStreamWriter* writer)
+void PrintCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("output", this->getOutput());
+    writer.writeTextElement("output", this->getOutput());
 }

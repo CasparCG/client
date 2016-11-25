@@ -22,7 +22,7 @@ class CORE_EXPORT FileRecorderCommand : public AbstractCommand
         explicit FileRecorderCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getOutput() const;
         const QString& getCodec() const;

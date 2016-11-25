@@ -223,10 +223,10 @@ void RundownMovieWidget::readProperties(boost::property_tree::wptree& pt)
     setTimecode(QString::fromStdWString(pt.get(L"timecode", L"")));
 }
 
-void RundownMovieWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownMovieWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
-    writer->writeTextElement("timecode", this->model.getTimecode());
+    writer.writeTextElement("color", this->color);
+    writer.writeTextElement("timecode", this->model.getTimecode());
 }
 
 bool RundownMovieWidget::isGroup() const

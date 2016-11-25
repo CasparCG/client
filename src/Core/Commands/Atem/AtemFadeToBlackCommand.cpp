@@ -49,11 +49,11 @@ void AtemFadeToBlackCommand::readProperties(boost::property_tree::wptree& pt)
     setMixerStep(QString::fromStdWString(pt.get(L"mixerstep", Atem::DEFAULT_MIXER_STEP.toStdWString())));
 }
 
-void AtemFadeToBlackCommand::writeProperties(QXmlStreamWriter* writer)
+void AtemFadeToBlackCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("speed", QString::number(this->getSpeed()));
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("mixerstep", this->getMixerStep());
+    writer.writeTextElement("speed", QString::number(this->getSpeed()));
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("mixerstep", this->getMixerStep());
 }

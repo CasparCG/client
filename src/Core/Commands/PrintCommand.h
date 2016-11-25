@@ -25,7 +25,7 @@ class CORE_EXPORT PrintCommand : public AbstractCommand
         void setOutput(const QString& output);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
     private:
         QString output = Print::DEFAULT_OUTPUT;

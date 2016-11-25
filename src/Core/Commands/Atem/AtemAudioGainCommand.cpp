@@ -49,11 +49,11 @@ void AtemAudioGainCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", Atem::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void AtemAudioGainCommand::writeProperties(QXmlStreamWriter* writer)
+void AtemAudioGainCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("audiogaininput", getInput());
-    writer->writeTextElement("gain", QString::number(getGain()));
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("audiogaininput", getInput());
+    writer.writeTextElement("gain", QString::number(getGain()));
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

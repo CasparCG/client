@@ -44,7 +44,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         void dragEnterEvent(QDragEnterEvent* event);
 
         AbstractRundownWidget* readProperties(boost::property_tree::wptree& pt);
-        void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer) const;
+        void writeProperties(QTreeWidgetItem* item, QXmlStreamWriter& writer) const;
 
         bool pasteSelectedItems(bool repositoryRundown = false);
         bool pasteItemProperties();

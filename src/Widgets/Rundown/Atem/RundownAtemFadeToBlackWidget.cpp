@@ -156,9 +156,9 @@ void RundownAtemFadeToBlackWidget::readProperties(boost::property_tree::wptree& 
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAtemFadeToBlackWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownAtemFadeToBlackWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownAtemFadeToBlackWidget::isGroup() const

@@ -177,9 +177,9 @@ void RundownFileRecorderWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownFileRecorderWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownFileRecorderWidget::isGroup() const

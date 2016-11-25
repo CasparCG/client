@@ -22,7 +22,7 @@ class CORE_EXPORT AtemAudioInputStateCommand: public AbstractCommand
         explicit AtemAudioInputStateCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getInput() const;
         const QString& getState() const;

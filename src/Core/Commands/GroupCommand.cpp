@@ -49,11 +49,11 @@ void GroupCommand::readProperties(boost::property_tree::wptree& pt)
     setAutoPlay(pt.get(L"autoplay", Group::DEFAULT_AUTO_PLAY));
 }
 
-void GroupCommand::writeProperties(QXmlStreamWriter* writer)
+void GroupCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("notes", this->getNotes());
-    writer->writeTextElement("autostep", (getAutoStep() == true) ? "true" : "false");
-    writer->writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
+    writer.writeTextElement("notes", this->getNotes());
+    writer.writeTextElement("autostep", (getAutoStep() == true) ? "true" : "false");
+    writer.writeTextElement("autoplay", (getAutoPlay() == true) ? "true" : "false");
 }

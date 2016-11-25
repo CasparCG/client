@@ -22,7 +22,7 @@ class CORE_EXPORT LevelsCommand : public AbstractCommand
         explicit LevelsCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getMinIn() const;
         float getMaxIn() const;

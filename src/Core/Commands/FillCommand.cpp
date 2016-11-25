@@ -121,17 +121,17 @@ void FillCommand::readProperties(boost::property_tree::wptree& pt)
     setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }
 
-void FillCommand::writeProperties(QXmlStreamWriter* writer)
+void FillCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("positionx", QString::number(getPositionX()));
-    writer->writeTextElement("positiony", QString::number(getPositionY()));
-    writer->writeTextElement("scalex", QString::number(getScaleX()));
-    writer->writeTextElement("scaley", QString::number(getScaleY()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
-    writer->writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
+    writer.writeTextElement("positionx", QString::number(getPositionX()));
+    writer.writeTextElement("positiony", QString::number(getPositionY()));
+    writer.writeTextElement("scalex", QString::number(getScaleX()));
+    writer.writeTextElement("scaley", QString::number(getScaleY()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
 }

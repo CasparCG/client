@@ -163,28 +163,28 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
     }
 }
 
-void TemplateCommand::writeProperties(QXmlStreamWriter* writer)
+void TemplateCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("flashlayer", QString::number(this->getFlashlayer()));
-    writer->writeTextElement("invoke", this->getInvoke());
-    writer->writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");
-    writer->writeTextElement("useuppercasedata", (getUseUppercaseData() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("sendasjson", (getSendAsJson() == true) ? "true" : "false");
+    writer.writeTextElement("flashlayer", QString::number(this->getFlashlayer()));
+    writer.writeTextElement("invoke", this->getInvoke());
+    writer.writeTextElement("usestoreddata", (getUseStoredData() == true) ? "true" : "false");
+    writer.writeTextElement("useuppercasedata", (getUseUppercaseData() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("sendasjson", (getSendAsJson() == true) ? "true" : "false");
 
 
     if (this->models.count() > 0)
     {
-        writer->writeStartElement("templatedata");
+        writer.writeStartElement("templatedata");
         foreach (KeyValueModel model, this->models)
         {
-            writer->writeStartElement("componentdata");
-            writer->writeTextElement("id", model.getKey());
-            writer->writeTextElement("value", model.getValue());
-            writer->writeEndElement();
+            writer.writeStartElement("componentdata");
+            writer.writeTextElement("id", model.getKey());
+            writer.writeTextElement("value", model.getValue());
+            writer.writeEndElement();
         }
-        writer->writeEndElement();
+        writer.writeEndElement();
     }
 }

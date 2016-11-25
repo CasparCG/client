@@ -22,7 +22,7 @@ class CORE_EXPORT NetworkSourceCommand : public AbstractCommand
         explicit NetworkSourceCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getSource() const;
         const QString& getTarget() const;

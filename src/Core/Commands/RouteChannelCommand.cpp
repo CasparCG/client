@@ -25,9 +25,9 @@ void RouteChannelCommand::readProperties(boost::property_tree::wptree& pt)
     setFromChannel(pt.get(L"fromchannel", Route::DEFAULT_FROM_CHANNEL));
 }
 
-void RouteChannelCommand::writeProperties(QXmlStreamWriter* writer)
+void RouteChannelCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("fromchannel", QString::number(getFromChannel()));
+    writer.writeTextElement("fromchannel", QString::number(getFromChannel()));
 }

@@ -22,7 +22,7 @@ class CORE_EXPORT MovieCommand : public AbstractCommand
         explicit MovieCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getVideoName() const;
         const QString& getTransition() const;

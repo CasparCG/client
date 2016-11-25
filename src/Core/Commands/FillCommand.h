@@ -22,7 +22,7 @@ class CORE_EXPORT FillCommand : public AbstractCommand
         explicit FillCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         float getPositionX() const;
         float getPositionY() const;

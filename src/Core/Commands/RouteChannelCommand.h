@@ -22,7 +22,7 @@ class CORE_EXPORT RouteChannelCommand : public AbstractCommand
         explicit RouteChannelCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         int getFromChannel() const;
 

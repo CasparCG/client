@@ -156,9 +156,9 @@ void RundownAtemAudioInputStateWidget::readProperties(boost::property_tree::wptr
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownAtemAudioInputStateWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownAtemAudioInputStateWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownAtemAudioInputStateWidget::isGroup() const

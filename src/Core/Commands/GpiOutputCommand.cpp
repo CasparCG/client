@@ -37,10 +37,10 @@ void GpiOutputCommand::readProperties(boost::property_tree::wptree& pt)
     setTriggerOnNext(pt.get(L"triggeronnext", GpiOutput::DEFAULT_TRIGGER_ON_NEXT));
 }
 
-void GpiOutputCommand::writeProperties(QXmlStreamWriter* writer)
+void GpiOutputCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("gpoport", QString::number(this->getGpoPort()));
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("gpoport", QString::number(this->getGpoPort()));
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
 }

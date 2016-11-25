@@ -50,11 +50,11 @@ void AtemCutCommand::readProperties(boost::property_tree::wptree& pt)
     setMixerStep(QString::fromStdWString(pt.get(L"mixerstep", Atem::DEFAULT_MIXER_STEP.toStdWString())));
 }
 
-void AtemCutCommand::writeProperties(QXmlStreamWriter* writer)
+void AtemCutCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("step", this->getStep());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("mixerstep", this->getMixerStep());
+    writer.writeTextElement("step", this->getStep());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("mixerstep", this->getMixerStep());
 }

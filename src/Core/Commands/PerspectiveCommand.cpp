@@ -169,21 +169,21 @@ void PerspectiveCommand::readProperties(boost::property_tree::wptree& pt)
     setUseMipmap(pt.get(L"usemipmap", Mixer::DEFAULT_MIPMAP));
 }
 
-void PerspectiveCommand::writeProperties(QXmlStreamWriter* writer)
+void PerspectiveCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("upperleftx", QString::number(getUpperLeftX()));
-    writer->writeTextElement("upperlefty", QString::number(getUpperLeftY()));
-    writer->writeTextElement("upperrightx", QString::number(getUpperRightX()));
-    writer->writeTextElement("upperrighty", QString::number(getUpperRightY()));
-    writer->writeTextElement("lowerrightx", QString::number(getLowerRightX()));
-    writer->writeTextElement("lowerrighty", QString::number(getLowerRightY()));
-    writer->writeTextElement("lowerleftx", QString::number(getLowerLeftX()));
-    writer->writeTextElement("lowerlefty", QString::number(getLowerLeftY()));
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("defer", (getDefer() == true) ? "true" : "false");
-    writer->writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
+    writer.writeTextElement("upperleftx", QString::number(getUpperLeftX()));
+    writer.writeTextElement("upperlefty", QString::number(getUpperLeftY()));
+    writer.writeTextElement("upperrightx", QString::number(getUpperRightX()));
+    writer.writeTextElement("upperrighty", QString::number(getUpperRightY()));
+    writer.writeTextElement("lowerrightx", QString::number(getLowerRightX()));
+    writer.writeTextElement("lowerrighty", QString::number(getLowerRightY()));
+    writer.writeTextElement("lowerleftx", QString::number(getLowerLeftX()));
+    writer.writeTextElement("lowerlefty", QString::number(getLowerLeftY()));
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("defer", (getDefer() == true) ? "true" : "false");
+    writer.writeTextElement("usemipmap", (getUseMipmap() == true) ? "true" : "false");
 }

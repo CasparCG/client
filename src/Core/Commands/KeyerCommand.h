@@ -25,7 +25,7 @@ class CORE_EXPORT KeyerCommand : public AbstractCommand
         void setDefer(bool defer);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
     private:
         bool defer = Mixer::DEFAULT_DEFER;

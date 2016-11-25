@@ -109,16 +109,16 @@ void HtmlCommand::readProperties(boost::property_tree::wptree& pt)
     setUseAuto(pt.get(L"useauto", Html::DEFAULT_USE_AUTO));
 }
 
-void HtmlCommand::writeProperties(QXmlStreamWriter* writer)
+void HtmlCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("url", getUrl());
-    writer->writeTextElement("transition", getTransition());
-    writer->writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
-    writer->writeTextElement("tween", getTween());
-    writer->writeTextElement("direction", getDirection());
-    writer->writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
-    writer->writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
-    writer->writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
+    writer.writeTextElement("url", getUrl());
+    writer.writeTextElement("transition", getTransition());
+    writer.writeTextElement("transitionDuration", QString::number(getTransitionDuration()));
+    writer.writeTextElement("tween", getTween());
+    writer.writeTextElement("direction", getDirection());
+    writer.writeTextElement("freezeonload", (getFreezeOnLoad() == true) ? "true" : "false");
+    writer.writeTextElement("triggeronnext", (getTriggerOnNext() == true) ? "true" : "false");
+    writer.writeTextElement("useauto", (getUseAuto() == true) ? "true" : "false");
 }

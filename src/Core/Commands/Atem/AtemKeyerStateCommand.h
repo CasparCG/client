@@ -22,7 +22,7 @@ class CORE_EXPORT AtemKeyerStateCommand: public AbstractCommand
         explicit AtemKeyerStateCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getMixerStep() const;
         const QString& getKeyer() const;

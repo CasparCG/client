@@ -40,26 +40,26 @@ void RundownTreeBaseWidget::setCompactView(bool compactView)
     this->compactView = compactView;
 }
 
-void RundownTreeBaseWidget::writeProperties(QTreeWidgetItem* item, QXmlStreamWriter* writer) const
+void RundownTreeBaseWidget::writeProperties(QTreeWidgetItem* item, QXmlStreamWriter& writer) const
 {
     AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
     if (widget->getLibraryModel()->getType() == "GROUP")
     {
         QString label = widget->getLibraryModel()->getLabel();
 
-        writer->writeStartElement("item");
-        writer->writeTextElement("type", widget->getLibraryModel()->getType());
-        writer->writeTextElement("label", label);
-        writer->writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
+        writer.writeStartElement("item");
+        writer.writeTextElement("type", widget->getLibraryModel()->getType());
+        writer.writeTextElement("label", label);
+        writer.writeTextElement("expanded", (item->isExpanded() == true ? "true" : "false"));
         widget->getCommand()->writeProperties(writer);
         widget->writeProperties(writer);
 
-        writer->writeStartElement("items");
+        writer.writeStartElement("items");
         for (int i = 0; i < item->childCount(); i++)
             writeProperties(item->child(i), writer);
 
-        writer->writeEndElement();
-        writer->writeEndElement();
+        writer.writeEndElement();
+        writer.writeEndElement();
     }
     else
     {
@@ -67,14 +67,14 @@ void RundownTreeBaseWidget::writeProperties(QTreeWidgetItem* item, QXmlStreamWri
         QString label = widget->getLibraryModel()->getLabel();
         QString name = widget->getLibraryModel()->getName();
 
-        writer->writeStartElement("item");
-        writer->writeTextElement("type", widget->getLibraryModel()->getType());
-        writer->writeTextElement("devicename", deviceName);
-        writer->writeTextElement("label", label);
-        writer->writeTextElement("name", name);
+        writer.writeStartElement("item");
+        writer.writeTextElement("type", widget->getLibraryModel()->getType());
+        writer.writeTextElement("devicename", deviceName);
+        writer.writeTextElement("label", label);
+        writer.writeTextElement("name", name);
         widget->getCommand()->writeProperties(writer);
         widget->writeProperties(writer);
-        writer->writeEndElement();
+        writer.writeEndElement();
     }
 }
 
@@ -116,22 +116,20 @@ AbstractRundownWidget* RundownTreeBaseWidget::readProperties(boost::property_tre
 bool RundownTreeBaseWidget::copySelectedItems() const
 {
     QString data;
-    QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+    QXmlStreamWriter writer(&data);
 
-    writer->setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
-    writer->setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
+    writer.setAutoFormatting(XmlFormatting::ENABLE_FORMATTING);
+    writer.setAutoFormattingIndent(XmlFormatting::NUMBER_OF_SPACES);
 
-    writer->writeStartDocument();
-    writer->writeStartElement("items");
+    writer.writeStartDocument();
+    writer.writeStartElement("items");
     for (int i = 0; i < QTreeWidget::selectedItems().count(); i++)
         writeProperties(QTreeWidget::selectedItems().at(i), writer);
 
-    writer->writeEndElement();
-    writer->writeEndDocument();
+    writer.writeEndElement();
+    writer.writeEndDocument();
 
     qApp->clipboard()->setText(data);
-
-    delete writer;
 
     return true;
 }

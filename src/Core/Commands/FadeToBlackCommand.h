@@ -22,7 +22,7 @@ class CORE_EXPORT FadeToBlackCommand : public AbstractCommand
         explicit FadeToBlackCommand(QObject* parent = 0);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
         const QString& getColor() const;
         const QString& getTransition() const;

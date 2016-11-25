@@ -39,7 +39,7 @@ class CORE_EXPORT AbstractCommand : public QObject, public AbstractProperties
         virtual void setStoryId(const QString& storyId);
 
         virtual void readProperties(boost::property_tree::wptree& pt);
-        virtual void writeProperties(QXmlStreamWriter* writer);
+        virtual void writeProperties(QXmlStreamWriter& writer);
 
     protected:
         explicit AbstractCommand(QObject* parent = 0);

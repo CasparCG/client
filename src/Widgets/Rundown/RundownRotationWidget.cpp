@@ -162,9 +162,9 @@ void RundownRotationWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownRotationWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownRotationWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownRotationWidget::isGroup() const

@@ -111,9 +111,9 @@ void RundownOscOutputWidget::readProperties(boost::property_tree::wptree& pt)
     if (pt.count(L"color") > 0) setColor(QString::fromStdWString(pt.get<std::wstring>(L"color")));
 }
 
-void RundownOscOutputWidget::writeProperties(QXmlStreamWriter* writer)
+void RundownOscOutputWidget::writeProperties(QXmlStreamWriter& writer)
 {
-    writer->writeTextElement("color", this->color);
+    writer.writeTextElement("color", this->color);
 }
 
 bool RundownOscOutputWidget::isGroup() const

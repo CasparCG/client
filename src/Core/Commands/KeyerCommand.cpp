@@ -25,9 +25,9 @@ void KeyerCommand::readProperties(boost::property_tree::wptree& pt)
     setDefer(pt.get(L"defer", Mixer::DEFAULT_DEFER));
 }
 
-void KeyerCommand::writeProperties(QXmlStreamWriter* writer)
+void KeyerCommand::writeProperties(QXmlStreamWriter& writer)
 {
     AbstractCommand::writeProperties(writer);
 
-    writer->writeTextElement("defer", QString::number(this->getDefer()));
+    writer.writeTextElement("defer", QString::number(this->getDefer()));
 }
