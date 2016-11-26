@@ -5,6 +5,7 @@ CasparCG Client 2.0.9
 - NEW: Added support for toggle ATEM mixer fade to black.
 - FIX: Properly calculate fractional fps. (dimitry-ishenko)
 - FIX: Client crash when enabling remote trigger, issue #191.
+- FIX: XML produced by the client is now auto formatted, issue #216.
 - FIX: Various bug fixes and enhancements.
 - UPDATE: Strip leading directories from filename to improve readability. (dimitry-ishenko)
 
