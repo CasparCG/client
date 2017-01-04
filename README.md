@@ -10,7 +10,7 @@ See [README](README?raw=true) and [CHANGELOG](CHANGELOG?raw=true) for more infor
 ## Development
 Pre-built Qt 5.* binaries for Windows 64-bit (MinGW SEH exception handling) can be found here: http://casparcg.com/build-tools
 
-VLC need to be installed on Linux: sudo apt-get install vlc libvlc-dev libvlccore-dev. The plugin cache may need to be refreshed: sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins
+VLC need to be installed on Linux: `sudo apt-get install vlc libvlc-dev libvlccore-dev`. The plugin cache may need to be refreshed: `sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins`
 
 You can find the latest unstable development builds on [http://builds.casparcg.com](http://builds.casparcg.com).
 
