@@ -519,3 +519,8 @@ namespace XmlFormatting
     static const bool ENABLE_FORMATTING = true;
     static const int NUMBER_OF_SPACES = 4;
 }
+
+namespace Utils
+{
+    static const Qt::TimerType DEFAULT_TIMER_TYPE = Qt::PreciseTimer;
+}

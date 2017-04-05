@@ -165,7 +165,8 @@ HEADERS += \
     Rundown/Atem/RundownAtemMacroWidget.h \
     Inspector/Atem/InspectorAtemMacroWidget.h \
     Rundown/Atem/RundownAtemFadeToBlackWidget.h \
-    Inspector/Atem/InspectorAtemFadeToBlackWidget.h
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.h \
+    Utils/ItemScheduler.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -323,7 +324,8 @@ SOURCES += \
     Rundown/Atem/RundownAtemMacroWidget.cpp \
     Inspector/Atem/InspectorAtemMacroWidget.cpp \
     Rundown/Atem/RundownAtemFadeToBlackWidget.cpp \
-    Inspector/Atem/InspectorAtemFadeToBlackWidget.cpp
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.cpp \
+    Utils/ItemScheduler.cpp
 
 FORMS += \
     SettingsDialog.ui \
