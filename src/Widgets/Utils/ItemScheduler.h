@@ -13,8 +13,8 @@ class ItemScheduler : public QObject
         explicit ItemScheduler(QObject *parent = 0);
         virtual ~ItemScheduler();
 
-        void schedulePlayAndStop(int delay, int duration, const QString& delayType, int framesPerSecond);
-        void scheduleUpdate(int delay, const QString& delayType, int framesPerSecond);
+        void schedulePlayAndStop(int delay, int duration, const QString& delayType, int framesPerSecond = 0);
+        void scheduleUpdate(int delay, const QString& delayType, int framesPerSecond = 0);
 
         void cancel();
 
