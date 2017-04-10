@@ -17,9 +17,9 @@
 #include "Commands/HttpPostCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -75,7 +75,7 @@ class WIDGETS_EXPORT RundownHttpPostWidget : public QWidget, Ui::RundownHttpPost
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
         HttpRequest request;
 
         void checkGpiConnection();

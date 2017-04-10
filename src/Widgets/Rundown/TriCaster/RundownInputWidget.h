@@ -20,9 +20,9 @@
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -72,7 +72,7 @@ class WIDGETS_EXPORT RundownInputWidget : public QWidget, Ui::RundownInputWidget
         OscSubscription* updateControlSubscription;
         OscSubscription* previewControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkEmptyDevice();
         void checkGpiConnection();

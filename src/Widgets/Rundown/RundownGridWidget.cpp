@@ -9,11 +9,9 @@
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -45,8 +43,7 @@ RundownGridWidget::RundownGridWidget(const LibraryModel& model, QWidget* parent,
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -232,7 +229,7 @@ void RundownGridWidget::checkEmptyDevice()
 
 void RundownGridWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownGridWidget::setUsed(bool used)
@@ -262,22 +259,15 @@ bool RundownGridWidget::executeCommand(Playout::PlayoutType type)
 
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeTimer.setInterval(this->command.getDelay());
-            }
-
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(
+                this->command.getDelay(),
+                0,
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -319,7 +309,7 @@ void RundownGridWidget::executePlay()
 
 void RundownGridWidget::executeClearVideolayer()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -344,7 +334,7 @@ void RundownGridWidget::executeClearVideolayer()
 
 void RundownGridWidget::executeClearChannel()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

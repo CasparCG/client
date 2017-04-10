@@ -9,11 +9,9 @@
 #include "Animations/ActiveAnimation.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 #include <QtCore/QMimeData>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
@@ -50,8 +48,12 @@ RundownTemplateWidget::RundownTemplateWidget(const LibraryModel& model, QWidget*
     this->labelFlashlayer->setText(QString("Flash layer: %1").arg(this->command.getFlashlayer()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    this->executePreviewTimer.setSingleShot(true);
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeStop()), this, SLOT(executeStop()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeUpdate()), this, SLOT(executeUpdate()));
+
+    QObject::connect(&this->itemSchedulerPreview, SIGNAL(executePlay()), this, SLOT(executePlayPreview()));
+    QObject::connect(&this->itemSchedulerPreview, SIGNAL(executeStop()), this, SLOT(executeStopPreview()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -273,8 +275,8 @@ void RundownTemplateWidget::checkEmptyDevice()
 
 void RundownTemplateWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
-    this->executePreviewTimer.stop();
+    this->itemScheduler.cancel();
+    this->itemSchedulerPreview.cancel();
 
     this->loaded = false;
 }
@@ -304,37 +306,17 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        this->executeTimer.disconnect(); // Disconnect all events.
-        QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
-
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeTimer.setInterval(startDelay);
-
-                if (this->command.getDuration() > 0)
-                {
-                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                     QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
-                }
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeTimer.setInterval(this->command.getDelay());
-
-                if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
-            }
-
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(
+                this->command.getDelay(),
+                this->command.getDuration(),
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -344,28 +326,16 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        this->executeTimer.disconnect(); // Disconnect all events.
-        QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executeUpdate()));
-
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeTimer.setInterval(startDelay);
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeTimer.setInterval(this->command.getDelay());
-            }
-
-            this->executeTimer.start();
+            this->itemScheduler.scheduleUpdate(
+                this->command.getDelay(),
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
     else if (type == Playout::PlayoutType::Load)
@@ -390,42 +360,22 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        this->executePreviewTimer.disconnect(); // Disconnect all events.
-        QObject::connect(&this->executePreviewTimer, SIGNAL(timeout()), SLOT(executePlayPreview()));
-
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
             const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
             if (deviceModel == NULL)
                 return true;
 
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                // Is preview channel valid?
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (deviceModel->getPreviewChannel() == 0 || deviceModel->getPreviewChannel() > channelFormats.count())
-                    return true;
+            // Is preview channel valid?
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (deviceModel->getPreviewChannel() == 0 || deviceModel->getPreviewChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[deviceModel->getPreviewChannel() - 1]).getFramesPerSecond().toDouble();
-
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executePreviewTimer.setInterval(startDelay);
-
-                if (this->command.getDuration() > 0)
-                {
-                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStopPreview()));
-                }
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executePreviewTimer.setInterval(this->command.getDelay());
-
-                if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStopPreview()));
-            }
-
-            this->executePreviewTimer.start();
+            this->itemSchedulerPreview.schedulePlayAndStop(
+                this->command.getDelay(),
+                this->command.getDuration(),
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[deviceModel->getPreviewChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
 
@@ -437,8 +387,8 @@ bool RundownTemplateWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownTemplateWidget::executeStop()
 {
-    this->executeTimer.stop();
-    this->executePreviewTimer.stop();
+    this->itemScheduler.cancel();
+    this->itemSchedulerPreview.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -472,7 +422,7 @@ void RundownTemplateWidget::executeStop()
 
 void RundownTemplateWidget::executeStopPreview()
 {
-    this->executePreviewTimer.stop();
+    this->itemSchedulerPreview.cancel();
 
     const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
     if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
@@ -678,8 +628,8 @@ void RundownTemplateWidget::executeInvoke()
 
 void RundownTemplateWidget::executeClear()
 {
-    this->executeTimer.stop();
-    this->executePreviewTimer.stop();
+    this->itemScheduler.cancel();
+    this->itemSchedulerPreview.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -713,8 +663,8 @@ void RundownTemplateWidget::executeClear()
 
 void RundownTemplateWidget::executeClearVideolayer()
 {
-    this->executeTimer.stop();
-    this->executePreviewTimer.stop();
+    this->itemScheduler.cancel();
+    this->itemSchedulerPreview.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -748,8 +698,8 @@ void RundownTemplateWidget::executeClearVideolayer()
 
 void RundownTemplateWidget::executeClearChannel()
 {
-    this->executeTimer.stop();
-    this->executePreviewTimer.stop();
+    this->itemScheduler.cancel();
+    this->itemSchedulerPreview.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

@@ -22,9 +22,9 @@
 #include "Events/Inspector/VideolayerChangedEvent.h"
 #include "Models/LibraryModel.h"
 #include "Models/OscFileModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -97,8 +97,7 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeStartTimer;
-        QTimer executeStopTimer;
+        ItemScheduler itemScheduler;
 
         void updateOscWidget();
         void setThumbnail();

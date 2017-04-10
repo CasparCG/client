@@ -19,9 +19,9 @@
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -82,8 +82,7 @@ class WIDGETS_EXPORT RundownAudioWidget : public QWidget, Ui::RundownAudioWidget
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeStartTimer;
-        QTimer executeStopTimer;
+        ItemScheduler itemScheduler;
 
         void checkEmptyDevice();
         void checkGpiConnection();

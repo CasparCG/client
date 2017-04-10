@@ -19,9 +19,9 @@
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -81,7 +81,7 @@ class WIDGETS_EXPORT RundownStillWidget : public QWidget, Ui::RundownStillWidget
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void setThumbnail();
         void checkEmptyDevice();

@@ -7,8 +7,7 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
 
@@ -41,8 +40,8 @@ RundownPrintWidget::RundownPrintWidget(const LibraryModel& model, QWidget* paren
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeStop()), this, SLOT(executeStop()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -211,7 +210,7 @@ void RundownPrintWidget::checkEmptyDevice()
 
 void RundownPrintWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownPrintWidget::setUsed(bool used)
@@ -241,22 +240,15 @@ bool RundownPrintWidget::executeCommand(Playout::PlayoutType type)
 
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeTimer.setInterval(this->command.getDelay());
-            }
-
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(
+                this->command.getDelay(),
+                0,
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -276,7 +268,7 @@ bool RundownPrintWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownPrintWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownPrintWidget::executePlay()

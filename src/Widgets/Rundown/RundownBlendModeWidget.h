@@ -19,13 +19,13 @@
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 #include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QWidget>
@@ -81,7 +81,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkEmptyDevice();
         void checkGpiConnection();

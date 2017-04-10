@@ -6,9 +6,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 #include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
@@ -41,8 +41,7 @@ RundownSpyderPresetWidget::RundownSpyderPresetWidget(const LibraryModel& model, 
     this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -169,7 +168,7 @@ void RundownSpyderPresetWidget::setColor(const QString& color)
 
 void RundownSpyderPresetWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownSpyderPresetWidget::setUsed(bool used)
@@ -199,8 +198,7 @@ bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType type)
 
         if (!this->command.getAddress().isEmpty())
         {
-            this->executeTimer.setInterval(this->command.getDelay());
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(this->command.getDelay(), 0, Output::DEFAULT_DELAY_IN_MILLISECONDS);
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -222,7 +220,7 @@ bool RundownSpyderPresetWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownSpyderPresetWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownSpyderPresetWidget::executePlay()

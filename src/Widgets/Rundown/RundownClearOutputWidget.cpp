@@ -7,11 +7,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -42,7 +40,8 @@ RundownClearOutputWidget::RundownClearOutputWidget(const LibraryModel& model, QW
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
+    QObject::connect(&this->clearChannelScheduler, SIGNAL(executePlay()), this, SLOT(executeClearChannel()));
+    QObject::connect(&this->clearVideoLayerScheduler, SIGNAL(executePlay()), this, SLOT(executeClearVideolayer()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
@@ -213,7 +212,8 @@ void RundownClearOutputWidget::checkEmptyDevice()
 
 void RundownClearOutputWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->clearChannelScheduler.cancel();
+    this->clearVideoLayerScheduler.cancel();
 }
 
 void RundownClearOutputWidget::setUsed(bool used)
@@ -242,35 +242,47 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType type)
         if (this->command.getDelay() < 0)
             return true;
 
-        this->executeTimer.disconnect(); // Disconnect all events.
-
-        if (this->command.getClearChannel())
-            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearChannel()));
-        else
-            QObject::connect(&this->executeTimer, SIGNAL(timeout()), this, SLOT(executeClearVideolayer()));
-
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
+
+            this->clearChannelScheduler.cancel();
+            this->clearVideoLayerScheduler.cancel();
+
+            if (this->command.getClearChannel())
             {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
-
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                this->executeTimer.setInterval(floor(this->command.getDelay() * (1000 / framesPerSecond)));
+                this->clearChannelScheduler.schedulePlayAndStop(
+                    this->command.getDelay(),
+                    this->command.getDuration(),
+                    this->delayType,
+                    DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
             }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
+            else
             {
-                this->executeTimer.setInterval(this->command.getDelay());
+                this->clearVideoLayerScheduler.schedulePlayAndStop(
+                    this->command.getDelay(),
+                    this->command.getDuration(),
+                    this->delayType,
+                    DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
             }
-
-            this->executeTimer.start();
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
-        this->executeTimer.start(0);
+    {
+        this->clearChannelScheduler.cancel();
+        this->clearVideoLayerScheduler.cancel();
+
+        if (this->command.getClearChannel())
+        {
+            this->clearChannelScheduler.schedulePlayAndStop(0, 0, this->delayType);
+        }
+        else
+        {
+            this->clearVideoLayerScheduler.schedulePlayAndStop(0, 0, this->delayType);
+        }
+    }
     else if (type == Playout::PlayoutType::Clear)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearVideoLayer)
@@ -286,12 +298,14 @@ bool RundownClearOutputWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownClearOutputWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->clearChannelScheduler.cancel();
+    this->clearVideoLayerScheduler.cancel();
 }
 
 void RundownClearOutputWidget::executeClearVideolayer()
 {
-    this->executeTimer.stop();
+    this->clearChannelScheduler.cancel();
+    this->clearVideoLayerScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -313,7 +327,8 @@ void RundownClearOutputWidget::executeClearVideolayer()
 
 void RundownClearOutputWidget::executeClearChannel()
 {
-    this->executeTimer.stop();
+    this->clearChannelScheduler.cancel();
+    this->clearVideoLayerScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

@@ -15,9 +15,9 @@
 #include "Commands/PlayoutCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -66,7 +66,7 @@ class WIDGETS_EXPORT RundownPlayoutCommandWidget : public QWidget, Ui::RundownPl
         OscSubscription* playControlSubscription;
         OscSubscription* playNowControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkGpiConnection();
         void configureOscSubscriptions();

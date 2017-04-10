@@ -8,11 +8,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 #include <QtCore/QXmlStreamWriter>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
@@ -41,8 +39,7 @@ RundownAtemAutoWidget::RundownAtemAutoWidget(const LibraryModel& model, QWidget*
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -227,7 +224,7 @@ void RundownAtemAutoWidget::checkEmptyDevice()
 
 void RundownAtemAutoWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownAtemAutoWidget::setUsed(bool used)
@@ -254,7 +251,9 @@ bool RundownAtemAutoWidget::executeCommand(Playout::PlayoutType type)
             return true;
 
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
-            QTimer::singleShot(this->command.getDelay(), this, SLOT(executePlay()));
+        {
+            this->itemScheduler.schedulePlayAndStop(this->command.getDelay(), 0, Output::DEFAULT_DELAY_IN_MILLISECONDS);
+        }
     }
     else if (type == Playout::PlayoutType::PlayNow)
         executePlay();

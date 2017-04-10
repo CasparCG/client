@@ -7,9 +7,9 @@
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
 #include "Events/Inspector/ShowAddHttpPostDataDialogEvent.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -39,8 +39,8 @@ RundownHttpPostWidget::RundownHttpPostWidget(const LibraryModel& model, QWidget*
     this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeStop()), this, SLOT(executeStop()));
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
@@ -177,7 +177,7 @@ void RundownHttpPostWidget::setColor(const QString& color)
 
 void RundownHttpPostWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownHttpPostWidget::setUsed(bool used)
@@ -207,8 +207,7 @@ bool RundownHttpPostWidget::executeCommand(Playout::PlayoutType type)
 
         if (!this->command.getUrl().isEmpty())
         {
-            this->executeTimer.setInterval(this->command.getDelay());
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(this->command.getDelay(), 0, Output::DEFAULT_DELAY_IN_MILLISECONDS);
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -230,7 +229,7 @@ bool RundownHttpPostWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownHttpPostWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownHttpPostWidget::executePlay()

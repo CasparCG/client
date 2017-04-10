@@ -17,9 +17,9 @@
 #include "Commands/Spyder/SpyderPresetCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -72,7 +72,7 @@ class WIDGETS_EXPORT RundownSpyderPresetWidget : public QWidget, Ui::RundownSpyd
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
         SpyderDevice* device;
 
         void checkGpiConnection();

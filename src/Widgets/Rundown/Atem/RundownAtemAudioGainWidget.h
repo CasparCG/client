@@ -20,10 +20,9 @@
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
-
 #include <QtWidgets/QWidget>
 
 class WIDGETS_EXPORT RundownAtemAudioGainWidget : public QWidget, Ui::RundownAtemAudioGainWidget, public AbstractRundownWidget, public AbstractPlayoutCommand
@@ -71,7 +70,7 @@ class WIDGETS_EXPORT RundownAtemAudioGainWidget : public QWidget, Ui::RundownAte
         OscSubscription* playNowControlSubscription;
         OscSubscription* updateControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkEmptyDevice();
         void checkGpiConnection();

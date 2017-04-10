@@ -20,9 +20,10 @@
 #include "Events/Inspector/TargetChangedEvent.h"
 #include "Models/LibraryModel.h"
 
+#include "Utils/ItemScheduler.h"
+
 #include <QtCore/QEvent>
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
@@ -89,8 +90,8 @@ class WIDGETS_EXPORT RundownTemplateWidget : public QWidget, Ui::RundownTemplate
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
-        QTimer executePreviewTimer;
+        ItemScheduler itemScheduler;
+        ItemScheduler itemSchedulerPreview;
 
         void checkEmptyDevice();
         void checkGpiConnection();

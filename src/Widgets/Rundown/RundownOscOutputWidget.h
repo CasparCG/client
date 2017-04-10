@@ -15,9 +15,9 @@
 #include "Commands/OscOutputCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -70,7 +70,7 @@ class WIDGETS_EXPORT RundownOscOutputWidget : public QWidget, Ui::RundownOscOutp
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkGpiConnection();
         void configureOscSubscriptions();

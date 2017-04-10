@@ -7,11 +7,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -43,8 +41,8 @@ RundownPerspectiveWidget::RundownPerspectiveWidget(const LibraryModel& model, QW
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
     this->labelDevice->setText(QString("Server: %1").arg(this->model.getDeviceName()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeStop()), this, SLOT(executeStop()));
 
     QObject::connect(&this->command, SIGNAL(channelChanged(int)), this, SLOT(channelChanged(int)));
     QObject::connect(&this->command, SIGNAL(videolayerChanged(int)), this, SLOT(videolayerChanged(int)));
@@ -239,7 +237,7 @@ void RundownPerspectiveWidget::checkEmptyDevice()
 
 void RundownPerspectiveWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownPerspectiveWidget::setUsed(bool used)
@@ -269,32 +267,15 @@ bool RundownPerspectiveWidget::executeCommand(Playout::PlayoutType type)
 
         if (!this->model.getDeviceName().isEmpty()) // The user need to select a device.
         {
-            if (this->delayType == Output::DEFAULT_DELAY_IN_FRAMES)
-            {
-                const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
-                if (this->command.getChannel() > channelFormats.count())
-                    return true;
+            const QStringList& channelFormats = DatabaseManager::getInstance().getDeviceByName(this->model.getDeviceName()).getChannelFormats().split(",");
+            if (this->command.getChannel() > channelFormats.count())
+                return true;
 
-                double framesPerSecond = DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble();
-
-                int startDelay = floor(this->command.getDelay() * (1000 / framesPerSecond));
-                this->executeTimer.setInterval(startDelay);
-
-                if (this->command.getDuration() > 0)
-                {
-                    int stopDelay = floor(this->command.getDuration() * (1000 / framesPerSecond));
-                    QTimer::singleShot(startDelay + stopDelay, this, SLOT(executeStop()));
-                }
-            }
-            else if (this->delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-            {
-                this->executeTimer.setInterval(this->command.getDelay());
-
-                if (this->command.getDuration() > 0)
-                    QTimer::singleShot(this->command.getDelay() + this->command.getDuration(), this, SLOT(executeStop()));
-            }
-
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(
+                this->command.getDelay(),
+                this->command.getDuration(),
+                this->delayType,
+                DatabaseManager::getInstance().getFormat(channelFormats[this->command.getChannel() - 1]).getFramesPerSecond().toDouble());
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -316,7 +297,7 @@ bool RundownPerspectiveWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownPerspectiveWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -363,7 +344,7 @@ void RundownPerspectiveWidget::executePlay()
 
 void RundownPerspectiveWidget::executeClearVideolayer()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
@@ -382,7 +363,7 @@ void RundownPerspectiveWidget::executeClearVideolayer()
 
 void RundownPerspectiveWidget::executeClearChannel()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

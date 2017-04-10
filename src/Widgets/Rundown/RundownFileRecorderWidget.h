@@ -21,9 +21,9 @@
 #include "Events/Inspector/DeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
 #include "Models/OscFileModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -81,7 +81,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void updateOscWidget();
         void checkEmptyDevice();

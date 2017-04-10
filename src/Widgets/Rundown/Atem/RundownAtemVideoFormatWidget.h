@@ -20,9 +20,9 @@
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -71,7 +71,7 @@ class WIDGETS_EXPORT RundownAtemVideoFormatWidget : public QWidget, Ui::RundownA
         OscSubscription* playNowControlSubscription;
         OscSubscription* updateControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
 
         void checkEmptyDevice();
         void checkGpiConnection();

@@ -17,9 +17,9 @@
 #include "Commands/Panasonic/PanasonicPresetCommand.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Models/LibraryModel.h"
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QWidget>
 
@@ -72,7 +72,7 @@ class WIDGETS_EXPORT RundownPanasonicPresetWidget : public QWidget, Ui::RundownP
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
 
-        QTimer executeTimer;
+        ItemScheduler itemScheduler;
         PtzDevice* device;
 
         void checkGpiConnection();

@@ -6,11 +6,9 @@
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/ConnectionStateChangedEvent.h"
-
-#include <math.h>
+#include "Utils/ItemScheduler.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTimer>
 
 #include <QtWidgets/QGraphicsOpacityEffect>
 
@@ -39,8 +37,8 @@ RundownGpiOutputWidget::RundownGpiOutputWidget(const LibraryModel& model, QWidge
     this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));
 
-    this->executeTimer.setSingleShot(true);
-    QObject::connect(&this->executeTimer, SIGNAL(timeout()), SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executePlay()), this, SLOT(executePlay()));
+    QObject::connect(&this->itemScheduler, SIGNAL(executeStop()), this, SLOT(executeStop()));
 
     QObject::connect(&this->command, SIGNAL(delayChanged(int)), this, SLOT(delayChanged(int)));
     QObject::connect(&this->command, SIGNAL(gpoPortChanged(int)), this, SLOT(gpiOutputPortChanged(int)));
@@ -168,7 +166,7 @@ void RundownGpiOutputWidget::setColor(const QString& color)
 
 void RundownGpiOutputWidget::clearDelayedCommands()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownGpiOutputWidget::setUsed(bool used)
@@ -198,8 +196,7 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType type)
 
         if (GpiManager::getInstance().getGpiDevice()->isConnected())
         {
-            this->executeTimer.setInterval(this->command.getDelay());
-            this->executeTimer.start();
+            this->itemScheduler.schedulePlayAndStop(this->command.getDelay(), 0, Output::DEFAULT_DELAY_IN_MILLISECONDS);
         }
     }
     else if (type == Playout::PlayoutType::PlayNow)
@@ -221,7 +218,7 @@ bool RundownGpiOutputWidget::executeCommand(Playout::PlayoutType type)
 
 void RundownGpiOutputWidget::executeStop()
 {
-    this->executeTimer.stop();
+    this->itemScheduler.cancel();
 }
 
 void RundownGpiOutputWidget::executePlay()
