@@ -64,5 +64,5 @@ cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
 
 # Create dmg file
 echo Creating dmg...
-hdiutil create -volname "$CLIENT_FOLDER" -srcfolder "$CLIENT_FOLDER" -ov -format UDZO "$BUILD_ARCHIVE_NAME.dmg" || fail "Could not create dmg"
+hdiutil create -size "$BUILD_HDIUTILS_WORKAROUND_SIZE" -volname "$CLIENT_FOLDER" -srcfolder "$CLIENT_FOLDER" -ov -format UDZO "$BUILD_ARCHIVE_NAME.dmg" || fail "Could not create dmg"
 
