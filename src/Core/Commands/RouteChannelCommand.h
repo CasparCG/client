@@ -25,11 +25,15 @@ class CORE_EXPORT RouteChannelCommand : public AbstractCommand
         virtual void writeProperties(QXmlStreamWriter& writer);
 
         int getFromChannel() const;
+        int getRouteDelay() const;
 
         void setFromChannel(int fromChannel);
+        void setRouteDelay(int delay);
 
     private:
         int fromChannel = Route::DEFAULT_FROM_CHANNEL;
+        int routeDelay = Route::DEFAULT_ROUTE_DELAY;
 
         Q_SIGNAL void fromChannelChanged(int);
+        Q_SIGNAL void routeDelayChanged(int);
 };

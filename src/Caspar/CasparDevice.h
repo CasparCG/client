@@ -46,7 +46,9 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void print(int channel, const QString& output);
 
         void loadRouteChannel(int toChannel, int toVideolayer, int fromChannel);
+        void loadRouteChannel(int toChannel, int toVideolayer, int fromChannel, int routeDelay);
         void playRouteChannel(int toChannel, int toVideolayer, int fromChannel);
+        void playRouteChannel(int toChannel, int toVideolayer, int fromChannel, int routeDelay);
         void loadRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer);
         void playRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer);
 

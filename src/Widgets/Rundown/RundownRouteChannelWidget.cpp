@@ -119,6 +119,7 @@ AbstractRundownWidget* RundownRouteChannelWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setFromChannel(this->command.getFromChannel());
+    command->setRouteDelay(this->command.getRouteDelay());
 
     return widget;
 }
@@ -306,7 +307,7 @@ void RundownRouteChannelWidget::executePlay()
         if (this->loaded)
             device->play(this->command.getChannel(), this->command.getVideolayer());
         else
-            device->playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+            this->performRouteChannel(*device);
     }
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
@@ -320,7 +321,7 @@ void RundownRouteChannelWidget::executePlay()
             if (this->loaded)
                 deviceShadow->play(this->command.getChannel(), this->command.getVideolayer());
             else
-                deviceShadow->playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+                this->performRouteChannel(*deviceShadow);
         }
     }
 
@@ -368,7 +369,7 @@ void RundownRouteChannelWidget::executeLoad()
 {
     const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())
-        device->loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+        this->performLoadRouteChannel(*device);
 
     foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
     {
@@ -377,7 +378,7 @@ void RundownRouteChannelWidget::executeLoad()
 
         const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
         if (deviceShadow != NULL && deviceShadow->isConnected())
-            deviceShadow->loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+            this->performLoadRouteChannel(*deviceShadow);
     }
 
     this->loaded = true;
@@ -469,6 +470,22 @@ void RundownRouteChannelWidget::checkDeviceConnection()
         this->labelDisconnected->setVisible(true);
     else
         this->labelDisconnected->setVisible(!device->isConnected());
+}
+
+void RundownRouteChannelWidget::performRouteChannel(CasparDevice &device)
+{
+    if (this->command.getRouteDelay() == 0)
+        device.playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+    else
+        device.playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getRouteDelay());
+}
+
+void RundownRouteChannelWidget::performLoadRouteChannel(CasparDevice &device)
+{
+    if (this->command.getRouteDelay() == 0)
+        device.loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
+    else
+        device.loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getRouteDelay());
 }
 
 void RundownRouteChannelWidget::configureOscSubscriptions()

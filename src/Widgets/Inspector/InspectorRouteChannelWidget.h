@@ -30,4 +30,5 @@ class WIDGETS_EXPORT InspectorRouteChannelWidget : public QWidget, Ui::Inspector
         Q_SLOT void channelChanged(int);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void routeDelayChanged(int);
 };
