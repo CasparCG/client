@@ -87,6 +87,9 @@ class WIDGETS_EXPORT RundownRouteVideolayerWidget : public QWidget, Ui::RundownR
         void checkDeviceConnection();
         void configureOscSubscriptions();
 
+        void performRouteVideoLayer(CasparDevice &device);
+        void performLoadRouteVideoLayer(CasparDevice &device);
+
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);

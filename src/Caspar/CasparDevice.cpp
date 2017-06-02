@@ -153,9 +153,19 @@ void CasparDevice::loadRouteVideolayer(int toChannel, int toVideolayer, int from
     writeMessage(QString("LOADBG %1-%2 route://%3-%4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(fromVideolayer));
 }
 
+void CasparDevice::loadRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer, int outputDelay)
+{
+    writeMessage(QString("LOADBG %1-%2 route://%3-%4 FRAMES_DELAY %5").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(fromVideolayer).arg(outputDelay));
+}
+
 void CasparDevice::playRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer)
 {
     writeMessage(QString("PLAY %1-%2 route://%3-%4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(fromVideolayer));
+}
+
+void CasparDevice::playRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer, int outputDelay)
+{
+    writeMessage(QString("PLAY %1-%2 route://%3-%4 FRAMES_DELAY %5").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(fromVideolayer).arg(outputDelay));
 }
 
 void CasparDevice::addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad)

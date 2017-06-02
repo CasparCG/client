@@ -17,6 +17,11 @@ int RouteVideolayerCommand::getFromVideolayer() const
     return this->fromVideolayer;
 }
 
+int RouteVideolayerCommand::getOutputDelay() const
+{
+    return this->outputDelay;
+}
+
 void RouteVideolayerCommand::setFromChannel(int fromChannel)
 {
     this->fromChannel = fromChannel;
@@ -29,12 +34,19 @@ void RouteVideolayerCommand::setFromVideolayer(int fromVideolayer)
     emit fromVideolayerChanged(this->fromVideolayer);
 }
 
+void RouteVideolayerCommand::setOutputDelay(int delay)
+{
+    this->outputDelay = delay;
+    emit outputDelayChanged(this->outputDelay);
+}
+
 void RouteVideolayerCommand::readProperties(boost::property_tree::wptree& pt)
 {
     AbstractCommand::readProperties(pt);
 
     setFromChannel(pt.get(L"fromchannel", Route::DEFAULT_FROM_CHANNEL));
     setFromVideolayer(pt.get(L"fromvideolayer", Route::DEFAULT_FROM_VIDEOLAYER));
+    setOutputDelay(pt.get(L"outputdelay", Route::DEFAULT_OUTPUT_DELAY));
 }
 
 void RouteVideolayerCommand::writeProperties(QXmlStreamWriter& writer)
@@ -43,4 +55,5 @@ void RouteVideolayerCommand::writeProperties(QXmlStreamWriter& writer)
 
     writer.writeTextElement("fromchannel", QString::number(getFromChannel()));
     writer.writeTextElement("fromvideolayer", QString::number(getFromVideolayer()));
+    writer.writeTextElement("outputdelay", QString::number(getOutputDelay()));
 }

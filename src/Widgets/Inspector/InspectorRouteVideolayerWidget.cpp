@@ -29,6 +29,7 @@ void InspectorRouteVideolayerWidget::rundownItemSelected(const RundownItemSelect
 
         this->spinBoxChannel->setValue(this->command->getFromChannel());
         this->spinBoxVideolayer->setValue(this->command->getFromVideolayer());
+        this->spinBoxOutputDelay->setValue(this->command->getOutputDelay());
     }
 
     blockAllSignals(false);
@@ -38,6 +39,7 @@ void InspectorRouteVideolayerWidget::blockAllSignals(bool block)
 {
     this->spinBoxChannel->blockSignals(block);
     this->spinBoxVideolayer->blockSignals(block);
+    this->spinBoxOutputDelay->blockSignals(block);
 }
 
 void InspectorRouteVideolayerWidget::deviceChanged(const DeviceChangedEvent& event)
@@ -64,4 +66,9 @@ void InspectorRouteVideolayerWidget::channelChanged(int fromChannel)
 void InspectorRouteVideolayerWidget::videolayerChanged(int fromVideolayer)
 {
     this->command->setFromVideolayer(fromVideolayer);
+}
+
+void InspectorRouteVideolayerWidget::outputDelayChanged(int delay)
+{
+    this->command->setOutputDelay(delay);
 }

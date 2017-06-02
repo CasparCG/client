@@ -50,7 +50,9 @@ class CASPAR_EXPORT CasparDevice : public AmcpDevice
         void playRouteChannel(int toChannel, int toVideolayer, int fromChannel);
         void playRouteChannel(int toChannel, int toVideolayer, int fromChannel, int routeDelay);
         void loadRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer);
+        void loadRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer, int outputDelay);
         void playRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer);
+        void playRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer, int outputDelay);
 
         void addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad);
         void addTemplate(int channel, int videolayer, int flashlayer, const QString& name, bool playOnLoad, const QString& data);

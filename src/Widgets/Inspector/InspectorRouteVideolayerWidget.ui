@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>89</height>
+    <height>112</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -66,6 +66,43 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelOutputDelay">
+     <property name="text">
+      <string>Output delay</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayoutOutputDelay">
+     <item>
+      <widget class="QSpinBox" name="spinBoxOutputDelay">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFrm">
+       <property name="text">
+        <string>frm</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -106,9 +143,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>spinBoxOutputDelay</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InspectorRouteVideolayerWidget</receiver>
+   <slot>outputDelayChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>channelChanged(int)</slot>
   <slot>videolayerChanged(int)</slot>
+  <slot>outputDelayChanged(int)</slot>
  </slots>
 </ui>

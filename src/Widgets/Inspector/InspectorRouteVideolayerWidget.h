@@ -31,4 +31,5 @@ class WIDGETS_EXPORT InspectorRouteVideolayerWidget : public QWidget, Ui::Inspec
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
         Q_SLOT void rundownItemSelected(const RundownItemSelectedEvent&);
+        Q_SLOT void outputDelayChanged(int);
 };

@@ -26,14 +26,18 @@ class CORE_EXPORT RouteVideolayerCommand : public AbstractCommand
 
         int getFromChannel() const;
         int getFromVideolayer() const;
+        int getOutputDelay() const;
 
         void setFromChannel(int fromChannel);
         void setFromVideolayer(int fromVideolayer);
+        void setOutputDelay(int delay);
 
     private:
         int fromChannel = Route::DEFAULT_FROM_CHANNEL;
         int fromVideolayer = Route::DEFAULT_FROM_VIDEOLAYER;
+        int outputDelay = Route::DEFAULT_OUTPUT_DELAY;
 
         Q_SIGNAL void fromChannelChanged(int);
         Q_SIGNAL void fromVideolayerChanged(int);
+        Q_SIGNAL void outputDelayChanged(int);
 };

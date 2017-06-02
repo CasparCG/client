@@ -4,6 +4,7 @@ CasparCG Client 2.0.9
 - NEW: Added support for OSC over WebSocket.
 - NEW: Added support for toggle ATEM mixer fade to black.
 - NEW: Added support for delaying channel route output.
+- NEW: Added support for delaying video layer route output.
 - FIX: Properly calculate fractional fps. (dimitry-ishenko)
 - FIX: Client crash when enabling remote trigger, issue #191.
 - FIX: XML produced by the client is now auto formatted, issue #216.
