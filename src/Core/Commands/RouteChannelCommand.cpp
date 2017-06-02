@@ -12,9 +12,9 @@ int RouteChannelCommand::getFromChannel() const
     return this->fromChannel;
 }
 
-int RouteChannelCommand::getRouteDelay() const
+int RouteChannelCommand::getOutputDelay() const
 {
-    return this->routeDelay;
+    return this->outputDelay;
 }
 
 void RouteChannelCommand::setFromChannel(int fromChannel)
@@ -23,10 +23,10 @@ void RouteChannelCommand::setFromChannel(int fromChannel)
     emit fromChannelChanged(this->fromChannel);
 }
 
-void RouteChannelCommand::setRouteDelay(int delay)
+void RouteChannelCommand::setOutputDelay(int delay)
 {
-    this->routeDelay = delay;
-    emit routeDelayChanged(this->routeDelay);
+    this->outputDelay = delay;
+    emit outputDelayChanged(this->outputDelay);
 }
 
 void RouteChannelCommand::readProperties(boost::property_tree::wptree& pt)
@@ -34,7 +34,7 @@ void RouteChannelCommand::readProperties(boost::property_tree::wptree& pt)
     AbstractCommand::readProperties(pt);
 
     setFromChannel(pt.get(L"fromchannel", Route::DEFAULT_FROM_CHANNEL));
-    setRouteDelay(pt.get(L"routedelay", Route::DEFAULT_ROUTE_DELAY));
+    setOutputDelay(pt.get(L"outputdelay", Route::DEFAULT_OUTPUT_DELAY));
 }
 
 void RouteChannelCommand::writeProperties(QXmlStreamWriter& writer)
@@ -42,5 +42,5 @@ void RouteChannelCommand::writeProperties(QXmlStreamWriter& writer)
     AbstractCommand::writeProperties(writer);
 
     writer.writeTextElement("fromchannel", QString::number(getFromChannel()));
-    writer.writeTextElement("routedelay", QString::number(getRouteDelay()));
+    writer.writeTextElement("outputdelay", QString::number(getOutputDelay()));
 }

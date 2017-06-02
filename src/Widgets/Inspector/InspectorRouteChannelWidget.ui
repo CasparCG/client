@@ -44,9 +44,9 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="labelRouteDelay">
+    <widget class="QLabel" name="labelOutputDelay">
      <property name="text">
-      <string>Route delay</string>
+      <string>Output delay</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -54,9 +54,9 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayoutRouteDelay">
+    <layout class="QHBoxLayout" name="horizontalLayoutOutputDelay">
      <item>
-      <widget class="QSpinBox" name="spinBoxRouteDelay">
+      <widget class="QSpinBox" name="spinBoxOutputDelay">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -104,10 +104,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxRouteDelay</sender>
+   <sender>spinBoxOutputDelay</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorRouteChannelWidget</receiver>
-   <slot>routeDelayChanged(int)</slot>
+   <slot>outputDelayChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>175</x>
@@ -122,6 +122,6 @@
  </connections>
  <slots>
   <slot>channelChanged(int)</slot>
-  <slot>routeDelayChanged(int)</slot>
+  <slot>outputDelayChanged(int)</slot>
  </slots>
 </ui>

@@ -133,9 +133,9 @@ void CasparDevice::loadRouteChannel(int toChannel, int toVideolayer, int fromCha
     writeMessage(QString("LOADBG %1-%2 route://%3").arg(toChannel).arg(toVideolayer).arg(fromChannel));
 }
 
-void CasparDevice::loadRouteChannel(int toChannel, int toVideolayer, int fromChannel, int routeDelay)
+void CasparDevice::loadRouteChannel(int toChannel, int toVideolayer, int fromChannel, int outputDelay)
 {
-    writeMessage(QString("LOADBG %1-%2 route://%3 FRAMES_DELAY %4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(routeDelay));
+    writeMessage(QString("LOADBG %1-%2 route://%3 FRAMES_DELAY %4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(outputDelay));
 }
 
 void CasparDevice::playRouteChannel(int toChannel, int toVideolayer, int fromChannel)
@@ -143,9 +143,9 @@ void CasparDevice::playRouteChannel(int toChannel, int toVideolayer, int fromCha
     writeMessage(QString("PLAY %1-%2 route://%3").arg(toChannel).arg(toVideolayer).arg(fromChannel));
 }
 
-void CasparDevice::playRouteChannel(int toChannel, int toVideolayer, int fromChannel, int routeDelay)
+void CasparDevice::playRouteChannel(int toChannel, int toVideolayer, int fromChannel, int outputDelay)
 {
-    writeMessage(QString("PLAY %1-%2 route://%3 FRAMES_DELAY %4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(routeDelay));
+    writeMessage(QString("PLAY %1-%2 route://%3 FRAMES_DELAY %4").arg(toChannel).arg(toVideolayer).arg(fromChannel).arg(outputDelay));
 }
 
 void CasparDevice::loadRouteVideolayer(int toChannel, int toVideolayer, int fromChannel, int fromVideolayer)

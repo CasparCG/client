@@ -28,7 +28,7 @@ void InspectorRouteChannelWidget::rundownItemSelected(const RundownItemSelectedE
         this->command = dynamic_cast<RouteChannelCommand*>(event.getCommand());
 
         this->spinBoxChannel->setValue(this->command->getFromChannel());
-        this->spinBoxRouteDelay->setValue(this->command->getRouteDelay());
+        this->spinBoxOutputDelay->setValue(this->command->getOutputDelay());
     }
 
     blockAllSignals(false);
@@ -37,7 +37,7 @@ void InspectorRouteChannelWidget::rundownItemSelected(const RundownItemSelectedE
 void InspectorRouteChannelWidget::blockAllSignals(bool block)
 {
     this->spinBoxChannel->blockSignals(block);
-    this->spinBoxRouteDelay->blockSignals(block);
+    this->spinBoxOutputDelay->blockSignals(block);
 }
 
 void InspectorRouteChannelWidget::deviceChanged(const DeviceChangedEvent& event)
@@ -61,7 +61,7 @@ void InspectorRouteChannelWidget::channelChanged(int fromChannel)
     this->command->setFromChannel(fromChannel);
 }
 
-void InspectorRouteChannelWidget::routeDelayChanged(int delay)
+void InspectorRouteChannelWidget::outputDelayChanged(int delay)
 {
-    this->command->setRouteDelay(delay);
+    this->command->setOutputDelay(delay);
 }

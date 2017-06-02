@@ -154,7 +154,6 @@ namespace Route
 {
     static const int DEFAULT_FROM_CHANNEL = 1;
     static const int DEFAULT_FROM_VIDEOLAYER = 1;
-    static const int DEFAULT_ROUTE_DELAY = 0;
     static const int DEFAULT_OUTPUT_DELAY = 0;
 }
 

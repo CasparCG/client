@@ -119,7 +119,7 @@ AbstractRundownWidget* RundownRouteChannelWidget::clone()
     command->setAllowRemoteTriggering(this->command.getAllowRemoteTriggering());
     command->setRemoteTriggerId(this->command.getRemoteTriggerId());
     command->setFromChannel(this->command.getFromChannel());
-    command->setRouteDelay(this->command.getRouteDelay());
+    command->setOutputDelay(this->command.getOutputDelay());
 
     return widget;
 }
@@ -474,18 +474,18 @@ void RundownRouteChannelWidget::checkDeviceConnection()
 
 void RundownRouteChannelWidget::performRouteChannel(CasparDevice &device)
 {
-    if (this->command.getRouteDelay() == 0)
+    if (this->command.getOutputDelay() == 0)
         device.playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
     else
-        device.playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getRouteDelay());
+        device.playRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getOutputDelay());
 }
 
 void RundownRouteChannelWidget::performLoadRouteChannel(CasparDevice &device)
 {
-    if (this->command.getRouteDelay() == 0)
+    if (this->command.getOutputDelay() == 0)
         device.loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel());
     else
-        device.loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getRouteDelay());
+        device.loadRouteChannel(this->command.getChannel(), this->command.getVideolayer(), this->command.getFromChannel(), this->command.getOutputDelay());
 }
 
 void RundownRouteChannelWidget::configureOscSubscriptions()
