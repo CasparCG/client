@@ -202,7 +202,7 @@ namespace Mixer
     static const float DEFAULT_CROP_TOP = 0.0f;
     static const float DEFAULT_CROP_RIGHT = 1.0f;
     static const float DEFAULT_CROP_BOTTOM = 1.0f;
-    static const int DEFAULT_DURATION = 1;
+    static const int DEFAULT_DURATION = 0;
     static const bool DEFAULT_DEFER = false;
     static const bool DEFAULT_MIPMAP = false;
     static const QString DEFAULT_BLENDMODE = "Normal";
