@@ -76,9 +76,9 @@ class WIDGETS_EXPORT RundownGroupWidget : public QWidget, Ui::RundownGroupWidget
         OscSubscription* clearChannelControlSubscription;
 
         void checkGpiConnection();
-        void configureOscSubscriptions();
         bool executeOscCommand(Playout::PlayoutType type);
 
+        Q_SLOT void configureOscSubscriptions();
         Q_SLOT void durationChanged(int);
         Q_SLOT void notesChanged(const QString&);
         Q_SLOT void allowGpiChanged(bool);

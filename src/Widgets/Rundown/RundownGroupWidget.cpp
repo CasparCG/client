@@ -47,6 +47,7 @@ RundownGroupWidget::RundownGroupWidget(const LibraryModel& model, QWidget* paren
     QObject::connect(&this->command, SIGNAL(allowGpiChanged(bool)), this, SLOT(allowGpiChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoStepChanged(bool)), this, SLOT(autoStepChanged(bool)));
     QObject::connect(&this->command, SIGNAL(autoPlayChanged(bool)), this, SLOT(autoPlayChanged(bool)));
+    QObject::connect(&this->command, SIGNAL(allowRemoteTriggeringChanged(bool)), this, SLOT(configureOscSubscriptions()));
     QObject::connect(&this->command, SIGNAL(remoteTriggerIdChanged(const QString&)), this, SLOT(remoteTriggerIdChanged(const QString&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(labelChanged(const LabelChangedEvent&)), this, SLOT(labelChanged(const LabelChangedEvent&)));
 
@@ -254,9 +255,6 @@ void RundownGroupWidget::checkGpiConnection()
 
 void RundownGroupWidget::configureOscSubscriptions()
 {
-    if (!this->command.getAllowRemoteTriggering())
-        return;
-
     if (this->stopControlSubscription != NULL)
         this->stopControlSubscription->disconnect(); // Disconnect all events.
 
@@ -286,6 +284,9 @@ void RundownGroupWidget::configureOscSubscriptions()
 
     if (this->clearChannelControlSubscription != NULL)
         this->clearChannelControlSubscription->disconnect(); // Disconnect all events.
+
+    if (!this->command.getAllowRemoteTriggering() || this->command.getRemoteTriggerId().trimmed().isEmpty())
+        return;
 
     QString stopControlFilter = Osc::ITEM_CONTROL_STOP_FILTER;
     stopControlFilter.replace("#UID#", this->command.getRemoteTriggerId());
