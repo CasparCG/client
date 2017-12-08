@@ -11,6 +11,8 @@ CONFIG += c++11
 TARGET = shell
 TEMPLATE = app
 
+DEFINES += _GLIBCXX_USE_CXX11_ABI=0
+
 HEADERS += \
     Application.h
 
