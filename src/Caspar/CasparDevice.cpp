@@ -364,13 +364,13 @@ void CasparDevice::startStream(int channel, int port, int quality, bool key, int
 {
     if (width > 0 && height > 0)
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast -vf %4scale=%5:%6")
-                     .arg(channel).arg(port).arg(quality).arg((key == true) ? "alphaextract," : "").arg(width).arg(height));
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast -filter:v scale=%4:%5%6")
+                     .arg(channel).arg(port).arg(quality).arg(width).arg(height).arg((key == true) ? ",alphaextract" : ""));
     }
     else
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -vcodec libx264 -crf %3 -tune zerolatency -preset ultrafast %4")
-                     .arg(channel).arg(port).arg(quality).arg((key == true) ? "-vf alphaextract" : ""));
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast %4")
+                     .arg(channel).arg(port).arg(quality).arg((key == true) ? "-filter:v alphaextract" : ""));
     }
 }
 
