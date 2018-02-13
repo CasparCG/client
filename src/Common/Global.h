@@ -115,7 +115,7 @@ namespace Osc
     static const QString FILERECORDER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/200/path";
     static const QString VIDEOLAYER_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame";
     static const QString VIDEOLAYER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps";
-    static const QString VIDEOLAYER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/path";
+    static const QString VIDEOLAYER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/name";
     static const QString VIDEOLAYER_PAUSED_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/paused";
     static const QString VIDEOLAYER_LOOP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/loop";
     static const QString AUDIOCHANNEL_FILTER = "#IPADDRESS#/channel/#CHANNEL#/mixer/audio/#AUDIOCHANNEL#/dBFS";
