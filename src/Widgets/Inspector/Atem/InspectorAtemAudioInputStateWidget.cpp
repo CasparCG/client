@@ -98,6 +98,9 @@ void InspectorAtemAudioInputStateWidget::blockAllSignals(bool block)
 
 void InspectorAtemAudioInputStateWidget::loadAtemInputState()
 {
+    if (comboBoxState->count())
+        return;
+
     // We do not have a command object, block the signals.
     // Events will not be triggered while we update the values.
     this->comboBoxState->blockSignals(true);
