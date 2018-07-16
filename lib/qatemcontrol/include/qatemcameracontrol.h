@@ -19,12 +19,13 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #define QATEMCAMERACONTROL_H
 
 #include "qatemtypes.h"
+#include "libqatemcontrol_global.h"
 
 #include <QObject>
 
 class QAtemConnection;
 
-class QAtemCameraControl : public QObject
+class LIBQATEMCONTROLSHARED_EXPORT QAtemCameraControl : public QObject
 {
     Q_OBJECT
 public:

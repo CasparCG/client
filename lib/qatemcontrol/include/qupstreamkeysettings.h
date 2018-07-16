@@ -19,10 +19,11 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #define QUPSTREAMKEYSETTINGS_H
 
 #include "qatemtypes.h"
+#include "libqatemcontrol_global.h"
 
 #include <QColor>
 
-struct QUpstreamKeySettings
+struct LIBQATEMCONTROLSHARED_EXPORT QUpstreamKeySettings
 {
     QUpstreamKeySettings(quint8 id) : m_id (id)
     {
