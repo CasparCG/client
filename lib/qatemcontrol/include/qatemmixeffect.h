@@ -25,7 +25,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 class QColor;
 
-class QAtemMixEffect : public QObject
+class LIBQATEMCONTROLSHARED_EXPORT QAtemMixEffect : public QObject
 {
     Q_OBJECT
 public:

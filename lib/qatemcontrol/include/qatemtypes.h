@@ -18,6 +18,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef QATEM_TOPOLOGY_H
 #define QATEM_TOPOLOGY_H
 
+#include "libqatemcontrol_global.h"
+
 #include <QtGlobal>
 #include <QString>
 #include <QPointF>
@@ -38,20 +40,21 @@ namespace QAtem
         quint8 u8[4];
     } U32_U8;
 
-    struct Topology
+    struct LIBQATEMCONTROLSHARED_EXPORT Topology
     {
         quint8 MEs;
         quint8 sources;
         quint8 colorGenerators;
         quint8 auxBusses;
         quint8 downstreamKeyers;
+        quint8 upstreamKeyers;
         quint8 stingers;
         quint8 DVEs;
         quint8 supersources;
         bool hasSD;
     };
 
-    struct VideoMode
+    struct LIBQATEMCONTROLSHARED_EXPORT VideoMode
     {
         VideoMode() : index(0), framesPerSecond(0.0) {}
         VideoMode(quint8 i, const QString &n, const QSize &s, float f) :
@@ -63,7 +66,7 @@ namespace QAtem
         float framesPerSecond;
     };
 
-    struct MultiView
+    struct LIBQATEMCONTROLSHARED_EXPORT MultiView
     {
         MultiView(quint8 i) : index(i) {}
 
@@ -73,7 +76,7 @@ namespace QAtem
         quint16 sources[10];
     };
 
-    struct InputInfo
+    struct LIBQATEMCONTROLSHARED_EXPORT InputInfo
     {
         InputInfo()
         {
@@ -104,7 +107,7 @@ namespace QAtem
         SoundMedia = 3
     };
 
-    struct MediaInfo
+    struct LIBQATEMCONTROLSHARED_EXPORT MediaInfo
     {
         quint8 index;
         bool used;
@@ -114,7 +117,7 @@ namespace QAtem
         QByteArray hash;
     };
 
-    struct MediaPlayerState
+    struct LIBQATEMCONTROLSHARED_EXPORT MediaPlayerState
     {
         quint8 index;
         bool loop;
@@ -123,7 +126,7 @@ namespace QAtem
         quint8 currentFrame;
     };
 
-    struct AudioInput
+    struct LIBQATEMCONTROLSHARED_EXPORT AudioInput
     {
         quint16 index;
         quint8 type; // 0 = Video input, 1 = Media player, 2 = External
@@ -133,7 +136,7 @@ namespace QAtem
         float gain; // dB
     };
 
-    struct AudioLevel
+    struct LIBQATEMCONTROLSHARED_EXPORT AudioLevel
     {
         quint8 index;
         float left;
@@ -142,7 +145,7 @@ namespace QAtem
         float peakRight;
     };
 
-    struct DveKeyFrame
+    struct LIBQATEMCONTROLSHARED_EXPORT DveKeyFrame
     {
         QPointF position;
         QSizeF size;
@@ -163,7 +166,7 @@ namespace QAtem
         float maskRight;
     };
 
-    struct Camera
+    struct LIBQATEMCONTROLSHARED_EXPORT Camera
     {
         Camera(quint8 i) :
             input(i), focus(0), autoFocused(false), iris(0), zoomSpeed(0),
@@ -201,7 +204,7 @@ namespace QAtem
         quint8 saturation;
     };
 
-    struct MacroInfo
+    struct LIBQATEMCONTROLSHARED_EXPORT MacroInfo
     {
         quint8 index;
         bool used;
