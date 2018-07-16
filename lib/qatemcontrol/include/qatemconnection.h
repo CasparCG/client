@@ -18,8 +18,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef QATEMCONNECTION_H
 #define QATEMCONNECTION_H
 
-#include "qdownstreamkeysettings.h"
 #include "qatemtypes.h"
+#include "libqatemcontrol_global.h"
 
 #include <QObject>
 #include <QUdpSocket>
@@ -29,12 +29,14 @@ class QTimer;
 class QHostAddress;
 class QAtemMixEffect;
 class QAtemCameraControl;
+class QAtemDownstreamKey;
 
-class QAtemConnection : public QObject
+class LIBQATEMCONTROLSHARED_EXPORT QAtemConnection : public QObject
 {
     Q_OBJECT
 friend class QAtemMixEffect;
 friend class QAtemCameraControl;
+friend class QAtemDownstreamKey;
 public:
     enum Command
     {
@@ -84,38 +86,10 @@ public:
     /// @returns number of tally channels available
     quint16 tallyChannelCount() const { return m_tallyChannelCount; }
 
-    /// @returns true if downstream key @p keyer is on air
-    bool downstreamKeyOn(quint8 keyer) const;
-    /// @returns true if downstream key @p keyer is tied to next transition
-    bool downstreamKeyTie(quint8 keyer) const;
-    /// @returns number of frames left of key transition for @p keyer
-    quint8 downstreamKeyFrameCount(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_frameCount; }
-    /// @returns duration in number of frames for key transition of dsk @p keyer
-    quint8 downstreamKeyFrames(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_frames; }
-    /// @returns the input selected as fill source for downstream key @p keyer
-    quint16 downstreamKeyFillSource(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_fillSource; }
-    /// @returns the input selected as key source for downstream key @p keyer
-    quint16 downstreamKeyKeySource(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_keySource; }
-    /// @returns true if the should be inverted for downstream key @p keyer
-    bool downstreamKeyInvertKey(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_invertKey; }
-    /// @returns true if the key is pre multiplied for downstream key @p keyer
-    bool downstreamKeyPreMultiplied(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_preMultiplied; }
-    /// @returns the clip set for downstream key @p keyer
-    quint16 downstreamKeyClip(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_clip; }
-    /// @returns the gain set for downstream key @p keyer
-    quint16 downstreamKeyGain(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_gain; }
-    /// @returns true if the mask for downstream key @p keyer is enabled
-    bool downstreamKeyEnableMask(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_enableMask; }
-    /// @returns the top position of the mask for downstream key @p keyer
-    qint16 downstreamKeyTopMask(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_topMask; }
-    /// @returns the bottom position of the mask for downstream key @p keyer
-    qint16 downstreamKeyBottomMask(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_bottomMask; }
-    /// @returns the left position of the mask for downstream key @p keyer
-    qint16 downstreamKeyLeftMask(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_leftMask; }
-    /// @returns the right position of the mask for downstream key @p keyer
-    qint16 downstreamKeyRightMask(quint8 keyer) const { return m_downstreamKeys.value(keyer).m_rightMask; }
-
     QColor colorGeneratorColor(quint8 generator) const;
+
+    QAtemDownstreamKey *downstreamKey(quint8 id) const;
+    QVector<QAtemDownstreamKey*> downstreamKeys() const { return m_downstreamKeys; }
 
     quint8 mediaPlayerType(quint8 player) const;
     quint8 mediaPlayerSelectedStill(quint8 player) const;
@@ -235,19 +209,6 @@ public:
     quint8 recordingMacro() const { return m_recordingMacro; }
 
 public slots:
-    void setDownstreamKeyOn(quint8 keyer, bool state);
-    void setDownstreamKeyTie(quint8 keyer, bool state);
-    void doDownstreamKeyAuto(quint8 keyer);
-    void setDownstreamKeyFillSource(quint8 keyer, quint16 source);
-    void setDownstreamKeyKeySource(quint8 keyer, quint16 source);
-    void setDownstreamKeyFrameRate(quint8 keyer, quint8 frames);
-    void setDownstreamKeyInvertKey(quint8 keyer, bool invert);
-    void setDownstreamKeyPreMultiplied(quint8 keyer, bool preMultiplied);
-    void setDownstreamKeyClip(quint8 keyer, float clip);
-    void setDownstreamKeyGain(quint8 keyer, float gain);
-    void setDownstreamKeyEnableMask(quint8 keyer, bool enable);
-    void setDownstreamKeyMask(quint8 keyer, float top, float bottom, float left, float right);
-
     void saveSettings();
     void clearSettings();
 
@@ -322,9 +283,6 @@ protected slots:
     void emitConnectedSignal();
 
     void onTlIn(const QByteArray& payload);
-    void onDskS(const QByteArray& payload);
-    void onDskP(const QByteArray& payload);
-    void onDskB(const QByteArray& payload);
     void onColV(const QByteArray& payload);
     void onMPCE(const QByteArray& payload);
     void onAuxS(const QByteArray& payload);
@@ -426,7 +384,7 @@ private:
 
     quint16 m_tallyChannelCount;
 
-    QHash<quint8, QDownstreamKeySettings> m_downstreamKeys;
+    QVector<QAtemDownstreamKey*> m_downstreamKeys;
 
     QHash<quint8, QColor> m_colorGeneratorColors;
 
@@ -511,21 +469,6 @@ signals:
     void switcherWarning(const QString &warningString);
 
     void tallyStatesChanged();
-
-    void downstreamKeyOnChanged(quint8 keyer, bool state);
-    void downstreamKeyTieChanged(quint8 keyer, bool state);
-    void downstreamKeyFrameCountChanged(quint8 keyer, quint8 count);
-    void downstreamKeyFramesChanged(quint8 keyer, quint8 frames);
-    void downstreamKeySourcesChanged(quint8 keyer, quint16 fill, quint16 key);
-    void downstreamKeyInvertKeyChanged(quint8 keyer, bool invert);
-    void downstreamKeyPreMultipliedChanged(quint8 keyer, bool preMultiplied);
-    void downstreamKeyClipChanged(quint8 keyer, float clip);
-    void downstreamKeyGainChanged(quint8 keyer, float gain);
-    void downstreamKeyEnableMaskChanged(quint8 keyer, bool enable);
-    void downstreamKeyTopMaskChanged(quint8 keyer, float value);
-    void downstreamKeyBottomMaskChanged(quint8 keyer, float value);
-    void downstreamKeyLeftMaskChanged(quint8 keyer, float value);
-    void downstreamKeyRightMaskChanged(quint8 keyer, float value);
 
     void colorGeneratorColorChanged(quint8 generator, const QColor& color);
 
