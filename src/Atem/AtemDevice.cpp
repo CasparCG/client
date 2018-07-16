@@ -2,7 +2,7 @@
 
 #include "qatemmixeffect.h"
 #include "qatemconnection.h"
-
+#include "qatemdownstreamkey.h"
 #include <math.h>
 #include <QtCore/QStringList>
 
@@ -40,9 +40,8 @@ void AtemDevice::triggerAuto(const QString& target, qint8 speed, const QString& 
     }
     else
     {
-        SwitcherDevice::atemConnection->setDownstreamKeyFrameRate(target.toInt(), speed);
-
-        SwitcherDevice::atemConnection->doDownstreamKeyAuto(target.toInt());
+        SwitcherDevice::atemConnection->downstreamKey(target.toInt())->setFrameRate(speed);
+        SwitcherDevice::atemConnection->downstreamKey(target.toInt())->doAuto();
     }
 }
 
@@ -64,7 +63,6 @@ QVector<QAtem::MacroInfo> AtemDevice::macroInfos()
     foreach (QAtem::MacroInfo macro, macros)
         qDebug("Name: %s Index: %s", qPrintable(macro.name), qPrintable(macro.index));
     */
-
     return SwitcherDevice::atemConnection->macroInfos();
 }
 
@@ -105,7 +103,7 @@ void AtemDevice::setAuxSource(const QString& aux, const QString& source)
 void AtemDevice::setKeyerState(const QString& keyer, bool state, const QString& me)
 {
     if (keyer == "0" || keyer == "1") // Downstream keyer.
-        SwitcherDevice::atemConnection->setDownstreamKeyOn(keyer.toInt(), state);
+        SwitcherDevice::atemConnection->downstreamKey(keyer.toInt())->setOnAir(state);
     else
         SwitcherDevice::atemConnection->mixEffect(me.toInt())->setUpstreamKeyOnAir(keyer.toInt() - 2, state);
 }
