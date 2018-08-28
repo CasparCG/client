@@ -31,6 +31,7 @@
 #include "DatabaseManager.h"
 #include "EventManager.h"
 #include "DeviceManager.h"
+#include "ScheduleManager.h"
 #include "Events/PresetChangedEvent.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
@@ -82,6 +83,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(clearDelayedCommands()), this, SLOT(clearDelayedCommands()));
     QObject::connect(&EventManager::getInstance(), SIGNAL(saveAsPreset(const SaveAsPresetEvent&)), this, SLOT(saveAsPreset(const SaveAsPresetEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addPresetItem(const AddPresetItemEvent&)), this, SLOT(addPresetItem(const AddPresetItemEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(addScheduleItem(const AddScheduleItemEvent&)), this, SLOT(addScheduleItem(const AddScheduleItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(addRudnownItem(const AddRudnownItemEvent&)), this, SLOT(addRudnownItem(const AddRudnownItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(toggleCompactView(const CompactViewEvent&)), this, SLOT(toggleCompactView(const CompactViewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(executeRundownItem(const ExecuteRundownItemEvent&)), this, SLOT(executeRundownItem(const ExecuteRundownItemEvent&)));
@@ -96,6 +98,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(insertRepositoryChanges(const InsertRepositoryChangesEvent&)), this, SLOT(insertRepositoryChanges(const InsertRepositoryChangesEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)), this, SLOT(clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(currentItemChanged(const CurrentItemChangedEvent&)), this, SLOT(currentItemChanged(const CurrentItemChangedEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(restoreBeforeSchedule(const RestoreBeforeScheduleEvent&)), this, SLOT(restoreBeforeSchedule(const RestoreBeforeScheduleEvent&)));
 
     foreach (const GpiPortModel& port, DatabaseManager::getInstance().getGpiPorts())
         gpiBindingChanged(port.getPort(), port.getAction());
@@ -377,6 +380,41 @@ void RundownTreeWidget::addPresetItem(const AddPresetItemEvent& event)
     qApp->clipboard()->setText(event.getPreset());
     pasteSelectedItems();
     selectItemBelow();
+}
+
+void RundownTreeWidget::addScheduleItem(const AddScheduleItemEvent& event)
+{
+    if (!this->active)
+        return;
+
+    if (this->tempRundownSaved.isEmpty()) {
+        if (!this->treeWidgetRundown->copyAllItems())
+            return;
+
+        this->tempRundownSaved = qApp->clipboard()->text();
+    }
+
+    this->treeWidgetRundown->removeAllItems();
+
+    foreach (PresetModel model, event.getScheduleModel().getPresetList()) {
+        EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(model.getValue()));
+    }
+
+    //Execute PlayNow
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F2, Qt::ShiftModifier));
+}
+
+void RundownTreeWidget::restoreBeforeSchedule(const RestoreBeforeScheduleEvent& event)
+{
+    Q_UNUSED(event);
+
+    this->treeWidgetRundown->removeAllItems();
+
+    EventManager::getInstance().fireAddPresetItemEvent(AddPresetItemEvent(tempRundownSaved));
+    tempRundownSaved = "";
+
+    //Execute PlayNow
+    EventManager::getInstance().fireExecutePlayoutCommandEvent(ExecutePlayoutCommandEvent(QEvent::KeyPress, Qt::Key_F2, Qt::ShiftModifier));
 }
 
 void RundownTreeWidget::toggleCompactView(const CompactViewEvent& event)

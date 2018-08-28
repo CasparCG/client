@@ -2,6 +2,7 @@
 #include "AboutDialog.h"
 #include "HelpDialog.h"
 #include "SettingsDialog.h"
+#include "ScheduleDialog.h"
 
 #include "Version.h"
 #include "Global.h"
@@ -25,9 +26,12 @@
 #include "Events/Rundown/ExecutePlayoutCommandEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
 
+#include "Models/ScheduleModel.h"
+
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
 #include <QtCore/QFileInfo>
+#include <QtCore/QList>
 
 #include <QtGui/QIcon>
 #include <QtGui/QMouseEvent>
@@ -105,6 +109,9 @@ void MainWindow::setupMenu()
     //this->viewMenu->addSeparator();
     this->viewMenu->addAction("Toggle Fullscreen", this, SLOT(toggleFullscreen()), QKeySequence::fromString("Ctrl+F"));
 
+    this->scheduleMenu = new QMenu(this);
+    this->scheduleMenu->addAction("Setup Scheduled Rundown...", this, SLOT(openScheduleDialogEntry()));
+
     this->libraryMenu = new QMenu(this);
     this->libraryMenu->addAction("Refresh Library", this, SLOT(refreshLibrary()), QKeySequence::fromString("Ctrl+R"));
 
@@ -160,6 +167,7 @@ void MainWindow::setupMenu()
     this->menuBar->addMenu(this->fileMenu)->setText("File");
     this->menuBar->addMenu(this->editMenu)->setText("Edit");
     this->menuBar->addMenu(this->viewMenu)->setText("View");
+    this->menuBar->addMenu(this->scheduleMenu)->setText("Schedule");
     this->menuBar->addMenu(this->libraryMenu)->setText("Library");
     this->menuBar->addMenu(this->rundownMenu)->setText("Rundown");
     this->menuBar->addMenu(this->playoutMenu)->setText("Playout");
@@ -467,4 +475,36 @@ void MainWindow::toggleFullscreen()
 void MainWindow::refreshLibrary()
 {
     EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
+}
+
+// Customized Implementation - Schedule
+
+void MainWindow::openScheduleDialogEntry()
+{
+    ScheduleDialog* dialog = new ScheduleDialog(this);
+    if (dialog->exec() == QDialog::Accepted) {
+        bool changed = false;
+        // Loop through to append changes from list
+        foreach (ScheduleModel addModel, dialog->getAddedSchedule()) {
+            DatabaseManager::getInstance().insertSchedule(addModel);
+            changed = true;
+        }
+        foreach (ScheduleModel updateModel, dialog->getUpdatedSchedule()) {
+            DatabaseManager::getInstance().updateScheduleTimeline(updateModel);
+            DatabaseManager::getInstance().updateScheduleActivated(updateModel);
+            DatabaseManager::getInstance().updateScheduleItem(updateModel);
+            changed = true;
+        }
+        foreach (ScheduleModel removedModel, dialog->getRemovedSchedule()){
+            DatabaseManager::getInstance().deleteSchedule(removedModel);
+            changed = true;
+        }
+
+        if (changed) {
+            EventManager::getInstance().fireScheduleChangedEvent(ScheduleChangedEvent());
+            qDebug("Schedule changed fired!");
+        }
+
+        return;
+    }
 }

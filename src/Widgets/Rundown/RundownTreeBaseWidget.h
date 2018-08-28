@@ -50,6 +50,7 @@ class WIDGETS_EXPORT RundownTreeBaseWidget : public QTreeWidget
         bool pasteItemProperties();
         bool duplicateSelectedItems();
         bool copySelectedItems() const;
+        bool copyAllItems() const;
         bool hasItemBelow() const;
 
         void moveItemUp();

@@ -43,6 +43,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QMenu* fileMenu;
         QMenu* editMenu;
         QMenu* viewMenu;
+        QMenu* scheduleMenu;
         QMenu* libraryMenu;
         QMenu* rundownMenu;
         QMenu* markMenu;
@@ -115,4 +116,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void exportPresetMenu(const ExportPresetMenuEvent&);
         Q_SLOT void saveAsPresetMenu(const SaveAsPresetMenuEvent&);
         Q_SLOT void reloadRundownMenu(const ReloadRundownMenuEvent&);
+
+        // Customized Implementation - Schedule
+        Q_SLOT void openScheduleDialogEntry();
 };

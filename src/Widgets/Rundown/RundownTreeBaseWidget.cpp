@@ -133,6 +133,28 @@ bool RundownTreeBaseWidget::copySelectedItems() const
     return true;
 }
 
+bool RundownTreeBaseWidget::copyAllItems() const
+{
+    QString data;
+    QXmlStreamWriter* writer = new QXmlStreamWriter(&data);
+
+    writer->writeStartDocument();
+    writer->writeStartElement("items");
+    QList<QTreeWidgetItem *> items = QTreeWidget::findItems(
+                QString("*"), Qt::MatchWrap | Qt::MatchWildcard | Qt::MatchRecursive);
+    for (int i = 0; i < items.count(); i++)
+        writeProperties(items.at(i), writer);
+
+    writer->writeEndElement();
+    writer->writeEndDocument();
+
+    qApp->clipboard()->setText(data);
+
+    delete writer;
+
+    return true;
+}
+
 void RundownTreeBaseWidget::copyItemProperties() const
 {
     copySelectedItems();
@@ -1044,7 +1066,7 @@ void RundownTreeBaseWidget::applyRepositoryChanges()
         this->repositoryChanges.removeAt(index);
     }
 
-    // Do we have updates which we can nott apply?
+    // Do we have updates which we can not apply?
     if (this->repositoryChanges.count() > 0)
         checRepositoryChanges();
 

@@ -10,8 +10,10 @@
 #include "GpiDevice.h"
 #include "RepositoryDevice.h"
 #include "Models/RepositoryChangeModel.h"
+#include "Models/PresetModel.h"
 
 #include "Events/AddPresetItemEvent.h"
+#include "Events/AddScheduleItemEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/Rundown/AddRudnownItemEvent.h"
@@ -28,6 +30,7 @@
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/Rundown/CurrentItemChangedEvent.h"
+#include "Events/Rundown/RestoreBeforeScheduleEvent.h"
 
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -80,6 +83,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QString page;
         QString activeRundown;
         QString hexHash;
+        QString tempRundownSaved;
 
         QMenu* contextMenuTools;
         QMenu* contextMenuColor;
@@ -209,6 +213,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
         Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
         Q_SLOT void addPresetItem(const AddPresetItemEvent&);
+        Q_SLOT void addScheduleItem(const AddScheduleItemEvent&);
         Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
         Q_SLOT void toggleCompactView(const CompactViewEvent&);
         Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
@@ -246,4 +251,5 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void insertRepositoryChanges(const InsertRepositoryChangesEvent&);
         Q_SLOT void currentItemChanged(const CurrentItemChangedEvent&);
         Q_SLOT void clearDelayedCommands();
+        Q_SLOT void restoreBeforeSchedule(const RestoreBeforeScheduleEvent&);
 };
