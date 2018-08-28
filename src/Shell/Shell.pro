@@ -184,3 +184,10 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Widgets/release/ -lw
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Widgets/debug/ -lwidgets
 else:macx:LIBS += -L$$OUT_PWD/../Widgets/ -lwidgets
 else:unix:LIBS += -L$$OUT_PWD/../Widgets/ -lwidgets
+
+DEPENDPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+INCLUDEPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Schedule/release/ -lschedule
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Schedule/debug/ -lschedule
+else:macx:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule
+else:unix:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule

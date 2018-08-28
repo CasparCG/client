@@ -12,6 +12,7 @@
 #include "../Core/OscWebSocketManager.h"
 #include "../Core/AtemDeviceManager.h"
 #include "../Core/TriCasterDeviceManager.h"
+#include "../Core/ScheduleManager.h"
 #include "../Core/Events/Rundown/OpenRundownEvent.h"
 
 #include "../Widgets/MainWindow.h"
@@ -101,6 +102,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
 void loadDatabase(CommandLineArgs* args)
 {
     QString path = QString("%1/.CasparCG/Client").arg(QDir::homePath());
+    qDebug("Main Path: %s", qPrintable(path));
 
     QDir directory(path);
     if (!directory.exists())
@@ -332,6 +334,7 @@ int main(int argc, char* argv[])
     TriCasterDeviceManager::getInstance().initialize();
     OscDeviceManager::getInstance().initialize();
     OscWebSocketManager::getInstance().initialize();
+    ScheduleManager::getInstance().initialize();
 
     int returnValue = application.exec();
 
@@ -344,6 +347,7 @@ int main(int argc, char* argv[])
     AtemDeviceManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
     LibraryManager::getInstance().uninitialize();
+    ScheduleManager::getInstance().uninitialize();
 
     return returnValue;
 }
