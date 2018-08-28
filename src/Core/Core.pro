@@ -191,7 +191,13 @@ HEADERS += \
     Events/Rundown/CurrentItemChangedEvent.h \
     Commands/Atem/AtemMacroCommand.h \
     OscWebSocketManager.h \
-    Commands/Atem/AtemFadeToBlackCommand.h
+    Commands/Atem/AtemFadeToBlackCommand.h \
+    Events/AddScheduleItemEvent.h \
+    Events/ScheduleChangedEvent.h \
+    Events/Schedule/ScheduleActivatedEvent.h \
+    Models/ScheduleModel.h \
+    ScheduleManager.h \
+    Events/Rundown/RestoreBeforeScheduleEvent.h
 
 SOURCES += \
     DatabaseManager.cpp \
@@ -376,7 +382,13 @@ SOURCES += \
     Events/Rundown/CurrentItemChangedEvent.cpp \
     Commands/Atem/AtemMacroCommand.cpp \
     OscWebSocketManager.cpp \
-    Commands/Atem/AtemFadeToBlackCommand.cpp
+    Commands/Atem/AtemFadeToBlackCommand.cpp \
+    Events/AddScheduleItemEvent.cpp \
+    Events/ScheduleChangedEvent.cpp \
+    Events/Schedule/ScheduleActivatedEvent.cpp \
+    Models/ScheduleModel.cpp \
+    ScheduleManager.cpp \
+    Events/Rundown/RestoreBeforeScheduleEvent.cpp
 
 DISTFILES += \
     Sql/ChangeScript-208.sql \
@@ -474,3 +486,10 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Common/release/ -lco
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Common/debug/ -lcommon
 else:macx:LIBS += -L$$OUT_PWD/../Common/ -lcommon
 else:unix:LIBS += -L$$OUT_PWD/../Common/ -lcommon
+
+DEPENDPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+INCLUDEPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Schedule/release/ -lschedule
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Schedule/debug/ -lschedule
+else:macx:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule
+else:unix:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule

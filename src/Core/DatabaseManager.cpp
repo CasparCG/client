@@ -1907,3 +1907,249 @@ void DatabaseManager::deleteThumbnails()
 
     QSqlDatabase::database().commit();
 }
+
+QList<ScheduleModel> DatabaseManager::getScheduledProgram()
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+
+    if (!sql.exec("SELECT s.Id, s.Name, s.Start, s.Ends, s.Presets, s.Activated FROM Schedule s"))
+        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QList<ScheduleModel> model;
+    while (sql.next()){
+        ScheduleModel schedule = ScheduleModel
+                               (sql.value(0).toInt(), sql.value(1).toString(),
+                               QDateTime::fromString(sql.value(2).toString()),
+                               QDateTime::fromString(sql.value(3).toString()),
+                                sql.value(5).toBool());
+        QStringList presets = sql.value(4).toString().split(",", QString::SkipEmptyParts);
+        foreach(QString preset, presets) {
+            schedule.addPresetToList(this->getPreset(preset.trimmed()));
+        }
+        model.push_back(schedule);
+    }
+
+    return model;
+}
+
+ScheduleModel DatabaseManager::getScheduledProgramByName(const QString &name)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlQuery sql;
+
+    sql.prepare("SELECT s.Id, s.Name, s.Start, s.Ends, s.Presets, s.Activated FROM Schedule s "
+                "WHERE s.Name = :Name");
+    sql.bindValue(":Name", name);
+
+    if (!sql.exec())
+        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    sql.first();
+    ScheduleModel schedule = ScheduleModel
+                           (sql.value(0).toInt(), sql.value(1).toString(),
+                           QDateTime::fromString(sql.value(2).toString()),
+                           QDateTime::fromString(sql.value(3).toString()),
+                            sql.value(5).toBool());
+    QStringList presets = sql.value(4).toString().split(",", QString::SkipEmptyParts);
+    foreach(QString preset, presets) {
+        schedule.addPresetToList(this->getPreset(preset.trimmed()));
+    }
+
+    return schedule;
+}
+
+ScheduleModel DatabaseManager::getScheduledProgramById(int id)
+{
+   QMutexLocker locker(&mutex);
+
+   ScheduleModel schedule(0, "");
+   QSqlQuery sql;
+
+   sql.prepare("SELECT s.Id, s.Name, s.Start, s.Ends, s.Presets, s.Activated FROM Schedule s "
+               "WHERE s.Id = :Id");
+   sql.bindValue(":Id", id);
+
+   if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+   if (sql.first()) {
+       schedule = ScheduleModel
+                              (sql.value(0).toInt(), sql.value(1).toString(),
+                              QDateTime::fromString(sql.value(2).toString()),
+                              QDateTime::fromString(sql.value(3).toString()),
+                               sql.value(5).toBool());
+       QStringList presets = sql.value(4).toString().split(",", QString::SkipEmptyParts);
+       foreach(QString preset, presets) {
+           schedule.addPresetToList(this->getPreset(preset.trimmed()));
+       }
+   }
+
+   return schedule;
+}
+
+void DatabaseManager::insertSchedule(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("INSERT INTO Schedule (Name, Start, Ends, Presets, Activated) "
+                "VALUES(:Name, :Start, :Ends, :Presets, :Activated)");
+    sql.bindValue(":Name", model.getName());
+    sql.bindValue(":Start", model.getTimelineBegan().toString());
+    sql.bindValue(":Ends", model.getTimelineEnd().toString());
+    sql.bindValue(":Activated", model.getActivated());
+
+    QString presets;
+    QList<PresetModel> prMod = model.getPresetList();
+
+    if (prMod.count() == 1) {
+        presets = prMod.at(0).getName();
+    }
+    else if (!prMod.isEmpty()){
+        bool pastFirst = false;
+        foreach(PresetModel pres, model.getPresetList()) {
+            if(!pastFirst) {
+                presets = pres.getName();
+                pastFirst = true;
+            }
+            else {
+                presets += QString(",%1").arg(pres.getName());
+            }
+        }
+    }
+    else {
+        presets = "";
+    }
+
+    sql.bindValue(":Presets", presets);
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateScheduleName(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("UPDATE Schedule SET Name = :Name "
+                "WHERE Id = :Id");
+    sql.bindValue(":Name", model.getName());
+    sql.bindValue(":Id", model.getId());
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateScheduleTimeline(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("UPDATE Schedule SET Start = :Start, Ends = :Ends "
+                "WHERE Name = :Name");
+    sql.bindValue(":Start", model.getTimelineBegan().toString());
+    sql.bindValue(":Ends", model.getTimelineEnd().toString());
+    sql.bindValue(":Name", model.getName());
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateScheduleItem(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("UPDATE Schedule SET Presets = :Presets "
+                "WHERE Name = :Name");
+
+    QString presets;
+    QList<PresetModel> prMod = model.getPresetList();
+
+    if (prMod.count() == 1) {
+        presets = prMod.at(0).getName();
+    }
+    else if (!prMod.isEmpty()){
+        bool pastFirst = false;
+        foreach(PresetModel pres, model.getPresetList()) {
+            if(!pastFirst) {
+                presets = pres.getName();
+                pastFirst = true;
+            }
+            else {
+                presets += QString(",%1").arg(pres.getName());
+            }
+        }
+    }
+    else {
+        presets = "";
+    }
+
+    sql.bindValue(":Presets", presets);
+    sql.bindValue(":Name", model.getName());
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::updateScheduleActivated(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("UPDATE Schedule SET Activated = :Activated "
+                "WHERE Name = :Name");
+    sql.bindValue(":Activated", model.getActivated());
+    sql.bindValue(":Name", model.getName());
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+
+void DatabaseManager::deleteSchedule(const ScheduleModel &model)
+{
+    QMutexLocker locker(&mutex);
+
+    QSqlDatabase::database().transaction();
+
+    QSqlQuery sql;
+
+    sql.prepare("DELETE FROM Schedule "
+                "WHERE Name = :Name");
+    sql.bindValue(":Name", model.getName());
+
+    if (!sql.exec())
+       qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    QSqlDatabase::database().commit();
+}
+

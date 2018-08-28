@@ -5,6 +5,7 @@
 #include "Global.h"
 
 #include "Commands/AbstractCommand.h"
+#include "Events/AddScheduleItemEvent.h"
 #include "Events/AddPresetItemEvent.h"
 #include "Events/DataChangedEvent.h"
 #include "Events/ExportPresetEvent.h"
@@ -12,6 +13,7 @@
 #include "Events/MediaChangedEvent.h"
 #include "Events/OscOutputChangedEvent.h"
 #include "Events/PresetChangedEvent.h"
+#include "Events/ScheduleChangedEvent.h"
 #include "Events/PreviewEvent.h"
 #include "Events/SaveAsPresetEvent.h"
 #include "Events/StatusbarEvent.h"
@@ -65,6 +67,7 @@
 #include "Events/Rundown/RundownItemSelectedEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/ReloadRundownEvent.h"
+#include "Events/Rundown/RestoreBeforeScheduleEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
 #include "Events/Rundown/CopyItemPropertiesEvent.h"
 #include "Events/Rundown/PasteItemPropertiesEvent.h"
@@ -161,6 +164,10 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void showAddHttpGetDataDialog(const ShowAddHttpGetDataDialogEvent&);
         Q_SIGNAL void showAddHttpPostDataDialog(const ShowAddHttpPostDataDialogEvent&);
 
+        Q_SIGNAL void scheduleChanged(const ScheduleChangedEvent&);
+        Q_SIGNAL void addScheduleItem(const AddScheduleItemEvent&);
+        Q_SIGNAL void restoreBeforeSchedule(const RestoreBeforeScheduleEvent&);
+
         void fireClearDelayedCommands();
         void fireCurrentItemChangedEvent(const CurrentItemChangedEvent&);
         void fireShowAddHttpPostDataDialogEvent(const ShowAddHttpPostDataDialogEvent&);
@@ -230,4 +237,8 @@ class CORE_EXPORT EventManager : public QObject
         void fireSaveMenuEvent(const SaveMenuEvent&);
         void fireSaveAsMenuEvent(const SaveAsMenuEvent&);
         void fireInsertRepositoryChangesEvent(const InsertRepositoryChangesEvent&);
+
+        void fireScheduleChangedEvent(const ScheduleChangedEvent&);
+        void fireAddScheduleItemEvent(const AddScheduleItemEvent&);
+        void fireRestoreBeforeScheduleEvent(const RestoreBeforeScheduleEvent&);
 };

@@ -18,6 +18,7 @@
 #include "Models/ThumbnailModel.h"
 #include "Models/FormatModel.h"
 #include "Models/PresetModel.h"
+#include "Models/ScheduleModel.h"
 #include "Models/OscOutputModel.h"
 #include "Models/Atem/AtemDeviceModel.h"
 #include "Models/Atem/AtemAudioInputModel.h"
@@ -150,6 +151,16 @@ class CORE_EXPORT DatabaseManager
         ThumbnailModel getThumbnailByNameAndDeviceName(const QString& name, const QString& deviceName);
         void updateThumbnail(const ThumbnailModel& model);
         void deleteThumbnails();
+
+        QList<ScheduleModel> getScheduledProgram();
+        ScheduleModel getScheduledProgramByName(const QString& name);
+        ScheduleModel getScheduledProgramById(int id);
+        void insertSchedule(const ScheduleModel& model);
+        void updateScheduleName(const ScheduleModel& model);
+        void updateScheduleTimeline(const ScheduleModel& model);
+        void updateScheduleItem(const ScheduleModel& model);
+        void updateScheduleActivated(const ScheduleModel& model);
+        void deleteSchedule(const ScheduleModel& model);
 
     private:
         QMutex mutex;

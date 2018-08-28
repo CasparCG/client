@@ -477,4 +477,21 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Input Balance", "", "", Rundown::ATEMAUDIOINPUTBALANCE, 0, "")));
     else if (type ==  Rundown::ATEMAUDIOGAIN)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Gain", "", "", Rundown::ATEMAUDIOGAIN, 0, "")));
+    //else if (type == Rundown::ATEMVIDEOFORMAT)
+        //emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Crone Audio Switch", "", "", Rundown::ATEMVIDEOFORMAT, 0, "")));
+}
+
+void EventManager::fireScheduleChangedEvent(const ScheduleChangedEvent& event)
+{
+    emit scheduleChanged(event);
+}
+
+void EventManager::fireAddScheduleItemEvent(const AddScheduleItemEvent& event)
+{
+    emit addScheduleItem(event);
+}
+
+void EventManager::fireRestoreBeforeScheduleEvent(const RestoreBeforeScheduleEvent& event)
+{
+    emit restoreBeforeSchedule(event);
 }
