@@ -165,7 +165,8 @@ HEADERS += \
     Rundown/Atem/RundownAtemMacroWidget.h \
     Inspector/Atem/InspectorAtemMacroWidget.h \
     Rundown/Atem/RundownAtemFadeToBlackWidget.h \
-    Inspector/Atem/InspectorAtemFadeToBlackWidget.h
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.h \
+    ScheduleDialog.h
 
 SOURCES += \
     SettingsDialog.cpp \
@@ -323,7 +324,8 @@ SOURCES += \
     Rundown/Atem/RundownAtemMacroWidget.cpp \
     Inspector/Atem/InspectorAtemMacroWidget.cpp \
     Rundown/Atem/RundownAtemFadeToBlackWidget.cpp \
-    Inspector/Atem/InspectorAtemFadeToBlackWidget.cpp
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.cpp \
+    ScheduleDialog.cpp
 
 FORMS += \
     SettingsDialog.ui \
@@ -469,7 +471,8 @@ FORMS += \
     Rundown/Atem/RundownAtemMacroWidget.ui \
     Inspector/Atem/InspectorAtemMacroWidget.ui \
     Rundown/Atem/RundownAtemFadeToBlackWidget.ui \
-    Inspector/Atem/InspectorAtemFadeToBlackWidget.ui
+    Inspector/Atem/InspectorAtemFadeToBlackWidget.ui \
+    ScheduleDialog.ui
 
 RESOURCES += \
     Widgets.qrc
@@ -855,6 +858,13 @@ win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Osc/release/ -losc
 else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Osc/debug/ -losc
 else:macx:LIBS += -L$$OUT_PWD/../Osc/ -losc
 else:unix:LIBS += -L$$OUT_PWD/../Osc/ -losc
+
+DEPENDPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+INCLUDEPATH += $$OUT_PWD/../Schedule $$PWD/../Schedule
+win32:CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../Schedule/release/ -lschedule
+else:win32:CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../Schedule/debug/ -lschedule
+else:macx:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule
+else:unix:LIBS += -L$$OUT_PWD/../Schedule/ -lschedule
 
 DEPENDPATH += $$OUT_PWD/../Repository $$PWD/../Repository
 INCLUDEPATH += $$OUT_PWD/../Repository $$PWD/../Repository
