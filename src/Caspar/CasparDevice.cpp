@@ -345,19 +345,21 @@ void CasparDevice::loadStill(int channel, int videolayer, const QString& name, c
                  .arg((useAuto == true) ? "AUTO" : ""));
 }
 
-void CasparDevice::startFileRecorder(int channel, const QString& filename, const QString& codec, const QString& preset,
-                                     const QString& tune, bool withAlpha)
+void CasparDevice::startFileRecorder(int channel, const QString& filename, const QString& preset, bool withAlpha)
 {
-    writeMessage(QString("ADD %1 FILE \"%2\" -vcodec %3 %4 %5 %6")
-                 .arg(channel).arg(filename).arg(codec)
-                 .arg((preset != "") ? QString("-preset %1").arg(preset) : "")
-                 .arg((tune != "") ? QString("-tune %1").arg(tune) : "")
+    writeMessage(QString("ADD %1-%2 FILE \"%3\" %4 %5")
+                 .arg(channel)
+                 .arg(QString("%1").arg(qChecksum(filename.toUtf8(), filename.length())))
+                 .arg(filename)
+                 .arg((preset != "") ? preset : "")
                  .arg((withAlpha == true) ? "SEPARATE_KEY" : ""));
 }
 
-void CasparDevice::stopFileRecorder(int channel)
+void CasparDevice::stopFileRecorder(int channel, const QString& filename)
 {
-    writeMessage(QString("REMOVE %1 FILE").arg(channel));
+    writeMessage(QString("REMOVE %1-%2 FILE")
+                 .arg(channel)
+                 .arg(QString("%1").arg(qChecksum(filename.toUtf8(), filename.length()))));
 }
 
 void CasparDevice::startStream(int channel, int port, int quality, bool key, int width, int height)

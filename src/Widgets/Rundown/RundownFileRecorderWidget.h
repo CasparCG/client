@@ -94,6 +94,7 @@ class WIDGETS_EXPORT RundownFileRecorderWidget : public QWidget, Ui::RundownFile
         Q_SLOT void channelChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
+        Q_SLOT void outputChanged(const QString&);
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void gpiConnectionStateChanged(bool, GpiDevice*);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);

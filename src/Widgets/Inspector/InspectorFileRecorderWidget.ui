@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>179</height>
+    <height>151</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,43 +17,10 @@
    </sizepolicy>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="bottomMargin">
-    <number>20</number>
-   </property>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelWithAlpha">
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelOutput">
      <property name="text">
-      <string>With alpha</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="comboBoxPreset">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ultrafast</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="labelCodec">
-     <property name="text">
-      <string>Codec</string>
+      <string>Output</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -63,10 +30,10 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="lineEditOutput"/>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="labelOutput">
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelCodec">
      <property name="text">
-      <string>Output</string>
+      <string>Codec</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -88,37 +55,35 @@
      </item>
      <item>
       <property name="text">
-       <string>libx264</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>qtrle</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>prores</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>dvvideo</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ffvhuff</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>rawvideo</string>
+       <string>h264</string>
       </property>
      </item>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelPreset">
+     <property name="text">
+      <string>Preset</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lineEditPreset"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelWithAlpha">
+     <property name="text">
+      <string>With alpha</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayoutWithAlpha">
      <item>
       <widget class="QCheckBox" name="checkBoxWithAlpha">
@@ -145,53 +110,11 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelPreset">
-     <property name="text">
-      <string>Preset</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QComboBox" name="comboBoxTune">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>fastdecode</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelTune">
-     <property name="text">
-      <string>Tune</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>lineEditOutput</tabstop>
   <tabstop>comboBoxCodec</tabstop>
-  <tabstop>comboBoxPreset</tabstop>
-  <tabstop>comboBoxTune</tabstop>
   <tabstop>checkBoxWithAlpha</tabstop>
  </tabstops>
  <resources/>
@@ -261,54 +184,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxPreset</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorFileRecorderWidget</receiver>
-   <slot>presetChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>85</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>225</x>
-     <y>102</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>labelTune</sender>
-   <signal>linkActivated(QString)</signal>
-   <receiver>InspectorFileRecorderWidget</receiver>
-   <slot>resetTune(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>76</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTune</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorFileRecorderWidget</receiver>
-   <slot>tuneChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>225</x>
-     <y>148</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>lineEditOutput</sender>
    <signal>textChanged(QString)</signal>
    <receiver>InspectorFileRecorderWidget</receiver>
@@ -353,6 +228,22 @@
     <hint type="destinationlabel">
      <x>94</x>
      <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditPreset</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InspectorFileRecorderWidget</receiver>
+   <slot>presetChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>

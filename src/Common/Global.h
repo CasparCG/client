@@ -110,9 +110,9 @@ namespace Osc
     static const int COMPACT_PAUSE_X = 102;
     static const int COMPACT_PAUSE_Y = 0;
     static const QString DEFAULT_TIME = "00:00:00:00";
-    static const QString FILERECORDER_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/200/frame";
-    static const QString FILERECORDER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/200/fps";
-    static const QString FILERECORDER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/200/path";
+    static const QString FILERECORDER_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/frame";
+    static const QString FILERECORDER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/fps";
+    static const QString FILERECORDER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/path";
     static const QString VIDEOLAYER_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/frame";
     static const QString VIDEOLAYER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/fps";
     static const QString VIDEOLAYER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/file/name";
@@ -364,10 +364,13 @@ namespace DeckLinkInput
 
 namespace FileRecorder
 {
-    static const QString DEFAULT_OUTPUT = "Output.mov";
-    static const QString DEFAULT_CODEC = "dnxhd";
-    static const QString DEFAULT_PRESET = "";
-    static const QString DEFAULT_TUNE = "";
+    static const QString DEFAULT_OUTPUT = "Output.mxf";
+    static const QString DEFAULT_DNXHD_CODEC = "dnxhd";
+    static const QString DEFAULT_H264_CODEC = "h264";
+    static const QString DEFAULT_DNXHD_PRESET = "-codec:v dnxhd -b:v 120M -flags:v +ilme+ildct -threads:v 4 -filter:v format=yuv422p,interlace";
+    static const QString DEFAULT_H264_PRESET = "-codec:v libx264 -flags:v +ilme+ildct -threads:v 4 -filter:v interlace -preset:v veryfast";
+    static const QString DEFAULT_CODEC = DEFAULT_DNXHD_CODEC;
+    static const QString DEFAULT_PRESET = DEFAULT_DNXHD_PRESET;
     static const bool DEFAULT_WITH_ALPHA = false;
 }
 
