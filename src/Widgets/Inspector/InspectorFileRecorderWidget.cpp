@@ -6,6 +6,8 @@
 #include "EventManager.h"
 #include "Models/FormatModel.h"
 
+#include <QtCore/QFileInfo>
+
 InspectorFileRecorderWidget::InspectorFileRecorderWidget(QWidget* parent)
     : QWidget(parent),
       model(NULL), command(NULL)
@@ -28,8 +30,7 @@ void InspectorFileRecorderWidget::rundownItemSelected(const RundownItemSelectedE
 
         this->lineEditOutput->setText(this->command->getOutput());
         this->comboBoxCodec->setCurrentIndex(this->comboBoxCodec->findText(this->command->getCodec()));
-        this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(this->command->getPreset()));
-        this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(this->command->getTune()));
+        this->lineEditPreset->setText(this->command->getPreset());
         this->checkBoxWithAlpha->setChecked(this->command->getWithAlpha());
     }
 
@@ -40,8 +41,7 @@ void InspectorFileRecorderWidget::blockAllSignals(bool block)
 {
     this->lineEditOutput->blockSignals(block);
     this->comboBoxCodec->blockSignals(block);
-    this->comboBoxPreset->blockSignals(block);
-    this->comboBoxTune->blockSignals(block);
+    this->lineEditPreset->blockSignals(block);
     this->checkBoxWithAlpha->blockSignals(block);
 }
 
@@ -53,16 +53,23 @@ void InspectorFileRecorderWidget::outputChanged(QString output)
 void InspectorFileRecorderWidget::codecChanged(QString codec)
 {
     this->command->setCodec(codec);
+
+    QFileInfo output(this->command->getOutput());
+    if (codec == FileRecorder::DEFAULT_DNXHD_CODEC)
+    {
+        this->lineEditOutput->setText(output.completeBaseName() + ".mxf");
+        this->lineEditPreset->setText(FileRecorder::DEFAULT_DNXHD_PRESET);
+    }
+    else if (codec == FileRecorder::DEFAULT_H264_CODEC)
+    {
+        this->lineEditOutput->setText(output.completeBaseName() + ".mp4");
+        this->lineEditPreset->setText(FileRecorder::DEFAULT_H264_PRESET);
+    }
 }
 
 void InspectorFileRecorderWidget::presetChanged(QString preset)
 {
     this->command->setPreset(preset);
-}
-
-void InspectorFileRecorderWidget::tuneChanged(QString tune)
-{
-    this->command->setTune(tune);
 }
 
 void InspectorFileRecorderWidget::withAlphaChanged(int state)
@@ -90,16 +97,8 @@ void InspectorFileRecorderWidget::resetPreset(QString preset)
 {
     Q_UNUSED(preset);
 
-    this->comboBoxPreset->setCurrentIndex(this->comboBoxPreset->findText(FileRecorder::DEFAULT_PRESET));
-    this->command->setPreset(this->comboBoxPreset->currentText());
-}
-
-void InspectorFileRecorderWidget::resetTune(QString tune)
-{
-    Q_UNUSED(tune);
-
-    this->comboBoxTune->setCurrentIndex(this->comboBoxTune->findText(FileRecorder::DEFAULT_TUNE));
-    this->command->setTune(this->comboBoxTune->currentText());
+    this->lineEditPreset->setText(FileRecorder::DEFAULT_PRESET);
+    this->command->setPreset(this->lineEditPreset->text());
 }
 
 void InspectorFileRecorderWidget::resetWithAlpha(QString withAlpha)

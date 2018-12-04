@@ -27,25 +27,21 @@ class CORE_EXPORT FileRecorderCommand : public AbstractCommand
         const QString& getOutput() const;
         const QString& getCodec() const;
         const QString& getPreset() const;
-        const QString& getTune() const;
         bool getWithAlpha() const;
 
         void setOutput(const QString& output);
         void setCodec(const QString& codec);
         void setPreset(const QString& preset);
-        void setTune(const QString& tune);
         void setWithAlpha(bool withAlpha);
 
     private:
         QString output = FileRecorder::DEFAULT_OUTPUT;
         QString codec = FileRecorder::DEFAULT_CODEC;
         QString preset = FileRecorder::DEFAULT_PRESET;
-        QString tune = FileRecorder::DEFAULT_TUNE;
         bool withAlpha = FileRecorder::DEFAULT_WITH_ALPHA;
 
         Q_SIGNAL void outputChanged(const QString&);
         Q_SIGNAL void codecChanged(const QString&);
         Q_SIGNAL void presetChanged(const QString&);
-        Q_SIGNAL void tuneChanged(const QString&);
         Q_SIGNAL void withAlphaChanged(bool);
 };
