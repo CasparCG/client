@@ -2,6 +2,7 @@
 
 #pragma GCC diagnostic ignored "-Wformat-security"
 #pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Winconsistent-missing-override"
 
 #include <QtCore/QByteArray>
 #include <QtCore/QDebug>
