@@ -458,6 +458,18 @@ QTreeWidget::branch:open:has-children
 }
 
 /*
+ * QScrollArea
+ */
+ QScrollArea
+ {
+     background-color: transparent;
+ }
+ QScrollArea > QWidget > QWidget
+ {
+     background-color: transparent;
+ }
+
+/*
  * QTableWidget
  */
 QTableWidget
