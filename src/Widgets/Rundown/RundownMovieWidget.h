@@ -79,9 +79,10 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         bool selected = false;
 
         OscFileModel fileModel;
-        OscSubscription* frameSubscription;
+        OscSubscription* timeSubscription;
+        OscSubscription* clipSubscription;
         OscSubscription* fpsSubscription;
-        OscSubscription* pathSubscription;
+        OscSubscription* nameSubscription;
         OscSubscription* pausedSubscription;
         OscSubscription* loopSubscription;
 
@@ -124,9 +125,10 @@ class WIDGETS_EXPORT RundownMovieWidget : public QWidget, Ui::RundownMovieWidget
         Q_SLOT void remoteTriggerIdChanged(const QString&);
         Q_SLOT void deviceConnectionStateChanged(CasparDevice&);
         Q_SLOT void deviceAdded(CasparDevice&);
-        Q_SLOT void frameSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void timeSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void clipSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void fpsSubscriptionReceived(const QString&, const QList<QVariant>&);
-        Q_SLOT void pathSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void nameSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void pausedSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void loopSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void autoPlayChanged(bool);

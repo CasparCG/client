@@ -21,8 +21,8 @@ RundownMovieWidget::RundownMovieWidget(const LibraryModel& model, QWidget* paren
                                        bool loaded, bool paused, bool playing, bool inGroup, bool compactView)
     : QWidget(parent),
       active(active), loaded(loaded), paused(paused), playing(playing), inGroup(inGroup), compactView(compactView), color(color), model(model),
-      reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false), frameSubscription(NULL), fpsSubscription(NULL),
-      pathSubscription(NULL), pausedSubscription(NULL), loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL),
+      reverseOscTime(false), sendAutoPlay(false), hasSentAutoPlay(false), useFreezeOnLoad(false), timeSubscription(NULL), clipSubscription(NULL), fpsSubscription(NULL),
+      nameSubscription(NULL), pausedSubscription(NULL), loopSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL),
       playNowControlSubscription(NULL), loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL),
       previewControlSubscription(NULL), clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL)
 {
@@ -458,7 +458,9 @@ void RundownMovieWidget::executeStop()
     this->sendAutoPlay= false;
 
     this->widgetOscTime->setPaused(this->paused);
-    this->widgetOscTime->reset();
+    QTimer::singleShot(500, this, [this]() {
+        this->widgetOscTime->reset();
+    });
 
     this->hasSentAutoPlay = false;
 }
@@ -710,7 +712,9 @@ void RundownMovieWidget::executeClearVideolayer()
     this->sendAutoPlay= false;
 
     this->widgetOscTime->setPaused(this->paused);
-    this->widgetOscTime->reset();
+    QTimer::singleShot(500, this, [this]() {
+        this->widgetOscTime->reset();
+    });
 
     this->hasSentAutoPlay = false;
 }
@@ -760,7 +764,9 @@ void RundownMovieWidget::executeClearChannel()
     this->sendAutoPlay= false;
 
     this->widgetOscTime->setPaused(this->paused);
-    this->widgetOscTime->reset();
+    QTimer::singleShot(500, this, [this]() {
+        this->widgetOscTime->reset();
+    });
 
     this->hasSentAutoPlay = false;
 }
@@ -792,14 +798,17 @@ void RundownMovieWidget::configureOscSubscriptions()
     if (DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName()) == NULL)
             return;
 
-    if (this->frameSubscription != NULL)
-        this->frameSubscription->disconnect(); // Disconnect all events.
+    if (this->timeSubscription != NULL)
+        this->timeSubscription->disconnect(); // Disconnect all events.
+
+    if (this->clipSubscription != NULL)
+        this->clipSubscription->disconnect(); // Disconnect all events.
 
     if (this->fpsSubscription != NULL)
         this->fpsSubscription->disconnect(); // Disconnect all events.
 
-    if (this->pathSubscription != NULL)
-        this->pathSubscription->disconnect(); // Disconnect all events.
+    if (this->nameSubscription != NULL)
+        this->nameSubscription->disconnect(); // Disconnect all events.
 
     if (this->pausedSubscription != NULL)
         this->pausedSubscription->disconnect(); // Disconnect all events.
@@ -807,13 +816,21 @@ void RundownMovieWidget::configureOscSubscriptions()
     if (this->loopSubscription != NULL)
         this->loopSubscription->disconnect(); // Disconnect all events.
 
-    QString frameFilter = Osc::VIDEOLAYER_FRAME_FILTER;
-    frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
-               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
-               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
-    this->frameSubscription = new OscSubscription(frameFilter, this);
-    QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    QString timeFilter = Osc::VIDEOLAYER_TIME_FILTER;
+    timeFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    this->timeSubscription = new OscSubscription(timeFilter, this);
+    QObject::connect(this->timeSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(timeSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString clipFilter = Osc::VIDEOLAYER_CLIP_FILTER;
+    clipFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
+              .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
+    this->clipSubscription = new OscSubscription(clipFilter, this);
+    QObject::connect(this->clipSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(clipSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString fpsFilter = Osc::VIDEOLAYER_FPS_FILTER;
     fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
@@ -823,13 +840,13 @@ void RundownMovieWidget::configureOscSubscriptions()
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString pathFilter = Osc::VIDEOLAYER_PATH_FILTER;
-    pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
+    QString nameFilter = Osc::VIDEOLAYER_NAME_FILTER;
+    nameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
               .replace("#VIDEOLAYER#", QString("%1").arg(this->command.getVideolayer()));
-    this->pathSubscription = new OscSubscription(pathFilter, this);
-    QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
-                     this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));
+    this->nameSubscription = new OscSubscription(nameFilter, this);
+    QObject::connect(this->nameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(nameSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString pausedFilter = Osc::VIDEOLAYER_PAUSED_FILTER;
     pausedFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
@@ -1012,12 +1029,22 @@ void RundownMovieWidget::deviceAdded(CasparDevice& device)
     configureOscSubscriptions();
 }
 
-void RundownMovieWidget::frameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownMovieWidget::timeSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     Q_UNUSED(predicate);
 
-    this->fileModel.setFrame(arguments.at(0).toInt());
-    this->fileModel.setTotalFrames(arguments.at(1).toInt());
+    this->fileModel.setTime(arguments.at(0).toDouble());
+    this->fileModel.setTotalTime(arguments.at(1).toDouble());
+
+    updateOscWidget();
+}
+
+void RundownMovieWidget::clipSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    Q_UNUSED(predicate);
+
+    this->fileModel.setClip(arguments.at(0).toDouble());
+    this->fileModel.setTotalClip(arguments.at(1).toDouble());
 
     updateOscWidget();
 }
@@ -1031,7 +1058,7 @@ void RundownMovieWidget::fpsSubscriptionReceived(const QString& predicate, const
     updateOscWidget();
 }
 
-void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+void RundownMovieWidget::nameSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
 {
     Q_UNUSED(predicate);
 
@@ -1041,30 +1068,26 @@ void RundownMovieWidget::pathSubscriptionReceived(const QString& predicate, cons
     if (this->model.getName().toLower() != name.toLower())
         return; // Wrong file.
 
-    this->fileModel.setPath(arguments.at(0).toString());
+    this->fileModel.setName(arguments.at(0).toString());
 
     updateOscWidget();
 }
 
 void RundownMovieWidget::updateOscWidget()
 {
-    if (this->fileModel.getFrame() > 0 && this->fileModel.getTotalFrames() > 0 &&
-        !this->fileModel.getPath().isEmpty() && this->fileModel.getFramesPerSecond() > 0)
-
+    if (this->fileModel.getTime() > 0 && this->fileModel.getTotalTime() > 0 &&
+        !this->fileModel.getName().isEmpty() && this->fileModel.getFramesPerSecond() > 0)
     {
-        this->widgetOscTime->setProgress(this->fileModel.getFrame());
-
-        if (this->reverseOscTime && this->fileModel.getFrame() > 0)
-            this->widgetOscTime->setTime(this->fileModel.getTotalFrames() - this->fileModel.getFrame());
-        else
-            this->widgetOscTime->setTime(this->fileModel.getFrame());
-
-        if (this->command.getSeek() == 0 && this->command.getLength() == 0)
-            this->widgetOscTime->setInOutTime(0, this->fileModel.getTotalFrames());
-        else
-            this->widgetOscTime->setInOutTime(this->command.getSeek(), this->command.getLength());
-
         this->widgetOscTime->setFramesPerSecond(this->fileModel.getFramesPerSecond());
+        this->widgetOscTime->setProgress(this->fileModel.getTime() - this->fileModel.getClip());
+
+        if (this->reverseOscTime && this->fileModel.getTime() > 0)
+            this->widgetOscTime->setTime(this->fileModel.getTotalTime() - (this->fileModel.getTime() - this->fileModel.getClip()));
+        else
+            this->widgetOscTime->setTime(this->fileModel.getTime() - this->fileModel.getClip());
+
+        this->widgetOscTime->setInOutTime(this->fileModel.getClip(),
+                                          this->fileModel.getTotalTime() - (this->fileModel.getTotalTime() - this->fileModel.getTotalClip()));
 
         if (this->sendAutoPlay && !this->hasSentAutoPlay)
         {
@@ -1078,9 +1101,9 @@ void RundownMovieWidget::updateOscWidget()
 
         this->playing = true;
 
-        this->fileModel.setPath("");
-        this->fileModel.setFrame(0);
-        this->fileModel.setTotalFrames(0);
+        this->fileModel.setName("");
+        this->fileModel.setTime(0);
+        this->fileModel.setTotalTime(0);
         this->fileModel.setFramesPerSecond(0);
     }
 }

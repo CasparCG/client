@@ -77,14 +77,12 @@ void OscTimeWidget::reset()
     }
 }
 
-void OscTimeWidget::setTime(int currentFrame)
+void OscTimeWidget::setTime(double currentTime)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
-
-    double currentTime = currentFrame * (1.0 / this->fps);
 
     this->labelOscTime->setText(Timecode::fromTime(currentTime, this->fps, this->useDropFrameNotation));
 
@@ -112,23 +110,20 @@ void OscTimeWidget::setStartTime(const QString& startTime, bool reverseOscTime)
     this->setVisible(true);
 }
 
-void OscTimeWidget::setInOutTime(int seek, int length)
+void OscTimeWidget::setInOutTime(double inTime, double outTime)
 {
     if (this->fps == 0)
         return;
 
     this->setVisible(true);
 
-    double inTime = seek * (1.0 / this->fps);
-    double outTime = (seek + length) * (1.0 / this->fps);
-
     this->labelOscInTime->setText(Timecode::fromTime(inTime, this->fps, this->useDropFrameNotation));
     this->labelOscOutTime->setText(Timecode::fromTime(outTime, this->fps, this->useDropFrameNotation));
 
-    this->progressBarOscTime->setRange(seek, seek + length);
+    this->progressBarOscTime->setRange(inTime * this->fps, outTime * this->fps);
 }
 
-void OscTimeWidget::setProgress(int currentFrame)
+void OscTimeWidget::setProgress(double currentTime)
 {
     if (this->fps == 0)
         return;
@@ -136,7 +131,7 @@ void OscTimeWidget::setProgress(int currentFrame)
     this->setVisible(true);
 
     this->progressBarOscTime->setVisible(true);
-    this->progressBarOscTime->setValue(currentFrame);
+    this->progressBarOscTime->setValue(currentTime * this->fps);
     this->progressBarOscTime->update();
 }
 

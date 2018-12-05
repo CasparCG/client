@@ -1,28 +1,48 @@
 #include "OscFileModel.h"
 
 OscFileModel::OscFileModel()
-    : currentFrame(0), totalFrames(0), fps(0), path("")
+    : currentTime(0), totalTime(0), currentClip(0), totalClip(0), fps(0), name("")
 {    
 }
 
-int OscFileModel::getFrame() const
+double OscFileModel::getClip() const
 {
-    return this->currentFrame;
+    return this->currentClip;
 }
 
-void OscFileModel::setFrame(int currentFrame)
+void OscFileModel::setClip(double currentClip)
 {
-    this->currentFrame = currentFrame;
+    this->currentClip = currentClip;
 }
 
-int OscFileModel::getTotalFrames() const
+double OscFileModel::getTotalClip() const
 {
-    return this->totalFrames;
+    return this->totalClip;
 }
 
-void OscFileModel::setTotalFrames(int totalFrames)
+void OscFileModel::setTotalClip(double totalClip)
 {
-    this->totalFrames = totalFrames;
+    this->totalClip = totalClip;
+}
+
+double OscFileModel::getTime() const
+{
+    return this->currentTime;
+}
+
+void OscFileModel::setTime(double currentTime)
+{
+    this->currentTime = currentTime;
+}
+
+double OscFileModel::getTotalTime() const
+{
+    return this->totalTime;
+}
+
+void OscFileModel::setTotalTime(double totalTime)
+{
+    this->totalTime = totalTime;
 }
 
 double OscFileModel::getFramesPerSecond() const
@@ -35,12 +55,12 @@ void OscFileModel::setFramesPerSecond(double fps)
     this->fps = fps;
 }
 
-const QString& OscFileModel::getPath() const
+const QString& OscFileModel::getName() const
 {
-    return this->path;
+    return this->name;
 }
 
-void OscFileModel::setPath(const QString& path)
+void OscFileModel::setName(const QString& name)
 {
-    this->path = path;
+    this->name = name;
 }
