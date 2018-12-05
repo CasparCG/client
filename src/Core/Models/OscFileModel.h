@@ -9,23 +9,31 @@ class CORE_EXPORT OscFileModel
     public:
         explicit OscFileModel();
 
-        int getFrame() const;
-        void setFrame(int currentFrame);
+        double getClip() const;
+        void setClip(double currentClip);
 
-        int getTotalFrames() const;
-        void setTotalFrames(int totalFrames);
+        double getTotalClip() const;
+        void setTotalClip(double totalClip);
+
+        double getTime() const;
+        void setTime(double currentTime);
+
+        double getTotalTime() const;
+        void setTotalTime(double totalTime);
 
         double getFramesPerSecond() const;
         void setFramesPerSecond(double fps);
 
-        const QString& getPath() const;
-        void setPath(const QString& path);
+        const QString& getName() const;
+        void setName(const QString& name);
 
     private:
-        int currentFrame;
-        int totalFrames;
+        double currentTime;
+        double totalTime;
+        double currentClip;
+        double totalClip;
         double fps;
-        QString path;
+        QString name;
 };
 
 

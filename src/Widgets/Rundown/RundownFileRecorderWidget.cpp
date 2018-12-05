@@ -510,7 +510,7 @@ void RundownFileRecorderWidget::frameSubscriptionReceived(const QString& predica
 {
     Q_UNUSED(predicate);
 
-    this->fileModel.setFrame(arguments.at(0).toInt());
+    this->fileModel.setTime(arguments.at(0).toInt());
 
     updateOscWidget();
 }
@@ -532,20 +532,20 @@ void RundownFileRecorderWidget::pathSubscriptionReceived(const QString& predicat
     if (this->command.getOutput().toLower() != name.toLower())
         return; // Wrong file.
 
-    this->fileModel.setPath(arguments.at(0).toString());
+    this->fileModel.setName(arguments.at(0).toString());
 
     updateOscWidget();
 }
 
 void RundownFileRecorderWidget::updateOscWidget()
 {
-    if (this->fileModel.getFrame() > 0 && this->fileModel.getFramesPerSecond() > 0 && !this->fileModel.getPath().isEmpty())
+    if (this->fileModel.getTime() > 0 && this->fileModel.getFramesPerSecond() > 0 && !this->fileModel.getName().isEmpty())
     {
-        this->widgetOscTime->setTime(this->fileModel.getFrame());
+        this->widgetOscTime->setTime(this->fileModel.getTime());
         this->widgetOscTime->setFramesPerSecond(this->fileModel.getFramesPerSecond());
 
-        this->fileModel.setPath("");
-        this->fileModel.setFrame(0);
+        this->fileModel.setName("");
+        this->fileModel.setTime(0);
         this->fileModel.setFramesPerSecond(0);
     }
 }
