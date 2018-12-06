@@ -71,12 +71,15 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
     this->checkBoxReverseOscTime->setChecked(reverseOscTime);
 
-    bool enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
-    this->checkBoxEnableOscInput->setChecked(enableOscInput);
-    this->labelOscPort->setEnabled(enableOscInput);
-    this->lineEditOscInputPort->setEnabled(enableOscInput);
-    this->labelOscWebSocketPort->setEnabled(enableOscInput);
-    this->lineEditOscWebSocketInputPort->setEnabled(enableOscInput);
+    bool enableOscInputMonitoring = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputMonitoring").getValue() == "true") ? true : false;
+    this->checkBoxEnableOscInputMonitoring->setChecked(enableOscInputMonitoring);
+    this->labelOscInput->setEnabled(enableOscInputMonitoring);
+    this->lineEditOscInputPort->setEnabled(enableOscInputMonitoring);
+
+    bool enableOscInputControl = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputControl").getValue() == "true") ? true : false;
+    this->checkBoxEnableOscInputControl->setChecked(enableOscInputControl);
+    this->labelOscWebSocketPort->setEnabled(enableOscInputControl);
+    this->lineEditOscWebSocketInputPort->setEnabled(enableOscInputControl);
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
@@ -667,10 +670,19 @@ void SettingsDialog::reverseOscTimeChanged(int state)
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "ReverseOscTime", reverseOscTime));
 }
 
-void SettingsDialog::enableOscInputChanged(int state)
+void SettingsDialog::enableOscInputControlChanged(int state)
 {
-    QString enableOscInput = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInput", enableOscInput));
+    QString enableOscInputControl = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputControl", enableOscInputControl));
+
+    this->labelOscWebSocketPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->lineEditOscWebSocketInputPort->setEnabled((state == Qt::Checked) ? true : false);
+}
+
+void SettingsDialog::enableOscInputMonitoringChanged(int state)
+{
+    QString enableOscInputMonitoring = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputMonitoring", enableOscInputMonitoring));
 
     this->labelOscPort->setEnabled((state == Qt::Checked) ? true : false);
     this->lineEditOscInputPort->setEnabled((state == Qt::Checked) ? true : false);

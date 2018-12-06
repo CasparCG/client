@@ -23,7 +23,7 @@ class WIDGETS_EXPORT InspectorMovieWidget : public QWidget, Ui::InspectorMovieWi
     private:
         LibraryModel* model;
         MovieCommand* command;
-        bool enableOscInput;
+        bool enableOscInputControl;
 
         void loadDirection();
         void loadTransition();

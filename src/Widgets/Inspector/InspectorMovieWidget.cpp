@@ -13,11 +13,11 @@
 
 InspectorMovieWidget::InspectorMovieWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL), enableOscInput(false)
+      model(NULL), command(NULL), enableOscInputControl(false)
 {
     setupUi(this);
 
-    this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
+    this->enableOscInputControl = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputControl").getValue() == "true") ? true : false;
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 
@@ -51,7 +51,7 @@ void InspectorMovieWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         AbstractRundownWidget* source = dynamic_cast<AbstractRundownWidget*>(event.getSource());
 
         // Only show auto play option if we are in a group. OSC needs to be enabled.
-        if (this->enableOscInput && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
+        if (this->enableOscInputControl && source != NULL && parent != NULL && source->isInGroup() && dynamic_cast<GroupCommand*>(parent->getCommand())->getAutoPlay())
         {
             this->labelAutoPlay->setEnabled(true);
             this->checkBoxAutoPlay->setEnabled(true);

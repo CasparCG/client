@@ -6,30 +6,9 @@
 #include <QtCore/QPair>
 #include <QtCore/QDebug>
 
-OscListener::OscListener(const QString& address, int port, QObject* parent)
+OscListener::OscListener(QObject* parent)
     : QObject(parent)
 {
-    try
-    {
-        this->port = port;
-
-        this->socket = new UdpSocket();
-        this->socket->SetAllowReuse(true);
-        this->socket->Bind(IpEndpointName(address.toStdString().c_str(), this->port));
-
-        qDebug("Listening for incoming OSC messages over UDP on port %d", this->port);
-
-        this->multiplexer = new SocketReceiveMultiplexer();
-        this->multiplexer->AttachSocketListener(this->socket, this);
-
-        this->thread = new OscThread(this->multiplexer, this);
-
-        QTimer::singleShot(200, this, SLOT(sendEventBatch()));
-    }
-    catch (std::runtime_error &e)
-    {
-        qDebug("%s", qPrintable(QString::fromStdString(e.what()).trimmed()));
-    }
 }
 
 OscListener::~OscListener()
@@ -44,11 +23,31 @@ OscListener::~OscListener()
     }
 }
 
-void OscListener::start()
+void OscListener::start(int port)
 {
-    if (this->thread != nullptr && this->socket->IsBound())
+    try
+    {
+        this->port = port;
+
+        this->socket = new UdpSocket();
+        this->socket->SetAllowReuse(true);
+        this->socket->Bind(IpEndpointName("0.0.0.0", this->port));
+
+        qDebug("Listening for incoming OSC messages over UDP on port %d", this->port);
+
+        this->multiplexer = new SocketReceiveMultiplexer();
+        this->multiplexer->AttachSocketListener(this->socket, this);
+
+        this->thread = new OscThread(this->multiplexer, this);
         this->thread->start();
-}
+
+        QTimer::singleShot(200, this, SLOT(sendEventBatch()));
+    }
+    catch (std::runtime_error &e)
+    {
+        qDebug("%s", qPrintable(QString::fromStdString(e.what()).trimmed()));
+    }
+ }
 
 void OscListener::ProcessMessage(const osc::ReceivedMessage& message, const IpEndpointName& endpoint)
 {
