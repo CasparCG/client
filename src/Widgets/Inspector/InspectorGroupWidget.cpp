@@ -14,11 +14,11 @@
 
 InspectorGroupWidget::InspectorGroupWidget(QWidget* parent)
     : QWidget(parent),
-      model(NULL), command(NULL), enableOscInput(true)
+      model(NULL), command(NULL), enableOscInputControl(true)
 {
     setupUi(this);
 
-    this->enableOscInput = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInput").getValue() == "true") ? true : false;
+    this->enableOscInputControl = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputControl").getValue() == "true") ? true : false;
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
 }
@@ -37,7 +37,7 @@ void InspectorGroupWidget::rundownItemSelected(const RundownItemSelectedEvent& e
         this->plainTextEditNotes->setPlainText(this->command->getNotes());
         this->checkBoxAutoStep->setChecked(this->command->getAutoStep());
 
-        if (this->enableOscInput)
+        if (this->enableOscInputControl)
         {
             this->labelAutoPlay->setVisible(true);
             this->checkBoxAutoPlay->setVisible(true);

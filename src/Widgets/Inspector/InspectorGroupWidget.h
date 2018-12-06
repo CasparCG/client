@@ -22,7 +22,7 @@ class WIDGETS_EXPORT InspectorGroupWidget : public QWidget, Ui::InspectorGroupWi
     private:
         LibraryModel* model;
         GroupCommand* command;
-        bool enableOscInput;
+        bool enableOscInputControl;
 
         void blockAllSignals(bool block);
 
