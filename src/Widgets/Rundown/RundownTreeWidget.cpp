@@ -801,6 +801,8 @@ void RundownTreeWidget::saveRundown(bool saveAs)
             file.write(data);
             file.close();
 
+            DatabaseManager::getInstance().insertOpenRecent(path);
+
             qDebug("Saved rundown to %s", qPrintable(path));
         }
 
