@@ -15,7 +15,7 @@ AudioLevelsWidget::AudioLevelsWidget(QWidget* parent)
     setupUi(this);
     setupMenus();
 
-    for (int i = 1; i < 9; i++)
+    for (int i = 1; i <= 8; i++)
         this->findChild<AudioMeterWidget*>(QString("widgetAudioMeter%1").arg(i))->configureAudioMeter(i);
 }
 

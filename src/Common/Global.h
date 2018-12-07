@@ -119,7 +119,7 @@ namespace Osc
     static const QString VIDEOLAYER_NAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/file/name";
     static const QString VIDEOLAYER_PAUSED_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/paused";
     static const QString VIDEOLAYER_LOOP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/loop";
-    static const QString AUDIOCHANNEL_FILTER = "#IPADDRESS#/channel/#CHANNEL#/mixer/audio/#AUDIOCHANNEL#/dBFS";
+    static const QString AUDIOCHANNEL_FILTER = "#IPADDRESS#/channel/#CHANNEL#/mixer/audio/volume";
     static const QString ITEM_CONTROL_STOP_FILTER = "/control/#UID#/stop";
     static const QString ITEM_CONTROL_PLAY_FILTER = "/control/#UID#/play";
     static const QString ITEM_CONTROL_PLAYNOW_FILTER = "/control/#UID#/playnow";
