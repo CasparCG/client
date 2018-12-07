@@ -1,11 +1,11 @@
 #pragma once
 
 #define MAJOR_VERSION 2
-#define MINOR_VERSION 0
-#define REVISION_VERSION 9
+#define MINOR_VERSION 2
+#define REVISION_VERSION 0
 #define BUILD_VERSION \"$$GIT_VERSION\"
 #define BUILD_TIMESTAMP \"$$GIT_TIMESTAMP\"
 
-#define RC_VERSION \"2.0.9.0\"
+#define RC_VERSION \"2.2.0.0\"
 
 #define DATABASE_VERSION \"213\"
