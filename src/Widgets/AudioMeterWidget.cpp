@@ -42,8 +42,7 @@ void AudioMeterWidget::deviceChanged(const DeviceChangedEvent& event)
 
         QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
         audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(event.getDeviceName())->resolveIpAddress()))
-                   .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
-                   .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
+                   .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()));
         this->audioSubscription = new OscSubscription(audioFilter, this);
         QObject::connect(this->audioSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                          this, SLOT(audioSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -91,8 +90,7 @@ void AudioMeterWidget::configureOscSubscriptions()
 
     QString audioFilter = Osc::AUDIOCHANNEL_FILTER;
     audioFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model->getDeviceName())->resolveIpAddress()))
-               .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()))
-               .replace("#AUDIOCHANNEL#", QString("%1").arg(this->channel));
+               .replace("#CHANNEL#", QString("%1").arg(this->command->getChannel()));
     this->audioSubscription = new OscSubscription(audioFilter, this);
     QObject::connect(this->audioSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(audioSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -102,14 +100,20 @@ void AudioMeterWidget::audioSubscriptionReceived(const QString& predicate, const
 {
     Q_UNUSED(predicate);
 
-    //qDebug("%s%s", qPrintable(predicate), qPrintable(arguments));
-
-    int value = arguments.at(0).toInt();
+    int value = convertToLevel(arguments.at(this->channel - 1).toInt());
     if (value < -60)
         this->progressBarAudioMeter->setValue(-61);
     else
     {
-        this->progressBarAudioMeter->setValue(arguments.at(0).toInt());
+        this->progressBarAudioMeter->setValue(value);
         this->progressBarAudioMeter->update();
     }
+}
+
+double AudioMeterWidget::convertToLevel(int value)
+{
+    auto MIN_PFS = 0.5 / static_cast<double>(std::numeric_limits<int32_t>::max());
+    auto pFS = value / static_cast<double>(std::numeric_limits<int32_t>::max());
+
+    return 20.0 * std::log10((std::max(MIN_PFS, pFS)));
 }

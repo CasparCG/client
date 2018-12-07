@@ -30,6 +30,7 @@ class WIDGETS_EXPORT AudioMeterWidget : public QWidget, Ui::AudioMeterWidget
 
         OscSubscription* audioSubscription;
 
+        double convertToLevel(int value);
         void configureOscSubscriptions();
 
         Q_SLOT void deviceChanged(const DeviceChangedEvent&);
