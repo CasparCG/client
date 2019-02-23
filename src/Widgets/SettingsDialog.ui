@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -3356,7 +3356,7 @@
     <attribute name="title">
      <string>OSC</string>
     </attribute>
-    <widget class="QLineEdit" name="lineEditOscInputPort">
+    <widget class="QLineEdit" name="lineEditOscInputMonitorPort">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -3372,7 +3372,7 @@
       <string/>
      </property>
      <property name="placeholderText">
-      <string>6250</string>
+      <string>3250</string>
      </property>
     </widget>
     <widget class="Line" name="lineOscInput">
@@ -3404,7 +3404,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="labelOscPort">
+    <widget class="QLabel" name="labelOscInputMonitorPort">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -3567,7 +3567,7 @@
       <string>Enable OSC Control</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEditOscWebSocketInputPort">
+    <widget class="QLineEdit" name="lineEditOscInputControlPort">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -3583,10 +3583,10 @@
       <string/>
      </property>
      <property name="placeholderText">
-      <string>4250</string>
+      <string>6250</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labelOscWebSocketPort">
+    <widget class="QLabel" name="labelOscInputControlPort">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -3596,13 +3596,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>WebSocket Port:</string>
+      <string>UDP Port:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxEnableOscInputMonitoring">
+    <widget class="QCheckBox" name="checkBoxEnableOscInputMonitor">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -3615,7 +3615,58 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>Enable OSC Monitoring</string>
+      <string>Enable OSC Monitor</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelOscInputWebSocketPort">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>158</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Web Socket Port:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxEnableOscInputWebSocket">
+     <property name="geometry">
+      <rect>
+       <x>358</x>
+       <y>120</y>
+       <width>291</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="text">
+      <string>Enable OSC Control through Web Socket</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditOscInputWebSocketPort">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>157</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>4250</string>
      </property>
     </widget>
    </widget>
@@ -4429,10 +4480,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditOscInputPort</sender>
+   <sender>lineEditOscInputMonitorPort</sender>
    <signal>editingFinished()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>oscPortChanged()</slot>
+   <slot>oscMonitorPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>221</x>
@@ -4973,10 +5024,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditOscWebSocketInputPort</sender>
+   <sender>lineEditOscInputControlPort</sender>
    <signal>editingFinished()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>oscWebSocketPortChanged()</slot>
+   <slot>oscControlPortChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>568</x>
@@ -4989,14 +5040,46 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxEnableOscInputMonitoring</sender>
+   <sender>checkBoxEnableOscInputMonitor</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>enableOscInputMonitoringChanged(int)</slot>
+   <slot>enableOscInputMonitorChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>227</x>
      <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditOscInputWebSocketPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscWebSocketPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>202</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxEnableOscInputWebSocket</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>enableOscInputWebSocketChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>543</x>
+     <y>161</y>
     </hint>
     <hint type="destinationlabel">
      <x>349</x>
@@ -5035,7 +5118,7 @@
   <slot>showThumbnailTooltipChanged(int)</slot>
   <slot>reverseOscTimeChanged(int)</slot>
   <slot>disableInAndOutPointsChanged(int)</slot>
-  <slot>oscPortChanged()</slot>
+  <slot>oscMonitorPortChanged()</slot>
   <slot>showAddTriCasterDeviceDialog()</slot>
   <slot>removeTriCasterDevice()</slot>
   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
@@ -5072,6 +5155,8 @@
   <slot>logLevelChanged(int)</slot>
   <slot>useDropFrameNotationChanged(int)</slot>
   <slot>oscWebSocketPortChanged()</slot>
-  <slot>enableOscInputMonitoringChanged(int)</slot>
+  <slot>enableOscInputMonitorChanged(int)</slot>
+  <slot>enableOscInputWebSocketChanged(int)</slot>
+  <slot>oscControlPortChanged()</slot>
  </slots>
 </ui>

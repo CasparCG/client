@@ -48,7 +48,8 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void synchronizeIntervalChanged(int);
         Q_SLOT void showThumbnailTooltipChanged(int);
         Q_SLOT void enableOscInputControlChanged(int);
-        Q_SLOT void enableOscInputMonitoringChanged(int);
+        Q_SLOT void enableOscInputMonitorChanged(int);
+        Q_SLOT void enableOscInputWebSocketChanged(int);
         Q_SLOT void disableInAndOutPointsChanged(int);
         Q_SLOT void reverseOscTimeChanged(int);
         Q_SLOT void deviceItemDoubleClicked(QTreeWidgetItem*, int);
@@ -73,7 +74,8 @@ class WIDGETS_EXPORT SettingsDialog : public QDialog, Ui::SettingsDialog
         Q_SLOT void serialPortChanged();
         Q_SLOT void streamPortChanged();
         Q_SLOT void baudRateChanged(QString);
-        Q_SLOT void oscPortChanged();
+        Q_SLOT void oscMonitorPortChanged();
+        Q_SLOT void oscControlPortChanged();
         Q_SLOT void oscWebSocketPortChanged();
         Q_SLOT void repositoryPortChanged();
         Q_SLOT void showImportDeviceDialog();

@@ -386,7 +386,8 @@ DISTFILES += \
     Sql/ChangeScript-211.sql \
     Sql/ChangeScript-212.sql \
     Sql/ChangeScript-213.sql \
-    Sql/ChangeScript-214.sql
+    Sql/ChangeScript-214.sql \
+    Sql/ChangeScript-215.sql
 
 RESOURCES += \
     Core.qrc
