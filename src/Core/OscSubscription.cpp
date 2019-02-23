@@ -9,7 +9,9 @@ OscSubscription::OscSubscription(const QString& path, QObject *parent)
     : QObject(parent),
       path(path)
 {  
-    QObject::connect(OscDeviceManager::getInstance().getOscListener().data(), SIGNAL(messageReceived(const QString&, const QList<QVariant>&)),
+    QObject::connect(OscDeviceManager::getInstance().getOscMonitorListener().data(), SIGNAL(messageReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));
+    QObject::connect(OscDeviceManager::getInstance().getOscControlListener().data(), SIGNAL(messageReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));
     QObject::connect(OscWebSocketManager::getInstance().getOscWebSocketListener().data(), SIGNAL(messageReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(messageReceived(const QString&, const QList<QVariant>&)));

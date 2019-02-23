@@ -10,15 +10,17 @@ DEFINES += OSC_LIBRARY
 HEADERS += \
     Shared.h \
     OscThread.h \
-    OscListener.h \
     OscSender.h \
-    OscWebSocketListener.h
+    OscWebSocketListener.h \
+    OscControlListener.h \
+    OscMonitorListener.h
 
 SOURCES += \
     OscThread.cpp \
-    OscListener.cpp \
     OscSender.cpp \
-    OscWebSocketListener.cpp
+    OscWebSocketListener.cpp \
+    OscControlListener.cpp \
+    OscMonitorListener.cpp
 
 CONFIG(system-boost) {
     LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono

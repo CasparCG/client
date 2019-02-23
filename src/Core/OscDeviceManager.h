@@ -3,7 +3,8 @@
 #include "Shared.h"
 
 #include "OscSender.h"
-#include "OscListener.h"
+#include "OscMonitorListener.h"
+#include "OscControlListener.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
@@ -21,10 +22,12 @@ class CORE_EXPORT OscDeviceManager : public QObject
         void uninitialize();
 
         const QSharedPointer<OscSender> getOscSender() const;
-        const QSharedPointer<OscListener> getOscListener() const;
+        const QSharedPointer<OscMonitorListener> getOscMonitorListener() const;
+        const QSharedPointer<OscControlListener> getOscControlListener() const;
 
     private:
         QSharedPointer<OscSender> oscSender;
-        QSharedPointer<OscListener> oscListener;
+        QSharedPointer<OscMonitorListener> oscMonitorListener;
+        QSharedPointer<OscControlListener> oscControlListener;
 };
 

@@ -12,13 +12,13 @@
 #include <QtCore/QVariant>
 #include <QtCore/QMutex>
 
-class OSC_EXPORT OscListener : public QObject, public osc::OscPacketListener
+class OSC_EXPORT OscControlListener : public QObject, public osc::OscPacketListener
 {
     Q_OBJECT
 
     public:
-        explicit OscListener(QObject* parent = 0);
-        ~OscListener();
+        explicit OscControlListener(QObject* parent = 0);
+        ~OscControlListener();
 
         void start(int port);
 

@@ -71,15 +71,20 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool reverseOscTime = (DatabaseManager::getInstance().getConfigurationByName("ReverseOscTime").getValue() == "true") ? true : false;
     this->checkBoxReverseOscTime->setChecked(reverseOscTime);
 
-    bool enableOscInputMonitoring = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputMonitoring").getValue() == "true") ? true : false;
-    this->checkBoxEnableOscInputMonitoring->setChecked(enableOscInputMonitoring);
-    this->labelOscInput->setEnabled(enableOscInputMonitoring);
-    this->lineEditOscInputPort->setEnabled(enableOscInputMonitoring);
+    bool enableOscInputMonitor = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputMonitor").getValue() == "true") ? true : false;
+    this->checkBoxEnableOscInputMonitor->setChecked(enableOscInputMonitor);
+    this->labelOscInputMonitorPort->setEnabled(enableOscInputMonitor);
+    this->lineEditOscInputMonitorPort->setEnabled(enableOscInputMonitor);
 
     bool enableOscInputControl = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputControl").getValue() == "true") ? true : false;
     this->checkBoxEnableOscInputControl->setChecked(enableOscInputControl);
-    this->labelOscWebSocketPort->setEnabled(enableOscInputControl);
-    this->lineEditOscWebSocketInputPort->setEnabled(enableOscInputControl);
+    this->labelOscInputControlPort->setEnabled(enableOscInputControl);
+    this->lineEditOscInputControlPort->setEnabled(enableOscInputControl);
+
+    bool enableOscInputWebSocket = (DatabaseManager::getInstance().getConfigurationByName("EnableOscInputWebSocket").getValue() == "true") ? true : false;
+    this->checkBoxEnableOscInputWebSocket->setChecked(enableOscInputWebSocket);
+    this->labelOscInputWebSocketPort->setEnabled(enableOscInputWebSocket);
+    this->lineEditOscInputWebSocketPort->setEnabled(enableOscInputWebSocket);
 
     bool disableInAndOutPoints = (DatabaseManager::getInstance().getConfigurationByName("DisableInAndOutPoints").getValue() == "true") ? true : false;
     this->checkBoxDisableInAndOutPoints->setChecked(disableInAndOutPoints);
@@ -122,15 +127,20 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     bool storeThumbnailsInDatabase = (DatabaseManager::getInstance().getConfigurationByName("StoreThumbnailsInDatabase").getValue() == "true") ? true : false;
     this->checkBoxStoreThumbnailsInDatabase->setChecked(storeThumbnailsInDatabase);
 
-    this->lineEditOscInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_PORT));
-    QString oscPort = DatabaseManager::getInstance().getConfigurationByName("OscPort").getValue();
-    if (!oscPort.isEmpty())
-        this->lineEditOscInputPort->setText(oscPort);
+    this->lineEditOscInputMonitorPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_MONITOR_PORT));
+    QString oscMonitorPort = DatabaseManager::getInstance().getConfigurationByName("OscMonitorPort").getValue();
+    if (!oscMonitorPort.isEmpty())
+        this->lineEditOscInputMonitorPort->setText(oscMonitorPort);
 
-    this->lineEditOscWebSocketInputPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_WEBSOCKET_PORT));
+    this->lineEditOscInputControlPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_CONTROL_PORT));
+    QString oscControlPort = DatabaseManager::getInstance().getConfigurationByName("OscControlPort").getValue();
+    if (!oscControlPort.isEmpty())
+        this->lineEditOscInputControlPort->setText(oscControlPort);
+
+    this->lineEditOscInputWebSocketPort->setPlaceholderText(QString("%1").arg(Osc::DEFAULT_WEBSOCKET_PORT));
     QString oscWebSocketPort = DatabaseManager::getInstance().getConfigurationByName("OscWebSocketPort").getValue();
     if (!oscWebSocketPort.isEmpty())
-        this->lineEditOscWebSocketInputPort->setText(oscWebSocketPort);
+        this->lineEditOscInputWebSocketPort->setText(oscWebSocketPort);
 
     loadDevice();
     loadTriCasterDevice();
@@ -675,17 +685,26 @@ void SettingsDialog::enableOscInputControlChanged(int state)
     QString enableOscInputControl = (state == Qt::Checked) ? "true" : "false";
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputControl", enableOscInputControl));
 
-    this->labelOscWebSocketPort->setEnabled((state == Qt::Checked) ? true : false);
-    this->lineEditOscWebSocketInputPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->labelOscInputControlPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->lineEditOscInputControlPort->setEnabled((state == Qt::Checked) ? true : false);
 }
 
-void SettingsDialog::enableOscInputMonitoringChanged(int state)
+void SettingsDialog::enableOscInputMonitorChanged(int state)
 {
-    QString enableOscInputMonitoring = (state == Qt::Checked) ? "true" : "false";
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputMonitoring", enableOscInputMonitoring));
+    QString enableOscInputMonitor = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputMonitor", enableOscInputMonitor));
 
-    this->labelOscPort->setEnabled((state == Qt::Checked) ? true : false);
-    this->lineEditOscInputPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->labelOscInputMonitorPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->lineEditOscInputMonitorPort->setEnabled((state == Qt::Checked) ? true : false);
+}
+
+void SettingsDialog::enableOscInputWebSocketChanged(int state)
+{
+    QString enableOscInputWebSocket = (state == Qt::Checked) ? "true" : "false";
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "EnableOscInputWebSocket", enableOscInputWebSocket));
+
+    this->labelOscInputWebSocketPort->setEnabled((state == Qt::Checked) ? true : false);
+    this->lineEditOscInputWebSocketPort->setEnabled((state == Qt::Checked) ? true : false);
 }
 
 void SettingsDialog::disableInAndOutPointsChanged(int state)
@@ -842,22 +861,31 @@ void SettingsDialog::baudRateChanged(QString baudRate)
     updateGpiDevice();
 }
 
-void SettingsDialog::oscPortChanged()
+void SettingsDialog::oscMonitorPortChanged()
 {
-    QString oscPort = this->lineEditOscInputPort->text().trimmed();
-    if (oscPort.isEmpty())
-        oscPort = QString("%1").arg(Osc::DEFAULT_PORT);
+    QString oscMonitorPort = this->lineEditOscInputMonitorPort->text().trimmed();
+    if (oscMonitorPort.isEmpty())
+        oscMonitorPort = QString("%1").arg(Osc::DEFAULT_MONITOR_PORT);
 
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscPort", oscPort));
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscMonitorPort", oscMonitorPort));
 }
 
 void SettingsDialog::oscWebSocketPortChanged()
 {
-    QString oscWebSocketPort = this->lineEditOscWebSocketInputPort->text().trimmed();
+    QString oscWebSocketPort = this->lineEditOscInputWebSocketPort->text().trimmed();
     if (oscWebSocketPort.isEmpty())
         oscWebSocketPort = QString("%1").arg(Osc::DEFAULT_WEBSOCKET_PORT);
 
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscWebSocketPort", oscWebSocketPort));
+}
+
+void SettingsDialog::oscControlPortChanged()
+{
+    QString oscControlPort = this->lineEditOscInputControlPort->text().trimmed();
+    if (oscControlPort.isEmpty())
+        oscControlPort = QString("%1").arg(Osc::DEFAULT_CONTROL_PORT);
+
+    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "OscControlPort", oscControlPort));
 }
 
 void SettingsDialog::streamPortChanged()
