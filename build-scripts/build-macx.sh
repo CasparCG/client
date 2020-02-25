@@ -22,7 +22,7 @@ cd ../build || fail "Could not enter ../build"
 
 # Run qmake
 echo Running qmake...
-"$BUILD_QT_PATH/qmake" ../src/Solution.pro -r -spec macx-clang "CONFIG+=release" "CONFIG+=x86_64" || fail "qmake failed"
+"$BUILD_QT_PATH/qmake" ../src/Solution.pro -r -spec macx-clang "CONFIG+=release" "CONFIG+=x86_64" "QMAKE_LFLAGS_SONAME=-Wl,-install_name,@executable_path/../Frameworks" || fail "qmake failed"
 
 # Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
@@ -32,16 +32,15 @@ export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
 # Copy compiled binaries
 echo Copying binaries...
 mkdir -p "Shell/shell.app/Contents/Frameworks" || fail "Could not create Shell/shell.app/Contents/Frameworks"
-find . -name \*.dylib\* -exec cp -RfP {} "Shell/shell.app/Contents/Frameworks" \; || fail "Could not copy client libraries"
+find . -not \( -path ./Shell/shell.app/Contents/Frameworks -prune \) -name \*.dylib\* -exec cp -RfP {} "Shell/shell.app/Contents/Frameworks" \; || fail "Could not copy client libraries"
 
 # Copy binary dependencies
 echo Copying binary dependencies...
 cp -RfP ../deploy/macx/MacOS "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
-cp -RfP ../deploy/macx/Frameworks "Shell/shell.app/Contents" || fail "Could not copy binary dependencies"
 
 # Create app bundle
 echo Creating app bundle...
-"$BUILD_QT_PATH/macdeployqt" Shell/shell.app
+"$BUILD_QT_PATH/macdeployqt" Shell/shell.app -libpath=../deploy/macx/Frameworks
 
 # Copy Info.plist
 echo Copying Info.plist...
