@@ -22,7 +22,7 @@ cd ../build || fail "Could not enter ../build"
 
 # Run qmake
 echo Running qmake...
-"$BUILD_QT_PATH/qmake" ../src/Solution.pro -r -spec macx-clang "CONFIG+=release" "CONFIG+=x86_64" "QMAKE_LFLAGS_SONAME=-Wl,-install_name,@executable_path/../Frameworks" || fail "qmake failed"
+"$BUILD_QT_PATH/qmake" ../src/Solution.pro -r -spec macx-clang "CONFIG+=release" "CONFIG+=x86_64" "QMAKE_LFLAGS_SONAME=-Wl,-install_name,@executable_path/../Frameworks/" || fail "qmake failed"
 
 # Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
