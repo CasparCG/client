@@ -16,15 +16,15 @@ If used with CasparCG Server as intended, CasparCG Client provides a seamless an
 
 #### Windows
 > No installation required. Move the program to a appropriate location on your drive and start it.
-> Tested on Windows 7 x64 and Windows 10 x64.
+> Tested on Windows 10 x64.
 
 #### OS X
 > Open the DMG file and drag the 'CasparCG Client' app to your /Applications to install.
-> Tested on OS X 10.10 and higher.
+> Tested on OS X 10.15.
 
 #### Linux
 > Unpack the tar file and run the run.sh. You have to pre-install *VLC* to be able to run the Linux version.
-> Tested on ubuntu 14.04 LTS and 16.04 LTS.
+> Tested on Ubuntu 19.10 64-bit.
 
 
 ## Branches
