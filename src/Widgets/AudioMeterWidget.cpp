@@ -6,6 +6,8 @@
 #include "DeviceManager.h"
 #include "EventManager.h"
 
+#include <cmath>
+
 AudioMeterWidget::AudioMeterWidget(QWidget* parent)
     : QWidget(parent),
       channel(-1), model(NULL), command(NULL), audioSubscription(NULL)
