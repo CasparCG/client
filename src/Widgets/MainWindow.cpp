@@ -42,6 +42,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setupMenu();
     setWindowIcon(QIcon(":/Graphics/Images/CasparCG.png"));
 
+#if defined(Q_OS_WIN)
+    verticalLayoutLeft->setSpacing(4);
+#elif defined(Q_OS_MAC)
+    ;
+#elif defined(Q_OS_LINUX)
+    ;
+#endif
+
     this->applicationTitle = this->windowTitle();
 
     this->widgetAction->setVisible(false);
