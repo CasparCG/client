@@ -1,12 +1,4 @@
 /*
- * QWidget
- */
-QWidget
-{
-    paint-alternating-row-colors-for-empty-area: false;
-}
-
-/*
  * QHeaderView
  */
 QHeaderView::section
@@ -27,7 +19,14 @@ QToolTip
  */
 QTabBar::tab
 {
+    padding-left: 5px;
+    padding-right: 10px;
     min-height: 18px;
+}
+
+#toolBoxLibrary
+{
+    margin-top: -2px;
 }
 
 /*

@@ -40,6 +40,9 @@
       </property>
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayoutLeft">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <item>
          <widget class="PreviewWidget" name="widgetPreview" native="true">
           <property name="sizePolicy">
@@ -70,6 +73,9 @@
       </widget>
       <widget class="QWidget" name="layoutWidget2">
        <layout class="QVBoxLayout" name="verticalLayoutMiddle">
+        <property name="spacing">
+         <number>6</number>
+        </property>
         <item>
          <widget class="DurationWidget" name="widgetDuration" native="true">
           <property name="sizePolicy">
