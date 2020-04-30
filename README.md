@@ -1,5 +1,4 @@
 # CasparCG Client
-> Client software primarily used with the CasparCG Server software for audio and video playout, to control graphics and recording, but it can also be used for other tasks within television broadcast.
 
 ![stable](https://img.shields.io/badge/stable-v2.0.8-lightgrey.svg?style=flat-square)
 ![platforms](https://img.shields.io/badge/platforms-windows%20%7C%20linux%20%7C%20osx-brightgreen.svg?style=flat-square)
@@ -7,45 +6,39 @@
 [![irc](https://img.shields.io/badge/irc-%23casparcg-green.svg?style=flat-square)](https://kiwiirc.com/client/sinisalo.freenode.net/?nick=Guest|?#CasparCG)
 [![license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](LICENSE)
 
-If used with CasparCG Server as intended, CasparCG Client provides a seamless and smooth way to playout audio, video and dynamic graphics. CasparCG Client can also be used to control ATEM Live Production Switchers and some TriCasters, without any requirements to use the CasparCG Server, and so much more.
-
 <p align="center"><img src="/src/Widgets/Images/Clients.png"></p>
 
 
 ## Installation
 
 #### Windows
-> No installation required. Move the program to a appropriate location on your drive and start it.
-> Tested on Windows 10 x64.
+ No installation required. Move the program to a appropriate location on your drive and start it. Tested on Windows 10 x64.
 
-#### OS X
-> Open the DMG file and drag the 'CasparCG Client' app to your /Applications to install.
-> Tested on OS X 10.15.
+#### macOS
+Open the DMG file and drag the 'CasparCG Client' app to your /Applications to install. Tested on OS X 10.15.
 
 #### Linux
-> Unpack the tar file and run the run.sh. You have to pre-install *VLC* to be able to run the Linux version.
-> Tested on Ubuntu 19.10 64-bit.
+Unpack the tar file and run the run.sh. You have to pre-install *VLC* to be able to run the Linux version. Tested on Ubuntu 19.10 64-bit.
 
 
 ## Branches
-For the moment the project has two primary branches, `master` and `next`.  
+For the moment the project has two primary branches, `master` and `next`. The master branch is currently outdated.
 
-The purpose of the `master` branch is to always have the latest stable version of CasparCG Client software, just as expected. The `next` branch contains the source code for the next upcoming version of CasparCG Client software. The version found in the next branch is considered to be unstable.  
-
-*In the future, stable releases will be tagged for better overview and tracking.*
+*In the future, releases will be tagged for better overview and tracking.*
 
 
 ## Development
 
 #### Windows
-Install the pre-built Qt 5.* binaries for Windows 64-bit (MinGW SEH exception handling),
-grab it from: [http://casparcg.com/build-tools/](http://casparcg.com/build-tools/).
+Install the pre-built Qt 5.14.2 binaries for Windows 64-bit from Qt site. The Mingw-w64 toolchain is bundled with the Qt installation.
+
+#### macOS
+Install the pre-built Qt 5.14.2 binaries for Mac OS X 64-bit from Qt site. Download and install Xcode from the App Store.
 
 #### Linux
-VLC need to be installed on Linux: `sudo apt-get install vlc libvlc-dev libvlccore-dev`.  
-The plugin cache may need to be refreshed: `sudo /usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins`.
+Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt site. Use your package manager to install the gcc toolchain.
 
-*You can find the latest unstable development builds on [http://builds.casparcg.com](http://builds.casparcg.com).*
+VLC need to be pre-installed: `sudo apt-get install vlc libvlc-dev libvlccore-dev`.
 
 
 ## Releases
