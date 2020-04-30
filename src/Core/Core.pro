@@ -393,46 +393,46 @@ RESOURCES += \
     Core.qrc
 
 CONFIG(system-libqatemcontrol) {
-LIBS += -lqatemcontrol
+    LIBS += -lqatemcontrol
 } else {
-DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
-INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
-win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
-else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
-else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/release/ -lqatemcontrol
-else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
-else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
-else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
+    DEPENDPATH += $$PWD/../../lib/qatemcontrol/include
+    INCLUDEPATH += $$PWD/../../lib/qatemcontrol/include
+    win32:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/release/ -lqatemcontrol
+    else:win32:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/win32/debug/ -lqatemcontrol
+    else:macx:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/release/ -lqatemcontrol
+    else:macx:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/macx/debug/ -lqatemcontrol
+    else:unix:CONFIG(release, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/release/ -lqatemcontrol
+    else:unix:CONFIG(debug, debug|release):LIBS += -L$$PWD/../../lib/qatemcontrol/lib/linux/debug/ -lqatemcontrol
 }
 
 CONFIG(system-oscpack) {
-LIBS += -loscpack
+    LIBS += -loscpack
 } else {
-DEPENDPATH += $$PWD/../../lib/oscpack/include
-INCLUDEPATH += $$PWD/../../lib/oscpack/include
-win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
-else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
-else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
+    DEPENDPATH += $$PWD/../../lib/oscpack/include
+    INCLUDEPATH += $$PWD/../../lib/oscpack/include
+    win32:LIBS += -L$$PWD/../../lib/oscpack/lib/win32/ -loscpack
+    else:macx:LIBS += -L$$PWD/../../lib/oscpack/lib/macx/ -loscpack
+    else:unix:LIBS += -L$$PWD/../../lib/oscpack/lib/linux/ -loscpack
 }
 
 CONFIG(system-boost) {
-LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+    LIBS += -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 } else {
-DEPENDPATH += $$PWD/../../lib/boost
-INCLUDEPATH += $$PWD/../../lib/boost
-win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw49-mt-1_57 -lboost_system-mgw49-mt-1_57 -lboost_thread-mgw49-mt-1_57 -lboost_filesystem-mgw49-mt-1_57 -lboost_chrono-mgw49-mt-1_57 -lws2_32
-else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
-else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+    DEPENDPATH += $$PWD/../../lib/boost
+    INCLUDEPATH += $$PWD/../../lib/boost
+    win32:LIBS += -L$$PWD/../../lib/boost/stage/lib/win32/ -lboost_date_time-mgw73-mt-1_57 -lboost_system-mgw73-mt-1_57 -lboost_thread-mgw73-mt-1_57 -lboost_filesystem-mgw73-mt-1_57 -lboost_chrono-mgw73-mt-1_57 -lws2_32
+    else:macx:LIBS += -L$$PWD/../../lib/boost/stage/lib/macx/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
+    else:unix:LIBS += -L$$PWD/../../lib/boost/stage/lib/linux/ -lboost_date_time -lboost_system -lboost_thread -lboost_filesystem -lboost_chrono
 }
 
 CONFIG(system-gpio-client) {
-LIBS += -lgpio-client
+    LIBS += -lgpio-client
 } else {
-DEPENDPATH += $$PWD/../../lib/gpio-client/include
-INCLUDEPATH += $$PWD/../../lib/gpio-client/include
-win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
-else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
-else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
+    DEPENDPATH += $$PWD/../../lib/gpio-client/include
+    INCLUDEPATH += $$PWD/../../lib/gpio-client/include
+    win32:LIBS += -L$$PWD/../../lib/gpio-client/lib/win32/ -lgpio-client
+    else:macx:LIBS += -L$$PWD/../../lib/gpio-client/lib/macx/ -lgpio-client
+    else:unix:LIBS += -L$$PWD/../../lib/gpio-client/lib/linux/ -lgpio-client
 }
 
 DEPENDPATH += $$OUT_PWD/../Atem $$PWD/../Atem
