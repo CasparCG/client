@@ -13,7 +13,6 @@
 
 #include <iostream>
 
-#include <QtCore/QTime>
 #include <QtCore/QDebug>
 
 #include <QtGui/QDrag>
@@ -166,9 +165,6 @@ bool RundownTreeBaseWidget::pasteItemProperties()
 
 bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 {
-    QTime time;
-    time.start();
-
     std::wstringstream wstringstream;
     wstringstream << qApp->clipboard()->text().toStdWString();
 

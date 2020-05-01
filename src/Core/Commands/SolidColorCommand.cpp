@@ -29,7 +29,7 @@ const QString SolidColorCommand::getPremultipliedColor() const
     blue = (blue * alpha) / 255;
 
     QString color;
-    return color.sprintf("#%02x%02x%02x%02x", alpha, red, green, blue);
+    return color.asprintf("#%02x%02x%02x%02x", alpha, red, green, blue);
 }
 
 const QString& SolidColorCommand::getTransition() const

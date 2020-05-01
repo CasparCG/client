@@ -22,15 +22,15 @@ void OscSender::send(const QString& address, int port, const QString& path, cons
     if (useBundle)
         stream << osc::BeginBundleImmediate;
 
-    if (message.type() == QMetaType::Bool)
+    if (message.userType() == QMetaType::Bool)
         stream << osc::BeginMessage(path.toStdString().c_str()) << message.toBool() << osc::EndMessage;
-    else if (message.type() == QMetaType::Double)
+    else if (message.userType() == QMetaType::Double)
         stream << osc::BeginMessage(path.toStdString().c_str()) << message.toDouble() << osc::EndMessage;
-    else if (message.type() == QMetaType::Float)
+    else if (message.userType() == QMetaType::Float)
         stream << osc::BeginMessage(path.toStdString().c_str()) << message.toFloat() << osc::EndMessage;
-    else if (message.type() == QMetaType::Int)
+    else if (message.userType() == QMetaType::Int)
         stream << osc::BeginMessage(path.toStdString().c_str()) << message.toInt() << osc::EndMessage;
-    else if (message.type() == QMetaType::QString)
+    else if (message.userType() == QMetaType::QString)
         stream << osc::BeginMessage(path.toStdString().c_str()) << message.toString().toUtf8().constData() << osc::EndMessage;
 
     if (useBundle)

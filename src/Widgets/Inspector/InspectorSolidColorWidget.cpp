@@ -124,8 +124,8 @@ void InspectorSolidColorWidget::colorDialogClicked()
     if (dialog.exec() == QDialog::Accepted)
     {
         QString color;
-        color.sprintf("#%02x%02x%02x%02x", dialog.selectedColor().alpha(), dialog.selectedColor().red(),
-                      dialog.selectedColor().green(), dialog.selectedColor().blue());
+        color.asprintf("#%02x%02x%02x%02x", dialog.selectedColor().alpha(), dialog.selectedColor().red(),
+                       dialog.selectedColor().green(), dialog.selectedColor().blue());
 
         this->lineEditColor->setText(color);
     }

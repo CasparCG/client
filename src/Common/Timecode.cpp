@@ -28,7 +28,7 @@ QString Timecode::fromTime(double time, double fps, bool useDropFrameNotation)
     frames = (int)((time - hour * 3600 - minutes * 60 - seconds) * fps);
 
     if (useDropFrameNotation)
-        return smpteFormat.sprintf("%02d:%02d:%02d.%02d", hour, minutes, seconds, frames);
+        return smpteFormat.asprintf("%02d:%02d:%02d.%02d", hour, minutes, seconds, frames);
     else
-        return smpteFormat.sprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
+        return smpteFormat.asprintf("%02d:%02d:%02d:%02d", hour, minutes, seconds, frames);
 }

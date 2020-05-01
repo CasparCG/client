@@ -11,7 +11,7 @@
 #include "Models/DeviceModel.h"
 
 #include <QtCore/QSharedPointer>
-#include <QtCore/QTime>
+#include <QtCore/QElapsedTimer>
 #include <QtCore/QTimer>
 #include <QtCore/QStringList>
 
@@ -152,7 +152,7 @@ void LibraryManager::connectionStateChanged(CasparDevice& device)
 
 void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDevice& device)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     QList<LibraryModel> insertModels;
@@ -193,12 +193,12 @@ void LibraryManager::mediaChanged(const QList<CasparMedia>& mediaItems, CasparDe
         EventManager::getInstance().fireMediaChangedEvent(MediaChangedEvent());
     }
 
-    qDebug("LibraryManager::mediaChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::mediaChanged %lld msec", time.elapsed());
 }
 
 void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems, CasparDevice& device)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     QList<LibraryModel> insertModels;
@@ -239,12 +239,12 @@ void LibraryManager::templateChanged(const QList<CasparTemplate>& templateItems,
         EventManager::getInstance().fireTemplateChangedEvent(TemplateChangedEvent());
     }
 
-    qDebug("LibraryManager::templateChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::templateChanged %lld msec", time.elapsed());
 }
 
 void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevice& device)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     QList<LibraryModel> insertModels;
@@ -285,7 +285,7 @@ void LibraryManager::dataChanged(const QList<CasparData>& dataItems, CasparDevic
         EventManager::getInstance().fireDataChangedEvent(DataChangedEvent());
     }
 
-    qDebug("LibraryManager::dataChanged %d msec", time.elapsed());
+    qDebug("LibraryManager::dataChanged %lld msec", time.elapsed());
 }
 
 void LibraryManager::thumbnailChanged(const QList<CasparThumbnail>& thumbnailItems, CasparDevice& device)

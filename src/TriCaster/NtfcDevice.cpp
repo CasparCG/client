@@ -88,7 +88,7 @@ void NtfcDevice::writeMessage(const QString& message)
         const TcpMessageHeader tcpMessageHeader = { 1, 0, destinationDataSize, static_cast<uint32_t>(sizeof(MessageHeader) + messageDataSize) };
 
         // Setup the message header.
-        const MessageHeader messageHeader = { 2, messageDataSize };
+        const MessageHeader messageHeader = { 2, messageDataSize, { 0 } };
 
         this->socket->write((char*)&tcpMessageHeader, sizeof(tcpMessageHeader));    // Send tcp header.
         this->socket->write((char*)destinationData, destinationDataSize);           // Send destination.

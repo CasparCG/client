@@ -46,7 +46,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QPoint>
 #include <QtCore/QTextCodec>
-#include <QtCore/QTime>
+#include <QtCore/QElapsedTimer>
 #include <QtCore/QTextStream>
 #include <QtCore/QCryptographicHash>
 
@@ -598,7 +598,7 @@ void RundownTreeWidget::setActive(bool active)
 
 void RundownTreeWidget::openRundown(const QString& path)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Opening rundown..."));
@@ -626,7 +626,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         // Set previous stored clipboard value.
         qApp->clipboard()->setText(latest);
 
-        qDebug("Parsing rundown completed in %d msec", time.elapsed());
+        qDebug("Parsing rundown completed in %lld msec", time.elapsed());
 
         file.close();
 
@@ -637,7 +637,7 @@ void RundownTreeWidget::openRundown(const QString& path)
 
         DatabaseManager::getInstance().insertOpenRecent(path);
 
-        qDebug("RundownTreeWidget::openRundown %d msec (%d items)", time.elapsed(), this->treeWidgetRundown->invisibleRootItem()->childCount());
+        qDebug("RundownTreeWidget::openRundown %lld msec (%d items)", time.elapsed(), this->treeWidgetRundown->invisibleRootItem()->childCount());
     }
 
     EventManager::getInstance().fireStatusbarEvent(StatusbarEvent(""));
