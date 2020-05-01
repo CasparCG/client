@@ -41,7 +41,7 @@
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayoutLeft">
         <property name="spacing">
-         <number>6</number>
+         <number>4</number>
         </property>
         <item>
          <widget class="PreviewWidget" name="widgetPreview" native="true">
