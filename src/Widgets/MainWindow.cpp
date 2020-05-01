@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 #if defined(Q_OS_WIN)
     verticalLayoutLeft->setSpacing(4);
 #elif defined(Q_OS_MAC)
-    ;
+    verticalLayoutLeft->setSpacing(5);
 #elif defined(Q_OS_LINUX)
     ;
 #endif

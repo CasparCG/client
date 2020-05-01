@@ -24,11 +24,6 @@ QTabBar::tab
     min-height: 18px;
 }
 
-#toolBoxLibrary
-{
-    margin-top: -2px;
-}
-
 /*
  * OscTimeWidget
  */

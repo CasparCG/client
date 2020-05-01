@@ -706,10 +706,15 @@ QComboBox::drop-down
 {
     border-color: rgba(70, 115, 195, 255);
 }*/
+QComboBox::item:selected
+{
+    border-width: 0px;
+    background-color: rgba(70, 115, 195, 64);
+}
 QComboBox QAbstractItemView
 {
     selection-background-color: rgba(70, 115, 195, 64);
-    background-color: transparent;
+    background-color: rgba(28, 28, 28, 255);
 }
 
 /*
