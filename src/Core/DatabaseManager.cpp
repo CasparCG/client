@@ -49,9 +49,6 @@ void DatabaseManager::createDatabase()
             if (query.trimmed().isEmpty())
                 continue;
 
-            if (sql.driver()->dbmsType() == QSqlDriver::SQLite)
-                query.remove("AUTO_INCREMENT");
-
             if (!sql.exec(query))
                 qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
         }

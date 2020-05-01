@@ -37,10 +37,6 @@ struct CommandLineArgs
 {
     QString rundown;
 
-    QString mysqlhost;
-    QString mysqluser;
-    QString mysqlpass;
-    QString mysqldb;
     QString sqlitepath;
 
     bool dbmemory = false;
@@ -116,27 +112,14 @@ void loadDatabase(CommandLineArgs* args)
     }
     else
     {
-        if (!args->mysqlhost.isEmpty() && !args->mysqluser.isEmpty() && !args->mysqlpass.isEmpty() && !args->mysqldb.isEmpty())
-        {
-            qDebug("Using MySQL database");
+        qDebug("Using SQLite database");
 
-            database = QSqlDatabase::addDatabase("QMYSQL");
-            database.setHostName(args->mysqlhost);
-            database.setDatabaseName(args->mysqldb);
-            database.setUserName(args->mysqluser);
-            database.setPassword(args->mysqlpass);
-        }
-        else
-        {
-            qDebug("Using SQLite database");
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        QString databaseLocation = QString("%1/Database.s3db").arg(path);
+        if (!args->sqlitepath.isEmpty())
+            databaseLocation = args->sqlitepath;
 
-            database = QSqlDatabase::addDatabase("QSQLITE");
-            QString databaseLocation = QString("%1/Database.s3db").arg(path);
-            if (!args->sqlitepath.isEmpty())
-                databaseLocation = args->sqlitepath;
-
-            database.setDatabaseName(databaseLocation);
-        }
+        database.setDatabaseName(databaseLocation);
     }
 
     if (!database.open())
@@ -236,10 +219,6 @@ CommandLineParseResult parseCommandLine(QCommandLineParser& parser, CommandLineA
     parser.addOption({{"m", "dbmemory"}, "Use SQLite in memory database."});
     parser.addOption({{"r", "rundown"}, "The rundown path.", "rundown"});
     parser.addOption({{"t", "sqlitepath"}, "The SQLite database path.", "sqlitepath"});
-    parser.addOption({{"a", "mysqlhost"}, "MySQL database host.", "mysqlhost"});
-    parser.addOption({{"u", "mysqluser"}, "MySQL database user.", "mysqluser"});
-    parser.addOption({{"p", "mysqlpass"}, "MySQL database password.", "mysqlpass"});
-    parser.addOption({{"n", "mysqldb"}, "MySQL database name.", "mysqldb"});
 
     if (!parser.parse(QApplication::arguments()))
         return CommandLineError;
@@ -258,18 +237,6 @@ CommandLineParseResult parseCommandLine(QCommandLineParser& parser, CommandLineA
 
     if (parser.isSet("dbmemory"))
         args->dbmemory = true;
-
-    if (parser.isSet("mysqlhost"))
-        args->mysqlhost = parser.value("mysqlhost");
-
-    if (parser.isSet("mysqluser"))
-        args->mysqluser = parser.value("mysqluser");
-
-    if (parser.isSet("mysqlpass"))
-        args->mysqlpass = parser.value("mysqlpass");
-
-    if (parser.isSet("mysqldb"))
-        args->mysqldb = parser.value("mysqldb");
 
     if (parser.isSet("sqlitepath"))
         args->sqlitepath = parser.value("sqlitepath");
