@@ -51,4 +51,3 @@ cp -fa ../LICENSE "$DOC_DIR/" || fail "Could not copy LICENSE"
 # Create tar.gz file
 echo Creating tag.gz...
 tar -cvzf "$BUILD_ARCHIVE_NAME.tar.gz" "$CLIENT_FOLDER" || fail "Could not create archive"
-
