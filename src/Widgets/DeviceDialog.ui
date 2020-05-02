@@ -34,6 +34,9 @@
      <property name="pixmap">
       <pixmap resource="Widgets.qrc">:/Graphics/Images/ServerBig.png</pixmap>
      </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
