@@ -29,13 +29,13 @@ For the moment the project has two primary branches, `master` and `next`. The ma
 ## Development
 
 #### Windows
-Install the pre-built Qt 5.14.2 binaries for Windows 64-bit from Qt site. The Mingw-w64 toolchain is bundled with the Qt installation.
+Install the pre-built Qt 5.14.2 binaries for Windows 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). The Mingw-w64 toolchain is bundled with the Qt installation for Windows.
 
 #### macOS
-Install the pre-built Qt 5.14.2 binaries for Mac OS X 64-bit from Qt site. Download and install Xcode from the App Store.
+Install the pre-built Qt 5.14.2 binaries for Mac OS X 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Download and install Xcode from the App Store.
 
 #### Linux
-Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt site. Use your package manager to install the gcc toolchain.
+Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Use your package manager to install the gcc toolchain.
 
 VLC need to be pre-installed: `sudo apt-get install vlc libvlc-dev libvlccore-dev`.
 
