@@ -248,6 +248,8 @@ int main(int argc, char* argv[])
 {
     qInstallMessageHandler(messageHandler);
 
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
     Application application(argc, argv);
     application.setApplicationName("CasparCG Client");
     application.setApplicationVersion(QString("%1.%2.%3.%4").arg(MAJOR_VERSION).arg(MINOR_VERSION).arg(REVISION_VERSION).arg(BUILD_VERSION));
