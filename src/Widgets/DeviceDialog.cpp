@@ -107,7 +107,7 @@ int DeviceDialog::getLockedChannel() const
 
 void DeviceDialog::accept()
 {
-    if (this->lineEditDeviceName->text().isEmpty() || this->lineEditAddress->text().isEmpty())
+    if (!lookupName(this->lineEditDeviceName->text()) || !lookupAddress(this->lineEditAddress->text()))
         return;
 
     if (!this->editMode)
@@ -169,20 +169,44 @@ void DeviceDialog::nameChanged(QString name)
 {
     Q_UNUSED(name);
 
-    if (this->lineEditDeviceName->text().isEmpty())
+    if (this->lineEditDeviceName->text().isEmpty() || !lookupName(this->lineEditDeviceName->text()))
         this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditDeviceName->setStyleSheet("");
+}
+
+bool DeviceDialog::lookupName(const QString& name)
+{
+    if (name.isEmpty())
+        return false;
+
+    DeviceModel model = DatabaseManager::getInstance().getDeviceByName(name);
+    if (model.getName() == name)
+        return false;
+
+    return true;
 }
 
 void DeviceDialog::addressChanged(QString name)
 {
     Q_UNUSED(name);
 
-    if (this->lineEditAddress->text().isEmpty())
+    if (this->lineEditAddress->text().isEmpty() || !lookupAddress(this->lineEditAddress->text()))
         this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditAddress->setStyleSheet("");
+}
+
+bool DeviceDialog::lookupAddress(const QString& address)
+{
+    if (address.isEmpty())
+        return false;
+
+    DeviceModel model = DatabaseManager::getInstance().getDeviceByAddress(address);
+    if (model.getAddress() == address)
+        return false;
+
+    return true;
 }
 
 void DeviceDialog::connectionStateChanged(CasparDevice& device)

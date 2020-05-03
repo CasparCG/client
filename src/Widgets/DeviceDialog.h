@@ -41,6 +41,9 @@ class WIDGETS_EXPORT DeviceDialog : public QDialog, Ui::DeviceDialog
 
         QSharedPointer<CasparDevice> device;
 
+        bool lookupName(const QString& name);
+        bool lookupAddress(const QString& address);
+
         Q_SLOT void nameChanged(QString);
         Q_SLOT void addressChanged(QString);
         Q_SLOT void testConnection();
