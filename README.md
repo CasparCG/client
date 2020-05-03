@@ -11,13 +11,13 @@
 ## Installation
 
 #### Windows
- No installation required. Move the program to a appropriate location on your drive and start it. Tested on Windows 10 x64.
+No installation required. Unpack the zip file to a location on your drive and start it. Tested on Windows 10 x64.
 
 #### macOS
-Open the DMG file and drag the 'CasparCG Client' app to your /Applications to install. Tested on OS X 10.15.
+No installation required. Open the DMG file and drag the 'CasparCG Client' app to a location on your drive and start it. Tested on macOS 10.15.
 
 #### Linux
-Unpack the tar file and run the run.sh. You have to pre-install *VLC* to be able to run the Linux version. Tested on Ubuntu 19.10 64-bit.
+No installation required. Unpack the tar file to a location on your drive and run the run.sh script. Tested on Ubuntu 19.10 64-bit.
 
 
 ## Branches
