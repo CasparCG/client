@@ -1,6 +1,5 @@
 # CasparCG Client
 
-![stable](https://img.shields.io/badge/stable-v2.0.8-lightgrey.svg?style=flat-square)
 ![platforms](https://img.shields.io/badge/platforms-windows%20%7C%20linux%20%7C%20osx-brightgreen.svg?style=flat-square)
 [![help](https://img.shields.io/badge/help-community%20forum-green.svg?style=flat-square)](https://casparcg.com/forum)
 [![irc](https://img.shields.io/badge/irc-%23casparcg-green.svg?style=flat-square)](https://kiwiirc.com/client/sinisalo.freenode.net/?nick=Guest|?#CasparCG)
