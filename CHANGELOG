@@ -1,3 +1,21 @@
+CasparCG Client 2.2.0
+=====================
+- ADD: Separated OSC monitoring / controlling options.
+- FIX: Fixed OSC feedback issues with CasparCG Server 2.2.x.
+- FIX: Fixed issue with "Open Recent Rundown" when rundown is saved.
+- FIX: Use logical CPU number when compiling on macOS. (grahamspr86)
+- FIX: Resolve issues with macdeployqt script on macOS. (grahamspr86) 
+- FIX: Fixed compile issues on Linux.
+- FIX: Fixed compile issues on Mac OSX Mojave.
+- FIX: Various graphic issues due to Qt update.
+- FIX: Fixed build script to work with Qt 5.14.2.
+- UPDATE: Updated Qt from 5.4 to 5.14.2.
+- UPDATE: Updated QAtemControl for better compatibility with ATEM mixers. 
+- UPDATE: Windows version and all dependencies to 64-bit.
+- REMOVE: MySQL database support. 
+
+
+
 CasparCG Client 2.0.9
 =====================
 - NEW: Added support for drop frame notation. (dimitry-ishenko)
