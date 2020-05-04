@@ -32,7 +32,7 @@ For the moment the project has two primary branches, `master` and `next`. The ma
 Install the pre-built Qt 5.14.2 binaries for Windows 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). The Mingw-w64 toolchain is bundled with the Qt installation for Windows.
 
 #### macOS
-Install the pre-built Qt 5.14.2 binaries for Mac OS X 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Download and install Xcode from the App Store.
+Install the pre-built Qt 5.14.2 binaries for macOS 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Download and install Xcode from the App Store.
 
 #### Linux
 Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Use your package manager to install the gcc toolchain.
