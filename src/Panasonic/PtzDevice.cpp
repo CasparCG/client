@@ -17,7 +17,7 @@ void PtzDevice::selectPreset(const QString& address, int preset)
     QUrl request(QString("http://%1/cgi-bin/aw_ptz").arg(address));
 
     QUrlQuery query;
-    query.addQueryItem("cmd", QString("#R%1").arg(QString(preset).asprintf("%02d", preset)));
+    query.addQueryItem("cmd", QString("#R%1").arg(preset, 2, 10));
     query.addQueryItem("res", "1");
 
     request.setQuery(query);

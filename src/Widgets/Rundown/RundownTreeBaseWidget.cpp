@@ -310,18 +310,18 @@ void RundownTreeBaseWidget::removeAllItems()
         AbstractRundownWidget* widget = dynamic_cast<AbstractRundownWidget*>(QTreeWidget::itemWidget(item, 0));
         if (widget->isGroup())
         {
-            for (int i = item->childCount() - 1; i >= 0; i--)
+            for (int j = item->childCount() - 1; j >= 0; j--)
             {
-                QWidget* childWidget = QTreeWidget::itemWidget(item->child(i), 0);
+                QWidget* childWidget = QTreeWidget::itemWidget(item->child(j), 0);
 
                 // Remove our items from the auto play queue if it exists.
-                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(i)));
+                EventManager::getInstance().fireRemoveItemFromAutoPlayQueueEvent(RemoveItemFromAutoPlayQueueEvent(item->child(j)));
 
                 // Clear current playing item.
-                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(i)));
+                EventManager::getInstance().fireClearCurrentPlayingItemEvent(ClearCurrentPlayingItemEvent(item->child(j)));
 
                 delete childWidget;
-                delete item->child(i);
+                delete item->child(j);
             }
         }
 
