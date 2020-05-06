@@ -738,10 +738,7 @@ void RundownTreeWidget::reloadRundown()
         this->currentPlayingAutoStepItem = NULL;
 
     if (this->currentAutoPlayWidget != NULL)
-    {
-        delete this->currentAutoPlayWidget;
         this->currentAutoPlayWidget = NULL;
-    }
 
     this->treeWidgetRundown->removeAllItems();
 
