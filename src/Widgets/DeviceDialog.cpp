@@ -177,6 +177,9 @@ void DeviceDialog::nameChanged(QString name)
 
 bool DeviceDialog::lookupName(const QString& name)
 {
+    if (this->editMode)
+        return true;
+
     if (name.isEmpty())
         return false;
 
@@ -199,6 +202,9 @@ void DeviceDialog::addressChanged(QString name)
 
 bool DeviceDialog::lookupAddress(const QString& address)
 {
+    if (this->editMode)
+        return true;
+
     if (address.isEmpty())
         return false;
 
