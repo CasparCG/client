@@ -77,7 +77,7 @@ void OscControlListener::ProcessMessage(const osc::ReceivedMessage& message, con
     QString eventMessage = QString("%1").arg(message.AddressPattern());
     QString eventPath = QString("%1%2").arg(addressBuffer).arg(message.AddressPattern());
 
-    //qDebug("DEBUG: OSC control message received: %s", eventPath);
+    //qDebug("DEBUG: OSC control message received: %s", qPrintable(eventPath));
 
     QMutexLocker locker(&eventsMutex);
     if (eventMessage.startsWith("/control"))

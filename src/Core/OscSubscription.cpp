@@ -21,7 +21,7 @@ void OscSubscription::messageReceived(const QString& pattern, const QList<QVaria
 {
     if (pattern.endsWith(this->path))
     {
-        //qDebug("Found a subscriber: %s:%s", qPrintable(this->parent()), qPrintable(this->path));
+        //qDebug("Found a subscriber: %s:%s", qPrintable(this->parent()->objectName()), qPrintable(this->path));
 
         emit subscriptionReceived(this->path, arguments);
     }

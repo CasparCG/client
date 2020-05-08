@@ -87,8 +87,8 @@ namespace Osc
 {
     static const bool DEFAULT_USE_BUNDLE = false;
     static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-    static const int DEFAULT_MONITOR_PORT = 3250;
-    static const int DEFAULT_CONTROL_PORT = 6250;
+    static const int DEFAULT_MONITOR_PORT = 6250;
+    static const int DEFAULT_CONTROL_PORT = 3250;
     static const int DEFAULT_WEBSOCKET_PORT = 4250;
     static const QString DEFAULT_OUTPUT = "";
     static const QString DEFAULT_TYPE = "String";
@@ -115,9 +115,9 @@ namespace Osc
     static const QString FILERECORDER_FRAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/frame";
     static const QString FILERECORDER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/fps";
     static const QString FILERECORDER_PATH_FILTER = "#IPADDRESS#/channel/#CHANNEL#/output/port/#PORT#/file/path";
+    static const QString VIDEOLAYER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/framerate";
     static const QString VIDEOLAYER_TIME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/file/time";
     static const QString VIDEOLAYER_CLIP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/file/clip";
-    static const QString VIDEOLAYER_FPS_FILTER = "#IPADDRESS#/channel/#CHANNEL#/framerate";
     static const QString VIDEOLAYER_NAME_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/file/name";
     static const QString VIDEOLAYER_PAUSED_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/paused";
     static const QString VIDEOLAYER_LOOP_FILTER = "#IPADDRESS#/channel/#CHANNEL#/stage/layer/#VIDEOLAYER#/foreground/loop";
