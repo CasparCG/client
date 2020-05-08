@@ -380,6 +380,7 @@ SOURCES += \
 
 DISTFILES += \
     Sql/ChangeScript-208.sql \
+    Sql/ChangeScript-216.sql \
     Sql/Schema.sql \
     Sql/ChangeScript-209.sql \
     Sql/ChangeScript-210.sql \

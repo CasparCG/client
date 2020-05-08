@@ -167,6 +167,8 @@ INSERT INTO GpoPort (RisingEdge, PulseLengthMillis) VALUES(1, 100);
 INSERT INTO GpoPort (RisingEdge, PulseLengthMillis) VALUES(1, 100);
 INSERT INTO GpoPort (RisingEdge, PulseLengthMillis) VALUES(1, 100);
 
+INSERT INTO OscOutput (Name, Address, Port, Description) VALUES('Localhost', '127.0.0.1', 3250, '');
+
 INSERT INTO Transition (Value) VALUES('CUT');
 INSERT INTO Transition (Value) VALUES('MIX');
 INSERT INTO Transition (Value) VALUES('PUSH');
