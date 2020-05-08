@@ -593,7 +593,8 @@ void InspectorOutputWidget::fillTargetCombo(const QString& type, QString deviceN
                 this->comboBoxTarget->addItem(model.getName());
         }
 
-        if (this->comboBoxTarget->findText(this->model->getName()))
+        // Include current target when using filter that do not match it.
+        if (!this->libraryFilter.isEmpty() && this->comboBoxTarget->findText(this->model->getName()))
         {
             if (!this->model->getName().isEmpty() &&
                 (this->model->getType() == Rundown::AUDIO || this->model->getType() == Rundown::STILL ||
