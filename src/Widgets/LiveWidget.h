@@ -46,18 +46,16 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
         QAction* expandCollapseAction;
 
         void setupMenus();
-        void setupAudioTrackMenu();
-        void setupStreamMenu();
         void setupRenderTarget(bool windowMode);
         void startStream();
         void stopStream();
 
+        Q_SLOT void setupStreamMenu();
+        Q_SLOT void setupAudioTrackMenu();
         Q_SLOT void toggleWindowMode();
         Q_SLOT void disconnectStream();
         Q_SLOT void muteAudio(bool);
         Q_SLOT void toggleExpandCollapse();
-        Q_SLOT void audioTrackMenuHovered();
-        Q_SLOT void streamMenuHovered();
         Q_SLOT void streamMenuActionTriggered(QAction*);
         Q_SLOT void audioMenuActionTriggered(QAction*);
         Q_SLOT void closeApplication(const CloseApplicationEvent&);

@@ -70,9 +70,9 @@ void LiveWidget::setupMenus()
     this->contextMenuLiveDropdown->addSeparator();
     this->expandCollapseAction = this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/Collapse.png"),*/ "Collapse", this, SLOT(toggleExpandCollapse()));
 
-    QObject::connect(this->streamMenuAction, SIGNAL(hovered()), this, SLOT(streamMenuHovered()));
-    QObject::connect(this->audioTrackMenuAction, SIGNAL(hovered()), this, SLOT(audioTrackMenuHovered()));
+    QObject::connect(this->streamMenu, SIGNAL(aboutToShow()), this, SLOT(setupStreamMenu()));
     QObject::connect(this->streamMenu, SIGNAL(triggered(QAction*)), this, SLOT(streamMenuActionTriggered(QAction*)));
+    QObject::connect(this->audioTrackMenu, SIGNAL(aboutToShow()), this, SLOT(setupAudioTrackMenu()));
     QObject::connect(this->audioTrackMenu, SIGNAL(triggered(QAction*)), this, SLOT(audioMenuActionTriggered(QAction*)));
     QObject::connect(this->muteAction, SIGNAL(toggled(bool)), this, SLOT(muteAudio(bool)));
 
@@ -83,11 +83,6 @@ void LiveWidget::setupMenus()
 
     this->tabWidgetLive->setCornerWidget(toolButtonLiveDropdown);
     //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
-}
-
-void LiveWidget::audioTrackMenuHovered()
-{
-    setupAudioTrackMenu();
 }
 
 void LiveWidget::setupAudioTrackMenu()
@@ -116,19 +111,6 @@ void LiveWidget::setupAudioTrackMenu()
     }
 }
 
-void LiveWidget::audioMenuActionTriggered(QAction* action)
-{
-    if (!this->vlcMediaPlayer)
-        return;
-
-    libvlc_audio_set_track(this->vlcMediaPlayer, action->data().toInt());
-}
-
-void LiveWidget::streamMenuHovered()
-{
-    setupStreamMenu();
-}
-
 void LiveWidget::setupStreamMenu()
 {
     foreach (QAction* action, this->streamMenu->actions())
@@ -146,6 +128,14 @@ void LiveWidget::setupStreamMenu()
 
     this->streamMenu->addSeparator();
     this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Disconnect", this, SLOT(disconnectStream()));
+}
+
+void LiveWidget::audioMenuActionTriggered(QAction* action)
+{
+    if (!this->vlcMediaPlayer)
+        return;
+
+    libvlc_audio_set_track(this->vlcMediaPlayer, action->data().toInt());
 }
 
 void LiveWidget::streamMenuActionTriggered(QAction* action)

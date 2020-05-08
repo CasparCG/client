@@ -57,6 +57,8 @@ void RundownWidget::setupMenus()
 {
     this->openRecentMenu = new QMenu(this);
     this->openRecentMenu->setTitle("Open Recent Rundown");
+
+    QObject::connect(this->openRecentMenu, SIGNAL(aboutToShow()), this, SLOT(refreshOpenRecent()));
     QObject::connect(this->openRecentMenu, SIGNAL(triggered(QAction*)), this, SLOT(openRecentMenuActionTriggered(QAction*)));
 
     this->contextMenuMark = new QMenu(this);
@@ -92,7 +94,6 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
     this->insertRepositoryChangesAction->setEnabled(false);
-    QObject::connect(this->openRecentMenuAction, SIGNAL(hovered()), this, SLOT(openRecentMenuHovered()));
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -104,7 +105,7 @@ void RundownWidget::setupMenus()
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
 }
 
-void RundownWidget::openRecentMenuHovered()
+void RundownWidget::refreshOpenRecent()
 {
     foreach (QAction* action, this->openRecentMenu->actions())
         this->openRecentMenu->removeAction(action);
