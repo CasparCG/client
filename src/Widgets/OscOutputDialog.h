@@ -34,6 +34,9 @@ class WIDGETS_EXPORT OscOutputDialog : public QDialog, Ui::OscOutputDialog
     private:
         bool editMode;
 
+        bool lookupName(const QString& name);
+        bool lookupAddress(const QString& address);
+
         Q_SLOT void nameChanged(QString);
         Q_SLOT void addressChanged(QString);
 };

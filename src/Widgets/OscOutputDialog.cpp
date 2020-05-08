@@ -73,7 +73,7 @@ const QString OscOutputDialog::getDescription() const
 
 void OscOutputDialog::accept()
 {
-    if (this->lineEditDeviceName->text().isEmpty() || this->lineEditAddress->text().isEmpty())
+    if (!lookupName(this->lineEditDeviceName->text()) || !lookupAddress(this->lineEditAddress->text()))
         return;
 
     if (!this->editMode)
@@ -124,18 +124,49 @@ void OscOutputDialog::nameChanged(QString name)
 {
     Q_UNUSED(name);
 
-    if (this->lineEditDeviceName->text().isEmpty())
+    if (this->lineEditDeviceName->text().isEmpty() || !lookupName(this->lineEditDeviceName->text()))
         this->lineEditDeviceName->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditDeviceName->setStyleSheet("");
 }
 
+bool OscOutputDialog::lookupName(const QString& name)
+{
+    if (this->editMode)
+        return true;
+
+    if (name.isEmpty())
+        return false;
+
+    OscOutputModel model = DatabaseManager::getInstance().getOscOutputByName(name);
+    if (model.getName() == name)
+        return false;
+
+    return true;
+}
+
+
 void OscOutputDialog::addressChanged(QString name)
 {
     Q_UNUSED(name);
 
-    if (this->lineEditAddress->text().isEmpty())
+    if (this->lineEditAddress->text().isEmpty() || !lookupAddress(this->lineEditAddress->text()))
         this->lineEditAddress->setStyleSheet("border-color: firebrick;");
     else
         this->lineEditAddress->setStyleSheet("");
+}
+
+bool OscOutputDialog::lookupAddress(const QString& address)
+{
+    if (this->editMode)
+        return true;
+
+    if (address.isEmpty())
+        return false;
+
+    OscOutputModel model = DatabaseManager::getInstance().getOscOutputByAddress(address);
+    if (model.getAddress() == address)
+        return false;
+
+    return true;
 }
