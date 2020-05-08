@@ -25,9 +25,9 @@ QString Timecode::fromTime(double time, double fps, bool useDropFrameNotation)
     seconds = (int)(time - hour * 3600 - minutes * 60);
     frames = (int)((time - hour * 3600 - minutes * 60 - seconds) * fps);
 
-    return QString("%1%2%3%4%5").arg(hour, 2, 16)
-                                .arg(minutes, 2, 16)
-                                .arg(seconds, 2, 16)
+    return QString("%1:%2:%3%4%5").arg(hour, 2, 10, QChar('0'))
+                                .arg(minutes, 2, 10, QChar('0'))
+                                .arg(seconds, 2, 10, QChar('0'))
                                 .arg(useDropFrameNotation ? "." : ":")
-                                .arg(frames, 2, 16);
+                                .arg(frames, 2, 10, QChar('0'));
 }
