@@ -92,6 +92,7 @@ class WIDGETS_EXPORT RundownBlendModeWidget : public QWidget, Ui::RundownBlendMo
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);
         Q_SLOT void executePlay();
+        Q_SLOT void executePlayPreview();
         Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);

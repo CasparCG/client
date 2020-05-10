@@ -284,6 +284,8 @@ bool RundownFillWidget::executeCommand(Playout::PlayoutType type)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
+    else if (type == Playout::PlayoutType::Preview)
+        executePlayPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -334,6 +336,36 @@ void RundownFillWidget::executePlay()
 
     if (this->markUsedItems)
         setUsed(true);
+}
+
+void RundownFillWidget::executePlayPreview()
+{
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+    if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+            device->setFill(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                            this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
+                            this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                            this->command.getUseMipmap());
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        if (model.getPreviewChannel() > 0)
+        {
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+                deviceShadow->setFill(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getPositionX(),
+                                      this->command.getPositionY(), this->command.getScaleX(), this->command.getScaleY(),
+                                      this->command.getTransitionDuration(), this->command.getTween(), this->command.getDefer(),
+                                      this->command.getUseMipmap());
+        }
+    }
 }
 
 void RundownFillWidget::executeClearVideolayer()

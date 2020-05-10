@@ -259,7 +259,7 @@ bool RundownAtemInputWidget::executeCommand(Playout::PlayoutType type)
     else if (type == Playout::PlayoutType::Next && this->command.getTriggerOnNext())
         executePlay();
     else if (type == Playout::PlayoutType::Preview)
-        executePreview();
+        executePlayPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -282,7 +282,7 @@ void RundownAtemInputWidget::executePlay()
         setUsed(true);
 }
 
-void RundownAtemInputWidget::executePreview()
+void RundownAtemInputWidget::executePlayPreview()
 {
     const QSharedPointer<AtemDevice> device = AtemDeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
     if (device != NULL && device->isConnected())

@@ -274,6 +274,8 @@ bool RundownBlendModeWidget::executeCommand(Playout::PlayoutType type)
         executeClearVideolayer();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeClearChannel();
+    else if (type == Playout::PlayoutType::Preview)
+        executePlayPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -318,6 +320,30 @@ void RundownBlendModeWidget::executePlay()
 
     if (this->markUsedItems)
         setUsed(true);
+}
+
+void RundownBlendModeWidget::executePlayPreview()
+{
+    const QSharedPointer<DeviceModel> deviceModel = DeviceManager::getInstance().getDeviceModelByName(this->model.getDeviceName());
+    if (deviceModel != NULL && deviceModel->getPreviewChannel() > 0)
+    {
+        const QSharedPointer<CasparDevice> device = DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName());
+        if (device != NULL && device->isConnected())
+            device->setBlendMode(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getBlendMode());
+    }
+
+    foreach (const DeviceModel& model, DeviceManager::getInstance().getDeviceModels())
+    {
+        if (model.getShadow() == "No")
+            continue;
+
+        if (model.getPreviewChannel() > 0)
+        {
+            const QSharedPointer<CasparDevice>  deviceShadow = DeviceManager::getInstance().getDeviceByName(model.getName());
+            if (deviceShadow != NULL && deviceShadow->isConnected())
+                deviceShadow->setBlendMode(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getBlendMode());
+        }
+    }
 }
 
 void RundownBlendModeWidget::executeClearVideolayer()

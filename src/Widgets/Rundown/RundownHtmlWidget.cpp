@@ -279,6 +279,8 @@ bool RundownHtmlWidget::executeCommand(Playout::PlayoutType type)
         executeStop();
     else if (type == Playout::PlayoutType::ClearChannel)
         executeStop();
+    else if (type == Playout::PlayoutType::Preview)
+        executeLoadPreview();
 
     if (this->active)
         this->animation->start(1);
@@ -438,8 +440,8 @@ void RundownHtmlWidget::executeLoadPreview()
         if (device != NULL && device->isConnected())
         {
             device->loadHtml(deviceModel->getPreviewChannel(), this->command.getVideolayer(), this->command.getUrl(),
-                                this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                this->command.getDirection(), true, false);
+                             this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                             this->command.getDirection(), true, false);
         }
     }
 
@@ -454,8 +456,8 @@ void RundownHtmlWidget::executeLoadPreview()
             if (deviceShadow != NULL && deviceShadow->isConnected())
             {
                 deviceShadow->loadHtml(model.getPreviewChannel(), this->command.getVideolayer(), this->command.getUrl(),
-                                          this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
-                                          this->command.getDirection(), true, false);
+                                       this->command.getTransition(), this->command.getTransitionDuration(), this->command.getTween(),
+                                       this->command.getDirection(), true, false);
             }
         }
     }

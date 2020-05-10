@@ -87,6 +87,7 @@ class WIDGETS_EXPORT RundownFillWidget : public QWidget, Ui::RundownFillWidget, 
         Q_SLOT void executeClearVideolayer();
         Q_SLOT void executeClearChannel();
         Q_SLOT void executePlay();
+        Q_SLOT void executePlayPreview();
         Q_SLOT void executeStop();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);

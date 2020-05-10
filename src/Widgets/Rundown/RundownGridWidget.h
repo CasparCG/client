@@ -86,6 +86,7 @@ class WIDGETS_EXPORT RundownGridWidget : public QWidget, Ui::RundownGridWidget, 
         Q_SLOT void executeClearChannel();
         Q_SLOT void channelChanged(int);
         Q_SLOT void executePlay();
+        Q_SLOT void executePlayPreview();
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void allowGpiChanged(bool);
