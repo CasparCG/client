@@ -6,11 +6,6 @@
 #include <QtCore/QTimer>
 #include <QtCore/QDebug>
 
-int getMilliseconds(int frames, double framesPerSecond)
-{
-    return static_cast<int>(frames * (1000.0 / framesPerSecond));
-}
-
 ItemScheduler::ItemScheduler(QObject *parent) : QObject(parent)
 {
     this->playTimer.setSingleShot(true);
@@ -27,18 +22,18 @@ ItemScheduler::ItemScheduler(QObject *parent) : QObject(parent)
     QObject::connect(&this->updateTimer, SIGNAL(timeout()), SIGNAL(executeUpdate()));
 }
 
-ItemScheduler::~ItemScheduler()
+int ItemScheduler::getMilliseconds(int frames, double framesPerSecond)
 {
+    return static_cast<int>(frames * (1000.0 / framesPerSecond));
 }
 
-void ItemScheduler::schedulePlayAndStop(int delay, int duration, const QString &delayType, int framesPerSecond)
+void ItemScheduler::schedulePlayAndStop(int delay, int duration, const QString& delayType, int framesPerSecond)
 {
-    // Stop all timers
+    // Stop all timers.
     this->cancel();
 
-    int delayInMilliseconds;
-    int durationInMilliseconds;
-
+    int delayInMilliseconds = 0;
+    int durationInMilliseconds = 0;
     if (delayType == Output::DEFAULT_DELAY_IN_FRAMES)
     {
         if (framesPerSecond > 0)
@@ -47,9 +42,7 @@ void ItemScheduler::schedulePlayAndStop(int delay, int duration, const QString &
             durationInMilliseconds = getMilliseconds(duration, framesPerSecond);
         }
         else
-        {
-            throw std::invalid_argument("When delay type is frames, fps must be specified");
-        }
+            qCritical("When delay type is frames, fps must be specified");
     }
     else if (delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
     {
@@ -57,9 +50,7 @@ void ItemScheduler::schedulePlayAndStop(int delay, int duration, const QString &
         durationInMilliseconds = duration;
     }
     else
-    {
-        throw std::logic_error(QString("Unsupported delay type: <%1>").arg(delayType).toStdString());
-    }
+        qCritical("Unsupported delay type %s", qPrintable(delayType));
 
     this->playTimer.setInterval(delayInMilliseconds);
     this->playTimer.start();
@@ -75,27 +66,18 @@ void ItemScheduler::scheduleUpdate(int delay, const QString& delayType, int fram
 {
     this->updateTimer.stop();
 
-    int delayInMilliseconds;
-
+    int delayInMilliseconds = 0;
     if (delayType == Output::DEFAULT_DELAY_IN_FRAMES)
     {
         if (framesPerSecond > 0)
-        {
             delayInMilliseconds = getMilliseconds(delay, framesPerSecond);
-        }
         else
-        {
-            throw std::invalid_argument("When delay type is frames, fps must be specified");
-        }
+            qCritical("When delay type is frames, fps must be specified");
     }
     else if (delayType == Output::DEFAULT_DELAY_IN_MILLISECONDS)
-    {
         delayInMilliseconds = delay;
-    }
     else
-    {
-        throw std::logic_error(QString("Unsupported delay type: <%1>").arg(delayType).toStdString());
-    }
+        qCritical("Unsupported delay type %s", qPrintable(delayType));
 
     this->updateTimer.setInterval(delayInMilliseconds);
     this->updateTimer.start();
