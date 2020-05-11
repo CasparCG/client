@@ -1,5 +1,11 @@
-CasparCG Client 2.2.0
-=====================
+CasparCG Client 2.2.0-20200511
+==============================
+- ADD: Preview support for mixer commands.
+
+
+
+CasparCG Client 2.2.0-20200509
+==============================
 - ADD: Separated OSC monitoring / controlling options.
 - FIX: Fixed OSC feedback issues with CasparCG Server 2.2.x.
 - FIX: Fixed issue with "Open Recent Rundown" when rundown is saved.
