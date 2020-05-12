@@ -99,6 +99,7 @@ INSERT INTO Configuration (Name, Value) VALUES('NetworkCache', '1000');
 INSERT INTO Configuration (Name, Value) VALUES('StreamPort', '9250');
 INSERT INTO Configuration (Name, Value) VALUES('LogLevel', '-1');
 INSERT INTO Configuration (Name, Value) VALUES('UseDropFrameNotation', 'false');
+INSERT INTO Configuration (Name, Value) VALUES('OpenRecent', '10');
 INSERT INTO Configuration (Name, Value) VALUES('DatabaseVersion', '216');
 
 INSERT INTO Chroma (Value) VALUES('None');

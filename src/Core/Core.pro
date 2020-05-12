@@ -379,16 +379,16 @@ SOURCES += \
     Commands/Atem/AtemFadeToBlackCommand.cpp
 
 DISTFILES += \
-    Sql/ChangeScript-208.sql \
-    Sql/ChangeScript-216.sql \
     Sql/Schema.sql \
+    Sql/ChangeScript-208.sql \
     Sql/ChangeScript-209.sql \
     Sql/ChangeScript-210.sql \
     Sql/ChangeScript-211.sql \
     Sql/ChangeScript-212.sql \
     Sql/ChangeScript-213.sql \
     Sql/ChangeScript-214.sql \
-    Sql/ChangeScript-215.sql
+    Sql/ChangeScript-215.sql \
+    Sql/ChangeScript-216.sql
 
 RESOURCES += \
     Core.qrc

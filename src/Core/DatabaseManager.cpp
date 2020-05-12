@@ -76,7 +76,6 @@ void DatabaseManager::upgradeDatabase()
     sql.first();
 
     int version = sql.value(2).toInt();
-
     while (version + 1 <= QString("%1").arg(DATABASE_VERSION).toInt())
     {
         QFile file(QString(":/Scripts/Sql/ChangeScript-%1.sql").arg(version + 1));
@@ -102,7 +101,7 @@ void DatabaseManager::upgradeDatabase()
             if (!sql.exec())
                 qFatal("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
-            qDebug("Successfully upgraded to ChangeScript-%d", version + 1);
+            qDebug("Successfully updated to ChangeScript-%d", version + 1);
         }
 
         version++;
@@ -205,8 +204,14 @@ void DatabaseManager::insertOpenRecent(const QString& path)
     if (!sql.exec())
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
-    if (!sql.exec("DELETE FROM OpenRecent WHERE Id > 10"))
+    if (!sql.exec("SELECT Count(*) FROM OpenRecent"))
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+
+    if (sql.first() && sql.value(0).toInt() > 10)
+    {
+        if (!sql.exec("DELETE FROM OpenRecent WHERE Id IN (SELECT min(Id) FROM OpenRecent)"))
+           qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
+    }
 
     QSqlDatabase::database().commit();
 }
