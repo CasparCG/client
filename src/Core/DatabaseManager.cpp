@@ -140,7 +140,7 @@ ConfigurationModel DatabaseManager::getConfigurationByName(const QString& name)
 
     sql.first();
 
-    return ConfigurationModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString());
+    return ConfigurationModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString());
 }
 
 QList<FormatModel> DatabaseManager::getFormat()
@@ -153,7 +153,8 @@ QList<FormatModel> DatabaseManager::getFormat()
 
     QList<FormatModel> models;
     while (sql.next())
-        models.push_back(FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString()));
+        models.push_back(FormatModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Width").toInt(),
+                                     sql.value("Height").toInt(), sql.value("FramesPerSecond").toString()));
 
     return models;
 }
@@ -172,7 +173,8 @@ FormatModel DatabaseManager::getFormat(const QString& name)
 
     sql.first();
 
-    return FormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toInt(), sql.value(3).toInt(), sql.value(4).toString());
+    return FormatModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Width").toInt(),
+                       sql.value("Height").toInt(), sql.value("FramesPerSecond").toString());
 }
 
 QList<QString> DatabaseManager::getOpenRecent()
@@ -185,7 +187,7 @@ QList<QString> DatabaseManager::getOpenRecent()
 
     QList<QString> values;
     while (sql.next())
-        values.push_back(sql.value(1).toString());
+        values.push_back(sql.value("Value").toString());
 
     return values;
 }
@@ -207,7 +209,7 @@ void DatabaseManager::insertOpenRecent(const QString& path)
     if (!sql.exec("SELECT Count(*) FROM OpenRecent"))
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
-    if (sql.first() && sql.value(0).toInt() > 10)
+    if (sql.first() && sql.value("Id").toInt() > 10)
     {
         if (!sql.exec("DELETE FROM OpenRecent WHERE Id IN (SELECT min(Id) FROM OpenRecent)"))
            qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
@@ -239,7 +241,7 @@ QList<PresetModel> DatabaseManager::getPreset()
 
     QList<PresetModel> models;
     while (sql.next())
-        models.push_back(PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(PresetModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -258,7 +260,7 @@ PresetModel DatabaseManager::getPreset(const QString& name)
 
     sql.first();
 
-    return PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString());
+    return PresetModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString());
 }
 
 QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
@@ -276,7 +278,7 @@ QList<PresetModel> DatabaseManager::getPresetByFilter(const QString& filter)
 
     QList<PresetModel> models;
     while (sql.next())
-        models.push_back(PresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(PresetModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -327,7 +329,7 @@ QList<BlendModeModel> DatabaseManager::getBlendMode()
 
     QList<BlendModeModel> models;
     while (sql.next())
-        models.push_back(BlendModeModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(BlendModeModel(sql.value("Id").toInt(), sql.value("Value").toString()));
 
     return models;
 }
@@ -342,7 +344,7 @@ QList<ChromaModel> DatabaseManager::getChroma()
 
     QList<ChromaModel> models;
     while (sql.next())
-        models.push_back(ChromaModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(ChromaModel(sql.value("Id").toInt(), sql.value("Value").toString()));
 
     return models;
 }
@@ -357,7 +359,7 @@ QList<DirectionModel> DatabaseManager::getDirection()
 
     QList<DirectionModel> models;
     while (sql.next())
-        models.push_back(DirectionModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(DirectionModel(sql.value("Id").toInt(), sql.value("Value").toString()));
 
     return models;
 }
@@ -372,7 +374,7 @@ QList<TransitionModel> DatabaseManager::getTransition()
 
     QList<TransitionModel> models;
     while (sql.next())
-        models.push_back(TransitionModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(TransitionModel(sql.value("Id").toInt(), sql.value("Value").toString()));
 
     return models;
 }
@@ -387,7 +389,7 @@ QList<TweenModel> DatabaseManager::getTween()
 
     QList<TweenModel> models;
     while (sql.next())
-        models.push_back(TweenModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(TweenModel(sql.value("Id").toInt(), sql.value("Value").toString()));
 
     return models;
 }
@@ -400,8 +402,8 @@ QList<OscOutputModel> DatabaseManager::getOscOutput()
 
     QList<OscOutputModel> models;
     while (sql.next())
-        models.push_back(OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                        sql.value(3).toInt(), sql.value(4).toString()));
+        models.push_back(OscOutputModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                                        sql.value("Port").toInt(), sql.value("Description").toString()));
 
     return models;
 }
@@ -440,8 +442,8 @@ OscOutputModel DatabaseManager::getOscOutputByName(const QString& name)
 
     sql.first();
 
-    return OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                          sql.value(3).toInt(), sql.value(4).toString());
+    return OscOutputModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                          sql.value("Port").toInt(), sql.value("Description").toString());
 }
 
 OscOutputModel DatabaseManager::getOscOutputByAddress(const QString& address)
@@ -458,8 +460,8 @@ OscOutputModel DatabaseManager::getOscOutputByAddress(const QString& address)
 
     sql.first();
 
-    return OscOutputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                          sql.value(3).toInt(), sql.value(4).toString());
+    return OscOutputModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                          sql.value("Port").toInt(), sql.value("Description").toString());
 }
 
 void DatabaseManager::updateOscOutput(const OscOutputModel& model)
@@ -512,7 +514,7 @@ QList<AtemStepModel> DatabaseManager::getAtemStep()
 
     QList<AtemStepModel> models;
     while (sql.next())
-        models.push_back(AtemStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemStepModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -527,7 +529,7 @@ QList<AtemAudioInputStateModel> DatabaseManager::getAtemAudioInputState()
 
     QList<AtemAudioInputStateModel> models;
     while (sql.next())
-        models.push_back(AtemAudioInputStateModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemAudioInputStateModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -542,7 +544,7 @@ QList<AtemKeyerModel> DatabaseManager::getAtemKeyer()
 
     QList<AtemKeyerModel> models;
     while (sql.next())
-        models.push_back(AtemKeyerModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemKeyerModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -557,7 +559,7 @@ QList<AtemSwitcherModel> DatabaseManager::getAtemSwitcher()
 
     QList<AtemSwitcherModel> models;
     while (sql.next())
-        models.push_back(AtemSwitcherModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemSwitcherModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -572,7 +574,7 @@ QList<AtemVideoFormatModel> DatabaseManager::getAtemVideoFormat()
 
     QList<AtemVideoFormatModel> models;
     while (sql.next())
-        models.push_back(AtemVideoFormatModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemVideoFormatModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -587,7 +589,7 @@ QList<AtemAutoTransitionModel> DatabaseManager::getAtemAutoTransition()
 
     QList<AtemAutoTransitionModel> models;
     while (sql.next())
-        models.push_back(AtemAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(AtemAutoTransitionModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -602,7 +604,8 @@ QList<AtemDeviceModel> DatabaseManager::getAtemDevice()
 
     QList<AtemDeviceModel> models;
     while (sql.next())
-        models.push_back(AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(AtemDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                         sql.value("Address").toString(), sql.value("Description").toString()));
 
     return models;
 }
@@ -621,7 +624,8 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByName(const QString& name)
 
     sql.first();
 
-    return AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString());
+    return AtemDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                           sql.value("Address").toString(), sql.value("Description").toString());
 }
 
 AtemDeviceModel DatabaseManager::getAtemDeviceByAddress(const QString& address)
@@ -638,7 +642,8 @@ AtemDeviceModel DatabaseManager::getAtemDeviceByAddress(const QString& address)
 
     sql.first();
 
-    return AtemDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString());
+    return AtemDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                           sql.value("Address").toString(), sql.value("Description").toString());
 }
 
 void DatabaseManager::insertAtemDevice(const AtemDeviceModel& model)
@@ -728,7 +733,7 @@ QList<TriCasterInputModel> DatabaseManager::getTriCasterInput()
 
     QList<TriCasterInputModel> models;
     while (sql.next())
-        models.push_back(TriCasterInputModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString()));
+        models.push_back(TriCasterInputModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Value").toString()));
 
     return models;
 }
@@ -749,7 +754,8 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
 
     QList<TriCasterStepModel> models;
     while (sql.next())
-        models.push_back(TriCasterStepModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterStepModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                            sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -770,7 +776,8 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
 
     QList<TriCasterAutoSpeedModel> models;
     while (sql.next())
-        models.push_back(TriCasterAutoSpeedModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterAutoSpeedModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                                 sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -791,7 +798,8 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
 
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
-        models.push_back(TriCasterAutoTransitionModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterAutoTransitionModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                                      sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -812,7 +820,8 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
 
     QList<TriCasterPresetModel> models;
     while (sql.next())
-        models.push_back(TriCasterPresetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterPresetModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                              sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -833,7 +842,8 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
 
     QList<TriCasterSourceModel> models;
     while (sql.next())
-        models.push_back(TriCasterSourceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterSourceModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                              sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -854,7 +864,8 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
 
     QList<TriCasterSwitcherModel> models;
     while (sql.next())
-        models.push_back(TriCasterSwitcherModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterSwitcherModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                                sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -875,7 +886,8 @@ QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
 
     QList<TriCasterNetworkTargetModel> models;
     while (sql.next())
-        models.push_back(TriCasterNetworkTargetModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toString()));
+        models.push_back(TriCasterNetworkTargetModel(sql.value("Id").toInt(), sql.value("Name").toString(),
+                                                     sql.value("Value").toString(), sql.value("Product").toString()));
 
     return models;
 }
@@ -890,8 +902,8 @@ QList<TriCasterDeviceModel> DatabaseManager::getTriCasterDevice()
 
     QList<TriCasterDeviceModel> models;
     while (sql.next())
-        models.push_back(TriCasterDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                              sql.value(3).toInt(), sql.value(4).toString()));
+        models.push_back(TriCasterDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                                              sql.value("Port").toInt(), sql.value("Description").toString()));
 
     return models;
 }
@@ -910,8 +922,8 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByName(const QString& na
 
     sql.first();
 
-    return TriCasterDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                sql.value(3).toInt(), sql.value(4).toString());
+    return TriCasterDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                                sql.value("Port").toInt(), sql.value("Description").toString());
 }
 
 TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByAddress(const QString& address)
@@ -928,8 +940,8 @@ TriCasterDeviceModel DatabaseManager::getTriCasterDeviceByAddress(const QString&
 
     sql.first();
 
-    return TriCasterDeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                sql.value(3).toInt(), sql.value(4).toString());
+    return TriCasterDeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(),
+                                sql.value("Port").toInt(), sql.value("Description").toString());
 }
 
 void DatabaseManager::insertTriCasterDevice(const TriCasterDeviceModel& model)
@@ -995,12 +1007,13 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
     QMutexLocker locker(&mutex);
 
     QSqlQuery sql;
-    if (!sql.exec("SELECT Id, RisingEdge, Action FROM GpiPort ORDER BY Id"))
+    if (!sql.exec("SELECT g.Id, g.RisingEdge, g.Action FROM GpiPort g ORDER BY Id"))
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     QList<GpiPortModel> models;
     while (sql.next())
-        models.push_back(GpiPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, Playout::fromString(sql.value(2).toString())));
+        models.push_back(GpiPortModel(sql.value("Id").toInt(),
+                                      sql.value("RisingEdge").toInt() == 1, Playout::fromString(sql.value("Action").toString())));
 
     return models;
 }
@@ -1029,12 +1042,13 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
     QMutexLocker locker(&mutex);
 
     QSqlQuery sql;
-    if (!sql.exec("SELECT Id, RisingEdge, PulseLengthMillis FROM GpoPort ORDER BY Id"))
+    if (!sql.exec("SELECT g.Id, g.RisingEdge, g.PulseLengthMillis FROM GpoPort g ORDER BY Id"))
        qCritical("Failed to execute sql query: %s, Error: %s", qPrintable(sql.lastQuery()), qPrintable(sql.lastError().text()));
 
     QList<GpoPortModel> models;
     while (sql.next())
-        models.push_back(GpoPortModel(sql.value(0).toInt(), sql.value(1).toInt() == 1, sql.value(2).toInt()));
+        models.push_back(GpoPortModel(sql.value("Id").toInt(),
+                                      sql.value("RisingEdge").toInt() == 1, sql.value("PulseLengthMillis").toInt()));
 
     return models;
 }
@@ -1098,9 +1112,9 @@ QList<DeviceModel> DatabaseManager::getDevice()
 
     QList<DeviceModel> models;
     while (sql.next())
-        models.push_back(DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
-                                     sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                                     sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt()));
+        models.push_back(DeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(), sql.value("Port").toInt(),
+                                     sql.value("Username").toString(), sql.value("Password").toString(), sql.value("Description").toString(), sql.value("Version").toString(),
+                                     sql.value("Shadow").toString(), sql.value("Channels").toInt(), sql.value("ChannelFormats").toString(), sql.value("PreviewChannel").toInt(), sql.value("LockedChannel").toInt()));
 
     return models;
 }
@@ -1120,9 +1134,9 @@ DeviceModel DatabaseManager::getDeviceById(int deviceId)
 
     sql.first();
 
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
-                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
+    return DeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(), sql.value("Port").toInt(),
+                       sql.value("Username").toString(), sql.value("Password").toString(), sql.value("Description").toString(), sql.value("Version").toString(),
+                       sql.value("Shadow").toString(), sql.value("Channels").toInt(), sql.value("ChannelFormats").toString(), sql.value("PreviewChannel").toInt(), sql.value("LockedChannel").toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByName(const QString& name)
@@ -1139,9 +1153,9 @@ DeviceModel DatabaseManager::getDeviceByName(const QString& name)
 
     sql.first();
 
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
-                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
+    return DeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(), sql.value("Port").toInt(),
+                       sql.value("Username").toString(), sql.value("Password").toString(), sql.value("Description").toString(), sql.value("Version").toString(),
+                       sql.value("Shadow").toString(), sql.value("Channels").toInt(), sql.value("ChannelFormats").toString(), sql.value("PreviewChannel").toInt(), sql.value("LockedChannel").toInt());
 }
 
 DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
@@ -1158,9 +1172,9 @@ DeviceModel DatabaseManager::getDeviceByAddress(const QString& address)
 
     sql.first();
 
-    return DeviceModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(), sql.value(3).toInt(),
-                       sql.value(4).toString(), sql.value(5).toString(), sql.value(6).toString(), sql.value(7).toString(),
-                       sql.value(8).toString(), sql.value(9).toInt(), sql.value(10).toString(), sql.value(11).toInt(), sql.value(12).toInt());
+    return DeviceModel(sql.value("Id").toInt(), sql.value("Name").toString(), sql.value("Address").toString(), sql.value("Port").toInt(),
+                       sql.value("Username").toString(), sql.value("Password").toString(), sql.value("Description").toString(), sql.value("Version").toString(),
+                       sql.value("Shadow").toString(), sql.value("Channels").toInt(), sql.value("ChannelFormats").toString(), sql.value("PreviewChannel").toInt(), sql.value("LockedChannel").toInt());
 }
 
 void DatabaseManager::insertDevice(const DeviceModel& model)
@@ -1315,9 +1329,9 @@ QList<LibraryModel> DatabaseManager::getLibraryMedia()
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1332,9 +1346,9 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplate()
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1349,9 +1363,9 @@ QList<LibraryModel> DatabaseManager::getLibraryData()
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1388,9 +1402,9 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByFilter(const QString& filt
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1427,9 +1441,9 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByFilter(const QString& f
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1466,9 +1480,9 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByFilter(const QString& filte
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1488,9 +1502,9 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceId(int deviceId)
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1522,9 +1536,9 @@ QList<LibraryModel> DatabaseManager::getLibraryByDeviceIdAndFilter(int deviceId,
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1544,9 +1558,9 @@ QList<LibraryModel> DatabaseManager::getLibraryMediaByDeviceAddress(const QStrin
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1566,9 +1580,9 @@ QList<LibraryModel> DatabaseManager::getLibraryTemplateByDeviceAddress(const QSt
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1588,9 +1602,9 @@ QList<LibraryModel> DatabaseManager::getLibraryDataByDeviceAddress(const QString
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1610,9 +1624,9 @@ QList<LibraryModel> DatabaseManager::getLibraryByNameAndDeviceId(const QString& 
 
     QList<LibraryModel> models;
     while (sql.next())
-        models.push_back(LibraryModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(1).toString(),
-                                      sql.value(2).toString(), sql.value(3).toString(), sql.value(4).toInt(),
-                                      sql.value(5).toString()));
+        models.push_back(LibraryModel(sql.value("Id").toInt(), sql.value(1).toString(), sql.value(1).toString(),
+                                      sql.value(2).toString(), sql.value("Value").toString(), sql.value("ThumbnailId").toInt(),
+                                      sql.value("Timecode").toString()));
 
     return models;
 }
@@ -1798,8 +1812,8 @@ QList<ThumbnailModel> DatabaseManager::getThumbnailByDeviceAddress(const QString
 
     QList<ThumbnailModel> models;
     while (sql.next())
-        models.push_back(ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                                        sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString()));
+        models.push_back(ThumbnailModel(sql.value("Id").toInt(), sql.value("Data").toString(), sql.value("Timestamp").toString(),
+                                        sql.value("Size").toString(), sql.value("Name").toString(), sql.value("Address").toString()));
 
     return models;
 }
@@ -1819,8 +1833,8 @@ ThumbnailModel DatabaseManager::getThumbnailByNameAndDeviceName(const QString& n
 
     sql.first();
 
-    return ThumbnailModel(sql.value(0).toInt(), sql.value(1).toString(), sql.value(2).toString(),
-                          sql.value(3).toString(), sql.value(4).toString(), sql.value(5).toString());
+    return ThumbnailModel(sql.value("Id").toInt(), sql.value("Data").toString(), sql.value("Timestamp").toString(),
+                          sql.value("Size").toString(), sql.value("Name").toString(), sql.value("Address").toString());
 }
 
 void DatabaseManager::updateThumbnail(const ThumbnailModel& model)
