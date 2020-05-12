@@ -210,7 +210,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void saveAsPreset(const SaveAsPresetEvent&);
         Q_SLOT void addPresetItem(const AddPresetItemEvent&);
         Q_SLOT void addRudnownItem(const AddRudnownItemEvent&);
-        Q_SLOT void toggleCompactView(const CompactViewEvent&);
+        Q_SLOT void compactView(const CompactViewEvent&);
         Q_SLOT void executeRundownItem(const ExecuteRundownItemEvent&);
         Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SLOT void autoPlayRundownItem(const AutoPlayRundownItemEvent&);

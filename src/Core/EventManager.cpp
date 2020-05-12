@@ -326,14 +326,14 @@ void EventManager::fireAddPresetItemEvent(const AddPresetItemEvent& event)
     emit addPresetItem(event);
 }
 
-void EventManager::fireToggleCompactViewEvent(const CompactViewEvent& event)
-{
-    emit toggleCompactView(event);
-}
-
 void EventManager::fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event)
 {
     emit executeRundownItem(event);
+}
+
+void EventManager::fireCompactViewEvent(const CompactViewEvent& event)
+{
+    emit compactView(event);
 }
 
 void EventManager::fireAllowRemoteTriggeringEvent(const AllowRemoteTriggeringEvent& event)

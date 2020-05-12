@@ -9,6 +9,7 @@
 #include "Events/Rundown/EmptyRundownEvent.h"
 #include "Events/Rundown/ActiveRundownChangedEvent.h"
 #include "Events/Rundown/AllowRemoteTriggeringEvent.h"
+#include "Events/Rundown/CompactViewEvent.h"
 #include "Events/Rundown/RepositoryRundownEvent.h"
 #include "Events/Rundown/NewRundownMenuEvent.h"
 #include "Events/Rundown/MarkItemAsUsedEvent.h"
@@ -59,6 +60,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         QAction* saveAsPresetAction;
         QAction* saveAction;
         QAction* saveAsAction;
+        QAction* compactViewAction;
         QAction* allowRemoteTriggeringAction;
         QAction* insertRepositoryChangesAction;
         QAction* reloadRundownAction;
@@ -89,7 +91,6 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void showHelpDialog();
         Q_SLOT void showSettingsDialog();
         Q_SLOT void toggleFullscreen();
-        Q_SLOT void toggleCompactView();
         Q_SLOT void refreshLibrary();
         Q_SLOT void importPreset();
         Q_SLOT void exportPreset();
@@ -103,6 +104,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void copyItemProperties();
         Q_SLOT void pasteItemProperties();
         Q_SLOT void insertRepositoryChanges();
+        Q_SLOT void compactView(bool);
         Q_SLOT void allowRemoteTriggering(bool);
         Q_SLOT void emptyRundown(const EmptyRundownEvent&);
         Q_SLOT void statusbar(const StatusbarEvent&);
@@ -110,6 +112,7 @@ class WIDGETS_EXPORT MainWindow : public QMainWindow, Ui::MainWindow
         Q_SLOT void newRundownMenu(const NewRundownMenuEvent&);
         Q_SLOT void openRundownMenu(const OpenRundownMenuEvent&);
         Q_SLOT void openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&);
+        Q_SLOT void compactView(const CompactViewEvent&);
         Q_SLOT void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SLOT void repositoryRundown(const RepositoryRundownEvent&);
         Q_SLOT void exportPresetMenu(const ExportPresetMenuEvent&);

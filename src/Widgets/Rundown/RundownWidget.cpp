@@ -37,6 +37,7 @@ RundownWidget::RundownWidget(QWidget* parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundown(const NewRundownEvent&)), this, SLOT(newRundown(const NewRundownEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(compactView(const CompactViewEvent&)), this, SLOT(compactView(const CompactViewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(closeRundown(const CloseRundownEvent&)), this, SLOT(closeRundown(const CloseRundownEvent&)));
@@ -84,16 +85,20 @@ void RundownWidget::setupMenus()
     this->contextMenuRundownDropdown->addAction("Copy Item Properties", this, SLOT(copyItemProperties()));
     this->contextMenuRundownDropdown->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()));
     this->contextMenuRundownDropdown->addSeparator();
-    this->contextMenuRundownDropdown->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
+    this->compactViewAction = this->contextMenuRundownDropdown->addAction("Compact View");
+    this->compactViewAction->setCheckable(true);
     this->allowRemoteTriggeringAction = this->contextMenuRundownDropdown->addAction("Allow Remote Triggering");
     this->allowRemoteTriggeringAction->setCheckable(true);
     this->contextMenuRundownDropdown->addSeparator();
     this->insertRepositoryChangesAction = this->contextMenuRundownDropdown->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()));
+    this->insertRepositoryChangesAction->setEnabled(false);
     this->contextMenuRundownDropdown->addSeparator();
     this->reloadRundownAction = this->contextMenuRundownDropdown->addAction("Reload Rundown", this, SLOT(reloadCurrentRundown()));
     this->contextMenuRundownDropdown->addSeparator();
     this->contextMenuRundownDropdown->addAction("Close Rundown", this, SLOT(closeCurrentRundown()));
-    this->insertRepositoryChangesAction->setEnabled(false);
+
+    QObject::connect(this->compactViewAction, SIGNAL(toggled(bool)), this, SLOT(compactView(bool)));
+    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
 
     QToolButton* toolButtonRundownDropdown = new QToolButton(this);
     toolButtonRundownDropdown->setObjectName("toolButtonRundownDropdown");
@@ -101,8 +106,6 @@ void RundownWidget::setupMenus()
     toolButtonRundownDropdown->setPopupMode(QToolButton::InstantPopup);
     this->tabWidgetRundown->setCornerWidget(toolButtonRundownDropdown);
     //this->tabWidgetRundown->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
-
-    QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(remoteTriggering(bool)));
 }
 
 void RundownWidget::refreshOpenRecent()
@@ -198,6 +201,14 @@ void RundownWidget::newRundown(const NewRundownEvent& event)
         EventManager::getInstance().fireOpenRundownMenuEvent(OpenRundownMenuEvent(false));
         EventManager::getInstance().fireOpenRundownFromUrlMenuEvent(OpenRundownFromUrlMenuEvent(false));
     }
+}
+
+void RundownWidget::compactView(const CompactViewEvent& event)
+{
+    // We do not want to trigger check changed event.
+    this->compactViewAction->blockSignals(true);
+    this->compactViewAction->setChecked(event.getEnabled());
+    this->compactViewAction->blockSignals(false);
 }
 
 void RundownWidget::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
@@ -411,11 +422,6 @@ void RundownWidget::pasteItemProperties()
     EventManager::getInstance().firePasteItemPropertiesEvent(PasteItemPropertiesEvent());
 }
 
-void RundownWidget::toggleCompactView()
-{
-    EventManager::getInstance().fireToggleCompactViewEvent(CompactViewEvent());
-}
-
 void RundownWidget::reloadCurrentRundown()
 {
     EventManager::getInstance().fireReloadRundownEvent(ReloadRundownEvent());
@@ -444,6 +450,11 @@ void RundownWidget::markAllItemsAsUsedInRundown()
 void RundownWidget::markAllItemsAsUnusedInRundown()
 {
     EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
+}
+
+void RundownWidget::compactView(bool enabled)
+{
+    EventManager::getInstance().fireCompactViewEvent(CompactViewEvent(enabled));
 }
 
 void RundownWidget::remoteTriggering(bool enabled)

@@ -2,6 +2,12 @@
 
 #include "Global.h"
 
-CompactViewEvent::CompactViewEvent()
+CompactViewEvent::CompactViewEvent(bool enabled)
+    : enabled(enabled)
 {
+}
+
+bool CompactViewEvent::getEnabled() const
+{
+    return this->enabled;
 }

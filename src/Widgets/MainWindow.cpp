@@ -71,6 +71,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QObject::connect(&EventManager::getInstance(), SIGNAL(newRundownMenu(const NewRundownMenuEvent&)), this, SLOT(newRundownMenu(const NewRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownMenu(const OpenRundownMenuEvent&)), this, SLOT(openRundownMenu(const OpenRundownMenuEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)), this, SLOT(openRundownFromUrlMenu(const OpenRundownFromUrlMenuEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(compactView(const CompactViewEvent&)), this, SLOT(compactView(const CompactViewEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)), this, SLOT(allowRemoteTriggering(const AllowRemoteTriggeringEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(repositoryRundown(const RepositoryRundownEvent&)), this, SLOT(repositoryRundown(const RepositoryRundownEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(exportPresetMenu(const ExportPresetMenuEvent&)), this, SLOT(exportPresetMenu(const ExportPresetMenuEvent&)));
@@ -125,17 +126,20 @@ void MainWindow::setupMenu()
     this->rundownMenu->addAction("Copy Item Properties", this, SLOT(copyItemProperties()), QKeySequence::fromString("Shift+C"));
     this->rundownMenu->addAction("Paste Item Properties", this, SLOT(pasteItemProperties()), QKeySequence::fromString("Shift+V"));
     this->rundownMenu->addSeparator();
-    this->rundownMenu->addAction("Toggle Compact View", this, SLOT(toggleCompactView()));
-    this->allowRemoteTriggeringAction = this->rundownMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Allow Remote Triggering");
+    this->compactViewAction = this->rundownMenu->addAction("Compact View");
+    this->compactViewAction->setCheckable(true);
+    this->allowRemoteTriggeringAction = this->rundownMenu->addAction("Allow Remote Triggering");
+    this->allowRemoteTriggeringAction->setCheckable(true);
     this->rundownMenu->addSeparator();
     this->insertRepositoryChangesAction = this->rundownMenu->addAction("Insert Repository Changes", this, SLOT(insertRepositoryChanges()), QKeySequence::fromString("Ins"));
+    this->insertRepositoryChangesAction->setEnabled(false);
     this->rundownMenu->addSeparator();
     this->reloadRundownAction = this->rundownMenu->addAction("Reload Rundown", this, SLOT(reloadRundown()), QKeySequence::fromString("Ctrl+L"));
     this->rundownMenu->addSeparator();
     this->rundownMenu->addAction("Close Rundown", this, SLOT(closeRundown()), QKeySequence::fromString("Ctrl+W"));
-    this->allowRemoteTriggeringAction->setCheckable(true);
+
+    QObject::connect(this->compactViewAction, SIGNAL(toggled(bool)), this, SLOT(compactView(bool)));
     QObject::connect(this->allowRemoteTriggeringAction, SIGNAL(toggled(bool)), this, SLOT(allowRemoteTriggering(bool)));
-    this->insertRepositoryChangesAction->setEnabled(false);
 
     this->playoutMenu = new QMenu(this);
     this->playoutMenu->addAction("Stop", this, SLOT(executeStop()), QKeySequence::fromString("F1"));
@@ -261,6 +265,14 @@ void MainWindow::allowRemoteTriggering(const AllowRemoteTriggeringEvent& event)
     this->allowRemoteTriggeringAction->blockSignals(true);
     this->allowRemoteTriggeringAction->setChecked(event.getEnabled());
     this->allowRemoteTriggeringAction->blockSignals(false);
+}
+
+void MainWindow::compactView(const CompactViewEvent& event)
+{
+    // We do not want to trigger check changed event.
+    this->compactViewAction->blockSignals(true);
+    this->compactViewAction->setChecked(event.getEnabled());
+    this->compactViewAction->blockSignals(false);
 }
 
 void MainWindow::repositoryRundown(const RepositoryRundownEvent& event)
@@ -413,9 +425,9 @@ void MainWindow::markAllItemsAsUnused()
     EventManager::getInstance().fireMarkAllItemsAsUnusedEvent(MarkAllItemsAsUnusedEvent());
 }
 
-void MainWindow::toggleCompactView()
+void MainWindow::compactView(bool enabled)
 {
-    EventManager::getInstance().fireToggleCompactViewEvent(CompactViewEvent());
+    EventManager::getInstance().fireCompactViewEvent(CompactViewEvent(enabled));
 }
 
 void MainWindow::allowRemoteTriggering(bool enabled)

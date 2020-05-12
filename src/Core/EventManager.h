@@ -135,7 +135,7 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void saveAsPreset(const SaveAsPresetEvent&);
         Q_SIGNAL void addPresetItem(const AddPresetItemEvent&);
         Q_SIGNAL void addRudnownItem(const AddRudnownItemEvent&);
-        Q_SIGNAL void toggleCompactView(const CompactViewEvent&);
+        Q_SIGNAL void compactView(const CompactViewEvent&);
         Q_SIGNAL void executeRundownItem(const ExecuteRundownItemEvent&);
         Q_SIGNAL void allowRemoteTriggering(const AllowRemoteTriggeringEvent&);
         Q_SIGNAL void autoPlayRundownItem(const AutoPlayRundownItemEvent&);
@@ -210,7 +210,7 @@ class CORE_EXPORT EventManager : public QObject
         void fireAddPresetItemEvent(const AddPresetItemEvent& event);
         void fireAddRudnownItemEvent(const QString& type);
         void fireAddRudnownItemEvent(const LibraryModel& model);
-        void fireToggleCompactViewEvent(const CompactViewEvent& event);
+        void fireCompactViewEvent(const CompactViewEvent& event);
         void fireExecuteRundownItemEvent(const ExecuteRundownItemEvent& event);
         void fireAllowRemoteTriggeringEvent(const AllowRemoteTriggeringEvent& event);
         void fireAutoPlayRundownItemEvent(const AutoPlayRundownItemEvent&);
