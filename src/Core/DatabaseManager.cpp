@@ -712,7 +712,7 @@ QList<TriCasterProductModel> DatabaseManager::getTriCasterProduct()
 
     QList<TriCasterProductModel> models;
     while (sql.next())
-        models.push_back(TriCasterProductModel(sql.value(0).toInt(), sql.value(1).toString()));
+        models.push_back(TriCasterProductModel(sql.value("Id").toInt(), sql.value("Name").toString()));
 
     return models;
 }
@@ -755,7 +755,7 @@ QList<TriCasterStepModel> DatabaseManager::getTriCasterStep()
     QList<TriCasterStepModel> models;
     while (sql.next())
         models.push_back(TriCasterStepModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                            sql.value("Value").toString(), sql.value("Product").toString()));
+                                            sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -777,7 +777,7 @@ QList<TriCasterAutoSpeedModel> DatabaseManager::getTriCasterAutoSpeed()
     QList<TriCasterAutoSpeedModel> models;
     while (sql.next())
         models.push_back(TriCasterAutoSpeedModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                                 sql.value("Value").toString(), sql.value("Product").toString()));
+                                                 sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -799,7 +799,7 @@ QList<TriCasterAutoTransitionModel> DatabaseManager::getTriCasterAutoTransition(
     QList<TriCasterAutoTransitionModel> models;
     while (sql.next())
         models.push_back(TriCasterAutoTransitionModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                                      sql.value("Value").toString(), sql.value("Product").toString()));
+                                                      sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -821,7 +821,7 @@ QList<TriCasterPresetModel> DatabaseManager::getTriCasterPreset()
     QList<TriCasterPresetModel> models;
     while (sql.next())
         models.push_back(TriCasterPresetModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                              sql.value("Value").toString(), sql.value("Product").toString()));
+                                              sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -843,7 +843,7 @@ QList<TriCasterSourceModel> DatabaseManager::getTriCasterSource()
     QList<TriCasterSourceModel> models;
     while (sql.next())
         models.push_back(TriCasterSourceModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                              sql.value("Value").toString(), sql.value("Product").toString()));
+                                              sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -865,7 +865,7 @@ QList<TriCasterSwitcherModel> DatabaseManager::getTriCasterSwitcher()
     QList<TriCasterSwitcherModel> models;
     while (sql.next())
         models.push_back(TriCasterSwitcherModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                                sql.value("Value").toString(), sql.value("Product").toString()));
+                                                sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
@@ -887,7 +887,7 @@ QList<TriCasterNetworkTargetModel> DatabaseManager::getTriCasterNetworkTarget()
     QList<TriCasterNetworkTargetModel> models;
     while (sql.next())
         models.push_back(TriCasterNetworkTargetModel(sql.value("Id").toInt(), sql.value("Name").toString(),
-                                                     sql.value("Value").toString(), sql.value("Product").toString()));
+                                                     sql.value("Value").toString(), sql.value("Products").toString()));
 
     return models;
 }
