@@ -1,3 +1,12 @@
+CasparCG Client 2.2.0-20200517
+==============================
+- FIX: Issue with unselectable items in device filter combo.
+- FIX: Fixed database column typo.
+- FIX: Use columns instead of index when adderssing values in sql results.
+- FIX: Sync compact view between menu bar and context menu in the rundown.
+
+
+
 CasparCG Client 2.2.0-20200511
 ==============================
 - ADD: Preview support for mixer commands.
