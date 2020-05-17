@@ -716,6 +716,14 @@ QComboBox QAbstractItemView
     selection-background-color: rgba(70, 115, 195, 64);
     background-color: rgba(28, 28, 28, 255);
 }
+QComboBox QAbstractItemView:indicator
+{
+    background-color:transparent;
+    selection-background-color:transparent;
+    color:transparent;
+    selection-color:transparent;
+    border-color: transparent;
+}
 
 /*
  * QSpinBox

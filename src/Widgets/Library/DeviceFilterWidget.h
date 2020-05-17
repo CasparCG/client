@@ -6,6 +6,7 @@
 #include "CasparDevice.h"
 
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QListWidget>
 
 class WIDGETS_EXPORT DeviceFilterWidget : public QWidget, Ui::DeviceFilterWidget
 {
@@ -20,11 +21,11 @@ class WIDGETS_EXPORT DeviceFilterWidget : public QWidget, Ui::DeviceFilterWidget
         virtual bool eventFilter(QObject* target, QEvent* event);
 
     private:
-        bool sendEvents;
+        QListWidget listWidget;
 
         void blockAllSignals(bool block);
 
         Q_SLOT void deviceAdded(CasparDevice&);
         Q_SLOT void deviceRemoved();
-        Q_SLOT void dataChanged(const QModelIndex&, const QModelIndex&);
+        Q_SLOT void itemPressed(QListWidgetItem*);
 };
