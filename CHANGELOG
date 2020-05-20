@@ -1,6 +1,6 @@
-CasparCG Client 2.2.0-20200519
+CasparCG Client 2.2.0-20200520
 ==============================
-- FIX: Disable app nap on macOS.
+- FIX: Disable app nap on macOS. (grahamspr86)
 
 
 
