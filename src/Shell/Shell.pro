@@ -12,11 +12,15 @@ TARGET = shell
 TEMPLATE = app
 
 HEADERS += \
-    Application.h
+    Application.h \
+    Mac/AppNap.h
 
 SOURCES += \
     Main.cpp \
     Application.cpp
+
+OBJECTIVE_SOURCES += \
+    Mac/AppNap.mm
 
 FORMS += \
 
@@ -40,6 +44,8 @@ OTHER_FILES += \
 
 win32:RC_FILE = Windows.rc
 else:macx:ICON = Images/CasparCG.icns
+
+macx:LIBS += -framework Foundation
 
 CONFIG(system-libqatemcontrol) {
     LIBS += -lqatemcontrol

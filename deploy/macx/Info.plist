@@ -6,8 +6,6 @@
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 	<string>True</string>
-	<key>NSAppSleepDisabled</key>
-	<true/>
 	<key>CFBundleIconFile</key>
 	<string>CasparCG.icns</string>
 	<key>CFBundlePackageType</key>

@@ -16,6 +16,10 @@
 
 #include "../Widgets/MainWindow.h"
 
+#ifdef Q_OS_MAC
+    #include "Mac/AppNap.h"
+#endif
+
 #include <QtCore/QRegExp>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -246,6 +250,10 @@ CommandLineParseResult parseCommandLine(QCommandLineParser& parser, CommandLineA
 
 int main(int argc, char* argv[])
 {
+#ifdef Q_OS_MAC
+    AppNap appNap;
+#endif
+
     qInstallMessageHandler(messageHandler);
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
