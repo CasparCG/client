@@ -35,9 +35,11 @@ Install the pre-built Qt 5.14.2 binaries for Windows 64-bit from Qt [archive](ht
 Install the pre-built Qt 5.14.2 binaries for macOS 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Download and install Xcode from the App Store.
 
 #### Linux
-Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Use your package manager to install the gcc toolchain.
+Install the pre-built Qt 5.14.2 binaries for Linux 64-bit from Qt [archive](http://download.qt.io/archive/qt/5.14/5.14.2/). Use your package manager to install the gcc toolchain. Please make sure that the `Desktop GCC 64-bit` option is selected when installing the binaries. Also take note of the path to which you are installing.
 
 VLC need to be pre-installed: `sudo apt-get install vlc libvlc-dev libvlccore-dev`.
+
+You may need to update the set-variables-and-build-linux.sh script in the build-scripts folder. Make sure that BUILD_QT_PATH variable and the BUILD_PARALLEL_THREADS variable is being set correctly there then run the script.
 
 
 ## Releases
