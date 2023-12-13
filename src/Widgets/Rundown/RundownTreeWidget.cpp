@@ -1658,6 +1658,11 @@ void RundownTreeWidget::configureOscSubscriptions()
     QObject::connect(this->loadControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(loadControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
+    QString pauseControlFilter = Osc::RUNDOWN_CONTROL_PAUSE_FILTER;
+    this->pauseControlSubscription = new OscSubscription(pauseControlFilter, this);
+    QObject::connect(this->pauseControlSubscription, SIGNAL(subscriptionReceived(const QString &, const QList<QVariant> &)),
+                     this, SLOT(pauseControlSubscriptionReceived(const QString &, const QList<QVariant> &)));
+                     
     QString nextControlFilter = Osc::RUNDOWN_CONTROL_NEXT_FILTER;
     this->nextControlSubscription = new OscSubscription(nextControlFilter, this);
     QObject::connect(this->nextControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
