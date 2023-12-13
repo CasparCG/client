@@ -5,8 +5,6 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "EventManager.h"
-#include "AtemDeviceManager.h"
-#include "TriCasterDeviceManager.h"
 #include "Commands/BlendModeCommand.h"
 #include "Commands/GridCommand.h"
 #include "Commands/BrightnessCommand.h"
@@ -42,25 +40,6 @@
 #include "Commands/HttpPostCommand.h"
 #include "Commands/RouteChannelCommand.h"
 #include "Commands/RouteVideolayerCommand.h"
-#include "Commands/Panasonic/PanasonicPresetCommand.h"
-#include "Commands/Sony/SonyPresetCommand.h"
-#include "Commands/Spyder/SpyderPresetCommand.h"
-#include "Commands/Atem/AtemFadeToBlackCommand.h"
-#include "Commands/Atem/AtemInputCommand.h"
-#include "Commands/Atem/AtemAudioInputStateCommand.h"
-#include "Commands/Atem/AtemCutCommand.h"
-#include "Commands/Atem/AtemAutoCommand.h"
-#include "Commands/Atem/AtemKeyerStateCommand.h"
-#include "Commands/Atem/AtemVideoFormatCommand.h"
-#include "Commands/Atem/AtemAudioInputBalanceCommand.h"
-#include "Commands/Atem/AtemAudioGainCommand.h"
-#include "Commands/Atem/AtemMacroCommand.h"
-#include "Commands/TriCaster/AutoCommand.h"
-#include "Commands/TriCaster/InputCommand.h"
-#include "Commands/TriCaster/PresetCommand.h"
-#include "Commands/TriCaster/TakeCommand.h"
-#include "Commands/TriCaster/NetworkSourceCommand.h"
-#include "Commands/TriCaster/MacroCommand.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
 #include "Events/Inspector/LabelChangedEvent.h"
 #include "Events/Inspector/TargetChangedEvent.h"
@@ -77,21 +56,12 @@ InspectorOutputWidget::InspectorOutputWidget(QWidget* parent)
 
     this->comboBoxDevice->setEnabled(false);
 
-    this->comboBoxAtemDevice->setVisible(false);
-    this->comboBoxTriCasterDevice->setVisible(false);
-
     this->delayType = DatabaseManager::getInstance().getConfigurationByName("DelayType").getValue();
 
     this->comboBoxTarget->lineEdit()->setStyleSheet("background-color: transparent; border-width: 0px;");
 
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceAdded(CasparDevice&)), this, SLOT(deviceAdded(CasparDevice&)));
-
-    QObject::connect(&AtemDeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(atemDeviceRemoved()));
-    QObject::connect(&AtemDeviceManager::getInstance(), SIGNAL(deviceAdded(AtemDevice&)), this, SLOT(atemDeviceAdded(AtemDevice&)));
-
-    QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(tricasterDeviceRemoved()));
-    QObject::connect(&TriCasterDeviceManager::getInstance(), SIGNAL(deviceAdded(TriCasterDevice&)), this, SLOT(tricasterDeviceAdded(TriCasterDevice&)));
 
     QObject::connect(&EventManager::getInstance(), SIGNAL(rundownItemSelected(const RundownItemSelectedEvent&)), this, SLOT(rundownItemSelected(const RundownItemSelectedEvent&)));
     QObject::connect(&EventManager::getInstance(), SIGNAL(libraryItemSelected(const LibraryItemSelectedEvent&)), this, SLOT(libraryItemSelected(const LibraryItemSelectedEvent&)));
@@ -119,8 +89,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     blockAllSignals(true);
 
     this->comboBoxDevice->setVisible(true);
-    this->comboBoxAtemDevice->setVisible(false);
-    this->comboBoxTriCasterDevice->setVisible(false);
 
     this->comboBoxDevice->setEnabled(true);
     this->comboBoxTarget->setEnabled(true);
@@ -163,8 +131,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
         }
 
         this->comboBoxDevice->setCurrentIndex(index);
-        this->comboBoxAtemDevice->setCurrentIndex(this->comboBoxAtemDevice->findText(this->model->getDeviceName()));
-        this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
         this->spinBoxChannel->setValue(this->command->getChannel());
         this->spinBoxVideolayer->setValue(this->command->getVideolayer());
         this->spinBoxDelay->setValue(this->command->getDelay());
@@ -229,9 +195,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
                  dynamic_cast<OscOutputCommand*>(event.getCommand()) ||
                  dynamic_cast<HttpGetCommand*>(event.getCommand()) ||
                  dynamic_cast<HttpPostCommand*>(event.getCommand()) ||
-                 dynamic_cast<SonyPresetCommand*>(event.getCommand()) ||
-                 dynamic_cast<SpyderPresetCommand*>(event.getCommand()) ||
-                 dynamic_cast<PanasonicPresetCommand*>(event.getCommand()) ||
                  dynamic_cast<PlayoutCommand*>(event.getCommand()))
         {
             this->comboBoxDevice->setEnabled(false);
@@ -317,63 +280,7 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
 
             this->comboBoxTarget->setCurrentIndex(-1);
         }
-        else if (dynamic_cast<InputCommand*>(event.getCommand()) ||
-                 dynamic_cast<PresetCommand*>(event.getCommand()) ||
-                 dynamic_cast<AutoCommand*>(event.getCommand()) ||
-                 dynamic_cast<TakeCommand*>(event.getCommand()) ||
-                 dynamic_cast<NetworkSourceCommand*>(event.getCommand()) ||
-                 dynamic_cast<MacroCommand*>(event.getCommand()))
-        {
 
-            this->comboBoxTarget->setEnabled(false);
-            this->spinBoxChannel->setEnabled(false);
-            this->spinBoxVideolayer->setEnabled(false);
-            this->spinBoxDuration->setEnabled(false);
-
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(false);
-            this->comboBoxTriCasterDevice->setVisible(true);
-
-            this->labelDelayMillisecond->setText("ms");
-            this->labelDurationMillisecond->setText("ms");
-
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxTarget->setCurrentIndex(-1);
-            this->comboBoxAtemDevice->setCurrentIndex(-1);
-            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
-        }
-        else if (dynamic_cast<AtemInputCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemCutCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemFadeToBlackCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemAutoCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemKeyerStateCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemVideoFormatCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemAudioInputStateCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemAudioGainCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemMacroCommand*>(event.getCommand()) ||
-                 dynamic_cast<AtemAudioInputBalanceCommand*>(event.getCommand()))
-        {
-            this->comboBoxTarget->setEnabled(false);
-            this->spinBoxChannel->setEnabled(false);
-            this->spinBoxVideolayer->setEnabled(false);
-            this->spinBoxDuration->setEnabled(false);
-
-            this->comboBoxDevice->setVisible(false);
-            this->comboBoxAtemDevice->setVisible(true);
-            this->comboBoxTriCasterDevice->setVisible(false);
-
-            this->labelDelayMillisecond->setText("ms");
-            this->labelDurationMillisecond->setText("ms");
-
-            this->comboBoxDevice->setCurrentIndex(-1);
-            this->comboBoxTarget->setCurrentIndex(-1);
-            this->comboBoxTriCasterDevice->setCurrentIndex(-1);
-            this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
-            this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
-            this->spinBoxDuration->setValue(Output::DEFAULT_DURATION);
-        }
     }
 
     if (deviceModel != NULL && deviceModel->getLockedChannel() > 0 && deviceModel->getLockedChannel() <= this->spinBoxChannel->maximum())
@@ -386,8 +293,6 @@ void InspectorOutputWidget::rundownItemSelected(const RundownItemSelectedEvent& 
     }
 
     checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
     blockAllSignals(false);
@@ -402,8 +307,6 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     this->comboBoxTarget->clear();
 
     this->comboBoxDevice->setVisible(true);
-    this->comboBoxAtemDevice->setVisible(false);
-    this->comboBoxTriCasterDevice->setVisible(false);
 
     this->comboBoxDevice->setEnabled(false);
     this->comboBoxTarget->setEnabled(false);
@@ -422,8 +325,6 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     this->labelDurationMillisecond->setVisible(false);
 
     this->comboBoxDevice->setCurrentIndex(this->comboBoxDevice->findText(this->model->getDeviceName()));
-    this->comboBoxAtemDevice->setCurrentIndex(this->comboBoxAtemDevice->findText(this->model->getDeviceName()));
-    this->comboBoxTriCasterDevice->setCurrentIndex(this->comboBoxTriCasterDevice->findText(this->model->getDeviceName()));
     this->checkBoxAllowGpi->setChecked(Output::DEFAULT_ALLOW_GPI);
     this->checkBoxAllowRemoteTriggering->setChecked(Output::DEFAULT_ALLOW_REMOTE_TRIGGERING);
     this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
@@ -431,8 +332,6 @@ void InspectorOutputWidget::libraryItemSelected(const LibraryItemSelectedEvent& 
     fillTargetCombo(this->model->getType());
 
     checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
     this->comboBoxTarget->setStyleSheet("");
@@ -451,8 +350,6 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->comboBoxTarget->clear();
 
     this->comboBoxDevice->setVisible(true);
-    this->comboBoxAtemDevice->setVisible(false);
-    this->comboBoxTriCasterDevice->setVisible(false);
 
     this->comboBoxDevice->setEnabled(false);
     this->comboBoxTarget->setEnabled(false);
@@ -471,8 +368,6 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->labelDurationMillisecond->setVisible(false);
 
     this->comboBoxDevice->setCurrentIndex(-1);
-    this->comboBoxAtemDevice->setCurrentIndex(-1);
-    this->comboBoxTriCasterDevice->setCurrentIndex(-1);
     this->spinBoxChannel->setValue(Output::DEFAULT_CHANNEL);
     this->spinBoxVideolayer->setValue(Output::DEFAULT_VIDEOLAYER);
     this->spinBoxDelay->setValue(Output::DEFAULT_DELAY);
@@ -482,8 +377,6 @@ void InspectorOutputWidget::emptyRundown(const EmptyRundownEvent& event)
     this->lineEditRemoteTriggerId->setText(Output::DEFAULT_REMOTE_TRIGGER_ID);
 
     checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
     this->comboBoxTarget->setStyleSheet("");
@@ -502,8 +395,6 @@ void InspectorOutputWidget::deviceChanged(const DeviceChangedEvent& event)
         fillTargetCombo(this->model->getType(), event.getDeviceName());
 
     checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
     blockAllSignals(false);
@@ -540,8 +431,6 @@ void InspectorOutputWidget::templateChanged(const TemplateChangedEvent& event)
 void InspectorOutputWidget::blockAllSignals(bool block)
 {
     this->comboBoxDevice->blockSignals(block);
-    this->comboBoxAtemDevice->blockSignals(block);
-    this->comboBoxTriCasterDevice->blockSignals(block);
     this->comboBoxTarget->blockSignals(block);
     this->spinBoxChannel->blockSignals(block);
     this->spinBoxVideolayer->blockSignals(block);
@@ -637,22 +526,6 @@ void InspectorOutputWidget::checkEmptyDevice()
         this->comboBoxDevice->setStyleSheet("");
 }
 
-void InspectorOutputWidget::checkEmptyAtemDevice()
-{
-    if (this->comboBoxAtemDevice->isEnabled() && this->comboBoxAtemDevice->currentText() == "")
-        this->comboBoxAtemDevice->setStyleSheet("border-color: firebrick;");
-    else
-        this->comboBoxAtemDevice->setStyleSheet("");
-}
-
-void InspectorOutputWidget::checkEmptyTriCasterDevice()
-{
-    if (this->comboBoxTriCasterDevice->isEnabled() && this->comboBoxTriCasterDevice->currentText() == "")
-        this->comboBoxTriCasterDevice->setStyleSheet("border-color: firebrick;");
-    else
-        this->comboBoxTriCasterDevice->setStyleSheet("");
-}
-
 void InspectorOutputWidget::checkEmptyTarget()
 {
     if (this->libraryFilter.isEmpty())
@@ -721,8 +594,6 @@ void InspectorOutputWidget::deviceNameChanged(QString deviceName)
     }
 
     checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
     checkEmptyTarget();
 
     EventManager::getInstance().fireDeviceChangedEvent(DeviceChangedEvent(this->comboBoxDevice->currentText()));
@@ -782,74 +653,4 @@ void InspectorOutputWidget::allowRemoteTriggeringChanged(int state)
 void InspectorOutputWidget::remoteTriggerIdChanged(QString id)
 {
     this->command->setRemoteTriggerId(id);
-}
-
-void InspectorOutputWidget::tricasterDeviceRemoved()
-{
-    blockAllSignals(true);
-
-    this->comboBoxTriCasterDevice->clear();
-    foreach (const TriCasterDeviceModel& model, TriCasterDeviceManager::getInstance().getDeviceModels())
-        this->comboBoxTriCasterDevice->addItem(model.getName());
-
-    blockAllSignals(false);
-}
-
-void InspectorOutputWidget::tricasterDeviceAdded(TriCasterDevice& device)
-{
-    TriCasterDeviceModel model = TriCasterDeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-
-    int index = this->comboBoxTriCasterDevice->currentIndex();
-
-    this->comboBoxTriCasterDevice->addItem(model.getName());
-
-    if (index == -1)
-        this->comboBoxTriCasterDevice->setCurrentIndex(index);
-}
-
-void InspectorOutputWidget::tricasterDeviceNameChanged(QString deviceName)
-{
-    Q_UNUSED(deviceName);
-
-    checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
-    checkEmptyTarget();
-
-    EventManager::getInstance().fireTriCasterDeviceChangedEvent(TriCasterDeviceChangedEvent(this->comboBoxTriCasterDevice->currentText()));
-}
-
-void InspectorOutputWidget::atemDeviceRemoved()
-{
-    blockAllSignals(true);
-
-    this->comboBoxAtemDevice->clear();
-    foreach (const AtemDeviceModel& model, AtemDeviceManager::getInstance().getDeviceModels())
-        this->comboBoxAtemDevice->addItem(model.getName());
-
-    blockAllSignals(false);
-}
-
-void InspectorOutputWidget::atemDeviceAdded(AtemDevice& device)
-{
-    AtemDeviceModel model = AtemDeviceManager::getInstance().getDeviceModelByAddress(device.getAddress());
-
-    int index = this->comboBoxAtemDevice->currentIndex();
-
-    this->comboBoxAtemDevice->addItem(model.getName());
-
-    if (index == -1)
-        this->comboBoxAtemDevice->setCurrentIndex(index);
-}
-
-void InspectorOutputWidget::atemDeviceNameChanged(QString deviceName)
-{
-    Q_UNUSED(deviceName);
-
-    checkEmptyDevice();
-    checkEmptyAtemDevice();
-    checkEmptyTriCasterDevice();
-    checkEmptyTarget();
-
-    EventManager::getInstance().fireAtemDeviceChangedEvent(AtemDeviceChangedEvent(this->comboBoxAtemDevice->currentText()));
 }

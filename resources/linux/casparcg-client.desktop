@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=CasparCG Client
+GenericName=CasparCG Client
+Exec=/usr/bin/casparcg-client
+Icon=/usr/share/icons/casparcg-client/CasparCG.png
+Terminal=false

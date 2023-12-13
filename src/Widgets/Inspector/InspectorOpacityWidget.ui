@@ -208,7 +208,7 @@
   </connection>
   <connection>
    <sender>comboBoxTween</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorOpacityWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>

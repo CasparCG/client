@@ -186,7 +186,7 @@
   </connection>
   <connection>
    <sender>comboBoxFormat</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
    <slot>formatChanged(QString)</slot>
    <hints>
@@ -202,7 +202,7 @@
   </connection>
   <connection>
    <sender>comboBoxTransition</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
    <slot>transitionChanged(QString)</slot>
    <hints>
@@ -234,7 +234,7 @@
   </connection>
   <connection>
    <sender>comboBoxTween</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>
@@ -250,7 +250,7 @@
   </connection>
   <connection>
    <sender>comboBoxDirection</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorDeckLinkInputWidget</receiver>
    <slot>directionChanged(QString)</slot>
    <hints>

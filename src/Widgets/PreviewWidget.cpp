@@ -86,7 +86,7 @@ void PreviewWidget::setThumbnail()
         this->image.loadFromData(QByteArray::fromBase64(data.toLatin1()), "PNG");
 
         if (this->viewAlpha)
-            this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+            this->labelPreview->setPixmap(QPixmap::fromImage(this->image.convertToFormat(QImage::Format_Alpha8)));
         else
             this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
     }
@@ -99,7 +99,7 @@ void PreviewWidget::setThumbnail()
 void PreviewWidget::viewAlphaChanged(bool enabled)
 {
     if (enabled)
-        this->labelPreview->setPixmap(QPixmap::fromImage(this->image.alphaChannel()));
+        this->labelPreview->setPixmap(QPixmap::fromImage(this->image.convertToFormat(QImage::Format_Alpha8)));
     else
         this->labelPreview->setPixmap(QPixmap::fromImage(this->image));
 

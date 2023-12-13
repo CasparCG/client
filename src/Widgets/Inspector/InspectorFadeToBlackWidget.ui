@@ -217,7 +217,7 @@
   </connection>
   <connection>
    <sender>comboBoxTransition</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorFadeToBlackWidget</receiver>
    <slot>transitionChanged(QString)</slot>
    <hints>
@@ -233,7 +233,7 @@
   </connection>
   <connection>
    <sender>comboBoxDirection</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorFadeToBlackWidget</receiver>
    <slot>directionChanged(QString)</slot>
    <hints>
@@ -249,7 +249,7 @@
   </connection>
   <connection>
    <sender>comboBoxTween</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorFadeToBlackWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>

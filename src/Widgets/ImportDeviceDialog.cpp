@@ -2,8 +2,9 @@
 
 #include <iostream>
 
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtCore/QTextStream>
+#include <QtCore/QFile>
 
 #include <QtGui/QCloseEvent>
 
@@ -25,7 +26,7 @@ void ImportDeviceDialog::setImportFile(const QString& path)
     if (file.open(QFile::ReadOnly | QIODevice::Text))
     {
         QTextStream stream(&file);
-        stream.setCodec(QTextCodec::codecForName("UTF-8"));
+        stream.setEncoding(QStringConverter::Utf8);
 
         std::wstringstream wstringstream;
         wstringstream << stream.readAll().toStdWString();
@@ -33,7 +34,7 @@ void ImportDeviceDialog::setImportFile(const QString& path)
         boost::property_tree::wptree pt;
         boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"servers"))
+        for (boost::property_tree::wptree::value_type &parentValue : pt.get_child(L"servers"))
         {
             this->models.push_back(parseData(parentValue.second));
         }

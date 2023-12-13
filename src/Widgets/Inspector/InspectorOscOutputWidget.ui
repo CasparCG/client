@@ -228,7 +228,7 @@
   </connection>
   <connection>
    <sender>comboBoxOutput</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorOscOutputWidget</receiver>
    <slot>outputChanged(QString)</slot>
    <hints>
@@ -244,7 +244,7 @@
   </connection>
   <connection>
    <sender>comboBoxType</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorOscOutputWidget</receiver>
    <slot>typeChanged(QString)</slot>
    <hints>

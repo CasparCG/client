@@ -19,14 +19,14 @@ No extra installations required.
 SYSTEM REQUIREMENTS FOR MAC
 ---------------------------
 
-The Mac version has been tested on 10.15.
+The Mac version has been tested on 11.
 No extra installations required.
 
 
 SYSTEM REQUIREMENTS FOR LINUX
 -----------------------------
 
-The Linux version has been tested on Ubuntu 19.10 64-bit.
+The Linux version has been tested on Ubuntu 22.04 64-bit.
 Requires that you install VLC.
 
 
@@ -47,7 +47,7 @@ folder.
 INSTALLATION LINUX
 ------------------
 
-Unpack the tar file and run the run.sh.
+Install the deb file, and launch 'CasparCG Client'
 
 
 DOCUMENTATION

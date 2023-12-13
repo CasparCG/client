@@ -38,7 +38,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabGeneral">
     <attribute name="title">
@@ -1149,355 +1149,6 @@
      </property>
      <property name="toolTip">
       <string>Import CasparCG Servers</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tabMixers">
-    <attribute name="title">
-     <string>Mixers</string>
-    </attribute>
-    <widget class="QToolButton" name="toolButtonAddTriCasterDevice">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>321</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Add TriCaster Mixer</string>
-     </property>
-    </widget>
-    <widget class="QTreeWidget" name="treeWidgetTriCasterDevice">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>78</y>
-       <width>535</width>
-       <height>231</height>
-      </rect>
-     </property>
-     <property name="rootIsDecorated">
-      <bool>false</bool>
-     </property>
-     <property name="uniformRowHeights">
-      <bool>true</bool>
-     </property>
-     <attribute name="headerDefaultSectionSize">
-      <number>150</number>
-     </attribute>
-     <attribute name="headerShowSortIndicator" stdset="0">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Id</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Icon</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Address</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Port</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Description</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QComboBox" name="comboBoxTriCasterProduct">
-     <property name="geometry">
-      <rect>
-       <x>154</x>
-       <y>38</y>
-       <width>131</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelModel">
-     <property name="geometry">
-      <rect>
-       <x>64</x>
-       <y>39</y>
-       <width>81</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Model:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonImportTriCasterDevice">
-     <property name="geometry">
-      <rect>
-       <x>612</x>
-       <y>321</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Import TriCaster Mixers</string>
-     </property>
-    </widget>
-    <widget class="Line" name="lineTriCaster">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>20</y>
-       <width>555</width>
-       <height>1</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelTriCaster">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>12</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TriCaster</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonRemoveTriCasterDevice">
-     <property name="geometry">
-      <rect>
-       <x>149</x>
-       <y>321</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Remove TriCaster Mixer</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelAtem">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>355</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>ATEM</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QTreeWidget" name="treeWidgetAtemDevice">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>385</y>
-       <width>535</width>
-       <height>231</height>
-      </rect>
-     </property>
-     <property name="rootIsDecorated">
-      <bool>false</bool>
-     </property>
-     <property name="uniformRowHeights">
-      <bool>true</bool>
-     </property>
-     <attribute name="headerDefaultSectionSize">
-      <number>150</number>
-     </attribute>
-     <attribute name="headerShowSortIndicator" stdset="0">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Id</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Icon</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Address</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Port</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Description</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="Line" name="lineAtem">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>363</y>
-       <width>555</width>
-       <height>1</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonRemoveAtemDevice">
-     <property name="geometry">
-      <rect>
-       <x>149</x>
-       <y>628</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Remove ATEM Mixer</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonAddAtemDevice">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>628</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Add ATEM Mixer</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="toolButtonImportAtemDevice">
-     <property name="geometry">
-      <rect>
-       <x>612</x>
-       <y>628</y>
-       <width>33</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>33</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Import ATEM Mixers</string>
      </property>
     </widget>
    </widget>
@@ -3744,54 +3395,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>toolButtonAddDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAddDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>679</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>39</x>
-     <y>574</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRemoveDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>removeDevice()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>194</x>
-     <y>679</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>80</x>
-     <y>574</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxFontSize</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>fontSizeChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>182</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>437</x>
-     <y>574</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButtonOk</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -3804,438 +3407,6 @@
     <hint type="destinationlabel">
      <x>594</x>
      <y>573</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxRefreshInterval</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>synchronizeIntervalChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>203</x>
-     <y>281</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>107</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxFullscreen</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>startFullscreenChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>163</x>
-     <y>98</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>81</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxAutoRefresh</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>autoSynchronizeChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>240</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>216</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction1</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi1Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>191</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>87</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction2</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi2Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>123</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction3</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi3Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>236</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction4</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi4Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>271</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>183</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction5</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi5Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>306</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction6</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi6Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>246</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction7</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi7Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>371</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>271</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxAction8</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi8Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>401</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>302</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditSerialPort</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>serialPortChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>624</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange1</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi1Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>191</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>57</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange2</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi2Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>36</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange3</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi3Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>236</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>672</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange4</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi4Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>271</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>634</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange5</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi5Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>306</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>602</x>
-     <y>1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange6</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi6Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>551</x>
-     <y>7</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange7</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi7Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>371</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>262</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiVoltageChange8</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpi8Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>401</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>339</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange1</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo1Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>460</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>179</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength1</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo1Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>462</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>228</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange2</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo2Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>490</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>257</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo2Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>492</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>287</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange3</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo3Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>520</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>316</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength3</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo3Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>522</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>346</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange4</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo4Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>550</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>376</y>
     </hint>
    </hints>
   </connection>
@@ -4256,162 +3427,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxGpoVoltageChange5</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <sender>comboBoxGpiVoltageChange3</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>gpo5Changed()</slot>
+   <slot>gpi3Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>215</x>
-     <y>580</y>
+     <x>371</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
-     <x>0</x>
-     <y>441</y>
+     <x>672</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>spinBoxPulseLength5</sender>
-   <signal>editingFinished()</signal>
+   <sender>comboBoxGpiVoltageChange1</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>gpo5Changed()</slot>
+   <slot>gpi1Changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>582</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>472</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange6</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo6Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>610</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>503</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength6</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo6Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>612</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>533</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange7</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo7Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>640</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>564</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength7</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo7Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>642</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpoVoltageChange8</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo8Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>670</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>658</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxPulseLength8</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>gpo8Changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>447</x>
-     <y>672</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>695</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxGpiBaudRate</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>baudRateChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>93</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxShowThumbnailTooltip</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showThumbnailTooltipChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>272</x>
-     <y>341</y>
+     <x>373</x>
+     <y>191</y>
     </hint>
     <hint type="destinationlabel">
      <x>699</x>
-     <y>335</y>
+     <y>57</y>
     </hint>
    </hints>
   </connection>
@@ -4432,342 +3475,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxReverseOscTime</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>reverseOscTimeChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>166</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>418</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxDisableInAndOutPoints</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>disableInAndOutPointsChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>140</x>
-     <y>393</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>428</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonImportDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showImportDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>657</x>
-     <y>679</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>691</x>
-     <y>689</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditOscInputMonitorPort</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>oscMonitorPortChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>221</x>
-     <y>137</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>693</x>
-     <y>115</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetOscOutput</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>571</x>
-     <y>334</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>211</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRemoveOscOutput</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>removeOscOutput()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>164</x>
-     <y>467</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>410</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonAddOscOutput</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAddOscOutputDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>125</x>
-     <y>467</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>695</x>
-     <y>517</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxDelayType</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>delayTypeChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>528</x>
-     <y>582</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>694</x>
-     <y>512</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxEnableOscInputControl</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>enableOscInputControlChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>125</x>
-     <y>98</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>174</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTheme</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>themeChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>274</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>141</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonAddAtemDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAddAtemDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>152</x>
-     <y>691</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>735</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRemoveAtemDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>removeAtemDevice()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>190</x>
-     <y>691</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>685</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonImportAtemDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showImportAtemDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>648</x>
-     <y>691</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>723</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetAtemDevice</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>527</x>
-     <y>533</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>501</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeWidgetTriCasterDevice</sender>
-   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>554</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>242</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonAddTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAddTriCasterDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>142</x>
-     <y>384</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>402</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonRemoveTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>removeTriCasterDevice()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>189</x>
-     <y>384</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>468</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButtonImportTriCasterDevice</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showImportTriCasterDeviceDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>642</x>
-     <y>384</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>380</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditRundownRepository</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>rundownRepositoryChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>311</x>
-     <y>442</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>464</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxPreviewOnAutoStep</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>previewOnAutoStepChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>500</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>698</x>
-     <y>454</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxClearDelayedCommandsOnAutoStep</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>clearDelayedCommandsOnAutoStepChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>535</x>
-     <y>367</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>695</x>
-     <y>545</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButtonDeleteThumbnails</sender>
    <signal>clicked()</signal>
    <receiver>SettingsDialog</receiver>
@@ -4780,230 +3487,6 @@
     <hint type="destinationlabel">
      <x>699</x>
      <y>665</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxStoreThumbnailsInDatabase</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>storeThumbnailsInDatabaseChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>125</x>
-     <y>637</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>646</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxMarkUsedItems</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>markUsedItemsChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>459</x>
-     <y>393</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>372</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxShowAudioLevels</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showAudioLevelsChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>546</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>699</x>
-     <y>600</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxShowPreview</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showPreviewChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>182</x>
-     <y>494</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>698</x>
-     <y>576</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxShowLive</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showLiveChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>520</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>700</x>
-     <y>627</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxNetworkCache</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>networkCacheChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>214</x>
-     <y>175</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>703</x>
-     <y>749</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxDisableAudioInStream</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>disableAudioInStreamChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>125</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>706</x>
-     <y>711</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBoxQuality</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>streamQualityChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>214</x>
-     <y>140</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>708</x>
-     <y>791</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditRepositoryPort</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>repositoryPortChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>499</x>
-     <y>423</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>701</x>
-     <y>700</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTriCasterProduct</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>tricasterProductChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>273</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>58</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxDuration</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>showDurationChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>217</x>
-     <y>582</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>4</x>
-     <y>558</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxUseFreezeOnLoad</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>useFreezeOnLoadChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>565</x>
-     <y>504</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>696</x>
-     <y>208</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditStreamPort</sender>
-   <signal>editingFinished()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>streamPortChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>591</x>
-     <y>173</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>782</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxLogLevel</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>logLevelChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>613</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>697</x>
-     <y>825</y>
     </hint>
    </hints>
   </connection>
@@ -5024,6 +3507,374 @@
    </hints>
   </connection>
   <connection>
+   <sender>comboBoxAction5</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>215</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxLogLevel</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>logLevelChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>825</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange8</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>339</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction8</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxDelayType</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>delayTypeChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>512</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange7</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxUseFreezeOnLoad</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>useFreezeOnLoadChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>565</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDuration</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showDurationChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxPreviewOnAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>previewOnAutoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>500</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>698</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonImportDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showImportDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>657</x>
+     <y>679</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>689</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowPreview</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showPreviewChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>494</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>698</x>
+     <y>576</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange1</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange8</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>670</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>658</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxReverseOscTime</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>reverseOscTimeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>166</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>418</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxTheme</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>themeChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditRepositoryPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>repositoryPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>701</x>
+     <y>700</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxStoreThumbnailsInDatabase</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>storeThumbnailsInDatabaseChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>637</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>646</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDisableAudioInStream</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>disableAudioInStreamChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>706</x>
+     <y>711</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowThumbnailTooltip</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showThumbnailTooltipChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>36</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>550</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditOscInputMonitorPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscMonitorPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>137</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>693</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>lineEditOscInputControlPort</sender>
    <signal>editingFinished()</signal>
    <receiver>SettingsDialog</receiver>
@@ -5036,6 +3887,630 @@
     <hint type="destinationlabel">
      <x>694</x>
      <y>11</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange5</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>580</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditStreamPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>streamPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>591</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>782</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxEnableOscInputControl</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>enableOscInputControlChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditSerialPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>serialPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>624</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxNetworkCache</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>networkCacheChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>703</x>
+     <y>749</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange6</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>551</x>
+     <y>7</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange5</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>602</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveOscOutput</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeOscOutput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength5</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo5Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>472</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange3</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiVoltageChange4</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi4Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxClearDelayedCommandsOnAutoStep</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>clearDelayedCommandsOnAutoStepChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>535</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>545</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxQuality</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>streamQualityChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>708</x>
+     <y>791</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxRefreshInterval</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>synchronizeIntervalChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>281</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength2</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonAddDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddDeviceDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>679</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>39</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxMarkUsedItems</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>markUsedItemsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>372</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpiBaudRate</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>baudRateChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction1</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange6</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>610</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>503</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength1</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo1Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>462</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetOscOutput</sender>
+   <signal>itemDoubleClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxDisableInAndOutPoints</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>disableInAndOutPointsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>428</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange2</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo2Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength6</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>612</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>533</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction6</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi6Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxFullscreen</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>startFullscreenChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength3</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowAudioLevels</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAudioLevelsChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>546</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>600</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonAddOscOutput</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showAddOscOutputDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>517</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxShowLive</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>showLiveChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>627</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxFontSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>fontSizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>437</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxAutoRefresh</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>autoSynchronizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonRemoveDevice</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>removeDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>679</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>80</x>
+     <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction7</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxAction3</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpi3Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>699</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxGpoVoltageChange7</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>640</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>564</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength8</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo8Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>672</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>695</y>
     </hint>
    </hints>
   </connection>
@@ -5056,18 +4531,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditOscInputWebSocketPort</sender>
+   <sender>lineEditRundownRepository</sender>
    <signal>editingFinished()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>oscWebSocketPortChanged()</slot>
+   <slot>rundownRepositoryChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>569</x>
-     <y>202</y>
+     <x>311</x>
+     <y>442</y>
     </hint>
     <hint type="destinationlabel">
-     <x>349</x>
-     <y>369</y>
+     <x>699</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxPulseLength7</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>gpo7Changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>642</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>595</y>
     </hint>
    </hints>
   </connection>
@@ -5080,6 +4571,22 @@
     <hint type="sourcelabel">
      <x>543</x>
      <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditOscInputWebSocketPort</sender>
+   <signal>editingFinished()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>oscWebSocketPortChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>349</x>
@@ -5119,22 +4626,13 @@
   <slot>reverseOscTimeChanged(int)</slot>
   <slot>disableInAndOutPointsChanged(int)</slot>
   <slot>oscMonitorPortChanged()</slot>
-  <slot>showAddTriCasterDeviceDialog()</slot>
-  <slot>removeTriCasterDevice()</slot>
-  <slot>tricasterDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>showImportDeviceDialog()</slot>
-  <slot>showImportTriCasterDeviceDialog()</slot>
   <slot>oscOutputItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>showAddOscOutputDialog()</slot>
   <slot>removeOscOutput()</slot>
   <slot>delayTypeChanged(QString)</slot>
-  <slot>tricasterProductChanged(QString)</slot>
   <slot>enableOscInputControlChanged(int)</slot>
   <slot>themeChanged(QString)</slot>
-  <slot>showAddAtemDeviceDialog()</slot>
-  <slot>removeAtemDevice()</slot>
-  <slot>showImportAtemDeviceDialog()</slot>
-  <slot>atemDeviceItemDoubleClicked(QTreeWidgetItem*,int)</slot>
   <slot>rundownRepositoryChanged()</slot>
   <slot>previewOnAutoStepChanged(int)</slot>
   <slot>clearDelayedCommandsOnAutoStepChanged(int)</slot>

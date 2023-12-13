@@ -295,7 +295,7 @@
   </connection>
   <connection>
    <sender>comboBoxKey</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorChromaWidget</receiver>
    <slot>keyChanged(QString)</slot>
    <hints>

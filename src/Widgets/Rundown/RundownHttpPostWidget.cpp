@@ -34,7 +34,7 @@ RundownHttpPostWidget::RundownHttpPostWidget(const LibraryModel& model, QWidget*
 
     this->labelGroupColor->setVisible(this->inGroup);
     this->labelGroupColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_GROUP_COLOR));
-    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_PANASONIC_COLOR));
+    this->labelColor->setStyleSheet(QString("background-color: %1;").arg(Color::DEFAULT_HTTP_COLOR));
 
     this->labelLabel->setText(this->model.getLabel());
     this->labelDelay->setText(QString("Delay: %1").arg(this->command.getDelay()));

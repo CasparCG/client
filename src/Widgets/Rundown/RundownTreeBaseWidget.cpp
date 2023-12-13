@@ -148,7 +148,7 @@ bool RundownTreeBaseWidget::pasteItemProperties()
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    for (boost::property_tree::wptree::value_type &parentValue : pt.get_child(L"items"))
     {
         QString type = QString::fromStdWString(parentValue.second.get(L"type", L""));
 
@@ -180,7 +180,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
 
     EventManager::getInstance().fireRepositoryRundownEvent(RepositoryRundownEvent(repositoryRundown));
 
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    for (boost::property_tree::wptree::value_type &parentValue : pt.get_child(L"items"))
     {
         if (parentValue.first != L"item")
             continue;
@@ -221,7 +221,7 @@ bool RundownTreeBaseWidget::pasteSelectedItems(bool repositoryRundown)
             parentItem->setExpanded(expanded);
             parentWidget->setExpanded(expanded);
 
-            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            for (boost::property_tree::wptree::value_type &childValue : parentValue.second.get_child(L"items"))
             {
                 AbstractRundownWidget* childWidget = readProperties(childValue.second);
                 childWidget->setInGroup(true);
@@ -1076,7 +1076,7 @@ bool RundownTreeBaseWidget::containsStoryId(const QString& storyId, const QStrin
         boost::property_tree::wptree pt;
         boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-        BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+        for (const boost::property_tree::wptree::value_type &parentValue : pt.get_child(L"items"))
         {
             if (parentValue.second.count(L"storyid") > 0)
             {
@@ -1125,7 +1125,7 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
     boost::property_tree::wptree pt;
     boost::property_tree::xml_parser::read_xml(wstringstream, pt);
 
-    BOOST_FOREACH(boost::property_tree::wptree::value_type& parentValue, pt.get_child(L"items"))
+    for (boost::property_tree::wptree::value_type &parentValue : pt.get_child(L"items"))
     {
         if (parentValue.first != L"item")
             continue;
@@ -1141,7 +1141,7 @@ void RundownTreeBaseWidget::addRepositoryItem(const QString& storyId, const QStr
 
         if (parentWidget->isGroup())
         {
-            BOOST_FOREACH(boost::property_tree::wptree::value_type& childValue, parentValue.second.get_child(L"items"))
+            for (boost::property_tree::wptree::value_type &childValue : parentValue.second.get_child(L"items"))
             {
                 AbstractRundownWidget* childWidget = readProperties(childValue.second);
                 childWidget->setInGroup(true);

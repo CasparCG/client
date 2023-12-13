@@ -98,26 +98,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxTriCasterDevice">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxAtemDevice">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item row="5" column="0">
@@ -273,8 +253,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>comboBoxDevice</tabstop>
-  <tabstop>comboBoxTriCasterDevice</tabstop>
-  <tabstop>comboBoxAtemDevice</tabstop>
   <tabstop>comboBoxTarget</tabstop>
   <tabstop>spinBoxChannel</tabstop>
   <tabstop>spinBoxVideolayer</tabstop>
@@ -352,7 +330,7 @@
   </connection>
   <connection>
    <sender>comboBoxDevice</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorOutputWidget</receiver>
    <slot>deviceNameChanged(QString)</slot>
    <hints>
@@ -379,22 +357,6 @@
     <hint type="destinationlabel">
      <x>0</x>
      <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBoxTriCasterDevice</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorOutputWidget</receiver>
-   <slot>tricasterDeviceNameChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>180</x>
-     <y>23</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>218</x>
-     <y>1</y>
     </hint>
    </hints>
   </connection>
@@ -431,22 +393,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBoxAtemDevice</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>InspectorOutputWidget</receiver>
-   <slot>atemDeviceNameChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>302</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>250</x>
-     <y>26</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>spinBoxDuration</sender>
    <signal>valueChanged(int)</signal>
    <receiver>InspectorOutputWidget</receiver>
@@ -470,10 +416,8 @@
   <slot>allowGpiChanged(int)</slot>
   <slot>deviceNameChanged(QString)</slot>
   <slot>targetChanged(QString)</slot>
-  <slot>tricasterDeviceNameChanged(QString)</slot>
   <slot>allowRemoteTriggeringChanged(int)</slot>
   <slot>remoteTriggerIdChanged(QString)</slot>
-  <slot>atemDeviceNameChanged(QString)</slot>
   <slot>durationChanged(int)</slot>
  </slots>
 </ui>

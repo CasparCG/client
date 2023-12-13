@@ -10,8 +10,6 @@
 #include "../Core/DeviceManager.h"
 #include "../Core/OscDeviceManager.h"
 #include "../Core/OscWebSocketManager.h"
-#include "../Core/AtemDeviceManager.h"
-#include "../Core/TriCasterDeviceManager.h"
 #include "../Core/Events/Rundown/OpenRundownEvent.h"
 
 #include "../Widgets/MainWindow.h"
@@ -20,7 +18,7 @@
     #include "Mac/AppNap.h"
 #endif
 
-#include <QtCore/QRegExp>
+#include <QtCore5Compat/QRegExp>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QString>
@@ -76,6 +74,10 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
             break;
         case QtFatalMsg:
             logMessage = QString("[%1] [%2] [F] %3").arg(timestamp).arg(threadId).arg(message);
+        break;
+        case QtInfoMsg:
+            logMessage = QString("[%1] [%2] [I] %3").arg(timestamp).arg(threadId).arg(message);
+        break;
     }
 
     fprintf(stderr, "%s\n", qPrintable(logMessage));
@@ -90,7 +92,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
     logFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
     QTextStream logStream(&logFile);
-    logStream << logMessage << endl;
+    logStream << logMessage << Qt::endl;
 
     logFile.close();
 
@@ -256,7 +258,7 @@ int main(int argc, char* argv[])
 
     qInstallMessageHandler(messageHandler);
 
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     Application application(argc, argv);
     application.setApplicationName("CasparCG Client");
@@ -303,8 +305,6 @@ int main(int argc, char* argv[])
 
     LibraryManager::getInstance().initialize();
     DeviceManager::getInstance().initialize();
-    AtemDeviceManager::getInstance().initialize();
-    TriCasterDeviceManager::getInstance().initialize();
     OscDeviceManager::getInstance().initialize();
     OscWebSocketManager::getInstance().initialize();
 
@@ -315,8 +315,6 @@ int main(int argc, char* argv[])
     GpiManager::getInstance().uninitialize();
     OscWebSocketManager::getInstance().uninitialize();
     OscDeviceManager::getInstance().uninitialize();
-    TriCasterDeviceManager::getInstance().uninitialize();
-    AtemDeviceManager::getInstance().uninitialize();
     DeviceManager::getInstance().uninitialize();
     LibraryManager::getInstance().uninitialize();
 

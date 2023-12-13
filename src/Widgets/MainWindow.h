@@ -22,7 +22,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
 
-#include <QtWidgets/QAction>
+#include <QtGui/QAction>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>

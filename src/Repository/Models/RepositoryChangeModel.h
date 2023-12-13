@@ -4,6 +4,9 @@
 
 #include <QtCore/QString>
 
+#ifndef WIDGETS_REPOSITORY_REPOSITORY_CHANGE_MODEL
+#define WIDGETS_REPOSITORY_REPOSITORY_CHANGE_MODEL
+
 class REPOSITORY_EXPORT RepositoryChangeModel
 {
     public:
@@ -18,3 +21,5 @@ class REPOSITORY_EXPORT RepositoryChangeModel
         QString storyId;
         QString data;
 };
+
+#endif // WIDGETS_REPOSITORY_REPOSITORY_CHANGE_MODEL

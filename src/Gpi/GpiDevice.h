@@ -4,9 +4,10 @@
 
 #include <map>
 
-#include <gpio/serial_port_device.h>
+#include "gpio-client.h"
 
 #include <QSharedPointer>
+#include <QObject>
 
 class GPI_EXPORT GpiDevice : public QObject
 {

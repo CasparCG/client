@@ -40,25 +40,6 @@
 #include "RundownRouteChannelWidget.h"
 #include "RundownRouteVideolayerWidget.h"
 #include "RundownHttpPostWidget.h"
-#include "Atem/RundownAtemFadeToBlackWidget.h"
-#include "Atem/RundownAtemAutoWidget.h"
-#include "Atem/RundownAtemInputWidget.h"
-#include "Atem/RundownAtemCutWidget.h"
-#include "Atem/RundownAtemKeyerStateWidget.h"
-#include "Atem/RundownAtemVideoFormatWidget.h"
-#include "Atem/RundownAtemAudioInputStateWidget.h"
-#include "Atem/RundownAtemAudioGainWidget.h"
-#include "Atem/RundownAtemAudioInputBalanceWidget.h"
-#include "Atem/RundownAtemMacroWidget.h"
-#include "TriCaster/RundownInputWidget.h"
-#include "TriCaster/RundownTakeWidget.h"
-#include "TriCaster/RundownAutoWidget.h"
-#include "TriCaster/RundownPresetWidget.h"
-#include "TriCaster/RundownNetworkSourceWidget.h"
-#include "TriCaster/RundownMacroWidget.h"
-#include "Panasonic/RundownPanasonicPresetWidget.h"
-#include "Sony/RundownSonyPresetWidget.h"
-#include "Spyder/RundownSpyderPresetWidget.h"
 
 Q_GLOBAL_STATIC(RundownItemFactory, rundownItemFactory)
 
@@ -95,26 +76,9 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::CLEAROUTPUT) return new RundownClearOutputWidget(model, this);
     else if (model.getType() == Rundown::SOLIDCOLOR) return new RundownSolidColorWidget(model, this);
     else if (model.getType() == Rundown::CUSTOMCOMMAND) return new RundownCustomCommandWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERINPUT) return new RundownInputWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERPRESET) return new RundownPresetWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERTAKE) return new RundownTakeWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERAUTO) return new RundownAutoWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERNETSOURCE) return new RundownNetworkSourceWidget(model, this);
-    else if (model.getType() == Rundown::TRICASTERMACRO) return new RundownMacroWidget(model, this);
     else if (model.getType() == Rundown::OSCOUTPUT) return new RundownOscOutputWidget(model, this);
-    else if (model.getType() == Rundown::ATEMINPUT) return new RundownAtemInputWidget(model, this);
-    else if (model.getType() == Rundown::ATEMFADETOBLACK) return new RundownAtemFadeToBlackWidget(model, this);
-    else if (model.getType() == Rundown::ATEMAUTO) return new RundownAtemAutoWidget(model, this);
-    else if (model.getType() == Rundown::ATEMCUT) return new RundownAtemCutWidget(model, this);
-    else if (model.getType() == Rundown::ATEMKEYERSTATE) return new RundownAtemKeyerStateWidget(model, this);
-    else if (model.getType() == Rundown::ATEMVIDEOFORMAT) return new RundownAtemVideoFormatWidget(model, this);
-    else if (model.getType() == Rundown::ATEMAUDIOINPUTSTATE) return new RundownAtemAudioInputStateWidget(model, this);
-    else if (model.getType() == Rundown::ATEMAUDIOGAIN) return new RundownAtemAudioGainWidget(model, this);
-    else if (model.getType() == Rundown::ATEMAUDIOINPUTBALANCE) return new RundownAtemAudioInputBalanceWidget(model, this);
-    else if (model.getType() == Rundown::ATEMMACRO) return new RundownAtemMacroWidget(model, this);
     else if (model.getType() == Rundown::PLAYOUTCOMMAND) return new RundownPlayoutCommandWidget(model, this);
     else if (model.getType() == Rundown::FADETOBLACK) return new RundownFadeToBlackWidget(model, this);
-    else if (model.getType() == Rundown::PANASONICPRESET) return new RundownPanasonicPresetWidget(model, this);
     else if (model.getType() == Rundown::PERSPECTIVE) return new RundownPerspectiveWidget(model, this);
     else if (model.getType() == Rundown::ROTATION) return new RundownRotationWidget(model, this);
     else if (model.getType() == Rundown::ANCHOR) return new RundownAnchorWidget(model, this);
@@ -125,8 +89,6 @@ AbstractRundownWidget* RundownItemFactory::createWidget(const LibraryModel& mode
     else if (model.getType() == Rundown::HTML) return new RundownHtmlWidget(model, this);
     else if (model.getType() == Rundown::ROUTECHANNEL) return new RundownRouteChannelWidget(model, this);
     else if (model.getType() == Rundown::ROUTEVIDEOLAYER) return new RundownRouteVideolayerWidget(model, this);
-    else if (model.getType() == Rundown::SONYPRESET) return new RundownSonyPresetWidget(model, this);
-    else if (model.getType() == Rundown::SPYDERPRESET) return new RundownSpyderPresetWidget(model, this);
 
     return NULL;
 }

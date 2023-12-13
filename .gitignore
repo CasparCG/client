@@ -1,11 +1,11 @@
 # /
 /bin/
 /build/
-
-# /lib/
-/lib/libvlc/lib/win32/plugins/plugins.dat
-/lib/libvlc/lib/macx/lib/plugins/plugins.dat
-/lib/libvlc/lib/linux/plugins/plugins.dat
+/build-*
+/.DS_Store
 
 # /src/
 /src/Solution.pro.user
+/src/CMakeSettings.json
+/src/out
+/src/.vs

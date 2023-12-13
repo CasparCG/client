@@ -2,8 +2,6 @@
 #include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "EventManager.h"
-#include "AtemDeviceManager.h"
-#include "TriCasterDeviceManager.h"
 #include "Events/StatusbarEvent.h"
 #include "Events/MediaChangedEvent.h"
 #include "Events/DataChangedEvent.h"
@@ -70,8 +68,6 @@ void LibraryManager::refresh()
     this->thumbnailWorkers.clear();
 
     DeviceManager::getInstance().refresh();
-    AtemDeviceManager::getInstance().refresh();
-    TriCasterDeviceManager::getInstance().refresh();
 
     if (DeviceManager::getInstance().getDeviceCount() == 0)
         return;

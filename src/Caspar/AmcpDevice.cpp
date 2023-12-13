@@ -2,7 +2,7 @@
 
 #include <QtCore/QStringList>
 #include <QtCore/QThread>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtCore/QTimer>
 
 #include <QtNetwork/QTcpSocket>

@@ -59,7 +59,7 @@ void HttpGetCommand::readProperties(boost::property_tree::wptree& pt)
 
     if (pt.count(L"httpdata") > 0)
     {
-        BOOST_FOREACH(const boost::property_tree::wptree::value_type& value, pt.get_child(L"httpdata"))
+        for (const boost::property_tree::wptree::value_type &value : pt.get_child(L"httpdata"))
         {
             this->models.push_back(KeyValueModel(QString::fromStdWString(value.second.get<std::wstring>(L"key")),
                                                  QString::fromStdWString(value.second.get<std::wstring>(L"value"))));

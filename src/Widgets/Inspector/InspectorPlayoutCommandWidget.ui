@@ -109,7 +109,7 @@
  <connections>
   <connection>
    <sender>comboBoxPlayoutCommand</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorPlayoutCommandWidget</receiver>
    <slot>playoutCommandChanged(QString)</slot>
    <hints>

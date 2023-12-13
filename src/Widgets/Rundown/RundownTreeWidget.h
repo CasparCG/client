@@ -29,7 +29,6 @@
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/Rundown/CurrentItemChangedEvent.h"
 
-#include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -86,13 +85,8 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         QMenu* contextMenuMark;
         QMenu* contextMenuMixer;
         QMenu* contextMenuOther;
-        QMenu* contextMenuTriCaster;
         QMenu* contextMenuLibrary;
         QMenu* contextMenuRundown;
-        QMenu* contextMenuAtem;
-        QMenu* contextMenuPanasonic;
-        QMenu* contextMenuSony;
-        QMenu* contextMenuSpyder;
 
         QMap<int, Playout::PlayoutType> gpiBindings;
 
@@ -133,7 +127,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         void configureOscSubscriptions();
         QString colorLookup(const QString& color, bool reverse) const;
 
-        Q_SLOT void addAtemFadeToBlackItem();
         Q_SLOT void addPlayoutCommandItem();
         Q_SLOT void addCustomCommandItem();
         Q_SLOT void addChromaKeyItem();
@@ -163,21 +156,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addOpacityItem();
         Q_SLOT void addSaturationItem();
         Q_SLOT void addVolumeItem();
-        Q_SLOT void addTriggerAutoItem();
-        Q_SLOT void addTriggerTakeItem();
-        Q_SLOT void addSelectInputItem();
-        Q_SLOT void addSelectPresetItem();
-        Q_SLOT void addSelectNetworkSourceItem();
-        Q_SLOT void addPlayMacroItem();
-        Q_SLOT void addAtemPlayMacroItem();
-        Q_SLOT void addAtemTriggerAutoItem();
-        Q_SLOT void addAtemTriggerCutItem();
-        Q_SLOT void addAtemSelectInputItem();
-        Q_SLOT void addAtemKeyerStateItem();
-        Q_SLOT void addAtemVideoFormatItem();
-        Q_SLOT void addAtemAudioInputStateItem();
-        Q_SLOT void addAtemAudioInputGainItem();
-        Q_SLOT void addAtemAudioInputBalanceItem();
         Q_SLOT void addPerspectiveItem();
         Q_SLOT void addRotationItem();
         Q_SLOT void addAnchorItem();
@@ -187,9 +165,6 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void addHtmlItem();
         Q_SLOT void addRouteChannelItem();
         Q_SLOT void addRouteVideolayerItem();
-        Q_SLOT void addPanasonicPresetItem();
-        Q_SLOT void addSonyPresetItem();
-        Q_SLOT void addSpyderPresetItem();
         Q_SLOT void contextMenuColorTriggered(QAction*);
         Q_SLOT void contextMenuRundownTriggered(QAction*);
         Q_SLOT void customContextMenuRequested(const QPoint&);

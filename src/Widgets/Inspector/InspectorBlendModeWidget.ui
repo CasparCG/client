@@ -65,7 +65,7 @@
   </connection>
   <connection>
    <sender>comboBoxBlendMode</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorBlendModeWidget</receiver>
    <slot>blendModeChanged(QString)</slot>
    <hints>

@@ -1,3 +1,11 @@
+CasparCG Client 2.3.0-Dev
+==============================
+- Update to Qt6
+- Remove atem, panasonic, spyder, sony and tricaster integrations
+- Update other dependencies
+- Rework build system to use updated tooling
+
+
 CasparCG Client 2.2.0-20200520
 ==============================
 - FIX: Disable app nap on macOS. (grahamspr86)
