@@ -391,7 +391,7 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
     QString frameFilter = Osc::FILERECORDER_FRAME_FILTER;
     frameFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
                .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
-               .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8(), this->command.getOutput().toUtf8().length())));
+               .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8())));
     this->frameSubscription = new OscSubscription(frameFilter, this);
     QObject::connect(this->frameSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(frameSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -399,7 +399,7 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
     QString fpsFilter = Osc::FILERECORDER_FPS_FILTER;
     fpsFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
              .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
-             .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8(), this->command.getOutput().toUtf8().length())));
+             .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8())));
     this->fpsSubscription = new OscSubscription(fpsFilter, this);
     QObject::connect(this->fpsSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(fpsSubscriptionReceived(const QString&, const QList<QVariant>&)));
@@ -407,7 +407,7 @@ void RundownFileRecorderWidget::configureOscSubscriptions()
     QString pathFilter = Osc::FILERECORDER_PATH_FILTER;
     pathFilter.replace("#IPADDRESS#", QString("%1").arg(DeviceManager::getInstance().getDeviceByName(this->model.getDeviceName())->resolveIpAddress()))
               .replace("#CHANNEL#", QString("%1").arg(this->command.getChannel()))
-              .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8(), this->command.getOutput().toUtf8().length())));
+              .replace("#PORT#", QString("%1").arg(qChecksum(this->command.getOutput().toUtf8())));
     this->pathSubscription = new OscSubscription(pathFilter, this);
     QObject::connect(this->pathSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(pathSubscriptionReceived(const QString&, const QList<QVariant>&)));

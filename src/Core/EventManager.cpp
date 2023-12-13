@@ -36,16 +36,6 @@ void EventManager::fireRepositoryRundownEvent(const RepositoryRundownEvent& even
     emit repositoryRundown(event);
 }
 
-void EventManager::fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent& event)
-{
-    emit tricasterDeviceChanged(event);
-}
-
-void EventManager::fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent& event)
-{
-    emit atemDeviceChanged(event);
-}
-
 void EventManager::fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent& event)
 {
     emit removeItemFromAutoPlayQueue(event);
@@ -415,26 +405,12 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Video", "", "", Rundown::MOVIE, 0, "")));
     else if (type == Rundown::CUSTOMCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Custom Command", "", "", Rundown::CUSTOMCOMMAND, 0, "")));
-    else if (type ==  Rundown::TRICASTERINPUT)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::TRICASTERINPUT, 0, "")));
-    else if (type ==  Rundown::TRICASTERPRESET)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Preset", "", "", Rundown::TRICASTERPRESET, 0, "")));
-    else if (type ==  Rundown::TRICASTERAUTO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::TRICASTERAUTO, 0, "")));
-    else if (type ==  Rundown::TRICASTERTAKE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Take", "", "", Rundown::TRICASTERTAKE, 0, "")));
-    else if (type ==  Rundown::TRICASTERNETSOURCE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Network Source", "", "", Rundown::TRICASTERNETSOURCE, 0, "")));
-    else if (type ==  Rundown::TRICASTERMACRO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::TRICASTERMACRO, 0, "")));
     else if (type ==  Rundown::OSCOUTPUT)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "OSC Output", "", "", Rundown::OSCOUTPUT, 0, "")));
     else if (type ==  Rundown::PLAYOUTCOMMAND)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Playout Command", "", "", Rundown::PLAYOUTCOMMAND, 0, "")));
     else if (type ==  Rundown::FADETOBLACK)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Fade Out", "", "", Rundown::FADETOBLACK, 0, "")));
-    else if (type ==  Rundown::PANASONICPRESET)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Panasonic PTZ Preset", "", "", Rundown::PANASONICPRESET, 0, "")));
     else if (type ==  Rundown::PERSPECTIVE)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Distort", "", "", Rundown::PERSPECTIVE, 0, "")));
     else if (type ==  Rundown::ROTATION)
@@ -455,26 +431,4 @@ void EventManager::fireAddRudnownItemEvent(const QString& type)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Channel", "", "", Rundown::ROUTECHANNEL, 0, "")));
     else if (type ==  Rundown::ROUTEVIDEOLAYER)
         emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Route Videolayer", "", "", Rundown::ROUTEVIDEOLAYER, 0, "")));
-    else if (type ==  Rundown::SONYPRESET)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Sony VISCA Preset", "", "", Rundown::SONYPRESET, 0, "")));
-    else if (type ==  Rundown::SPYDERPRESET)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Spyder Preset", "", "", Rundown::SPYDERPRESET, 0, "")));
-    else if (type ==  Rundown::ATEMINPUT)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Select Input", "", "", Rundown::ATEMINPUT, 0, "")));
-    else if (type ==  Rundown::ATEMAUTO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Auto", "", "", Rundown::ATEMAUTO, 0, "")));
-    else if (type ==  Rundown::ATEMCUT)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Trigger Cut", "", "", Rundown::ATEMCUT, 0, "")));
-    else if (type ==  Rundown::ATEMKEYERSTATE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Keyer State", "", "", Rundown::ATEMKEYERSTATE, 0, "")));
-    else if (type ==  Rundown::ATEMVIDEOFORMAT)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Video Format", "", "", Rundown::ATEMVIDEOFORMAT, 0, "")));
-    else if (type ==  Rundown::ATEMAUDIOINPUTSTATE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Input State", "", "", Rundown::ATEMAUDIOINPUTSTATE, 0, "")));
-    else if (type ==  Rundown::ATEMMACRO)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Play Macro", "", "", Rundown::ATEMMACRO, 0, "")));
-    else if (type ==  Rundown::ATEMAUDIOINPUTBALANCE)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Input Balance", "", "", Rundown::ATEMAUDIOINPUTBALANCE, 0, "")));
-    else if (type ==  Rundown::ATEMAUDIOGAIN)
-        emit addRudnownItem(AddRudnownItemEvent(LibraryModel(0, "Set Audio Gain", "", "", Rundown::ATEMAUDIOGAIN, 0, "")));
 }

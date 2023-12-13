@@ -3,9 +3,7 @@
 #include "../Shared.h"
 #include "ui_InspectorOutputWidget.h"
 
-#include "AtemDevice.h"
 #include "CasparDevice.h"
-#include "TriCasterDevice.h"
 
 #include "Commands/AbstractCommand.h"
 #include "Events/MediaChangedEvent.h"
@@ -37,8 +35,6 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         QString libraryFilter;
 
         void checkEmptyDevice();
-        void checkEmptyAtemDevice();
-        void checkEmptyTriCasterDevice();
         void checkEmptyTarget();
         void blockAllSignals(bool block);
 
@@ -54,12 +50,6 @@ class WIDGETS_EXPORT InspectorOutputWidget : public QWidget, Ui::InspectorOutput
         Q_SLOT void videolayerChanged(int);
         Q_SLOT void delayChanged(int);
         Q_SLOT void durationChanged(int);
-        Q_SLOT void tricasterDeviceAdded(TriCasterDevice&);
-        Q_SLOT void tricasterDeviceRemoved();
-        Q_SLOT void tricasterDeviceNameChanged(QString);
-        Q_SLOT void atemDeviceAdded(AtemDevice&);
-        Q_SLOT void atemDeviceRemoved();
-        Q_SLOT void atemDeviceNameChanged(QString);
         Q_SLOT void remoteTriggerIdChanged(QString);
         Q_SLOT void mediaChanged(const MediaChangedEvent&);
         Q_SLOT void templateChanged(const TemplateChangedEvent&);

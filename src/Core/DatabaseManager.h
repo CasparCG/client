@@ -19,27 +19,8 @@
 #include "Models/FormatModel.h"
 #include "Models/PresetModel.h"
 #include "Models/OscOutputModel.h"
-#include "Models/Atem/AtemDeviceModel.h"
-#include "Models/Atem/AtemAudioInputModel.h"
-#include "Models/Atem/AtemAudioInputStateModel.h"
-#include "Models/Atem/AtemSwitcherModel.h"
-#include "Models/Atem/AtemStepModel.h"
-#include "Models/Atem/AtemMixerStepModel.h"
-#include "Models/Atem/AtemAutoTransitionModel.h"
-#include "Models/Atem/AtemKeyerModel.h"
-#include "Models/Atem/AtemVideoFormatModel.h"
-#include "Models/TriCaster/TriCasterProductModel.h"
-#include "Models/TriCaster/TriCasterInputModel.h"
-#include "Models/TriCaster/TriCasterStepModel.h"
-#include "Models/TriCaster/TriCasterAutoSpeedModel.h"
-#include "Models/TriCaster/TriCasterAutoTransitionModel.h"
-#include "Models/TriCaster/TriCasterPresetModel.h"
-#include "Models/TriCaster/TriCasterSourceModel.h"
-#include "Models/TriCaster/TriCasterSwitcherModel.h"
-#include "Models/TriCaster/TriCasterDeviceModel.h"
-#include "Models/TriCaster/TriCasterNetworkTargetModel.h"
 
-#include <QtCore/QMutex>
+#include <QtCore/QRecursiveMutex>
 #include <QtCore/QObject>
 
 class CORE_EXPORT DatabaseManager
@@ -80,35 +61,6 @@ class CORE_EXPORT DatabaseManager
         OscOutputModel getOscOutputByAddress(const QString& address);
         void updateOscOutput(const OscOutputModel& model);
         void deleteOscOutput(int id);
-
-        QList<AtemStepModel> getAtemStep();
-        QList<AtemAudioInputStateModel> getAtemAudioInputState();
-        QList<AtemKeyerModel> getAtemKeyer();
-        QList<AtemSwitcherModel> getAtemSwitcher();
-        QList<AtemVideoFormatModel> getAtemVideoFormat();
-        QList<AtemAutoTransitionModel> getAtemAutoTransition();
-        QList<AtemDeviceModel> getAtemDevice();
-        AtemDeviceModel getAtemDeviceByName(const QString& name);
-        AtemDeviceModel getAtemDeviceByAddress(const QString& address);
-        void insertAtemDevice(const AtemDeviceModel& model);
-        void updateAtemDevice(const AtemDeviceModel& model);
-        void deleteAtemDevice(int id);
-
-        QList<TriCasterProductModel> getTriCasterProduct();
-        QList<TriCasterInputModel> getTriCasterInput();
-        QList<TriCasterStepModel> getTriCasterStep();
-        QList<TriCasterAutoSpeedModel> getTriCasterAutoSpeed();
-        QList<TriCasterAutoTransitionModel> getTriCasterAutoTransition();
-        QList<TriCasterPresetModel> getTriCasterPreset();
-        QList<TriCasterSourceModel> getTriCasterSource();
-        QList<TriCasterSwitcherModel> getTriCasterSwitcher();
-        QList<TriCasterDeviceModel> getTriCasterDevice();
-        QList<TriCasterNetworkTargetModel> getTriCasterNetworkTarget();
-        TriCasterDeviceModel getTriCasterDeviceByName(const QString& name);
-        TriCasterDeviceModel getTriCasterDeviceByAddress(const QString& address);
-        void insertTriCasterDevice(const TriCasterDeviceModel& model);
-        void updateTriCasterDevice(const TriCasterDeviceModel& model);
-        void deleteTriCasterDevice(int id);
 
         QList<GpiPortModel> getGpiPorts();
         QList<GpoPortModel> getGpoPorts();
@@ -152,7 +104,7 @@ class CORE_EXPORT DatabaseManager
         void deleteThumbnails();
 
     private:
-        QMutex mutex;
+        QRecursiveMutex mutex;
 
         void createDatabase();
         void upgradeDatabase();

@@ -349,7 +349,7 @@ void CasparDevice::startFileRecorder(int channel, const QString& filename, const
 {
     writeMessage(QString("ADD %1-%2 FILE \"%3\" %4 %5")
                  .arg(channel)
-                 .arg(QString("%1").arg(qChecksum(filename.toUtf8(), filename.length())))
+                 .arg(QString("%1").arg(qChecksum(filename.toUtf8())))
                  .arg(filename)
                  .arg((preset != "") ? preset : "")
                  .arg((withAlpha == true) ? "SEPARATE_KEY" : ""));
@@ -359,7 +359,7 @@ void CasparDevice::stopFileRecorder(int channel, const QString& filename)
 {
     writeMessage(QString("REMOVE %1-%2 FILE")
                  .arg(channel)
-                 .arg(QString("%1").arg(qChecksum(filename.toUtf8(), filename.length()))));
+                 .arg(QString("%1").arg(qChecksum(filename.toUtf8()))));
 }
 
 void CasparDevice::startStream(int channel, int port, int quality, bool key, int width, int height)

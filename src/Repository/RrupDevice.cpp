@@ -2,7 +2,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QStringList>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 #include <QtCore/QUrl>

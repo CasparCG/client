@@ -1,31 +1,22 @@
 #include "SettingsDialog.h"
 #include "DeviceDialog.h"
-#include "AtemDeviceDialog.h"
-#include "TriCasterDeviceDialog.h"
 #include "OscOutputDialog.h"
 #include "ImportDeviceDialog.h"
-#include "ImportAtemDeviceDialog.h"
-#include "ImportTriCasterDeviceDialog.h"
 
 #include "DatabaseManager.h"
 #include "GpiManager.h"
 #include "EventManager.h"
 #include "Events/OscOutputChangedEvent.h"
-#include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Library/RefreshLibraryEvent.h"
 #include "Events/Library/AutoRefreshLibraryEvent.h"
 #include "Events/Rundown/SaveRundownEvent.h"
-#include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/ConfigurationModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/GpiModel.h"
-#include "Models/TriCaster/TriCasterProductModel.h"
-#include "Models/TriCaster/TriCasterDeviceModel.h"
 #include "Models/DeviceModel.h"
 #include "Models/OscOutputModel.h"
 
 #include <QtCore/QTimer>
-#include <QtCore/QRegExp>
 
 #include <QtGui/QIcon>
 
@@ -143,19 +134,14 @@ SettingsDialog::SettingsDialog(QWidget* parent)
         this->lineEditOscInputWebSocketPort->setText(oscWebSocketPort);
 
     loadDevice();
-    loadTriCasterDevice();
-    loadAtemDevice();
     loadGpi();
     loadOscOutput();
-    loadTriCasterProduct();
 
-    this->comboBoxTriCasterProduct->setCurrentIndex(this->comboBoxTriCasterProduct->findText(DatabaseManager::getInstance().getConfigurationByName("TriCasterProduct").getValue()));
 }
 
 void SettingsDialog::blockAllSignals(bool block)
 {
     this->comboBoxLogLevel->blockSignals(block);
-    this->comboBoxTriCasterProduct->blockSignals(block);
 }
 
 void SettingsDialog::loadDevice()
@@ -179,7 +165,7 @@ void SettingsDialog::loadDevice()
         treeItem->setText(6, model.getUsername());
 
         QString password = model.getPassword();
-        treeItem->setText(7, password.replace(QRegExp("."), "*"));
+        treeItem->setText(7, password.replace(QRegularExpression("."), "*"));
 
         treeItem->setText(8, model.getVersion());
         treeItem->setText(9, model.getShadow());
@@ -199,63 +185,6 @@ void SettingsDialog::loadDevice()
     checkEmptyDeviceList();
 }
 
-void SettingsDialog::loadTriCasterDevice()
-{
-    this->treeWidgetTriCasterDevice->clear();
-    this->treeWidgetTriCasterDevice->headerItem()->setText(1, "");
-    this->treeWidgetTriCasterDevice->setColumnHidden(0, true);
-    this->treeWidgetTriCasterDevice->setColumnWidth(1, 25);
-    this->treeWidgetTriCasterDevice->setColumnWidth(4, 50);
-
-    QList<TriCasterDeviceModel> models = DatabaseManager::getInstance().getTriCasterDevice();
-    foreach (TriCasterDeviceModel model, models)
-    {
-        QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetTriCasterDevice);
-        treeItem->setText(0, QString("%1").arg(model.getId()));
-        treeItem->setIcon(1, QIcon(":/Graphics/Images/ServerSmall.png"));
-        treeItem->setText(2, model.getName());
-        treeItem->setText(3, model.getAddress());
-        treeItem->setText(4, QString("%1").arg(model.getPort()));
-        treeItem->setText(5, model.getDescription());
-    }
-
-    checkEmptyTriCasterDeviceList();
-}
-
-void SettingsDialog::loadTriCasterProduct()
-{
-    blockAllSignals(true);
-
-    this->comboBoxTriCasterProduct->clear();
-
-    QList<TriCasterProductModel> models = DatabaseManager::getInstance().getTriCasterProduct();
-    foreach (TriCasterProductModel model, models)
-        this->comboBoxTriCasterProduct->addItem(model.getName());
-
-    blockAllSignals(false);
-}
-
-void SettingsDialog::loadAtemDevice()
-{
-    this->treeWidgetAtemDevice->clear();
-    this->treeWidgetAtemDevice->headerItem()->setText(1, "");
-    this->treeWidgetAtemDevice->setColumnHidden(0, true);
-    this->treeWidgetAtemDevice->setColumnWidth(1, 25);
-    this->treeWidgetAtemDevice->setColumnWidth(4, 50);
-
-    QList<AtemDeviceModel> models = DatabaseManager::getInstance().getAtemDevice();
-    foreach (AtemDeviceModel model, models)
-    {
-        QTreeWidgetItem* treeItem = new QTreeWidgetItem(this->treeWidgetAtemDevice);
-        treeItem->setText(0, QString("%1").arg(model.getId()));
-        treeItem->setIcon(1, QIcon(":/Graphics/Images/ServerSmall.png"));
-        treeItem->setText(2, model.getName());
-        treeItem->setText(3, model.getAddress());
-        treeItem->setText(4, model.getDescription());
-    }
-
-    checkEmptyAtemDeviceList();
-}
 
 void SettingsDialog::loadGpi()
 {
@@ -341,22 +270,6 @@ void SettingsDialog::checkEmptyDeviceList()
         this->treeWidgetDevice->setStyleSheet("");
 }
 
-void SettingsDialog::checkEmptyTriCasterDeviceList()
-{
-    if (this->treeWidgetTriCasterDevice->invisibleRootItem()->childCount() == 0)
-        this->treeWidgetTriCasterDevice->setStyleSheet("border-color: firebrick;");
-    else
-        this->treeWidgetTriCasterDevice->setStyleSheet("");
-}
-
-void SettingsDialog::checkEmptyAtemDeviceList()
-{
-    if (this->treeWidgetAtemDevice->invisibleRootItem()->childCount() == 0)
-        this->treeWidgetAtemDevice->setStyleSheet("border-color: firebrick;");
-    else
-        this->treeWidgetAtemDevice->setStyleSheet("");
-}
-
 void SettingsDialog::checkEmptyOscOutputList()
 {
     if (this->treeWidgetOscOutput->invisibleRootItem()->childCount() == 0)
@@ -396,62 +309,6 @@ void SettingsDialog::showImportDeviceDialog()
     }
 }
 
-void SettingsDialog::showImportTriCasterDeviceDialog()
-{
-    QString path("./TriCaster.xml");
-
-    QFile file(path);
-    if (!file.exists())
-        path = QFileDialog::getOpenFileName(this, "Import TriCaster Mixers", "", "TriCaster (*.xml)");
-
-    if (!path.isEmpty())
-    {
-        ImportTriCasterDeviceDialog* dialog = new ImportTriCasterDeviceDialog(this);
-        dialog->setImportFile(path);
-        if (dialog->exec() == QDialog::Accepted)
-        {
-            QList<TriCasterDeviceModel> models = dialog->getDevice();
-            foreach (TriCasterDeviceModel model, models)
-            {
-                DatabaseManager::getInstance().insertTriCasterDevice(TriCasterDeviceModel(0, model.getName(), model.getAddress(),
-                                                                                          model.getPort(), model.getDescription()));
-            }
-
-            loadTriCasterDevice();
-
-            EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-        }
-    }
-}
-
-void SettingsDialog::showImportAtemDeviceDialog()
-{
-    QString path("./ATEM.xml");
-
-    QFile file(path);
-    if (!file.exists())
-        path = QFileDialog::getOpenFileName(this, "Import ATEM Mixers", "", "ATEM (*.xml)");
-
-    if (!path.isEmpty())
-    {
-        ImportAtemDeviceDialog* dialog = new ImportAtemDeviceDialog(this);
-        dialog->setImportFile(path);
-        if (dialog->exec() == QDialog::Accepted)
-        {
-            QList<AtemDeviceModel> models = dialog->getDevice();
-            foreach (AtemDeviceModel model, models)
-            {
-                DatabaseManager::getInstance().insertAtemDevice(AtemDeviceModel(0, model.getName(), model.getAddress(),
-                                                                                model.getDescription()));
-            }
-
-            loadAtemDevice();
-
-            EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-        }
-    }
-}
-
 void SettingsDialog::showAddDeviceDialog()
 {
     DeviceDialog* dialog = new DeviceDialog(this);
@@ -464,34 +321,6 @@ void SettingsDialog::showAddDeviceDialog()
                                                                 dialog->getLockedChannel()));
 
         loadDevice();
-
-        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-    }
-}
-
-void SettingsDialog::showAddTriCasterDeviceDialog()
-{
-    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        DatabaseManager::getInstance().insertTriCasterDevice(TriCasterDeviceModel(0, dialog->getName(), dialog->getAddress(),
-                                                             dialog->getPort().toInt(), dialog->getDescription()));
-
-        loadTriCasterDevice();
-
-        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-    }
-}
-
-void SettingsDialog::showAddAtemDeviceDialog()
-{
-    AtemDeviceDialog* dialog = new AtemDeviceDialog(this);
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        DatabaseManager::getInstance().insertAtemDevice(AtemDeviceModel(0, dialog->getName(), dialog->getAddress(),
-                                                        dialog->getDescription()));
-
-        loadAtemDevice();
 
         EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
     }
@@ -520,32 +349,6 @@ void SettingsDialog::removeDevice()
     delete this->treeWidgetDevice->currentItem();
 
     loadDevice();
-
-    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-}
-
-void SettingsDialog::removeTriCasterDevice()
-{
-    if (this->treeWidgetTriCasterDevice->selectedItems().count() == 0)
-        return;
-
-    DatabaseManager::getInstance().deleteTriCasterDevice(this->treeWidgetTriCasterDevice->currentItem()->text(0).toInt());
-    delete this->treeWidgetTriCasterDevice->currentItem();
-
-    loadTriCasterDevice();
-
-    EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-}
-
-void SettingsDialog::removeAtemDevice()
-{
-    if (this->treeWidgetAtemDevice->selectedItems().count() == 0)
-        return;
-
-    DatabaseManager::getInstance().deleteAtemDevice(this->treeWidgetAtemDevice->currentItem()->text(0).toInt());
-    delete this->treeWidgetAtemDevice->currentItem();
-
-    loadAtemDevice();
 
     EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
 }
@@ -586,43 +389,6 @@ void SettingsDialog::deviceItemDoubleClicked(QTreeWidgetItem* current, int index
     }
 }
 
-void SettingsDialog::tricasterDeviceItemDoubleClicked(QTreeWidgetItem* current, int index)
-{
-    Q_UNUSED(index);
-
-    TriCasterDeviceModel model = DatabaseManager::getInstance().getTriCasterDeviceByAddress(current->text(3));
-
-    TriCasterDeviceDialog* dialog = new TriCasterDeviceDialog(this);
-    dialog->setDeviceModel(model);
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        DatabaseManager::getInstance().updateTriCasterDevice(TriCasterDeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
-                                                                                  dialog->getPort().toInt(), dialog->getDescription()));
-
-        loadTriCasterDevice();
-
-        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-    }
-}
-
-void SettingsDialog::atemDeviceItemDoubleClicked(QTreeWidgetItem* current, int index)
-{
-    Q_UNUSED(index);
-
-    AtemDeviceModel model = DatabaseManager::getInstance().getAtemDeviceByAddress(current->text(3));
-
-    AtemDeviceDialog* dialog = new AtemDeviceDialog(this);
-    dialog->setDeviceModel(model);
-    if (dialog->exec() == QDialog::Accepted)
-    {
-        DatabaseManager::getInstance().updateAtemDevice(AtemDeviceModel(model.getId(), dialog->getName(), dialog->getAddress(),
-                                                                        dialog->getDescription()));
-
-        loadAtemDevice();
-
-        EventManager::getInstance().fireRefreshLibraryEvent(RefreshLibraryEvent());
-    }
-}
 
 void SettingsDialog::oscOutputItemDoubleClicked(QTreeWidgetItem* current, int index)
 {
@@ -916,13 +682,6 @@ void SettingsDialog::delayTypeChanged(QString delayType)
 void SettingsDialog::logLevelChanged(int index)
 {
     DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "LogLevel", this->comboBoxLogLevel->itemData(index).toString()));
-}
-
-void SettingsDialog::tricasterProductChanged(QString product)
-{
-    Q_UNUSED(product);
-
-    DatabaseManager::getInstance().updateConfiguration(ConfigurationModel(0, "TriCasterProduct", this->comboBoxTriCasterProduct->currentText()));
 }
 
 void SettingsDialog::themeChanged(QString theme)

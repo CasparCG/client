@@ -164,29 +164,32 @@ void LiveWidget::startStream()
 {
     if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
     {
-        QStringList arguments;
-        arguments.append("--ignore-config");
-        arguments.append("--deinterlace=-1");
-        arguments.append("--deinterlace-mode=yadif");
-        arguments.append("--video-filter=deinterlace");
-        arguments.append(QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()));
-        arguments.append(QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue()));
-
         bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
-        if (disableAudioInStream)
-            arguments.append("--no-audio");
+        //if (disableAudioInStream)
+          //  arguments.append("--no-audio");
 
+        /*
         QString args;
         foreach (QString value, arguments)
             args += value + " ";
 
         qDebug("Using live arguments: %s", qPrintable(args.trimmed()));
+        */
 
-        char* vlcArguments[arguments.count()];
-        for (int i = 0; i < arguments.count(); i++)
-            vlcArguments[i] = (char*)qstrdup(arguments.at(i).toUtf8().data());
+        char* vlcArguments[] = {
+            qstrdup("--ignore-config"),
+            qstrdup("--deinterlace=-1"),
+            qstrdup("--deinterlace-mode=yadif"),
+            qstrdup("--video-filter=deinterlace"),
+            QString("--verbose=%1").arg(DatabaseManager::getInstance().getConfigurationByName("LogLevel").getValue()).toUtf8().data(),
+            QString("--network-caching=%1").arg(DatabaseManager::getInstance().getConfigurationByName("NetworkCache").getValue()).toUtf8().data(),
+            qstrdup("--no-audio"),
+        };
+        int len = 6;
+        if (disableAudioInStream)
+            len += 1;
 
-        this->vlcInstance = libvlc_new(sizeof(vlcArguments) / sizeof(vlcArguments[0]), vlcArguments);
+        this->vlcInstance = libvlc_new(len, vlcArguments);
         if (this->vlcInstance)
         {
             this->vlcMediaPlayer = libvlc_media_player_new(this->vlcInstance);

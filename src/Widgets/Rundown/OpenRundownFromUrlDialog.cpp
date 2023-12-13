@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include <QtCore/QDebug>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtCore/QTextStream>
 
 #include <QtGui/QCloseEvent>

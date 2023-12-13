@@ -155,7 +155,7 @@ void TemplateCommand::readProperties(boost::property_tree::wptree& pt)
 
     if (pt.count(L"templatedata") > 0)
     {
-        BOOST_FOREACH(const boost::property_tree::wptree::value_type& value, pt.get_child(L"templatedata"))
+        for (const boost::property_tree::wptree::value_type &value : pt.get_child(L"templatedata"))
         {
             this->models.push_back(KeyValueModel(QString::fromStdWString(value.second.get<std::wstring>(L"id")),
                                                  QString::fromStdWString(value.second.get<std::wstring>(L"value"))));

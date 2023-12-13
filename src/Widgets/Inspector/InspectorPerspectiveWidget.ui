@@ -393,7 +393,7 @@
   </connection>
   <connection>
    <sender>comboBoxTween</sender>
-   <signal>currentIndexChanged(QString)</signal>
+   <signal>currentTextChanged(QString)</signal>
    <receiver>InspectorPerspectiveWidget</receiver>
    <slot>tweenChanged(QString)</slot>
    <hints>

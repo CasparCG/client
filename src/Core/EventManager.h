@@ -20,7 +20,6 @@
 #include "Events/ExportPresetMenuEvent.h"
 #include "Events/SaveAsPresetMenuEvent.h"
 #include "Events/ToggleFullscreenEvent.h"
-#include "Events/Atem/AtemDeviceChangedEvent.h"
 #include "Events/Inspector/AddTemplateDataEvent.h"
 #include "Events/Inspector/AutoPlayChangedEvent.h"
 #include "Events/Inspector/ChannelChangedEvent.h"
@@ -71,7 +70,6 @@
 #include "Events/Rundown/InsertRepositoryChangesEvent.h"
 #include "Events/Rundown/ReloadRundownMenuEvent.h"
 #include "Events/Rundown/CurrentItemChangedEvent.h"
-#include "Events/TriCaster/TriCasterDeviceChangedEvent.h"
 #include "Models/BlendModeModel.h"
 #include "Models/LibraryModel.h"
 
@@ -95,8 +93,6 @@ class CORE_EXPORT EventManager : public QObject
         Q_SIGNAL void clearDelayedCommands();
         Q_SIGNAL void currentItemChanged(const CurrentItemChangedEvent&);
         Q_SIGNAL void durationChanged(const DurationChangedEvent&);
-        Q_SIGNAL void tricasterDeviceChanged(const TriCasterDeviceChangedEvent&);
-        Q_SIGNAL void atemDeviceChanged(const AtemDeviceChangedEvent&);
         Q_SIGNAL void removeItemFromAutoPlayQueue(const RemoveItemFromAutoPlayQueueEvent&);
         Q_SIGNAL void clearCurrentPlayingItem(const ClearCurrentPlayingItemEvent&);
         Q_SIGNAL void executePlayoutCommand(const ExecutePlayoutCommandEvent&);
@@ -168,8 +164,6 @@ class CORE_EXPORT EventManager : public QObject
         void fireDurationChangedEvent(const DurationChangedEvent&);
         void fireReloadRundownMenuEvent(const ReloadRundownMenuEvent&);
         void fireRepositoryRundownEvent(const RepositoryRundownEvent&);
-        void fireTriCasterDeviceChangedEvent(const TriCasterDeviceChangedEvent&);
-        void fireAtemDeviceChangedEvent(const AtemDeviceChangedEvent&);
         void fireRemoveItemFromAutoPlayQueueEvent(const RemoveItemFromAutoPlayQueueEvent&);
         void fireClearCurrentPlayingItemEvent(const ClearCurrentPlayingItemEvent&);
         void fireExecutePlayoutCommandEvent(const ExecutePlayoutCommandEvent&);

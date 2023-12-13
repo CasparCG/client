@@ -3,8 +3,6 @@
 #include "Shared.h"
 #include "ui_OscOutputDialog.h"
 
-#include "TriCasterDevice.h"
-
 #include "Models/OscOutputModel.h"
 
 #include <QtCore/QList>

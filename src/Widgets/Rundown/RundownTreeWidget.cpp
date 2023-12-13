@@ -45,7 +45,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDir>
 #include <QtCore/QPoint>
-#include <QtCore/QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 #include <QtCore/QElapsedTimer>
 #include <QtCore/QTextStream>
 #include <QtCore/QCryptographicHash>
@@ -54,7 +54,7 @@
 #include <QtGui/QIcon>
 #include <QtGui/QKeyEvent>
 
-#include <QtWidgets/QAction>
+#include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QTreeWidgetItem>
@@ -159,62 +159,12 @@ void RundownTreeWidget::setupMenus()
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SeparatorSmall.png"), "Separator", this, SLOT(addSeparatorItem()));
     this->contextMenuOther->addAction(QIcon(":/Graphics/Images/SolidColorSmall.png"), "Solid Color", this, SLOT(addSolidColorItem()));
 
-    this->contextMenuTriCaster = new QMenu(this);
-    this->contextMenuTriCaster->setObjectName("contextMenuTriCaster");
-    this->contextMenuTriCaster->setTitle("TriCaster");
-    //this->contextMenuTriCaster->setIcon(QIcon(":/Graphics/Images/TriCaster.png"));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/PlayMacroSmall.png"), "Play Macro", this, SLOT(addPlayMacroItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectInputSmall.png"), "Select Input", this, SLOT(addSelectInputItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectNetworkSourceSmall.png"), "Select Network Source", this, SLOT(addSelectNetworkSourceItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/SelectPresetSmall.png"), "Select Preset", this, SLOT(addSelectPresetItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addTriggerAutoItem()));
-    this->contextMenuTriCaster->addAction(QIcon(":/Graphics/Images/TriCaster/TriggerTakeSmall.png"), "Trigger Take", this, SLOT(addTriggerTakeItem()));
-
-    this->contextMenuAtem = new QMenu(this);
-    this->contextMenuAtem->setObjectName("contextMenuAtem");
-    this->contextMenuAtem->setTitle("ATEM");
-    //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Atem.png"));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/FadeToBlackSmall.png"), "Fade to Black", this, SLOT(addAtemFadeToBlackItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/PlayMacroSmall.png"), "Play Macro", this, SLOT(addAtemPlayMacroItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/SelectInputSmall.png"), "Select Input", this, SLOT(addAtemSelectInputItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioGainSmall.png"), "Set Audio Gain", this, SLOT(addAtemAudioInputGainItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioInputStateSmall.png"), "Set Audio Input State", this, SLOT(addAtemAudioInputStateItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/AudioInputBalanceSmall.png"), "Set Audio Input Balance", this, SLOT(addAtemAudioInputBalanceItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/KeyerStateSmall.png"), "Set Keyer State", this, SLOT(addAtemKeyerStateItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/VideoFormatSmall.png"), "Set Video Format", this, SLOT(addAtemVideoFormatItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerAutoSmall.png"), "Trigger Auto", this, SLOT(addAtemTriggerAutoItem()));
-    this->contextMenuAtem->addAction(QIcon(":/Graphics/Images/Atem/TriggerCutSmall.png"), "Trigger Cut", this, SLOT(addAtemTriggerCutItem()));
-
-    this->contextMenuPanasonic = new QMenu(this);
-    this->contextMenuPanasonic->setObjectName("contextMenuPanasonic");
-    this->contextMenuPanasonic->setTitle("Panasonic");
-    //this->contextMenuAtem->setIcon(QIcon(":/Graphics/Images/Panasonic.png"));
-    this->contextMenuPanasonic->addAction(QIcon(":/Graphics/Images/Panasonic/PanasonicPresetSmall.png"), "Panasonic PTZ Preset", this, SLOT(addPanasonicPresetItem()));
-
-    this->contextMenuSony = new QMenu(this);
-    this->contextMenuSony->setObjectName("contextMenuSony");
-    this->contextMenuSony->setTitle("Sony");
-    //this->contextMenuSony->setIcon(QIcon(":/Graphics/Images/Sony.png"));
-    this->contextMenuSony->addAction(QIcon(":/Graphics/Images/Sony/SonyPresetSmall.png"), "Sony VISCA Preset", this, SLOT(addSonyPresetItem()));
-
-    this->contextMenuSpyder = new QMenu(this);
-    this->contextMenuSpyder->setObjectName("contextMenuSpyder");
-    this->contextMenuSpyder->setTitle("Spyder");
-    //this->contextMenuSpyder->setIcon(QIcon(":/Graphics/Images/Spyder.png"));
-    this->contextMenuSpyder->addAction(QIcon(":/Graphics/Images/Spyder/SpyderPresetSmall.png"), "Spyder Preset", this, SLOT(addSpyderPresetItem()));
-
     this->contextMenuTools = new QMenu(this);
     this->contextMenuTools->setTitle("Tools");
     //this->contextMenuTools->setIcon(QIcon(":/Graphics/Images/New.png"));
     this->contextMenuTools->addMenu(this->contextMenuLibrary);
     this->contextMenuTools->addMenu(this->contextMenuMixer);
     this->contextMenuTools->addMenu(this->contextMenuOther);
-    this->contextMenuTools->addSeparator();
-    this->contextMenuTools->addMenu(this->contextMenuAtem);
-    this->contextMenuTools->addMenu(this->contextMenuPanasonic);
-    this->contextMenuTools->addMenu(this->contextMenuSony);
-    this->contextMenuTools->addMenu(this->contextMenuSpyder);
-    this->contextMenuTools->addMenu(this->contextMenuTriCaster);
 
     this->contextMenuMark = new QMenu(this);
     this->contextMenuMark->setTitle("Mark Item");
@@ -611,7 +561,7 @@ void RundownTreeWidget::openRundown(const QString& path)
         this->activeRundown = path;
 
         QTextStream stream(&file);
-        stream.setCodec(QTextCodec::codecForName("UTF-8"));
+        stream.setEncoding(QStringConverter::Utf8);
 
         // Save the latest value stored in the clipboard.
         QString latest = qApp->clipboard()->text();
@@ -1458,35 +1408,6 @@ void RundownTreeWidget::addSeparatorItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SEPARATOR);
 }
 
-void RundownTreeWidget::addTriggerAutoItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERAUTO);
-}
-
-void RundownTreeWidget::addTriggerTakeItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERTAKE);
-}
-
-void RundownTreeWidget::addPlayMacroItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERMACRO);
-}
-
-void RundownTreeWidget::addSelectInputItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERINPUT);
-}
-
-void RundownTreeWidget::addSelectPresetItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERPRESET);
-}
-
-void RundownTreeWidget::addSelectNetworkSourceItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::TRICASTERNETSOURCE);
-}
 
 void RundownTreeWidget::addGridItem()
 {
@@ -1588,70 +1509,6 @@ void RundownTreeWidget::addVideoItem()
     EventManager::getInstance().fireAddRudnownItemEvent(Rundown::MOVIE);
 }
 
-void RundownTreeWidget::addAtemKeyerStateItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMKEYERSTATE);
-}
-
-void RundownTreeWidget::addAtemSelectInputItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMINPUT);
-}
-
-void RundownTreeWidget::addAtemTriggerAutoItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUTO);
-}
-
-void RundownTreeWidget::addAtemFadeToBlackItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMFADETOBLACK);
-}
-
-void RundownTreeWidget::addAtemPlayMacroItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMMACRO);
-}
-
-void RundownTreeWidget::addAtemTriggerCutItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMCUT);
-}
-
-void RundownTreeWidget::addAtemVideoFormatItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMVIDEOFORMAT);
-}
-
-void RundownTreeWidget::addAtemAudioInputStateItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUDIOINPUTSTATE);
-}
-
-void RundownTreeWidget::addAtemAudioInputGainItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUDIOGAIN);
-}
-
-void RundownTreeWidget::addAtemAudioInputBalanceItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::ATEMAUDIOINPUTBALANCE);
-}
-
-void RundownTreeWidget::addPanasonicPresetItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::PANASONICPRESET);
-}
-
-void RundownTreeWidget::addSonyPresetItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SONYPRESET);
-}
-
-void RundownTreeWidget::addSpyderPresetItem()
-{
-    EventManager::getInstance().fireAddRudnownItemEvent(Rundown::SPYDERPRESET);
-}
 
 void RundownTreeWidget::saveAsPreset()
 {

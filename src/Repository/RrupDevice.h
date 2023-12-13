@@ -3,7 +3,7 @@
 #include "Shared.h"
 
 #include <QtCore/QObject>
-#include <QtCore/QTextDecoder>
+#include <QtCore5Compat/QTextDecoder>
 
 #include <QtNetwork/QTcpSocket>
 #include <QtNetwork/QAbstractSocket>

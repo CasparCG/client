@@ -1,8 +1,9 @@
 #pragma once
 
+#ifndef _MSC_VER
 #pragma GCC diagnostic ignored "-Wformat-security"
 #pragma GCC diagnostic ignored "-Wunused-variable"
-#pragma GCC diagnostic ignored "-Winconsistent-missing-override"
+#endif
 
 #include <QtCore/QByteArray>
 #include <QtCore/QDebug>
@@ -10,45 +11,6 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QList>
-
-namespace Atem
-{
-    static const int DEFAULT_SPEED = 12;
-    static const QString DEFAULT_MACRO = "0";
-    static const QString DEFAULT_TRANSITION = "0";
-    static const QString DEFAULT_INPUT = "0";
-    static const QString DEFAULT_SWITCHER = "prev";
-    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-    static const QString DEFAULT_KEYER = "0";
-    static const bool DEFAULT_KEYER_STATE = false;
-    static const QString DEFAULT_VIDEO_FORMAT = "4";
-    static const QString DEFAULT_AUDIO_INPUT = "1";
-    static const QString DEFAULT_AUDIO_INPUT_STATE = "0";
-    static const float DEFAULT_AUDIO_INPUT_BALANCE = 0.0f;
-    static const float DEFAULT_AUDIO_GAIN = 0.0f;
-    static const QString DEFAULT_MIXER_STEP = "0";
-}
-
-namespace Panasonic
-{
-    static const QString DEFAULT_ADDRESS = "";
-    static const int DEFAULT_PRESET = 1;
-    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-}
-
-namespace Sony
-{
-    static const QString DEFAULT_ADDRESS = "";
-    static const int DEFAULT_PRESET = 1;
-    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-}
-
-namespace Spyder
-{
-    static const QString DEFAULT_ADDRESS = "";
-    static const int DEFAULT_PRESET = 1;
-    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
-}
 
 namespace Http
 {
@@ -61,21 +23,6 @@ namespace Stream
     static const int DEFAULT_PORT = 9250;
     static const int COMPACT_WIDTH = 288;
     static const int COMPACT_HEIGHT = 162;
-}
-
-namespace TriCaster
-{
-    static const int DEFAULT_PORT = 5950;
-    static const QString DEFAULT_SPEED = "";
-    static const QString DEFAULT_TRANSITION = "";
-    static const QString DEFAULT_PRESET = "0";
-    static const QString DEFAULT_SOURCE = "audiomixer";
-    static const QString DEFAULT_INPUT = "ddr";
-    static const QString DEFAULT_SWITCHER = "prev";
-    static const QString DEFAULT_NETWORK_SOURCE = "";
-    static const QString DEFAULT_NETWORK_TARGET = "net";
-    static const QString DEFAULT_MACRO = "";
-    static const bool DEFAULT_TRIGGER_ON_NEXT = false;
 }
 
 namespace Repository
@@ -233,9 +180,7 @@ namespace Color
     static const QString DEFAULT_CLEAR_OUTPUT_COLOR = "Goldenrod";
     static const QString DEFAULT_COLOR_PRODUCER_COLOR = "Goldenrod";
     static const QString DEFAULT_MIXER_COLOR = "Sienna";
-    static const QString DEFAULT_TRICASTER_COLOR = "DarkOliveGreen";
-    static const QString DEFAULT_ATEM_COLOR = "DarkOliveGreen";
-    static const QString DEFAULT_PANASONIC_COLOR = "DarkOliveGreen";
+    static const QString DEFAULT_HTTP_COLOR = "DarkOliveGreen";
     static const QString DEFAULT_PRODUCER_COLOR = "SeaGreen";
     static const QString DEFAULT_TEMPLATE_COLOR = "OliveDrab";
     static const QString DEFAULT_SEPARATOR_COLOR = "Maroon";
@@ -456,26 +401,7 @@ namespace Rundown
     static const QString PLAYOUTCOMMAND = "PLAYOUTCOMMAND";
     static const QString FADETOBLACK = "FADETOBLACK";
     static const QString CHROMAKEY = "CHROMAKEY";
-    static const QString TRICASTERAUTO = "TRICASTERAUTO";
-    static const QString TRICASTERTAKE = "TRICASTERTAKE";
-    static const QString TRICASTERINPUT = "TRICASTERINPUT";
-    static const QString TRICASTERPRESET = "TRICASTERPRESET";
-    static const QString TRICASTERNETSOURCE = "TRICASTERNETSOURCE";
-    static const QString TRICASTERMACRO = "TRICASTERMACRO";
-    static const QString ATEMFADETOBLACK = "ATEMFADETOBLACK";
-    static const QString ATEMMACRO = "ATEMMACRO";
-    static const QString ATEMAUTO = "ATEMAUTO";
-    static const QString ATEMINPUT = "ATEMINPUT";
-    static const QString ATEMKEYERSTATE = "ATEMKEYERSTATE";
-    static const QString ATEMCUT = "ATEMCUT";
-    static const QString ATEMVIDEOFORMAT = "ATEMVIDEOFORMAT";
-    static const QString ATEMAUDIOINPUTSTATE = "ATEMAUDIOINPUTSTATE";
-    static const QString ATEMAUDIOGAIN = "ATEMAUDIOGAIN";
-    static const QString ATEMAUDIOINPUTBALANCE = "ATEMAUDIOINPUTBALANCE";
     static const QString OSCOUTPUT = "OSCOUTPUT";
-    static const QString PANASONICPRESET = "PANASONICPRESET";
-    static const QString SONYPRESET = "SONYPRESET";
-    static const QString SPYDERPRESET = "SPYDERPRESET";
     static const QString PERSPECTIVE = "PERSPECTIVE";
     static const QString ROTATION = "ROTATION";
     static const QString RESET = "RESET";
