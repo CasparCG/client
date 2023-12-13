@@ -514,7 +514,7 @@ QList<GpiPortModel> DatabaseManager::getGpiPorts()
 
     QList<GpiPortModel> models;
     while (sql.next())
-        models.push_back(GpiPortModel(sql.value("Id").toInt(),
+        models.push_back(GpiPortModel(sql.value("Id").toInt() - 1,
                                       sql.value("RisingEdge").toInt() == 1, Playout::fromString(sql.value("Action").toString())));
 
     return models;
@@ -549,7 +549,7 @@ QList<GpoPortModel> DatabaseManager::getGpoPorts()
 
     QList<GpoPortModel> models;
     while (sql.next())
-        models.push_back(GpoPortModel(sql.value("Id").toInt(),
+        models.push_back(GpoPortModel(sql.value("Id").toInt() - 1,
                                       sql.value("RisingEdge").toInt() == 1, sql.value("PulseLengthMillis").toInt()));
 
     return models;
