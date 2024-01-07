@@ -65,7 +65,7 @@ RundownTreeWidget::RundownTreeWidget(QWidget* parent)
       clearDelayedCommandsOnAutoStep(false), activeRundown(Rundown::DEFAULT_NAME), currentAutoPlayWidget(NULL), copyItem(NULL), currentPlayingItem(NULL), currentPlayingAutoStepItem(NULL),
       upControlSubscription(NULL), downControlSubscription(NULL), playAndAutoStepControlSubscription(NULL), playNowAndAutoStepControlSubscription(NULL),
       playNowIfChannelControlSubscription(NULL), stopControlSubscription(NULL), playControlSubscription(NULL), playNowControlSubscription(NULL),
-      loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL),
+      loadControlSubscription(NULL), pauseControlSubscription(NULL), nextControlSubscription(NULL), updateControlSubscription(NULL), invokeControlSubscription(NULL), previewControlSubscription(NULL),
       clearControlSubscription(NULL), clearVideolayerControlSubscription(NULL), clearChannelControlSubscription(NULL), repositoryDevice(NULL)
 {
     setupUi(this);
@@ -1597,6 +1597,9 @@ void RundownTreeWidget::resetOscSubscriptions()
     if (this->updateControlSubscription != NULL)
         this->updateControlSubscription->disconnect(); // Disconnect all events.
 
+    if (this->previewControlSubscription != NULL)
+        this->previewControlSubscription->disconnect(); // Disconnect all events.
+
     if (this->clearControlSubscription != NULL)
         this->clearControlSubscription->disconnect(); // Disconnect all events.
 
@@ -1677,6 +1680,11 @@ void RundownTreeWidget::configureOscSubscriptions()
     this->invokeControlSubscription = new OscSubscription(invokeControlFilter, this);
     QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
+
+    QString previewControlFilter = Osc::DEFAULT_PREVIEW_RUNDOWN_CONTROL_FILTER;
+    this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
+    QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
+                     this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
     QString clearControlFilter = Osc::RUNDOWN_CONTROL_CLEAR_FILTER;
     this->clearControlSubscription = new OscSubscription(clearControlFilter, this);
@@ -1923,6 +1931,20 @@ void RundownTreeWidget::invokeControlSubscriptionReceived(const QString& predica
 
     if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0)
         EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Invoke, this->treeWidgetRundown->currentItem()));
+}
+
+void RundownTreeWidget::previewControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
+{
+    Q_UNUSED(predicate);
+
+    if (!this->active)
+        return;
+
+    if (this->treeWidgetRundown->currentItem() == NULL)
+        return;
+
+    if (this->allowRemoteRundownTriggering && arguments.count() > 0 && arguments[0].toInt() > 0 && !this->previewOnAutoStep) 
+        EventManager::getInstance().fireExecuteRundownItemEvent(ExecuteRundownItemEvent(Playout::PlayoutType::Preview, this->treeWidgetRundown->currentItem()));
 }
 
 void RundownTreeWidget::clearControlSubscriptionReceived(const QString& predicate, const QList<QVariant>& arguments)
