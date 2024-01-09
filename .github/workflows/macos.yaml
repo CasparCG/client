@@ -11,6 +11,7 @@ jobs:
         runs-on: macos-11
 
         strategy:
+          fail-fast: false
           matrix:
             arch: [arm64, x86_64]
 
@@ -26,6 +27,32 @@ jobs:
                 tools: 'tools_ifw tools_cmake'
                 modules: 'qtwebsockets qt5compat'
 
+            - name: Install the Apple certificate and provisioning profile
+              env:
+                APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+                APPLE_P12_PASSWORD: ${{ secrets.APPLE_P12_PASSWORD }}
+                KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+              run: |
+                if [[ -n "$APPLE_CERTIFICATE_BASE64" ]]; then
+                  # create variables
+                  CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+                  KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+                  # import certificate and provisioning profile from secrets
+                  echo -n "$APPLE_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+
+                  # create temporary keychain
+                  security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+                  security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+                  security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+                  # import certificate to keychain
+                  security import $CERTIFICATE_PATH -P "$APPLE_P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+                  security list-keychain -d user -s $KEYCHAIN_PATH
+
+                  # list signing identities
+                  # security find-identity -v -p codesigning
+                fi
             - name: Run build
               run: |
                   ./tools/build-macos.sh ${{ matrix.arch }}
@@ -33,6 +60,10 @@ jobs:
                   CI: 1
                   BUILD_QT_PATH: ${{ github.workspace }}/Qt/6.5.3/macos
                   BUILD_PARALLEL_THREADS: 2
+                  MACOS_SIGN_NAME: ${{ secrets.MACOS_SIGN_NAME }}
+                  APPLEID: ${{ secrets.APPLEID }}
+                  APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+                  APPLEIDTEAM: ${{ secrets.APPLEIDTEAM }}
 
             - name: Rename build
               id: "rename-build"

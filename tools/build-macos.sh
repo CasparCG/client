@@ -51,12 +51,27 @@ mkdir "$CLIENT_FOLDER" || fail "Could not create $CLIENT_FOLDER"
 # Copy app bundle
 mv staging/casparcg-client.app "$CLIENT_FOLDER/$CLIENT_FOLDER.app" || fail "Could not move app bundle"
 
+# Sign app bundle
+if [ -n "$MACOS_SIGN_NAME" ]; then
+    echo "Signing..."
+    codesign --deep --timestamp --options runtime -s "$MACOS_SIGN_NAME" --entitlements "../resources/macos/entitlements.plist" "$CLIENT_FOLDER/$CLIENT_FOLDER.app"
+fi
+
 # Copy documentation
 echo Copying documentation...
 cp -f ../CHANGELOG "$CLIENT_FOLDER/" || fail "Could not copy CHANGELOG"
 cp -f ../LICENSE "$CLIENT_FOLDER/" || fail "Could not copy LICENSE"
+ln -s /Applications "$CLIENT_FOLDER/"
 
 # Create dmg file
 echo Creating dmg...
-hdiutil create -size "$BUILD_HDIUTILS_WORKAROUND_SIZE" -volname "$CLIENT_FOLDER" -srcfolder "$CLIENT_FOLDER" -ov -format UDZO "$BUILD_ARCHIVE_NAME-$ARCH.dmg" || fail "Could not create dmg"
+DMG_NAME="$BUILD_ARCHIVE_NAME-macos-$ARCH.dmg"
+hdiutil create -size "$BUILD_HDIUTILS_WORKAROUND_SIZE" -volname "$CLIENT_FOLDER" -srcfolder "$CLIENT_FOLDER" -ov -format UDZO "$DMG_NAME" || fail "Could not create dmg"
+ 
+# notarize dmg
+if [ -n "$APPLEID" ]; then
+    echo "Notarizing..."
+    xcrun notarytool submit "$DMG_NAME" --wait --apple-id "$APPLEID" --password "$APPLEIDPASS" --team-id "$APPLEIDTEAM"
+    xcrun stapler staple "$DMG_NAME"
+fi
 
