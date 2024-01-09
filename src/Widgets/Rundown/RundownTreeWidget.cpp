@@ -1681,7 +1681,7 @@ void RundownTreeWidget::configureOscSubscriptions()
     QObject::connect(this->invokeControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
 
-    QString previewControlFilter = Osc::DEFAULT_PREVIEW_RUNDOWN_CONTROL_FILTER;
+    QString previewControlFilter = Osc::RUNDOWN_CONTROL_PREVIEW_FILTER;
     this->previewControlSubscription = new OscSubscription(previewControlFilter, this);
     QObject::connect(this->previewControlSubscription, SIGNAL(subscriptionReceived(const QString&, const QList<QVariant>&)),
                      this, SLOT(previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)));
