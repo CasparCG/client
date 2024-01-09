@@ -110,6 +110,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         OscSubscription* nextControlSubscription;
         OscSubscription* updateControlSubscription;
         OscSubscription* invokeControlSubscription;
+        OscSubscription* previewControlSubscription;
         OscSubscription* clearControlSubscription;
         OscSubscription* clearVideolayerControlSubscription;
         OscSubscription* clearChannelControlSubscription;
@@ -204,6 +205,7 @@ class WIDGETS_EXPORT RundownTreeWidget : public QWidget, Ui::RundownTreeWidget
         Q_SLOT void nextControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void updateControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void invokeControlSubscriptionReceived(const QString&, const QList<QVariant>&);
+        Q_SLOT void previewControlSubscriptionReceived(const QString&, const QList<QVariant>&)
         Q_SLOT void clearControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearVideolayerControlSubscriptionReceived(const QString&, const QList<QVariant>&);
         Q_SLOT void clearChannelControlSubscriptionReceived(const QString&, const QList<QVariant>&);
