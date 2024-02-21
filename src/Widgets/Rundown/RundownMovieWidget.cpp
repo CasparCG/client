@@ -1063,7 +1063,10 @@ void RundownMovieWidget::nameSubscriptionReceived(const QString& predicate, cons
     Q_UNUSED(predicate);
 
     QString name = arguments.at(0).toString();
-    name.remove(name.lastIndexOf('.'), name.length()); // Remove extension.
+
+    int extIndex = name.lastIndexOf('.');
+    if (extIndex != -1)
+        name.remove(extIndex, name.length()); // Remove extension.
 
     if (this->model.getName().toLower() != name.toLower())
         return; // Wrong file.
