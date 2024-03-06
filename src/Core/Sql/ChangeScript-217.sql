@@ -1,0 +1,11 @@
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p5000', 3840, 2160, '50');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p5994', 3840, 2160, '59.94');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('2160p6000', 3840, 2160, '60');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp2398', 4096, 2160, '23.98');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp2400', 4096, 2160, '24');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp2500', 4096, 2160, '25');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp2997', 4096, 2160, '29.97');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp3000', 4096, 2160, '30');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp5000', 4096, 2160, '50');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp5994', 4096, 2160, '59.94');
+INSERT INTO Format (Name, Width, Height, FramesPerSecond) VALUES('4kDCIp6000', 4096, 2160, '60');
