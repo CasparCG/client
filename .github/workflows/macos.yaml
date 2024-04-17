@@ -16,7 +16,7 @@ jobs:
             arch: [arm64, x86_64]
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                 submodules: true
 
@@ -84,7 +84,7 @@ jobs:
                     fi
                   fi
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: casparcg-client-macos-${{ matrix.arch }}
                   path: ${{ steps.rename-build.outputs.artifactname }}
