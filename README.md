@@ -20,7 +20,7 @@ Install the deb file and launch 'CasparCG Client'. Tested on Ubuntu 22.04 64-bit
 ## Development
 
 #### Windows
-* Install Qt 6.5 for Windows from [Qt archive](https://www.qt.io/download). You may wish to select a more minimal installation than the full 6.5 tree.
+* Install Qt 6.5 for Windows from [Qt archive](https://www.qt.io/download). You may wish to select a more minimal installation than the full 6.5 tree. At a minimum the additional library *Qt WebSockets* and the *Qt 5 Comaptibility Module* are required.
 * Install [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/community/)
 * Install [CMake](https://cmake.org/download/)
 
