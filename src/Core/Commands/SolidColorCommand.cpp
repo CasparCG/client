@@ -28,10 +28,10 @@ const QString SolidColorCommand::getPremultipliedColor() const
     green = (green * alpha) / 255;
     blue = (blue * alpha) / 255;
 
-    return QString("#%1%2%3%4").arg(alpha, 2, 16)
-                               .arg(red, 2, 16)
-                               .arg(green, 2, 16)
-                               .arg(blue, 2, 16);
+    return QString("#%1%2%3%4").arg(alpha, 2, 16, QChar('0'))
+                               .arg(red, 2, 16, QChar('0'))
+                               .arg(green, 2, 16, QChar('0'))
+                               .arg(blue, 2, 16, QChar('0'));
 }
 
 const QString& SolidColorCommand::getTransition() const

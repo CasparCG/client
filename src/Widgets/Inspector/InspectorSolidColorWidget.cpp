@@ -123,10 +123,10 @@ void InspectorSolidColorWidget::colorDialogClicked()
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        QString color = QString("#%1%2%3%4").arg(dialog.selectedColor().alpha(), 2, 16)
-                                            .arg(dialog.selectedColor().red(), 2, 16)
-                                            .arg(dialog.selectedColor().green(), 2, 16)
-                                            .arg(dialog.selectedColor().blue(), 2, 16);
+        QString color = QString("#%1%2%3%4").arg(dialog.selectedColor().alpha(), 2, 16, QChar('0'))
+                                            .arg(dialog.selectedColor().red(), 2, 16, QChar('0'))
+                                            .arg(dialog.selectedColor().green(), 2, 16, QChar('0'))
+                                            .arg(dialog.selectedColor().blue(), 2, 16, QChar('0'));
 
         this->lineEditColor->setText(color.toUpper());
     }
