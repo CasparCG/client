@@ -10,6 +10,8 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <QtCore/QString>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 class QObject;
 class QXmlStreamWriter;

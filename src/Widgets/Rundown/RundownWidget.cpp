@@ -279,9 +279,17 @@ void RundownWidget::openRundown(const OpenRundownEvent& event)
 {
     QString path = "";
 
-    if (event.getPath().isEmpty())
-        path = QFileDialog::getOpenFileName(this, "Open Rundown", QDir::homePath(), "Rundown (*.xml)");
-    else
+    if (event.getPath().isEmpty()){
+        QList<QString> paths = DatabaseManager::getInstance().getOpenRecent();
+        if(paths.count() > 0){
+                path = paths.at(0);
+                QFileInfo fi(path);
+                path = fi.absolutePath();
+        }else{
+                path = QDir::homePath();
+        }
+        path = QFileDialog::getOpenFileName(this, "Open Rundown", path , "Rundown (*.xml)");
+    }else
         path = event.getPath();
 
     if (!path.isEmpty())

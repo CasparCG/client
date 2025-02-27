@@ -54,14 +54,15 @@ const QString TemplateCommand::getTemplateData() const
     {
         if (this->sendAsJson)
         {
-            templateData.append("{");
+            QJsonObject jsonObject;
             foreach (KeyValueModel model, this->models)
             {
-                templateData.append(QString("\\\"%1\\\":\\\"%2\\\",").arg(model.getKey())
-                                                                     .arg((this->useUppercaseData == true) ? model.getValue().toUpper() : model.getValue()));
+                jsonObject[model.getKey()] = (this->useUppercaseData == true) ? model.getValue().toUpper() : model.getValue();
             }
-            templateData.chop(1);
-            templateData.append("}");
+            QJsonDocument jsonDocument(jsonObject);
+            QString strJson(jsonDocument.toJson(QJsonDocument::Compact));
+            strJson.replace("\"", "\\\"");
+            templateData.append(strJson);
         }
         else
         {

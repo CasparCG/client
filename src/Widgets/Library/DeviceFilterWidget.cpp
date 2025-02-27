@@ -25,8 +25,9 @@ DeviceFilterWidget::DeviceFilterWidget(QWidget* parent)
     this->listWidget.addItem(item);
     this->lineEditDeviceFilter->setText(item->text());
 
-    this->comboBoxDeviceFilter->setView(&this->listWidget);
     this->comboBoxDeviceFilter->setModel(this->listWidget.model());
+    this->comboBoxDeviceFilter->setView(&this->listWidget);
+
 
     QObject::connect(&this->listWidget, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(itemPressed(QListWidgetItem*)));
     QObject::connect(&DeviceManager::getInstance(), SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()));
