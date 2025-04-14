@@ -707,17 +707,24 @@ void RundownTreeWidget::saveRundown(bool saveAs)
         return;
 
     QString path;
-    if (saveAs)
-        path = QFileDialog::getSaveFileName(this, "Save Rundown", QDir::homePath(), "Rundown (*.xml)");
+    if (saveAs) {
+        if (this->activeRundown == Rundown::DEFAULT_NAME) {
+            path = QDir::homePath();
+        }
+        else {
+            QFileInfo fi(this->activeRundown);
+            path = fi.absolutePath();
+        }
+        path = QFileDialog::getSaveFileName(this, "Save Rundown", path, "Rundown (*.xml)");
+    }
     else
         path = (this->activeRundown == Rundown::DEFAULT_NAME) ? QFileDialog::getSaveFileName(this, "Save Rundown", QDir::homePath(), "Rundown (*.xml)") : this->activeRundown;
 
-    // Make sure we have an extension. On *nix system it will not be appended by default.
-    if (!path.toLower().endsWith(".xml"))
-        path.append(".xml");
-
     if (!path.isEmpty())
     {
+        // Make sure we have an extension. On *nix system it will not be appended by default.
+        if (!path.toLower().endsWith(".xml"))
+            path.append(".xml");
         EventManager::getInstance().fireStatusbarEvent(StatusbarEvent("Saving rundown..."));
 
         QFile file(path);
