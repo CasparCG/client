@@ -368,14 +368,14 @@ void CasparDevice::startStream(int channel, int port, int quality, bool key, int
     {
         //writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast -filter:v scale=%4:%5%6")
           //           .arg(channel).arg(port).arg(quality).arg(width).arg(height).arg((key == true) ? ",alphaextract,format=pix_fmts=yuv422p" : ""));
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast -filter:v %4scale=%5:%6")
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast -filter:v %4scale=%5:%6  -filter:a \"pan=stereo|c0=FL|c1=FR\"")
                              .arg(channel).arg(port).arg(quality)
                              .arg((key == true) ? "alphaextract,format=pix_fmts=yuv422p," : "")
                              .arg(width).arg(height));
     }
     else
     {
-        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast %4")
+        writeMessage(QString("ADD %1 STREAM udp://<client_ip_address>:%2 -format mpegts -codec:v libx264 -crf:v %3 -tune:v zerolatency -preset:v ultrafast %4  -filter:a \"pan=stereo|c0=FL|c1=FR\"")
                      .arg(channel).arg(port).arg(quality).arg((key == true) ? "-filter:v alphaextract" : ""));
     }
 }
