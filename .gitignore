@@ -9,3 +9,5 @@
 /src/CMakeSettings.json
 /src/out
 /src/.vs
+/src/cmake-build-*
+/src/.idea
