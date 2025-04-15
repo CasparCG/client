@@ -24,6 +24,7 @@ jobs:
               uses: jurplel/install-qt-action@v3
               with:
                 version: 6.5.3
+                cache: true
                 tools: 'tools_ifw tools_cmake'
                 modules: 'qtwebsockets qt5compat'
 
