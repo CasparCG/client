@@ -83,6 +83,8 @@ jobs:
                     then
                         echo "uploadname=$TARGET" >> $GITHUB_OUTPUT
 
+                        brew install sshpass
+
                         set -x
                         eval $(ssh-agent -s)
                         mkdir -v -m 700 $HOME/.ssh || true
