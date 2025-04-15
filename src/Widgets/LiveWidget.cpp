@@ -217,6 +217,12 @@ void LiveWidget::startStream()
                 }
             }
         }
+        else
+        {
+            auto err = "Failed to initialise libvlc";
+
+            fprintf(stderr, "%s\n", qPrintable(err));
+        }
     }
 }
 
@@ -232,6 +238,9 @@ void LiveWidget::setupRenderTarget(bool windowMode)
 #elif defined(Q_OS_LINUX)
     libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLiveSmall->winId());
 #endif
+
+    auto err = libvlc_errmsg();
+    if (err)  fprintf(stderr, "%s\n", qPrintable(err));
 }
 
 void LiveWidget::stopStream()
