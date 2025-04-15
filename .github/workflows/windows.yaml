@@ -57,7 +57,7 @@ jobs:
                   path: ${{ steps.rename-build.outputs.artifactname }}
 
             - name: Copy single file to remote
-              uses: garygrossgarten/github-action-scp@v0.8.0
+              uses: garygrossgarten/github-action-scp@0.9.0
               if: ${{ steps.rename-build.outputs.uploadname }}
               with:
                   local: "${{ steps.rename-build.outputs.uploadname }}"
