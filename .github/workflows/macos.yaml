@@ -93,7 +93,7 @@ jobs:
                     fi
                   fi
 
-            - uses: actions/upload-artifact@v4
+            - uses: actions/upload-artifact@v5
               with:
                   name: casparcg-client-macos-${{ matrix.arch }}
                   path: ${{ steps.upload-build.outputs.artifactname }}
