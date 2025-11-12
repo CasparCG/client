@@ -10,7 +10,6 @@ fail()
 # Fail early if environment not set
 [ -z "$BUILD_QT_PATH" ] && export BUILD_QT_PATH=~/Qt/6.5.3
 [ -z "$BUILD_ARCHIVE_NAME" ] && export BUILD_ARCHIVE_NAME="CasparCG Client"
-[ -z "$BUILD_PARALLEL_THREADS" ] && export BUILD_PARALLEL_THREADS=$(sysctl -n hw.logicalcpu)
 export BUILD_HDIUTILS_WORKAROUND_SIZE="180m"
 
 export ARCH=$1
@@ -32,10 +31,8 @@ cd ../build || fail "Could not enter ../build"
 echo Running cmake...
 cmake ../src -DQt6_ROOT=$BUILD_QT_PATH/macos -DCMAKE_OSX_ARCHITECTURES=$ARCH
 
-# Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
-export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
-/usr/bin/time make || fail "make failed"
+/usr/bin/time cmake --build . --parallel || fail "make failed"
 
 # Create app bundle
 echo Creating app bundle...

@@ -60,7 +60,6 @@ jobs:
         env:
           CI: 1
           BUILD_QT_PATH: ${{ github.workspace }}/Qt/6.5.3/macos
-          BUILD_PARALLEL_THREADS: 2
           MACOS_SIGN_NAME: ${{ secrets.MACOS_SIGN_NAME }}
           APPLEID: ${{ secrets.APPLEID }}
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
