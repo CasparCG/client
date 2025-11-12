@@ -7,9 +7,11 @@
 #include "EventManager.h"
 #include "Models/DeviceModel.h"
 
+#include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
 #include <QtWidgets/QToolButton>
 
-LiveWidget::LiveWidget(QWidget* parent)
+LiveWidget::LiveWidget(QWidget *parent)
     : QWidget(parent),
       collapsed(false), windowMode(false), deviceName(""), deviceChannel(""), useKey(false), vlcMedia(NULL), vlcInstance(NULL), vlcMediaPlayer(NULL)
 {
@@ -22,10 +24,10 @@ LiveWidget::LiveWidget(QWidget* parent)
     QString streamPort = DatabaseManager::getInstance().getConfigurationByName("StreamPort").getValue();
     this->streamPort = (streamPort.isEmpty() == true) ? Stream::DEFAULT_PORT : streamPort.toInt();
 
-    QObject::connect(&EventManager::getInstance(), SIGNAL(closeApplication(const CloseApplicationEvent&)), this, SLOT(closeApplication(const CloseApplicationEvent&)));
+    QObject::connect(&EventManager::getInstance(), SIGNAL(closeApplication(const CloseApplicationEvent &)), this, SLOT(closeApplication(const CloseApplicationEvent &)));
 }
 
-void LiveWidget::closeApplication(const CloseApplicationEvent& event)
+void LiveWidget::closeApplication(const CloseApplicationEvent &event)
 {
     Q_UNUSED(event);
 
@@ -71,18 +73,18 @@ void LiveWidget::setupMenus()
     this->expandCollapseAction = this->contextMenuLiveDropdown->addAction(/*QIcon(":/Graphics/Images/Collapse.png"),*/ "Collapse", this, SLOT(toggleExpandCollapse()));
 
     QObject::connect(this->streamMenu, SIGNAL(aboutToShow()), this, SLOT(setupStreamMenu()));
-    QObject::connect(this->streamMenu, SIGNAL(triggered(QAction*)), this, SLOT(streamMenuActionTriggered(QAction*)));
+    QObject::connect(this->streamMenu, SIGNAL(triggered(QAction *)), this, SLOT(streamMenuActionTriggered(QAction *)));
     QObject::connect(this->audioTrackMenu, SIGNAL(aboutToShow()), this, SLOT(setupAudioTrackMenu()));
-    QObject::connect(this->audioTrackMenu, SIGNAL(triggered(QAction*)), this, SLOT(audioMenuActionTriggered(QAction*)));
+    QObject::connect(this->audioTrackMenu, SIGNAL(triggered(QAction *)), this, SLOT(audioMenuActionTriggered(QAction *)));
     QObject::connect(this->muteAction, SIGNAL(toggled(bool)), this, SLOT(muteAudio(bool)));
 
-    QToolButton* toolButtonLiveDropdown = new QToolButton(this);
+    QToolButton *toolButtonLiveDropdown = new QToolButton(this);
     toolButtonLiveDropdown->setObjectName("toolButtonLiveDropdown");
     toolButtonLiveDropdown->setMenu(this->contextMenuLiveDropdown);
     toolButtonLiveDropdown->setPopupMode(QToolButton::InstantPopup);
 
     this->tabWidgetLive->setCornerWidget(toolButtonLiveDropdown);
-    //this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
+    // this->tabWidgetPreview->setTabIcon(0, QIcon(":/Graphics/Images/TabSplitter.png"));
 }
 
 void LiveWidget::setupAudioTrackMenu()
@@ -93,11 +95,11 @@ void LiveWidget::setupAudioTrackMenu()
     if (!libvlc_media_player_is_playing(this->vlcMediaPlayer))
         return;
 
-    foreach (QAction* action, this->audioTrackMenu->actions())
+    foreach (QAction *action, this->audioTrackMenu->actions())
         this->audioTrackMenu->removeAction(action);
 
     int currentTrack = libvlc_audio_get_track(this->vlcMediaPlayer);
-    libvlc_track_description_t* trackDescription = libvlc_audio_get_track_description(this->vlcMediaPlayer);
+    libvlc_track_description_t *trackDescription = libvlc_audio_get_track_description(this->vlcMediaPlayer);
     while (trackDescription != NULL)
     {
         this->audioTrackAction = this->audioTrackMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ trackDescription->psz_name);
@@ -113,7 +115,7 @@ void LiveWidget::setupAudioTrackMenu()
 
 void LiveWidget::setupStreamMenu()
 {
-    foreach (QAction* action, this->streamMenu->actions())
+    foreach (QAction *action, this->streamMenu->actions())
         this->streamMenu->removeAction(action);
 
     QList<DeviceModel> models = DatabaseManager::getInstance().getDevice();
@@ -130,7 +132,7 @@ void LiveWidget::setupStreamMenu()
     this->streamMenu->addAction(/*QIcon(":/Graphics/Images/RenameRundown.png"),*/ "Disconnect", this, SLOT(disconnectStream()));
 }
 
-void LiveWidget::audioMenuActionTriggered(QAction* action)
+void LiveWidget::audioMenuActionTriggered(QAction *action)
 {
     if (!this->vlcMediaPlayer)
         return;
@@ -138,7 +140,7 @@ void LiveWidget::audioMenuActionTriggered(QAction* action)
     libvlc_audio_set_track(this->vlcMediaPlayer, action->data().toInt());
 }
 
-void LiveWidget::streamMenuActionTriggered(QAction* action)
+void LiveWidget::streamMenuActionTriggered(QAction *action)
 {
     if (!action->text().contains(',') && !action->text().contains(':'))
         return;
@@ -165,8 +167,8 @@ void LiveWidget::startStream()
     if (!this->deviceName.isEmpty() && !this->deviceChannel.isEmpty())
     {
         bool disableAudioInStream = (DatabaseManager::getInstance().getConfigurationByName("DisableAudioInStream").getValue() == "true") ? true : false;
-        //if (disableAudioInStream)
-          //  arguments.append("--no-audio");
+        // if (disableAudioInStream)
+        //   arguments.append("--no-audio");
 
         /*
         QString args;
@@ -176,7 +178,7 @@ void LiveWidget::startStream()
         qDebug("Using live arguments: %s", qPrintable(args.trimmed()));
         */
 
-        char* vlcArguments[] = {
+        char *vlcArguments[] = {
             qstrdup("--ignore-config"),
             qstrdup("--deinterlace=-1"),
             qstrdup("--deinterlace-mode=yadif"),
@@ -188,6 +190,16 @@ void LiveWidget::startStream()
         int len = 6;
         if (disableAudioInStream)
             len += 1;
+
+        // Set VLC plugin path relative to the executable
+#ifdef Q_OS_MAC
+        QString appPath = QCoreApplication::applicationDirPath();
+        QString pluginPath = QDir(appPath).filePath("../Frameworks/plugins");
+        QByteArray pluginPathBytes = QDir::cleanPath(pluginPath).toUtf8();
+        setenv("VLC_PLUGIN_PATH", pluginPathBytes.constData(), 1);
+
+        qDebug("Setting VLC_PLUGIN_PATH to: %s", pluginPathBytes.constData());
+#endif
 
         this->vlcInstance = libvlc_new(len, vlcArguments);
         if (this->vlcInstance)
@@ -220,8 +232,20 @@ void LiveWidget::startStream()
         else
         {
             auto err = "Failed to initialise libvlc";
+            fprintf(stderr, "%s\n", err);
 
-            fprintf(stderr, "%s\n", qPrintable(err));
+#ifdef Q_OS_MAC
+            char *pluginPath = getenv("VLC_PLUGIN_PATH");
+            if (pluginPath)
+            {
+                fprintf(stderr, "VLC_PLUGIN_PATH was set to: %s\n", pluginPath);
+                fprintf(stderr, "Please verify that VLC plugins exist at this location\n");
+            }
+            else
+            {
+                fprintf(stderr, "VLC_PLUGIN_PATH was not set\n");
+            }
+#endif
         }
     }
 }
@@ -232,15 +256,18 @@ void LiveWidget::setupRenderTarget(bool windowMode)
         return;
 
 #if defined(Q_OS_WIN)
-    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLiveSmall->winId());
+    libvlc_media_player_set_hwnd(this->vlcMediaPlayer, (windowMode == true) ? (void *)this->liveDialog->getRenderTarget()->winId() : (void *)this->labelLiveSmall->winId());
 #elif defined(Q_OS_MAC)
-    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void*)this->liveDialog->getRenderTarget()->winId() : (void*)this->labelLiveSmall->winId());
+    libvlc_media_player_set_nsobject(this->vlcMediaPlayer, (windowMode == true) ? (void *)this->liveDialog->getRenderTarget()->winId() : (void *)this->labelLiveSmall->winId());
 #elif defined(Q_OS_LINUX)
     libvlc_media_player_set_xwindow(this->vlcMediaPlayer, (windowMode == true) ? this->liveDialog->getRenderTarget()->winId() : this->labelLiveSmall->winId());
+#else
+#error "Unsupported platform"
 #endif
 
     auto err = libvlc_errmsg();
-    if (err)  fprintf(stderr, "%s\n", qPrintable(err));
+    if (err)
+        fprintf(stderr, "%s\n", qPrintable(err));
 }
 
 void LiveWidget::stopStream()
