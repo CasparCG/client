@@ -22,7 +22,7 @@ jobs:
                 cache: true
                 arch: win64_msvc2019_64
                 tools: 'tools_ifw tools_cmake'
-                modules: "qtwebsockets qt5compat qtmultimedia qtmultimediawidgets"
+                modules: "qtwebsockets qt5compat qtmultimedia"
 
             - name: Run build
               run: |
