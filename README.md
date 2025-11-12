@@ -32,7 +32,7 @@ Install the deb file and launch 'CasparCG Client'. Tested on Ubuntu 22.04 64-bit
 * Download and install Xcode from the App Store.
 
 #### Linux
-* Install Qt6, libvlc and boost from your system package manager
+* Install Qt6 and boost from your system package manager
 
 ## Releases
 Complete history of all releases and the changes can be found in the [CHANGELOG](CHANGELOG).

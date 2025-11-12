@@ -12,7 +12,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # qt_standard_project_setup()
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Network Sql Widgets Core5Compat)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Network Sql Widgets Core5Compat Multimedia MultimediaWidgets)
 
 if (UNIX AND APPLE)
     set(myApp_ICON ${CMAKE_CURRENT_SOURCE_DIR}/Images/CasparCG.icns)
@@ -79,11 +79,9 @@ target_link_libraries(shell PRIVATE
     Qt::Sql
     Qt::Widgets
     Qt::Core5Compat
+    Qt::Multimedia
 
     ${Boost_LIBRARIES}
-    
-    ${LIBVLC_LIBRARY}
-    ${LIBVLCCORE_LIBRARY}
 )
 
 # Resources:
@@ -134,8 +132,5 @@ add_external_dependencies(casparcg_copy_dependencies)
 
 set(OUTPUT_FOLDER "${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR}")
 add_custom_command(TARGET casparcg_copy_dependencies POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory \"${OUTPUT_FOLDER}\")
-
-# copy any runtime dependencies
-casparcg_copy_runtime_dependencies()
 
 include(${CMAKE_CURRENT_LIST_DIR}/../Packaging.cmake)

@@ -12,7 +12,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 LIST (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMakeModules)
 
 include(ExternalProject)
-include(CasparCG_Util)
 
 # Set up AUTOMOC and some sensible defaults for runtime execution
 # When using Qt 6.3, you can replace the code block below with
@@ -44,7 +43,7 @@ else()
     include(Bootstrap_Windows)
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Network Sql WebSockets Widgets Core5Compat)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Network Sql WebSockets Widgets Core5Compat Multimedia MultimediaWidgets)
 if (MSVC OR APPLE)
     qt_standard_project_setup()
 endif()
