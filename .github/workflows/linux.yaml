@@ -18,7 +18,7 @@ jobs:
             - name: Prepare dependencies
               run: |
                   sudo apt update
-                  sudo apt install cmake libboost-thread-dev libasio-dev qt6-base-dev libqt6websockets6-dev libqt6gui6 libqt6widgets6 libqt6core5compat6-dev libgl1-mesa-dev
+                  sudo apt install cmake libboost-thread-dev libasio-dev qt6-base-dev libqt6websockets6-dev libqt6gui6 libqt6widgets6 libqt6multimedia6 libqt6multimediawidgets6 libqt6core5compat6-dev libgl1-mesa-dev
               env:
                   CI: 1
 
