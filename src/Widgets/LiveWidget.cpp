@@ -191,8 +191,13 @@ void LiveWidget::startStream()
         // Set up video output
         setupRenderTarget(this->windowMode);
 
-        // Set the stream source with larger buffers and error tolerance
-        QString streamUrl = QString("udp://@0.0.0.0:%1?overrun_nonfatal=1&fifo_size=100000000&buffer_size=10000000").arg(this->streamPort);
+        // Set the stream source
+#if defined(Q_OS_WIN)
+        // Some Windows media backends don't accept the '@' host shorthand.
+        QString streamUrl = QString("udp://0.0.0.0:%1").arg(this->streamPort);
+#else
+        QString streamUrl = QString("udp://@:%1?overrun_nonfatal=1&fifo_size=100000000&buffer_size=10000000").arg(this->streamPort);
+#endif
         qDebug("Setting media source: %s", qPrintable(streamUrl));
         this->mediaPlayer->setSource(QUrl(streamUrl));
 
