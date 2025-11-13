@@ -6,15 +6,12 @@
 
 #include "Events/CloseApplicationEvent.h"
 
-#if defined(_MSC_VER)
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
-#endif
-#include <vlc/vlc.h>
-
 #include <QtGui/QAction>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QWidget>
+#include <QtMultimedia/QMediaPlayer>
+#include <QtMultimedia/QAudioOutput>
+#include <QtMultimediaWidgets/QVideoWidget>
 
 class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
 {
@@ -33,9 +30,9 @@ class WIDGETS_EXPORT LiveWidget : public QWidget, Ui::LiveWidget
 
         LiveDialog* liveDialog = nullptr;
 
-        libvlc_media_t* vlcMedia = nullptr;
-        libvlc_instance_t* vlcInstance = nullptr;
-        libvlc_media_player_t* vlcMediaPlayer = nullptr;
+        QMediaPlayer *mediaPlayer = nullptr;
+        QAudioOutput *audioOutput = nullptr;
+        QVideoWidget *videoWidget = nullptr;
 
         QMenu* streamMenu;
         QMenu* audioMenu;

@@ -9,7 +9,6 @@ fail()
 
 # Fail early if environment not set
 [ -z "$BUILD_ARCHIVE_NAME" ] && export BUILD_ARCHIVE_NAME="CasparCG Client"
-[ -z "$BUILD_PARALLEL_THREADS" ] && export BUILD_PARALLEL_THREADS=8
 
 # Clean and enter shadow build folder
 echo Cleaning...
@@ -24,10 +23,8 @@ cd ../build || fail "Could not enter ../build"
 echo Running cmake...
 cmake ../src/ || fail "cmake failed"
 
-# Run make using the number of hardware threads in BUILD_PARALLEL_THREADS
 echo Building...
-export MAKE_COMMAND="make -j$BUILD_PARALLEL_THREADS"
-/usr/bin/time -f 'Build time %E' make || fail "make failed"
+/usr/bin/time -f 'Build time %E' cmake --build .  || fail "make failed"
 
 echo Packaging...
 make bundle
