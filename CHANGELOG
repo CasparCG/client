@@ -1,4 +1,11 @@
-CasparCG Client 2.3.0-Dev
+CasparCG Client 2.3.1
+==============================
+- Fix crash when using osc on arm64 macos
+- Fix audio channels in preview streams
+- Fix malformed color command
+
+
+CasparCG Client 2.3.0
 ==============================
 - Update to Qt6
 - Remove atem, panasonic, spyder, sony and tricaster integrations
