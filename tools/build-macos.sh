@@ -8,7 +8,7 @@ fail()
 }
 
 # Fail early if environment not set
-[ -z "$BUILD_QT_PATH" ] && export BUILD_QT_PATH=~/Qt/6.5.3
+[ -z "$BUILD_QT_PATH" ] && export BUILD_QT_PATH=~/Qt/6.9.3
 [ -z "$BUILD_ARCHIVE_NAME" ] && export BUILD_ARCHIVE_NAME="CasparCG Client"
 export BUILD_HDIUTILS_WORKAROUND_SIZE="180m"
 
