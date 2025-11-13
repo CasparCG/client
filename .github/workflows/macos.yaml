@@ -70,7 +70,7 @@ jobs:
         id: "upload-build"
         shell: bash
         run: |
-          TARGET=casparcg-client-${{ github.sha }}-${{ matrix.arch }}.dmg
+          TARGET=casparcg-client-${{ github.sha }}-macos-${{ matrix.arch }}.dmg
           mv build/CasparCG*.dmg "$TARGET"
 
           echo "artifactname=$TARGET" >> $GITHUB_OUTPUT
