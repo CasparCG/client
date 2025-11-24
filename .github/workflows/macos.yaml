@@ -16,7 +16,7 @@ jobs:
         arch: [arm64, x86_64]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
