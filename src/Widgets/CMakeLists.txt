@@ -146,10 +146,6 @@ target_compile_definitions(widgets PUBLIC
     WIDGETS_LIBRARY
 )
 
-target_include_directories(widgets PUBLIC
-    ${LIBVLC_INCLUDE_DIR}
-)
-
 target_link_libraries(widgets PUBLIC
     caspar
     common
@@ -164,6 +160,8 @@ target_link_libraries(widgets PUBLIC
     Qt::Network
     Qt::Sql
     Qt::Widgets
+    Qt::Multimedia
+    Qt::MultimediaWidgets
 )
 
 # Resources:
