@@ -4,7 +4,7 @@ function (add_external_dependencies PROJECT)
 endfunction()
 
 set (Boost_NO_WARN_NEW_VERSIONS 1)
-FIND_PACKAGE (Boost REQUIRED COMPONENTS thread REQUIRED)
+FIND_PACKAGE (Boost REQUIRED COMPONENTS thread chrono REQUIRED)
 
 find_package(LibVLC REQUIRED)
 
