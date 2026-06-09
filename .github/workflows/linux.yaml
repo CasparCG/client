@@ -54,7 +54,7 @@ jobs:
                     fi
                   fi
 
-            - uses: actions/upload-artifact@v6
+            - uses: actions/upload-artifact@v7
               with:
                   name: upload-artifact
                   path: ${{ steps.upload-build.outputs.artifactname }}
