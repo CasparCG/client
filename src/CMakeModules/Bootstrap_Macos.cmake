@@ -14,8 +14,8 @@ set(BOOST_USE_PRECOMPILED ON CACHE BOOL "Use precompiled boost")
 # casparcg_add_external_project(boost)
 if (BOOST_USE_PRECOMPILED)
 	ExternalProject_Add(boost
-		URL ${CASPARCG_DOWNLOAD_MIRROR}/boost/boost_1_83_0-macos-multiarch-release2.zip
-		URL_HASH SHA256=26c32398ac4d798e27e7f7972d74ab346c1d2f6a9a49bdb0a6aa9723b08165da
+		URL ${CASPARCG_DOWNLOAD_MIRROR}/boost/boost_1_83_0-macos-multiarch-release3.zip
+		URL_HASH SHA256=sha256:6d4ef91c72d6d7990bf89b0f0da113dc9096ff06e7f1b75740a7b5b770530700
 		DOWNLOAD_DIR ${CASPARCG_DOWNLOAD_CACHE}
 		CONFIGURE_COMMAND ""
 		BUILD_COMMAND ""
@@ -33,9 +33,7 @@ else ()
 		DOWNLOAD_DIR ${CASPARCG_DOWNLOAD_CACHE}
 		BUILD_IN_SOURCE 1
 		CONFIGURE_COMMAND ./bootstrap.sh
-			--with-libraries=thread
-			--with-libraries=system
-			--with-libraries=chrono
+			--with-libraries=thread,system,chrono
 		BUILD_COMMAND ./b2 install release architecture=arm+x86 --prefix=${BOOST_INSTALL_DIR} link=static -j ${CONFIG_CPU_COUNT} 
 		INSTALL_COMMAND ""
 	)
