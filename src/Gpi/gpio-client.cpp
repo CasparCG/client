@@ -106,14 +106,14 @@ namespace gpio
 
     class writer : public std::enable_shared_from_this<writer>
     {
-        io_service &service;
+        io_context &service;
         std::queue<write_package> &outgoing;
         std::function<void()> write_pending;
-        deadline_timer timer;
+        steady_timer timer;
 
     public:
         writer(
-            io_service &service,
+            io_context &service,
             std::queue<write_package> &outgoing,
             const std::function<void()> &write_pending)
             : service(service), outgoing(outgoing), write_pending(write_pending), timer(service)
@@ -130,20 +130,20 @@ namespace gpio
 
         void write(const write_package &package)
         {
-            service.post(bind(&writer::do_write, shared_from_this(), package));
+            boost::asio::post(service, std::bind(&writer::do_write, shared_from_this(), package));
         }
 
         template <class Func>
         void post(const Func &task)
         {
-            service.post(task);
+            boost::asio::post(service, task);
         }
 
         template <class Func>
         void post_delayed(long millis_delayed, const Func &task)
         {
-            timer.expires_from_now(
-                boost::posix_time::milliseconds(millis_delayed));
+            timer.expires_after(
+                std::chrono::milliseconds(millis_delayed));
             timer.async_wait(delayed_task<Func>(task));
         }
 
@@ -316,11 +316,11 @@ namespace gpio
 
     struct connection_details
     {
-        io_service service;
+        io_context service;
         boost::asio::serial_port serial_port;
         std::string serial_port_name;
         int baud_rate;
-        deadline_timer timer;
+        steady_timer timer;
 
         connection_details(
             std::string serial_port_name,
@@ -361,7 +361,7 @@ namespace gpio
              const connection_listener &connection_listener)
             : conn(serial_port_name, baud_rate), state(DISCONNECTED), conn_listener(connection_listener), shutdown(false)
         {
-            conn.service.post(std::bind(&impl::connect, this));
+            boost::asio::post(conn.service, std::bind(&impl::connect, this));
             io_thread = std::thread(std::bind(&impl::run, this));
         }
 
@@ -497,7 +497,7 @@ namespace gpio
                 try
                 {
                     conn.service.run();
-                    conn.service.reset();
+                    conn.service.restart();
                 }
                 catch (const std::exception &e)
                 {
@@ -510,7 +510,7 @@ namespace gpio
         template <class Func>
         void delay(long delay_millis, const Func &command)
         {
-            conn.timer.expires_from_now(boost::posix_time::milliseconds(delay_millis));
+            conn.timer.expires_after(std::chrono::milliseconds(delay_millis));
             conn.timer.async_wait(delayed_task<Func>(command));
         }
 
@@ -644,7 +644,7 @@ namespace gpio
             {
                 request_gpi();
 
-                if (!num_gpi.timed_wait(boost::posix_time::milliseconds(1000)))
+                if (num_gpi.wait_for(boost::chrono::milliseconds(1000)) != boost::future_status::ready)
                     return -1;
             }
 
@@ -660,7 +660,7 @@ namespace gpio
             {
                 request_gpo();
 
-                if (!num_gpo.timed_wait(boost::posix_time::milliseconds(1000)))
+                if (num_gpo.wait_for(boost::chrono::milliseconds(1000)) != boost::future_status::ready)
                     return -1;
             }
 
@@ -673,7 +673,7 @@ namespace gpio
                 conn.service,
                 outgoing,
                 std::bind(&impl::write_pending, this)));
-            conn.service.post(
+            boost::asio::post(conn.service,
                 bind(&impl::do_insert_writer, this, gpo_port, result));
 
             return result;
@@ -690,7 +690,7 @@ namespace gpio
             voltage silent_state,
             const gpi_trigger_handler &handler)
         {
-            conn.service.post(bind(&impl::do_setup_gpi_pulse, this,
+            boost::asio::post(conn.service,bind(&impl::do_setup_gpi_pulse, this,
                                    gpi_port, silent_state, handler));
         }
 
@@ -710,7 +710,7 @@ namespace gpio
             voltage off_state,
             const gpi_switch_handler &handler)
         {
-            conn.service.post(bind(&impl::do_setup_gpi_tally, this,
+            boost::asio::post(conn.service,bind(&impl::do_setup_gpi_tally, this,
                                    gpi_port, off_state, handler));
         }
 
@@ -727,7 +727,7 @@ namespace gpio
 
         void stop_gpi(int gpi_port)
         {
-            conn.service.post(std::bind(&impl::do_stop_gpi, this, gpi_port));
+            boost::asio::post(conn.service,std::bind(&impl::do_stop_gpi, this, gpi_port));
         }
 
         void do_stop_gpi(int gpi_port)
@@ -744,7 +744,7 @@ namespace gpio
                 duration_milliseconds,
                 new_writer(gpo_port)));
 
-            conn.service.post(
+            boost::asio::post(conn.service,
                 bind(&impl::do_insert_gpo_handler, this, gpo_port, trigger));
 
             return trigger;
@@ -762,7 +762,7 @@ namespace gpio
             std::shared_ptr<gpo_switch_impl> tally(new gpo_switch_impl(
                 gpo_port, off_state, new_writer(gpo_port)));
 
-            conn.service.post(
+            boost::asio::post(conn.service,
                 bind(&impl::do_insert_gpo_handler, this, gpo_port, tally));
 
             return tally;
