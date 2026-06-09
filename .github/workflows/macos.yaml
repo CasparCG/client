@@ -6,9 +6,12 @@ on:
   pull_request:
     branches: ["main"]
 
+env:
+  MACOSX_DEPLOYMENT_TARGET: 11
+
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-latest
 
     strategy:
       fail-fast: false
