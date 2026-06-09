@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 env:
-  MACOSX_DEPLOYMENT_TARGET: 14 # Boost is built with 14 as minimum
+  MACOSX_DEPLOYMENT_TARGET: 13 # Boost is built with 13 as minimum
 
 jobs:
   build:

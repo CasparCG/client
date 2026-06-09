@@ -14,8 +14,8 @@ set(BOOST_USE_PRECOMPILED ON CACHE BOOL "Use precompiled boost")
 # casparcg_add_external_project(boost)
 if (BOOST_USE_PRECOMPILED)
 	ExternalProject_Add(boost
-		URL ${CASPARCG_DOWNLOAD_MIRROR}/boost/boost_1_83_0-macos-multiarch-release.zip
-		URL_HASH MD5=029541b7a7d6827fc0d79b1822b3b3be
+		URL ${CASPARCG_DOWNLOAD_MIRROR}/boost/boost_1_83_0-macos-multiarch-release2.zip
+		URL_HASH SHAA256=26c32398ac4d798e27e7f7972d74ab346c1d2f6a9a49bdb0a6aa9723b08165da
 		DOWNLOAD_DIR ${CASPARCG_DOWNLOAD_CACHE}
 		CONFIGURE_COMMAND ""
 		BUILD_COMMAND ""
@@ -35,6 +35,7 @@ else ()
 		CONFIGURE_COMMAND ./bootstrap.sh
 			--with-libraries=thread
 			--with-libraries=system
+			--with-libraries=chrono
 		BUILD_COMMAND ./b2 install release architecture=arm+x86 --prefix=${BOOST_INSTALL_DIR} link=static -j ${CONFIG_CPU_COUNT} 
 		INSTALL_COMMAND ""
 	)
@@ -42,7 +43,7 @@ else ()
 	link_directories("${BOOST_INSTALL_DIR}/lib")
     include_directories(${BOOST_INCLUDE_PATH}) # TODO this is not pretty
 endif ()
-set(Boost_LIBRARIES "boost_thread")
+set(Boost_LIBRARIES "boost_thread" "boost_chrono")
 add_definitions( -D_HAS_AUTO_PTR_ETC=0 ) # fix incompatibility with c++17
 add_definitions( -DBOOST_ERROR_CODE_HEADER_ONLY ) # fix a link issue inside of 
 
